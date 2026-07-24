@@ -517,7 +517,7 @@
       }
     }
   },
-  "revision": "20260716",
+  "revision": "20260723",
   "rootUrl": "https://authorizedbuyersmarketplace.googleapis.com/",
   "schemas": {
     "AccessControlSettings": {
@@ -616,6 +616,20 @@
           "description": "Output only. The timestamp when the curated package was created. Can be used to filter the response of the curatedPackages.list method.",
           "format": "google-datetime",
           "readOnly": true,
+          "type": "string"
+        },
+        "curationFeeVisibility": {
+          "description": "Optional. Immutable. The visibility of the combined curation package fee and data segment fees (the total curation fee).",
+          "enum": [
+            "CURATION_FEE_VISIBILITY_UNSPECIFIED",
+            "DISCLOSED",
+            "NON_DISCLOSED"
+          ],
+          "enumDescriptions": [
+            "The total curation fee visibility is unspecified.",
+            "The total curation fee is visible to all buyers. This is the default value if not set.",
+            "The total curation fee is not visible to all buyers."
+          ],
           "type": "string"
         },
         "description": {

@@ -134,6 +134,13 @@ const (
 	// it adds.
 	GooglehealthLocationWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.location.writeonly"
 
+	// Add logged symptoms data to Google Health, and edit or delete the data it
+	// adds
+	GooglehealthLoggedSymptomsWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly"
+
+	// Add mindfulness data to Google Health, and edit or delete the data it adds
+	GooglehealthMindfulnessWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly"
+
 	// Add nutrition data to Google Health, and edit or delete the data it adds.
 	GooglehealthNutritionWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly"
 
@@ -142,6 +149,10 @@ const (
 
 	// Add profile data to Google Health, and edit or delete the data it adds.
 	GooglehealthProfileWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.profile.writeonly"
+
+	// Add reproductive health data to Google Health, and edit or delete the data
+	// it adds
+	GooglehealthReproductiveHealthWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly"
 
 	// See your Google Health settings
 	GooglehealthSettingsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.settings.readonly"
@@ -168,9 +179,12 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/googlehealth.irn.readonly",
 		"https://www.googleapis.com/auth/googlehealth.location.readonly",
 		"https://www.googleapis.com/auth/googlehealth.location.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.profile.readonly",
 		"https://www.googleapis.com/auth/googlehealth.profile.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.settings.readonly",
 		"https://www.googleapis.com/auth/googlehealth.settings.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.sleep.readonly",

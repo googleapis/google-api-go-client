@@ -187,6 +187,8 @@ type FoldersService struct {
 func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 	rs := &FoldersLocationsService{s: s}
 	rs.DbFindingSummaries = NewFoldersLocationsDbFindingSummariesService(s)
+	rs.DbFrameworkComplianceReports = NewFoldersLocationsDbFrameworkComplianceReportsService(s)
+	rs.DbFrameworkComplianceSummaries = NewFoldersLocationsDbFrameworkComplianceSummariesService(s)
 	return rs
 }
 
@@ -194,6 +196,10 @@ type FoldersLocationsService struct {
 	s *Service
 
 	DbFindingSummaries *FoldersLocationsDbFindingSummariesService
+
+	DbFrameworkComplianceReports *FoldersLocationsDbFrameworkComplianceReportsService
+
+	DbFrameworkComplianceSummaries *FoldersLocationsDbFrameworkComplianceSummariesService
 }
 
 func NewFoldersLocationsDbFindingSummariesService(s *Service) *FoldersLocationsDbFindingSummariesService {
@@ -202,6 +208,36 @@ func NewFoldersLocationsDbFindingSummariesService(s *Service) *FoldersLocationsD
 }
 
 type FoldersLocationsDbFindingSummariesService struct {
+	s *Service
+}
+
+func NewFoldersLocationsDbFrameworkComplianceReportsService(s *Service) *FoldersLocationsDbFrameworkComplianceReportsService {
+	rs := &FoldersLocationsDbFrameworkComplianceReportsService{s: s}
+	rs.DbControlComplianceSummaries = NewFoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService(s)
+	return rs
+}
+
+type FoldersLocationsDbFrameworkComplianceReportsService struct {
+	s *Service
+
+	DbControlComplianceSummaries *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService
+}
+
+func NewFoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService(s *Service) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService {
+	rs := &FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService{s: s}
+	return rs
+}
+
+type FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService struct {
+	s *Service
+}
+
+func NewFoldersLocationsDbFrameworkComplianceSummariesService(s *Service) *FoldersLocationsDbFrameworkComplianceSummariesService {
+	rs := &FoldersLocationsDbFrameworkComplianceSummariesService{s: s}
+	return rs
+}
+
+type FoldersLocationsDbFrameworkComplianceSummariesService struct {
 	s *Service
 }
 
@@ -220,6 +256,8 @@ type OrganizationsService struct {
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
 	rs.DbFindingSummaries = NewOrganizationsLocationsDbFindingSummariesService(s)
+	rs.DbFrameworkComplianceReports = NewOrganizationsLocationsDbFrameworkComplianceReportsService(s)
+	rs.DbFrameworkComplianceSummaries = NewOrganizationsLocationsDbFrameworkComplianceSummariesService(s)
 	rs.Operations = NewOrganizationsLocationsOperationsService(s)
 	rs.Workloads = NewOrganizationsLocationsWorkloadsService(s)
 	return rs
@@ -229,6 +267,10 @@ type OrganizationsLocationsService struct {
 	s *Service
 
 	DbFindingSummaries *OrganizationsLocationsDbFindingSummariesService
+
+	DbFrameworkComplianceReports *OrganizationsLocationsDbFrameworkComplianceReportsService
+
+	DbFrameworkComplianceSummaries *OrganizationsLocationsDbFrameworkComplianceSummariesService
 
 	Operations *OrganizationsLocationsOperationsService
 
@@ -241,6 +283,36 @@ func NewOrganizationsLocationsDbFindingSummariesService(s *Service) *Organizatio
 }
 
 type OrganizationsLocationsDbFindingSummariesService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsDbFrameworkComplianceReportsService(s *Service) *OrganizationsLocationsDbFrameworkComplianceReportsService {
+	rs := &OrganizationsLocationsDbFrameworkComplianceReportsService{s: s}
+	rs.DbControlComplianceSummaries = NewOrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService(s)
+	return rs
+}
+
+type OrganizationsLocationsDbFrameworkComplianceReportsService struct {
+	s *Service
+
+	DbControlComplianceSummaries *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService
+}
+
+func NewOrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService(s *Service) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService {
+	rs := &OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsDbFrameworkComplianceSummariesService(s *Service) *OrganizationsLocationsDbFrameworkComplianceSummariesService {
+	rs := &OrganizationsLocationsDbFrameworkComplianceSummariesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsDbFrameworkComplianceSummariesService struct {
 	s *Service
 }
 
@@ -301,6 +373,8 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.DbFindingSummaries = NewProjectsLocationsDbFindingSummariesService(s)
+	rs.DbFrameworkComplianceReports = NewProjectsLocationsDbFrameworkComplianceReportsService(s)
+	rs.DbFrameworkComplianceSummaries = NewProjectsLocationsDbFrameworkComplianceSummariesService(s)
 	return rs
 }
 
@@ -308,6 +382,10 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	DbFindingSummaries *ProjectsLocationsDbFindingSummariesService
+
+	DbFrameworkComplianceReports *ProjectsLocationsDbFrameworkComplianceReportsService
+
+	DbFrameworkComplianceSummaries *ProjectsLocationsDbFrameworkComplianceSummariesService
 }
 
 func NewProjectsLocationsDbFindingSummariesService(s *Service) *ProjectsLocationsDbFindingSummariesService {
@@ -316,6 +394,36 @@ func NewProjectsLocationsDbFindingSummariesService(s *Service) *ProjectsLocation
 }
 
 type ProjectsLocationsDbFindingSummariesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDbFrameworkComplianceReportsService(s *Service) *ProjectsLocationsDbFrameworkComplianceReportsService {
+	rs := &ProjectsLocationsDbFrameworkComplianceReportsService{s: s}
+	rs.DbControlComplianceSummaries = NewProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService(s)
+	return rs
+}
+
+type ProjectsLocationsDbFrameworkComplianceReportsService struct {
+	s *Service
+
+	DbControlComplianceSummaries *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService
+}
+
+func NewProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService(s *Service) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService {
+	rs := &ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDbFrameworkComplianceSummariesService(s *Service) *ProjectsLocationsDbFrameworkComplianceSummariesService {
+	rs := &ProjectsLocationsDbFrameworkComplianceSummariesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDbFrameworkComplianceSummariesService struct {
 	s *Service
 }
 
@@ -363,6 +471,57 @@ func (s GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest) MarshalJSON() 
 type GoogleCloudAssuredworkloadsV1AcknowledgeViolationResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse:
+// The response message for AggregateDbFrameworkComplianceReport.
+type GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse struct {
+	// AggregatedComplianceReports: The list of aggregated compliance reports.
+	AggregatedComplianceReports []*GoogleCloudAssuredworkloadsV1AggregatedComplianceReport `json:"aggregatedComplianceReports,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AggregatedComplianceReports") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregatedComplianceReports") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1AggregatedComplianceReport: The aggregated
+// compliance report.
+type GoogleCloudAssuredworkloadsV1AggregatedComplianceReport struct {
+	// ControlAssessmentDetails: The control assessment details of the framework.
+	ControlAssessmentDetails *GoogleCloudAssuredworkloadsV1ControlAssessmentDetails `json:"controlAssessmentDetails,omitempty"`
+	// ReportTime: The report time of the aggregated compliance report.
+	ReportTime string `json:"reportTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ControlAssessmentDetails")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ControlAssessmentDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1AggregatedComplianceReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1AggregatedComplianceReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1AnalyzeWorkloadMoveResponse: Response
@@ -634,6 +793,205 @@ func (s GoogleCloudAssuredworkloadsV1BatchAcknowledgeViolationsResponse) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1CELExpression: A Common Expression Language
+// (CEL) expression that's used to create a rule.
+type GoogleCloudAssuredworkloadsV1CELExpression struct {
+	// Expression: Required. The logical expression in CEL. The maximum length of
+	// the condition is 1000 characters. For more information, see CEL expression
+	// (https://cloud.google.com/security-command-center/docs/compliance-manager-write-cel-expressions).
+	Expression string `json:"expression,omitempty"`
+	// ResourceTypesValues: The resource instance types on which this expression is
+	// defined. The format is `/`. For example: `compute.googleapis.com/Instance`
+	ResourceTypesValues *GoogleCloudAssuredworkloadsV1StringList `json:"resourceTypesValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Expression") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Expression") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1CELExpression) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1CELExpression
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1CloudControlAssessmentDetails: The cloud
+// control assessment details for non-manual cloud controls.
+type GoogleCloudAssuredworkloadsV1CloudControlAssessmentDetails struct {
+	// EvaluationState: Output only. The evaluation status of the cloud control.
+	//
+	// Possible values:
+	//   "EVALUATION_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "EVALUATION_STATE_PASSED" - The control is passing.
+	//   "EVALUATION_STATE_FAILED" - The control is failing.
+	//   "EVALUATION_STATE_NOT_ASSESSED" - The control is not assessed.
+	EvaluationState string `json:"evaluationState,omitempty"`
+	// FindingsCount: The number of findings for the cloud control.
+	FindingsCount int64 `json:"findingsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EvaluationState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EvaluationState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1CloudControlAssessmentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1CloudControlAssessmentDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1CloudControlReport: The cloud control report.
+type GoogleCloudAssuredworkloadsV1CloudControlReport struct {
+	// Categories: The list of categories for the cloud control.
+	Categories []string `json:"categories,omitempty"`
+	// CloudControl: The name of the cloud control.
+	CloudControl string `json:"cloudControl,omitempty"`
+	// CloudControlAssessmentDetails: The details of a cloud control assessment.
+	CloudControlAssessmentDetails *GoogleCloudAssuredworkloadsV1CloudControlAssessmentDetails `json:"cloudControlAssessmentDetails,omitempty"`
+	// CloudControlDeployment: The name of the cloud control deployment.
+	CloudControlDeployment string `json:"cloudControlDeployment,omitempty"`
+	// CloudControlType: The type of the cloud control.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "CUSTOM" - A cloud control that's created and managed by you.
+	//   "BUILT_IN" - A cloud control that's provided and managed by Google.
+	CloudControlType string `json:"cloudControlType,omitempty"`
+	// Description: The description of the cloud control.
+	Description string `json:"description,omitempty"`
+	// DisplayName: The display name of the cloud control.
+	DisplayName string `json:"displayName,omitempty"`
+	// EnforcementMode: The enforcement mode of the cloud control.
+	//
+	// Possible values:
+	//   "ENFORCEMENT_MODE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PREVENTIVE" - The cloud control is enforced to prevent non-compliance.
+	//   "DETECTIVE" - The cloud control is enforced to detect non-compliance.
+	//   "AUDIT" - The cloud control is enforced to audit for non-compliance.
+	EnforcementMode string `json:"enforcementMode,omitempty"`
+	// FindingCategory: The category of the finding.
+	FindingCategory string `json:"findingCategory,omitempty"`
+	// FindingSeverity: The severity of the finding.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Default value. This value is unused.
+	//   "CRITICAL" - A critical vulnerability is easily discoverable by an
+	// external actor, exploitable, and results in the direct ability to execute
+	// arbitrary code, exfiltrate data, and otherwise gain additional access and
+	// privileges to cloud resources and workloads. Examples include publicly
+	// accessible unprotected user data and public SSH access with weak or no
+	// passwords. A critical threat is a threat that can access, modify, or delete
+	// data or execute unauthorized code within existing resources.
+	//   "HIGH" - A high-risk vulnerability can be easily discovered and exploited
+	// in combination with other vulnerabilities to gain direct access and the
+	// ability to execute arbitrary code, exfiltrate data, and otherwise gain
+	// additional access and privileges to cloud resources and workloads. An
+	// example is a database with weak or no passwords that is only accessible
+	// internally. This database could easily be compromised by an actor that had
+	// access to the internal network. A high-risk threat is a threat that can
+	// create new computational resources in an environment but can't access data
+	// or execute code in existing resources.
+	//   "MEDIUM" - A medium-risk vulnerability can be used by an actor to gain
+	// access to resources or privileges that enable them to eventually (through
+	// multiple steps or a complex exploit) gain access and the ability to execute
+	// arbitrary code or exfiltrate data. An example is a service account with
+	// access to more projects than it should have. If an actor gains access to the
+	// service account, they could potentially use that access to manipulate a
+	// project the service account was not intended to. A medium-risk threat can
+	// cause operational impact but might not access data or execute unauthorized
+	// code.
+	//   "LOW" - A low-risk vulnerability hampers a security organization's ability
+	// to detect vulnerabilities or active threats in their deployment, or prevents
+	// the root cause investigation of security issues. An example is monitoring
+	// and logs being disabled for resource configurations and access. A low-risk
+	// threat is a threat that has obtained minimal access to an environment but
+	// can't access data, execute code, or create resources.
+	FindingSeverity string `json:"findingSeverity,omitempty"`
+	// FrameworkMajorRevisionIds: The major revision IDs of the frameworks that the
+	// cloud control belongs to.
+	FrameworkMajorRevisionIds googleapi.Int64s `json:"frameworkMajorRevisionIds,omitempty"`
+	// MajorRevisionId: The major revision ID of the cloud control.
+	MajorRevisionId int64 `json:"majorRevisionId,omitempty,string"`
+	// ManualCloudControlAssessmentDetails: The details of a manual cloud control
+	// assessment.
+	ManualCloudControlAssessmentDetails *GoogleCloudAssuredworkloadsV1ManualCloudControlAssessmentDetails `json:"manualCloudControlAssessmentDetails,omitempty"`
+	// MinorRevisionId: The minor revision ID of the cloud control.
+	MinorRevisionId int64 `json:"minorRevisionId,omitempty,string"`
+	// Rules: The list of rules that correspond to the cloud control.
+	Rules []*GoogleCloudAssuredworkloadsV1Rule `json:"rules,omitempty"`
+	// SimilarControls: The list of similar controls.
+	SimilarControls []*GoogleCloudAssuredworkloadsV1SimilarControls `json:"similarControls,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Categories") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Categories") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1CloudControlReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1CloudControlReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1ControlAssessmentDetails: The details for a
+// control assessment.
+type GoogleCloudAssuredworkloadsV1ControlAssessmentDetails struct {
+	// AssessedPassingControlIds: The list of controls that were assessed and are
+	// passing.
+	AssessedPassingControlIds []string `json:"assessedPassingControlIds,omitempty"`
+	// AssessedPassingControls: The number of controls that were assessed and are
+	// passing.
+	AssessedPassingControls int64 `json:"assessedPassingControls,omitempty"`
+	// FailingControlIds: The list of controls that are failing.
+	FailingControlIds []string `json:"failingControlIds,omitempty"`
+	// FailingControls: The number of controls that are failing.
+	FailingControls int64 `json:"failingControls,omitempty"`
+	// NotAssessedControlIds: The list of controls that aren't assessed because
+	// they require manual review.
+	NotAssessedControlIds []string `json:"notAssessedControlIds,omitempty"`
+	// NotAssessedControls: The number of controls that aren't assessed because
+	// they require manual review.
+	NotAssessedControls int64 `json:"notAssessedControls,omitempty"`
+	// PassingControlIds: The list of controls that are passing or not assessed.
+	PassingControlIds []string `json:"passingControlIds,omitempty"`
+	// PassingControls: The number of controls that are passing or not assessed.
+	PassingControls int64 `json:"passingControls,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssessedPassingControlIds")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssessedPassingControlIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ControlAssessmentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ControlAssessmentDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata: Operation
 // metadata to give request details of CreateWorkload.
 type GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata struct {
@@ -778,6 +1136,65 @@ func (s GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1DbControlComplianceSummary: The details for
+// control compliance.
+type GoogleCloudAssuredworkloadsV1DbControlComplianceSummary struct {
+	// CloudControlReports: The list of cloud control reports.
+	CloudControlReports []*GoogleCloudAssuredworkloadsV1CloudControlReport `json:"cloudControlReports,omitempty"`
+	// ComplianceFrameworks: The list of compliance frameworks that the control
+	// belongs to.
+	ComplianceFrameworks []string `json:"complianceFrameworks,omitempty"`
+	// Control: The name of the control.
+	Control string `json:"control,omitempty"`
+	// ControlResponsibilityType: The responsibility type for the control.
+	//
+	// Possible values:
+	//   "REGULATORY_CONTROL_RESPONSIBILITY_TYPE_UNSPECIFIED" - Default value. This
+	// value is unused.
+	//   "GOOGLE" - Google's responsibility.
+	//   "CUSTOMER" - Your responsibility.
+	//   "SHARED" - Shared responsibility.
+	ControlResponsibilityType string `json:"controlResponsibilityType,omitempty"`
+	// Description: The description of the control.
+	Description string `json:"description,omitempty"`
+	// DisplayName: The display name of the control.
+	DisplayName string `json:"displayName,omitempty"`
+	// IsFakeControl: Whether the control is a fake control. Fake controls are
+	// created and mapped to cloud controls that don't belong to a control group.
+	IsFakeControl bool `json:"isFakeControl,omitempty"`
+	// Name: Identifier. The name of the control compliance summary.
+	Name string `json:"name,omitempty"`
+	// OverallEvaluationState: Output only. The overall evaluation status of the
+	// control.
+	//
+	// Possible values:
+	//   "EVALUATION_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "EVALUATION_STATE_PASSED" - The control is passing.
+	//   "EVALUATION_STATE_FAILED" - The control is failing.
+	//   "EVALUATION_STATE_NOT_ASSESSED" - The control is not assessed.
+	OverallEvaluationState string `json:"overallEvaluationState,omitempty"`
+	// SimilarControls: The list of similar controls.
+	SimilarControls []*GoogleCloudAssuredworkloadsV1SimilarControls `json:"similarControls,omitempty"`
+	// TotalFindingsCount: The total number of findings for the control.
+	TotalFindingsCount int64 `json:"totalFindingsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudControlReports") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudControlReports") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1DbControlComplianceSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1DbControlComplianceSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1DbFindingSummary: The details for a finding.
 type GoogleCloudAssuredworkloadsV1DbFindingSummary struct {
 	// FindingCategory: Output only. The category of the finding.
@@ -866,6 +1283,74 @@ func (s GoogleCloudAssuredworkloadsV1DbFindingSummary) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary: The details for a
+// framework compliance summary.
+type GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary struct {
+	// ControlAssessmentDetails: The control assessment details of the framework.
+	ControlAssessmentDetails *GoogleCloudAssuredworkloadsV1ControlAssessmentDetails `json:"controlAssessmentDetails,omitempty"`
+	// ControlsPassingTrend: Output only. The trend of controls that are passing
+	// for the given duration.
+	ControlsPassingTrend *GoogleCloudAssuredworkloadsV1Trend `json:"controlsPassingTrend,omitempty"`
+	// FindingCount: Output only. The count of the findings generated against the
+	// framework.
+	FindingCount int64 `json:"findingCount,omitempty,string"`
+	// Framework: The name of the framework.
+	Framework string `json:"framework,omitempty"`
+	// FrameworkCategories: The list of framework categories supported by the
+	// framework.
+	//
+	// Possible values:
+	//   "FRAMEWORK_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
+	//   "INDUSTRY_DEFINED_STANDARD" - An industry-defined framework.
+	//   "ASSURED_WORKLOADS" - An Assured Workloads framework.
+	//   "DATA_SECURITY" - A data security posture framework.
+	//   "GOOGLE_BEST_PRACTICES" - A Google's best practices framework.
+	//   "CUSTOM_FRAMEWORK" - A user-created framework.
+	FrameworkCategories []string `json:"frameworkCategories,omitempty"`
+	// FrameworkDisplayName: Optional. The display name for the framework.
+	FrameworkDisplayName string `json:"frameworkDisplayName,omitempty"`
+	// FrameworkType: The type of framework.
+	//
+	// Possible values:
+	//   "FRAMEWORK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "BUILT_IN" - A framework that's provided and managed by Google.
+	//   "CUSTOM" - A framework that's created and managed by you.
+	FrameworkType string `json:"frameworkType,omitempty"`
+	// MajorRevisionId: The major revision ID of the framework.
+	MajorRevisionId int64 `json:"majorRevisionId,omitempty,string"`
+	// MinorRevisionId: The minor revision ID of the framework.
+	MinorRevisionId int64 `json:"minorRevisionId,omitempty,string"`
+	// Name: Identifier. The name of the framework compliance summary.
+	Name string `json:"name,omitempty"`
+	// SupportedCloudProviders: The list of cloud providers supported by the
+	// framework.
+	//
+	// Possible values:
+	//   "CLOUD_PROVIDER_UNSPECIFIED" - Default value. This value is unused.
+	//   "AWS" - Amazon Web Services (AWS).
+	//   "AZURE" - Microsoft Azure.
+	//   "GCP" - Google Cloud.
+	SupportedCloudProviders []string `json:"supportedCloudProviders,omitempty"`
+	// TargetResourceDetails: The target resource details for the framework.
+	TargetResourceDetails []*GoogleCloudAssuredworkloadsV1TargetResourceDetails `json:"targetResourceDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ControlAssessmentDetails")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ControlAssessmentDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse: Response for
 // EnableComplianceUpdates endpoint.
 type GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse struct {
@@ -878,6 +1363,103 @@ type GoogleCloudAssuredworkloadsV1EnableComplianceUpdatesResponse struct {
 type GoogleCloudAssuredworkloadsV1EnableResourceMonitoringResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse: The
+// response message for FetchDbFrameworkComplianceReport.
+type GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse struct {
+	// ControlAssessmentDetails: The control assessment details of the framework.
+	ControlAssessmentDetails *GoogleCloudAssuredworkloadsV1ControlAssessmentDetails `json:"controlAssessmentDetails,omitempty"`
+	// Framework: The name of the framework.
+	Framework string `json:"framework,omitempty"`
+	// FrameworkCategories: The list of framework categories supported.
+	//
+	// Possible values:
+	//   "FRAMEWORK_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
+	//   "INDUSTRY_DEFINED_STANDARD" - An industry-defined framework.
+	//   "ASSURED_WORKLOADS" - An Assured Workloads framework.
+	//   "DATA_SECURITY" - A data security posture framework.
+	//   "GOOGLE_BEST_PRACTICES" - A Google's best practices framework.
+	//   "CUSTOM_FRAMEWORK" - A user-created framework.
+	FrameworkCategories []string `json:"frameworkCategories,omitempty"`
+	// FrameworkDescription: The description of the framework.
+	FrameworkDescription string `json:"frameworkDescription,omitempty"`
+	// FrameworkDisplayName: Optional. The display name for the framework.
+	FrameworkDisplayName string `json:"frameworkDisplayName,omitempty"`
+	// FrameworkType: The type of the framework.
+	//
+	// Possible values:
+	//   "FRAMEWORK_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "BUILT_IN" - A framework that's provided and managed by Google.
+	//   "CUSTOM" - A framework that's created and managed by you.
+	FrameworkType string `json:"frameworkType,omitempty"`
+	// MajorRevisionId: The latest major revision ID of the framework.
+	MajorRevisionId int64 `json:"majorRevisionId,omitempty,string"`
+	// MinorRevisionId: The latest minor revision ID of the latest major revision
+	// of the framework.
+	MinorRevisionId int64 `json:"minorRevisionId,omitempty,string"`
+	// Name: The name of the framework compliance report.
+	Name string `json:"name,omitempty"`
+	// SupportedCloudProviders: The list of cloud providers that are supported by
+	// the framework.
+	//
+	// Possible values:
+	//   "CLOUD_PROVIDER_UNSPECIFIED" - Default value. This value is unused.
+	//   "AWS" - Amazon Web Services (AWS).
+	//   "AZURE" - Microsoft Azure.
+	//   "GCP" - Google Cloud.
+	SupportedCloudProviders []string `json:"supportedCloudProviders,omitempty"`
+	// TargetResourceDetails: The target resource details of the framework.
+	TargetResourceDetails []*GoogleCloudAssuredworkloadsV1TargetResourceDetails `json:"targetResourceDetails,omitempty"`
+	// UpdateTime: Output only. The last updated time of the report.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ControlAssessmentDetails")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ControlAssessmentDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse: The
+// response message for ListDBControlComplianceSummaries.
+type GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse struct {
+	// DbControlComplianceSummaries: The list of control compliance details.
+	DbControlComplianceSummaries []*GoogleCloudAssuredworkloadsV1DbControlComplianceSummary `json:"dbControlComplianceSummaries,omitempty"`
+	// NextPageToken: Output only. The token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DbControlComplianceSummaries") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DbControlComplianceSummaries") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse: The response
@@ -905,6 +1487,35 @@ type GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse struct {
 
 func (s GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse: The
+// response message for ListDbFrameworkComplianceSummariesResponse.
+type GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse struct {
+	// DbFrameworkComplianceSummaries: The list of framework compliance summaries.
+	DbFrameworkComplianceSummaries []*GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary `json:"dbFrameworkComplianceSummaries,omitempty"`
+	// NextPageToken: Output only. The token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DbFrameworkComplianceSummaries") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DbFrameworkComplianceSummaries")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -991,6 +1602,29 @@ type GoogleCloudAssuredworkloadsV1ListWorkloadsResponse struct {
 
 func (s GoogleCloudAssuredworkloadsV1ListWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1ListWorkloadsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1ManualCloudControlAssessmentDetails: The
+// details for a manual cloud control assessment.
+type GoogleCloudAssuredworkloadsV1ManualCloudControlAssessmentDetails struct {
+	// ManualCloudControlGuide: The guide for assessing a cloud control manually.
+	ManualCloudControlGuide []string `json:"manualCloudControlGuide,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ManualCloudControlGuide") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ManualCloudControlGuide") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1ManualCloudControlAssessmentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1ManualCloudControlAssessmentDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1331,6 +1965,170 @@ type GoogleCloudAssuredworkloadsV1RevertArchivedResourceEventsResponse struct {
 func (s GoogleCloudAssuredworkloadsV1RevertArchivedResourceEventsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAssuredworkloadsV1RevertArchivedResourceEventsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1Rule: A rule in the cloud control.
+type GoogleCloudAssuredworkloadsV1Rule struct {
+	// CelExpression: The rule's logic expression in Common Expression Language
+	// (CEL).
+	CelExpression *GoogleCloudAssuredworkloadsV1CELExpression `json:"celExpression,omitempty"`
+	// Description: Optional. The rule description. The maximum length is 2000
+	// characters.
+	Description string `json:"description,omitempty"`
+	// RuleActionTypes: Required. The functionality that's enabled by the rule.
+	//
+	// Possible values:
+	//   "RULE_ACTION_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "RULE_ACTION_TYPE_PREVENTIVE" - The rule is intended to prevent
+	// non-compliance.
+	//   "RULE_ACTION_TYPE_DETECTIVE" - The rule is intended to detect
+	// non-compliance.
+	//   "RULE_ACTION_TYPE_AUDIT" - The rule is intended to audit non-compliance.
+	RuleActionTypes []string `json:"ruleActionTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CelExpression") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CelExpression") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1Rule) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1Rule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1SimilarControls: The similar controls.
+type GoogleCloudAssuredworkloadsV1SimilarControls struct {
+	// ControlId: The ID of the control.
+	ControlId string `json:"controlId,omitempty"`
+	// Framework: The name of the framework.
+	Framework string `json:"framework,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ControlId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ControlId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1SimilarControls) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1SimilarControls
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1StringList: A list of strings for the parameter
+// value.
+type GoogleCloudAssuredworkloadsV1StringList struct {
+	// Values: Required. The strings in the list.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1StringList) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1StringList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1TargetResourceDetails: The details for a target
+// resource.
+type GoogleCloudAssuredworkloadsV1TargetResourceDetails struct {
+	// CreateTime: The create time of the target resource.
+	CreateTime string `json:"createTime,omitempty"`
+	// FrameworkDeployment: The framework deployment name for the target resource.
+	// For example,
+	// `organizations/{organization_id}/locations/{location}/frameworkDeployments/{f
+	// ramework_deployment_id}`
+	FrameworkDeployment string `json:"frameworkDeployment,omitempty"`
+	// MajorRevisionId: The major revision ID of the framework for the target
+	// resource.
+	MajorRevisionId int64 `json:"majorRevisionId,omitempty,string"`
+	// MinorRevisionId: The minor revision ID of the framework for the target
+	// resource.
+	MinorRevisionId int64 `json:"minorRevisionId,omitempty,string"`
+	// TargetResource: The target resource. For example,
+	// `organizations/1234567890`, `projects/1234567890`, or `folders/1234567890`.
+	TargetResource string `json:"targetResource,omitempty"`
+	// TargetResourceDisplayName: The display name of the target resource. For
+	// example, `google.com`, `staging-project`, or `development-folder`.
+	TargetResourceDisplayName string `json:"targetResourceDisplayName,omitempty"`
+	// UpdateTime: The update time of the target resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1TargetResourceDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1TargetResourceDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAssuredworkloadsV1Trend: The trend of a compliance metric.
+type GoogleCloudAssuredworkloadsV1Trend struct {
+	// Duration: Output only. The duration for the trend.
+	Duration string `json:"duration,omitempty"`
+	// ValuePercent: Output only. The trend value as a percentage. The value can be
+	// positive or negative.
+	ValuePercent float64 `json:"valuePercent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Duration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAssuredworkloadsV1Trend) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAssuredworkloadsV1Trend
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAssuredworkloadsV1Trend) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAssuredworkloadsV1Trend
+	var s1 struct {
+		ValuePercent gensupport.JSONFloat64 `json:"valuePercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ValuePercent = float64(s1.ValuePercent)
+	return nil
 }
 
 // GoogleCloudAssuredworkloadsV1UpdateDetails: The details of the update.
@@ -2676,6 +3474,600 @@ func (c *FoldersLocationsDbFindingSummariesListCall) Pages(ctx context.Context, 
 	}
 }
 
+type FoldersLocationsDbFrameworkComplianceReportsAggregateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Aggregate: Gets the aggregated compliance report over time for a given
+// scope.
+//
+//   - name: The name of the aggregated compliance report over time to retrieve.
+//     Format:
+//     `organizations/{organization_id}/locations/{location}/dbFrameworkCompliance
+//     Reports/{db_framework_compliance_report}`.
+func (r *FoldersLocationsDbFrameworkComplianceReportsService) Aggregate(name string) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
+	c := &FoldersLocationsDbFrameworkComplianceReportsAggregateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) Filter(filter string) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// IntervalEndTime sets the optional parameter "interval.endTime": Exclusive
+// end of the interval. If specified, a Timestamp matching this interval will
+// have to be before the end.
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) IntervalEndTime(intervalEndTime string) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("interval.endTime", intervalEndTime)
+	return c
+}
+
+// IntervalStartTime sets the optional parameter "interval.startTime":
+// Inclusive start of the interval. If specified, a Timestamp matching this
+// interval will have to be the same or after the start.
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) IntervalStartTime(intervalStartTime string) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("interval.startTime", intervalStartTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) Fields(s ...googleapi.Field) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) IfNoneMatch(entityTag string) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) Context(ctx context.Context) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:aggregate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFrameworkComplianceReports.aggregate", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.folders.locations.dbFrameworkComplianceReports.aggregate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse.Se
+// rverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFrameworkComplianceReports.aggregate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsDbFrameworkComplianceReportsFetchCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Fetch: Fetches the framework compliance report for a given scope.
+//
+// - name: The name of the framework compliance report to retrieve.
+func (r *FoldersLocationsDbFrameworkComplianceReportsService) Fetch(name string) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
+	c := &FoldersLocationsDbFrameworkComplianceReportsFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": The end time of the report.
+func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) EndTime(endTime string) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) Filter(filter string) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) Fields(s ...googleapi.Field) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) IfNoneMatch(entityTag string) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) Context(ctx context.Context) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFrameworkComplianceReports.fetch", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.folders.locations.dbFrameworkComplianceReports.fetch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFrameworkComplianceReports.fetch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the control compliance summary for a given scope.
+//
+//   - parent: The parent scope for the framework overview page. Format:
+//     organizations/{organization}/locations/{location}/dbFrameworkComplianceRepo
+//     rts/{db_framework_compliance_report}
+//     folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fram
+//     ework_compliance_report}
+//     projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_fr
+//     amework_compliance_report}.
+func (r *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService) List(parent string) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c := &FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Filter(filter string) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// default page size is 50. The maximum value is 1000.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageSize(pageSize int64) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageToken(pageToken string) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Fields(s ...googleapi.Field) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) IfNoneMatch(entityTag string) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Context(ctx context.Context) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbControlComplianceSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.folders.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FoldersLocationsDbFrameworkComplianceSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the framework compliance summary for a given scope.
+//
+//   - parent: The parent scope for the framework compliance summary. Format:
+//     organizations/{organization}/locations/{location}
+//     folders/{folder}/locations/{location}
+//     projects/{project}/locations/{location}.
+func (r *FoldersLocationsDbFrameworkComplianceSummariesService) List(parent string) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
+	c := &FoldersLocationsDbFrameworkComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) Filter(filter string) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// default page size is 50. The maximum value is 1000.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) PageSize(pageSize int64) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return. Pass the next_page_token
+// value from a previous result.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) PageToken(pageToken string) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the level of detail to
+// return in the response.
+//
+// Possible values:
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_UNSPECIFIED" - The default / unset
+//
+// value. The API will default to the BASIC view.
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_BASIC" - Includes basic compliance
+//
+// metadata, but omits trend data.
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_FULL" - Includes all information,
+//
+// including finding_count and controls_passing_trend. Trend data is provided
+// for the last 30 days.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) View(view string) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) Fields(s ...googleapi.Field) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) IfNoneMatch(entityTag string) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) Context(ctx context.Context) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbFrameworkComplianceSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFrameworkComplianceSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.folders.locations.dbFrameworkComplianceSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.folders.locations.dbFrameworkComplianceSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type OrganizationsLocationsDbFindingSummariesListCall struct {
 	s            *Service
 	parent       string
@@ -2814,6 +4206,600 @@ func (c *OrganizationsLocationsDbFindingSummariesListCall) Do(opts ...googleapi.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsDbFindingSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Aggregate: Gets the aggregated compliance report over time for a given
+// scope.
+//
+//   - name: The name of the aggregated compliance report over time to retrieve.
+//     Format:
+//     `organizations/{organization_id}/locations/{location}/dbFrameworkCompliance
+//     Reports/{db_framework_compliance_report}`.
+func (r *OrganizationsLocationsDbFrameworkComplianceReportsService) Aggregate(name string) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c := &OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) Filter(filter string) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// IntervalEndTime sets the optional parameter "interval.endTime": Exclusive
+// end of the interval. If specified, a Timestamp matching this interval will
+// have to be before the end.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) IntervalEndTime(intervalEndTime string) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("interval.endTime", intervalEndTime)
+	return c
+}
+
+// IntervalStartTime sets the optional parameter "interval.startTime":
+// Inclusive start of the interval. If specified, a Timestamp matching this
+// interval will have to be the same or after the start.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) IntervalStartTime(intervalStartTime string) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("interval.startTime", intervalStartTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) IfNoneMatch(entityTag string) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) Context(ctx context.Context) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:aggregate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.aggregate", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.aggregate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse.Se
+// rverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.aggregate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsDbFrameworkComplianceReportsFetchCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Fetch: Fetches the framework compliance report for a given scope.
+//
+// - name: The name of the framework compliance report to retrieve.
+func (r *OrganizationsLocationsDbFrameworkComplianceReportsService) Fetch(name string) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
+	c := &OrganizationsLocationsDbFrameworkComplianceReportsFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": The end time of the report.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) EndTime(endTime string) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) Filter(filter string) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) IfNoneMatch(entityTag string) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) Context(ctx context.Context) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.fetch", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.fetch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.fetch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the control compliance summary for a given scope.
+//
+//   - parent: The parent scope for the framework overview page. Format:
+//     organizations/{organization}/locations/{location}/dbFrameworkComplianceRepo
+//     rts/{db_framework_compliance_report}
+//     folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fram
+//     ework_compliance_report}
+//     projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_fr
+//     amework_compliance_report}.
+func (r *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService) List(parent string) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c := &OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Filter(filter string) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// default page size is 50. The maximum value is 1000.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageSize(pageSize int64) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageToken(pageToken string) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Context(ctx context.Context) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbControlComplianceSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsDbFrameworkComplianceSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the framework compliance summary for a given scope.
+//
+//   - parent: The parent scope for the framework compliance summary. Format:
+//     organizations/{organization}/locations/{location}
+//     folders/{folder}/locations/{location}
+//     projects/{project}/locations/{location}.
+func (r *OrganizationsLocationsDbFrameworkComplianceSummariesService) List(parent string) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
+	c := &OrganizationsLocationsDbFrameworkComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) Filter(filter string) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// default page size is 50. The maximum value is 1000.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) PageSize(pageSize int64) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return. Pass the next_page_token
+// value from a previous result.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) PageToken(pageToken string) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the level of detail to
+// return in the response.
+//
+// Possible values:
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_UNSPECIFIED" - The default / unset
+//
+// value. The API will default to the BASIC view.
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_BASIC" - Includes basic compliance
+//
+// metadata, but omits trend data.
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_FULL" - Includes all information,
+//
+// including finding_count and controls_passing_trend. Trend data is provided
+// for the last 30 days.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) View(view string) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) Context(ctx context.Context) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbFrameworkComplianceSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFrameworkComplianceSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.organizations.locations.dbFrameworkComplianceSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.organizations.locations.dbFrameworkComplianceSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -5213,6 +7199,600 @@ func (c *ProjectsLocationsDbFindingSummariesListCall) Do(opts ...googleapi.CallO
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDbFindingSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDbFrameworkComplianceReportsAggregateCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Aggregate: Gets the aggregated compliance report over time for a given
+// scope.
+//
+//   - name: The name of the aggregated compliance report over time to retrieve.
+//     Format:
+//     `organizations/{organization_id}/locations/{location}/dbFrameworkCompliance
+//     Reports/{db_framework_compliance_report}`.
+func (r *ProjectsLocationsDbFrameworkComplianceReportsService) Aggregate(name string) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c := &ProjectsLocationsDbFrameworkComplianceReportsAggregateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) Filter(filter string) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// IntervalEndTime sets the optional parameter "interval.endTime": Exclusive
+// end of the interval. If specified, a Timestamp matching this interval will
+// have to be before the end.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) IntervalEndTime(intervalEndTime string) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("interval.endTime", intervalEndTime)
+	return c
+}
+
+// IntervalStartTime sets the optional parameter "interval.startTime":
+// Inclusive start of the interval. If specified, a Timestamp matching this
+// interval will have to be the same or after the start.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) IntervalStartTime(intervalStartTime string) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("interval.startTime", intervalStartTime)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) Context(ctx context.Context) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:aggregate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFrameworkComplianceReports.aggregate", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.projects.locations.dbFrameworkComplianceReports.aggregate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse.Se
+// rverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFrameworkComplianceReports.aggregate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDbFrameworkComplianceReportsFetchCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Fetch: Fetches the framework compliance report for a given scope.
+//
+// - name: The name of the framework compliance report to retrieve.
+func (r *ProjectsLocationsDbFrameworkComplianceReportsService) Fetch(name string) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
+	c := &ProjectsLocationsDbFrameworkComplianceReportsFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// EndTime sets the optional parameter "endTime": The end time of the report.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) EndTime(endTime string) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("endTime", endTime)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) Filter(filter string) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) Context(ctx context.Context) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFrameworkComplianceReports.fetch", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.projects.locations.dbFrameworkComplianceReports.fetch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFrameworkComplianceReports.fetch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the control compliance summary for a given scope.
+//
+//   - parent: The parent scope for the framework overview page. Format:
+//     organizations/{organization}/locations/{location}/dbFrameworkComplianceRepo
+//     rts/{db_framework_compliance_report}
+//     folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fram
+//     ework_compliance_report}
+//     projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_fr
+//     amework_compliance_report}.
+func (r *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService) List(parent string) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c := &ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Filter(filter string) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// default page size is 50. The maximum value is 1000.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageSize(pageSize int64) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageToken(pageToken string) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Context(ctx context.Context) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbControlComplianceSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.projects.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFrameworkComplianceReports.dbControlComplianceSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDbFrameworkComplianceSummariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the framework compliance summary for a given scope.
+//
+//   - parent: The parent scope for the framework compliance summary. Format:
+//     organizations/{organization}/locations/{location}
+//     folders/{folder}/locations/{location}
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDbFrameworkComplianceSummariesService) List(parent string) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
+	c := &ProjectsLocationsDbFrameworkComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filtering results.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) Filter(filter string) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The requested page size.
+// The server might return fewer items than requested. If unspecified, the
+// default page size is 50. The maximum value is 1000.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) PageSize(pageSize int64) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token that identifies
+// the page of results that the server should return. Pass the next_page_token
+// value from a previous result.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) PageToken(pageToken string) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the level of detail to
+// return in the response.
+//
+// Possible values:
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_UNSPECIFIED" - The default / unset
+//
+// value. The API will default to the BASIC view.
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_BASIC" - Includes basic compliance
+//
+// metadata, but omits trend data.
+//
+//	"FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_FULL" - Includes all information,
+//
+// including finding_count and controls_passing_trend. Trend data is provided
+// for the last 30 days.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) View(view string) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) Context(ctx context.Context) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/dbFrameworkComplianceSummaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFrameworkComplianceSummaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "assuredworkloads.projects.locations.dbFrameworkComplianceSummaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "assuredworkloads.projects.locations.dbFrameworkComplianceSummaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) Pages(ctx context.Context, f func(*GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

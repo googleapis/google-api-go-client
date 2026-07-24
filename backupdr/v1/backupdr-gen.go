@@ -1713,10 +1713,9 @@ func (s BackupRule) MarshalJSON() ([]byte, error) {
 
 // BackupVault: Message describing a BackupVault object.
 type BackupVault struct {
-	// AccessRestriction: Optional. Note: This field is added for future use case
-	// and will not be supported in the current release. Access restriction for the
-	// backup vault. Default value is WITHIN_ORGANIZATION if not provided during
-	// creation.
+	// AccessRestriction: Optional. Restricts access to certain sources and
+	// destinations for data being sent into, or restored from, the backup vault.
+	// Defaults to WITHIN_ORGANIZATION if not provided during creation.
 	//
 	// Possible values:
 	//   "ACCESS_RESTRICTION_UNSPECIFIED" - Access restriction not set. If user

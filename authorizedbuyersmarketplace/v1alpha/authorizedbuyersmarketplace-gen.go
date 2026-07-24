@@ -855,6 +855,16 @@ type CuratedPackage struct {
 	// CreateTime: Output only. The timestamp when the curated package was created.
 	// Can be used to filter the response of the curatedPackages.list method.
 	CreateTime string `json:"createTime,omitempty"`
+	// CurationFeeVisibility: Optional. Immutable. The visibility of the combined
+	// curation package fee and data segment fees (the total curation fee).
+	//
+	// Possible values:
+	//   "CURATION_FEE_VISIBILITY_UNSPECIFIED" - The total curation fee visibility
+	// is unspecified.
+	//   "DISCLOSED" - The total curation fee is visible to all buyers. This is the
+	// default value if not set.
+	//   "NON_DISCLOSED" - The total curation fee is not visible to all buyers.
+	CurationFeeVisibility string `json:"curationFeeVisibility,omitempty"`
 	// Description: Optional. A description of the curated package, provided by the
 	// curator.
 	Description string `json:"description,omitempty"`

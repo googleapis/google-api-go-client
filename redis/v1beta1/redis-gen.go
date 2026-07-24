@@ -209,10 +209,22 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsAclPoliciesService(s *Service) *ProjectsLocationsAclPoliciesService {
 	rs := &ProjectsLocationsAclPoliciesService{s: s}
+	rs.Revisions = NewProjectsLocationsAclPoliciesRevisionsService(s)
 	return rs
 }
 
 type ProjectsLocationsAclPoliciesService struct {
+	s *Service
+
+	Revisions *ProjectsLocationsAclPoliciesRevisionsService
+}
+
+func NewProjectsLocationsAclPoliciesRevisionsService(s *Service) *ProjectsLocationsAclPoliciesRevisionsService {
+	rs := &ProjectsLocationsAclPoliciesRevisionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAclPoliciesRevisionsService struct {
 	s *Service
 }
 
@@ -321,6 +333,11 @@ func (s AOFConfig) MarshalJSON() ([]byte, error) {
 
 // AclPolicy: The ACL policy resource.
 type AclPolicy struct {
+	// ClusterAclPolicyAttachments: Output only. The ACL policy attachment status
+	// for each attached cluster.
+	ClusterAclPolicyAttachments []*ClusterAclPolicyAttachment `json:"clusterAclPolicyAttachments,omitempty"`
+	// CreateTime: Output only. The timestamp that the ACL policy was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// Etag: Output only. Etag for the ACL policy.
 	Etag string `json:"etag,omitempty"`
 	// Name: Identifier. Full resource path of the ACL policy.
@@ -336,26 +353,139 @@ type AclPolicy struct {
 	//   "UPDATING" - ACL policy is being updated.
 	//   "DELETING" - ACL policy is being deleted.
 	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp that the ACL policy was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 	// Version: Output only. Deprecated: Used in drift resolution.
 	Version int64 `json:"version,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "ClusterAclPolicyAttachments") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Etag") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "ClusterAclPolicyAttachments") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s AclPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod AclPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AclPolicyInfo: Details of the applied ACL policy.
+type AclPolicyInfo struct {
+	// AclPolicyRevisionStatuses: Output only. A list of status for various
+	// revisions of this ACL policy on the cluster.
+	AclPolicyRevisionStatuses []*AclPolicyRevisionStatus `json:"aclPolicyRevisionStatuses,omitempty"`
+	// AppliedAclPolicy: Output only. The resource name of the applied ACL policy.
+	// Format: "projects/{project}/locations/{location}/aclPolicies/{acl_policy}"
+	AppliedAclPolicy string `json:"appliedAclPolicy,omitempty"`
+	// AppliedAclPolicyRevision: Output only. The resource name of the applied ACL
+	// policy revision. Format:
+	// "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{
+	// revision}"
+	AppliedAclPolicyRevision string `json:"appliedAclPolicyRevision,omitempty"`
+	// AppliedAclPolicyRevisionNumber: Output only. The revision number of the
+	// applied ACL policy revision.
+	AppliedAclPolicyRevisionNumber int64 `json:"appliedAclPolicyRevisionNumber,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "AclPolicyRevisionStatuses")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AclPolicyRevisionStatuses") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AclPolicyInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AclPolicyInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AclPolicyRevision: The ACL policy revision resource.
+type AclPolicyRevision struct {
+	// AttachedClusters: Output only. A list of clusters that are attached to this
+	// ACL policy revision.
+	AttachedClusters []string `json:"attachedClusters,omitempty"`
+	// CreateTime: Output only. The timestamp that the revision was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Identifier. The name of the ACL policy revision. Format:
+	// "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{
+	// revision}"
+	Name string `json:"name,omitempty"`
+	// RevisionNumber: Output only. The revision number of the ACL policy revision.
+	RevisionNumber int64 `json:"revisionNumber,omitempty,string"`
+	// Snapshot: Output only. The snapshot of the ACL policy at the time of
+	// revision creation.
+	Snapshot *AclPolicy `json:"snapshot,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AttachedClusters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttachedClusters") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AclPolicyRevision) MarshalJSON() ([]byte, error) {
+	type NoMethod AclPolicyRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AclPolicyRevisionStatus: AclPolicyRevisionStatus stores the per-revision
+// status for an attached cluster.
+type AclPolicyRevisionStatus struct {
+	// AclPolicyRevision: Output only. The resource name of the ACL policy revision
+	// this status refers to. Format:
+	// "projects/{project}/locations/{location}/aclPolicies/{acl_policy}/revisions/{
+	// revision}"
+	AclPolicyRevision string `json:"aclPolicyRevision,omitempty"`
+	// AclPolicyRevisionNumber: Output only. The revision number of the ACL policy
+	// revision this status refers to.
+	AclPolicyRevisionNumber int64 `json:"aclPolicyRevisionNumber,omitempty,string"`
+	// ErrorMessage: Output only. Human-readable error message providing more
+	// details for FAILED states.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// State: Output only. AclPolicyRevision state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not set.
+	//   "APPLYING" - The cluster is attempting to apply this revision.
+	//   "APPLIED" - The cluster has successfully applied this revision.
+	//   "FAILED" - The cluster failed to apply this revision.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AclPolicyRevision") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AclPolicyRevision") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AclPolicyRevisionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AclPolicyRevisionStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -906,6 +1036,8 @@ type Cluster struct {
 	// AclPolicyInSync: Optional. Output only. Deprecated: Indicates whether the
 	// ACL rules applied to the cluster are in sync.
 	AclPolicyInSync bool `json:"aclPolicyInSync,omitempty"`
+	// AclPolicyInfo: Output only. Details of the applied ACL policy.
+	AclPolicyInfo *AclPolicyInfo `json:"aclPolicyInfo,omitempty"`
 	// AllowFewerZonesDeployment: Optional. Immutable. Deprecated, do not use.
 	AllowFewerZonesDeployment bool `json:"allowFewerZonesDeployment,omitempty"`
 	// AsyncClusterEndpointsDeletionEnabled: Optional. If true, cluster endpoints
@@ -1106,6 +1238,34 @@ func (s *Cluster) UnmarshalJSON(data []byte) error {
 	}
 	s.PreciseSizeGb = float64(s1.PreciseSizeGb)
 	return nil
+}
+
+// ClusterAclPolicyAttachment: ClusterAclPolicyAttachment stores the ACL policy
+// status for an attached cluster for the revisions successfully applied, under
+// application or failed.
+type ClusterAclPolicyAttachment struct {
+	// AclPolicyRevisionStatuses: Output only. A list of status for various
+	// revisions of this ACL policy on the cluster.
+	AclPolicyRevisionStatuses []*AclPolicyRevisionStatus `json:"aclPolicyRevisionStatuses,omitempty"`
+	// Cluster: Output only. The resource name of the attached Cluster. Format:
+	// "projects/{project}/locations/{location}/clusters/{cluster}"
+	Cluster string `json:"cluster,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AclPolicyRevisionStatuses")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AclPolicyRevisionStatuses") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClusterAclPolicyAttachment) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterAclPolicyAttachment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ClusterEndpoint: ClusterEndpoint consists of PSC connections that are
@@ -3280,6 +3440,36 @@ type ListAclPoliciesResponse struct {
 
 func (s ListAclPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAclPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAclPolicyRevisionsResponse: Response for `ListAclPolicyRevisions`.
+type ListAclPolicyRevisionsResponse struct {
+	// AclPolicyRevisions: A list of ACL policy revisions.
+	AclPolicyRevisions []*AclPolicyRevision `json:"aclPolicyRevisions,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AclPolicyRevisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AclPolicyRevisions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAclPolicyRevisionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAclPolicyRevisionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6232,6 +6422,264 @@ func (c *ProjectsLocationsAclPoliciesPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsAclPoliciesRevisionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a specific ACL policy revision.
+//
+//   - name: Redis ACL policy revision resource name using the form:
+//     `projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}/
+//     revisions/{revision_id}` where `location_id` refers to a GCP region.
+func (r *ProjectsLocationsAclPoliciesRevisionsService) Get(name string) *ProjectsLocationsAclPoliciesRevisionsGetCall {
+	c := &ProjectsLocationsAclPoliciesRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAclPoliciesRevisionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAclPoliciesRevisionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAclPoliciesRevisionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAclPoliciesRevisionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAclPoliciesRevisionsGetCall) Context(ctx context.Context) *ProjectsLocationsAclPoliciesRevisionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAclPoliciesRevisionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAclPoliciesRevisionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.revisions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.aclPolicies.revisions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AclPolicyRevision.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAclPoliciesRevisionsGetCall) Do(opts ...googleapi.CallOption) (*AclPolicyRevision, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AclPolicyRevision{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.revisions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAclPoliciesRevisionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all ACL policy revisions in a given ACL policy.
+//
+//   - parent: The name of the ACL policy to list revisions for. Format:
+//     "projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}".
+func (r *ProjectsLocationsAclPoliciesRevisionsService) List(parent string) *ProjectsLocationsAclPoliciesRevisionsListCall {
+	c := &ProjectsLocationsAclPoliciesRevisionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return.
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) PageSize(pageSize int64) *ProjectsLocationsAclPoliciesRevisionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The `next_page_token`
+// value returned from a previous `ListAclPolicyRevisions` request, if any.
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) PageToken(pageToken string) *ProjectsLocationsAclPoliciesRevisionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAclPoliciesRevisionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAclPoliciesRevisionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) Context(ctx context.Context) *ProjectsLocationsAclPoliciesRevisionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/revisions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.revisions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "redis.projects.locations.aclPolicies.revisions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAclPolicyRevisionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) Do(opts ...googleapi.CallOption) (*ListAclPolicyRevisionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAclPolicyRevisionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "redis.projects.locations.aclPolicies.revisions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAclPoliciesRevisionsListCall) Pages(ctx context.Context, f func(*ListAclPolicyRevisionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsBackupCollectionsGetCall struct {

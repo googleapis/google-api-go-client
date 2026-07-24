@@ -621,6 +621,8 @@ type ConnectionProfile struct {
 	StaticServiceIpConnectivity *StaticServiceIpConnectivity `json:"staticServiceIpConnectivity,omitempty"`
 	// UpdateTime: Output only. The update time of the resource.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// WorkdayProfile: Optional. Profile for connecting to a Workday source.
+	WorkdayProfile *WorkdayProfile `json:"workdayProfile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1017,7 +1019,7 @@ type ErrorInfo struct {
 	// "100"}`, if the client exceeds the number of instances that can be created
 	// in a single (batch) request.
 	Metadata map[string]string `json:"metadata,omitempty"`
-	// Reason: The reason of the error. This is a constant value that identifies
+	// Reason: The reason for the error. This is a constant value that identifies
 	// the proximate cause of the error. Error reasons are unique within a
 	// particular domain of errors. This should be at most 63 characters and match
 	// a regular expression of `A-Z+[A-Z0-9]`, which represents UPPER_SNAKE_CASE.
@@ -1115,7 +1117,7 @@ type FieldViolation struct {
 	// LocalizedMessage: Provides a localized error message for field-level errors
 	// that is safe to return to the API consumer.
 	LocalizedMessage *LocalizedMessage `json:"localizedMessage,omitempty"`
-	// Reason: The reason of the field-level error. This is a constant value that
+	// Reason: The reason for the field-level error. This is a constant value that
 	// identifies the proximate cause of the field-level error. It should uniquely
 	// identify the type of the FieldViolation within the scope of the
 	// google.rpc.ErrorInfo.domain. This should be at most 63 characters and match
@@ -2357,6 +2359,30 @@ type OauthClientCredentials struct {
 
 func (s OauthClientCredentials) MarshalJSON() ([]byte, error) {
 	type NoMethod OauthClientCredentials
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OauthRefreshTokenCredentials: OAuth Refresh Token Credentials.
+type OauthRefreshTokenCredentials struct {
+	// OauthClientCredentials: Required. Specifies the OAuth Client Credentials.
+	OauthClientCredentials *OauthClientCredentials `json:"oauthClientCredentials,omitempty"`
+	// RefreshToken: Required. Specifies the OAuth Refresh Token.
+	RefreshToken *Secret `json:"refreshToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OauthClientCredentials") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OauthClientCredentials") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OauthRefreshTokenCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod OauthRefreshTokenCredentials
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3910,6 +3936,8 @@ type SourceConfig struct {
 	SpannerSourceConfig *SpannerSourceConfig `json:"spannerSourceConfig,omitempty"`
 	// SqlServerSourceConfig: SQLServer data source configuration.
 	SqlServerSourceConfig *SqlServerSourceConfig `json:"sqlServerSourceConfig,omitempty"`
+	// WorkdaySourceConfig: Optional. Workday data source configuration.
+	WorkdaySourceConfig *WorkdaySourceConfig `json:"workdaySourceConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataverseSourceConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5046,6 +5074,63 @@ type VpcPeeringConfig struct {
 
 func (s VpcPeeringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VpcPeeringConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkdayProfile: Profile for connecting to a Workday source.
+type WorkdayProfile struct {
+	// Host: Required. Host for the Workday connection. Must be a valid hostname
+	// (e.g., `wd3-impl-services1.workday.com`).
+	Host string `json:"host,omitempty"`
+	// OauthRefreshTokenCredentials: Required. Credentials for authenticating with
+	// the Workday API. OAuth Refresh Token credentials for authenticating with the
+	// Workday API.
+	OauthRefreshTokenCredentials *OauthRefreshTokenCredentials `json:"oauthRefreshTokenCredentials,omitempty"`
+	// Tenant: Required. Tenant for the Workday connection (e.g., `google12`).
+	Tenant string `json:"tenant,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkdayProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkdayProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkdaySourceConfig: Configuration for syncing data from a Workday source.
+type WorkdaySourceConfig struct {
+	// ExcludeObjects: Optional. The objects to exclude from the stream.
+	ExcludeObjects *SourceCatalog `json:"excludeObjects,omitempty"`
+	// IncludeObjects: Optional. The objects to retrieve from the source.
+	IncludeObjects *SourceCatalog `json:"includeObjects,omitempty"`
+	// PollingInterval: Required. Incremental sync polling interval for all
+	// objects. If not set, a default value of `5 minutes` is used. The duration
+	// must be from `5 minutes` to `24 hours`, inclusive.
+	PollingInterval string `json:"pollingInterval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkdaySourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkdaySourceConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

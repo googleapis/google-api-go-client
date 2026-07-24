@@ -262,7 +262,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20260722",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -310,11 +310,13 @@
           "description": "The event that the merchant wants to be notified about.",
           "enum": [
             "NOTIFICATION_EVENT_TYPE_UNSPECIFIED",
-            "PRODUCT_STATUS_CHANGE"
+            "PRODUCT_STATUS_CHANGE",
+            "ACCOUNT_SERVICE_CHANGE"
           ],
           "enumDescriptions": [
             "Notifications event type is unspecified.",
-            "Notification of product status changes, for example when product becomes disapproved."
+            "Notification of product status changes, for example when product becomes disapproved.",
+            "Notification of account service changes."
           ],
           "type": "string"
         },

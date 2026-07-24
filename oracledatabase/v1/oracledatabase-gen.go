@@ -1708,7 +1708,7 @@ type CloudExadataInfrastructureProperties struct {
 	CustomerContacts []*CustomerContact `json:"customerContacts,omitempty"`
 	// DataStorageSizeTb: Output only. Size, in terabytes, of the DATA disk group.
 	DataStorageSizeTb float64 `json:"dataStorageSizeTb,omitempty"`
-	// DatabaseServerType: Output only. The database server type of the Exadata
+	// DatabaseServerType: Optional. The database server type of the Exadata
 	// Infrastructure.
 	DatabaseServerType string `json:"databaseServerType,omitempty"`
 	// DbNodeStorageSizeGb: Output only. The local node storage allocated in GBs.
@@ -1771,7 +1771,7 @@ type CloudExadataInfrastructureProperties struct {
 	// StorageCount: Optional. The number of Cloud Exadata storage servers for the
 	// Exadata Infrastructure.
 	StorageCount int64 `json:"storageCount,omitempty"`
-	// StorageServerType: Output only. The storage server type of the Exadata
+	// StorageServerType: Optional. The storage server type of the Exadata
 	// Infrastructure.
 	StorageServerType string `json:"storageServerType,omitempty"`
 	// StorageServerVersion: Output only. The software version of the storage
@@ -2903,12 +2903,14 @@ type DbSystemProperties struct {
 	// Possible values:
 	//   "COMPUTE_MODEL_UNSPECIFIED" - The compute model is unspecified.
 	//   "ECPU" - The compute model is virtual.
-	//   "OCPU" - The compute model is physical.
+	//   "OCPU" - Deprecated: This option is not supported. Please use ECPU
+	// instead. The compute model is physical.
 	ComputeModel string `json:"computeModel,omitempty"`
 	// DataCollectionOptions: Optional. Data collection options for diagnostics.
 	DataCollectionOptions *DataCollectionOptionsDbSystem `json:"dataCollectionOptions,omitempty"`
 	// DataStorageSizeGb: Optional. The data storage size in GB that is currently
-	// available to DbSystems.
+	// available to DbSystems. The value is same as initial_data_storage_size_gb.
+	// This can be modified from OCI console.
 	DataStorageSizeGb int64 `json:"dataStorageSizeGb,omitempty"`
 	// DatabaseEdition: Required. The database edition of the DbSystem.
 	//
@@ -2955,15 +2957,19 @@ type DbSystemProperties struct {
 	//   "NEEDS_ATTENTION" - Indicates that the resource needs attention.
 	//   "UPGRADING" - Indicates that the resource is upgrading.
 	LifecycleState string `json:"lifecycleState,omitempty"`
-	// MemorySizeGb: Optional. The memory size in GB.
+	// MemorySizeGb: Optional. The memory size in GB. This value can not be set and
+	// is automatically calculated based on the number of ECPUs allocated to the
+	// DbSystem.
 	MemorySizeGb int64 `json:"memorySizeGb,omitempty"`
-	// NodeCount: Optional. The number of nodes in the DbSystem.
+	// NodeCount: Optional. The number of nodes to launch for a virtual machine
+	// DbSystem. By default this will be set to 1.
 	NodeCount int64 `json:"nodeCount,omitempty"`
 	// Ocid: Output only. OCID of the DbSystem.
 	Ocid string `json:"ocid,omitempty"`
 	// PrivateIp: Optional. The private IP address of the DbSystem.
 	PrivateIp string `json:"privateIp,omitempty"`
-	// RecoStorageSizeGb: Optional. The reco/redo storage size in GB.
+	// RecoStorageSizeGb: Optional. The reco/redo storage size in GB. The value for
+	// recovery storage size is based on the available data storage size.
 	RecoStorageSizeGb int64 `json:"recoStorageSizeGb,omitempty"`
 	// Shape: Required. Shape of DB System.
 	Shape string `json:"shape,omitempty"`
@@ -2992,6 +2998,8 @@ func (s DbSystemProperties) MarshalJSON() ([]byte, error) {
 // DbSystemShape: Details of the Database System Shapes resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/DbSystemShapeSummary/
 type DbSystemShape struct {
+	// AvailableCoreCount: Optional. Available core count.
+	AvailableCoreCount int64 `json:"availableCoreCount,omitempty"`
 	// AvailableCoreCountPerNode: Optional. Number of cores per node.
 	AvailableCoreCountPerNode int64 `json:"availableCoreCountPerNode,omitempty"`
 	// AvailableDataStorageTb: Optional. Storage per storage server in terabytes.
@@ -2999,6 +3007,8 @@ type DbSystemShape struct {
 	// AvailableMemoryPerNodeGb: Optional. Memory per database server node in
 	// gigabytes.
 	AvailableMemoryPerNodeGb int64 `json:"availableMemoryPerNodeGb,omitempty"`
+	// CoreCountIncrement: Optional. Core count increment.
+	CoreCountIncrement int64 `json:"coreCountIncrement,omitempty"`
 	// MaxNodeCount: Optional. Maximum number of database servers.
 	MaxNodeCount int64 `json:"maxNodeCount,omitempty"`
 	// MaxStorageCount: Optional. Maximum number of storage servers.
@@ -3014,21 +3024,23 @@ type DbSystemShape struct {
 	MinNodeCount int64 `json:"minNodeCount,omitempty"`
 	// MinStorageCount: Optional. Minimum number of storage servers.
 	MinStorageCount int64 `json:"minStorageCount,omitempty"`
+	// MinimumCoreCount: Optional. Minimum core count per node.
+	MinimumCoreCount int64 `json:"minimumCoreCount,omitempty"`
 	// Name: Identifier. The name of the Database System Shape resource with the
 	// format:
 	// projects/{project}/locations/{region}/dbSystemShapes/{db_system_shape}
 	Name string `json:"name,omitempty"`
 	// Shape: Optional. shape
 	Shape string `json:"shape,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AvailableCoreCountPerNode")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AvailableCoreCount") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AvailableCoreCountPerNode") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AvailableCoreCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3289,6 +3301,9 @@ type ExadbVmCluster struct {
 	// ExadbVmCluster is hosted. Example: us-east4-b-r2. During creation, the
 	// system will pick the zone assigned to the ExascaleDbStorageVault.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
+	// IdentityConnector: Output only. The identity connector details which will
+	// allow OCI to securely access the resources in the customer project.
+	IdentityConnector *IdentityConnector `json:"identityConnector,omitempty"`
 	// Labels: Optional. The labels or tags associated with the ExadbVmCluster.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The name of the ExadbVmCluster resource in the following
@@ -12977,8 +12992,10 @@ func (r *ProjectsLocationsDbSystemShapesService) List(parent string) *ProjectsLo
 }
 
 // Filter sets the optional parameter "filter": An expression for filtering the
-// results of the request. Only the gcp_oracle_zone_id field is supported in
-// this format: `gcp_oracle_zone_id="{gcp_oracle_zone_id}".
+// results of the request. The `gcp_oracle_zone_id`, `shape_family`, and
+// `database_edition` fields are supported in the following format:
+// `gcp_oracle_zone_id="{gcp_oracle_zone_id}" AND shape_family="{shape_family}"
+// AND database_edition="{database_edition}".
 func (c *ProjectsLocationsDbSystemShapesListCall) Filter(filter string) *ProjectsLocationsDbSystemShapesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -15360,8 +15377,9 @@ func (r *ProjectsLocationsGiVersionsService) List(parent string) *ProjectsLocati
 }
 
 // Filter sets the optional parameter "filter": An expression for filtering the
-// results of the request. Only the shape, gcp_oracle_zone and gi_version
-// fields are supported in this format: `shape="{shape}".
+// results of the request. Only the `shape` and `gcp_oracle_zone_id` fields are
+// supported in the following format: `shape="{shape}" AND
+// gcp_oracle_zone_id="{gcp_oracle_zone_id}".
 func (c *ProjectsLocationsGiVersionsListCall) Filter(filter string) *ProjectsLocationsGiVersionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -15517,9 +15535,9 @@ func (r *ProjectsLocationsGiVersionsMinorVersionsService) List(parent string) *P
 }
 
 // Filter sets the optional parameter "filter": An expression for filtering the
-// results of the request. Only shapeFamily and gcp_oracle_zone_id are
-// supported in this format: `shape_family="{shapeFamily}" AND
-// gcp_oracle_zone_id="{gcp_oracle_zone_id}".
+// results of the request. Only the `shape_family` and `gcp_oracle_zone_id`
+// fields are supported in the following format: `shape_family="{shape_family}"
+// AND gcp_oracle_zone_id="{gcp_oracle_zone_id}".
 func (c *ProjectsLocationsGiVersionsMinorVersionsListCall) Filter(filter string) *ProjectsLocationsGiVersionsMinorVersionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

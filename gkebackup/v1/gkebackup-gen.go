@@ -1078,6 +1078,8 @@ type BackupRuleDetail struct {
 	RetentionDays int64 `json:"retentionDays,omitempty"`
 	// RuleName: Backup Rule Name.
 	RuleName string `json:"ruleName,omitempty"`
+	// StorageTier: The storage tier of the BackupRule.
+	StorageTier string `json:"storageTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupWindow") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

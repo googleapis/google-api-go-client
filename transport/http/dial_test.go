@@ -28,7 +28,7 @@ func TestNewClient(t *testing.T) {
 	if endpoint != "" {
 		t.Errorf("got: %s, want: ''", endpoint)
 	}
-	if got, want := fmt.Sprintf("%T", client.Transport), "*httptransport.authTransport"; got != want {
+	if got, want := fmt.Sprintf("%T", client.Transport), "*oauth2.Transport"; got != want {
 		t.Fatalf("got %s, want: %s", got, want)
 	}
 }

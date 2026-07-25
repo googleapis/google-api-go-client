@@ -1437,10 +1437,11 @@ type ConfigManagementSpec struct {
 	// configmanagement feature is no longer recommended. Use
 	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
-	// Management: Optional. Deprecated: In Preview, automatic Feature management
-	// is unavailable from version 1.21.0 onwards, and Config Sync only supports
-	// manual upgrades. If set to manual upgrades, clear this field instead, which
-	// is behaviorally equivalent.
+	// Management: Optional. Deprecated: Automatic Feature management is in Preview
+	// and is unavailable in version 1.21.0 and later, after which Config Sync only
+	// supports manual upgrades. If set to manual upgrades, clear this field
+	// instead, which is behaviorally equivalent but helps prevent compatibility
+	// issues with newer fields.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
@@ -3309,6 +3310,8 @@ type ServiceMeshCondition struct {
 	// a fleet. Rollback is no longer allowed.
 	//   "MODERNIZATION_ROLLING_BACK_FLEET" - Rollback is in progress for
 	// modernization of all clusters in a fleet.
+	//   "MODERNIZATION_MODERNIZED" - Modernization of all the fleet's clusters is
+	// complete. Soaking before finalizing the modernization.
 	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
 	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
 	// modernization.

@@ -1977,10 +1977,11 @@ type ConfigManagementMembershipSpec struct {
 	// configmanagement feature is no longer recommended. Use
 	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
-	// Management: Optional. Deprecated: In Preview, automatic Feature management
-	// is unavailable from version 1.21.0 onwards, and Config Sync only supports
-	// manual upgrades. If set to manual upgrades, clear this field instead, which
-	// is behaviorally equivalent.
+	// Management: Optional. Deprecated: Automatic Feature management is in Preview
+	// and is unavailable in version 1.21.0 and later, after which Config Sync only
+	// supports manual upgrades. If set to manual upgrades, clear this field
+	// instead, which is behaviorally equivalent but helps prevent compatibility
+	// issues with newer fields.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
@@ -6402,6 +6403,8 @@ type ServiceMeshCondition struct {
 	// a fleet. Rollback is no longer allowed.
 	//   "MODERNIZATION_ROLLING_BACK_FLEET" - Rollback is in progress for
 	// modernization of all clusters in a fleet.
+	//   "MODERNIZATION_MODERNIZED" - Modernization of all the fleet's clusters is
+	// complete. Soaking before finalizing the modernization.
 	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
 	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
 	// modernization.
@@ -6545,6 +6548,22 @@ type ServiceMeshFeatureSpec struct {
 	//   "VALIDATION_DISABLED" - Google should not report modernization eligibility
 	// gaps.
 	ModernizationCompatibility string `json:"modernizationCompatibility,omitempty"`
+	// ModernizationStrategy: Optional. Declares your intended modernization
+	// strategy for the fleet.
+	//
+	// Possible values:
+	//   "MODERNIZATION_STRATEGY_UNSPECIFIED" - Default unspecified.
+	//   "AUTOMATIC" - The infrastructure is automatically modernized. Setting this
+	// strategy initiates the modernization process. The system schedules the
+	// modernization subject to configured maintenance windows and maintenance
+	// exclusions.
+	//   "DEFERRED" - The infrastructure is pinned to the legacy implementation.
+	// This fleet will not be selected for Google-driven modernization. If the
+	// resource is actively modernizing, or if the modernization has completed but
+	// is not yet finalized (e.g., during the soak time), setting this strategy
+	// triggers a rollback to the legacy state. If the modernization process has
+	// already been marked as finalized, setting this strategy has no effect.
+	ModernizationStrategy string `json:"modernizationStrategy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ModernizationCompatibility")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

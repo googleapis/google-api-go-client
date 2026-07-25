@@ -1223,6 +1223,13 @@ type Reservation struct {
 	// projects/{project}/locations/{location}/reservationGroups/{reservation_group}
 	//  or just {reservation_group}
 	ReservationGroup string `json:"reservationGroup,omitempty"`
+	// ReservationGroupPath: Output only. The reservation group path of the
+	// reservation from root to leaf. The order of elements matters: the first
+	// element is the top level group and the last element is the direct parent
+	// reservation group. For example, if a reservation is under group-1 -> group-2
+	// -> group-3, then the reservation group path is ["group-1", "group-2",
+	// "group-3"].
+	ReservationGroupPath []string `json:"reservationGroupPath,omitempty"`
 	// ScalingMode: Optional. The scaling mode for the reservation. If the field is
 	// present but max_slots is not present, requests will be rejected with error
 	// code `google.rpc.Code.INVALID_ARGUMENT`.

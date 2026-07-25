@@ -2623,7 +2623,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20260717",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "GoogleCloudRunV2BinaryAuthorization": {
@@ -4680,7 +4680,7 @@
           "type": "number"
         },
         "cpuUtilization": {
-          "description": "Optional. Determines a threshold for CPU utilization before scaling begins. Accepted values are between `0.1` and `0.95` (inclusive) or `0.0` to disable CPU utilization as threshold for scaling. CPU and concurrency scaling cannot both be disabled.",
+          "description": "Optional. Determines a threshold for CPU utilization before scaling begins. Accepted values are between `0.1` and `0.90` (inclusive) or `0.0` to disable CPU utilization as threshold for scaling. CPU and concurrency scaling cannot both be disabled.",
           "format": "float",
           "type": "number"
         },

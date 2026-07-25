@@ -2106,7 +2106,7 @@ type ErrorInfo struct {
 	// "100"}`, if the client exceeds the number of instances that can be created
 	// in a single (batch) request.
 	Metadata map[string]string `json:"metadata,omitempty"`
-	// Reason: The reason of the error. This is a constant value that identifies
+	// Reason: The reason for the error. This is a constant value that identifies
 	// the proximate cause of the error. Error reasons are unique within a
 	// particular domain of errors. This should be at most 63 characters and match
 	// a regular expression of `A-Z+[A-Z0-9]`, which represents UPPER_SNAKE_CASE.
@@ -2228,7 +2228,7 @@ type FieldViolation struct {
 	// LocalizedMessage: Provides a localized error message for field-level errors
 	// that is safe to return to the API consumer.
 	LocalizedMessage *LocalizedMessage `json:"localizedMessage,omitempty"`
-	// Reason: The reason of the field-level error. This is a constant value that
+	// Reason: The reason for the field-level error. This is a constant value that
 	// identifies the proximate cause of the field-level error. It should uniquely
 	// identify the type of the FieldViolation within the scope of the
 	// google.rpc.ErrorInfo.domain. This should be at most 63 characters and match
@@ -3131,7 +3131,7 @@ type MappingRule struct {
 	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
 	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
 	RuleScope string `json:"ruleScope,omitempty"`
-	// SetTablePrimaryKey: Optional. Rule to specify the primary key for a table
+	// SetTablePrimaryKey: Optional. Deprecated: This rule is no longer supported.
 	SetTablePrimaryKey *SetTablePrimaryKey `json:"setTablePrimaryKey,omitempty"`
 	// SingleColumnChange: Optional. Rule to specify how a single column is
 	// converted.
@@ -5077,10 +5077,10 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SetTablePrimaryKey: Options to configure rule type SetTablePrimaryKey. The
-// rule is used to specify the columns and name to configure/alter the primary
-// key of a table. The rule filter field can refer to one entity. The rule
-// scope can be one of: Table.
+// SetTablePrimaryKey: Deprecated: Options to configure rule type
+// SetTablePrimaryKey. The rule is used to specify the columns and name to
+// configure/alter the primary key of a table. The rule filter field can refer
+// to one entity. The rule scope can be one of: Table.
 type SetTablePrimaryKey struct {
 	// PrimaryKey: Optional. Name for the primary key
 	PrimaryKey string `json:"primaryKey,omitempty"`

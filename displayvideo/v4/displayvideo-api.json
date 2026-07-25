@@ -516,6 +516,50 @@
                 "https://www.googleapis.com/auth/display-video"
               ]
             },
+            "patch": {
+              "description": "Updates an ad asset. Returns the updated ad asset if successful. Supports updating assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO` and `AD_ASSET_TYPE_IMAGE`. Only the `synthetic_content_attestation_status` field is mutable.",
+              "flatPath": "v4/advertisers/{advertisersId}/adAssets/{adAssetsId}",
+              "httpMethod": "PATCH",
+              "id": "displayvideo.advertisers.adAssets.patch",
+              "parameterOrder": [
+                "advertiserId",
+                "adAssetId"
+              ],
+              "parameters": {
+                "adAssetId": {
+                  "description": "Output only. The ID of the ad asset. Referred to as the asset ID when assigned to an ad.",
+                  "format": "int64",
+                  "location": "path",
+                  "pattern": "^[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "advertiserId": {
+                  "description": "Required. The ID of the advertiser this ad asset belongs to.",
+                  "format": "int64",
+                  "location": "path",
+                  "pattern": "^[^/]+$",
+                  "required": true,
+                  "type": "string"
+                },
+                "updateMask": {
+                  "description": "Required. The list of fields to update. Only AdAsset.synthetic_content_attestation_status is mutable.",
+                  "format": "google-fieldmask",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "v4/advertisers/{+advertiserId}/adAssets/{+adAssetId}",
+              "request": {
+                "$ref": "AdAsset"
+              },
+              "response": {
+                "$ref": "AdAsset"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/display-video"
+              ]
+            },
             "upload": {
               "description": "Uploads and creates an ad asset. Returns the ID of the newly-created ad asset if successful. Only supports the uploading of assets with the AdAssetType `AD_ASSET_TYPE_IMAGE`.",
               "flatPath": "v4/advertisers/{advertisersId}/adAssets:uploadAdAsset",
@@ -9574,7 +9618,7 @@
       }
     }
   },
-  "revision": "20260714",
+  "revision": "20260720",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActiveViewVideoViewabilityMetricConfig": {
@@ -9739,6 +9783,20 @@
         },
         "name": {
           "description": "Identifier. The resource name of the ad asset.",
+          "type": "string"
+        },
+        "syntheticContentAttestationStatus": {
+          "description": "Optional. Whether the asset contains synthetic content or was created using AI.",
+          "enum": [
+            "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED",
+            "NOT_SYNTHETIC",
+            "IS_SYNTHETIC"
+          ],
+          "enumDescriptions": [
+            "Attestation status is unspecified.",
+            "Not synthetic content.",
+            "Is synthetic content."
+          ],
           "type": "string"
         },
         "youtubeVideoAsset": {
@@ -15278,6 +15336,20 @@
         "skippable": {
           "description": "Optional. Whether the user can choose to skip a video creative. This field is only supported for the following creative_type: * `CREATIVE_TYPE_VIDEO`",
           "type": "boolean"
+        },
+        "syntheticContentAttestationStatus": {
+          "description": "Optional. Whether the creative contains synthetic content or was created using AI.",
+          "enum": [
+            "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED",
+            "NOT_SYNTHETIC",
+            "IS_SYNTHETIC"
+          ],
+          "enumDescriptions": [
+            "Attestation status is unspecified.",
+            "Not synthetic content.",
+            "Is synthetic content."
+          ],
+          "type": "string"
         },
         "thirdPartyTag": {
           "description": "Optional. The original third-party tag used for the creative. Required and only valid for third-party tag creatives. Third-party tag creatives are creatives with following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_EXPANDABLE`",
@@ -23260,6 +23332,16 @@
       "description": "Performance metrics for a forecast point.",
       "id": "PlannedProductForecast",
       "properties": {
+        "onTargetCoviewImpressions": {
+          "description": "Number of on-target impressions including co-viewers.",
+          "format": "int64",
+          "type": "string"
+        },
+        "onTargetCoviewReach": {
+          "description": "Number of unique people reached that match the on-target definition including co-viewers.",
+          "format": "int64",
+          "type": "string"
+        },
         "onTargetImpressions": {
           "description": "Number of on-target impressions.",
           "format": "int64",
@@ -23267,6 +23349,16 @@
         },
         "onTargetReach": {
           "description": "Number of unique people reached that match the on-target definition.",
+          "format": "int64",
+          "type": "string"
+        },
+        "totalCoviewImpressions": {
+          "description": "Total number of impressions including co-viewers.",
+          "format": "int64",
+          "type": "string"
+        },
+        "totalCoviewReach": {
+          "description": "Total number of unique people reached including co-viewers.",
           "format": "int64",
           "type": "string"
         },
@@ -25329,6 +25421,20 @@
         },
         "filename": {
           "description": "Required. The filename of the ad asset, including the file extension. The filename must be UTF-8 encoded with a maximum size of 240 bytes.",
+          "type": "string"
+        },
+        "syntheticContentAttestationStatus": {
+          "description": "Optional. Whether the asset contains synthetic content or was created using AI.",
+          "enum": [
+            "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED",
+            "NOT_SYNTHETIC",
+            "IS_SYNTHETIC"
+          ],
+          "enumDescriptions": [
+            "Attestation status is unspecified.",
+            "Not synthetic content.",
+            "Is synthetic content."
+          ],
           "type": "string"
         }
       },

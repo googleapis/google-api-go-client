@@ -7823,7 +7823,7 @@
       }
     }
   },
-  "revision": "20260714",
+  "revision": "20260720",
   "rootUrl": "https://displayvideo.googleapis.com/",
   "schemas": {
     "ActivateManualTriggerRequest": {
@@ -11185,6 +11185,20 @@
         "skippable": {
           "description": "Optional. Whether the user can choose to skip a video creative. This field is only supported for the following creative_type: * `CREATIVE_TYPE_VIDEO`",
           "type": "boolean"
+        },
+        "syntheticContentAttestationStatus": {
+          "description": "Optional. Whether the creative contains synthetic content or was created using AI.",
+          "enum": [
+            "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED",
+            "NOT_SYNTHETIC",
+            "IS_SYNTHETIC"
+          ],
+          "enumDescriptions": [
+            "Attestation status is unspecified.",
+            "Not synthetic content.",
+            "Is synthetic content."
+          ],
+          "type": "string"
         },
         "thirdPartyTag": {
           "description": "Optional. The original third-party tag used for the creative. Required and only valid for third-party tag creatives. Third-party tag creatives are creatives with following hosting_source: * `HOSTING_SOURCE_THIRD_PARTY` combined with following creative_type: * `CREATIVE_TYPE_STANDARD` * `CREATIVE_TYPE_EXPANDABLE`",

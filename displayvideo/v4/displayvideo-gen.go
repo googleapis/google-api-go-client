@@ -924,6 +924,15 @@ type AdAsset struct {
 	EntityStatus string `json:"entityStatus,omitempty"`
 	// Name: Identifier. The resource name of the ad asset.
 	Name string `json:"name,omitempty"`
+	// SyntheticContentAttestationStatus: Optional. Whether the asset contains
+	// synthetic content or was created using AI.
+	//
+	// Possible values:
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - Attestation status is
+	// unspecified.
+	//   "NOT_SYNTHETIC" - Not synthetic content.
+	//   "IS_SYNTHETIC" - Is synthetic content.
+	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// YoutubeVideoAsset: Youtube video asset data.
 	YoutubeVideoAsset *YoutubeVideoAsset `json:"youtubeVideoAsset,omitempty"`
 
@@ -7350,6 +7359,15 @@ type Creative struct {
 	// This field is only supported for the following creative_type: *
 	// `CREATIVE_TYPE_VIDEO`
 	Skippable bool `json:"skippable,omitempty"`
+	// SyntheticContentAttestationStatus: Optional. Whether the creative contains
+	// synthetic content or was created using AI.
+	//
+	// Possible values:
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - Attestation status is
+	// unspecified.
+	//   "NOT_SYNTHETIC" - Not synthetic content.
+	//   "IS_SYNTHETIC" - Is synthetic content.
+	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ThirdPartyTag: Optional. The original third-party tag used for the creative.
 	// Required and only valid for third-party tag creatives. Third-party tag
 	// creatives are creatives with following hosting_source: *
@@ -15883,11 +15901,22 @@ func (s PlannedProduct) MarshalJSON() ([]byte, error) {
 
 // PlannedProductForecast: Performance metrics for a forecast point.
 type PlannedProductForecast struct {
+	// OnTargetCoviewImpressions: Number of on-target impressions including
+	// co-viewers.
+	OnTargetCoviewImpressions int64 `json:"onTargetCoviewImpressions,omitempty,string"`
+	// OnTargetCoviewReach: Number of unique people reached that match the
+	// on-target definition including co-viewers.
+	OnTargetCoviewReach int64 `json:"onTargetCoviewReach,omitempty,string"`
 	// OnTargetImpressions: Number of on-target impressions.
 	OnTargetImpressions int64 `json:"onTargetImpressions,omitempty,string"`
 	// OnTargetReach: Number of unique people reached that match the on-target
 	// definition.
 	OnTargetReach int64 `json:"onTargetReach,omitempty,string"`
+	// TotalCoviewImpressions: Total number of impressions including co-viewers.
+	TotalCoviewImpressions int64 `json:"totalCoviewImpressions,omitempty,string"`
+	// TotalCoviewReach: Total number of unique people reached including
+	// co-viewers.
+	TotalCoviewReach int64 `json:"totalCoviewReach,omitempty,string"`
 	// TotalImpressions: Total number of impressions.
 	TotalImpressions int64 `json:"totalImpressions,omitempty,string"`
 	// TotalReach: Total number of unique people reached.
@@ -15896,15 +15925,15 @@ type PlannedProductForecast struct {
 	TrueviewViews int64 `json:"trueviewViews,omitempty,string"`
 	// ViewableImpressions: Number of viewable impressions.
 	ViewableImpressions int64 `json:"viewableImpressions,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "OnTargetImpressions") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "OnTargetCoviewImpressions")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OnTargetImpressions") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "OnTargetCoviewImpressions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -18218,6 +18247,15 @@ type UploadAdAssetRequest struct {
 	// extension. The filename must be UTF-8 encoded with a maximum size of 240
 	// bytes.
 	Filename string `json:"filename,omitempty"`
+	// SyntheticContentAttestationStatus: Optional. Whether the asset contains
+	// synthetic content or was created using AI.
+	//
+	// Possible values:
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - Attestation status is
+	// unspecified.
+	//   "NOT_SYNTHETIC" - Not synthetic content.
+	//   "IS_SYNTHETIC" - Is synthetic content.
+	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdAssetType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -20931,6 +20969,125 @@ func (c *AdvertisersAdAssetsListCall) Pages(ctx context.Context, f func(*ListAdA
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type AdvertisersAdAssetsPatchCall struct {
+	s            *Service
+	advertiserId int64
+	adAssetId    int64
+	adasset      *AdAsset
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an ad asset. Returns the updated ad asset if successful.
+// Supports updating assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO` and
+// `AD_ASSET_TYPE_IMAGE`. Only the `synthetic_content_attestation_status` field
+// is mutable.
+//
+//   - adAssetId: Output only. The ID of the ad asset. Referred to as the asset
+//     ID when assigned to an ad.
+//   - advertiserId: The ID of the advertiser this ad asset belongs to.
+func (r *AdvertisersAdAssetsService) Patch(advertiserId int64, adAssetId int64, adasset *AdAsset) *AdvertisersAdAssetsPatchCall {
+	c := &AdvertisersAdAssetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adAssetId = adAssetId
+	c.adasset = adasset
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update. Only AdAsset.synthetic_content_attestation_status is
+// mutable.
+func (c *AdvertisersAdAssetsPatchCall) UpdateMask(updateMask string) *AdvertisersAdAssetsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdAssetsPatchCall) Fields(s ...googleapi.Field) *AdvertisersAdAssetsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdAssetsPatchCall) Context(ctx context.Context) *AdvertisersAdAssetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdAssetsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdAssetsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adasset)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adAssets/{+adAssetId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"adAssetId":    strconv.FormatInt(c.adAssetId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adAssets.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdAsset.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdAssetsPatchCall) Do(opts ...googleapi.CallOption) (*AdAsset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdAsset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type AdvertisersAdAssetsUploadCall struct {

@@ -10123,7 +10123,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20260721",
   "rootUrl": "https://dfareporting.googleapis.com/",
   "schemas": {
     "Account": {
@@ -13037,6 +13037,20 @@
         "subaccountId": {
           "description": "Subaccount ID of this creative. This field, if left unset, will be auto-generated for both insert and update operations. Applicable to all creative types.",
           "format": "int64",
+          "type": "string"
+        },
+        "syntheticContentAttestationStatus": {
+          "description": "Optional. Whether to add a label to the creative as created or edited using AI when served in regions with local AI labeling regulations. [Learn more about labeling requirements in AI regulations.](https://support.google.com/campaignmanager/answer/17232030)",
+          "enum": [
+            "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED",
+            "IS_SYNTHETIC",
+            "NOT_SYNTHETIC"
+          ],
+          "enumDescriptions": [
+            "No attestation has been provided.",
+            "Attested as created or edited using AI.",
+            "Attested as not created or edited using AI."
+          ],
           "type": "string"
         },
         "thirdPartyBackupImageImpressionsUrl": {

@@ -265,16 +265,24 @@ func (s ClientCache) MarshalJSON() ([]byte, error) {
 
 // CloudSqlInstance: Settings for CloudSQL instance configuration.
 type CloudSqlInstance struct {
+	// Edition: Output only. [Output only] The Cloud SQL instance edition.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Unspecified edition.
+	//   "EDITION_ENTERPRISE" - Enterprise edition.
+	//   "EDITION_ENTERPRISE_PLUS" - Enterprise Plus edition.
+	//   "EDITION_DEVELOPER" - Developer edition (includes AI Developer edition).
+	Edition string `json:"edition,omitempty"`
 	// Instance: Required. Name of the CloudSQL instance, in the format: ```
 	// projects/{project}/locations/{location}/instances/{instance} ```
 	Instance string `json:"instance,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Instance") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Edition") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Instance") to include in API
+	// NullFields is a list of field names (e.g. "Edition") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

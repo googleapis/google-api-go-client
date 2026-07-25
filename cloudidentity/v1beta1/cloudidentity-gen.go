@@ -1717,6 +1717,35 @@ func (s ExpiryDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalId: An external identifier for an entity in the Cloud Identity
+// Groups API. Used to link a `Group` in Cloud Identity Groups API with a
+// corresponding entity in an external identity system or directory.
+type ExternalId struct {
+	// Id: Required. The unique identifier assigned by the external identity
+	// provider. The API does not enforce uniqueness of IDs across entities, but
+	// clients should ensure IDs are unique within their namespace.
+	Id string `json:"id,omitempty"`
+	// Namespace: Required. The namespace in which the entity exists. Cannot be
+	// empty. Currently, the only allowable namespace is "system/external".
+	Namespace string `json:"namespace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalId) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalId
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GetMembershipGraphResponse: The response message for
 // MembershipsService.GetMembershipGraph.
 type GetMembershipGraphResponse struct {
@@ -2606,6 +2635,11 @@ type Group struct {
 	// DynamicGroupMetadata: Optional. Dynamic group metadata like queries and
 	// status.
 	DynamicGroupMetadata *DynamicGroupMetadata `json:"dynamicGroupMetadata,omitempty"`
+	// ExternalIds: Optional. External identifiers associated with the `Group`.
+	// Enables external identity providers and directory sync tools to link their
+	// native unique identifiers with this group. Currently, the only allowable
+	// namespace is "system/external".
+	ExternalIds []*ExternalId `json:"externalIds,omitempty"`
 	// GroupKey: Required. The `EntityKey` of the `Group`.
 	GroupKey *EntityKey `json:"groupKey,omitempty"`
 	// Labels: Required. One or more label entries that apply to the Group. Labels

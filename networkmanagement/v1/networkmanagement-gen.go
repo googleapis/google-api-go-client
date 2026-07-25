@@ -1316,6 +1316,10 @@ type DropInfo struct {
 	//   "PRIVATE_NAT_TO_PSC_ENDPOINT_UNSUPPORTED" - Sending packets processed by
 	// the Private NAT Gateways to the Private Service Connect endpoints is not
 	// supported.
+	//   "PRIVATE_NAT_SOURCE_IP_IN_EXCLUDED_RANGE" - Packet is dropped due to its
+	// source IP address being in the excluded range of the Spoke.
+	//   "PRIVATE_NAT_SOURCE_IP_IS_A_LINK_LOCAL_IP_IN_GKE" - Packet is dropped due
+	// to its source IP address being a link-local IP address in GKE.
 	//   "PSC_PORT_MAPPING_PORT_MISMATCH" - Packet is sent to the PSC port mapping
 	// service, but its destination port does not match any port mapping rules.
 	//   "PSC_PORT_MAPPING_WITHOUT_PSC_CONNECTION_UNSUPPORTED" - Sending packets

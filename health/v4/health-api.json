@@ -29,6 +29,12 @@
         "https://www.googleapis.com/auth/googlehealth.location.writeonly": {
           "description": "Add exercise GPS location data to Google Health, and edit or delete the data it adds."
         },
+        "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly": {
+          "description": "Add logged symptoms data to Google Health, and edit or delete the data it adds"
+        },
+        "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly": {
+          "description": "Add mindfulness data to Google Health, and edit or delete the data it adds"
+        },
         "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly": {
           "description": "Add nutrition data to Google Health, and edit or delete the data it adds."
         },
@@ -37,6 +43,9 @@
         },
         "https://www.googleapis.com/auth/googlehealth.profile.writeonly": {
           "description": "Add profile data to Google Health, and edit or delete the data it adds."
+        },
+        "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly": {
+          "description": "Add reproductive health data to Google Health, and edit or delete the data it adds"
         },
         "https://www.googleapis.com/auth/googlehealth.settings.readonly": {
           "description": "See your Google Health settings"
@@ -704,7 +713,10 @@
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
@@ -736,7 +748,10 @@
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
@@ -904,7 +919,10 @@
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
@@ -1060,7 +1078,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20260722",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {

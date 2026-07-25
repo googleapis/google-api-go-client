@@ -749,8 +749,8 @@ type BackupVault struct {
 	// region. Format:
 	// `projects/{project_id}/locations/{location}/backupVaults/{backup_vault_id}`
 	SourceBackupVault string `json:"sourceBackupVault,omitempty"`
-	// SourceRegion: Output only. Region in which the backup vault is created.
-	// Format: `projects/{project_id}/locations/{location}`
+	// SourceRegion: Optional. Region in which the backup vault is created. Format:
+	// `projects/{project_id}/locations/{location}`
 	SourceRegion string `json:"sourceRegion,omitempty"`
 	// State: Output only. The backup vault state.
 	//

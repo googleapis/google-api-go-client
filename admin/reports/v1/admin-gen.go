@@ -268,6 +268,8 @@ type Activity struct {
 	// address can be the user's proxy server's address or a virtual private
 	// network (VPN) address. The API supports IPv4 and IPv6.
 	IpAddress string `json:"ipAddress,omitempty"`
+	// IsAgenticAction: Whether the activity was performed by an agent.
+	IsAgenticAction bool `json:"isAgenticAction,omitempty"`
 	// Kind: The type of API resource. For an activity report, the value is
 	// `audit#activity`.
 	Kind string `json:"kind,omitempty"`
@@ -278,6 +280,8 @@ type Activity struct {
 	OwnerDomain string `json:"ownerDomain,omitempty"`
 	// ResourceDetails: Details of the resource on which the action was performed.
 	ResourceDetails []*ResourceDetails `json:"resourceDetails,omitempty"`
+	// UserDeviceInfo: Device details of the user doing the action.
+	UserDeviceInfo *ActivityUserDeviceInfo `json:"userDeviceInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actor") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -298,6 +302,9 @@ func (s Activity) MarshalJSON() ([]byte, error) {
 
 // ActivityActor: User doing the action.
 type ActivityActor struct {
+	// AgentAttributionInfo: Details of the AI agent that was the actor for the
+	// activity.
+	AgentAttributionInfo *AgentAttributionInfo `json:"agentAttributionInfo,omitempty"`
 	// ApplicationInfo: Details of the application that was the actor for the
 	// activity.
 	ApplicationInfo *ActivityActorApplicationInfo `json:"applicationInfo,omitempty"`
@@ -314,15 +321,15 @@ type ActivityActor struct {
 	// might be absent if the actor is not a Google Workspace user, or may be the
 	// number 105250506097979753968 which acts as a placeholder ID.
 	ProfileId string `json:"profileId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ApplicationInfo") to
+	// ForceSendFields is a list of field names (e.g. "AgentAttributionInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApplicationInfo") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentAttributionInfo") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -657,6 +664,83 @@ type ActivityNetworkInfo struct {
 
 func (s ActivityNetworkInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityNetworkInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActivityUserDeviceInfo: Device details of the user doing the action.
+type ActivityUserDeviceInfo struct {
+	// DeviceId: Output only. Device ID of the user's device.
+	DeviceId string `json:"deviceId,omitempty"`
+	// DeviceOsVersion: Output only. Device OS version of the user's device.
+	DeviceOsVersion string `json:"deviceOsVersion,omitempty"`
+	// DeviceType: Output only. The type of the user's device.
+	DeviceType string `json:"deviceType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivityUserDeviceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivityUserDeviceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentAttributionInfo: Details of the AI agent that was the actor for the
+// activity.
+type AgentAttributionInfo struct {
+	// AgentId: The ID of the agent.
+	AgentId string `json:"agentId,omitempty"`
+	// AgentName: The user visible name of the agent.
+	AgentName string `json:"agentName,omitempty"`
+	// AgentOwner: The owner of the agent.
+	AgentOwner *AgentAttributionInfoAgentOwner `json:"agentOwner,omitempty"`
+	// AgentType: Type of the agent.
+	AgentType string `json:"agentType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentAttributionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentAttributionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentAttributionInfoAgentOwner: Details of the owner of the AI agent.
+type AgentAttributionInfoAgentOwner struct {
+	// Email: The email of the agent owner.
+	Email string `json:"email,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentAttributionInfoAgentOwner) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentAttributionInfoAgentOwner
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

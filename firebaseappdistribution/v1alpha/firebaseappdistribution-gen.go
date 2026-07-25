@@ -344,6 +344,9 @@ func (s AndroidxCrawlerOutputRectangle) MarshalJSON() ([]byte, error) {
 
 // GoogleFirebaseAppdistroV1Release: A release of a Firebase app.
 type GoogleFirebaseAppdistroV1Release struct {
+	// AcceptedInvitationCount: Output only. Number of testers with accepted
+	// invitations.
+	AcceptedInvitationCount int64 `json:"acceptedInvitationCount,omitempty"`
 	// AndroidPackageRegistrationState: Output only. Registration state of the
 	// Android package (BinaryType.APK).
 	//
@@ -358,6 +361,14 @@ type GoogleFirebaseAppdistroV1Release struct {
 	// BinaryDownloadUri: Output only. A signed link (which expires in one hour) to
 	// directly download the app binary (IPA/APK/AAB) file.
 	BinaryDownloadUri string `json:"binaryDownloadUri,omitempty"`
+	// BinaryType: Output only. Type of binary.
+	//
+	// Possible values:
+	//   "BINARY_TYPE_UNSPECIFIED" - unspecified binary type
+	//   "IPA" - iOS App Store package
+	//   "APK" - Android Application package
+	//   "AAB" - Android App Bundle
+	BinaryType string `json:"binaryType,omitempty"`
 	// BuildVersion: Output only. Build version of the release. For an Android
 	// release, the build version is the `versionCode`. For an iOS release, the
 	// build version is the `CFBundleVersion`.
@@ -370,29 +381,47 @@ type GoogleFirebaseAppdistroV1Release struct {
 	DisplayVersion string `json:"displayVersion,omitempty"`
 	// ExpireTime: Output only. The time the release will expire.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// FeedbackCount: Output only. Number of feedback reports left by testers.
+	FeedbackCount int64 `json:"feedbackCount,omitempty"`
 	// FirebaseConsoleUri: Output only. A link to the Firebase console displaying a
 	// single release.
 	FirebaseConsoleUri string `json:"firebaseConsoleUri,omitempty"`
+	// InstallationCount: Output only. Number of testers who have downloaded this
+	// release.
+	InstallationCount int64 `json:"installationCount,omitempty"`
 	// Name: The name of the release resource. Format:
 	// `projects/{project_number}/apps/{app}/releases/{release}`
 	Name string `json:"name,omitempty"`
+	// OpenInvitationCount: Output only. Number of testers who were invited (incl.
+	// expired invitations), but did not (yet) accept the invitation.
+	OpenInvitationCount int64 `json:"openInvitationCount,omitempty"`
 	// ReleaseNotes: Notes about the release.
 	ReleaseNotes *GoogleFirebaseAppdistroV1ReleaseNotes `json:"releaseNotes,omitempty"`
+	// TestState: Output only. The overall state of tests run on this release
+	//
+	// Possible values:
+	//   "TEST_STATE_UNSPECIFIED" - No test state specified
+	//   "NO_TESTS_REQUESTED" - No tests have been requested for this release
+	//   "IN_PROGRESS" - One or more device executions are in progress
+	//   "PASSED" - All device executions passed during the most recent test
+	//   "FAILED" - Some device executions failed during the most recent test
+	//   "INCONCLUSIVE" - Some device executions were inconclusive, but none
+	// failed, during the most recent test
+	TestState string `json:"testState,omitempty"`
 	// TestingUri: Output only. A link to the release in the tester web clip or
 	// Android app that lets testers (which were granted access to the app) view
 	// release notes and install the app onto their devices.
 	TestingUri string `json:"testingUri,omitempty"`
 	// UpdateTime: Output only. The time the release was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "AndroidPackageRegistrationState") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "AcceptedInvitationCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AndroidPackageRegistrationState")
-	// to include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "AcceptedInvitationCount") to
+	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`

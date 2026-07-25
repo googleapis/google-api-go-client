@@ -4030,6 +4030,17 @@ type Creative struct {
 	// will be auto-generated for both insert and update operations. Applicable to
 	// all creative types.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// creative as created or edited using AI when served in regions with local AI
+	// labeling regulations. Learn more about labeling requirements in AI
+	// regulations. (https://support.google.com/campaignmanager/answer/17232030)
+	//
+	// Possible values:
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ThirdPartyBackupImageImpressionsUrl: Third-party URL used to record backup
 	// image impressions. Applicable to the following creative types: all
 	// RICH_MEDIA.

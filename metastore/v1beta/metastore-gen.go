@@ -2008,6 +2008,11 @@ type MigrationExecution struct {
 	//   "FAILED" - The migration execution has failed.
 	//   "CANCELLED" - The migration execution is cancelled.
 	//   "DELETING" - The migration execution is being deleted.
+	//   "ROLLED_BACK" - The migration execution has been rolled back. This occurs
+	// when CancelMigration is invoked after the migration has completed and the
+	// metastore service is in the PROXY state, returning the service to the ACTIVE
+	// state. This enables rollback support when the customer wants to resume using
+	// DPMS after a successful migration.
 	State string `json:"state,omitempty"`
 	// StateMessage: Output only. Additional information about the current state of
 	// the migration execution.
@@ -2761,6 +2766,8 @@ type Service struct {
 	//   "AUTOSCALING" - The Dataproc Metastore service 2 is being scaled up or
 	// down.
 	//   "MIGRATING" - The metastore service is processing a managed migration.
+	//   "PROXY" - The metastore service has completed managed migration and is now
+	// proxying requests to the Lakehouse runtime catalog.
 	State string `json:"state,omitempty"`
 	// StateMessage: Output only. Additional information about the current state of
 	// the metastore service, if available.

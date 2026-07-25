@@ -238,6 +238,7 @@ type NotificationSubscription struct {
 	// unspecified.
 	//   "PRODUCT_STATUS_CHANGE" - Notification of product status changes, for
 	// example when product becomes disapproved.
+	//   "ACCOUNT_SERVICE_CHANGE" - Notification of account service changes.
 	RegisteredEvent string `json:"registeredEvent,omitempty"`
 	// TargetAccount: The `name` of the account you want to receive notifications
 	// for. Format: `accounts/{account}`

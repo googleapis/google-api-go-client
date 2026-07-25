@@ -103,6 +103,26 @@ const mtlsBasePath = "https://workspaceevents.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// On their own behalf, apps in Google Chat can see all members in Google Chat
+	// spaces and conversations throughout your Workspace organization, even when
+	// the Chat app isn't a member
+	ChatAppAllMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.memberships.readonly"
+
+	// On their own behalf, apps in Google Chat can see all messages and reactions
+	// throughout your Workspace organization, even when the Chat app isn't a
+	// member of a space or conversation
+	ChatAppAllMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.messages.readonly"
+
+	// On their own behalf, apps in Google Chat can see metadata about all spaces
+	// and conversations in Google Chat throughout your Workspace organization,
+	// even when the Chat app isn't a member
+	ChatAppAllSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.spaces.readonly"
+
+	// On their own behalf, apps in Google Chat can see the last read time for all
+	// users in all spaces and conversations throughout your Workspace
+	// organization, even when the Chat app isn't a member.
+	ChatAppAllUsersReadstateReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.users.readstate.readonly"
+
 	// On their own behalf, apps in Google Chat can see, add, update, and remove
 	// members from conversations and spaces
 	ChatAppMembershipsScope = "https://www.googleapis.com/auth/chat.app.memberships"
@@ -194,6 +214,10 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/chat.app.all.memberships.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.messages.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.spaces.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.users.readstate.readonly",
 		"https://www.googleapis.com/auth/chat.app.memberships",
 		"https://www.googleapis.com/auth/chat.app.memberships.readonly",
 		"https://www.googleapis.com/auth/chat.app.messages.readonly",
@@ -1448,10 +1472,17 @@ type SubscriptionsCreateCall struct {
 // (https://developers.google.com/workspace/events/guides/create-subscription).
 // For a subscription on a Chat target resource
 // (https://developers.google.com/workspace/events/guides/events-chat), you can
-// create a subscription as: - A Chat app by specifying an authorization scope
-// that begins with `chat.app` and getting one-time administrator approval. To
-// learn more, see Authorize as a Chat app with administrator approval
+// create a subscription as: - A Chat app subscribing to space events where the
+// app is a member by specifying an authorization scope that begins with
+// `chat.app` and getting one-time administrator approval. To learn more, see
+// Authorize as a Chat app with administrator approval
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+// - Developer Preview (https://developers.google.com/workspace/preview): A
+// Chat app subscribing to all events in a Google Workspace organization by
+// specifying an authorization scope that begins with `chat.app.all` and
+// obtaining one-time administrator approval. To learn more, see Subscribe to
+// all Google Chat events in a Workspace organization
+// (https://developers.google.com/workspace/events/guides/create-subscription#customer-subscription).
 // - A user by specifying an authorization scope that doesn't include `app` in
 // its name. To learn more, see Authorize as a Chat user
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
@@ -1813,8 +1844,12 @@ func (r *SubscriptionsService) List() *SubscriptionsListCall {
 // target_resource="//chat.googleapis.com/spaces/{space}" (
 // event_types:"google.workspace.chat.membership.v1.updated" OR
 // event_types:"google.workspace.chat.message.v1.created" ) AND
-// target_resource="//chat.googleapis.com/spaces/{space}" ``` The server
-// rejects invalid queries with an `INVALID_ARGUMENT` error.
+// target_resource="//chat.googleapis.com/spaces/{space}" ``` The following
+// query is available in Developer Preview
+// (https://developers.google.com/workspace/preview): ```
+// event_types:"google.workspace.chat.message.v1.created" AND
+// target_resource="//admin.googleapis.com/customers/my_customer" ``` The
+// server rejects invalid queries with an `INVALID_ARGUMENT` error.
 func (c *SubscriptionsListCall) Filter(filter string) *SubscriptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1964,10 +1999,17 @@ type SubscriptionsPatchCall struct {
 // (https://developers.google.com/workspace/events/guides/update-subscription).
 // For a subscription on a Chat target resource
 // (https://developers.google.com/workspace/events/guides/events-chat), you can
-// update a subscription as: - A Chat app by specifying an authorization scope
-// that begins with `chat.app` and getting one-time administrator approval. To
-// learn more, see Authorize as a Chat app with administrator approval
+// update a subscription as: - A Chat app subscribing to space events where the
+// app is a member by specifying an authorization scope that begins with
+// `chat.app` and getting one-time administrator approval. To learn more, see
+// Authorize as a Chat app with administrator approval
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+// - Developer Preview (https://developers.google.com/workspace/preview): A
+// Chat app subscribing to all events in a Google Workspace organization by
+// specifying an authorization scope that begins with `chat.app.all` and
+// getting one-time administrator approval. To learn more, see Subscribe to all
+// Google Chat events in a Workspace organization
+// (https://developers.google.com/workspace/events/guides/create-subscription#customer-subscription).
 // - A user by specifying an authorization scope that doesn't include `app` in
 // its name. To learn more, see Authorize as a Chat user
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
@@ -2102,11 +2144,17 @@ type SubscriptionsReactivateCall struct {
 // (https://developers.google.com/workspace/events/guides/reactivate-subscription).
 // For a subscription on a Chat target resource
 // (https://developers.google.com/workspace/events/guides/events-chat), you can
-// reactivate a subscription as: - A Chat app by specifying an authorization
-// scope that begins with `chat.app` and getting one-time administrator
-// approval. To learn more, see Authorize as a Chat app with administrator
-// approval
+// reactivate a subscription as: - A Chat app subscribing to space events where
+// the app is a member by specifying an authorization scope that begins with
+// `chat.app` and getting one-time administrator approval. To learn more, see
+// Authorize as a Chat app with administrator approval
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+// - Developer Preview (https://developers.google.com/workspace/preview): A
+// Chat app subscribing to all events in a Google Workspace organization by
+// specifying an authorization scope that begins with `chat.app.all` and
+// getting one-time administrator approval. To learn more, see Subscribe to all
+// Google Chat events in a Workspace organization
+// (https://developers.google.com/workspace/events/guides/create-subscription#customer-subscription).
 // - A user by specifying an authorization scope that doesn't include `app` in
 // its name. To learn more, see Authorize as a Chat user
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).

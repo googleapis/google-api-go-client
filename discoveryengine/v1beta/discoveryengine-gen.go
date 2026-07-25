@@ -3634,6 +3634,14 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	//   "STREAMING" - The data will be synced in real time.
 	//   "UNSPECIFIED" - Connector that doesn't ingest data will have this value
 	SyncMode string `json:"syncMode,omitempty"`
+	// Tag: Optional. Immutable. User-facing, version-independent label for this
+	// connector. May be shared by multiple connectors under the same (project,
+	// location, collection, data_source); tag-based lookup returns the one with
+	// the greatest create_time. Optional at Create time. Agent Designer resolves
+	// connectors via (data_source, tag) when set, falling back to the legacy
+	// resource-name lookup when unset, so connectors created before the tag-write
+	// launch continue to work without a backfill.
+	Tag string `json:"tag,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
@@ -4851,7 +4859,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
 	// `disable-skills` * `disable-projects` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
+	// `multi-agent-orchestration` * `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -11338,6 +11346,14 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "STREAMING" - The data will be synced in real time.
 	//   "UNSPECIFIED" - Connector that doesn't ingest data will have this value
 	SyncMode string `json:"syncMode,omitempty"`
+	// Tag: Optional. Immutable. User-facing, version-independent label for this
+	// connector. May be shared by multiple connectors under the same (project,
+	// location, collection, data_source); tag-based lookup returns the one with
+	// the greatest create_time. Optional at Create time. Agent Designer resolves
+	// connectors via (data_source, tag) when set, falling back to the legacy
+	// resource-name lookup when unset, so connectors created before the tag-write
+	// launch continue to work without a backfill.
+	Tag string `json:"tag,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
@@ -12776,7 +12792,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
 	// `disable-skills` * `disable-projects` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
+	// `multi-agent-orchestration` * `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -25227,7 +25243,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
 	// `disable-skills` * `disable-projects` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
+	// `multi-agent-orchestration` * `cross-product-intelligence`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:

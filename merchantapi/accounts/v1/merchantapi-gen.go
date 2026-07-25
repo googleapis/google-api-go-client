@@ -751,6 +751,10 @@ type AccountService struct {
 	// ProviderDisplayName: Output only. The human-readable display name of the
 	// provider account.
 	ProviderDisplayName string `json:"providerDisplayName,omitempty"`
+	// UcpCheckoutManagement: Service type for UCP Checkout Management. The
+	// provider is managing the UCP Checkout capability integration for the
+	// merchant.
+	UcpCheckoutManagement *UcpCheckoutManagement `json:"ucpCheckoutManagement,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4745,6 +4749,10 @@ type TransitTimeValue struct {
 func (s TransitTimeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitTimeValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UcpCheckoutManagement: `UcpCheckoutManagement` payload.
+type UcpCheckoutManagement struct {
 }
 
 // UnclaimHomepageRequest: Request message for the `UnclaimHomepage` method.

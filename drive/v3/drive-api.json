@@ -3038,7 +3038,7 @@
       }
     }
   },
-  "revision": "20260712",
+  "revision": "20260720",
   "rootUrl": "https://www.googleapis.com/",
   "schemas": {
     "About": {
@@ -4165,7 +4165,7 @@
               "type": "boolean"
             },
             "canAccessViaGenAi": {
-              "description": "Whether the current user can access this file via Gen AI features.",
+              "description": "Whether the current user can access this file via Gen AI features. For more information, see [Drive MCP file eligibility](https://developers.google.com/workspace/drive/api/guides/drive-mcp-server-file-eligibility).",
               "type": "boolean"
             },
             "canAddChildren": {

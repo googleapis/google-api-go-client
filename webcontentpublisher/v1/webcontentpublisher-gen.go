@@ -483,6 +483,14 @@ type Publication struct {
 	// PublicationTosUrl: Optional. The URL to the publisher's own Terms of
 	// Service.
 	PublicationTosUrl string `json:"publicationTosUrl,omitempty"`
+	// PublicationType: Optional. The publication entity type (for-profit vs
+	// non-profit). Defaults to FOR_PROFIT if omitted.
+	//
+	// Possible values:
+	//   "PUBLICATION_TYPE_UNSPECIFIED" - Unspecified publication type.
+	//   "FOR_PROFIT" - For-profit entity.
+	//   "NON_PROFIT" - Non-profit entity.
+	PublicationType string `json:"publicationType,omitempty"`
 	// RegionCode: Required. The ISO 3166-1 alpha-2 region code where the
 	// publication is registered (e.g., "US").
 	RegionCode string `json:"regionCode,omitempty"`
@@ -566,19 +574,22 @@ func (s SlProduct) MarshalJSON() ([]byte, error) {
 
 // TosAcceptance: Details about the acceptance of the Terms of Service (TOS).
 type TosAcceptance struct {
+	// EmailOptIn: Optional. Whether the user opted in to receive product updates
+	// and email communications.
+	EmailOptIn bool `json:"emailOptIn,omitempty"`
 	// Signer: Optional. The name of the person who accepted the TOS.
 	Signer string `json:"signer,omitempty"`
 	// SignerTitle: Optional. The job title or role of the signer.
 	SignerTitle string `json:"signerTitle,omitempty"`
 	// UserAccepted: Required. Whether the user has accepted the Terms of Service.
 	UserAccepted bool `json:"userAccepted,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Signer") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EmailOptIn") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Signer") to include in API
+	// NullFields is a list of field names (e.g. "EmailOptIn") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

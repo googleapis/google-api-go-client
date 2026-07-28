@@ -1,5 +1,22 @@
 # Changes
 
+## [0.291.0](https://github.com/googleapis/google-api-go-client/compare/v0.290.0...v0.291.0) (2026-07-28)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3666](https://github.com/googleapis/google-api-go-client/issues/3666)) ([e3721ba](https://github.com/googleapis/google-api-go-client/commit/e3721ba5d733583d6999df8e179fd7c9d891c0a9))
+* **all:** Auto-regenerate discovery clients ([#3670](https://github.com/googleapis/google-api-go-client/issues/3670)) ([4067374](https://github.com/googleapis/google-api-go-client/commit/40673741ea906e5313a602459110dcfb17a54f7d))
+* **all:** Auto-regenerate discovery clients ([#3674](https://github.com/googleapis/google-api-go-client/issues/3674)) ([432658c](https://github.com/googleapis/google-api-go-client/commit/432658c5a9051b867b016979d6d948cdae99a401))
+* **all:** Auto-regenerate discovery clients ([#3676](https://github.com/googleapis/google-api-go-client/issues/3676)) ([9998a11](https://github.com/googleapis/google-api-go-client/commit/9998a114c63f1c113fb627e30597b02dee6301d5))
+* **all:** Auto-regenerate discovery clients ([#3678](https://github.com/googleapis/google-api-go-client/issues/3678)) ([b5c5526](https://github.com/googleapis/google-api-go-client/commit/b5c5526a1d862e21cf126b2287490e63ac52ee2c))
+* **all:** Auto-regenerate discovery clients ([#3679](https://github.com/googleapis/google-api-go-client/issues/3679)) ([499d9b1](https://github.com/googleapis/google-api-go-client/commit/499d9b17067ababff6992f1a0c50f8de794cff45))
+
+
+### Bug Fixes
+
+* **transport:** Use ds.GetUniverseDomain() instead of raw ds.UniverseDomain field ([#3660](https://github.com/googleapis/google-api-go-client/issues/3660)) ([6bad358](https://github.com/googleapis/google-api-go-client/commit/6bad35801f85c9915d8ad7635225a2b94e27082c))
+
 ## [0.290.0](https://github.com/googleapis/google-api-go-client/compare/v0.289.0...v0.290.0) (2026-07-20)
 
 

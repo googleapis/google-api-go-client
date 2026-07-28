@@ -3372,6 +3372,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	ModelName string `json:"modelName,omitempty"`
 	// NumDiffusionSteps: Number of diffusion steps
 	NumDiffusionSteps int64 `json:"numDiffusionSteps,omitempty"`
+	// OmniRewriter: Optional. Omni Rewriter configuration.
+	OmniRewriter *CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig `json:"omniRewriter,omitempty"`
 	// OriginalRequestJson: The original REST API request JSON sent by the user, in
 	// the instances/parameters format. Preserved for saving alongside output
 	// artifacts so users can reproduce their requests. This field is populated by
@@ -3483,6 +3485,46 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame struct {
 func (s CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig:
+// Configuration for Omni Rewriter.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig struct {
+	// MaxChunkDuration: Optional. Maximum duration of a chunk in seconds.
+	MaxChunkDuration float64 `json:"maxChunkDuration,omitempty"`
+	// RewriterInputFps: Optional. FPS used to generate gemini chunks for video
+	// inputs.
+	RewriterInputFps int64 `json:"rewriterInputFps,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxChunkDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxChunkDuration") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig
+	var s1 struct {
+		MaxChunkDuration gensupport.JSONFloat64 `json:"maxChunkDuration"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxChunkDuration = float64(s1.MaxChunkDuration)
+	return nil
 }
 
 // CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig:
@@ -5175,6 +5217,129 @@ type GoogleCloudAiplatformV1AudioResponseFormat struct {
 
 func (s GoogleCloudAiplatformV1AudioResponseFormat) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AudioResponseFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1AudioTranscription: The transcription of an audio
+// part. For multi-speaker audio, each speaker segment is a separate Part with
+// its own AudioTranscription carrying the speaker_label.
+type GoogleCloudAiplatformV1AudioTranscription struct {
+	// SpeakerLabel: Optional. A label identifying the speaker of this audio
+	// segment (e.g. "spk_1", "spk_2"). Present when diarization is set.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
+	// Text: Required. The transcription text of this audio segment.
+	Text string `json:"text,omitempty"`
+	// Words: Optional. Detailed word-level transcriptions and timing details.
+	// Present when word_timestamp is set.
+	Words []*GoogleCloudAiplatformV1AudioTranscriptionWordInfo `json:"words,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SpeakerLabel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SpeakerLabel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1AudioTranscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1AudioTranscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1AudioTranscriptionConfig: Configuration for speech
+// recognition (transcription).
+type GoogleCloudAiplatformV1AudioTranscriptionConfig struct {
+	// AdaptationPhrases: Optional. A list of phrases to bias the ASR model
+	// towards.
+	AdaptationPhrases []string `json:"adaptationPhrases,omitempty"`
+	// CustomVocabulary: Optional. A list of custom vocabulary phrases to bias the
+	// speech recognition model toward recognizing specific terms.
+	CustomVocabulary []string `json:"customVocabulary,omitempty"`
+	// Diarization: Optional. Configures speaker diarization.
+	Diarization bool `json:"diarization,omitempty"`
+	// LanguageAuto: Optional. The model will detect the language automatically.
+	LanguageAuto *GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageAuto `json:"languageAuto,omitempty"`
+	// LanguageHints: Optional. Specifies one or more languages in the audio.
+	LanguageHints *GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints `json:"languageHints,omitempty"`
+	// WordTimestamp: Optional. Configures word-level timestamp generation.
+	WordTimestamp bool `json:"wordTimestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdaptationPhrases") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdaptationPhrases") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1AudioTranscriptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1AudioTranscriptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageAuto: Indicates the
+// language of the audio should be automatically detected.
+type GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageAuto struct {
+}
+
+// GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints: Provides hints
+// to the model about possible languages present in the audio.
+type GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints struct {
+	// LanguageCodes: Required. BCP-47 language codes. At least one must be
+	// specified.
+	LanguageCodes []string `json:"languageCodes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LanguageCodes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1AudioTranscriptionWordInfo: Information about a
+// single recognized word.
+type GoogleCloudAiplatformV1AudioTranscriptionWordInfo struct {
+	// EndOffset: Optional. End offset in time of the word relative to the start of
+	// the audio.
+	EndOffset string `json:"endOffset,omitempty"`
+	// StartOffset: Optional. Start offset in time of the word relative to the
+	// start of the audio.
+	StartOffset string `json:"startOffset,omitempty"`
+	// Word: Required. Transcript of the word.
+	Word string `json:"word,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndOffset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndOffset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1AudioTranscriptionWordInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1AudioTranscriptionWordInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14050,6 +14215,10 @@ type GoogleCloudAiplatformV1EvaluationSet struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: Required. The display name of the EvaluationSet.
 	DisplayName string `json:"displayName,omitempty"`
+	// EncryptionSpec: Optional. Customer-managed encryption key spec for this
+	// EvaluationSet. If set, this EvaluationSet and its sub-resources will be
+	// secured by this key.
+	EncryptionSpec *GoogleCloudAiplatformV1EncryptionSpec `json:"encryptionSpec,omitempty"`
 	// EvaluationItems: Required. The EvaluationItems that are part of this
 	// dataset.
 	EvaluationItems []string `json:"evaluationItems,omitempty"`
@@ -18796,6 +18965,14 @@ func (s GoogleCloudAiplatformV1FunctionResponsePart) MarshalJSON() ([]byte, erro
 
 // GoogleCloudAiplatformV1GatewayConfig: Configuration for a single gateway.
 type GoogleCloudAiplatformV1GatewayConfig struct {
+	// AllowedProjects: Optional. Additional consumer projects permitted to attach
+	// their own PSC endpoint to this gateway's ServiceAttachment. This is the
+	// "decoupled" mode, where the customer creates the PSC endpoint in a project
+	// other than this gateway's `network` project. Each listed project is VPC-SC
+	// enforced: it must be within the caller's service perimeter. The owning
+	// SemanticGovernancePolicyEngine's own project is always permitted implicitly
+	// and need not be listed. Format: project ID or number.
+	AllowedProjects []string `json:"allowedProjects,omitempty"`
 	// DnsRecord: Output only. The fully qualified record name of the created
 	// A-record in Cloud DNS.
 	DnsRecord string `json:"dnsRecord,omitempty"`
@@ -18827,15 +19004,15 @@ type GoogleCloudAiplatformV1GatewayConfig struct {
 	// {location} Format:
 	// projects/{project}/regions/{region}/subnetworks/{subnetwork}
 	Subnetwork string `json:"subnetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DnsRecord") to
+	// ForceSendFields is a list of field names (e.g. "AllowedProjects") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DnsRecord") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedProjects") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -19807,6 +19984,9 @@ type GoogleCloudAiplatformV1GenerationConfig struct {
 	// the request to the model. This can be useful for synchronizing audio with
 	// other modalities in the response.
 	AudioTimestamp bool `json:"audioTimestamp,omitempty"`
+	// AudioTranscriptionConfig: Optional. Config for audio transcription (speech
+	// recognition).
+	AudioTranscriptionConfig *GoogleCloudAiplatformV1AudioTranscriptionConfig `json:"audioTranscriptionConfig,omitempty"`
 	// CandidateCount: Optional. The number of candidate responses to generate. A
 	// higher `candidate_count` can provide more options to choose from, but it
 	// also consumes more resources. This can be useful for generating a variety of
@@ -26476,8 +26656,8 @@ type GoogleCloudAiplatformV1Model struct {
 	BaseModelSource *GoogleCloudAiplatformV1ModelBaseModelSource `json:"baseModelSource,omitempty"`
 	// Checkpoints: Optional. Output only. The checkpoints of the model.
 	Checkpoints []*GoogleCloudAiplatformV1Checkpoint `json:"checkpoints,omitempty"`
-	// ContainerSpec: Input only. The specification of the container that is to be
-	// used when deploying this Model. The specification is ingested upon
+	// ContainerSpec: The specification of the container that is to be used when
+	// deploying this Model. The specification is ingested upon
 	// ModelService.UploadModel, and all binaries it contains are copied and stored
 	// internally by Vertex AI. Not required for AutoML Models.
 	ContainerSpec *GoogleCloudAiplatformV1ModelContainerSpec `json:"containerSpec,omitempty"`
@@ -29776,10 +29956,10 @@ type GoogleCloudAiplatformV1OnlineEvaluator struct {
 	Config *GoogleCloudAiplatformV1OnlineEvaluatorConfig `json:"config,omitempty"`
 	// CreateTime: Output only. Timestamp when the OnlineEvaluator was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. Human-readable name for the `OnlineEvaluator`. The
-	// name doesn't have to be unique. The name can consist of any UTF-8
-	// characters. The maximum length is `63` characters. If the display name
-	// exceeds max characters, an `INVALID_ARGUMENT` error is returned.
+	// DisplayName: Optional. Human-readable name for the OnlineEvaluator. The name
+	// doesn't have to be unique. The name can consist of any UTF-8 characters. The
+	// maximum length is `63` characters. If the display name exceeds max
+	// characters, an `INVALID_ARGUMENT` error is returned.
 	DisplayName string `json:"displayName,omitempty"`
 	// MetricSources: Required. A list of metric sources to be used for evaluating
 	// samples. At least one MetricSource must be provided. Right now, only
@@ -30588,6 +30768,9 @@ func (s GoogleCloudAiplatformV1PairwiseSummarizationQualitySpec) MarshalJSON() (
 // IANA MIME type identifying the type and subtype of the media if
 // `inline_data` or `file_data` field is filled with raw bytes.
 type GoogleCloudAiplatformV1Part struct {
+	// AudioTranscription: Optional. Audio (input or output) transcription. This is
+	// only set when this Part contains audio data.
+	AudioTranscription *GoogleCloudAiplatformV1AudioTranscription `json:"audioTranscription,omitempty"`
 	// CodeExecutionResult: Optional. The result of executing the ExecutableCode.
 	CodeExecutionResult *GoogleCloudAiplatformV1CodeExecutionResult `json:"codeExecutionResult,omitempty"`
 	// ExecutableCode: Optional. Code generated by the model that is intended to be
@@ -30623,13 +30806,13 @@ type GoogleCloudAiplatformV1Part struct {
 	// VideoMetadata: Optional. Video metadata. The metadata should only be
 	// specified while the video data is presented in inline_data or file_data.
 	VideoMetadata *GoogleCloudAiplatformV1VideoMetadata `json:"videoMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CodeExecutionResult") to
+	// ForceSendFields is a list of field names (e.g. "AudioTranscription") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CodeExecutionResult") to include
+	// NullFields is a list of field names (e.g. "AudioTranscription") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -35439,19 +35622,26 @@ func (s GoogleCloudAiplatformV1ReasoningEngineSpec) MarshalJSON() ([]byte, error
 // GoogleCloudAiplatformV1ReasoningEngineSpecBuildSpec: Specification for
 // building container image.
 type GoogleCloudAiplatformV1ReasoningEngineSpecBuildSpec struct {
+	// ServiceAccount: Optional. The service account that Cloud Build uses to run
+	// the build. This field is only applicable when `worker_pool` is specified
+	// (i.e., for custom worker pools). If `worker_pool` is not specified, this
+	// field is ignored and the build runs using the Google-managed service agent.
+	// Format: `projects/{project}/serviceAccounts/{service_account}` or
+	// `{service_account}@{project}.iam.gserviceaccount.com`
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// WorkerPool: Optional. Identifier. The resource name of the Cloud Build
 	// WorkerPool to use for the build. Format:
 	// `projects/{project}/locations/{location}/workerPools/{worker_pool}`
 	WorkerPool string `json:"workerPool,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "WorkerPool") to
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "WorkerPool") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -35468,6 +35658,9 @@ type GoogleCloudAiplatformV1ReasoningEngineSpecContainerSpec struct {
 	// us-central1-docker.pkg.dev/my-project/my-repo/my-image:tag) of the container
 	// image that is to be run on each worker replica.
 	ImageUri string `json:"imageUri,omitempty"`
+	// Port: Optional. The port the container listens on. Defaults to 8080 if
+	// unset.
+	Port int64 `json:"port,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ImageUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -37974,6 +38167,8 @@ type GoogleCloudAiplatformV1SandboxEnvironmentTemplateDefaultContainerEnvironmen
 	// is unused.
 	//   "DEFAULT_CONTAINER_CATEGORY_COMPUTER_USE" - The default container image
 	// for Computer Use.
+	//   "DEFAULT_CONTAINER_CATEGORY_SHELL_SANDBOX" - The default container image
+	// for Shell Sandbox.
 	DefaultContainerCategory string `json:"defaultContainerCategory,omitempty"`
 	// Resources: Optional. Resource requests and limits for the default container.
 	Resources *GoogleCloudAiplatformV1SandboxEnvironmentTemplateResourceRequirements `json:"resources,omitempty"`
@@ -37998,23 +38193,64 @@ func (s GoogleCloudAiplatformV1SandboxEnvironmentTemplateDefaultContainerEnviron
 // GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig:
 // Configuration for egress control of sandbox instances.
 type GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig struct {
+	// CustomerVpcNetwork: Optional. The customer VPC network that sandbox egress
+	// is routed into.
+	CustomerVpcNetwork string `json:"customerVpcNetwork,omitempty"`
+	// DnsPeeringConfigs: Optional. DNS peering configurations that allow sandbox
+	// egress to resolve customer-internal domains via the customer VPC.
+	DnsPeeringConfigs []*GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfigDnsPeeringConfig `json:"dnsPeeringConfigs,omitempty"`
 	// InternetAccess: Optional. Whether to allow internet access.
 	InternetAccess bool `json:"internetAccess,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InternetAccess") to
+	// NetworkAttachment: Optional. The name of the customer VPC NetworkAttachment
+	// used to draw a PSC interface IP into the customer VPC for sandbox egress.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomerVpcNetwork") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InternetAccess") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomerVpcNetwork") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfigDnsPeerin
+// gConfig: Configuration for peering a customer's private DNS zone so that
+// sandbox egress can resolve customer-internal domains via the customer VPC.
+type GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfigDnsPeeringConfig struct {
+	// Domain: Required. The DNS name suffix of the zone being peered to, e.g.,
+	// "my-internal-domain.corp.". Must end with a dot.
+	Domain string `json:"domain,omitempty"`
+	// TargetNetwork: Required. The VPC network name in the target_project where
+	// the DNS zone specified by 'domain' is visible.
+	TargetNetwork string `json:"targetNetwork,omitempty"`
+	// TargetProject: Required. The project ID hosting the Cloud DNS managed zone
+	// that contains the 'domain'. The Vertex AI Service Agent requires the
+	// dns.peer role on this project.
+	TargetProject string `json:"targetProject,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfigDnsPeeringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfigDnsPeeringConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -110777,6 +111013,16 @@ func (r *ProjectsLocationsIndexEndpointsService) MutateDeployedIndex(indexEndpoi
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": The update mask applies
+// to the resource. The supported paths are `automatic_resources`,
+// `dedicated_resources`, `enable_access_logging` and
+// `deployed_index_auth_config`. When omitted, the service will perform a full
+// update of all fields. See google.protobuf.FieldMask.
+func (c *ProjectsLocationsIndexEndpointsMutateDeployedIndexCall) UpdateMask(updateMask string) *ProjectsLocationsIndexEndpointsMutateDeployedIndexCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -113179,6 +113425,113 @@ func (c *ProjectsLocationsIndexesOperationsWaitCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.indexes.operations.wait", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsMemoryBanksIngestEventsCall struct {
+	s                                          *Service
+	parent                                     string
+	googlecloudaiplatformv1ingesteventsrequest *GoogleCloudAiplatformV1IngestEventsRequest
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// IngestEvents: Ingests events for a Memory Bank.
+//
+//   - parent: The resource name of the ReasoningEngine to ingest events to.
+//     Format:
+//     `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine
+//     }`.
+func (r *ProjectsLocationsMemoryBanksService) IngestEvents(parent string, googlecloudaiplatformv1ingesteventsrequest *GoogleCloudAiplatformV1IngestEventsRequest) *ProjectsLocationsMemoryBanksIngestEventsCall {
+	c := &ProjectsLocationsMemoryBanksIngestEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudaiplatformv1ingesteventsrequest = googlecloudaiplatformv1ingesteventsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsMemoryBanksIngestEventsCall) Fields(s ...googleapi.Field) *ProjectsLocationsMemoryBanksIngestEventsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsMemoryBanksIngestEventsCall) Context(ctx context.Context) *ProjectsLocationsMemoryBanksIngestEventsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsMemoryBanksIngestEventsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsMemoryBanksIngestEventsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1ingesteventsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:ingestEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.memoryBanks.ingestEvents", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.memoryBanks.ingestEvents" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsMemoryBanksIngestEventsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.memoryBanks.ingestEvents", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

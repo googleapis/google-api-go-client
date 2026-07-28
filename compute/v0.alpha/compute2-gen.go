@@ -2838,6 +2838,120 @@ func (c *AdviceCalendarModeCall) Do(opts ...googleapi.CallOption) (*CalendarMode
 	return ret, nil
 }
 
+type AdviceCalendarModeExtensionCall struct {
+	s                                  *Service
+	project                            string
+	region                             string
+	calendarmodeextensionadvicerequest *CalendarModeExtensionAdviceRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// CalendarModeExtension: Advise on whether extending an existing Future
+// Reservation is possible
+// based on the desired extension end time. If capacity is not available
+// for
+// the entire requested duration, the method will recommend the
+// longest
+// possible extension.
+//
+// - project: Project ID for this request.
+// - region: Name of the region for this request.
+func (r *AdviceService) CalendarModeExtension(project string, region string, calendarmodeextensionadvicerequest *CalendarModeExtensionAdviceRequest) *AdviceCalendarModeExtensionCall {
+	c := &AdviceCalendarModeExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.region = region
+	c.calendarmodeextensionadvicerequest = calendarmodeextensionadvicerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdviceCalendarModeExtensionCall) Fields(s ...googleapi.Field) *AdviceCalendarModeExtensionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdviceCalendarModeExtensionCall) Context(ctx context.Context) *AdviceCalendarModeExtensionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdviceCalendarModeExtensionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdviceCalendarModeExtensionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.calendarmodeextensionadvicerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/regions/{region}/advice/calendarModeExtension")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"region":  c.region,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.advice.calendarModeExtension", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.advice.calendarModeExtension" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CalendarModeExtensionAdviceResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AdviceCalendarModeExtensionCall) Do(opts ...googleapi.CallOption) (*CalendarModeExtensionAdviceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CalendarModeExtensionAdviceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.advice.calendarModeExtension", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AdviceCapacityCall struct {
 	s                     *Service
 	project               string
@@ -92249,6 +92363,15 @@ type ProjectViewsGetCall struct {
 // Get: Returns the specified global ProjectViews resource, with a
 // regional
 // context.
+// This regional API endpoint reads resource metadata from regional
+// read-only replicas. Because changes are copied to these regional
+// replicas
+// asynchronously, for real-time resource reads or any write
+// operations
+// (creating, updating, or deleting resources), use the global
+// projects.get
+// (https://cloud.google.com/compute/docs/reference/rest/v1/projects/get)
+// endpoint.
 //
 // - project: Project ID for this request. This is part of the URL path.
 // - region: Name of the region for this request. This is part of the URL path.

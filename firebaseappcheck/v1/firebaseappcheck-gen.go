@@ -1352,8 +1352,8 @@ type GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity struct {
 	//
 	// Possible values:
 	//   "DEVICE_RECOGNITION_LEVEL_UNSPECIFIED" - Default value. Do not specify
-	// this value directly. When this default value is detected in a configuration,
-	// the `NO_INTEGRITY` default level takes effect.
+	// this value directly. If this value is detected in a configuration, it will
+	// have the same effect as the value `NO_INTEGRITY`.
 	//   "NO_INTEGRITY" - If this level is set, no explicit device integrity label
 	// requirements will be checked. However, because Play Integrity's other
 	// features may perform (and require) their own intrinsic device integrity
@@ -1670,19 +1670,19 @@ type GoogleFirebaseAppcheckV1ResourcePolicy struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
 	// fields, and may be sent on update and delete requests to ensure the client
@@ -1765,19 +1765,19 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 	// Etag: Optional. This checksum is computed by the server based on the value
 	// of other fields, and may be sent on update and delete requests to ensure the
@@ -1796,7 +1796,13 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform
 	// services: * `maps-backend.googleapis.com` (Maps JavaScript API) *
 	// `places.googleapis.com` (Places API (New)) Other supported Google services:
-	// * `oauth2.googleapis.com` (Google Identity for iOS)
+	// * `oauth2.googleapis.com` (Google Identity for iOS) Note: While all the
+	// supported `service_id`s may appear to be subdomains of `googleapis.com`, the
+	// `service_id` has no semantic meaning beyond identifying the service to App
+	// Check. It is not intended to represent the actual domain to which your apps
+	// send traffic, nor is it necessarily the API that should be enabled to use
+	// the service. For information on using these Google services, consult their
+	// documentation.
 	Name string `json:"name,omitempty"`
 	// ReplayProtection: Optional. The replay protection EnforcementMode for this
 	// service. Note that this field cannot be set to a level higher than that of
@@ -1838,19 +1844,19 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	ReplayProtection string `json:"replayProtection,omitempty"`
 	// UpdateTime: Output only. Timestamp when this service configuration object
 	// was most recently updated.
@@ -6380,7 +6386,13 @@ type ProjectsServicesPatchCall struct {
 //     `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform
 //     services: * `maps-backend.googleapis.com` (Maps JavaScript API) *
 //     `places.googleapis.com` (Places API (New)) Other supported Google
-//     services: * `oauth2.googleapis.com` (Google Identity for iOS).
+//     services: * `oauth2.googleapis.com` (Google Identity for iOS) Note: While
+//     all the supported `service_id`s may appear to be subdomains of
+//     `googleapis.com`, the `service_id` has no semantic meaning beyond
+//     identifying the service to App Check. It is not intended to represent the
+//     actual domain to which your apps send traffic, nor is it necessarily the
+//     API that should be enabled to use the service. For information on using
+//     these Google services, consult their documentation.
 func (r *ProjectsServicesService) Patch(name string, googlefirebaseappcheckv1service *GoogleFirebaseAppcheckV1Service) *ProjectsServicesPatchCall {
 	c := &ProjectsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

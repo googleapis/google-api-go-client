@@ -1,4 +1,4 @@
-// Copyright 2025 Google LLC.
+// Copyright 2026 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -120,9 +120,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Projects = NewProjectsService(s)
-	if err != nil {
-		return nil, err
-	}
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -277,9 +274,7 @@ type GoogleFirebaseFcmDataV1beta1DeliveryPerformancePercents struct {
 	DelayedDeviceOffline float64 `json:"delayedDeviceOffline,omitempty"`
 	// DelayedMessageThrottled: The percentage of accepted messages that were
 	// delayed due to message throttling, such as collapsible message throttling
-	// (https://firebase.google.com/docs/cloud-messaging/concept-options#collapsible_throttling)
-	// or maximum message rate throttling
-	// (https://firebase.google.com/docs/cloud-messaging/concept-options#device_throttling).
+	// (https://firebase.google.com/docs/cloud-messaging/concept-options#collapsible_throttling).
 	DelayedMessageThrottled float64 `json:"delayedMessageThrottled,omitempty"`
 	// DelayedUserStopped: The percentage of accepted messages that were delayed
 	// because the intended device user-profile was stopped

@@ -1046,41 +1046,6 @@ func (s CreateServiceAccountRequest) MarshalJSON() ([]byte, error) {
 
 // DisableServiceAccountKeyRequest: The service account key disable request.
 type DisableServiceAccountKeyRequest struct {
-	// ExtendedStatusMessage: Optional. Usable by internal google services only. An
-	// extended_status_message can be used to include additional information about
-	// the key, such as its private key data being exposed on a public repository
-	// like GitHub.
-	ExtendedStatusMessage string `json:"extendedStatusMessage,omitempty"`
-	// ServiceAccountKeyDisableReason: Optional. Describes the reason this key is
-	// being disabled. If unspecified, the default value of
-	// SERVICE_ACCOUNT_KEY_DISABLE_REASON_USER_INITIATED will be used.
-	//
-	// Possible values:
-	//   "SERVICE_ACCOUNT_KEY_DISABLE_REASON_UNSPECIFIED" - Unspecified disable
-	// reason
-	//   "SERVICE_ACCOUNT_KEY_DISABLE_REASON_USER_INITIATED" - Disabled by the user
-	//   "SERVICE_ACCOUNT_KEY_DISABLE_REASON_EXPOSED" - Google detected this
-	// Service Account external key's private key data as exposed, typically in a
-	// public repository on GitHub or similar.
-	//   "SERVICE_ACCOUNT_KEY_DISABLE_REASON_COMPROMISE_DETECTED" - This service
-	// account external key was detected as compromised and used by an attacker.
-	ServiceAccountKeyDisableReason string `json:"serviceAccountKeyDisableReason,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExtendedStatusMessage") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExtendedStatusMessage") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DisableServiceAccountKeyRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod DisableServiceAccountKeyRequest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DisableServiceAccountRequest: The service account disable request.

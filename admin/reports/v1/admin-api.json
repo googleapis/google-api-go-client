@@ -126,6 +126,11 @@
               "location": "query",
               "type": "string"
             },
+            "agentInfoFilter": {
+              "description": "Optional. Filters on agent info fields in the activity. This filter gets applied in conjunction(AND) with other filters. Example: \"agentInfoFilter=agentId=\\\"agent-id\\\" AND agentName=\\\"agent-name\\\" AND agentOwnerEmail=\\\"agent-owner-email\\\"\"",
+              "location": "query",
+              "type": "string"
+            },
             "applicationInfoFilter": {
               "description": "Optional. Used to filter on the `oAuthClientId` field present in [`ApplicationInfo`](#applicationinfo) message. **Usage** ``` GET...\u0026applicationInfoFilter=oAuthClientId=\"clientId\" GET...\u0026applicationInfoFilter=oAuthClientId=%22clientId%22 ```",
               "location": "query",
@@ -690,7 +695,7 @@
       }
     }
   },
-  "revision": "20260722",
+  "revision": "20260724",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Activities": {

@@ -3577,7 +3577,8 @@ func (s GoogleCloudRetailV2alphaEnrollSolutionRequest) MarshalJSON() ([]byte, er
 // GoogleCloudRetailV2alphaEnrollSolutionResponse: Response for EnrollSolution
 // method.
 type GoogleCloudRetailV2alphaEnrollSolutionResponse struct {
-	// EnrolledSolution: Retail API solution that the project has enrolled.
+	// EnrolledSolution: AI Commerce Search API solution that the project has
+	// enrolled.
 	//
 	// Possible values:
 	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
@@ -4675,7 +4676,8 @@ func (s GoogleCloudRetailV2alphaListControlsResponse) MarshalJSON() ([]byte, err
 // GoogleCloudRetailV2alphaListEnrolledSolutionsResponse: Response for
 // ListEnrolledSolutions method.
 type GoogleCloudRetailV2alphaListEnrolledSolutionsResponse struct {
-	// EnrolledSolutions: Retail API solutions that the project has enrolled.
+	// EnrolledSolutions: AI Commerce Search API solutions that the project has
+	// enrolled.
 	//
 	// Possible values:
 	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
@@ -6579,8 +6581,8 @@ func (s GoogleCloudRetailV2alphaProductLevelConfig) MarshalJSON() ([]byte, error
 // GoogleCloudRetailV2alphaProject: Metadata that describes a Cloud Retail
 // Project.
 type GoogleCloudRetailV2alphaProject struct {
-	// EnrolledSolutions: Output only. Retail API solutions that the project has
-	// enrolled.
+	// EnrolledSolutions: Output only. AI Commerce Search API solutions that the
+	// project has enrolled.
 	//
 	// Possible values:
 	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
@@ -9158,25 +9160,25 @@ func (s GoogleCloudRetailV2alphaUpdateGenerativeQuestionConfigRequest) MarshalJS
 }
 
 // GoogleCloudRetailV2alphaUserEvent: UserEvent captures all metadata
-// information Retail API needs to know about how end users interact with
-// customers' website.
+// information AI Commerce Search API needs to know about how end users
+// interact with customers' website.
 type GoogleCloudRetailV2alphaUserEvent struct {
 	// Attributes: Extra user event features to include in the recommendation
 	// model. If you provide custom attributes for ingested user events, also
 	// include them in the user events that you associate with prediction requests.
 	// Custom attribute formatting must be consistent between imported events and
-	// events provided with prediction requests. This lets the Retail API use those
-	// custom attributes when training models and serving predictions, which helps
-	// improve recommendation quality. This field needs to pass all below criteria,
-	// otherwise an INVALID_ARGUMENT error is returned: * The key must be a UTF-8
-	// encoded string with a length limit of 5,000 characters. * For text
-	// attributes, at most 400 values are allowed. Empty values are not allowed.
-	// Each value must be a UTF-8 encoded string with a length limit of 256
-	// characters. * For number attributes, at most 400 values are allowed. For
-	// product recommendations, an example of extra user information is
-	// traffic_channel, which is how a user arrives at the site. Users can arrive
-	// at the site by coming to the site directly, coming through Google search, or
-	// in other ways.
+	// events provided with prediction requests. This lets the AI Commerce Search
+	// API use those custom attributes when training models and serving
+	// predictions, which helps improve recommendation quality. This field needs to
+	// pass all below criteria, otherwise an INVALID_ARGUMENT error is returned: *
+	// The key must be a UTF-8 encoded string with a length limit of 5,000
+	// characters. * For text attributes, at most 400 values are allowed. Empty
+	// values are not allowed. Each value must be a UTF-8 encoded string with a
+	// length limit of 256 characters. * For number attributes, at most 400 values
+	// are allowed. For product recommendations, an example of extra user
+	// information is traffic_channel, which is how a user arrives at the site.
+	// Users can arrive at the site by coming to the site directly, coming through
+	// Google search, or in other ways.
 	Attributes map[string]GoogleCloudRetailV2alphaCustomAttribute `json:"attributes,omitempty"`
 	// AttributionToken: Highly recommended for user events that are the result of
 	// PredictionService.Predict. This field enables accurate attribution of
@@ -9218,8 +9220,8 @@ type GoogleCloudRetailV2alphaUserEvent struct {
 	EventType string `json:"eventType,omitempty"`
 	// ExperimentIds: A list of identifiers for the independent experiment groups
 	// this user event belongs to. This is used to distinguish between user events
-	// associated with different experiment setups (e.g. using Retail API, using
-	// different recommendation models).
+	// associated with different experiment setups (such as by using AI Commerce
+	// Search API, or using different recommendation models).
 	ExperimentIds []string `json:"experimentIds,omitempty"`
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the products being
@@ -10483,7 +10485,7 @@ type ProjectsEnrollSolutionCall struct {
 
 // EnrollSolution: The method enrolls a solution of type Retail Search into a
 // project. The Recommendations AI solution type is enrolled by default when
-// your project enables Retail API, so you don't need to call the
+// your project enables AI Commerce Search API, so you don't need to call the
 // enrollSolution method for recommendations.
 //
 //   - project: Full resource name of parent. Format:
@@ -10812,7 +10814,7 @@ type ProjectsGetRetailProjectCall struct {
 }
 
 // GetRetailProject: Gets the project. Throws `NOT_FOUND` if the project wasn't
-// initialized for the Retail API service.
+// initialized for the AI Commerce Search API service.
 //
 //   - name: Full resource name of the project. Format:
 //     `projects/{project_number_or_id}/retailProject`.
@@ -10923,8 +10925,8 @@ type ProjectsListEnrolledSolutionsCall struct {
 	header_      http.Header
 }
 
-// ListEnrolledSolutions: Lists all the retail API solutions the project has
-// enrolled.
+// ListEnrolledSolutions: Lists all the AI Commerce Search API solutions the
+// project has enrolled.
 //
 //   - parent: Full resource name of parent. Format:
 //     `projects/{project_number_or_id}`.
@@ -19591,9 +19593,9 @@ type ProjectsLocationsCatalogsUserEventsCollectCall struct {
 
 // Collect: Writes a single user event from the browser. For larger user event
 // payload over 16 KB, the POST method should be used instead, otherwise a 400
-// Bad Request error is returned. This method is used only by the Retail API
-// JavaScript pixel and Google Tag Manager. Users should not call this method
-// directly.
+// Bad Request error is returned. This method is used only by the AI Commerce
+// Search API JavaScript pixel and Google Tag Manager. Users should not call
+// this method directly.
 //
 //   - parent: The parent catalog name, such as
 //     `projects/1234/locations/global/catalogs/default_catalog`.

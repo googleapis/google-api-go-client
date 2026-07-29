@@ -1480,6 +1480,16 @@ func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesLi
 	return c
 }
 
+// AgentInfoFilter sets the optional parameter "agentInfoFilter": Filters on
+// agent info fields in the activity. This filter gets applied in
+// conjunction(AND) with other filters. Example:
+// "agentInfoFilter=agentId=\"agent-id\" AND agentName=\"agent-name\" AND
+// agentOwnerEmail=\"agent-owner-email\""
+func (c *ActivitiesListCall) AgentInfoFilter(agentInfoFilter string) *ActivitiesListCall {
+	c.urlParams_.Set("agentInfoFilter", agentInfoFilter)
+	return c
+}
+
 // ApplicationInfoFilter sets the optional parameter "applicationInfoFilter":
 // Used to filter on the `oAuthClientId` field present in `ApplicationInfo`
 // (#applicationinfo) message. **Usage** ```

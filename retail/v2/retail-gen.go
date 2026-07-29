@@ -7095,26 +7095,26 @@ func (s GoogleCloudRetailV2UpdateGenerativeQuestionConfigRequest) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRetailV2UserEvent: UserEvent captures all metadata information
-// Retail API needs to know about how end users interact with customers'
-// website.
+// GoogleCloudRetailV2UserEvent: UserEvent captures all metadata information AI
+// Commerce Search API needs to know about how end users interact with
+// customers' website.
 type GoogleCloudRetailV2UserEvent struct {
 	// Attributes: Extra user event features to include in the recommendation
 	// model. If you provide custom attributes for ingested user events, also
 	// include them in the user events that you associate with prediction requests.
 	// Custom attribute formatting must be consistent between imported events and
-	// events provided with prediction requests. This lets the Retail API use those
-	// custom attributes when training models and serving predictions, which helps
-	// improve recommendation quality. This field needs to pass all below criteria,
-	// otherwise an INVALID_ARGUMENT error is returned: * The key must be a UTF-8
-	// encoded string with a length limit of 5,000 characters. * For text
-	// attributes, at most 400 values are allowed. Empty values are not allowed.
-	// Each value must be a UTF-8 encoded string with a length limit of 256
-	// characters. * For number attributes, at most 400 values are allowed. For
-	// product recommendations, an example of extra user information is
-	// traffic_channel, which is how a user arrives at the site. Users can arrive
-	// at the site by coming to the site directly, coming through Google search, or
-	// in other ways.
+	// events provided with prediction requests. This lets the AI Commerce Search
+	// API use those custom attributes when training models and serving
+	// predictions, which helps improve recommendation quality. This field needs to
+	// pass all below criteria, otherwise an INVALID_ARGUMENT error is returned: *
+	// The key must be a UTF-8 encoded string with a length limit of 5,000
+	// characters. * For text attributes, at most 400 values are allowed. Empty
+	// values are not allowed. Each value must be a UTF-8 encoded string with a
+	// length limit of 256 characters. * For number attributes, at most 400 values
+	// are allowed. For product recommendations, an example of extra user
+	// information is traffic_channel, which is how a user arrives at the site.
+	// Users can arrive at the site by coming to the site directly, coming through
+	// Google search, or in other ways.
 	Attributes map[string]GoogleCloudRetailV2CustomAttribute `json:"attributes,omitempty"`
 	// AttributionToken: Highly recommended for user events that are the result of
 	// PredictionService.Predict. This field enables accurate attribution of
@@ -7156,8 +7156,8 @@ type GoogleCloudRetailV2UserEvent struct {
 	EventType string `json:"eventType,omitempty"`
 	// ExperimentIds: A list of identifiers for the independent experiment groups
 	// this user event belongs to. This is used to distinguish between user events
-	// associated with different experiment setups (e.g. using Retail API, using
-	// different recommendation models).
+	// associated with different experiment setups (such as by using AI Commerce
+	// Search API, or using different recommendation models).
 	ExperimentIds []string `json:"experimentIds,omitempty"`
 	// Filter: The filter syntax consists of an expression language for
 	// constructing a predicate from one or more fields of the products being
@@ -7510,7 +7510,8 @@ type GoogleCloudRetailV2alphaEnrollSolutionMetadata struct {
 // GoogleCloudRetailV2alphaEnrollSolutionResponse: Response for EnrollSolution
 // method.
 type GoogleCloudRetailV2alphaEnrollSolutionResponse struct {
-	// EnrolledSolution: Retail API solution that the project has enrolled.
+	// EnrolledSolution: AI Commerce Search API solution that the project has
+	// enrolled.
 	//
 	// Possible values:
 	//   "SOLUTION_TYPE_UNSPECIFIED" - Default value.
@@ -17002,9 +17003,9 @@ type ProjectsLocationsCatalogsUserEventsCollectCall struct {
 
 // Collect: Writes a single user event from the browser. For larger user event
 // payload over 16 KB, the POST method should be used instead, otherwise a 400
-// Bad Request error is returned. This method is used only by the Retail API
-// JavaScript pixel and Google Tag Manager. Users should not call this method
-// directly.
+// Bad Request error is returned. This method is used only by the AI Commerce
+// Search API JavaScript pixel and Google Tag Manager. Users should not call
+// this method directly.
 //
 //   - parent: The parent catalog name, such as
 //     `projects/1234/locations/global/catalogs/default_catalog`.

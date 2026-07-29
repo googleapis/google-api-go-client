@@ -2730,8 +2730,10 @@ type Address struct {
 	// It supports the following cases:
 	//
 	//    -
-	//      Case 1: PublicDelegatedPrefix (PDP) for BYOIP external IPv4
-	//      addresses. The PDP must support enhanced IPv4 allocations.
+	//      Case 1: PublicDelegatedPrefix (PDP) for BYOIP external
+	//      addresses. If an IPv4 PDP is used, the PDP must support enhanced IPv4
+	//      allocations. If an IPv6 PDP is used, the PDP must be in
+	//      EXTERNAL_IPV6_FORWARDING_RULE_CREATION mode.
 	//    -
 	//      Case 2: Internal Range for global internal addresses.
 	//
@@ -2865,6 +2867,13 @@ type Address struct {
 	//      used to configure Private Service Connect. Only global internal
 	// addresses
 	//      can use this purpose.
+	//      - `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0` for addresses
+	//      that can only be assigned to global external Passthrough Network Load
+	//      Balancer forwarding rules, as an Availability Group 0 address.
+	//      - `PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1` for addresses that
+	//      can only be assigned to global external Passthrough Network Load
+	// Balancer
+	//      forwarding rules, as an Availability Group 1 address.
 	//
 	// Possible values:
 	//   "DNS_RESOLVER" - DNS resolver address in the subnetwork.
@@ -2876,7 +2885,7 @@ type Address struct {
 	// of subnet/route in the VPC network and its peering networks. After the
 	// VLAN attachment is created with the reserved IP address range, when
 	// creating a new VPN gateway, its interface IP address is allocated
-	// from the associated VLAN attachment’s IP address range.
+	// from the associated VLAN attachment's IP address range.
 	//   "NAT_AUTO" - External IP automatically reserved for Cloud NAT.
 	//   "PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0" - The global external
 	// address can only be assigned to Global External
@@ -4184,8 +4193,57 @@ type AttachedDiskInitializeParams struct {
 	// boot disks, the default size is the size of the sourceImage.
 	// If you do not specify a sourceImage, the default disk size
 	// is 500 GB.
-	DiskSizeGb int64  `json:"diskSizeGb,omitempty,string"`
-	DiskType   string `json:"diskType,omitempty"`
+	DiskSizeGb int64 `json:"diskSizeGb,omitempty,string"`
+	// DiskType: Specifies the disk type used for the boot disk or an additional
+	// data
+	// disk. For valid disk type values, see
+	// Supported types for Hyperdisk volumes and
+	// Persistent Disk type variables.
+	//
+	// When creating a single instance, you must provide either the full or
+	// partial URL of the disk type. For example, the following values are
+	// valid:
+	//
+	//
+	//      -
+	// https://www.googleapis.com/compute/v1/projects/project/zones/zone/diskTypes/diskType
+	//      - projects/project/zones/zone/diskTypes/diskType
+	//      - zones/zone/diskTypes/diskType
+	//
+	//
+	//
+	// When creating an instance template, instance flexibility policy, or
+	// when
+	// creating or updating an all-instances configuration, you specify the
+	// disk type without a URL, for example, hyperdisk-balanced.
+	//
+	// If you omit this field for a disk, the default disk type depends on
+	// the instance's machine series, as follows.
+	//
+	//
+	//     - For first- and second-generation machine series like N1, N2, T2, and
+	//     M1, the
+	//        default disk type is Standard Persistent Disk
+	//        (pd-standard).
+	//     - For C3, C3D, and M3 the default is Balanced Persistent Disk
+	//     (pd-balanced).
+	//    - For other third-generation machine
+	//     series like A3, H3, Z3, all
+	//         fourth-generation types like C4, N4, M4, and newer machine series,
+	//         the default is Hyperdisk Balanced
+	//         (hyperdisk-balanced).
+	//
+	//
+	//
+	// The disk type you specify must be compatible with the instance's
+	// machine
+	// series. For a list of machine series that support Persistent Disk, see
+	// Machine
+	// series support for Persistent Disk.
+	//
+	// For a list of machine series that support Hyperdisk, seeMachine
+	// series support for Hyperdisk.
+	DiskType string `json:"diskType,omitempty"`
 	// EnableConfidentialCompute: Whether this disk is using confidential compute
 	// mode.
 	EnableConfidentialCompute bool `json:"enableConfidentialCompute,omitempty"`
@@ -7899,7 +7957,14 @@ type BackendService struct {
 	//
 	// Can only be set if load balancing scheme is
 	// EXTERNAL_MANAGED,
-	// INTERNAL_MANAGED or INTERNAL_SELF_MANAGED and the scope is global.
+	// INTERNAL_MANAGED or INTERNAL_SELF_MANAGED for a global backend service,
+	// and
+	// EXTERNAL_MANAGED or INTERNAL_MANAGED for a regional backend service. For
+	// a
+	// global backend service, the service lb policy must be global. For a
+	// regional backend service, the service lb policy must be regional and in
+	// the
+	// same region.
 	ServiceLbPolicy string `json:"serviceLbPolicy,omitempty"`
 	// SessionAffinity: Type of session affinity to use. The default is NONE.
 	//
@@ -12278,6 +12343,7 @@ type Commitment struct {
 	// and 12TB of memory.
 	//   "MEMORY_OPTIMIZED_X4_960_16T" - CUD bucket for X4 machine with 960 vCPUs
 	// and 16TB of memory.
+	//   "NETWORK_OPTIMIZED_C4N" - CUD bucket for C4N (dual Diorite) machines.
 	//   "STORAGE_OPTIMIZED_Z3"
 	//   "TYPE_UNSPECIFIED" - Note for internal users: When adding a new enum Type
 	// for v1, make sure
@@ -14171,7 +14237,9 @@ type CustomerEncryptionKey struct {
 	//
 	// "kmsKeyServiceAccount": "name@project_id.iam.gserviceaccount.com/
 	KmsKeyServiceAccount string `json:"kmsKeyServiceAccount,omitempty"`
-	// RawKey: Specifies a 256-bit customer-supplied
+	// RawKey: [DEPRECATED] CSEK is no longer supported. Use CMEK
+	// instead.
+	// Specifies a 256-bit customer-supplied
 	// encryption key, encoded in RFC
 	// 4648 base64 to either encrypt or decrypt this resource. You can
 	// provide either the rawKey or thersaEncryptedKey.
@@ -14180,8 +14248,9 @@ type CustomerEncryptionKey struct {
 	// "rawKey":
 	// "SGVsbG8gZnJvbSBHb29nbGUgQ2xvdWQgUGxhdGZvcm0="
 	RawKey string `json:"rawKey,omitempty"`
-	// RsaEncryptedKey: Specifies an RFC 4648 base64 encoded, RSA-wrapped
-	// 2048-bit
+	// RsaEncryptedKey: [DEPRECATED] CSEK is no longer supported. Use CMEK
+	// instead.
+	// Specifies an RFC 4648 base64 encoded, RSA-wrapped 2048-bit
 	// customer-supplied encryption key to either encrypt or decrypt this
 	// resource. You can provide either the rawKey or thersaEncryptedKey.
 	// For
@@ -14207,7 +14276,8 @@ type CustomerEncryptionKey struct {
 	//
 	// https://cloud-certs.storage.googleapis.com/google-cloud-csek-ingress.pem
 	RsaEncryptedKey string `json:"rsaEncryptedKey,omitempty"`
-	// Sha256: [Output only] TheRFC
+	// Sha256: [DEPRECATED] CSEK is no longer supported. Use CMEK instead.
+	// [Output only] TheRFC
 	// 4648 base64 encoded SHA-256 hash of the customer-supplied
 	// encryption key that protects this resource.
 	Sha256 string `json:"sha256,omitempty"`
@@ -23986,7 +24056,7 @@ type HealthCheck struct {
 	// on what other health check fields are supported and what other resources
 	// can use this health check:
 	//
-	//    - SSL, HTTP2, and GRPC protocols are not supported.
+	//    - SSL, HTTP2, GRPC, and GRPC_WITH_TLS protocols are not supported.
 	//    - The TCP request field is not supported.
 	//    - The proxyHeader field for HTTP, HTTPS, and TCP is not
 	//    supported.
@@ -24002,9 +24072,10 @@ type HealthCheck struct {
 	// value than checkIntervalSec.
 	TimeoutSec int64 `json:"timeoutSec,omitempty"`
 	// Type: Specifies the type of the healthCheck, either TCP,SSL, HTTP,
-	// HTTPS,HTTP2 or GRPC. Exactly one of the
-	// protocol-specific health check fields must be specified, which must
-	// matchtype field.
+	// HTTPS,HTTP2, GRPC or GRPC_WITH_TLS.
+	// Exactly one of the protocol-specific health check fields must be
+	// specified,
+	// which must match type field.
 	//
 	// Possible values:
 	//   "GRPC"
@@ -50336,7 +50407,7 @@ type NetworkProfileNetworkFeatures struct {
 	// of subnet/route in the VPC network and its peering networks. After the
 	// VLAN attachment is created with the reserved IP address range, when
 	// creating a new VPN gateway, its interface IP address is allocated
-	// from the associated VLAN attachment’s IP address range.
+	// from the associated VLAN attachment's IP address range.
 	//   "NAT_AUTO" - External IP automatically reserved for Cloud NAT.
 	//   "PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0" - The global external
 	// address can only be assigned to Global External
@@ -57623,6 +57694,13 @@ func (s Project) MarshalJSON() ([]byte, error) {
 // globally.
 type ProjectView struct {
 	// Project: The project data.
+	// The returned Project data does not contain regional or zonal quota
+	// usage data. Global quota limits are present. For accurate, real-time
+	// quota
+	// usage numbers, query the global
+	// projects.get
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/projects/get)
+	// endpoint.
 	Project *Project `json:"project,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -62298,6 +62376,7 @@ func (s ReliabilityRisk) MarshalJSON() ([]byte, error) {
 // ReliabilityRisksListResponse: Response message for the List method of
 // ReliabilityRisksService.
 type ReliabilityRisksListResponse struct {
+	// Etag: [Output Only] An ETag of the resource.
 	Etag string `json:"etag,omitempty"`
 	// Id: [Output Only] Unique identifier for the resource; defined by the server.
 	Id string `json:"id,omitempty"`
@@ -66018,6 +66097,12 @@ type ResourceStatusPhysicalHostTopologyAdditionalAttributes struct {
 	// The key will be topologies like "4x4", "2x2x2" and the value will be
 	// the location ID of the topologies.
 	AcceleratorTopologyIds map[string]string `json:"acceleratorTopologyIds,omitempty"`
+	// NetworkTopologyIds: Output only. Key-value store for arbitrary network
+	// topology identifiers
+	// defined by the underlying infrastructure.
+	// The key will be the topology label and the value will be the location
+	// ID for the topology.
+	NetworkTopologyIds map[string]string `json:"networkTopologyIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceleratorTopologyIds") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -66075,6 +66160,10 @@ type ResourceStatusScheduling struct {
 	// must be a number between 1 and the number of availability domains
 	// specified in the spread placement policy attached to the instance.
 	AvailabilityDomain int64 `json:"availabilityDomain,omitempty"`
+	// GracefulShutdownTimestamp: Output only. Specifies the timestamp, when the
+	// instance will start graceful shutdown
+	// process, in RFC3339 text format.
+	GracefulShutdownTimestamp string `json:"gracefulShutdownTimestamp,omitempty"`
 	// TerminationTimestamp: Time in future when the instance will be terminated
 	// inRFC3339 text format.
 	TerminationTimestamp string `json:"terminationTimestamp,omitempty"`
@@ -69450,6 +69539,9 @@ type RouterStatusBgpPeerStatus struct {
 	// AdvertisedRoutes: Routes that were advertised to the remote BGP peer
 	AdvertisedRoutes []*Route   `json:"advertisedRoutes,omitempty"`
 	BfdStatus        *BfdStatus `json:"bfdStatus,omitempty"`
+	// Depreferenced: Output only. [Output Only] Indicates whether the BGP peer is
+	// in a depreferenced state.
+	Depreferenced bool `json:"depreferenced,omitempty"`
 	// EnableIpv4: Output only. Enable IPv4 traffic over BGP Peer.
 	// It is enabled by default if the peerIpAddress is version 4.
 	EnableIpv4 bool `json:"enableIpv4,omitempty"`
@@ -70861,10 +70953,9 @@ type Scheduling struct {
 	// Cycle for more information on the possible instance states.
 	Preemptible bool `json:"preemptible,omitempty"`
 	// PreemptionNoticeDuration: Specifies the Metadata Service preemption notice
-	// duration before the  GCE ACPI G2 Soft
-	//  Off signal is triggered for Spot
-	//  VMs only. If not specified, there will be no wait before the G2 Soft
-	//  Off signal is triggered.
+	// duration before the GCE ACPI G2
+	// Soft Off signal is triggered for Spot VMs only. If not specified,
+	// there will be no wait before the G2 Soft Off signal is triggered.
 	PreemptionNoticeDuration *Duration `json:"preemptionNoticeDuration,omitempty"`
 	// ProvisioningModel: Specifies the provisioning model of the instance.
 	//
@@ -77698,8 +77789,8 @@ type StoragePool struct {
 	// when you
 	// create the resource.
 	Description string `json:"description,omitempty"`
-	// ExapoolProvisionedCapacityGb: Output only. [Output Only] Provisioned
-	// capacities for each SKU for this Exapool in GiB
+	// ExapoolProvisionedCapacityGb: Provisioned capacities for each SKU for this
+	// Exapool in GiB
 	ExapoolProvisionedCapacityGb *StoragePoolExapoolProvisionedCapacityGb `json:"exapoolProvisionedCapacityGb,omitempty"`
 	// Id: Output only. [Output Only] The unique identifier for the resource. This
 	// identifier is
@@ -77774,6 +77865,8 @@ type StoragePool struct {
 	// SelfLinkWithId: Output only. [Output Only] Server-defined URL for this
 	// resource's resource id.
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// ShareSettings: Share settings for the storage pool.
+	ShareSettings *StoragePoolShareSettings `json:"shareSettings,omitempty"`
 	// State: Output only. [Output Only] The status of storage pool creation.
 	//
 	//
@@ -78572,6 +78665,53 @@ type StoragePoolResourceStatus struct {
 
 func (s StoragePoolResourceStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod StoragePoolResourceStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StoragePoolShareSettings: Share settings for the storage pool.
+type StoragePoolShareSettings struct {
+	// ProjectMap: A map of project id and project config.
+	ProjectMap map[string]StoragePoolShareSettingsProjectConfig `json:"projectMap,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProjectMap") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProjectMap") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StoragePoolShareSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod StoragePoolShareSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StoragePoolShareSettingsProjectConfig: Config for each project in the share
+// settings.
+type StoragePoolShareSettingsProjectConfig struct {
+	// ProjectId: The project ID, should be same as the key of this project config
+	// in the
+	// parent map.
+	ProjectId string `json:"projectId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProjectId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StoragePoolShareSettingsProjectConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StoragePoolShareSettingsProjectConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

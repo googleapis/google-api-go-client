@@ -789,18 +789,21 @@ func (s ReportStateAndNotificationRequest) MarshalJSON() ([]byte, error) {
 // `ReportStateAndNotification`
 // (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification) call.
 type ReportStateAndNotificationResponse struct {
+	// DeviceResults: Map from agent device ID to the result of reporting state and
+	// notifications. This is only populated for UDDM updates for now.
+	DeviceResults map[string]Result `json:"deviceResults,omitempty"`
 	// RequestId: Request ID copied from ReportStateAndNotificationRequest.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// ForceSendFields is a list of field names (e.g. "DeviceResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// NullFields is a list of field names (e.g. "DeviceResults") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -846,6 +849,29 @@ func (s RequestSyncDevicesRequest) MarshalJSON() ([]byte, error) {
 type RequestSyncDevicesResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Result: Result of reporting state and notifications for a single device.
+type Result struct {
+	// HomeTraitCommitTime: The trait commit timestamp of the state update in Home
+	// Graph.
+	HomeTraitCommitTime string `json:"homeTraitCommitTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HomeTraitCommitTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HomeTraitCommitTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Result) MarshalJSON() ([]byte, error) {
+	type NoMethod Result
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // StateAndNotificationPayload: Payload containing the state and notification

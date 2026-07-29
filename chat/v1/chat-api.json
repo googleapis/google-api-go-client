@@ -17,6 +17,15 @@
         "https://www.googleapis.com/auth/chat.admin.spaces.readonly": {
           "description": "View display name, description, and other metadata for all Google Chat conversations owned by your organization"
         },
+        "https://www.googleapis.com/auth/chat.app.all.memberships.readonly": {
+          "description": "On their own behalf, apps in Google Chat can see all members in Google Chat spaces and conversations throughout your Workspace organization, even when the Chat app isn't a member"
+        },
+        "https://www.googleapis.com/auth/chat.app.all.messages.readonly": {
+          "description": "On their own behalf, apps in Google Chat can see all messages and reactions throughout your Workspace organization, even when the Chat app isn't a member of a space or conversation"
+        },
+        "https://www.googleapis.com/auth/chat.app.all.spaces.readonly": {
+          "description": "On their own behalf, apps in Google Chat can see metadata about all spaces and conversations in Google Chat throughout your Workspace organization, even when the Chat app isn't a member"
+        },
         "https://www.googleapis.com/auth/chat.app.delete": {
           "description": "On their own behalf, apps in Google Chat can delete conversations and spaces and remove access to associated files"
         },
@@ -1387,6 +1396,9 @@
                 "$ref": "SpaceEvent"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/chat.app.all.memberships.readonly",
+                "https://www.googleapis.com/auth/chat.app.all.messages.readonly",
+                "https://www.googleapis.com/auth/chat.app.all.spaces.readonly",
                 "https://www.googleapis.com/auth/chat.app.memberships",
                 "https://www.googleapis.com/auth/chat.app.memberships.readonly",
                 "https://www.googleapis.com/auth/chat.app.messages.readonly",
@@ -1440,6 +1452,9 @@
                 "$ref": "ListSpaceEventsResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/chat.app.all.memberships.readonly",
+                "https://www.googleapis.com/auth/chat.app.all.messages.readonly",
+                "https://www.googleapis.com/auth/chat.app.all.spaces.readonly",
                 "https://www.googleapis.com/auth/chat.app.memberships",
                 "https://www.googleapis.com/auth/chat.app.memberships.readonly",
                 "https://www.googleapis.com/auth/chat.app.messages.readonly",
@@ -2008,7 +2023,7 @@
       }
     }
   },
-  "revision": "20260714",
+  "revision": "20260723",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessPermissionSetting": {

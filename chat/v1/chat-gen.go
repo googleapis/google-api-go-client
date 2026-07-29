@@ -122,6 +122,21 @@ const (
 	// conversations owned by your organization
 	ChatAdminSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.admin.spaces.readonly"
 
+	// On their own behalf, apps in Google Chat can see all members in Google Chat
+	// spaces and conversations throughout your Workspace organization, even when
+	// the Chat app isn't a member
+	ChatAppAllMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.memberships.readonly"
+
+	// On their own behalf, apps in Google Chat can see all messages and reactions
+	// throughout your Workspace organization, even when the Chat app isn't a
+	// member of a space or conversation
+	ChatAppAllMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.messages.readonly"
+
+	// On their own behalf, apps in Google Chat can see metadata about all spaces
+	// and conversations in Google Chat throughout your Workspace organization,
+	// even when the Chat app isn't a member
+	ChatAppAllSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.spaces.readonly"
+
 	// On their own behalf, apps in Google Chat can delete conversations and spaces
 	// and remove access to associated files
 	ChatAppDeleteScope = "https://www.googleapis.com/auth/chat.app.delete"
@@ -237,6 +252,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.admin.memberships.readonly",
 		"https://www.googleapis.com/auth/chat.admin.spaces",
 		"https://www.googleapis.com/auth/chat.admin.spaces.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.memberships.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.messages.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.spaces.readonly",
 		"https://www.googleapis.com/auth/chat.app.delete",
 		"https://www.googleapis.com/auth/chat.app.memberships",
 		"https://www.googleapis.com/auth/chat.app.memberships.readonly",

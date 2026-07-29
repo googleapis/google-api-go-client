@@ -3463,19 +3463,10 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	CreateEuaSaas bool `json:"createEuaSaas,omitempty"`
 	// CreateTime: Output only. Timestamp the DataConnector was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataSource: Required. The identifier for the data source. This is a partial
-	// list of supported connectors. Please refer to the documentation
-	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores)
-	// for the full list of connectors. Supported first-party connectors include: *
-	// `gcs` * `bigquery` * `gcp_fhir` * `google_mail` * `google_drive` *
-	// `google_calendar` * `google_chat` Supported third-party connectors include:
-	// Generally available (GA) connectors: * `onedrive` * `outlook` * `confluence`
-	// * `jira` * `servicenow` * `sharepoint` Preview connectors: * `asana` *
-	// `azure_active_directory` * `box` * `canva` * `confluence_server` *
-	// `custom_connector` * `docusign` * `dropbox` * `dynamics365` * `github` *
-	// `gitlab` * `hubspot` * `jira_server` * `linear` * `native_cloud_identity` *
-	// `notion` * `okta` * `pagerduty` * `peoplesoft` * `salesforce` * `shopify` *
-	// `slack` * `snowflake` * `teams` * `trello` * `workday` * `zendesk`
+	// DataSource: Required. The identifier for the data source. For the full,
+	// up-to-date list of supported connectors and their values, see Connect a
+	// third-party data source
+	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/connect-third-party-data-source#sources-by-launch-stage).
 	DataSource string `json:"dataSource,omitempty"`
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
@@ -3544,6 +3535,9 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// data synchronization job will be canceled. - No future data synchronization
 	// runs will be scheduled nor can be triggered.
 	LatestPauseTime string `json:"latestPauseTime,omitempty"`
+	// Metadata: Optional. User-facing metadata for the connector. Populated from
+	// the connector's generated metadata / registry `ConnectorSource`.
+	Metadata *GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata `json:"metadata,omitempty"`
 	// Name: Identifier. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
@@ -3662,6 +3656,47 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 
 func (s GoogleCloudDiscoveryengineV1DataConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1DataConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata: User-facing
+// metadata for the connector, shown on the connector detail page (title,
+// description, short_description, author, authenticated_account, note).
+type GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata struct {
+	// AuthenticatedAccount: Optional. The end user's account as authenticated to
+	// the connector, so the end user can see which account is connected. May be an
+	// email, a username, or any identifier the connector/third party provides.
+	AuthenticatedAccount string `json:"authenticatedAccount,omitempty"`
+	// Author: Optional. The party that authored the connector, e.g. "Google" or a
+	// third-party provider name. Lets end users see who authored a connector
+	// (future: third-party-authored connectors).
+	Author string `json:"author,omitempty"`
+	// Description: Optional. Human-readable description of the connector, shown on
+	// the connector detail page. One connector has a single description.
+	Description string `json:"description,omitempty"`
+	// Note: Optional. Free-form, multi-line note about the connector's
+	// capabilities or a custom note that can be set for the connector.
+	Note string `json:"note,omitempty"`
+	// ShortDescription: Optional. Short, subtitle-length description of the
+	// connector (e.g. shown beneath the connector name in list and detail views).
+	ShortDescription string `json:"shortDescription,omitempty"`
+	// Title: Optional. Display title of the connector.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticatedAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticatedAccount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6411,7 +6446,9 @@ func (s GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsMetadata) MarshalJ
 }
 
 // GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsResponse: Response
-// message for CompletionService.PurgeCompletionSuggestions method.
+// message for CompletionService.PurgeCompletionSuggestions method. If the long
+// running operation is successfully done, then this message is returned by the
+// google.longrunning.Operations.response field.
 type GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsResponse struct {
 	// ErrorSamples: A sample of errors encountered while processing the request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
@@ -11175,19 +11212,10 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
 	// connector.
 	DataProtectionPolicy *GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
-	// DataSource: Required. The identifier for the data source. This is a partial
-	// list of supported connectors. Please refer to the documentation
-	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores)
-	// for the full list of connectors. Supported first-party connectors include: *
-	// `gcs` * `bigquery` * `gcp_fhir` * `google_mail` * `google_drive` *
-	// `google_calendar` * `google_chat` Supported third-party connectors include:
-	// Generally available (GA) connectors: * `onedrive` * `outlook` * `confluence`
-	// * `jira` * `servicenow` * `sharepoint` Preview connectors: * `asana` *
-	// `azure_active_directory` * `box` * `canva` * `confluence_server` *
-	// `custom_connector` * `docusign` * `dropbox` * `dynamics365` * `github` *
-	// `gitlab` * `hubspot` * `jira_server` * `linear` * `native_cloud_identity` *
-	// `notion` * `okta` * `pagerduty` * `peoplesoft` * `salesforce` * `shopify` *
-	// `slack` * `snowflake` * `teams` * `trello` * `workday` * `zendesk`
+	// DataSource: Required. The identifier for the data source. For the full,
+	// up-to-date list of supported connectors and their values, see Connect a
+	// third-party data source
+	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/connect-third-party-data-source#sources-by-launch-stage).
 	DataSource string `json:"dataSource,omitempty"`
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
@@ -11256,6 +11284,9 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// data synchronization job will be canceled. - No future data synchronization
 	// runs will be scheduled nor can be triggered.
 	LatestPauseTime string `json:"latestPauseTime,omitempty"`
+	// Metadata: Optional. User-facing metadata for the connector. Populated from
+	// the connector's generated metadata / registry `ConnectorSource`.
+	Metadata *GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata `json:"metadata,omitempty"`
 	// Name: Identifier. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
@@ -11374,6 +11405,47 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata: User-facing
+// metadata for the connector, shown on the connector detail page (title,
+// description, short_description, author, authenticated_account, note).
+type GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata struct {
+	// AuthenticatedAccount: Optional. The end user's account as authenticated to
+	// the connector, so the end user can see which account is connected. May be an
+	// email, a username, or any identifier the connector/third party provides.
+	AuthenticatedAccount string `json:"authenticatedAccount,omitempty"`
+	// Author: Optional. The party that authored the connector, e.g. "Google" or a
+	// third-party provider name. Lets end users see who authored a connector
+	// (future: third-party-authored connectors).
+	Author string `json:"author,omitempty"`
+	// Description: Optional. Human-readable description of the connector, shown on
+	// the connector detail page. One connector has a single description.
+	Description string `json:"description,omitempty"`
+	// Note: Optional. Free-form, multi-line note about the connector's
+	// capabilities or a custom note that can be set for the connector.
+	Note string `json:"note,omitempty"`
+	// ShortDescription: Optional. Short, subtitle-length description of the
+	// connector (e.g. shown beneath the connector name in list and detail views).
+	ShortDescription string `json:"shortDescription,omitempty"`
+	// Title: Optional. Display title of the connector.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticatedAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticatedAccount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15175,7 +15247,9 @@ func (s GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsMetadata) Mar
 }
 
 // GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsResponse:
-// Response message for CompletionService.PurgeCompletionSuggestions method.
+// Response message for CompletionService.PurgeCompletionSuggestions method. If
+// the long running operation is successfully done, then this message is
+// returned by the google.longrunning.Operations.response field.
 type GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsResponse struct {
 	// ErrorSamples: A sample of errors encountered while processing the request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
@@ -18464,11 +18538,10 @@ func (s GoogleCloudDiscoveryengineV1alphaUserInfo) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation: Precise location
-// info with multiple representation options. Currently only latitude and
-// longitude point is supported.
+// info with multiple representation options.
 type GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation struct {
-	// Address: Optional. Location represented by a natural language address. Will
-	// later be geocoded and converted to either a point or a polygon.
+	// Address: Location represented by a natural language address. Will later be
+	// geocoded and converted to either a point or a polygon.
 	Address string `json:"address,omitempty"`
 	// Point: Optional. Location represented by a latitude/longitude point.
 	Point *GoogleTypeLatLng `json:"point,omitempty"`
@@ -34350,11 +34423,10 @@ func (s GoogleCloudDiscoveryengineV1betaUserInfo) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation: Precise location
-// info with multiple representation options. Currently only latitude and
-// longitude point is supported.
+// info with multiple representation options.
 type GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation struct {
-	// Address: Optional. Location represented by a natural language address. Will
-	// later be geocoded and converted to either a point or a polygon.
+	// Address: Location represented by a natural language address. Will later be
+	// geocoded and converted to either a point or a polygon.
 	Address string `json:"address,omitempty"`
 	// Point: Optional. Location represented by a latitude/longitude point.
 	Point *GoogleTypeLatLng `json:"point,omitempty"`

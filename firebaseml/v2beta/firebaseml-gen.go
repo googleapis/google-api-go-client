@@ -332,6 +332,129 @@ func (s GoogleCloudAiplatformV1beta1AudioResponseFormat) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1AudioTranscription: The transcription of an
+// audio part. For multi-speaker audio, each speaker segment is a separate Part
+// with its own AudioTranscription carrying the speaker_label.
+type GoogleCloudAiplatformV1beta1AudioTranscription struct {
+	// SpeakerLabel: Optional. A label identifying the speaker of this audio
+	// segment (e.g. "spk_1", "spk_2"). Present when diarization is set.
+	SpeakerLabel string `json:"speakerLabel,omitempty"`
+	// Text: Required. The transcription text of this audio segment.
+	Text string `json:"text,omitempty"`
+	// Words: Optional. Detailed word-level transcriptions and timing details.
+	// Present when word_timestamp is set.
+	Words []*GoogleCloudAiplatformV1beta1AudioTranscriptionWordInfo `json:"words,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SpeakerLabel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SpeakerLabel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AudioTranscription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AudioTranscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AudioTranscriptionConfig: Configuration for
+// speech recognition (transcription).
+type GoogleCloudAiplatformV1beta1AudioTranscriptionConfig struct {
+	// AdaptationPhrases: Optional. A list of phrases to bias the ASR model
+	// towards.
+	AdaptationPhrases []string `json:"adaptationPhrases,omitempty"`
+	// CustomVocabulary: Optional. A list of custom vocabulary phrases to bias the
+	// speech recognition model toward recognizing specific terms.
+	CustomVocabulary []string `json:"customVocabulary,omitempty"`
+	// Diarization: Optional. Configures speaker diarization.
+	Diarization bool `json:"diarization,omitempty"`
+	// LanguageAuto: Optional. The model will detect the language automatically.
+	LanguageAuto *GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageAuto `json:"languageAuto,omitempty"`
+	// LanguageHints: Optional. Specifies one or more languages in the audio.
+	LanguageHints *GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints `json:"languageHints,omitempty"`
+	// WordTimestamp: Optional. Configures word-level timestamp generation.
+	WordTimestamp bool `json:"wordTimestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdaptationPhrases") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdaptationPhrases") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AudioTranscriptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AudioTranscriptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageAuto: Indicates
+// the language of the audio should be automatically detected.
+type GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageAuto struct {
+}
+
+// GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints: Provides
+// hints to the model about possible languages present in the audio.
+type GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints struct {
+	// LanguageCodes: Required. BCP-47 language codes. At least one must be
+	// specified.
+	LanguageCodes []string `json:"languageCodes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LanguageCodes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1AudioTranscriptionWordInfo: Information about a
+// single recognized word.
+type GoogleCloudAiplatformV1beta1AudioTranscriptionWordInfo struct {
+	// EndOffset: Optional. End offset in time of the word relative to the start of
+	// the audio.
+	EndOffset string `json:"endOffset,omitempty"`
+	// StartOffset: Optional. Start offset in time of the word relative to the
+	// start of the audio.
+	StartOffset string `json:"startOffset,omitempty"`
+	// Word: Required. Transcript of the word.
+	Word string `json:"word,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndOffset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndOffset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1AudioTranscriptionWordInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1AudioTranscriptionWordInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1AuthConfig: Auth configuration to run the
 // extension.
 type GoogleCloudAiplatformV1beta1AuthConfig struct {
@@ -737,6 +860,9 @@ func (s GoogleCloudAiplatformV1beta1CitationMetadata) MarshalJSON() ([]byte, err
 // GoogleCloudAiplatformV1beta1CodeExecutionResult: Result of executing the
 // ExecutableCode. Generated only when the `CodeExecution` tool is used.
 type GoogleCloudAiplatformV1beta1CodeExecutionResult struct {
+	// Id: Optional. The identifier of the `ExecutableCode` part this result is
+	// for. Only populated if the corresponding `ExecutableCode` has an id.
+	Id string `json:"id,omitempty"`
 	// Outcome: Required. Outcome of the code execution.
 	//
 	// Possible values:
@@ -751,15 +877,15 @@ type GoogleCloudAiplatformV1beta1CodeExecutionResult struct {
 	// Output: Optional. Contains stdout when code execution is successful, stderr
 	// or other description otherwise.
 	Output string `json:"output,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Outcome") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Outcome") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -966,6 +1092,9 @@ func (s GoogleCloudAiplatformV1beta1EnterpriseWebSearch) MarshalJSON() ([]byte, 
 type GoogleCloudAiplatformV1beta1ExecutableCode struct {
 	// Code: Required. The code to be executed.
 	Code string `json:"code,omitempty"`
+	// Id: Optional. Unique identifier of the `ExecutableCode` part. The server
+	// returns the `CodeExecutionResult` with the matching `id`.
+	Id string `json:"id,omitempty"`
 	// Language: Required. Programming language of the `code`.
 	//
 	// Possible values:
@@ -1622,6 +1751,9 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	// the request to the model. This can be useful for synchronizing audio with
 	// other modalities in the response.
 	AudioTimestamp bool `json:"audioTimestamp,omitempty"`
+	// AudioTranscriptionConfig: Optional. Config for audio transcription (speech
+	// recognition).
+	AudioTranscriptionConfig *GoogleCloudAiplatformV1beta1AudioTranscriptionConfig `json:"audioTranscriptionConfig,omitempty"`
 	// CandidateCount: Optional. The number of candidate responses to generate. A
 	// higher `candidate_count` can provide more options to choose from, but it
 	// also consumes more resources. This can be useful for generating a variety of
@@ -1954,6 +2086,9 @@ type GoogleCloudAiplatformV1beta1GoogleMaps struct {
 	// planned for removal and no longer has any effect once removed. If true,
 	// include the widget context token in the response.
 	EnableWidget bool `json:"enableWidget,omitempty"`
+	// GroundingTypes: Optional. Specifies the types of Google Maps grounding to
+	// enable. Defaults to `places` when unset.
+	GroundingTypes *GoogleCloudAiplatformV1beta1GoogleMapsGroundingTypes `json:"groundingTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableWidget") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1970,6 +2105,44 @@ type GoogleCloudAiplatformV1beta1GoogleMaps struct {
 func (s GoogleCloudAiplatformV1beta1GoogleMaps) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1GoogleMaps
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GoogleMapsGroundingTypes: Defines the types of
+// Google Maps grounding that can be enabled and their configurations.
+type GoogleCloudAiplatformV1beta1GoogleMapsGroundingTypes struct {
+	// Places: Optional. Enables grounding with Google Maps Places. This is the
+	// default grounding type when no `GroundingTypes` are specified.
+	Places *GoogleCloudAiplatformV1beta1GoogleMapsPlaces `json:"places,omitempty"`
+	// Routing: Optional. Enables grounding with Google Maps Routing APIs
+	// (ComputeRoutes and SearchAlongRoute).
+	Routing *GoogleCloudAiplatformV1beta1GoogleMapsRouting `json:"routing,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Places") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Places") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GoogleMapsGroundingTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GoogleMapsGroundingTypes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GoogleMapsPlaces: Grounding with Google Maps
+// Places data (e.g. QueryPlaces). This is the default Google Maps grounding
+// type when no other type is specified.
+type GoogleCloudAiplatformV1beta1GoogleMapsPlaces struct {
+}
+
+// GoogleCloudAiplatformV1beta1GoogleMapsRouting: Grounding with Google Maps
+// Routing APIs (ComputeRoutes and SearchAlongRoute).
+type GoogleCloudAiplatformV1beta1GoogleMapsRouting struct {
 }
 
 // GoogleCloudAiplatformV1beta1GoogleSearchRetrieval: Tool to retrieve public
@@ -2753,6 +2926,9 @@ func (s GoogleCloudAiplatformV1beta1MultiSpeakerVoiceConfig) MarshalJSON() ([]by
 // IANA MIME type identifying the type and subtype of the media if
 // `inline_data` or `file_data` field is filled with raw bytes.
 type GoogleCloudAiplatformV1beta1Part struct {
+	// AudioTranscription: Optional. Audio (input or output) transcription. This is
+	// only set when this Part contains audio data.
+	AudioTranscription *GoogleCloudAiplatformV1beta1AudioTranscription `json:"audioTranscription,omitempty"`
 	// CodeExecutionResult: Optional. The result of executing the ExecutableCode.
 	CodeExecutionResult *GoogleCloudAiplatformV1beta1CodeExecutionResult `json:"codeExecutionResult,omitempty"`
 	// ExecutableCode: Optional. Code generated by the model that is intended to be
@@ -2788,13 +2964,13 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	// VideoMetadata: Optional. Video metadata. The metadata should only be
 	// specified while the video data is presented in inline_data or file_data.
 	VideoMetadata *GoogleCloudAiplatformV1beta1VideoMetadata `json:"videoMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CodeExecutionResult") to
+	// ForceSendFields is a list of field names (e.g. "AudioTranscription") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CodeExecutionResult") to include
+	// NullFields is a list of field names (e.g. "AudioTranscription") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

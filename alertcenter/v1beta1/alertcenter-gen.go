@@ -2008,6 +2008,7 @@ type RuleViolationInfo struct {
 	// between different file systems on ChromeOS.
 	//   "GEMINI_ACCESS" - Gemini access.
 	//   "AGENT_EXECUTION" - Agent execution.
+	//   "CHROME_DATA_COPIED" - Text copied from Chrome.
 	Trigger string `json:"trigger,omitempty"`
 	// TriggeredActionInfo: Metadata related to the triggered actions.
 	TriggeredActionInfo []*ActionInfo `json:"triggeredActionInfo,omitempty"`

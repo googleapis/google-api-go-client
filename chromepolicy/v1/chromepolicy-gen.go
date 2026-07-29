@@ -1817,7 +1817,7 @@ func (s Proto2FieldDescriptorProto) MarshalJSON() ([]byte, error) {
 
 // Proto2FileDescriptorProto: Describes a complete .proto file.
 type Proto2FileDescriptorProto struct {
-	// EditionDeprecated: copybara:strip_begin TODO(b/297898292) Deprecate and
+	// EditionDeprecated: copybara:strip_begin TODO(b/538805613) Deprecate and
 	// remove this field in favor of enums. copybara:strip_end
 	EditionDeprecated string                       `json:"editionDeprecated,omitempty"`
 	EnumType          []*Proto2EnumDescriptorProto `json:"enumType,omitempty"`

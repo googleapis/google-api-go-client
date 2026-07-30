@@ -7620,6 +7620,28 @@ func (r *UsersSettingsCseKeypairsService) Create(userId string, csekeypair *CseK
 	return c
 }
 
+// ChainValidation sets the optional parameter "chainValidation": The type of
+// certificate chain validation to perform at creation. The request will be
+// rejected if the uploaded chain fails to satisfy the requested validation
+// checks. When unspecified, this parameter defaults to `all`.
+//
+// Possible values:
+//
+//	"all" (default) - Enable all certificate chain validation and certificate
+//
+// revocation checks. Recommended for normal use.
+//
+//	"none" - Disable all certificate chain validation and certificate
+//
+// revocation checks. This may be useful when deliberately creating key pairs
+// with invalid, out-of-use certificate chains to be used only for decryption
+// of historical S/MIME messages. Key pairs created with invalid or revoked
+// certificates cannot be used in a CseIdentity object.
+func (c *UsersSettingsCseKeypairsCreateCall) ChainValidation(chainValidation string) *UsersSettingsCseKeypairsCreateCall {
+	c.urlParams_.Set("chainValidation", chainValidation)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.

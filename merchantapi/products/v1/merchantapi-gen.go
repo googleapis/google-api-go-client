@@ -953,6 +953,41 @@ func (s ItemLevelIssue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LeaseTerm: The lease term of the property.
+type LeaseTerm struct {
+	// DurationUnit: The duration unit of the lease term.
+	//
+	// Possible values:
+	//   "DURATION_UNIT_UNSPECIFIED" - Unspecified duration unit.
+	//   "MONTHS" - Month.
+	//   "WEEKS" - Week.
+	DurationUnit string `json:"durationUnit,omitempty"`
+	// DurationValue: The duration value of the lease term.
+	DurationValue int64 `json:"durationValue,omitempty,string"`
+	// Type: The type of lease term.
+	//
+	// Possible values:
+	//   "LEASE_TERM_TYPE_UNSPECIFIED" - Unspecified lease term type.
+	//   "FIXED_TERM" - Fixed term.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DurationUnit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DurationUnit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LeaseTerm) MarshalJSON() ([]byte, error) {
+	type NoMethod LeaseTerm
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListProductsResponse: Response message for the ListProducts method.
 type ListProductsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
@@ -1688,6 +1723,8 @@ type ProductAttributes struct {
 	// Latitude: The latitude of the property. The value must be between -90
 	// (inclusive) and 90 (inclusive), up to 6 decimal places.
 	Latitude float64 `json:"latitude,omitempty"`
+	// LeaseTerm: The lease term of the property.
+	LeaseTerm *LeaseTerm `json:"leaseTerm,omitempty"`
 	// LifestyleImageLinks: Additional URLs of lifestyle images of the item, used
 	// to explicitly identify images that showcase your item in a real-world
 	// context. See the Help Center article

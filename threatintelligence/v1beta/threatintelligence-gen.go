@@ -3034,7 +3034,7 @@ func (c *ProjectsAlertsGetPasswordCall) doRequest(alt string) (*http.Response, e
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:GetPassword")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:getPassword")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, nil)
 	if err != nil {

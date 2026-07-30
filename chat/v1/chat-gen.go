@@ -6430,6 +6430,207 @@ func (s RichLinkMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SearchMessageResult: A single result item from a message search.
+type SearchMessageResult struct {
+	// Message: The matched message.
+	Message *Message `json:"message,omitempty"`
+	// Read: Indicates if the matched message is read by the calling user. Only
+	// returned if the request view is `SEARCH_MESSAGES_VIEW_FULL` and the calling
+	// credentials include one of the following authorization scopes
+	// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+	// - `https://www.googleapis.com/auth/chat.users.readstate.readonly` -
+	// `https://www.googleapis.com/auth/chat.users.readstate`
+	Read bool `json:"read,omitempty"`
+	// SpaceMuteSetting: The mute setting of the calling user for the space where
+	// the message is posted. The caller app can use this information to decide how
+	// to process the message depending on whether the space is muted for the user
+	// or not. Only returned if the request view is `SEARCH_MESSAGES_VIEW_FULL` and
+	// the calling credentials include the following authorization scope
+	// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+	// - `https://www.googleapis.com/auth/chat.users.spacesettings`
+	//
+	// Possible values:
+	//   "MUTE_SETTING_UNSPECIFIED" - Reserved.
+	//   "UNMUTED" - The user will receive notifications for the space based on the
+	// notification setting.
+	//   "MUTED" - The user will not receive any notifications for the space,
+	// regardless of the notification setting.
+	SpaceMuteSetting string `json:"spaceMuteSetting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchMessageResult) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchMessageResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchMessagesRequest: Request message for searching messages.
+type SearchMessagesRequest struct {
+	// Filter: Required. A search query. The query can specify one or more search
+	// keywords, which are used to filter the results, You can also filter the
+	// results using the following message fields: - `create_time`: Accepts a
+	// timestamp in RFC-3339 (https://www.rfc-editor.org/rfc/rfc3339) format and
+	// the supported comparison operators are: `<` and `>=`. - `sender.name`: The
+	// resource name of the sender (`users/{user}`). Only supports `=`. You can use
+	// the e-mail as an alias for `{user}`. For example, `users/example@gmail.com`,
+	// where `example@gmail.com` is the e-mail of the Google Chat user. -
+	// `space.name`: The resource name of the space where the message is posted.
+	// (`spaces/{space}`). Only supports `=`. If this filter is not set, the search
+	// is performed across all direct messages and spaces the user has access to as
+	// a space member. - `space.display_name`: Supports the operator `:` (has) and
+	// filters spaces based on a partial match of their display name. Results are
+	// limited to the top five space matches. For example,
+	// `space.display_name:Project` searches for messages in the top five spaces
+	// that contain the word "Project" in their display names. - `attachment`:
+	// Supports the operator `:*` (has any) to check for the presence of
+	// attachments. If `attachment:*` is specified, only messages that have at
+	// least one attachment are returned. - `annotations.user_mentions.user.name`:
+	// The resource name of the mentioned user (`users/{user}`). Only supports `:`
+	// (has). For example: `annotations.user_mentions.user.name:"users/1234567890"
+	// returns only messages that contain a mention to the specified user.
+	// Alternatively, the alias `me` can be used to filter for messages that
+	// mention the caller user, for example:
+	// `annotations.user_mentions.user.name:users/me`. You can also use the e-mail
+	// as an alias for `{user}`, for example, `users/example@gmail.com`. For
+	// advanced filtering, the following functions are also available: -
+	// `has_link()`: Returns only messages that have at least one hyperlink in the
+	// message text. - `is_unread()`: Filters out messages that have been read by
+	// the calling user. Using the `space.display_name` filter requires that the
+	// calling credentials include one of the following authorization scopes
+	// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+	// - `https://www.googleapis.com/auth/chat.spaces.readonly` -
+	// `https://www.googleapis.com/auth/chat.spaces` Using the `is_unread()` filter
+	// requires that the calling credentials include one of the following
+	// authorization scopes
+	// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+	// - `https://www.googleapis.com/auth/chat.users.readstate.readonly` -
+	// `https://www.googleapis.com/auth/chat.users.readstate` Across different
+	// fields, only `AND` operators are supported. A valid example is `sender.name
+	// = "users/1234567890" AND is_unread()`. The word `AND` is optional and is
+	// implied if omitted. For example, `sender.name = "users/1234567890"
+	// is_unread()` is valid and is equivalent to the previous example. An invalid
+	// example is `sender.name = "users/1234567890" OR is_unread()` because `OR` is
+	// not supported between different fields. Among the same field: -
+	// `create_time` supports only `AND`, and can only be used to represent an
+	// interval, such as `create_time >= "2022-01-01T00:00:00+00:00" AND
+	// create_time < "2023-01-01T00:00:00+00:00". - `sender.name` supports only
+	// the `OR` operator, for example: `sender.name = "users/1234567890" OR
+	// sender.name = "users/0987654321". - `space.name` supports only the `OR`
+	// operator, for example: `space.name = "spaces/ABCDEFGH" OR space.name =
+	// "spaces/QWERTYUI". - `space.display_name` supports the operators `AND` and
+	// `OR`, but not a mix of both. For example: `space.display_name:Project AND
+	// space.display_name:Tasks` returns messages that are in spaces with display
+	// names containing both `Project` and `Tasks`, whereas
+	// `space.display_name:Project OR space.display_name:Tasks` returns messages
+	// that are in spaces with display names containing either `Project` or `Tasks`
+	// or both. - `annotations.user_mentions.user.name` supports the operators
+	// `AND` and `OR`, but not a mix of both. For example:
+	// `annotations.user_mentions.user.name:"users/1234567890" AND
+	// annotations.user_mentions.user.name:"users/0987654321" returns only
+	// messages that mentions both users, whereas
+	// `annotations.user_mentions.user.name:"users/1234567890" OR
+	// annotations.user_mentions.user.name:"users/0987654321" returns messages
+	// that mention either user or both. Parentheses are required to disambiguate
+	// operator precedence when combining `AND` and `OR` operators in the same
+	// query. For example: `(sender.name="users/me" OR sender.name="users/123456")
+	// AND is_unread()`. Otherwise, parentheses are optional. The following example
+	// queries are valid: ``` "Pending reports" AND create_time >=
+	// "2023-01-01T00:00:00Z" sender.name = "users/example@gmail.com"
+	// annotations.user_mentions.user.name:"users/0987654321" attachment:* AND
+	// space.name = "spaces/ABCDEFGH" tasks AND is_unread() AND sender.name =
+	// "users/1234567890" "things to do" "urgent" (sender.name =
+	// "users/1234567890") AND (create_time < "2023-05-01T00:00:00Z") tasks AND
+	// space.name = "spaces/ABCDEFGH" AND has_link() "project one" is_unread()
+	// space.display_name:Project tasks ``` The maximum query length is 1,000
+	// characters. Invalid queries are rejected by the server with an
+	// `INVALID_ARGUMENT` error.
+	Filter string `json:"filter,omitempty"`
+	// OrderBy: Optional. How the results list is ordered. Supported attributes to
+	// order by are: - `create_time`: Sorts the results by the time of the message
+	// creation. Default value. - `relevance`: Sorts the results by relevance.
+	// Developer Preview (https://developers.google.com/workspace/preview). The
+	// default ordering is `create_time desc`. Only a single order per query
+	// (`create_time` or `relevance`) is supported. Only descending order (`desc`)
+	// is supported, and it must be specified after the order attribute.
+	OrderBy string `json:"orderBy,omitempty"`
+	// PageSize: Optional. The maximum number of results to return. The service may
+	// return fewer than this value. If unspecified, at most 25 are returned. The
+	// maximum value is 100. If you use a value more than 100, it's automatically
+	// changed to 100.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. A token, received from the previous search messages
+	// call. Provide this parameter to retrieve the subsequent page. When
+	// paginating, all other parameters provided should match the call that
+	// provided the page token. Passing different values to the other parameters
+	// might lead to unexpected results.
+	PageToken string `json:"pageToken,omitempty"`
+	// View: Optional. Specifies what kind of search results view to return. The
+	// default is `SEARCH_MESSAGES_VIEW_BASIC`.
+	//
+	// Possible values:
+	//   "SEARCH_MESSAGES_VIEW_UNSPECIFIED" - The default / unset value. The API
+	// will default to the BASIC view.
+	//   "SEARCH_MESSAGES_VIEW_BASIC" - Includes only the matched messages in the
+	// results, but no additional metadata. This is the default value.
+	//   "SEARCH_MESSAGES_VIEW_FULL" - Includes everything in the results: the
+	// matched messages and additional metadata.
+	View string `json:"view,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchMessagesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchMessagesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchMessagesResponse: Response message for searching messages.
+type SearchMessagesResponse struct {
+	// NextPageToken: A token that can be used to retrieve the next page. If this
+	// field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Results: The list of search results that matched the query.
+	Results []*SearchMessageResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchMessagesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchMessagesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchSpacesResponse: Response with a list of spaces corresponding to the
 // search spaces request.
 type SearchSpacesResponse struct {
@@ -11694,6 +11895,151 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messages.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type SpacesMessagesSearchCall struct {
+	s                     *Service
+	parent                string
+	searchmessagesrequest *SearchMessagesRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Search: Searches for messages in Google Chat that the calling user has
+// access to. Returns a list of messages matching the search criteria. To
+// search across all spaces the user has access to, set `parent` to `spaces/-`.
+// Using any other value for `parent` results in an `INVALID_ARGUMENT` error.
+// The returned messages have their `name` field populated with the full
+// resource name, which includes the specific `space` in which the message
+// resides. This API doesn't return all message types. The types of messages
+// listed below aren't included in the response. Use ListMessages to list all
+// messages. - Private Messages that are visible to the authenticated user. -
+// Messages posted by Chat apps in spaces or group chats. - Messages in a Chat
+// app DM. - Messages from blocked users. - Messages in spaces that the caller
+// has muted. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.messages`
+//
+//   - parent: The resource name of the space to search within. To search across
+//     all spaces the user has access to, set this field to `spaces/-`. Using any
+//     other value for `parent` results in an `INVALID_ARGUMENT` error. To limit
+//     the search to one or more spaces, use `space.name` or `space.display_name`
+//     in the `filter`.
+func (r *SpacesMessagesService) Search(parent string, searchmessagesrequest *SearchMessagesRequest) *SpacesMessagesSearchCall {
+	c := &SpacesMessagesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.searchmessagesrequest = searchmessagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagesSearchCall) Fields(s ...googleapi.Field) *SpacesMessagesSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagesSearchCall) Context(ctx context.Context) *SpacesMessagesSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagesSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagesSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.searchmessagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messages:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messages.search", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messages.search" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchMessagesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *SpacesMessagesSearchCall) Do(opts ...googleapi.CallOption) (*SearchMessagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchMessagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messages.search", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SpacesMessagesSearchCall) Pages(ctx context.Context, f func(*SearchMessagesResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchmessagesrequest.PageToken = pt }(c.searchmessagesrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchmessagesrequest.PageToken = x.NextPageToken
+	}
 }
 
 type SpacesMessagesUpdateCall struct {

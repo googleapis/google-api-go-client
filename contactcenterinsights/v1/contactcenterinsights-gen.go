@@ -170,6 +170,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.AnalysisRules = NewProjectsLocationsAnalysisRulesService(s)
 	rs.AssessmentRules = NewProjectsLocationsAssessmentRulesService(s)
+	rs.AssistantSessions = NewProjectsLocationsAssistantSessionsService(s)
 	rs.AuthorizedViewSets = NewProjectsLocationsAuthorizedViewSetsService(s)
 	rs.AutoLabelingRules = NewProjectsLocationsAutoLabelingRulesService(s)
 	rs.Conversations = NewProjectsLocationsConversationsService(s)
@@ -192,6 +193,8 @@ type ProjectsLocationsService struct {
 	AnalysisRules *ProjectsLocationsAnalysisRulesService
 
 	AssessmentRules *ProjectsLocationsAssessmentRulesService
+
+	AssistantSessions *ProjectsLocationsAssistantSessionsService
 
 	AuthorizedViewSets *ProjectsLocationsAuthorizedViewSetsService
 
@@ -235,6 +238,15 @@ func NewProjectsLocationsAssessmentRulesService(s *Service) *ProjectsLocationsAs
 }
 
 type ProjectsLocationsAssessmentRulesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAssistantSessionsService(s *Service) *ProjectsLocationsAssistantSessionsService {
+	rs := &ProjectsLocationsAssistantSessionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAssistantSessionsService struct {
 	s *Service
 }
 
@@ -1393,6 +1405,105 @@ type GoogleCloudContactcenterinsightsV1AssessmentRule struct {
 
 func (s GoogleCloudContactcenterinsightsV1AssessmentRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1AssessmentRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1AssistantChunk: A chunk of data in an
+// assistant message.
+type GoogleCloudContactcenterinsightsV1AssistantChunk struct {
+	// Text: Optional. Text data.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1AssistantChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1AssistantChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1AssistantMessage: A message in an
+// assistant session.
+type GoogleCloudContactcenterinsightsV1AssistantMessage struct {
+	// Chunks: Required. Content of the message.
+	Chunks []*GoogleCloudContactcenterinsightsV1AssistantChunk `json:"chunks,omitempty"`
+	// EventTime: Required. Timestamp when the message was sent or received.
+	EventTime string `json:"eventTime,omitempty"`
+	// Role: Required. Role within the conversation.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Default value for unspecified.
+	//   "USER" - The user role.
+	//   "MODEL" - The model role.
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chunks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Chunks") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1AssistantMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1AssistantMessage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1AssistantSession: Represents a
+// conversation session with the Assistant Agent.
+type GoogleCloudContactcenterinsightsV1AssistantSession struct {
+	// CreateTime: Output only. The time the session was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. The display name of the session.
+	DisplayName string `json:"displayName,omitempty"`
+	// Messages: Optional. History of messages in the session.
+	Messages []*GoogleCloudContactcenterinsightsV1AssistantMessage `json:"messages,omitempty"`
+	// Name: Identifier. Resource name of the session. Format:
+	// projects/{project}/locations/{location}/assistantSessions/{assistant_session}
+	Name string `json:"name,omitempty"`
+	// Requester: Output only. The user who initiated the session.
+	Requester string `json:"requester,omitempty"`
+	// State: Output only. The status of the session.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "PROCESSING" - Agent is working.
+	//   "IDLE" - Waiting for user input.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The time the session was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1AssistantSession) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1AssistantSession
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6298,6 +6409,35 @@ func (s GoogleCloudContactcenterinsightsV1ListAssessmentsResponse) MarshalJSON()
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudContactcenterinsightsV1ListAssistantSessionsResponse: Response to
+// list assistant sessions.
+type GoogleCloudContactcenterinsightsV1ListAssistantSessionsResponse struct {
+	// AssistantSessions: The assistant sessions.
+	AssistantSessions []*GoogleCloudContactcenterinsightsV1AssistantSession `json:"assistantSessions,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AssistantSessions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssistantSessions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ListAssistantSessionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ListAssistantSessionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudContactcenterinsightsV1ListAuthorizedViewSetsResponse: The
 // response from a ListAuthorizedViewSet request.
 type GoogleCloudContactcenterinsightsV1ListAuthorizedViewSetsResponse struct {
@@ -9297,6 +9437,60 @@ type GoogleCloudContactcenterinsightsV1SpeechConfig struct {
 
 func (s GoogleCloudContactcenterinsightsV1SpeechConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1SpeechConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1StreamChatRequest: Request to stream chat.
+type GoogleCloudContactcenterinsightsV1StreamChatRequest struct {
+	// Message: Required. The message to send to the assistant.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1StreamChatRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1StreamChatRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1StreamChatResponse: Response from
+// streaming chat.
+type GoogleCloudContactcenterinsightsV1StreamChatResponse struct {
+	// Chunk: A chunk of the assistant response message.
+	Chunk *GoogleCloudContactcenterinsightsV1AssistantChunk `json:"chunk,omitempty"`
+	// EventId: The unique ID of the event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: The time when the event occurred.
+	EventTime string `json:"eventTime,omitempty"`
+	// StatusMessage: A status message.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Chunk") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1StreamChatResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1StreamChatResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -24359,6 +24553,495 @@ func (c *ProjectsLocationsAssessmentRulesPatchCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assessmentRules.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAssistantSessionsCreateCall struct {
+	s                                                  *Service
+	parent                                             string
+	googlecloudcontactcenterinsightsv1assistantsession *GoogleCloudContactcenterinsightsV1AssistantSession
+	urlParams_                                         gensupport.URLParams
+	ctx_                                               context.Context
+	header_                                            http.Header
+}
+
+// Create: Creates an assistant session.
+//
+//   - parent: The parent resource where this assistant session will be created.
+//     Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsAssistantSessionsService) Create(parent string, googlecloudcontactcenterinsightsv1assistantsession *GoogleCloudContactcenterinsightsV1AssistantSession) *ProjectsLocationsAssistantSessionsCreateCall {
+	c := &ProjectsLocationsAssistantSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudcontactcenterinsightsv1assistantsession = googlecloudcontactcenterinsightsv1assistantsession
+	return c
+}
+
+// AssistantSessionId sets the optional parameter "assistantSessionId": The ID
+// to use for the assistant session, which will become the final component of
+// the assistant session's resource name. If not provided, a random UUID will
+// be generated by the server. This value should be 4-64 characters and must
+// match the regular expression `^[a-z0-9-]{4,64}$`.
+func (c *ProjectsLocationsAssistantSessionsCreateCall) AssistantSessionId(assistantSessionId string) *ProjectsLocationsAssistantSessionsCreateCall {
+	c.urlParams_.Set("assistantSessionId", assistantSessionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssistantSessionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssistantSessionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssistantSessionsCreateCall) Context(ctx context.Context) *ProjectsLocationsAssistantSessionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssistantSessionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssistantSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1assistantsession)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/assistantSessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assistantSessions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.assistantSessions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1AssistantSession.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssistantSessionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1AssistantSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1AssistantSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assistantSessions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAssistantSessionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an assistant session.
+//
+//   - name: The name of the assistant session to retrieve. Format:
+//     `projects/{project}/locations/{location}/assistantSessions/{assistant_sessi
+//     on}`.
+func (r *ProjectsLocationsAssistantSessionsService) Get(name string) *ProjectsLocationsAssistantSessionsGetCall {
+	c := &ProjectsLocationsAssistantSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssistantSessionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssistantSessionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAssistantSessionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAssistantSessionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssistantSessionsGetCall) Context(ctx context.Context) *ProjectsLocationsAssistantSessionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssistantSessionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssistantSessionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assistantSessions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.assistantSessions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1AssistantSession.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssistantSessionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1AssistantSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1AssistantSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assistantSessions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAssistantSessionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists assistant sessions.
+//
+//   - parent: The parent resource, which owns this collection of assistant
+//     sessions. Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsAssistantSessionsService) List(parent string) *ProjectsLocationsAssistantSessionsListCall {
+	c := &ProjectsLocationsAssistantSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to reduce results to a
+// specific subset.
+func (c *ProjectsLocationsAssistantSessionsListCall) Filter(filter string) *ProjectsLocationsAssistantSessionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// assistant sessions to return in a single response. If unspecified, at most
+// 100 assistant sessions will be returned. The maximum value is 1000; values
+// above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsAssistantSessionsListCall) PageSize(pageSize int64) *ProjectsLocationsAssistantSessionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAssistantSessions` call. Provide this to retrieve the
+// subsequent page.
+func (c *ProjectsLocationsAssistantSessionsListCall) PageToken(pageToken string) *ProjectsLocationsAssistantSessionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssistantSessionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssistantSessionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAssistantSessionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAssistantSessionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssistantSessionsListCall) Context(ctx context.Context) *ProjectsLocationsAssistantSessionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssistantSessionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssistantSessionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/assistantSessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assistantSessions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.assistantSessions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1ListAssistantSessionsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssistantSessionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1ListAssistantSessionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1ListAssistantSessionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assistantSessions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAssistantSessionsListCall) Pages(ctx context.Context, f func(*GoogleCloudContactcenterinsightsV1ListAssistantSessionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAssistantSessionsStreamChatCall struct {
+	s                                                   *Service
+	name                                                string
+	googlecloudcontactcenterinsightsv1streamchatrequest *GoogleCloudContactcenterinsightsV1StreamChatRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// StreamChat: Streams chat messages from the assistant.
+//
+//   - name: The name of the assistant session to stream chat. Format:
+//     `projects/{project}/locations/{location}/assistantSessions/{assistant_sessi
+//     on}`.
+func (r *ProjectsLocationsAssistantSessionsService) StreamChat(name string, googlecloudcontactcenterinsightsv1streamchatrequest *GoogleCloudContactcenterinsightsV1StreamChatRequest) *ProjectsLocationsAssistantSessionsStreamChatCall {
+	c := &ProjectsLocationsAssistantSessionsStreamChatCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudcontactcenterinsightsv1streamchatrequest = googlecloudcontactcenterinsightsv1streamchatrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAssistantSessionsStreamChatCall) Fields(s ...googleapi.Field) *ProjectsLocationsAssistantSessionsStreamChatCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAssistantSessionsStreamChatCall) Context(ctx context.Context) *ProjectsLocationsAssistantSessionsStreamChatCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAssistantSessionsStreamChatCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAssistantSessionsStreamChatCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1streamchatrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:streamChat")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assistantSessions.streamChat", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenterinsights.projects.locations.assistantSessions.streamChat" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudContactcenterinsightsV1StreamChatResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAssistantSessionsStreamChatCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1StreamChatResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudContactcenterinsightsV1StreamChatResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.assistantSessions.streamChat", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

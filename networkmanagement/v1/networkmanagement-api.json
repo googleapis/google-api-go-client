@@ -1797,7 +1797,7 @@
       }
     }
   },
-  "revision": "20260715",
+  "revision": "20260724",
   "rootUrl": "https://networkmanagement.googleapis.com/",
   "schemas": {
     "AbortInfo": {
@@ -3197,6 +3197,25 @@
           "description": "Name of the forwarding rule.",
           "type": "string"
         },
+        "envoyHealthCheckFirewallsConfigState": {
+          "description": "Output only. State of the firewalls allowing health check traffic to the load balancer frontend (Envoy proxies). This is the result of the firewall configuration analysis verifying that health check traffic from required IP ranges to the the Envoy-based load balancer frontend is allowed by firewall rules with the load balancer target.",
+          "enum": [
+            "HEALTH_CHECK_FIREWALLS_CONFIG_STATE_UNSPECIFIED",
+            "FIREWALLS_CONFIGURED",
+            "FIREWALLS_PARTIALLY_CONFIGURED",
+            "FIREWALLS_NOT_CONFIGURED",
+            "FIREWALLS_UNSUPPORTED"
+          ],
+          "enumDescriptions": [
+            "Configuration state unspecified. It usually means that there are no relevant health checks for this load balancer frontend, or there was an unexpected configuration error preventing Connectivity Tests from verifying health check configuration.",
+            "Firewall rules (policies) allow health check traffic to the load balancer frontend.",
+            "Firewall rules (policies) allow health check traffic to the load balancer frontend only from a part of the required IP ranges.",
+            "Firewall rules (policies) deny health check traffic to the load balancer frontend.",
+            "Connectivity Tests doesn't support evaluating some of the firewall rules in the network, so it's not able to verify health check configuration status."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
         "loadBalancerName": {
           "description": "Name of the load balancer the forwarding rule belongs to. Empty for forwarding rules not related to load balancers (like PSC forwarding rules).",
           "type": "string"
@@ -4284,6 +4303,11 @@
         "routerUri": {
           "description": "URI of the Cloud Router. Only valid when type is CLOUD_NAT. Format: `projects/{project_id}/regions/{region}/routers/{router_id}`",
           "type": "string"
+        },
+        "ruleNumber": {
+          "description": "The number of the NAT rule that was matched.",
+          "format": "int32",
+          "type": "integer"
         },
         "type": {
           "description": "Type of NAT.",

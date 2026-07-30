@@ -5406,8 +5406,8 @@ type Sleep struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Interval: Required. Observed sleep interval.
 	Interval *SessionTimeInterval `json:"interval,omitempty"`
-	// Metadata: Optional. Sleep metadata: processing, main, manually edited,
-	// stages status.
+	// Metadata: Optional. Sleep metadata: `processed`, `main_sleep`,
+	// `manually_edited`, and `stages_status`.
 	Metadata *SleepMetadata `json:"metadata,omitempty"`
 	// OutOfBedSegments: Optional. “Out of bed” segments that can overlap with
 	// sleep stages.
@@ -5452,6 +5452,11 @@ type SleepMetadata struct {
 	// ExternalId: Optional. Sleep identifier relevant in the context of the data
 	// source.
 	ExternalId string `json:"externalId,omitempty"`
+	// MainSleep: Output only. `main_sleep`: the longest sleep session with stages
+	// within one day. If no sleep session has stages, then the longest sleep is
+	// the `main_sleep`. If there are multiple days of sleep in the response, there
+	// is one `main_sleep` per day.
+	MainSleep bool `json:"mainSleep,omitempty"`
 	// ManuallyEdited: Output only. Some sleeps autodetected by algorithms can be
 	// manually edited by users.
 	ManuallyEdited bool `json:"manuallyEdited,omitempty"`

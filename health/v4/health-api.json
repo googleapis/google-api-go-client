@@ -1078,7 +1078,7 @@
       }
     }
   },
-  "revision": "20260722",
+  "revision": "20260729",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {
@@ -5229,7 +5229,7 @@
         },
         "metadata": {
           "$ref": "SleepMetadata",
-          "description": "Optional. Sleep metadata: processing, main, manually edited, stages status."
+          "description": "Optional. Sleep metadata: `processed`, `main_sleep`, `manually_edited`, and `stages_status`."
         },
         "outOfBedSegments": {
           "description": "Optional. “Out of bed” segments that can overlap with sleep stages.",
@@ -5280,6 +5280,11 @@
         "externalId": {
           "description": "Optional. Sleep identifier relevant in the context of the data source.",
           "type": "string"
+        },
+        "mainSleep": {
+          "description": "Output only. `main_sleep`: the longest sleep session with stages within one day. If no sleep session has stages, then the longest sleep is the `main_sleep`. If there are multiple days of sleep in the response, there is one `main_sleep` per day.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "manuallyEdited": {
           "description": "Output only. Some sleeps autodetected by algorithms can be manually edited by users.",

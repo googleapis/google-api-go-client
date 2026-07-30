@@ -315,7 +315,7 @@
             },
             "getPassword": {
               "description": "Get the decrypted password of an alert.",
-              "flatPath": "v1beta/projects/{projectsId}/alerts/{alertsId}:GetPassword",
+              "flatPath": "v1beta/projects/{projectsId}/alerts/{alertsId}:getPassword",
               "httpMethod": "GET",
               "id": "threatintelligence.projects.alerts.getPassword",
               "parameterOrder": [
@@ -330,7 +330,7 @@
                   "type": "string"
                 }
               },
-              "path": "v1beta/{+name}:GetPassword",
+              "path": "v1beta/{+name}:getPassword",
               "response": {
                 "$ref": "Alert"
               },
@@ -842,7 +842,7 @@
       }
     }
   },
-  "revision": "20260719",
+  "revision": "20260726",
   "rootUrl": "https://threatintelligence.googleapis.com/",
   "schemas": {
     "Alert": {

@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20260715",
+  "revision": "20260729",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "AutomatedDiscounts": {
@@ -1031,6 +1031,44 @@
             "This issue represents a warning and does not have a direct affect on the product.",
             "The product is demoted and most likely have limited performance in search results",
             "Issue disapproves the product."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LeaseTerm": {
+      "description": "The lease term of the property.",
+      "id": "LeaseTerm",
+      "properties": {
+        "durationUnit": {
+          "description": "The duration unit of the lease term.",
+          "enum": [
+            "DURATION_UNIT_UNSPECIFIED",
+            "MONTHS",
+            "WEEKS"
+          ],
+          "enumDescriptions": [
+            "Unspecified duration unit.",
+            "Month.",
+            "Week."
+          ],
+          "type": "string"
+        },
+        "durationValue": {
+          "description": "The duration value of the lease term.",
+          "format": "int64",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of lease term.",
+          "enum": [
+            "LEASE_TERM_TYPE_UNSPECIFIED",
+            "FIXED_TERM"
+          ],
+          "enumDescriptions": [
+            "Unspecified lease term type.",
+            "Fixed term."
           ],
           "type": "string"
         }
@@ -1895,6 +1933,10 @@
           "description": "The latitude of the property. The value must be between -90 (inclusive) and 90 (inclusive), up to 6 decimal places.",
           "format": "double",
           "type": "number"
+        },
+        "leaseTerm": {
+          "$ref": "LeaseTerm",
+          "description": "The lease term of the property."
         },
         "lifestyleImageLinks": {
           "description": "Additional URLs of lifestyle images of the item, used to explicitly identify images that showcase your item in a real-world context. See the [Help Center article](https://support.google.com/merchants/answer/9103186) for more information.",

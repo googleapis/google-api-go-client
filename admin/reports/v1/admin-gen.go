@@ -1507,6 +1507,16 @@ func (c *ActivitiesListCall) CustomerId(customerId string) *ActivitiesListCall {
 	return c
 }
 
+// DeviceFilter sets the optional parameter "deviceFilter": Used to filter on
+// the fields present in `UserDeviceInfo` (#userdeviceinfo) message like
+// `deviceId`, `deviceType`, and `deviceOsVersion`. **Usage** ```
+// GET...&deviceFilter=deviceId="123" GET...&deviceFilter=deviceType="ANDROID"
+// GET...&deviceFilter=deviceOsVersion="14.0" ```
+func (c *ActivitiesListCall) DeviceFilter(deviceFilter string) *ActivitiesListCall {
+	c.urlParams_.Set("deviceFilter", deviceFilter)
+	return c
+}
+
 // EndTime sets the optional parameter "endTime": Sets the end of the range of
 // time shown in the report. The date is in the RFC 3339 format, for example
 // 2010-10-28T10:26:35.000Z. The default value is the approximate time of the

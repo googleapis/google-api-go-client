@@ -2828,6 +2828,31 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExternalId: External identifier used to link and identify this group across
+// external directory systems.
+type ExternalId struct {
+	// Id: The unique identifier string assigned by the external provider.
+	Id string `json:"id,omitempty"`
+	// Namespace: The system or identity provider managing this ID.
+	Namespace string `json:"namespace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalId) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalId
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FailureInfo: Info about failures
 type FailureInfo struct {
 	// ErrorCode: Canonical code for why the update failed to apply.
@@ -3101,6 +3126,10 @@ type Group struct {
 	Email string `json:"email,omitempty"`
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
+	// ExternalIds: Optional. The list of external IDs for the group, such as an
+	// immutable identifier from an external identity provider or directory sync
+	// client. Each entry contains a namespace and an ID value.
+	ExternalIds []*ExternalId `json:"externalIds,omitempty"`
 	// Id: Read-only. The unique ID of a group. A group `id` can be used as a group
 	// request URI's `groupKey`.
 	Id string `json:"id,omitempty"`

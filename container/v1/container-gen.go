@@ -7938,6 +7938,8 @@ type ReleaseChannelConfig struct {
 	// availability for versions which are known to be stable and reliable in
 	// production.
 	Channel string `json:"channel,omitempty"`
+	// CustomVersions: Output only. List of custom versions for the channel.
+	CustomVersions []string `json:"customVersions,omitempty"`
 	// DefaultVersion: The default version for newly created clusters on the
 	// channel.
 	DefaultVersion string `json:"defaultVersion,omitempty"`

@@ -387,7 +387,7 @@ type AdEvent struct {
 	CampaignId string `json:"campaignId,omitempty"`
 	// CampaignName: Required. The name of the associated campaign.
 	CampaignName string `json:"campaignName,omitempty"`
-	// DeviceInfo: Optional. Information gathered about the device being used when
+	// DeviceInfo: Required. Information gathered about the device being used when
 	// the ad event happened.
 	DeviceInfo *DeviceInfo `json:"deviceInfo,omitempty"`
 	// EventId: Optional. An ID created and managed by the caller that uniquely
@@ -443,7 +443,7 @@ type AdEvent struct {
 	PlatformType string `json:"platformType,omitempty"`
 	// PlatformTypeString: String value for platform type.
 	PlatformTypeString string `json:"platformTypeString,omitempty"`
-	// RegionCode: Required. The ISO 3166-2 country plus subdivision.
+	// RegionCode: Optional. The ISO 3166-2 country plus subdivision.
 	RegionCode string `json:"regionCode,omitempty"`
 	// Source: Required. The platform source of the ad, akin to the Google
 	// Analytics source.
@@ -541,6 +541,20 @@ func (s AdIdentifiers) MarshalJSON() ([]byte, error) {
 
 // AddressInfo: Address information for the user.
 type AddressInfo struct {
+	// AddressLine: Optional. The street and number of the user's address. Used
+	// only for Google Analytics. This field is hashed and possibly encrypted.
+	// Normalize the value before hashing: - Remove symbol characters - Convert to
+	// lowercase - Remove leading and trailing whitespace
+	AddressLine string `json:"addressLine,omitempty"`
+	// AdministrativeArea: Optional. The administrative area (state/province) of
+	// the user's address. Used only for Google Analytics. The value should be
+	// normalized as such: - Remove symbol characters - Convert to lowercase -
+	// Remove leading and trailing whitespace
+	AdministrativeArea string `json:"administrativeArea,omitempty"`
+	// City: Optional. The city of the user's address. Used only for Google
+	// Analytics. The value should be normalized as such: - Remove symbol
+	// characters - Convert to lowercase - Remove leading and trailing whitespace
+	City string `json:"city,omitempty"`
 	// FamilyName: Required. Family (last) name of the user, all lowercase, with no
 	// punctuation, no leading or trailing whitespace, and hashed as SHA-256.
 	FamilyName string `json:"familyName,omitempty"`
@@ -552,13 +566,13 @@ type AddressInfo struct {
 	// RegionCode: Required. The 2-letter region code in ISO-3166-1 alpha-2 of the
 	// user's address.
 	RegionCode string `json:"regionCode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FamilyName") to
+	// ForceSendFields is a list of field names (e.g. "AddressLine") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FamilyName") to include in API
+	// NullFields is a list of field names (e.g. "AddressLine") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -579,12 +593,16 @@ type AudienceMember struct {
 	// DestinationReferences: Optional. Defines which Destination to send the
 	// audience member to.
 	DestinationReferences []string `json:"destinationReferences,omitempty"`
+	// GoogleUserIdData: Encrypted Google User IDs.
+	GoogleUserIdData *GoogleUserIdData `json:"googleUserIdData,omitempty"`
 	// MobileData: Data identifying the user's mobile devices.
 	MobileData *MobileData `json:"mobileData,omitempty"`
 	// PairData: Publisher Advertiser Identity Reconciliation (PAIR) IDs
 	// (//support.google.com/admanager/answer/15067908). This feature is only
 	// available to data partners.
 	PairData *PairData `json:"pairData,omitempty"`
+	// PartnerProvidedIdData: Partner-provided identifiers.
+	PartnerProvidedIdData *PartnerProvidedIdData `json:"partnerProvidedIdData,omitempty"`
 	// PpidData: Data related to publisher provided identifiers. This feature is
 	// only available to data partners.
 	PpidData *PpidData `json:"ppidData,omitempty"`
@@ -962,15 +980,15 @@ type DeviceInfo struct {
 	// “tablet”, “mobile”, “smart TV”.
 	Category string `json:"category,omitempty"`
 	// IpAddress: Optional. The IP address of the device for the given context.
-	// **Note:** Google Ads does not support IP address matching for end users in
-	// the European Economic Area (EEA), United Kingdom (UK), or Switzerland (CH).
-	// Add logic to conditionally exclude sharing IP addresses from users from
-	// these regions and ensure that you provide users with clear and comprehensive
-	// information about the data you collect on your sites, apps, and other
-	// properties and get consent where required by law or any applicable Google
-	// policies. See the About offline conversion imports
-	// (https://support.google.com/google-ads/answer/2998031) page for more
-	// details.
+	// Required when used in an AdEvent. **Note:** Google Ads does not support IP
+	// address matching for end users in the European Economic Area (EEA), United
+	// Kingdom (UK), or Switzerland (CH). Add logic to conditionally exclude
+	// sharing IP addresses from users from these regions and ensure that you
+	// provide users with clear and comprehensive information about the data you
+	// collect on your sites, apps, and other properties and get consent where
+	// required by law or any applicable Google policies. See the About offline
+	// conversion imports (https://support.google.com/google-ads/answer/2998031)
+	// page for more details.
 	IpAddress string `json:"ipAddress,omitempty"`
 	// LanguageCode: Optional. The language the device uses in ISO 639-1 format.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -1434,6 +1452,61 @@ func (s ExperimentalField) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FieldWarning: Detailed row-level warning with field paths.
+type FieldWarning struct {
+	// Description: The detailed warning message describing the issue.
+	Description string `json:"description,omitempty"`
+	// Field: The field path that triggered the warning. Uses the same format as
+	// google.rpc.BadRequest.FieldViolation.field.
+	Field string `json:"field,omitempty"`
+	// Reason: The warning reason.
+	//
+	// Possible values:
+	//   "WARNING_REASON_UNSPECIFIED" - Unspecified warning reason.
+	//   "WARNING_REASON_CUSTOM_VARIABLE_NOT_ENABLED" - A custom variable in
+	// `custom_variables` is not enabled in the account.
+	//   "WARNING_REASON_CUSTOM_VARIABLE_NOT_PREDEFINED" - A custom variable value
+	// in `custom_variables` is not among the predefined allowed values configured
+	// for the custom variable on the destination account.
+	//   "WARNING_REASON_CART_DATA_NOT_SUPPORTED_WITH_GBRAID_OR_WBRAID" - The
+	// `cart_data` is not supported with `gbraid` or `wbraid`.
+	//   "WARNING_REASON_CART_DATA_ITEM_MERCHANT_PRODUCT_ID_MISSING" - The
+	// `merchant_product_id` is missing in the cart item.
+	//   "WARNING_REASON_CART_DATA_ITEM_UNIT_PRICE_MISSING" - The `unit_price` is
+	// missing in the cart item.
+	//   "WARNING_REASON_GENERIC" - Generic warning reason for issues that do not
+	// fit into other specific categories.
+	//   "WARNING_REASON_INVALID_CLIENT_ID" - The `client_id` is invalid.
+	//   "WARNING_REASON_INVALID_SUBDIVISION_CODE" - The `subdivision_code` is
+	// invalid.
+	//   "WARNING_REASON_INVALID_REGION_CODE" - The `region_code` is invalid.
+	//   "WARNING_REASON_INVALID_SUBCONTINENT_CODE" - The `subcontinent_code` is
+	// invalid.
+	//   "WARNING_REASON_INVALID_CONTINENT_CODE" - The `continent_code` is invalid.
+	//   "WARNING_REASON_INVALID_DEVICE_CATEGORY" - The device `category` is
+	// invalid.
+	//   "WARNING_REASON_INVALID_DEVICE_SCREEN_RESOLUTION" - The device
+	// `screen_height` or `screen_width` is invalid.
+	//   "WARNING_REASON_INVALID_MERCHANT_ID" - The `merchant_id` is invalid.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldWarning
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GcpWrappedKeyInfo: Information about the Google Cloud Platform wrapped key.
 type GcpWrappedKeyInfo struct {
 	// EncryptedDek: Required. The base64 encoded encrypted data encryption key.
@@ -1474,11 +1547,34 @@ func (s GcpWrappedKeyInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleUserIdData: Google user id data holding encrypted google user IDs. At
+// least one google user ID is required.
+type GoogleUserIdData struct {
+	// GoogleUserIds: Required. The list of encrypted google user IDs.
+	GoogleUserIds []string `json:"googleUserIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleUserIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleUserIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleUserIdData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleUserIdData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IngestAdEventsRequest: Request to upload ad events.
 type IngestAdEventsRequest struct {
 	// AdEvents: Required. Required (at least 1). A list of ad events.
 	AdEvents []*AdEvent `json:"adEvents,omitempty"`
-	// EncryptionInfo: Optional. Information about encryption keys which are used
+	// EncryptionInfo: Required. Information about encryption keys which are used
 	// to encrypt the data.
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 	// ValidateOnly: Optional. If true, the request is validated, but not executed.
@@ -1565,18 +1661,20 @@ func (s IngestAudienceMembersRequest) MarshalJSON() ([]byte, error) {
 // IngestAudienceMembersResponse: Response from the
 // IngestAudienceMembersRequest.
 type IngestAudienceMembersResponse struct {
+	// FieldWarnings: Detailed row-level warnings with field paths.
+	FieldWarnings []*FieldWarning `json:"fieldWarnings,omitempty"`
 	// RequestId: The auto-generated ID of the request.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// ForceSendFields is a list of field names (e.g. "FieldWarnings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// NullFields is a list of field names (e.g. "FieldWarnings") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1594,12 +1692,18 @@ type IngestAudienceMembersStatus struct {
 	// CompositeDataIngestionStatus: The status of the composite data ingestion to
 	// the destination.
 	CompositeDataIngestionStatus *IngestCompositeDataStatus `json:"compositeDataIngestionStatus,omitempty"`
+	// GoogleUserIdDataIngestionStatus: The status of the google user id data
+	// ingestion to the destination.
+	GoogleUserIdDataIngestionStatus *IngestGoogleUserIdDataStatus `json:"googleUserIdDataIngestionStatus,omitempty"`
 	// MobileDataIngestionStatus: The status of the mobile data ingestion to the
 	// destination.
 	MobileDataIngestionStatus *IngestMobileDataStatus `json:"mobileDataIngestionStatus,omitempty"`
 	// PairDataIngestionStatus: The status of the pair data ingestion to the
 	// destination.
 	PairDataIngestionStatus *IngestPairDataStatus `json:"pairDataIngestionStatus,omitempty"`
+	// PartnerProvidedIdDataIngestionStatus: The status of the partner provided id
+	// data ingestion to the destination.
+	PartnerProvidedIdDataIngestionStatus *IngestPartnerProvidedIdDataStatus `json:"partnerProvidedIdDataIngestionStatus,omitempty"`
 	// PpidDataIngestionStatus: The status of the ppid data ingestion to the
 	// destination.
 	PpidDataIngestionStatus *IngestPpidDataStatus `json:"ppidDataIngestionStatus,omitempty"`
@@ -1732,18 +1836,20 @@ func (s IngestEventsRequest) MarshalJSON() ([]byte, error) {
 
 // IngestEventsResponse: Response from the IngestEventsRequest.
 type IngestEventsResponse struct {
+	// FieldWarnings: Detailed row-level warnings with field paths.
+	FieldWarnings []*FieldWarning `json:"fieldWarnings,omitempty"`
 	// RequestId: The auto-generated ID of the request.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// ForceSendFields is a list of field names (e.g. "FieldWarnings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// NullFields is a list of field names (e.g. "FieldWarnings") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1776,6 +1882,35 @@ type IngestEventsStatus struct {
 
 func (s IngestEventsStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestEventsStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestGoogleUserIdDataStatus: The status of the google user id data
+// ingestion to the destination containing stats related to the ingestion.
+type IngestGoogleUserIdDataStatus struct {
+	// GoogleUserIdCount: The total count of google user ids sent in the upload
+	// request for the destination. Includes all google user ids in the request,
+	// regardless of whether they were successfully ingested or not.
+	GoogleUserIdCount int64 `json:"googleUserIdCount,omitempty,string"`
+	// RecordCount: The total count of audience members sent in the upload request
+	// for the destination. Includes all audience members in the request,
+	// regardless of whether they were successfully ingested or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "GoogleUserIdCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleUserIdCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestGoogleUserIdDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestGoogleUserIdDataStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1834,6 +1969,35 @@ type IngestPairDataStatus struct {
 
 func (s IngestPairDataStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod IngestPairDataStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IngestPartnerProvidedIdDataStatus: The status of the partner provided id
+// data ingestion to the destination containing stats related to the ingestion.
+type IngestPartnerProvidedIdDataStatus struct {
+	// PartnerProvidedIdCount: The total count of partner provided ids sent in the
+	// upload request for the destination. Includes all partner provided ids in the
+	// request, regardless of whether they were successfully ingested or not.
+	PartnerProvidedIdCount int64 `json:"partnerProvidedIdCount,omitempty,string"`
+	// RecordCount: The total count of audience members sent in the upload request
+	// for the destination. Includes all audience members in the request,
+	// regardless of whether they were successfully ingested or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "PartnerProvidedIdCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartnerProvidedIdCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestPartnerProvidedIdDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestPartnerProvidedIdDataStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1977,7 +2141,7 @@ type IngestedUserListInfo struct {
 	//   "PAIR_ID" - Publisher advertiser identity reconciliation ids.
 	//   "PSEUDONYMOUS_ID" - Data Management Platform IDs: - Google User ID -
 	// Partner Provided ID - Publisher Provided ID - iOS IDFA - Android advertising
-	// ID - Roku ID - Amazon Fire TV ID - Xbox or Microsoft ID
+	// ID - Roku ID - Amazon Fire TV ID - Xbox or Microsoft ID - Generic Device ID
 	UploadKeyTypes []string `json:"uploadKeyTypes,omitempty"`
 	// UserIdInfo: Optional. Additional information when `USER_ID` is one of the
 	// `upload_key_types`.
@@ -2395,8 +2559,11 @@ func (s *MarketingDataInsightsAttribute) UnmarshalJSON(data []byte) error {
 
 // MobileData: Mobile IDs for the audience. At least one mobile ID is required.
 type MobileData struct {
-	// MobileIds: Required. The list of mobile device IDs (advertising ID/IDFA). At
-	// most 10 `mobileIds` can be provided in a single AudienceMember.
+	// MobileIds: Required. The list of mobile device IDs (Android advertising ID,
+	// iOS IDFA for Customer Match user lists and Android advertising ID, iOS IDFA,
+	// Xbox or Microsoft ID, Amazon Fire TV ID, Roku ID, Generic Device ID for
+	// basic user lists). At most 10 `mobileIds` can be provided in a single
+	// AudienceMember.
 	MobileIds []string `json:"mobileIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MobileIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2667,6 +2834,29 @@ func (s PartnerLinkMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PartnerProvidedIdData: Partner-provided data holding the partner-provided
+// identifiers. At least one partner-provided identifier is required.
+type PartnerProvidedIdData struct {
+	// PartnerProvidedIds: Required. The list of partner-provided identifiers.
+	PartnerProvidedIds []string `json:"partnerProvidedIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PartnerProvidedIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartnerProvidedIds") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartnerProvidedIdData) MarshalJSON() ([]byte, error) {
+	type NoMethod PartnerProvidedIdData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PpidData: Publisher provided identifiers data holding the ppids. At least
 // one ppid is required. This feature is only available to data partners.
 type PpidData struct {
@@ -2771,6 +2961,68 @@ func (s PseudonymousIdInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RemoveAllAudienceMembersRequest: Request to remove all users from an
+// audience in the provided destinations. Returns a
+// RemoveAllAudienceMembersResponse.
+type RemoveAllAudienceMembersRequest struct {
+	// Destinations: Required. The list of destinations to remove the users from.
+	Destinations []*Destination `json:"destinations,omitempty"`
+	// RemoveAsOfTime: Optional. The remove as of time. If set, only audience
+	// members last added before this time will be removed. If not set, it defaults
+	// to current time. The remove as of time must not be in the future.
+	RemoveAsOfTime string `json:"removeAsOfTime,omitempty"`
+	// ValidateOnly: Optional. For testing purposes. If `true`, the request is
+	// validated but not executed. Only errors are returned, not results.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destinations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destinations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveAllAudienceMembersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveAllAudienceMembersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveAllAudienceMembersResponse: Response from the
+// RemoveAllAudienceMembersRequest.
+type RemoveAllAudienceMembersResponse struct {
+	// RequestId: The auto-generated ID of the request.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveAllAudienceMembersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveAllAudienceMembersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveAllAudienceMembersStatus: The status of the remove all audience
+// members request.
+type RemoveAllAudienceMembersStatus struct {
+}
+
 // RemoveAudienceMembersRequest: Request to remove users from an audience in
 // the provided destinations. Returns a RemoveAudienceMembersResponse.
 type RemoveAudienceMembersRequest struct {
@@ -2844,12 +3096,18 @@ type RemoveAudienceMembersStatus struct {
 	// CompositeDataRemovalStatus: The status of the composite data removal from
 	// the destination.
 	CompositeDataRemovalStatus *RemoveCompositeDataStatus `json:"compositeDataRemovalStatus,omitempty"`
+	// GoogleUserIdDataRemovalStatus: The status of the google user id data removal
+	// from the destination.
+	GoogleUserIdDataRemovalStatus *RemoveGoogleUserIdDataStatus `json:"googleUserIdDataRemovalStatus,omitempty"`
 	// MobileDataRemovalStatus: The status of the mobile data removal from the
 	// destination.
 	MobileDataRemovalStatus *RemoveMobileDataStatus `json:"mobileDataRemovalStatus,omitempty"`
 	// PairDataRemovalStatus: The status of the pair data removal from the
 	// destination.
 	PairDataRemovalStatus *RemovePairDataStatus `json:"pairDataRemovalStatus,omitempty"`
+	// PartnerProvidedIdDataRemovalStatus: The status of the partner provided id
+	// data removal from the destination.
+	PartnerProvidedIdDataRemovalStatus *RemovePartnerProvidedIdDataStatus `json:"partnerProvidedIdDataRemovalStatus,omitempty"`
 	// PpidDataRemovalStatus: The status of the ppid data removal from the
 	// destination.
 	PpidDataRemovalStatus *RemovePpidDataStatus `json:"ppidDataRemovalStatus,omitempty"`
@@ -2903,6 +3161,35 @@ type RemoveCompositeDataStatus struct {
 
 func (s RemoveCompositeDataStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveCompositeDataStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemoveGoogleUserIdDataStatus: The status of the google user id data removal
+// from the destination.
+type RemoveGoogleUserIdDataStatus struct {
+	// GoogleUserIdCount: The total count of google user ids sent in the removal
+	// request. Includes all google user ids in the request, regardless of whether
+	// they were successfully removed or not.
+	GoogleUserIdCount int64 `json:"googleUserIdCount,omitempty,string"`
+	// RecordCount: The total count of audience members sent in the removal
+	// request. Includes all audience members in the request, regardless of whether
+	// they were successfully removed or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "GoogleUserIdCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleUserIdCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveGoogleUserIdDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveGoogleUserIdDataStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2961,6 +3248,35 @@ type RemovePairDataStatus struct {
 
 func (s RemovePairDataStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RemovePairDataStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RemovePartnerProvidedIdDataStatus: The status of the partner provided id
+// data removal from the destination.
+type RemovePartnerProvidedIdDataStatus struct {
+	// PartnerProvidedIdCount: The total count of partner provided ids sent in the
+	// removal request. Includes all partner provided ids in the request,
+	// regardless of whether they were successfully removed or not.
+	PartnerProvidedIdCount int64 `json:"partnerProvidedIdCount,omitempty,string"`
+	// RecordCount: The total count of audience members sent in the removal
+	// request. Includes all audience members in the request, regardless of whether
+	// they were successfully removed or not.
+	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "PartnerProvidedIdCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartnerProvidedIdCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemovePartnerProvidedIdDataStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod RemovePartnerProvidedIdDataStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3068,6 +3384,9 @@ type RequestStatusPerDestination struct {
 	ErrorInfo *ErrorInfo `json:"errorInfo,omitempty"`
 	// EventsIngestionStatus: The status of the ingest events request.
 	EventsIngestionStatus *IngestEventsStatus `json:"eventsIngestionStatus,omitempty"`
+	// RemoveAllAudienceMembersStatus: The status of the remove all audience
+	// members request.
+	RemoveAllAudienceMembersStatus *RemoveAllAudienceMembersStatus `json:"removeAllAudienceMembersStatus,omitempty"`
 	// RequestStatus: The request status of the destination.
 	//
 	// Possible values:
@@ -6658,6 +6977,103 @@ func (c *AudienceMembersRemoveCall) Do(opts ...googleapi.CallOption) (*RemoveAud
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.audienceMembers.remove", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AudienceMembersRemoveAllCall struct {
+	s                               *Service
+	removeallaudiencemembersrequest *RemoveAllAudienceMembersRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// RemoveAll: Removes all audience members from the provided destinations.
+func (r *AudienceMembersService) RemoveAll(removeallaudiencemembersrequest *RemoveAllAudienceMembersRequest) *AudienceMembersRemoveAllCall {
+	c := &AudienceMembersRemoveAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.removeallaudiencemembersrequest = removeallaudiencemembersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AudienceMembersRemoveAllCall) Fields(s ...googleapi.Field) *AudienceMembersRemoveAllCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AudienceMembersRemoveAllCall) Context(ctx context.Context) *AudienceMembersRemoveAllCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AudienceMembersRemoveAllCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AudienceMembersRemoveAllCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.removeallaudiencemembersrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/audienceMembers:removeAll")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.audienceMembers.removeAll", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.audienceMembers.removeAll" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RemoveAllAudienceMembersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AudienceMembersRemoveAllCall) Do(opts ...googleapi.CallOption) (*RemoveAllAudienceMembersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RemoveAllAudienceMembersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.audienceMembers.removeAll", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

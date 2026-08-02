@@ -1355,6 +1355,8 @@ type GoogleMapsPlacesV1Place struct {
 	// applicable. Summary text must be presented as-is and can not be modified or
 	// altered.
 	EditorialSummary *GoogleTypeLocalizedText `json:"editorialSummary,omitempty"`
+	// Entrances: Entrances for this destination.
+	Entrances []*GoogleMapsPlacesV1PlaceEntrance `json:"entrances,omitempty"`
 	// EvChargeAmenitySummary: The summary of amenities near the EV charging
 	// station.
 	EvChargeAmenitySummary *GoogleMapsPlacesV1PlaceEvChargeAmenitySummary `json:"evChargeAmenitySummary,omitempty"`
@@ -1417,6 +1419,8 @@ type GoogleMapsPlacesV1Place struct {
 	// NationalPhoneNumber: A human-readable phone number for the place, in
 	// national format.
 	NationalPhoneNumber string `json:"nationalPhoneNumber,omitempty"`
+	// NavigationPoints: Navigation points for this destination.
+	NavigationPoints []*GoogleMapsPlacesV1PlaceNavigationPoint `json:"navigationPoints,omitempty"`
 	// NeighborhoodSummary: A summary of points of interest near the place.
 	NeighborhoodSummary *GoogleMapsPlacesV1PlaceNeighborhoodSummary `json:"neighborhoodSummary,omitempty"`
 	// OpeningDate: The date this place will open in the future. This field is only
@@ -1781,6 +1785,51 @@ func (s GoogleMapsPlacesV1PlaceContainingPlace) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleMapsPlacesV1PlaceEntrance: An entrance is a single latitude/longitude
+// coordinate pair that defines the location of an entry and exit point for a
+// place.
+type GoogleMapsPlacesV1PlaceEntrance struct {
+	// Location: The location of the entrance.
+	Location *GoogleTypeLatLng `json:"location,omitempty"`
+	// Tags: A list of tags that describe the entrance.
+	//
+	// Possible values:
+	//   "TAG_UNSPECIFIED" - Not used.
+	//   "PREFERRED" - The entrance likely provides physical access to the primary
+	// place in the returned destination. A place can have multiple preferred
+	// entrances. If an entrance does not have this tag, it means the entrance is
+	// physically on the same building as the primary place, but does not
+	// necessarily provide access to the place. For example, if the primary place
+	// is a restaurant in a strip mall, the "PREFERRED" entrances will be the ones
+	// that likely lead into the restaurant itself, while the other returned
+	// entrances will be other entrances for the building, such as entrances into
+	// other restaurants in the strip mall. If the primary place is a building
+	// itself, the `PREFERRED` entrances will be the ones that lead into the "main"
+	// part of the building. For example, in a shopping center the `PREFERRED`
+	// entrances will be the ones that allow access to the main foyer area, but if
+	// an entrance only provides access to a store on the side of the building, it
+	// won't be a `PREFERRED` entrance. Note: a `PREFERRED` entrance might not
+	// provide access to the primary place, and a non-`PREFERRED` entrance might
+	// provide access to the primary place.
+	Tags []string `json:"tags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Location") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1PlaceEntrance) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceEntrance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleMapsPlacesV1PlaceEvChargeAmenitySummary: The summary of amenities near
 // the EV charging station. This only applies to places with type
 // `electric_vehicle_charging_station`. The `overview` field is guaranteed to
@@ -1877,6 +1926,56 @@ type GoogleMapsPlacesV1PlaceGoogleMapsLinks struct {
 
 func (s GoogleMapsPlacesV1PlaceGoogleMapsLinks) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1PlaceGoogleMapsLinks
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1PlaceNavigationPoint: A navigation point is a location
+// next to a road where navigation can end.
+type GoogleMapsPlacesV1PlaceNavigationPoint struct {
+	// DisplayName: The display name of this navigation point. For example, "5th
+	// Ave" or "Gate B".
+	DisplayName *GoogleTypeLocalizedText `json:"displayName,omitempty"`
+	// Location: A point next to the road segment where navigation should end. The
+	// point is intentionally slightly offset from the road's centerline to clearly
+	// mark the side of the road where the place is located.
+	Location *GoogleTypeLatLng `json:"location,omitempty"`
+	// NavigationPointToken: A token that can be used to identify this navigation
+	// point.
+	NavigationPointToken string `json:"navigationPointToken,omitempty"`
+	// TravelModes: Travel modes that are appropriate for this navigation point.
+	//
+	// Possible values:
+	//   "TRAVEL_MODE_UNSPECIFIED" - Not used.
+	//   "DRIVE" - Suitable for driving.
+	//   "WALK" - Suitable for walking.
+	TravelModes []string `json:"travelModes,omitempty"`
+	// Usages: Lists `usages` supported by this navigation point. If empty, it does
+	// not necessarily mean its usage is restricted in any way. All navigation
+	// points can be used for general navigation.
+	//
+	// Possible values:
+	//   "USAGE_UNSPECIFIED" - Not used.
+	//   "DROPOFF" - Suitable for dropping off a passenger. For example, a
+	// rideshare drop off location.
+	//   "PICKUP" - Suitable for picking up a passenger. For example, a rideshare
+	// pick up location.
+	//   "PARKING" - Suitable for parking. For example, within a parking lot.
+	Usages []string `json:"usages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleMapsPlacesV1PlaceNavigationPoint) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1PlaceNavigationPoint
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

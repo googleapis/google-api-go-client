@@ -2320,6 +2320,10 @@ type GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription struct {
 	Name string `json:"name,omitempty"`
 	// SeatCount: Optional. Number of seats in the subscription.
 	SeatCount int64 `json:"seatCount,omitempty,string"`
+	// SignupSource: Optional. Input only. The source from which the subscription
+	// was initiated, for example "admin-console-browser-overview" or
+	// "admin-console-security-insights".
+	SignupSource string `json:"signupSource,omitempty"`
 	// Sku: Required. SKU of subscription.
 	//
 	// Possible values:
@@ -2552,6 +2556,8 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaApplicationUpstreamNetwork) 
 type GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeaders struct {
 	// DeviceInfo: Optional. The device information configuration.
 	DeviceInfo *GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDeviceInfo `json:"deviceInfo,omitempty"`
+	// DispatchInfo: Optional. The dispatch information configuration.
+	DispatchInfo *GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDispatchInfo `json:"dispatchInfo,omitempty"`
 	// GroupInfo: Optional. Group details.
 	GroupInfo *GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedGroupInfo `json:"groupInfo,omitempty"`
 	// OutputType: Optional. Default output type for all enabled headers.
@@ -2608,6 +2614,36 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDevic
 
 func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDeviceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDispatc
+// hInfo: The delegated dispatch information configuration.
+type GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDispatchInfo struct {
+	// OutputType: Optional. The output type details for the delegated dispatch
+	// information.
+	//
+	// Possible values:
+	//   "OUTPUT_TYPE_UNSPECIFIED" - The unspecified output type.
+	//   "PROTOBUF" - Protobuf output type.
+	//   "JSON" - JSON output type.
+	//   "NONE" - Explicitly disable header output.
+	OutputType string `json:"outputType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDispatchInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaContextualHeadersDelegatedDispatchInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

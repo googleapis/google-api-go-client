@@ -1552,6 +1552,10 @@ type DatabaseInstance struct {
 	// (https://groups.google.com/d/msg/google-cloud-sql-announce/I_7-F9EBhT0/BtvFtdFeAgAJ)
 	// for details.
 	CurrentDiskSize int64 `json:"currentDiskSize,omitempty,string"`
+	// DatabaseCenterIntegrationEnabled: Optional. If true, instance metadata is
+	// sent to the Database Center. If false, instance metadata is not sent to the
+	// Database Center.
+	DatabaseCenterIntegrationEnabled bool `json:"databaseCenterIntegrationEnabled,omitempty"`
 	// DatabaseInstalledVersion: Output only. Stores the current database version
 	// running on the instance including minor version such as `MYSQL_8_0_18`.
 	DatabaseInstalledVersion string `json:"databaseInstalledVersion,omitempty"`
@@ -4113,6 +4117,9 @@ type OnPremisesConfiguration struct {
 	// ClientKey: PEM representation of the replica's private key. The
 	// corresponding public key is encoded in the client's certificate.
 	ClientKey string `json:"clientKey,omitempty"`
+	// DmsManaged: Output only. Indicates whether the resource is managed by
+	// Database Migration Service.
+	DmsManaged bool `json:"dmsManaged,omitempty"`
 	// DumpFilePath: The dump file to create the Cloud SQL replica.
 	DumpFilePath string `json:"dumpFilePath,omitempty"`
 	// HostPort: The host and port of the on-premises instance in host:port format
@@ -6762,7 +6769,9 @@ type User struct {
 	// Project: The project ID of the project containing the Cloud SQL database.
 	// The Google apps domain is prefixed if applicable. Can be omitted for
 	// *update* because it is already specified on the URL.
-	Project              string                `json:"project,omitempty"`
+	Project string `json:"project,omitempty"`
+	// ServerRoles: Optional. The server roles for the SQL Server login.
+	ServerRoles          []string              `json:"serverRoles,omitempty"`
 	SqlserverUserDetails *SqlServerUserDetails `json:"sqlserverUserDetails,omitempty"`
 	// Type: The user type. It determines the method to authenticate the user
 	// during login. The default is the database's built-in user type.
@@ -13028,6 +13037,13 @@ func (r *OperationsService) Cancel(project string, operation string) *Operations
 	return c
 }
 
+// Location sets the optional parameter "location": Region of the Cloud SQL
+// instance.
+func (c *OperationsCancelCall) Location(location string) *OperationsCancelCall {
+	c.urlParams_.Set("location", location)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -13127,6 +13143,13 @@ func (r *OperationsService) Get(project string, operation string) *OperationsGet
 	c := &OperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.operation = operation
+	return c
+}
+
+// Location sets the optional parameter "location": Region of the Cloud SQL
+// instance.
+func (c *OperationsGetCall) Location(location string) *OperationsGetCall {
+	c.urlParams_.Set("location", location)
 	return c
 }
 
@@ -13245,6 +13268,13 @@ func (r *OperationsService) List(project string) *OperationsListCall {
 // does not include the project ID.
 func (c *OperationsListCall) Instance(instance string) *OperationsListCall {
 	c.urlParams_.Set("instance", instance)
+	return c
+}
+
+// Location sets the optional parameter "location": Region of the Cloud SQL
+// instance.
+func (c *OperationsListCall) Location(location string) *OperationsListCall {
+	c.urlParams_.Set("location", location)
 	return c
 }
 
@@ -15324,6 +15354,25 @@ func (c *UsersUpdateCall) Name(name string) *UsersUpdateCall {
 // `database_roles` are added to the user's existing roles.
 func (c *UsersUpdateCall) RevokeExistingRoles(revokeExistingRoles bool) *UsersUpdateCall {
 	c.urlParams_.Set("revokeExistingRoles", fmt.Sprint(revokeExistingRoles))
+	return c
+}
+
+// RevokeExistingServerRoles sets the optional parameter
+// "revokeExistingServerRoles": Specifies whether to revoke existing roles that
+// are not present in the `server_roles` field. If `false` or unset, the server
+// roles specified in `server_roles` are added to the user's existing server
+// roles.
+func (c *UsersUpdateCall) RevokeExistingServerRoles(revokeExistingServerRoles bool) *UsersUpdateCall {
+	c.urlParams_.Set("revokeExistingServerRoles", fmt.Sprint(revokeExistingServerRoles))
+	return c
+}
+
+// ServerRoles sets the optional parameter "serverRoles": The server roles to
+// grant to the SQL Server login. Existing server roles will not be revoked if
+// revoke_existing_roles is false. body.server_roles will be ignored for update
+// request.
+func (c *UsersUpdateCall) ServerRoles(serverRoles ...string) *UsersUpdateCall {
+	c.urlParams_.SetMulti("serverRoles", append([]string{}, serverRoles...))
 	return c
 }
 

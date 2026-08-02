@@ -656,7 +656,7 @@ type GoogleIdentityStsV1Jwk struct {
 	Kty string `json:"kty,omitempty"`
 	// N: Modulus value for kty="RSA".
 	N string `json:"n,omitempty"`
-	// Use: Public key use. Currently "jwt-svid".
+	// Use: Public key use. Currently "sig".
 	Use string `json:"use,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Alg") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

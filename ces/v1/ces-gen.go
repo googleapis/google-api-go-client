@@ -2069,6 +2069,10 @@ type ConversationTurn struct {
 	Messages []*Message `json:"messages,omitempty"`
 	// RootSpan: Optional. The root span of the action processing.
 	RootSpan *Span `json:"rootSpan,omitempty"`
+	// UserIntendedText: Optional. The intended ground-truth text from the
+	// Simulated Caller (Polysynth). Only populated when word error rate metrics
+	// are enabled.
+	UserIntendedText string `json:"userIntendedText,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Messages") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2590,6 +2594,8 @@ type DataStoreToolModalityConfig struct {
 	ModalityType string `json:"modalityType,omitempty"`
 	// RewriterConfig: Optional. The rewriter config.
 	RewriterConfig *DataStoreToolRewriterConfig `json:"rewriterConfig,omitempty"`
+	// SnippetsConfig: Optional. The snippets configuration.
+	SnippetsConfig *DataStoreToolSnippetsConfig `json:"snippetsConfig,omitempty"`
 	// SummarizationConfig: Optional. The summarization config.
 	SummarizationConfig *DataStoreToolSummarizationConfig `json:"summarizationConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroundingConfig") to
@@ -2634,6 +2640,28 @@ type DataStoreToolRewriterConfig struct {
 
 func (s DataStoreToolRewriterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DataStoreToolRewriterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataStoreToolSnippetsConfig: Snippets configuration.
+type DataStoreToolSnippetsConfig struct {
+	// EnableSnippets: Optional. Whether snippets are enabled.
+	EnableSnippets bool `json:"enableSnippets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableSnippets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableSnippets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataStoreToolSnippetsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DataStoreToolSnippetsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4120,6 +4148,10 @@ type ImportAppRequestImportOptions struct {
 	// Toolsets) in the app will be deleted. - Imported resources will be created
 	// as new resources.
 	ConflictResolutionStrategy string `json:"conflictResolutionStrategy,omitempty"`
+	// ValidateOnly: Optional. Flag for dry-running the import process. If set to
+	// true, the import process will only perform validations and will not make any
+	// changes to the existing app or create a new one.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConflictResolutionStrategy")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6810,6 +6842,9 @@ type SessionConfig struct {
 	// specified, the session will be handled by the root agent of the app. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/agents/{agent}`
 	EntryAgent string `json:"entryAgent,omitempty"`
+	// ExcludeDiagnosticInfo: Optional. Whether to exclude diagnostic info from the
+	// session output.
+	ExcludeDiagnosticInfo bool `json:"excludeDiagnosticInfo,omitempty"`
 	// HistoricalContexts: Optional. The historical context of the session,
 	// including user inputs, agent responses, and other messages. Typically, CES
 	// agent would manage session automatically so client doesn't need to
@@ -7079,8 +7114,9 @@ func (s Status) MarshalJSON() ([]byte, error) {
 // SynthesizeSpeechConfig: Configuration for how the agent response should be
 // synthesized.
 type SynthesizeSpeechConfig struct {
-	// ConsentAudioGcsUri: Optional. The Cloud Storage URI to the consent audio for
-	// voice cloning.
+	// ConsentAudioGcsUri: Optional. Deprecated: Use `custom_voice_samples` in
+	// AudioProcessingConfig instead. The Cloud Storage URI to the consent audio
+	// for voice cloning.
 	ConsentAudioGcsUri string `json:"consentAudioGcsUri,omitempty"`
 	// Instruction: Optional. The instruction used to synthesize speech when using
 	// a generative model.
@@ -7099,7 +7135,8 @@ type SynthesizeSpeechConfig struct {
 	// (https://cloud.google.com/text-to-speech/docs/voices) from Cloud
 	// Text-to-Speech.
 	Voice string `json:"voice,omitempty"`
-	// VoiceSampleGcsUri: Optional. The Cloud Storage URI to the audio sample for
+	// VoiceSampleGcsUri: Optional. Deprecated: Use `custom_voice_samples` in
+	// AudioProcessingConfig instead. The Cloud Storage URI to the audio sample for
 	// voice cloning. The audio sample should be a mono-channel, 24kHz WAV file.
 	// Note: Please make sure the CES service agent
 	// `service-@gcp-sa-ces.iam.gserviceaccount.com` has `storage.objects.get`

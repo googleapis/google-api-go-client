@@ -5695,6 +5695,20 @@ type Message struct {
 	// LastUpdateTime: Output only. The time at which the message was last edited
 	// by a user. If the message has never been edited, this field is empty.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+	// MarkupSyntax: Optional. Specifies how the server interprets the message
+	// `text` field content.
+	//
+	// Possible values:
+	//   "MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.
+	//   "MARKUP_SYNTAX_CHAT" - Uses Google Chat's markup syntax. See
+	// https://developers.google.com/workspace/chat/format-messages#format-texts
+	// for more information.
+	//   "MARKUP_SYNTAX_MARKDOWN" - Uses Markdown syntax. This syntax is based on
+	// the [CommonMark](https://commonmark.org/help/) specification, with
+	// additional extensions. See
+	// https://developers.google.com/workspace/chat/format-messages#format-texts
+	// for more information.
+	MarkupSyntax string `json:"markupSyntax,omitempty"`
 	// MatchedUrl: Output only. A URL in the Chat message `text` field that matches
 	// a link preview pattern. For more information, see Preview links
 	// (https://developers.google.com/workspace/chat/preview-links).
@@ -6555,6 +6569,20 @@ type SearchMessagesRequest struct {
 	// characters. Invalid queries are rejected by the server with an
 	// `INVALID_ARGUMENT` error.
 	Filter string `json:"filter,omitempty"`
+	// MarkupSyntax: Optional. Specifies the desired output syntax for the Chat
+	// message `formatted_text` field.
+	//
+	// Possible values:
+	//   "MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.
+	//   "MARKUP_SYNTAX_CHAT" - Uses Google Chat's markup syntax. See
+	// https://developers.google.com/workspace/chat/format-messages#format-texts
+	// for more information.
+	//   "MARKUP_SYNTAX_MARKDOWN" - Uses Markdown syntax. This syntax is based on
+	// the [CommonMark](https://commonmark.org/help/) specification, with
+	// additional extensions. See
+	// https://developers.google.com/workspace/chat/format-messages#format-texts
+	// for more information.
+	MarkupSyntax string `json:"markupSyntax,omitempty"`
 	// OrderBy: Optional. How the results list is ordered. Supported attributes to
 	// order by are: - `create_time`: Sorts the results by the time of the message
 	// creation. Default value. - `relevance`: Sorts the results by relevance.
@@ -6631,12 +6659,36 @@ func (s SearchMessagesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SearchSpaceResult: A single result item from a space search.
+type SearchSpaceResult struct {
+	// Space: Output only. The matched space.
+	Space *Space `json:"space,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Space") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchSpaceResult) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchSpaceResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchSpacesResponse: Response with a list of spaces corresponding to the
 // search spaces request.
 type SearchSpacesResponse struct {
 	// NextPageToken: A token that can be used to retrieve the next page. If this
 	// field is empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Results: Output only. The list of search results that matched the query.
+	Results []*SearchSpaceResult `json:"results,omitempty"`
 	// Spaces: Deprecated: Please use the new `results` field instead. A page of
 	// the requested spaces. This field will be populated only when
 	// `useAdminAccess` is set to `true` and deprecated in favor of the new
@@ -9852,8 +9904,7 @@ type SpacesSearchCall struct {
 // (https://developers.google.com/workspace/chat/search-manage-admin). When
 // `use_admin_access` is set to `false`, the results are limited to spaces
 // where the calling user is a joined member. To search with administrator
-// privileges, set `use_admin_access` to `true`. Setting `use_admin_access` to
-// `false` is available under Developer Preview. Supports the following types
+// privileges, set `use_admin_access` to `true`. Supports the following types
 // of authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize): -
 // User authentication
@@ -9972,8 +10023,6 @@ func (c *SpacesSearchCall) Query(query string) *SpacesSearchCall {
 // (https://support.google.com/a/answer/13369245). Requires either the
 // `chat.admin.spaces.readonly` or `chat.admin.spaces` OAuth 2.0 scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
-// Setting `use_admin_access` to `false` is available under Developer Preview.
-// Developer Preview (https://developers.google.com/workspace/preview).
 func (c *SpacesSearchCall) UseAdminAccess(useAdminAccess bool) *SpacesSearchCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -11441,6 +11490,28 @@ func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	return c
 }
 
+// MarkupSyntax sets the optional parameter "markupSyntax": Specifies the
+// desired output syntax for the Chat message `formatted_text` field.
+//
+// Possible values:
+//
+//	"MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.
+//	"MARKUP_SYNTAX_CHAT" - Uses Google Chat's markup syntax. See
+//
+// https://developers.google.com/workspace/chat/format-messages#format-texts
+// for more information.
+//
+//	"MARKUP_SYNTAX_MARKDOWN" - Uses Markdown syntax. This syntax is based on
+//
+// the [CommonMark](https://commonmark.org/help/) specification, with
+// additional extensions. See
+// https://developers.google.com/workspace/chat/format-messages#format-texts
+// for more information.
+func (c *SpacesMessagesGetCall) MarkupSyntax(markupSyntax string) *SpacesMessagesGetCall {
+	c.urlParams_.Set("markupSyntax", markupSyntax)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -11591,6 +11662,28 @@ func (r *SpacesMessagesService) List(parent string) *SpacesMessagesListCall {
 // rejected by the server with an `INVALID_ARGUMENT` error.
 func (c *SpacesMessagesListCall) Filter(filter string) *SpacesMessagesListCall {
 	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MarkupSyntax sets the optional parameter "markupSyntax": Specifies the
+// desired output syntax for the Chat message `formatted_text` field.
+//
+// Possible values:
+//
+//	"MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.
+//	"MARKUP_SYNTAX_CHAT" - Uses Google Chat's markup syntax. See
+//
+// https://developers.google.com/workspace/chat/format-messages#format-texts
+// for more information.
+//
+//	"MARKUP_SYNTAX_MARKDOWN" - Uses Markdown syntax. This syntax is based on
+//
+// the [CommonMark](https://commonmark.org/help/) specification, with
+// additional extensions. See
+// https://developers.google.com/workspace/chat/format-messages#format-texts
+// for more information.
+func (c *SpacesMessagesListCall) MarkupSyntax(markupSyntax string) *SpacesMessagesListCall {
+	c.urlParams_.Set("markupSyntax", markupSyntax)
 	return c
 }
 

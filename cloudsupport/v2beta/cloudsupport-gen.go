@@ -122,7 +122,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.CaseClassifications = NewCaseClassificationsService(s)
 	s.Cases = NewCasesService(s)
 	s.Media = NewMediaService(s)
-	s.SupportEventSubscriptions = NewSupportEventSubscriptionsService(s)
+	s.Organizations = NewOrganizationsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -153,7 +153,7 @@ type Service struct {
 
 	Media *MediaService
 
-	SupportEventSubscriptions *SupportEventSubscriptionsService
+	Organizations *OrganizationsService
 }
 
 func (s *Service) userAgent() string {
@@ -214,12 +214,24 @@ type MediaService struct {
 	s *Service
 }
 
-func NewSupportEventSubscriptionsService(s *Service) *SupportEventSubscriptionsService {
-	rs := &SupportEventSubscriptionsService{s: s}
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	rs.SupportEventSubscriptions = NewOrganizationsSupportEventSubscriptionsService(s)
 	return rs
 }
 
-type SupportEventSubscriptionsService struct {
+type OrganizationsService struct {
+	s *Service
+
+	SupportEventSubscriptions *OrganizationsSupportEventSubscriptionsService
+}
+
+func NewOrganizationsSupportEventSubscriptionsService(s *Service) *OrganizationsSupportEventSubscriptionsService {
+	rs := &OrganizationsSupportEventSubscriptionsService{s: s}
+	return rs
+}
+
+type OrganizationsSupportEventSubscriptionsService struct {
 	s *Service
 }
 
@@ -3685,7 +3697,7 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Attachment, error) 
 	return ret, nil
 }
 
-type SupportEventSubscriptionsCreateCall struct {
+type OrganizationsSupportEventSubscriptionsCreateCall struct {
 	s                        *Service
 	parent                   string
 	supporteventsubscription *SupportEventSubscription
@@ -3711,8 +3723,8 @@ type SupportEventSubscriptionsCreateCall struct {
 //
 //   - parent: The parent resource name where the support event subscription will
 //     be created. Format: organizations/{organization_id}.
-func (r *SupportEventSubscriptionsService) Create(parent string, supporteventsubscription *SupportEventSubscription) *SupportEventSubscriptionsCreateCall {
-	c := &SupportEventSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsSupportEventSubscriptionsService) Create(parent string, supporteventsubscription *SupportEventSubscription) *OrganizationsSupportEventSubscriptionsCreateCall {
+	c := &OrganizationsSupportEventSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.supporteventsubscription = supporteventsubscription
 	return c
@@ -3721,27 +3733,27 @@ func (r *SupportEventSubscriptionsService) Create(parent string, supporteventsub
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *SupportEventSubscriptionsCreateCall) Fields(s ...googleapi.Field) *SupportEventSubscriptionsCreateCall {
+func (c *OrganizationsSupportEventSubscriptionsCreateCall) Fields(s ...googleapi.Field) *OrganizationsSupportEventSubscriptionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *SupportEventSubscriptionsCreateCall) Context(ctx context.Context) *SupportEventSubscriptionsCreateCall {
+func (c *OrganizationsSupportEventSubscriptionsCreateCall) Context(ctx context.Context) *OrganizationsSupportEventSubscriptionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *SupportEventSubscriptionsCreateCall) Header() http.Header {
+func (c *OrganizationsSupportEventSubscriptionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SupportEventSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsSupportEventSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.supporteventsubscription)
 	if err != nil {
@@ -3759,17 +3771,17 @@ func (c *SupportEventSubscriptionsCreateCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudsupport.supportEventSubscriptions.create" call.
+// Do executes the "cloudsupport.organizations.supportEventSubscriptions.create" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *SupportEventSubscription.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *SupportEventSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
+func (c *OrganizationsSupportEventSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3799,11 +3811,11 @@ func (c *SupportEventSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.create", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.create", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type SupportEventSubscriptionsDeleteCall struct {
+type OrganizationsSupportEventSubscriptionsDeleteCall struct {
 	s          *Service
 	name       string
 	urlParams_ gensupport.URLParams
@@ -3827,8 +3839,8 @@ type SupportEventSubscriptionsDeleteCall struct {
 //
 //   - name: The name of the support event subscription to delete. Format:
 //     organizations/{organization_id}/supportEventSubscriptions/{subscription_id}.
-func (r *SupportEventSubscriptionsService) Delete(name string) *SupportEventSubscriptionsDeleteCall {
-	c := &SupportEventSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsSupportEventSubscriptionsService) Delete(name string) *OrganizationsSupportEventSubscriptionsDeleteCall {
+	c := &OrganizationsSupportEventSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -3836,27 +3848,27 @@ func (r *SupportEventSubscriptionsService) Delete(name string) *SupportEventSubs
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *SupportEventSubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SupportEventSubscriptionsDeleteCall {
+func (c *OrganizationsSupportEventSubscriptionsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsSupportEventSubscriptionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *SupportEventSubscriptionsDeleteCall) Context(ctx context.Context) *SupportEventSubscriptionsDeleteCall {
+func (c *OrganizationsSupportEventSubscriptionsDeleteCall) Context(ctx context.Context) *OrganizationsSupportEventSubscriptionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *SupportEventSubscriptionsDeleteCall) Header() http.Header {
+func (c *OrganizationsSupportEventSubscriptionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SupportEventSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsSupportEventSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3870,17 +3882,17 @@ func (c *SupportEventSubscriptionsDeleteCall) doRequest(alt string) (*http.Respo
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.delete", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.delete", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudsupport.supportEventSubscriptions.delete" call.
+// Do executes the "cloudsupport.organizations.supportEventSubscriptions.delete" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *SupportEventSubscription.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *SupportEventSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
+func (c *OrganizationsSupportEventSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3910,11 +3922,11 @@ func (c *SupportEventSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.delete", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.delete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type SupportEventSubscriptionsExpungeCall struct {
+type OrganizationsSupportEventSubscriptionsExpungeCall struct {
 	s                                      *Service
 	name                                   string
 	expungesupporteventsubscriptionrequest *ExpungeSupportEventSubscriptionRequest
@@ -3923,12 +3935,24 @@ type SupportEventSubscriptionsExpungeCall struct {
 	header_                                http.Header
 }
 
-// Expunge: Expunges a support event subscription.
+// Expunge: Expunges a support event subscription. EXAMPLES: cURL: ```shell
+// support_event_subscription="organizations/123456789/supportEventSubscriptions
+// /abcdef123456" curl \ --request POST \ --header "Authorization: Bearer
+// $(gcloud auth print-access-token)" \
+// "https://cloudsupport.googleapis.com/v2beta/$support_event_subscription:expun
+// ge" ``` Python: ```python import googleapiclient.discovery api_version =
+// "v2beta" supportApiService = googleapiclient.discovery.build(
+// serviceName="cloudsupport", version=api_version,
+// discoveryServiceUrl=f"https://cloudsupport.googleapis.com/$discovery/rest?ver
+// sion={api_version}", ) request =
+// supportApiService.supportEventSubscriptions().expunge(
+// name="organizations/123456789/supportEventSubscriptions/abcdef123456" )
+// print(request.execute()) ```
 //
 //   - name: The name of the support event subscription to expunge. Format:
 //     organizations/{organization_id}/supportEventSubscriptions/{subscription_id}.
-func (r *SupportEventSubscriptionsService) Expunge(name string, expungesupporteventsubscriptionrequest *ExpungeSupportEventSubscriptionRequest) *SupportEventSubscriptionsExpungeCall {
-	c := &SupportEventSubscriptionsExpungeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsSupportEventSubscriptionsService) Expunge(name string, expungesupporteventsubscriptionrequest *ExpungeSupportEventSubscriptionRequest) *OrganizationsSupportEventSubscriptionsExpungeCall {
+	c := &OrganizationsSupportEventSubscriptionsExpungeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.expungesupporteventsubscriptionrequest = expungesupporteventsubscriptionrequest
 	return c
@@ -3937,27 +3961,27 @@ func (r *SupportEventSubscriptionsService) Expunge(name string, expungesupportev
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *SupportEventSubscriptionsExpungeCall) Fields(s ...googleapi.Field) *SupportEventSubscriptionsExpungeCall {
+func (c *OrganizationsSupportEventSubscriptionsExpungeCall) Fields(s ...googleapi.Field) *OrganizationsSupportEventSubscriptionsExpungeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *SupportEventSubscriptionsExpungeCall) Context(ctx context.Context) *SupportEventSubscriptionsExpungeCall {
+func (c *OrganizationsSupportEventSubscriptionsExpungeCall) Context(ctx context.Context) *OrganizationsSupportEventSubscriptionsExpungeCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *SupportEventSubscriptionsExpungeCall) Header() http.Header {
+func (c *OrganizationsSupportEventSubscriptionsExpungeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SupportEventSubscriptionsExpungeCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsSupportEventSubscriptionsExpungeCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.expungesupporteventsubscriptionrequest)
 	if err != nil {
@@ -3975,16 +3999,16 @@ func (c *SupportEventSubscriptionsExpungeCall) doRequest(alt string) (*http.Resp
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.expunge", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.expunge", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudsupport.supportEventSubscriptions.expunge" call.
+// Do executes the "cloudsupport.organizations.supportEventSubscriptions.expunge" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *Empty.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
 // whether the returned error was because http.StatusNotModified was returned.
-func (c *SupportEventSubscriptionsExpungeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+func (c *OrganizationsSupportEventSubscriptionsExpungeCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4014,11 +4038,11 @@ func (c *SupportEventSubscriptionsExpungeCall) Do(opts ...googleapi.CallOption) 
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.expunge", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.expunge", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type SupportEventSubscriptionsGetCall struct {
+type OrganizationsSupportEventSubscriptionsGetCall struct {
 	s            *Service
 	name         string
 	urlParams_   gensupport.URLParams
@@ -4043,8 +4067,8 @@ type SupportEventSubscriptionsGetCall struct {
 //
 //   - name: The name of the support event subscription to retrieve. Format:
 //     organizations/{organization_id}/supportEventSubscriptions/{subscription_id}.
-func (r *SupportEventSubscriptionsService) Get(name string) *SupportEventSubscriptionsGetCall {
-	c := &SupportEventSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsSupportEventSubscriptionsService) Get(name string) *OrganizationsSupportEventSubscriptionsGetCall {
+	c := &OrganizationsSupportEventSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
@@ -4052,7 +4076,7 @@ func (r *SupportEventSubscriptionsService) Get(name string) *SupportEventSubscri
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *SupportEventSubscriptionsGetCall) Fields(s ...googleapi.Field) *SupportEventSubscriptionsGetCall {
+func (c *OrganizationsSupportEventSubscriptionsGetCall) Fields(s ...googleapi.Field) *OrganizationsSupportEventSubscriptionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4060,27 +4084,27 @@ func (c *SupportEventSubscriptionsGetCall) Fields(s ...googleapi.Field) *Support
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *SupportEventSubscriptionsGetCall) IfNoneMatch(entityTag string) *SupportEventSubscriptionsGetCall {
+func (c *OrganizationsSupportEventSubscriptionsGetCall) IfNoneMatch(entityTag string) *OrganizationsSupportEventSubscriptionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *SupportEventSubscriptionsGetCall) Context(ctx context.Context) *SupportEventSubscriptionsGetCall {
+func (c *OrganizationsSupportEventSubscriptionsGetCall) Context(ctx context.Context) *OrganizationsSupportEventSubscriptionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *SupportEventSubscriptionsGetCall) Header() http.Header {
+func (c *OrganizationsSupportEventSubscriptionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SupportEventSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsSupportEventSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4097,17 +4121,17 @@ func (c *SupportEventSubscriptionsGetCall) doRequest(alt string) (*http.Response
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.get", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudsupport.supportEventSubscriptions.get" call.
+// Do executes the "cloudsupport.organizations.supportEventSubscriptions.get" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *SupportEventSubscription.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *SupportEventSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
+func (c *OrganizationsSupportEventSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4137,11 +4161,11 @@ func (c *SupportEventSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Su
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.get", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type SupportEventSubscriptionsListCall struct {
+type OrganizationsSupportEventSubscriptionsListCall struct {
 	s            *Service
 	parent       string
 	urlParams_   gensupport.URLParams
@@ -4164,8 +4188,8 @@ type SupportEventSubscriptionsListCall struct {
 //
 //   - parent: The fully qualified name of the Cloud resource to list support
 //     event subscriptions under. Format: organizations/{organization_id}.
-func (r *SupportEventSubscriptionsService) List(parent string) *SupportEventSubscriptionsListCall {
-	c := &SupportEventSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsSupportEventSubscriptionsService) List(parent string) *OrganizationsSupportEventSubscriptionsListCall {
+	c := &OrganizationsSupportEventSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
@@ -4176,14 +4200,14 @@ func (r *SupportEventSubscriptionsService) List(parent string) *SupportEventSubs
 // `state=WORKING` -
 // `pub_sub_topic="projects/example-project/topics/example-topic" AND
 // state=WORKING`
-func (c *SupportEventSubscriptionsListCall) Filter(filter string) *SupportEventSubscriptionsListCall {
+func (c *OrganizationsSupportEventSubscriptionsListCall) Filter(filter string) *OrganizationsSupportEventSubscriptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // support event subscriptions to return.
-func (c *SupportEventSubscriptionsListCall) PageSize(pageSize int64) *SupportEventSubscriptionsListCall {
+func (c *OrganizationsSupportEventSubscriptionsListCall) PageSize(pageSize int64) *OrganizationsSupportEventSubscriptionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
@@ -4192,14 +4216,14 @@ func (c *SupportEventSubscriptionsListCall) PageSize(pageSize int64) *SupportEve
 // page of results to return. If unspecified, the first page is retrieved. When
 // paginating, all other parameters provided to `ListSupportEventSubscriptions`
 // must match the call that provided the page token.
-func (c *SupportEventSubscriptionsListCall) PageToken(pageToken string) *SupportEventSubscriptionsListCall {
+func (c *OrganizationsSupportEventSubscriptionsListCall) PageToken(pageToken string) *OrganizationsSupportEventSubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Whether to show
 // deleted subscriptions. By default, deleted subscriptions are not returned.
-func (c *SupportEventSubscriptionsListCall) ShowDeleted(showDeleted bool) *SupportEventSubscriptionsListCall {
+func (c *OrganizationsSupportEventSubscriptionsListCall) ShowDeleted(showDeleted bool) *OrganizationsSupportEventSubscriptionsListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
@@ -4207,7 +4231,7 @@ func (c *SupportEventSubscriptionsListCall) ShowDeleted(showDeleted bool) *Suppo
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *SupportEventSubscriptionsListCall) Fields(s ...googleapi.Field) *SupportEventSubscriptionsListCall {
+func (c *OrganizationsSupportEventSubscriptionsListCall) Fields(s ...googleapi.Field) *OrganizationsSupportEventSubscriptionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
@@ -4215,27 +4239,27 @@ func (c *SupportEventSubscriptionsListCall) Fields(s ...googleapi.Field) *Suppor
 // IfNoneMatch sets an optional parameter which makes the operation fail if the
 // object's ETag matches the given value. This is useful for getting updates
 // only after the object has changed since the last request.
-func (c *SupportEventSubscriptionsListCall) IfNoneMatch(entityTag string) *SupportEventSubscriptionsListCall {
+func (c *OrganizationsSupportEventSubscriptionsListCall) IfNoneMatch(entityTag string) *OrganizationsSupportEventSubscriptionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *SupportEventSubscriptionsListCall) Context(ctx context.Context) *SupportEventSubscriptionsListCall {
+func (c *OrganizationsSupportEventSubscriptionsListCall) Context(ctx context.Context) *OrganizationsSupportEventSubscriptionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *SupportEventSubscriptionsListCall) Header() http.Header {
+func (c *OrganizationsSupportEventSubscriptionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SupportEventSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsSupportEventSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
@@ -4252,17 +4276,17 @@ func (c *SupportEventSubscriptionsListCall) doRequest(alt string) (*http.Respons
 	googleapi.Expand(req.URL, map[string]string{
 		"parent": c.parent,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.list", "request", internallog.HTTPRequest(req, nil))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.list", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudsupport.supportEventSubscriptions.list" call.
+// Do executes the "cloudsupport.organizations.supportEventSubscriptions.list" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListSupportEventSubscriptionsResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *SupportEventSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSupportEventSubscriptionsResponse, error) {
+func (c *OrganizationsSupportEventSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSupportEventSubscriptionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4292,14 +4316,14 @@ func (c *SupportEventSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*L
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.list", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.list", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
 // Pages invokes f for each page of results.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
-func (c *SupportEventSubscriptionsListCall) Pages(ctx context.Context, f func(*ListSupportEventSubscriptionsResponse) error) error {
+func (c *OrganizationsSupportEventSubscriptionsListCall) Pages(ctx context.Context, f func(*ListSupportEventSubscriptionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -4317,7 +4341,7 @@ func (c *SupportEventSubscriptionsListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-type SupportEventSubscriptionsPatchCall struct {
+type OrganizationsSupportEventSubscriptionsPatchCall struct {
 	s                        *Service
 	name                     string
 	supporteventsubscription *SupportEventSubscription
@@ -4344,8 +4368,8 @@ type SupportEventSubscriptionsPatchCall struct {
 // print(request.execute()) ```
 //
 // - name: Identifier. The resource name of the support event subscription.
-func (r *SupportEventSubscriptionsService) Patch(name string, supporteventsubscription *SupportEventSubscription) *SupportEventSubscriptionsPatchCall {
-	c := &SupportEventSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsSupportEventSubscriptionsService) Patch(name string, supporteventsubscription *SupportEventSubscription) *OrganizationsSupportEventSubscriptionsPatchCall {
+	c := &OrganizationsSupportEventSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.supporteventsubscription = supporteventsubscription
 	return c
@@ -4353,7 +4377,7 @@ func (r *SupportEventSubscriptionsService) Patch(name string, supporteventsubscr
 
 // UpdateMask sets the optional parameter "updateMask": The list of fields to
 // update. The only supported value is pub_sub_topic.
-func (c *SupportEventSubscriptionsPatchCall) UpdateMask(updateMask string) *SupportEventSubscriptionsPatchCall {
+func (c *OrganizationsSupportEventSubscriptionsPatchCall) UpdateMask(updateMask string) *OrganizationsSupportEventSubscriptionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
@@ -4361,27 +4385,27 @@ func (c *SupportEventSubscriptionsPatchCall) UpdateMask(updateMask string) *Supp
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *SupportEventSubscriptionsPatchCall) Fields(s ...googleapi.Field) *SupportEventSubscriptionsPatchCall {
+func (c *OrganizationsSupportEventSubscriptionsPatchCall) Fields(s ...googleapi.Field) *OrganizationsSupportEventSubscriptionsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *SupportEventSubscriptionsPatchCall) Context(ctx context.Context) *SupportEventSubscriptionsPatchCall {
+func (c *OrganizationsSupportEventSubscriptionsPatchCall) Context(ctx context.Context) *OrganizationsSupportEventSubscriptionsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *SupportEventSubscriptionsPatchCall) Header() http.Header {
+func (c *OrganizationsSupportEventSubscriptionsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SupportEventSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsSupportEventSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.supporteventsubscription)
 	if err != nil {
@@ -4399,17 +4423,17 @@ func (c *SupportEventSubscriptionsPatchCall) doRequest(alt string) (*http.Respon
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudsupport.supportEventSubscriptions.patch" call.
+// Do executes the "cloudsupport.organizations.supportEventSubscriptions.patch" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *SupportEventSubscription.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *SupportEventSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
+func (c *OrganizationsSupportEventSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4439,11 +4463,11 @@ func (c *SupportEventSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.patch", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
-type SupportEventSubscriptionsUndeleteCall struct {
+type OrganizationsSupportEventSubscriptionsUndeleteCall struct {
 	s                                       *Service
 	name                                    string
 	undeletesupporteventsubscriptionrequest *UndeleteSupportEventSubscriptionRequest
@@ -4464,12 +4488,12 @@ type SupportEventSubscriptionsUndeleteCall struct {
 // sion={api_version}", ) request =
 // supportApiService.supportEventSubscriptions().undelete(
 // name="organizations/123456789/supportEventSubscriptions/abcdef123456" )
-// print(request.execute()) ``` Undeletes a support event subscription.
+// print(request.execute()) ```
 //
 //   - name: The name of the support event subscription to undelete. Format:
 //     organizations/{organization_id}/supportEventSubscriptions/{subscription_id}.
-func (r *SupportEventSubscriptionsService) Undelete(name string, undeletesupporteventsubscriptionrequest *UndeleteSupportEventSubscriptionRequest) *SupportEventSubscriptionsUndeleteCall {
-	c := &SupportEventSubscriptionsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+func (r *OrganizationsSupportEventSubscriptionsService) Undelete(name string, undeletesupporteventsubscriptionrequest *UndeleteSupportEventSubscriptionRequest) *OrganizationsSupportEventSubscriptionsUndeleteCall {
+	c := &OrganizationsSupportEventSubscriptionsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.undeletesupporteventsubscriptionrequest = undeletesupporteventsubscriptionrequest
 	return c
@@ -4478,27 +4502,27 @@ func (r *SupportEventSubscriptionsService) Undelete(name string, undeletesupport
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
-func (c *SupportEventSubscriptionsUndeleteCall) Fields(s ...googleapi.Field) *SupportEventSubscriptionsUndeleteCall {
+func (c *OrganizationsSupportEventSubscriptionsUndeleteCall) Fields(s ...googleapi.Field) *OrganizationsSupportEventSubscriptionsUndeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
 // Context sets the context to be used in this call's Do method.
-func (c *SupportEventSubscriptionsUndeleteCall) Context(ctx context.Context) *SupportEventSubscriptionsUndeleteCall {
+func (c *OrganizationsSupportEventSubscriptionsUndeleteCall) Context(ctx context.Context) *OrganizationsSupportEventSubscriptionsUndeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
 // Header returns a http.Header that can be modified by the caller to add
 // headers to the request.
-func (c *SupportEventSubscriptionsUndeleteCall) Header() http.Header {
+func (c *OrganizationsSupportEventSubscriptionsUndeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
 	}
 	return c.header_
 }
 
-func (c *SupportEventSubscriptionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
+func (c *OrganizationsSupportEventSubscriptionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.undeletesupporteventsubscriptionrequest)
 	if err != nil {
@@ -4516,17 +4540,17 @@ func (c *SupportEventSubscriptionsUndeleteCall) doRequest(alt string) (*http.Res
 	googleapi.Expand(req.URL, map[string]string{
 		"name": c.name,
 	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.undelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.undelete", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
 }
 
-// Do executes the "cloudsupport.supportEventSubscriptions.undelete" call.
+// Do executes the "cloudsupport.organizations.supportEventSubscriptions.undelete" call.
 // Any non-2xx status code is an error. Response headers are in either
 // *SupportEventSubscription.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *SupportEventSubscriptionsUndeleteCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
+func (c *OrganizationsSupportEventSubscriptionsUndeleteCall) Do(opts ...googleapi.CallOption) (*SupportEventSubscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -4556,6 +4580,6 @@ func (c *SupportEventSubscriptionsUndeleteCall) Do(opts ...googleapi.CallOption)
 	if err != nil {
 		return nil, err
 	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.supportEventSubscriptions.undelete", "response", internallog.HTTPResponse(res, b))
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudsupport.organizations.supportEventSubscriptions.undelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -847,7 +847,8 @@ type Cluster struct {
 	// the form: `projects/{project}/global/networks/{network_id}`. This is
 	// required to create a cluster. Deprecated, use network_config.network
 	// instead.
-	Network       string         `json:"network,omitempty"`
+	Network string `json:"network,omitempty"`
+	// NetworkConfig: Optional.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
 	// PrimaryConfig: Output only. Cross Region replication config specific to
 	// PRIMARY cluster.
@@ -2091,6 +2092,9 @@ type Instance struct {
 	// PscInstanceConfig: Optional. The configuration for Private Service Connect
 	// (PSC) for the instance.
 	PscInstanceConfig *PscInstanceConfig `json:"pscInstanceConfig,omitempty"`
+	// PscInstanceInfo: Output only. Information about the Private Service Connect
+	// (PSC) for the instance.
+	PscInstanceInfo *PscInstanceInfo `json:"pscInstanceInfo,omitempty"`
 	// PublicIpAddress: Output only. The public IP addresses for the Instance. This
 	// is available ONLY when enable_public_ip is set. This is the connection
 	// endpoint for an end-user application.
@@ -3042,9 +3046,32 @@ type PscInstanceConfig struct {
 	// AllowedConsumerProjects: Optional. List of consumer projects that are
 	// allowed to create PSC endpoints to service-attachments to this instance.
 	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
+	// PscAutoConnectionPolicyState: Optional. Configuration for setting up PSC
+	// auto connection for the instance.
+	//
+	// Possible values:
+	//   "PSC_AUTO_CONNECTION_POLICY_STATE_UNSPECIFIED" - The state is unspecified.
+	// For old instances, this means the PSC auto connection is disabled. For new
+	// instances, this means the PSC auto connection is enabled by default.
+	//   "ENABLED" - Enables the PSC auto connection for the instance.
+	//   "DISABLED" - Disables the PSC auto connection for the instance.
+	PscAutoConnectionPolicyState string `json:"pscAutoConnectionPolicyState,omitempty"`
 	// PscAutoConnections: Optional. Configurations for setting up PSC service
 	// automation.
 	PscAutoConnections []*PscAutoConnectionConfig `json:"pscAutoConnections,omitempty"`
+	// PscAutoDnsState: Optional. Configuration for setting up PSC auto DNS for the
+	// instance.
+	//
+	// Possible values:
+	//   "PSC_AUTO_DNS_STATE_UNSPECIFIED" - The state is unspecified. For old
+	// instances, this means the PSC auto DNS is disabled. For new instances, this
+	// means the PSC auto DNS is enabled by default. Use
+	// `effective_psc_auto_dns_enabled` to check the effective state of the PSC
+	// auto DNS.
+	//   "PSC_AUTO_DNS_STATE_ENABLED" - Enables the PSC auto DNS for the instance.
+	//   "PSC_AUTO_DNS_STATE_DISABLED" - Disables the PSC auto DNS for the
+	// instance.
+	PscAutoDnsState string `json:"pscAutoDnsState,omitempty"`
 	// PscDnsName: Output only. The DNS name of the instance for PSC connectivity.
 	// Name convention: ...alloydb-psc.goog
 	PscDnsName string `json:"pscDnsName,omitempty"`
@@ -3072,6 +3099,41 @@ type PscInstanceConfig struct {
 
 func (s PscInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscInstanceInfo: Information about the Private Service Connect (PSC) for the
+// instance.
+type PscInstanceInfo struct {
+	// EffectivePscAutoConnectionPolicy: Output only. Indicates if the PSC auto
+	// connection policy is enabled for the instance. For older instances, this
+	// will be off by default, but for newer instances, this will be auto-enabled.
+	EffectivePscAutoConnectionPolicy bool `json:"effectivePscAutoConnectionPolicy,omitempty"`
+	// EffectivePscAutoDnsEnabled: Output only. The effective state of the PSC auto
+	// DNS for the instance.
+	EffectivePscAutoDnsEnabled bool `json:"effectivePscAutoDnsEnabled,omitempty"`
+	// PscAutoDnsNames: Output only. Specifies the auto DNS names for the instance.
+	PscAutoDnsNames []string `json:"pscAutoDnsNames,omitempty"`
+	// ServiceConnectionPolicy: Output only. The PSC service connection policy
+	// name. The format is "projects//regions//serviceConnectionPolicies/"
+	ServiceConnectionPolicy string `json:"serviceConnectionPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectivePscAutoConnectionPolicy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "EffectivePscAutoConnectionPolicy") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscInstanceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInstanceInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3656,30 +3718,26 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration:
-// Configuration for availability of database instance
+// StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration struct {
-	// AutomaticFailoverRoutingConfigured: Checks for existence of (multi-cluster)
-	// routing configuration that allows automatic failover to a different
-	// zone/region in case of an outage. Applicable to Bigtable resources.
+	// AutomaticFailoverRoutingConfigured: Disable validation warnings
 	AutomaticFailoverRoutingConfigured bool `json:"automaticFailoverRoutingConfigured,omitempty"`
-	// AvailabilityType: Availability type. Potential values: * `ZONAL`: The
-	// instance serves data from only one zone. Outages in that zone affect data
-	// accessibility. * `REGIONAL`: The instance can serve data from more than one
-	// zone in a region (it is highly available).
+	// AvailabilityType: Disable validation warnings
 	//
 	// Possible values:
-	//   "AVAILABILITY_TYPE_UNSPECIFIED" - Unspecified availability type.
-	//   "ZONAL" - Zonal available instance.
-	//   "REGIONAL" - Regional available instance.
-	//   "MULTI_REGIONAL" - Multi regional instance
-	//   "AVAILABILITY_TYPE_OTHER" - For rest of the other category
+	//   "AVAILABILITY_TYPE_UNSPECIFIED" - Disable validation warnings
+	//   "ZONAL" - Disable validation warnings
+	//   "REGIONAL" - Disable validation warnings
+	//   "MULTI_REGIONAL" - Disable validation warnings
+	//   "AVAILABILITY_TYPE_OTHER" - Disable validation warnings
 	AvailabilityType string `json:"availabilityType,omitempty"`
-	// CrossRegionReplicaConfigured: Checks for resources that are configured to
-	// have redundancy, and ongoing replication across regions
+	// CrossRegionReplicaConfigured: Disable validation warnings
 	CrossRegionReplicaConfigured bool `json:"crossRegionReplicaConfigured,omitempty"`
-	ExternalReplicaConfigured    bool `json:"externalReplicaConfigured,omitempty"`
-	PromotableReplicaConfigured  bool `json:"promotableReplicaConfigured,omitempty"`
+	// ExternalReplicaConfigured: Disable validation warnings
+	ExternalReplicaConfigured bool `json:"externalReplicaConfigured,omitempty"`
+	// PromotableReplicaConfigured: Disable validation warnings
+	PromotableReplicaConfigured bool `json:"promotableReplicaConfigured,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AutomaticFailoverRoutingConfigured") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -3700,17 +3758,14 @@ func (s StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainBackupConfiguration: Configuration for
-// automatic backups
+// StorageDatabasecenterPartnerapiV1mainBackupConfiguration: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainBackupConfiguration struct {
-	// AutomatedBackupEnabled: Whether customer visible automated backups are
-	// enabled on the instance.
+	// AutomatedBackupEnabled: Disable validation warnings
 	AutomatedBackupEnabled bool `json:"automatedBackupEnabled,omitempty"`
-	// BackupRetentionSettings: Backup retention settings.
+	// BackupRetentionSettings: Disable validation warnings
 	BackupRetentionSettings *StorageDatabasecenterPartnerapiV1mainRetentionSettings `json:"backupRetentionSettings,omitempty"`
-	// PointInTimeRecoveryEnabled: Whether point-in-time recovery is enabled. This
-	// is optional field, if the database service does not have this feature or
-	// metadata is not available in control plane, this can be omitted.
+	// PointInTimeRecoveryEnabled: Disable validation warnings
 	PointInTimeRecoveryEnabled bool `json:"pointInTimeRecoveryEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutomatedBackupEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3730,11 +3785,10 @@ func (s StorageDatabasecenterPartnerapiV1mainBackupConfiguration) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainBackupDRConfiguration:
-// BackupDRConfiguration to capture the backup and disaster recovery details of
-// database resource.
+// StorageDatabasecenterPartnerapiV1mainBackupDRConfiguration: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainBackupDRConfiguration struct {
-	// BackupdrManaged: Indicates if the resource is managed by BackupDR.
+	// BackupdrManaged: Disable validation warnings
 	BackupdrManaged bool `json:"backupdrManaged,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupdrManaged") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3754,21 +3808,20 @@ func (s StorageDatabasecenterPartnerapiV1mainBackupDRConfiguration) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainBackupDRMetadata: BackupDRMetadata
-// contains information about the backup and disaster recovery metadata of a
-// database resource.
+// StorageDatabasecenterPartnerapiV1mainBackupDRMetadata: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainBackupDRMetadata struct {
-	// BackupConfiguration: Backup configuration for this instance.
+	// BackupConfiguration: Disable validation warnings
 	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
-	// BackupRun: Latest backup run information for this instance.
+	// BackupRun: Disable validation warnings
 	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
-	// BackupdrConfiguration: BackupDR configuration for this instance.
+	// BackupdrConfiguration: Disable validation warnings
 	BackupdrConfiguration *StorageDatabasecenterPartnerapiV1mainBackupDRConfiguration `json:"backupdrConfiguration,omitempty"`
-	// FullResourceName: Required. Full resource name of this instance.
+	// FullResourceName: Required. Disable validation warnings
 	FullResourceName string `json:"fullResourceName,omitempty"`
-	// LastRefreshTime: Required. Last time backup configuration was refreshed.
+	// LastRefreshTime: Required. Disable validation warnings
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
-	// ResourceId: Required. Database resource id.
+	// ResourceId: Required. Disable validation warnings
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3788,21 +3841,20 @@ func (s StorageDatabasecenterPartnerapiV1mainBackupDRMetadata) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainBackupRun: A backup run.
+// StorageDatabasecenterPartnerapiV1mainBackupRun: Disable validation warnings
 type StorageDatabasecenterPartnerapiV1mainBackupRun struct {
-	// EndTime: The time the backup operation completed. REQUIRED
+	// EndTime: Disable validation warnings
 	EndTime string `json:"endTime,omitempty"`
-	// Error: Information about why the backup operation failed. This is only
-	// present if the run has the FAILED status. OPTIONAL
+	// Error: Disable validation warnings
 	Error *StorageDatabasecenterPartnerapiV1mainOperationError `json:"error,omitempty"`
-	// StartTime: The time the backup operation started. REQUIRED
+	// StartTime: Disable validation warnings
 	StartTime string `json:"startTime,omitempty"`
-	// Status: The status of this run. REQUIRED
+	// Status: Disable validation warnings
 	//
 	// Possible values:
-	//   "STATUS_UNSPECIFIED" - Unspecified status.
-	//   "SUCCESSFUL" - The backup was successful.
-	//   "FAILED" - The backup was unsuccessful.
+	//   "STATUS_UNSPECIFIED" - Disable validation warnings
+	//   "SUCCESSFUL" - Disable validation warnings
+	//   "FAILED" - Disable validation warnings
 	Status string `json:"status,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3822,13 +3874,11 @@ func (s StorageDatabasecenterPartnerapiV1mainBackupRun) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainCompliance: Contains compliance
-// information about a security standard indicating unmet recommendations.
+// StorageDatabasecenterPartnerapiV1mainCompliance: Disable validation warnings
 type StorageDatabasecenterPartnerapiV1mainCompliance struct {
-	// Standard: Industry-wide compliance standards or benchmarks, such as CIS,
-	// PCI, and OWASP.
+	// Standard: Disable validation warnings
 	Standard string `json:"standard,omitempty"`
-	// Version: Version of the standard or benchmark, for example, 1.1
+	// Version: Disable validation warnings
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Standard") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3848,42 +3898,32 @@ func (s StorageDatabasecenterPartnerapiV1mainCompliance) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData: Config based
-// signal data. This is used to send signals to Condor which are based on the
-// DB level configurations. These will be used to send signals for self managed
-// databases.
+// StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData struct {
-	// FullResourceName: Required. Full Resource name of the source resource.
+	// FullResourceName: Required. Disable validation warnings
 	FullResourceName string `json:"fullResourceName,omitempty"`
-	// LastRefreshTime: Required. Last time signal was refreshed
+	// LastRefreshTime: Required. Disable validation warnings
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
-	// ResourceId: Database resource id.
+	// ResourceId: Disable validation warnings
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
-	// SignalBoolValue: Signal data for boolean signals.
+	// SignalBoolValue: Disable validation warnings
 	SignalBoolValue bool `json:"signalBoolValue,omitempty"`
-	// SignalType: Required. Signal type of the signal
+	// SignalType: Required. Disable validation warnings
 	//
 	// Possible values:
-	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified signal type.
-	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated Minor Version
-	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Represents database auditing is
-	// disabled.
-	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Represents if a database has a password
-	// configured for the root account or not.
-	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Represents if a resource is
-	// exposed to public access.
-	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources requires
-	// all incoming connections to use SSL or not.
-	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Represents if a resource version is in
-	// extended support.
-	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has no
-	// automated backup policy.
-	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents if a resource
-	// version is nearing end of life.
-	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
-	// resource is older than 24 hours.
-	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
-	// resource is not protected by automatic failover.
+	//   "SIGNAL_TYPE_UNSPECIFIED" - Disable validation warnings
+	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Disable validation warnings
+	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Disable validation warnings
+	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Disable validation warnings
+	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Disable validation warnings
+	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Disable validation warnings
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Disable validation warnings
+	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Disable validation warnings
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Disable validation warnings
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Disable validation warnings
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Disable validation
+	// warnings
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3903,14 +3943,10 @@ func (s StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainCustomMetadataData: Any custom metadata
-// associated with the resource. e.g. A spanner instance can have multiple
-// databases with its own unique metadata. Information for these individual
-// databases can be captured in custom metadata data
+// StorageDatabasecenterPartnerapiV1mainCustomMetadataData: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainCustomMetadataData struct {
-	// InternalResourceMetadata: Metadata for individual internal resources in an
-	// instance. e.g. spanner instance can have multiple databases with unique
-	// configuration.
+	// InternalResourceMetadata: Disable validation warnings
 	InternalResourceMetadata []*StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata `json:"internalResourceMetadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InternalResourceMetadata")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -3930,50 +3966,40 @@ func (s StorageDatabasecenterPartnerapiV1mainCustomMetadataData) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed:
-// DatabaseResourceFeed is the top level proto to be used to ingest different
-// database resource level events into Condor platform. Next ID: 13
+// StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed struct {
-	// BackupdrMetadata: BackupDR metadata is used to ingest metadata from
-	// BackupDR.
+	// BackupdrMetadata: Disable validation warnings
 	BackupdrMetadata *StorageDatabasecenterPartnerapiV1mainBackupDRMetadata `json:"backupdrMetadata,omitempty"`
-	// ConfigBasedSignalData: Config based signal data is used to ingest signals
-	// that are generated based on the configuration of the database resource.
+	// ConfigBasedSignalData: Disable validation warnings
 	ConfigBasedSignalData *StorageDatabasecenterPartnerapiV1mainConfigBasedSignalData `json:"configBasedSignalData,omitempty"`
-	// DatabaseResourceSignalData: Database resource signal data is used to ingest
-	// signals from database resource signal feeds.
+	// DatabaseResourceSignalData: Disable validation warnings
 	DatabaseResourceSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData `json:"databaseResourceSignalData,omitempty"`
-	// FeedTimestamp: Required. Timestamp when feed is generated.
+	// FeedTimestamp: Required. Disable validation warnings
 	FeedTimestamp string `json:"feedTimestamp,omitempty"`
-	// FeedType: Required. Type feed to be ingested into condor
+	// FeedType: Required. Disable validation warnings
 	//
 	// Possible values:
-	//   "FEEDTYPE_UNSPECIFIED" - Unspecified feed type. Not expected to be used.
-	//   "RESOURCE_METADATA" - Database resource metadata feed from control plane
-	//   "OBSERVABILITY_DATA" - Database resource monitoring data
-	//   "SECURITY_FINDING_DATA" - Database resource security health signal data
-	//   "RECOMMENDATION_SIGNAL_DATA" - Database resource recommendation signal
-	// data
-	//   "CONFIG_BASED_SIGNAL_DATA" - Database config based signal data
-	//   "BACKUPDR_METADATA" - Database resource metadata from BackupDR
-	//   "DATABASE_RESOURCE_SIGNAL_DATA" - Database resource signal data
+	//   "FEEDTYPE_UNSPECIFIED" - Disable validation warnings
+	//   "RESOURCE_METADATA" - Disable validation warnings
+	//   "OBSERVABILITY_DATA" - Disable validation warnings
+	//   "SECURITY_FINDING_DATA" - Disable validation warnings
+	//   "RECOMMENDATION_SIGNAL_DATA" - Disable validation warnings
+	//   "CONFIG_BASED_SIGNAL_DATA" - Disable validation warnings
+	//   "BACKUPDR_METADATA" - Disable validation warnings
+	//   "DATABASE_RESOURCE_SIGNAL_DATA" - Disable validation warnings
 	FeedType string `json:"feedType,omitempty"`
-	// ObservabilityMetricData: Observability metric data.
+	// ObservabilityMetricData: Disable validation warnings
 	ObservabilityMetricData *StorageDatabasecenterPartnerapiV1mainObservabilityMetricData `json:"observabilityMetricData,omitempty"`
-	// RecommendationSignalData: Database resource recommendation signal data.
+	// RecommendationSignalData: Disable validation warnings
 	RecommendationSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData `json:"recommendationSignalData,omitempty"`
-	// ResourceHealthSignalData: Database resource health signal data.
+	// ResourceHealthSignalData: Disable validation warnings
 	ResourceHealthSignalData *StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData `json:"resourceHealthSignalData,omitempty"`
-	// ResourceId: Primary key associated with the Resource. resource_id is
-	// available in individual feed level as well.
+	// ResourceId: Disable validation warnings
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
-	// ResourceMetadata: Database resource metadata.
+	// ResourceMetadata: Disable validation warnings
 	ResourceMetadata *StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata `json:"resourceMetadata,omitempty"`
-	// SkipIngestion: Optional. If true, the feed won't be ingested by DB Center.
-	// This indicates that the feed is intentionally skipped. For example, BackupDR
-	// feeds are only needed for resources integrated with DB Center (e.g.,
-	// CloudSQL, AlloyDB). Feeds for non-integrated resources (e.g., Compute
-	// Engine, Persistent Disk) can be skipped.
+	// SkipIngestion: Optional. Disable validation warnings
 	SkipIngestion bool `json:"skipIngestion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupdrMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3994,93 +4020,59 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceFeed) MarshalJSON()
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData:
-// Common model for database resource health signal data.
+// Disable validation warnings
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struct {
-	// AdditionalMetadata: Any other additional metadata
+	// AdditionalMetadata: Disable validation warnings
 	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
-	// Compliance: Industry standards associated with this signal; if this signal
-	// is an issue, that could be a violation of the associated industry
-	// standard(s). For example, AUTO_BACKUP_DISABLED signal is associated with CIS
-	// GCP 1.1, CIS GCP 1.2, CIS GCP 1.3, NIST 800-53 and ISO-27001 compliance
-	// standards. If a database resource does not have automated backup enable, it
-	// will violate these following industry standards.
+	// Compliance: Disable validation warnings
 	Compliance []*StorageDatabasecenterPartnerapiV1mainCompliance `json:"compliance,omitempty"`
-	// Description: Description associated with signal
+	// Description: Disable validation warnings
 	Description string `json:"description,omitempty"`
-	// EventTime: Required. The last time at which the event described by this
-	// signal took place
+	// EventTime: Required. Disable validation warnings
 	EventTime string `json:"eventTime,omitempty"`
-	// ExternalUri: The external-uri of the signal, using which more information
-	// about this signal can be obtained. In GCP, this will take user to SCC page
-	// to get more details about signals.
+	// ExternalUri: Disable validation warnings
 	ExternalUri string `json:"externalUri,omitempty"`
-	// Location: This is used to identify the location of the resource. Example:
-	// "us-central1"
+	// Location: Disable validation warnings
 	Location string `json:"location,omitempty"`
-	// Name: Required. The name of the signal, ex: PUBLIC_SQL_INSTANCE,
-	// SQL_LOG_ERROR_VERBOSITY etc.
+	// Name: Required. Disable validation warnings
 	Name string `json:"name,omitempty"`
-	// Provider: Cloud provider name. Ex: GCP/AWS/Azure/OnPrem/SelfManaged
+	// Provider: Disable validation warnings
 	//
 	// Possible values:
-	//   "PROVIDER_UNSPECIFIED" - Unspecified provider.
-	//   "GCP" - Google cloud platform provider
-	//   "AWS" - Amazon web service
-	//   "AZURE" - Azure web service
-	//   "ONPREM" - On-prem database resources.
-	//   "SELFMANAGED" - Self-managed database provider. These are resources on a
-	// cloud platform, e.g., database resource installed in a GCE VM, but not a
-	// managed database service.
-	//   "PROVIDER_OTHER" - For the rest of the other categories. Other refers to
-	// the rest of other database service providers, this could be smaller cloud
-	// provider. This needs to be provided when the provider is known, but it is
-	// not present in the existing set of enum values.
+	//   "PROVIDER_UNSPECIFIED" - Disable validation warnings
+	//   "GCP" - Disable validation warnings
+	//   "AWS" - Disable validation warnings
+	//   "AZURE" - Disable validation warnings
+	//   "ONPREM" - Disable validation warnings
+	//   "SELFMANAGED" - Disable validation warnings
+	//   "PROVIDER_OTHER" - Disable validation warnings
 	Provider string `json:"provider,omitempty"`
-	// ResourceContainer: Closest parent container of this resource. In GCP,
-	// 'container' refers to a Cloud Resource Manager project. It must be resource
-	// name of a Cloud Resource Manager project with the format of "provider//",
-	// such as "projects/123". For GCP provided resources, number should be project
-	// number.
+	// ResourceContainer: Disable validation warnings
 	ResourceContainer string `json:"resourceContainer,omitempty"`
-	// ResourceName: Required. Database resource name associated with the signal.
-	// Resource name to follow CAIS resource_name format as noted here
-	// go/condor-common-datamodel
+	// ResourceName: Required. Disable validation warnings
 	ResourceName string `json:"resourceName,omitempty"`
-	// SignalClass: Required. The class of the signal, such as if it's a THREAT or
-	// VULNERABILITY.
+	// SignalClass: Required. Disable validation warnings
 	//
 	// Possible values:
-	//   "CLASS_UNSPECIFIED" - Unspecified signal class.
-	//   "THREAT" - Describes unwanted or malicious activity.
-	//   "VULNERABILITY" - Describes a potential weakness in software that
-	// increases risk to Confidentiality & Integrity & Availability.
-	//   "MISCONFIGURATION" - Describes a potential weakness in cloud
-	// resource/asset configuration that increases risk.
-	//   "OBSERVATION" - Describes a security observation that is for informational
-	// purposes.
-	//   "ERROR" - Describes an error that prevents some SCC functionality.
+	//   "CLASS_UNSPECIFIED" - Disable validation warnings
+	//   "THREAT" - Disable validation warnings
+	//   "VULNERABILITY" - Disable validation warnings
+	//   "MISCONFIGURATION" - Disable validation warnings
+	//   "OBSERVATION" - Disable validation warnings
+	//   "ERROR" - Disable validation warnings
 	SignalClass string `json:"signalClass,omitempty"`
-	// SignalId: Required. Unique identifier for the signal. This is an unique id
-	// which would be mainatined by partner to identify a signal.
+	// SignalId: Required. Disable validation warnings
 	SignalId string `json:"signalId,omitempty"`
-	// SignalSeverity: The severity of the signal, such as if it's a HIGH or LOW
-	// severity.
+	// SignalSeverity: Disable validation warnings
 	//
 	// Possible values:
-	//   "SIGNAL_SEVERITY_UNSPECIFIED" - This value is used for findings when a
-	// source doesn't write a severity value.
-	//   "CRITICAL" - A critical vulnerability is easily discoverable by an
-	// external actor, exploitable.
-	//   "HIGH" - A high risk vulnerability can be easily discovered and exploited
-	// in combination with other vulnerabilities.
-	//   "MEDIUM" - A medium risk vulnerability could be used by an actor to gain
-	// access to resources or privileges that enable them to eventually gain access
-	// and the ability to execute arbitrary code or exfiltrate data.
-	//   "LOW" - A low risk vulnerability hampers a security organization's ability
-	// to detect vulnerabilities or active threats in their deployment.
+	//   "SIGNAL_SEVERITY_UNSPECIFIED" - Disable validation warnings
+	//   "CRITICAL" - Disable validation warnings
+	//   "HIGH" - Disable validation warnings
+	//   "MEDIUM" - Disable validation warnings
+	//   "LOW" - Disable validation warnings
 	SignalSeverity string `json:"signalSeverity,omitempty"`
-	// SignalType: Required. Type of signal, for example,
-	// `AVAILABLE_IN_MULTIPLE_ZONES`, `LOGGING_MOST_ERRORS`, etc.
+	// SignalType: Required. Disable validation warnings
 	//
 	// Possible values:
 	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified.
@@ -4318,15 +4310,13 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	//   "SIGNAL_TYPE_MISSING_ENHANCED_PROTECTION" - Indicates that the resource is
 	// missing enhanced protection.
 	SignalType string `json:"signalType,omitempty"`
-	// State: Required. The state of the signal, such as if it's ACTIVE or
-	// RESOLVED.
+	// State: Required. Disable validation warnings
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "ACTIVE" - The signal requires attention and has not been addressed yet.
-	//   "RESOLVED" - The signal has been fixed, triaged as a non-issue or
-	// otherwise addressed and is no longer active.
-	//   "MUTED" - The signal has been muted.
+	//   "STATE_UNSPECIFIED" - Disable validation warnings
+	//   "ACTIVE" - Disable validation warnings
+	//   "RESOLVED" - Disable validation warnings
+	//   "MUTED" - Disable validation warnings
 	State string `json:"state,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4346,44 +4336,25 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData) M
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainDatabaseResourceId: DatabaseResourceId
-// will serve as primary key for any resource ingestion event.
+// StorageDatabasecenterPartnerapiV1mainDatabaseResourceId: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceId struct {
-	// Provider: Required. Cloud provider name. Ex:
-	// GCP/AWS/Azure/OnPrem/SelfManaged
+	// Provider: Required. Disable validation warnings
 	//
 	// Possible values:
-	//   "PROVIDER_UNSPECIFIED" - Unspecified provider.
-	//   "GCP" - Google cloud platform provider
-	//   "AWS" - Amazon web service
-	//   "AZURE" - Azure web service
-	//   "ONPREM" - On-prem database resources.
-	//   "SELFMANAGED" - Self-managed database provider. These are resources on a
-	// cloud platform, e.g., database resource installed in a GCE VM, but not a
-	// managed database service.
-	//   "PROVIDER_OTHER" - For the rest of the other categories. Other refers to
-	// the rest of other database service providers, this could be smaller cloud
-	// provider. This needs to be provided when the provider is known, but it is
-	// not present in the existing set of enum values.
+	//   "PROVIDER_UNSPECIFIED" - Disable validation warnings
+	//   "GCP" - Disable validation warnings
+	//   "AWS" - Disable validation warnings
+	//   "AZURE" - Disable validation warnings
+	//   "ONPREM" - Disable validation warnings
+	//   "SELFMANAGED" - Disable validation warnings
+	//   "PROVIDER_OTHER" - Disable validation warnings
 	Provider string `json:"provider,omitempty"`
-	// ProviderDescription: Optional. Needs to be used only when the provider is
-	// PROVIDER_OTHER.
+	// ProviderDescription: Optional. Disable validation warnings
 	ProviderDescription string `json:"providerDescription,omitempty"`
-	// ResourceType: Required. The type of resource this ID is identifying. Ex
-	// go/keep-sorted start alloydb.googleapis.com/Cluster,
-	// alloydb.googleapis.com/Instance, bigtableadmin.googleapis.com/Cluster,
-	// bigtableadmin.googleapis.com/Instance compute.googleapis.com/Instance
-	// firestore.googleapis.com/Database, memorystore.googleapis.com/Instance,
-	// redis.googleapis.com/Instance, redis.googleapis.com/Cluster,
-	// oracledatabase.googleapis.com/CloudExadataInfrastructure
-	// oracledatabase.googleapis.com/CloudVmCluster
-	// oracledatabase.googleapis.com/AutonomousDatabase
-	// spanner.googleapis.com/Instance, spanner.googleapis.com/Database,
-	// sqladmin.googleapis.com/Instance, go/keep-sorted end REQUIRED Please refer
-	// go/condor-common-datamodel
+	// ResourceType: Required. Disable validation warnings
 	ResourceType string `json:"resourceType,omitempty"`
-	// UniqueId: Required. A service-local token that distinguishes this resource
-	// from other resources within the same service.
+	// UniqueId: Required. Disable validation warnings
 	UniqueId string `json:"uniqueId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Provider") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4403,69 +4374,60 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceId) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Common model
-// for database resource instance metadata. Next ID: 35
+// StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
-	// AdditionalMetadata: Field to ingest additional metadata whichd does not
-	// support proto format.
+	// AdditionalMetadata: Disable validation warnings
 	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
-	// AvailabilityConfiguration: Availability configuration for this instance
+	// AvailabilityConfiguration: Disable validation warnings
 	AvailabilityConfiguration *StorageDatabasecenterPartnerapiV1mainAvailabilityConfiguration `json:"availabilityConfiguration,omitempty"`
-	// BackupConfiguration: Backup configuration for this instance
+	// BackupConfiguration: Disable validation warnings
 	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
-	// BackupRun: Latest backup run information for this instance
+	// BackupRun: Disable validation warnings
 	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
-	// BackupdrConfiguration: Optional. BackupDR Configuration for the resource.
+	// BackupdrConfiguration: Optional. Disable validation warnings
 	BackupdrConfiguration *StorageDatabasecenterPartnerapiV1mainBackupDRConfiguration `json:"backupdrConfiguration,omitempty"`
-	// CreationTime: The creation time of the resource, i.e. the time when resource
-	// is created and recorded in partner service.
+	// CreationTime: Disable validation warnings
 	CreationTime string `json:"creationTime,omitempty"`
-	// CurrentState: Current state of the instance.
+	// CurrentState: Disable validation warnings
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
-	//   "HEALTHY" - The instance is running.
-	//   "UNHEALTHY" - Instance being created, updated, deleted or under
-	// maintenance
-	//   "SUSPENDED" - When instance is suspended
-	//   "DELETED" - Instance is deleted.
-	//   "STATE_OTHER" - For rest of the other category
-	//   "STOPPED" - Instance is in STOPPED state.
+	//   "STATE_UNSPECIFIED" - Disable validation warnings
+	//   "HEALTHY" - Disable validation warnings
+	//   "UNHEALTHY" - Disable validation warnings
+	//   "SUSPENDED" - Disable validation warnings
+	//   "DELETED" - Disable validation warnings
+	//   "STATE_OTHER" - Disable validation warnings
+	//   "STOPPED" - Disable validation warnings
 	CurrentState string `json:"currentState,omitempty"`
-	// CustomMetadata: Any custom metadata associated with the resource
+	// CustomMetadata: Disable validation warnings
 	CustomMetadata *StorageDatabasecenterPartnerapiV1mainCustomMetadataData `json:"customMetadata,omitempty"`
-	// Edition: Optional. Edition represents whether the instance is ENTERPRISE or
-	// ENTERPRISE_PLUS. This information is core to Cloud SQL only and is used to
-	// identify the edition of the instance.
+	// Edition: Optional. Disable validation warnings
 	//
 	// Possible values:
-	//   "EDITION_UNSPECIFIED" - Default, to make it consistent with instance
-	// edition enum.
-	//   "EDITION_ENTERPRISE" - Represents the enterprise edition.
-	//   "EDITION_ENTERPRISE_PLUS" - Represents the enterprise plus edition.
-	//   "EDITION_STANDARD" - Represents the standard edition.
+	//   "EDITION_UNSPECIFIED" - Disable validation warnings
+	//   "EDITION_ENTERPRISE" - Disable validation warnings
+	//   "EDITION_ENTERPRISE_PLUS" - Disable validation warnings
+	//   "EDITION_STANDARD" - Disable validation warnings
 	Edition string `json:"edition,omitempty"`
-	// Entitlements: Entitlements associated with the resource
+	// Entitlements: Disable validation warnings
 	Entitlements []*StorageDatabasecenterPartnerapiV1mainEntitlement `json:"entitlements,omitempty"`
-	// ExpectedState: The state that the instance is expected to be in. For
-	// example, an instance state can transition to UNHEALTHY due to wrong patch
-	// update, while the expected state will remain at the HEALTHY.
+	// ExpectedState: Disable validation warnings
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED"
-	//   "HEALTHY" - The instance is running.
-	//   "UNHEALTHY" - Instance being created, updated, deleted or under
-	// maintenance
-	//   "SUSPENDED" - When instance is suspended
-	//   "DELETED" - Instance is deleted.
-	//   "STATE_OTHER" - For rest of the other category
-	//   "STOPPED" - Instance is in STOPPED state.
+	//   "STATE_UNSPECIFIED" - Disable validation warnings
+	//   "HEALTHY" - Disable validation warnings
+	//   "UNHEALTHY" - Disable validation warnings
+	//   "SUSPENDED" - Disable validation warnings
+	//   "DELETED" - Disable validation warnings
+	//   "STATE_OTHER" - Disable validation warnings
+	//   "STOPPED" - Disable validation warnings
 	ExpectedState string `json:"expectedState,omitempty"`
-	// GcbdrConfiguration: GCBDR configuration for the resource.
+	// GcbdrConfiguration: Disable validation warnings
 	GcbdrConfiguration *StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration `json:"gcbdrConfiguration,omitempty"`
-	// Id: Required. Unique identifier for a Database resource
+	// Id: Required. Disable validation warnings
 	Id *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"id,omitempty"`
-	// InstanceType: The type of the instance. Specified at creation time.
+	// InstanceType: Disable validation warnings
 	//
 	// Possible values:
 	//   "INSTANCE_TYPE_UNSPECIFIED" - Unspecified.
@@ -4485,55 +4447,41 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "SUB_RESOURCE_TYPE_DATASET" - Represents a dataset resource.
 	//   "SUB_RESOURCE_TYPE_OTHER" - For rest of the other categories.
 	InstanceType string `json:"instanceType,omitempty"`
-	// InternalAdditionalMetadata: Field to ingest additional metadata which
-	// support proto format.
+	// InternalAdditionalMetadata: Disable validation warnings
 	InternalAdditionalMetadata googleapi.RawMessage `json:"internalAdditionalMetadata,omitempty"`
-	// IpAddress: Optional. Private and public IP address of the resource.
+	// IpAddress: Optional. Disable validation warnings
 	IpAddress *StorageDatabasecenterPartnerapiV1mainIpAddress `json:"ipAddress,omitempty"`
-	// IsDeletionProtectionEnabled: Optional. Whether deletion protection is
-	// enabled for this resource.
+	// IsDeletionProtectionEnabled: Optional. Disable validation warnings
 	IsDeletionProtectionEnabled bool `json:"isDeletionProtectionEnabled,omitempty"`
-	// Location: The resource location. REQUIRED
+	// Location: Disable validation warnings
 	Location string `json:"location,omitempty"`
-	// MachineConfiguration: Machine configuration for this resource.
+	// MachineConfiguration: Disable validation warnings
 	MachineConfiguration *StorageDatabasecenterPartnerapiV1mainMachineConfiguration `json:"machineConfiguration,omitempty"`
-	// MaintenanceInfo: Optional. Maintenance info for the resource.
+	// MaintenanceInfo: Optional. Disable validation warnings
 	MaintenanceInfo *StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo `json:"maintenanceInfo,omitempty"`
-	// Modes: Optional. The modes of the database resource.
+	// Modes: Optional. Disable validation warnings
 	//
 	// Possible values:
-	//   "MODE_UNSPECIFIED" - Default mode.
-	//   "MODE_NATIVE" - Native mode.
-	//   "MODE_MONGODB_COMPATIBLE" - MongoDB compatible mode.
-	//   "MODE_DATASTORE" - Datastore mode.
-	//   "MODE_CLUSTER_ENABLED" - Memorystore/ValKey: Cluster enabled mode.
-	//   "MODE_CLUSTER_DISABLED" - Memorystore/ValKey: Cluster disabled mode.
+	//   "MODE_UNSPECIFIED" - Disable validation warnings
+	//   "MODE_NATIVE" - Disable validation warnings
+	//   "MODE_MONGODB_COMPATIBLE" - Disable validation warnings
+	//   "MODE_DATASTORE" - Disable validation warnings
+	//   "MODE_CLUSTER_ENABLED" - Disable validation warnings
+	//   "MODE_CLUSTER_DISABLED" - Disable validation warnings
 	Modes []string `json:"modes,omitempty"`
-	// PrimaryResourceId: Identifier for this resource's immediate parent/primary
-	// resource if the current resource is a replica or derived form of another
-	// Database resource. Else it would be NULL. REQUIRED if the immediate parent
-	// exists when first time resource is getting ingested, otherwise optional.
+	// PrimaryResourceId: Disable validation warnings
 	PrimaryResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"primaryResourceId,omitempty"`
-	// PrimaryResourceLocation: Primary resource location. REQUIRED if the
-	// immediate parent exists when first time resource is getting ingested,
-	// otherwise optional.
+	// PrimaryResourceLocation: Disable validation warnings
 	PrimaryResourceLocation string `json:"primaryResourceLocation,omitempty"`
-	// Product: The product this resource represents.
+	// Product: Disable validation warnings
 	Product *StorageDatabasecenterProtoCommonProduct `json:"product,omitempty"`
-	// ResourceContainer: Closest parent Cloud Resource Manager container of this
-	// resource. It must be resource name of a Cloud Resource Manager project with
-	// the format of "/", such as "projects/123". For GCP provided resources,
-	// number should be project number.
+	// ResourceContainer: Disable validation warnings
 	ResourceContainer string `json:"resourceContainer,omitempty"`
-	// ResourceFlags: Optional. List of resource flags for the database resource.
+	// ResourceFlags: Optional. Disable validation warnings
 	ResourceFlags []*StorageDatabasecenterPartnerapiV1mainResourceFlags `json:"resourceFlags,omitempty"`
-	// ResourceName: Required. Different from DatabaseResourceId.unique_id, a
-	// resource name can be reused over time. That is, after a resource named "ABC"
-	// is deleted, the name "ABC" can be used to to create a new resource within
-	// the same source. Resource name to follow CAIS resource_name format as noted
-	// here go/condor-common-datamodel
+	// ResourceName: Required. Disable validation warnings
 	ResourceName string `json:"resourceName,omitempty"`
-	// SuspensionReason: Optional. Suspension reason for the resource.
+	// SuspensionReason: Optional. Disable validation warnings
 	//
 	// Possible values:
 	//   "SUSPENSION_REASON_UNSPECIFIED" - Suspension reason is unspecified.
@@ -4545,15 +4493,13 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	//   "REPLICATED_CLUSTER_ENCRYPTION_KEY_INACCESSIBLE" - Replicated cluster
 	// encryption key inaccessible.
 	SuspensionReason string `json:"suspensionReason,omitempty"`
-	// TagsSet: Optional. Tags associated with this resources.
+	// TagsSet: Optional. Disable validation warnings
 	TagsSet *StorageDatabasecenterPartnerapiV1mainTags `json:"tagsSet,omitempty"`
-	// UpdationTime: The time at which the resource was updated and recorded at
-	// partner service.
+	// UpdationTime: Disable validation warnings
 	UpdationTime string `json:"updationTime,omitempty"`
-	// UserLabelSet: User-provided labels associated with the resource
+	// UserLabelSet: Disable validation warnings
 	UserLabelSet *StorageDatabasecenterPartnerapiV1mainUserLabels `json:"userLabelSet,omitempty"`
-	// Zone: The resource zone. This is only applicable for zonal resources and
-	// will be empty for regional and multi-regional resources.
+	// Zone: Disable validation warnings
 	Zone string `json:"zone,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4574,55 +4520,31 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata) MarshalJS
 }
 
 // StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData
-// : Common model for database resource recommendation signal data.
+// : Disable validation warnings
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalData struct {
-	// AdditionalMetadata: Optional. Any other additional metadata specific to
-	// recommendation
+	// AdditionalMetadata: Optional. Disable validation warnings
 	AdditionalMetadata googleapi.RawMessage `json:"additionalMetadata,omitempty"`
-	// LastRefreshTime: Required. last time recommendationw as refreshed
+	// LastRefreshTime: Required. Disable validation warnings
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
-	// RecommendationState: Required. Recommendation state
+	// RecommendationState: Required. Disable validation warnings
 	//
 	// Possible values:
-	//   "UNSPECIFIED"
-	//   "ACTIVE" - Recommendation is active and can be applied. ACTIVE
-	// recommendations can be marked as CLAIMED, SUCCEEDED, or FAILED.
-	//   "CLAIMED" - Recommendation is in claimed state. Recommendations content is
-	// immutable and cannot be updated by Google. CLAIMED recommendations can be
-	// marked as CLAIMED, SUCCEEDED, or FAILED.
-	//   "SUCCEEDED" - Recommendation is in succeeded state. Recommendations
-	// content is immutable and cannot be updated by Google. SUCCEEDED
-	// recommendations can be marked as SUCCEEDED, or FAILED.
-	//   "FAILED" - Recommendation is in failed state. Recommendations content is
-	// immutable and cannot be updated by Google. FAILED recommendations can be
-	// marked as SUCCEEDED, or FAILED.
-	//   "DISMISSED" - Recommendation is in dismissed state. Recommendation content
-	// can be updated by Google. DISMISSED recommendations can be marked as ACTIVE.
+	//   "UNSPECIFIED" - Disable validation warnings
+	//   "ACTIVE" - Disable validation warnings
+	//   "CLAIMED" - Disable validation warnings
+	//   "SUCCEEDED" - Disable validation warnings
+	//   "FAILED" - Disable validation warnings
+	//   "DISMISSED" - Disable validation warnings
 	RecommendationState string `json:"recommendationState,omitempty"`
-	// Recommender: Required. Name of recommendation. Examples:
-	// organizations/1234/locations/us-central1/recommenders/google.cloudsql.instanc
-	// e.PerformanceRecommender/recommendations/9876
+	// Recommender: Required. Disable validation warnings
 	Recommender string `json:"recommender,omitempty"`
-	// RecommenderId: Required. ID of recommender. Examples:
-	// "google.cloudsql.instance.PerformanceRecommender"
+	// RecommenderId: Required. Disable validation warnings
 	RecommenderId string `json:"recommenderId,omitempty"`
-	// RecommenderSubtype: Required. Contains an identifier for a subtype of
-	// recommendations produced for the same recommender. Subtype is a function of
-	// content and impact, meaning a new subtype might be added when significant
-	// changes to `content` or `primary_impact.category` are introduced. See the
-	// Recommenders section to see a list of subtypes for a given Recommender.
-	// Examples: For recommender =
-	// "google.cloudsql.instance.PerformanceRecommender", recommender_subtype can
-	// be
-	// "MYSQL_HIGH_NUMBER_OF_OPEN_TABLES_BEST_PRACTICE"/"POSTGRES_HIGH_TRANSACTION_I
-	// D_UTILIZATION_BEST_PRACTICE"
+	// RecommenderSubtype: Required. Disable validation warnings
 	RecommenderSubtype string `json:"recommenderSubtype,omitempty"`
-	// ResourceName: Required. Database resource name associated with the signal.
-	// Resource name to follow CAIS resource_name format as noted here
-	// go/condor-common-datamodel
+	// ResourceName: Required. Disable validation warnings
 	ResourceName string `json:"resourceName,omitempty"`
-	// SignalType: Required. Type of signal, for example, `SIGNAL_TYPE_IDLE`,
-	// `SIGNAL_TYPE_HIGH_NUMBER_OF_TABLES`, etc.
+	// SignalType: Required. Disable validation warnings
 	//
 	// Possible values:
 	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified.
@@ -4878,58 +4800,46 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSigna
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData: Database
-// resource signal data. This is used to send signals to Condor which are based
-// on the DB/Instance/Fleet level configurations. These will be used to send
-// signals for all inventory types. Next ID: 10
+// StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData struct {
-	// BackupRun: Deprecated: Use signal_metadata_list instead.
+	// BackupRun: Disable validation warnings
 	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
-	// FullResourceName: Required. Full Resource name of the source resource.
+	// FullResourceName: Required. Disable validation warnings
 	FullResourceName string `json:"fullResourceName,omitempty"`
-	// LastRefreshTime: Required. Last time signal was refreshed
+	// LastRefreshTime: Required. Disable validation warnings
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
-	// Location: Required. Resource location.
+	// Location: Required. Disable validation warnings
 	Location string `json:"location,omitempty"`
-	// ResourceId: Database resource id.
+	// ResourceId: Disable validation warnings
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
-	// SignalBoolValue: Deprecated: Use signal_metadata_list instead.
+	// SignalBoolValue: Disable validation warnings
 	SignalBoolValue bool `json:"signalBoolValue,omitempty"`
-	// SignalMetadataList: This will support array of OneOf signal metadata
-	// information for a given signal type.
+	// SignalMetadataList: Disable validation warnings
 	SignalMetadataList []*StorageDatabasecenterPartnerapiV1mainSignalMetadata `json:"signalMetadataList,omitempty"`
-	// SignalState: Required. Output only. Signal state of the signal
+	// SignalState: Required. Output only. Disable validation warnings
 	//
 	// Possible values:
-	//   "SIGNAL_STATE_UNSPECIFIED" - Unspecified signal state.
-	//   "ACTIVE" - Signal is active and requires attention.
-	//   "INACTIVE" - Signal is inactive and does not require attention.
-	//   "DISMISSED" - Signal is dismissed by the user and should not be shown to
-	// the user again.
+	//   "SIGNAL_STATE_UNSPECIFIED" - Disable validation warnings
+	//   "ACTIVE" - Disable validation warnings
+	//   "INACTIVE" - Disable validation warnings
+	//   "DISMISSED" - Disable validation warnings
 	SignalState string `json:"signalState,omitempty"`
-	// SignalType: Required. Signal type of the signal
+	// SignalType: Required. Disable validation warnings
 	//
 	// Possible values:
-	//   "SIGNAL_TYPE_UNSPECIFIED" - Unspecified signal type.
-	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated Minor Version
-	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Represents database auditing is
-	// disabled.
-	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Represents if a database has a password
-	// configured for the root account or not.
-	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Represents if a resource is
-	// exposed to public access.
-	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Represents if a resources requires
-	// all incoming connections to use SSL or not.
-	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Represents if a resource version is in
-	// extended support.
-	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has no
-	// automated backup policy.
-	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents if a resource
-	// version is nearing end of life.
-	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Represents if the last backup of a
-	// resource is older than 24 hours.
-	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Represents if a
-	// resource is not protected by automatic failover.
+	//   "SIGNAL_TYPE_UNSPECIFIED" - Disable validation warnings
+	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Disable validation warnings
+	//   "SIGNAL_TYPE_DATABASE_AUDITING_DISABLED" - Disable validation warnings
+	//   "SIGNAL_TYPE_NO_ROOT_PASSWORD" - Disable validation warnings
+	//   "SIGNAL_TYPE_EXPOSED_TO_PUBLIC_ACCESS" - Disable validation warnings
+	//   "SIGNAL_TYPE_UNENCRYPTED_CONNECTIONS" - Disable validation warnings
+	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Disable validation warnings
+	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Disable validation warnings
+	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Disable validation warnings
+	//   "SIGNAL_TYPE_LAST_BACKUP_OLD" - Disable validation warnings
+	//   "SIGNAL_TYPE_NOT_PROTECTED_BY_AUTOMATIC_FAILOVER" - Disable validation
+	// warnings
 	SignalType string `json:"signalType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupRun") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4949,29 +4859,23 @@ func (s StorageDatabasecenterPartnerapiV1mainDatabaseResourceSignalData) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainEntitlement: Proto representing the
-// access that a user has to a specific feature/service. NextId: 3.
+// StorageDatabasecenterPartnerapiV1mainEntitlement: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainEntitlement struct {
-	// EntitlementState: The current state of user's accessibility to a
-	// feature/benefit.
+	// EntitlementState: Disable validation warnings
 	//
 	// Possible values:
-	//   "ENTITLEMENT_STATE_UNSPECIFIED"
-	//   "ENTITLED" - User is entitled to a feature/benefit, but whether it has
-	// been successfully provisioned is decided by provisioning state.
-	//   "REVOKED" - User is entitled to a feature/benefit, but it was requested to
-	// be revoked. Whether the revoke has been successful is decided by
-	// provisioning state.
+	//   "ENTITLEMENT_STATE_UNSPECIFIED" - Disable validation warnings
+	//   "ENTITLED" - Disable validation warnings
+	//   "REVOKED" - Disable validation warnings
 	EntitlementState string `json:"entitlementState,omitempty"`
-	// Type: An enum that represents the type of this entitlement.
+	// Type: Disable validation warnings
 	//
 	// Possible values:
-	//   "ENTITLEMENT_TYPE_UNSPECIFIED" - The entitlement type is unspecified.
-	//   "GEMINI" - The root entitlement representing Gemini package ownership.This
-	// will no longer be supported in the future.
-	//   "NATIVE" - The entitlement representing Native Tier, This will be the
-	// default Entitlement going forward with GCA Enablement.
-	//   "GCA_STANDARD" - The entitlement representing GCA-Standard Tier.
+	//   "ENTITLEMENT_TYPE_UNSPECIFIED" - Disable validation warnings
+	//   "GEMINI" - Disable validation warnings
+	//   "NATIVE" - Disable validation warnings
+	//   "GCA_STANDARD" - Disable validation warnings
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EntitlementState") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4991,10 +4895,10 @@ func (s StorageDatabasecenterPartnerapiV1mainEntitlement) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration: GCBDR Configuration
-// for the resource.
+// StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration struct {
-	// GcbdrManaged: Whether the resource is managed by GCBDR.
+	// GcbdrManaged: Disable validation warnings
 	GcbdrManaged bool `json:"gcbdrManaged,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GcbdrManaged") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5014,24 +4918,20 @@ func (s StorageDatabasecenterPartnerapiV1mainGCBDRConfiguration) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata: Metadata for
-// individual internal resources in an instance. e.g. spanner instance can have
-// multiple databases with unique configuration settings. Similarly bigtable
-// can have multiple clusters within same bigtable instance.
+// StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata struct {
-	// BackupConfiguration: Backup configuration for this database
+	// BackupConfiguration: Disable validation warnings
 	BackupConfiguration *StorageDatabasecenterPartnerapiV1mainBackupConfiguration `json:"backupConfiguration,omitempty"`
-	// BackupRun: Information about the last backup attempt for this database
+	// BackupRun: Disable validation warnings
 	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
-	// IsDeletionProtectionEnabled: Whether deletion protection is enabled for this
-	// internal resource.
+	// IsDeletionProtectionEnabled: Disable validation warnings
 	IsDeletionProtectionEnabled bool `json:"isDeletionProtectionEnabled,omitempty"`
-	// Product: The product this resource represents.
-	Product    *StorageDatabasecenterProtoCommonProduct                 `json:"product,omitempty"`
+	// Product: Disable validation warnings
+	Product *StorageDatabasecenterProtoCommonProduct `json:"product,omitempty"`
+	// ResourceId: Disable validation warnings
 	ResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"resourceId,omitempty"`
-	// ResourceName: Required. internal resource name for spanner this will be
-	// database name
-	// e.g."spanner.googleapis.com/projects/123/abc/instances/inst1/databases/db1"
+	// ResourceName: Required. Disable validation warnings
 	ResourceName string `json:"resourceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupConfiguration") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5051,16 +4951,11 @@ func (s StorageDatabasecenterPartnerapiV1mainInternalResourceMetadata) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainIpAddress: Used to send IP address
-// information for a database resource.
+// StorageDatabasecenterPartnerapiV1mainIpAddress: Disable validation warnings
 type StorageDatabasecenterPartnerapiV1mainIpAddress struct {
-	// PrivateIp: The private IP address assigned to the resource within a Virtual
-	// Private Cloud (VPC). This IP is only reachable from within the same VPC
-	// network. Stored in standard string format (e.g., "10.0.0.2").
+	// PrivateIp: Disable validation warnings
 	PrivateIp string `json:"privateIp,omitempty"`
-	// PublicIp: The public IP address assigned to the resource. This IP is
-	// reachable from the internet. Stored in standard string format (e.g.,
-	// "34.72.1.1").
+	// PublicIp: Disable validation warnings
 	PublicIp string `json:"publicIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PrivateIp") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5080,26 +4975,20 @@ func (s StorageDatabasecenterPartnerapiV1mainIpAddress) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainMachineConfiguration:
-// MachineConfiguration describes the configuration of a machine specific to
-// Database Resource.
+// StorageDatabasecenterPartnerapiV1mainMachineConfiguration: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainMachineConfiguration struct {
-	// BaselineSlots: Optional. Baseline slots for BigQuery Reservations. Baseline
-	// slots are in increments of 50.
+	// BaselineSlots: Optional. Disable validation warnings
 	BaselineSlots int64 `json:"baselineSlots,omitempty,string"`
-	// CpuCount: The number of CPUs. Deprecated. Use vcpu_count instead.
-	// TODO(b/342344482) add proto validations again after bug fix.
+	// CpuCount: Disable validation warnings
 	CpuCount int64 `json:"cpuCount,omitempty"`
-	// MaxReservationSlots: Optional. Max slots for BigQuery Reservations. Max
-	// slots are in increments of 50.
+	// MaxReservationSlots: Optional. Disable validation warnings
 	MaxReservationSlots int64 `json:"maxReservationSlots,omitempty,string"`
-	// MemorySizeInBytes: Memory size in bytes. TODO(b/342344482) add proto
-	// validations again after bug fix.
+	// MemorySizeInBytes: Disable validation warnings
 	MemorySizeInBytes int64 `json:"memorySizeInBytes,omitempty,string"`
-	// ShardCount: Optional. Number of shards (if applicable).
+	// ShardCount: Optional. Disable validation warnings
 	ShardCount int64 `json:"shardCount,omitempty"`
-	// VcpuCount: Optional. The number of vCPUs. TODO(b/342344482) add proto
-	// validations again after bug fix.
+	// VcpuCount: Optional. Disable validation warnings
 	VcpuCount float64 `json:"vcpuCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BaselineSlots") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5133,8 +5022,10 @@ func (s *StorageDatabasecenterPartnerapiV1mainMachineConfiguration) UnmarshalJSO
 	return nil
 }
 
+// StorageDatabasecenterPartnerapiV1mainObservabilityMetricData: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
-	// AggregationType: Required. Type of aggregation performed on the metric.
+	// AggregationType: Required. Disable validation warnings
 	//
 	// Possible values:
 	//   "AGGREGATION_TYPE_UNSPECIFIED" - Unspecified aggregation type.
@@ -5143,7 +5034,7 @@ type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
 	//   "P95" - P95 aggregation type.
 	//   "CURRENT" - current aggregation type.
 	AggregationType string `json:"aggregationType,omitempty"`
-	// MetricType: Required. Type of metric like CPU, Memory, etc.
+	// MetricType: Required. Disable validation warnings
 	//
 	// Possible values:
 	//   "METRIC_TYPE_UNSPECIFIED" - Unspecified metric type.
@@ -5161,13 +5052,11 @@ type StorageDatabasecenterPartnerapiV1mainObservabilityMetricData struct {
 	//   "PROCESSING_UNIT_COUNT" - Processing units used by a resource. It
 	// represents the number of processing units in a spanner instance.
 	MetricType string `json:"metricType,omitempty"`
-	// ObservationTime: Required. The time the metric value was observed.
+	// ObservationTime: Required. Disable validation warnings
 	ObservationTime string `json:"observationTime,omitempty"`
-	// ResourceName: Required. Database resource name associated with the signal.
-	// Resource name to follow CAIS resource_name format as noted here
-	// go/condor-common-datamodel
+	// ResourceName: Required. Disable validation warnings
 	ResourceName string `json:"resourceName,omitempty"`
-	// Value: Required. Value of the metric type.
+	// Value: Required. Disable validation warnings
 	Value *StorageDatabasecenterProtoCommonTypedValue `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregationType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5187,11 +5076,13 @@ func (s StorageDatabasecenterPartnerapiV1mainObservabilityMetricData) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainOperationError: An error that occurred
-// during a backup creation operation.
+// StorageDatabasecenterPartnerapiV1mainOperationError: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainOperationError struct {
-	// Code: Identifies the specific error that occurred. REQUIRED
+	// Code: Disable validation warnings
 	Code string `json:"code,omitempty"`
+	// ErrorType: Disable validation warnings
+	//
 	// Possible values:
 	//   "OPERATION_ERROR_TYPE_UNSPECIFIED" - UNSPECIFIED means product type is not
 	// known or available.
@@ -5204,7 +5095,7 @@ type StorageDatabasecenterPartnerapiV1mainOperationError struct {
 	//   "SQLSERVER_ERROR" - SQL server specific error
 	//   "INTERNAL_ERROR" - Any other internal error.
 	ErrorType string `json:"errorType,omitempty"`
-	// Message: Additional information about the error encountered. REQUIRED
+	// Message: Disable validation warnings
 	Message string `json:"message,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5224,12 +5115,12 @@ func (s StorageDatabasecenterPartnerapiV1mainOperationError) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainResourceFlags: Message type for storing
-// resource flags.
+// StorageDatabasecenterPartnerapiV1mainResourceFlags: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainResourceFlags struct {
-	// Key: Optional. Key of the resource flag.
+	// Key: Optional. Disable validation warnings
 	Key string `json:"key,omitempty"`
-	// Value: Optional. Value of the resource flag.
+	// Value: Optional. Disable validation warnings
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5249,17 +5140,14 @@ func (s StorageDatabasecenterPartnerapiV1mainResourceFlags) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule: Deny
-// maintenance period for the database resource. It specifies the time range
-// during which the maintenance cannot start. This is configured by the
-// customer.
+// StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule:
+// Disable validation warnings
 type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule struct {
-	// EndDate: Optional. Deny period end date.
+	// EndDate: Optional. Disable validation warnings
 	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
-	// StartDate: Optional. The start date of the deny maintenance period.
+	// StartDate: Optional. Disable validation warnings
 	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
-	// Time: Optional. Time in UTC when the deny period starts on start_date and
-	// ends on end_date.
+	// Time: Optional. Disable validation warnings
 	Time *GoogleTypeTimeOfDay `json:"time,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5279,43 +5167,33 @@ func (s StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule) Ma
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo:
-// MaintenanceInfo to capture the maintenance details of database resource.
+// StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo struct {
-	// CurrentVersionReleaseDate: Optional. The date when the current maintenance
-	// version was released.
+	// CurrentVersionReleaseDate: Optional. Disable validation warnings
 	CurrentVersionReleaseDate *GoogleTypeDate `json:"currentVersionReleaseDate,omitempty"`
-	// DenyMaintenanceSchedules: Optional. List of Deny maintenance period for the
-	// database resource.
+	// DenyMaintenanceSchedules: Optional. Disable validation warnings
 	DenyMaintenanceSchedules []*StorageDatabasecenterPartnerapiV1mainResourceMaintenanceDenySchedule `json:"denyMaintenanceSchedules,omitempty"`
-	// IsInstanceStopped: Optional. Whether the instance is in stopped state. This
-	// information is temporarily being captured in maintenanceInfo, till STOPPED
-	// state is supported by DB Center.
+	// IsInstanceStopped: Optional. Disable validation warnings
 	IsInstanceStopped bool `json:"isInstanceStopped,omitempty"`
-	// MaintenanceSchedule: Optional. Maintenance window for the database resource.
+	// MaintenanceSchedule: Optional. Disable validation warnings
 	MaintenanceSchedule *StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
-	// MaintenanceState: Output only. Current state of maintenance on the database
-	// resource.
+	// MaintenanceState: Output only. Disable validation warnings
 	//
 	// Possible values:
-	//   "MAINTENANCE_STATE_UNSPECIFIED" - Unspecified state.
-	//   "CREATING" - Database resource is being created.
-	//   "READY" - Database resource has been created and is ready to use.
-	//   "UPDATING" - Database resource is being updated.
-	//   "REPAIRING" - Database resource is unheathy and under repair.
-	//   "DELETING" - Database resource is being deleted.
-	//   "ERROR" - Database resource encountered an error and is in indeterministic
-	// state.
+	//   "MAINTENANCE_STATE_UNSPECIFIED" - Disable validation warnings
+	//   "CREATING" - Disable validation warnings
+	//   "READY" - Disable validation warnings
+	//   "UPDATING" - Disable validation warnings
+	//   "REPAIRING" - Disable validation warnings
+	//   "DELETING" - Disable validation warnings
+	//   "ERROR" - Disable validation warnings
 	MaintenanceState string `json:"maintenanceState,omitempty"`
-	// MaintenanceVersion: Optional. Current Maintenance version of the database
-	// resource. Example: "MYSQL_8_0_41.R20250531.01_15"
+	// MaintenanceVersion: Optional. Disable validation warnings
 	MaintenanceVersion string `json:"maintenanceVersion,omitempty"`
-	// NextAvailableMaintenanceVersions: Optional. List of next available
-	// maintenance versions.
+	// NextAvailableMaintenanceVersions: Optional. Disable validation warnings
 	NextAvailableMaintenanceVersions []string `json:"nextAvailableMaintenanceVersions,omitempty"`
-	// UpcomingMaintenance: Optional. Upcoming maintenance for the database
-	// resource. This field is populated once SLM generates and publishes upcoming
-	// maintenance window.
+	// UpcomingMaintenance: Optional. Disable validation warnings
 	UpcomingMaintenance *StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance `json:"upcomingMaintenance,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentVersionReleaseDate")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -5335,13 +5213,10 @@ func (s StorageDatabasecenterPartnerapiV1mainResourceMaintenanceInfo) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule:
-// Maintenance window for the database resource. It specifies preferred time
-// and day of the week and phase in some cases, when the maintenance can start.
-// This is configured by the customer.
+// StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule: Disable
+// validation warnings
 type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule struct {
-	// Day: Optional. Preferred day of the week for maintenance, e.g. MONDAY,
-	// TUESDAY, etc.
+	// Day: Optional. Disable validation warnings
 	//
 	// Possible values:
 	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
@@ -5353,22 +5228,16 @@ type StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	Day string `json:"day,omitempty"`
-	// Phase: Optional. Phase of the maintenance window. This is to capture order
-	// of maintenance. For example, for Cloud SQL resources, this can be used to
-	// capture if the maintenance window is in Week1, Week2, Week5, etc. Non
-	// production resources are usually part of early phase. For more details,
-	// refer to Cloud SQL resources -
-	// https://cloud.google.com/sql/docs/mysql/maintenance
+	// Phase: Optional. Disable validation warnings
 	//
 	// Possible values:
-	//   "PHASE_UNSPECIFIED" - Phase is unspecified.
-	//   "ANY" - Any phase.
-	//   "WEEK1" - Week 1.
-	//   "WEEK2" - Week 2.
-	//   "WEEK5" - Week 5.
+	//   "PHASE_UNSPECIFIED" - Disable validation warnings
+	//   "ANY" - Disable validation warnings
+	//   "WEEK1" - Disable validation warnings
+	//   "WEEK2" - Disable validation warnings
+	//   "WEEK5" - Disable validation warnings
 	Phase string `json:"phase,omitempty"`
-	// Time: Optional. Preferred time to start the maintenance operation on the
-	// specified day.
+	// Time: Optional. Disable validation warnings
 	Time *GoogleTypeTimeOfDay `json:"time,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5388,30 +5257,25 @@ func (s StorageDatabasecenterPartnerapiV1mainResourceMaintenanceSchedule) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StorageDatabasecenterPartnerapiV1mainRetentionSettings: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
-	// DurationBasedRetention: Duration based retention period i.e. 172800 seconds
-	// (2 days)
+	// DurationBasedRetention: Disable validation warnings
 	DurationBasedRetention string `json:"durationBasedRetention,omitempty"`
-	// QuantityBasedRetention: Quantity based retention period i.e. 7 backups
+	// QuantityBasedRetention: Disable validation warnings
 	QuantityBasedRetention int64 `json:"quantityBasedRetention,omitempty"`
-	// RetentionUnit: The unit that 'retained_backups' represents.
+	// RetentionUnit: Disable validation warnings
 	//
 	// Possible values:
-	//   "RETENTION_UNIT_UNSPECIFIED" - Backup retention unit is unspecified, will
-	// be treated as COUNT.
-	//   "COUNT" - Retention will be by count, eg. "retain the most recent 7
-	// backups".
-	//   "TIME" - Retention will be by Time, eg. "retain backups till a specific
-	// time" i.e. till 2024-05-01T00:00:00Z.
-	//   "DURATION" - Retention will be by duration, eg. "retain the backups for
-	// 172800 seconds (2 days)".
-	//   "RETENTION_UNIT_OTHER" - For rest of the other category
+	//   "RETENTION_UNIT_UNSPECIFIED" - Disable validation warnings
+	//   "COUNT" - Disable validation warnings
+	//   "TIME" - Disable validation warnings
+	//   "DURATION" - Disable validation warnings
+	//   "RETENTION_UNIT_OTHER" - Disable validation warnings
 	RetentionUnit string `json:"retentionUnit,omitempty"`
-	// TimeBasedRetention: Duration based retention period i.e. 172800 seconds (2
-	// days)
+	// TimeBasedRetention: Disable validation warnings
 	TimeBasedRetention string `json:"timeBasedRetention,omitempty"`
-	// TimestampBasedRetentionTime: Timestamp based retention period i.e.
-	// 2024-05-01T00:00:00Z
+	// TimestampBasedRetentionTime: Disable validation warnings
 	TimestampBasedRetentionTime string `json:"timestampBasedRetentionTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DurationBasedRetention") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5431,13 +5295,12 @@ func (s StorageDatabasecenterPartnerapiV1mainRetentionSettings) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainSignalMetadata: SignalMetadata contains
-// one of the signal metadata proto messages associated with a SignalType. This
-// proto will be mapped to SignalMetadata message in storage.proto. Next ID: 3
+// StorageDatabasecenterPartnerapiV1mainSignalMetadata: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainSignalMetadata struct {
-	// BackupRun: Signal data for backup runs.
+	// BackupRun: Disable validation warnings
 	BackupRun *StorageDatabasecenterPartnerapiV1mainBackupRun `json:"backupRun,omitempty"`
-	// SignalBoolValue: Signal data for boolean signals.
+	// SignalBoolValue: Disable validation warnings
 	SignalBoolValue bool `json:"signalBoolValue,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BackupRun") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5457,12 +5320,9 @@ func (s StorageDatabasecenterPartnerapiV1mainSignalMetadata) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainTags: Message type for storing tags.
-// Tags provide a way to create annotations for resources, and in some cases
-// conditionally allow or deny policies based on whether a resource has a
-// specific tag.
+// StorageDatabasecenterPartnerapiV1mainTags: Disable validation warnings
 type StorageDatabasecenterPartnerapiV1mainTags struct {
-	// Tags: The Tag key/value mappings.
+	// Tags: Disable validation warnings
 	Tags map[string]string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Tags") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5482,13 +5342,12 @@ func (s StorageDatabasecenterPartnerapiV1mainTags) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance: Upcoming
-// maintenance for the database resource. This is generated by SLM once the
-// upcoming maintenance schedule is published.
+// StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance: Disable validation
+// warnings
 type StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance struct {
-	// EndTime: Optional. The end time of the upcoming maintenance.
+	// EndTime: Optional. Disable validation warnings
 	EndTime string `json:"endTime,omitempty"`
-	// StartTime: Optional. The start time of the upcoming maintenance.
+	// StartTime: Optional. Disable validation warnings
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5508,11 +5367,9 @@ func (s StorageDatabasecenterPartnerapiV1mainUpcomingMaintenance) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// StorageDatabasecenterPartnerapiV1mainUserLabels: Message type for storing
-// user labels. User labels are used to tag App Engine resources, allowing
-// users to search for resources matching a set of labels and to aggregate
-// usage data by labels.
+// StorageDatabasecenterPartnerapiV1mainUserLabels: Disable validation warnings
 type StorageDatabasecenterPartnerapiV1mainUserLabels struct {
+	// Labels: Disable validation warnings
 	Labels map[string]string `json:"labels,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5663,6 +5520,8 @@ type StringRestrictions struct {
 	// AllowedValues: The list of allowed values, if bounded. This field will be
 	// empty if there is a unbounded number of allowed values.
 	AllowedValues []string `json:"allowedValues,omitempty"`
+	// CaseAgnostic: Output only. Whether the allowed values are case agnostic.
+	CaseAgnostic bool `json:"caseAgnostic,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -425,8 +425,8 @@ func (s CreateDataPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataGovernanceTag: Data Governance tag This is a namespaced name specifying
-// the key and the value. For example: `project-id/pii/sensitive`.
+// DataGovernanceTag: This is a namespaced name specifying the key and the
+// value. For example: `project-id/pii/sensitive`.
 type DataGovernanceTag struct {
 	// Key: Optional. Tag keys are globally unique. Tag key is expected to be in
 	// the namespaced format, for example `parent-id/pii` where `parent-id` is the

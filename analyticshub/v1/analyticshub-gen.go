@@ -2158,8 +2158,9 @@ type QueryTemplate struct {
 	// PrimaryContact: Optional. Email or URL of the primary point of contact of
 	// the QueryTemplate. Max Length: 1000 bytes.
 	PrimaryContact string `json:"primaryContact,omitempty"`
-	// Proposer: Optional. Will be deprecated. Email or URL of the primary point of
-	// contact of the QueryTemplate. Max Length: 1000 bytes.
+	// Proposer: Optional. Deprecated: Use `primary_contact` instead. Email or URL
+	// of the primary point of contact of the QueryTemplate. Max Length: 1000
+	// bytes.
 	Proposer string `json:"proposer,omitempty"`
 	// Routine: Optional. The routine associated with the QueryTemplate.
 	Routine *Routine `json:"routine,omitempty"`

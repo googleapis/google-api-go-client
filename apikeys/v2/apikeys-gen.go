@@ -1484,6 +1484,25 @@ func (r *ProjectsLocationsKeysService) Patch(name string, v2key *V2Key) *Project
 	return c
 }
 
+// CheckExistingUsage sets the optional parameter "checkExistingUsage": Defines
+// the behavior for checking existing usage when updating a key.
+//
+// Possible values:
+//
+//	"CHECK_EXISTING_USAGE_UNSPECIFIED" - When unset, the default behavior is
+//
+// used, which is SKIP.
+//
+//	"SKIP" - If set, skip checking existing usage when updating a key.
+//	"CHECK" - If set, existing usage is checked when updating the key. If the
+//
+// key has usage in the last 7 days, the request returns a FAILED_PRECONDITION
+// error.
+func (c *ProjectsLocationsKeysPatchCall) CheckExistingUsage(checkExistingUsage string) *ProjectsLocationsKeysPatchCall {
+	c.urlParams_.Set("checkExistingUsage", checkExistingUsage)
+	return c
+}
+
 // UpdateMask sets the optional parameter "updateMask": The field mask
 // specifies which fields to be updated as part of this request. All other
 // fields are ignored. Mutable fields are: `display_name`, `restrictions`, and

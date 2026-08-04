@@ -6274,6 +6274,10 @@ type RequestOptions struct {
 	// ClientDisplayLanguageCode: The BCP-47 language code, such as "pt" or "en".
 	// It represents the user's preferred Display Language.
 	ClientDisplayLanguageCode string `json:"clientDisplayLanguageCode,omitempty"`
+	// CountryCode: Optional. Specifies the country/region where the query
+	// originated, as a lowercase ISO 3166-1 alpha-2 region code (using 'uk'
+	// instead of 'gb' for the United Kingdom).
+	CountryCode string `json:"countryCode,omitempty"`
 	// DebugOptions: Debug options of the request
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn". For
@@ -10898,6 +10902,15 @@ func (c *QuerySourcesListCall) PageToken(pageToken string) *QuerySourcesListCall
 // as "pt" or "en". It represents the user's preferred Display Language.
 func (c *QuerySourcesListCall) RequestOptionsClientDisplayLanguageCode(requestOptionsClientDisplayLanguageCode string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.clientDisplayLanguageCode", requestOptionsClientDisplayLanguageCode)
+	return c
+}
+
+// RequestOptionsCountryCode sets the optional parameter
+// "requestOptions.countryCode": Specifies the country/region where the query
+// originated, as a lowercase ISO 3166-1 alpha-2 region code (using 'uk'
+// instead of 'gb' for the United Kingdom).
+func (c *QuerySourcesListCall) RequestOptionsCountryCode(requestOptionsCountryCode string) *QuerySourcesListCall {
+	c.urlParams_.Set("requestOptions.countryCode", requestOptionsCountryCode)
 	return c
 }
 

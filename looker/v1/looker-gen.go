@@ -856,11 +856,10 @@ func (s ListInstanceBackupsResponse) MarshalJSON() ([]byte, error) {
 // ListInstancesResponse: Response from ListInstances.
 type ListInstancesResponse struct {
 	// Instances: The list of instances matching the request filters, up to the
-	// requested ListInstancesRequest.pageSize.
+	// requested `pageSize`.
 	Instances []*Instance `json:"instances,omitempty"`
 	// NextPageToken: If provided, a page token that can look up the next
-	// ListInstancesRequest.pageSize results. If empty, the results list is
-	// exhausted.
+	// `pageSize` results. If empty, the results list is exhausted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`

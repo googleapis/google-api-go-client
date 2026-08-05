@@ -437,6 +437,10 @@ func (s AndroidTest) MarshalJSON() ([]byte, error) {
 type AndroidTestLoop struct {
 }
 
+// AntiTamperingTermination: Anti-tampering termination was detected.
+type AntiTamperingTermination struct {
+}
+
 // Any:  `Any` contains an arbitrary serialized protocol buffer message along
 // with a URL that describes the type of the serialized message. Protobuf
 // library provides support to pack/unpack Any values in the form of utility
@@ -3248,6 +3252,7 @@ type TestIssue struct {
 	//   "assetIssue" - There was an issue with the assets in this test.
 	//   "licensingProtectionTermination" - Licensing protection termination
 	// (Pairip) was detected.
+	//   "antiTamperingTermination" - Anti-tampering termination was detected.
 	Type string `json:"type,omitempty"`
 	// WarningMigration: Warning message with additional details of the issue.
 	// Should always be a message from com.google.devtools.toolresults.v1.warnings

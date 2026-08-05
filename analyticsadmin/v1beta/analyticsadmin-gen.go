@@ -5467,7 +5467,10 @@ type PropertiesCustomDimensionsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a CustomDimension.
+// Create: Creates a CustomDimension. Warning: It's not permissible to use this
+// method to collect data on individual users. In particular, sending user IDs
+// in custom dimensions violates the Google Analytics Terms of Service
+// (https://www.google.com/analytics/terms/).
 //
 // - parent: Example format: properties/1234.
 func (r *PropertiesCustomDimensionsService) Create(parent string, googleanalyticsadminv1betacustomdimension *GoogleAnalyticsAdminV1betaCustomDimension) *PropertiesCustomDimensionsCreateCall {

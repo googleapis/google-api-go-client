@@ -781,6 +781,8 @@ type GoogleFirebaseAppdistroV1AabInfo struct {
 	//   "PLAY_ANDROID_DEVELOPER_CONSOLE_ACCOUNT_NOT_FOUND" - The linked Play
 	// developer account was not found or is not fully set up in Android Developer
 	// Console.
+	//   "PLAY_ANDROID_DEVELOPER_CONSOLE_PACKAGE_NOT_FOUND" - The package was not
+	// found in the Android Developer Console.
 	IntegrationState string `json:"integrationState,omitempty"`
 	// Name: The name of the `AabInfo` resource. Format:
 	// `projects/{project_number}/apps/{app}/aabInfo`

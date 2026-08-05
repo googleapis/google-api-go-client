@@ -2018,8 +2018,8 @@ type ComputeEngineShapeDescriptor struct {
 	PhysicalCoreCount int64 `json:"physicalCoreCount,omitempty"`
 	// Series: Output only. Compute Engine machine series.
 	Series string `json:"series,omitempty"`
-	// SmtEnabled: Output only. Whether simultaneous multithreading is enabled (see
-	// https://cloud.google.com/compute/docs/instances/set-threads-per-core).
+	// SmtEnabled: Output only. Whether simultaneous multithreading is enabled. See
+	// https://cloud.google.com/compute/docs/instances/set-threads-per-core.
 	SmtEnabled bool `json:"smtEnabled,omitempty"`
 	// Storage: Output only. Compute Engine storage. Never empty.
 	Storage []*ComputeStorageDescriptor `json:"storage,omitempty"`
@@ -15126,8 +15126,8 @@ func (r *ProjectsLocationsReportConfigsService) Create(parent string, reportconf
 // specified ID for the report config. It will become the last component of the
 // report config name. The ID must be unique within the project, must conform
 // with RFC-1034, is restricted to lower-cased letters, and has a maximum
-// length of 63 characters. The ID must match the regular expression: a-z
-// ([a-z0-9-]{0,61}[a-z0-9])?.
+// length of 63 characters. The ID must match the regular expression:
+// `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 func (c *ProjectsLocationsReportConfigsCreateCall) ReportConfigId(reportConfigId string) *ProjectsLocationsReportConfigsCreateCall {
 	c.urlParams_.Set("reportConfigId", reportConfigId)
 	return c
@@ -15645,7 +15645,7 @@ func (r *ProjectsLocationsReportConfigsReportsService) Create(parent string, rep
 // for the report. It will become the last component of the report name. The id
 // must be unique within the project, must conform with RFC-1034, is restricted
 // to lower-cased letters, and has a maximum length of 63 characters. The id
-// must match the regular expression: a-z ([a-z0-9-]{0,61}[a-z0-9])?.
+// must match the regular expression: `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
 func (c *ProjectsLocationsReportConfigsReportsCreateCall) ReportId(reportId string) *ProjectsLocationsReportConfigsReportsCreateCall {
 	c.urlParams_.Set("reportId", reportId)
 	return c

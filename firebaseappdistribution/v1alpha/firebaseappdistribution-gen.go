@@ -1289,6 +1289,8 @@ type GoogleFirebaseAppdistroV1alphaGetUploadStatusResponse struct {
 	//   "AAB_ANDROID_DEVELOPER_CONSOLE_ACCOUNT_NOT_FOUND" - A corresponding
 	// Android Developer Console account for this app's Play Console account was
 	// not found.
+	//   "AAB_ANDROID_DEVELOPER_CONSOLE_PACKAGE_NOT_FOUND" - The package was not
+	// found in the Android Developer Console.
 	ErrorCode string `json:"errorCode,omitempty"`
 	// Message: Any additional context for the given upload status (e.g. error
 	// message) Meant to be displayed to the client

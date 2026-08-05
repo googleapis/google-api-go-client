@@ -4210,6 +4210,7 @@ type GoogleCloudApihubV1Plugin struct {
 	//   "API_DISCOVERY" - The gateway type is API Discovery.
 	//   "OTHERS" - The gateway type for any other types of gateways.
 	//   "AWS_API_GATEWAY" - The gateway type is AWS API Gateway.
+	//   "AZURE_API_MANAGEMENT" - The gateway type is Azure API Management.
 	GatewayType string `json:"gatewayType,omitempty"`
 	// HostingService: Optional. This field is optional. It is used to notify the
 	// plugin hosting service for any lifecycle changes of the plugin instance and
@@ -5336,9 +5337,11 @@ type GoogleCloudApihubV1Version struct {
 	// `projects/{project}/locations/{location}/apis/{api}/versions/{version}/defini
 	// tions/{definition}`
 	Definitions []string `json:"definitions,omitempty"`
-	// Deployments: Optional. The deployments linked to this API version. Note: A
-	// particular API version could be deployed to multiple deployments (for dev
-	// deployment, UAT deployment, etc) Format is
+	// Deployments: Optional. The deployments linked directly to this API version.
+	// Only directly-linked deployments are returned; deployments linked to this
+	// version's specs or operations are not included. Note: A particular API
+	// version could be deployed to multiple deployments (for dev deployment, UAT
+	// deployment, etc) Format is
 	// `projects/{project}/locations/{location}/deployments/{deployment}`
 	Deployments []string `json:"deployments,omitempty"`
 	// Description: Optional. The description of the version.

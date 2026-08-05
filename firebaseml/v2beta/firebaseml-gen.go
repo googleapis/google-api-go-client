@@ -373,9 +373,15 @@ type GoogleCloudAiplatformV1beta1AudioTranscriptionConfig struct {
 	CustomVocabulary []string `json:"customVocabulary,omitempty"`
 	// Diarization: Optional. Configures speaker diarization.
 	Diarization bool `json:"diarization,omitempty"`
-	// LanguageAuto: Optional. The model will detect the language automatically.
+	// LanguageAuto: Optional. Deprecated: Use top-level `language_codes` instead.
+	// The model will detect the language automatically.
 	LanguageAuto *GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageAuto `json:"languageAuto,omitempty"`
-	// LanguageHints: Optional. Specifies one or more languages in the audio.
+	// LanguageCodes: Optional. BCP-47 language codes providing hints about the
+	// languages present in the audio. If omitted or empty, defaults to automatic
+	// language detection.
+	LanguageCodes []string `json:"languageCodes,omitempty"`
+	// LanguageHints: Optional. Deprecated: Use top-level `language_codes` instead.
+	// Specifies one or more languages in the audio.
 	LanguageHints *GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints `json:"languageHints,omitempty"`
 	// WordTimestamp: Optional. Configures word-level timestamp generation.
 	WordTimestamp bool `json:"wordTimestamp,omitempty"`
@@ -397,16 +403,18 @@ func (s GoogleCloudAiplatformV1beta1AudioTranscriptionConfig) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageAuto: Indicates
-// the language of the audio should be automatically detected.
+// GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageAuto:
+// Deprecated: Use top-level `language_codes` instead. Indicates the language
+// of the audio should be automatically detected.
 type GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageAuto struct {
 }
 
-// GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints: Provides
-// hints to the model about possible languages present in the audio.
+// GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints:
+// Deprecated: Use top-level `language_codes` instead. Provides hints to the
+// model about possible languages present in the audio.
 type GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints struct {
-	// LanguageCodes: Required. BCP-47 language codes. At least one must be
-	// specified.
+	// LanguageCodes: Required. Deprecated: Use top-level `language_codes` instead.
+	// BCP-47 language codes. At least one must be specified.
 	LanguageCodes []string `json:"languageCodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LanguageCodes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1722,6 +1730,7 @@ type GoogleCloudAiplatformV1beta1GenerateContentResponseUsageMetadata struct {
 	//   "ON_DEMAND" - The request was processed using Pay-As-You-Go quota.
 	//   "ON_DEMAND_PRIORITY" - Type for Priority Pay-As-You-Go traffic.
 	//   "ON_DEMAND_FLEX" - Type for Flex traffic.
+	//   "ON_DEMAND_OFFPEAK" - Type for Off-Peak Pay-As-You-Go traffic.
 	//   "PROVISIONED_THROUGHPUT" - Type for Provisioned Throughput traffic.
 	TrafficType string `json:"trafficType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CacheTokensDetails") to
@@ -4518,6 +4527,9 @@ type GoogleCloudAiplatformV1beta1VideoResponseFormat struct {
 	// GcsUri: Optional. The Google Cloud Storage URI to store the video output.
 	// Required for Vertex if delivery is URI.
 	GcsUri string `json:"gcsUri,omitempty"`
+	// Resolution: Optional. The video output resolution. Supported values: "360p",
+	// "720p", "1080p", "4k".
+	Resolution string `json:"resolution,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

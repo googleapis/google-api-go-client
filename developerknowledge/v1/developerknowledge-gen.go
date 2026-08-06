@@ -351,8 +351,9 @@ func (s CitationSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Document: A Document represents a piece of content from the Developer
-// Knowledge corpus.
+// Document: A Document represents a page of documentation in the Developer
+// Knowledge corpus, like the page at
+// https://docs.cloud.google.com/storage/docs/creating-buckets.
 type Document struct {
 	// Content: Output only. Contains the full content of the document in Markdown
 	// format.
@@ -478,9 +479,8 @@ func (s DocumentReference) MarshalJSON() ([]byte, error) {
 // SearchDocumentChunksResponse: Response message for
 // DeveloperKnowledge.SearchDocumentChunks.
 type SearchDocumentChunksResponse struct {
-	// NextPageToken: Optional. Provides a token that can be sent as `page_token`
-	// to retrieve the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: Provides a token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Results: Contains the search results for the given query. Each DocumentChunk
 	// in this list contains a snippet of content relevant to the search query. Use
@@ -527,7 +527,9 @@ func (r *DocumentsService) BatchGet() *DocumentsBatchGetCall {
 // the documents to retrieve. A maximum of 20 documents can be retrieved in a
 // batch. The documents are returned in the same order as the `names` in the
 // request. Format: `documents/{uri_without_scheme}` Example:
-// `documents/docs.cloud.google.com/storage/docs/creating-buckets`
+// `documents/docs.cloud.google.com/storage/docs/creating-buckets` Each name
+// must not exceed 500 characters; values longer than 500 characters will
+// result in an `INVALID_ARGUMENT` error.
 func (c *DocumentsBatchGetCall) Names(names ...string) *DocumentsBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
@@ -661,7 +663,9 @@ type DocumentsGetCall struct {
 //
 //   - name: Specifies the name of the document to retrieve. Format:
 //     `documents/{uri_without_scheme}` Example:
-//     `documents/docs.cloud.google.com/storage/docs/creating-buckets`.
+//     `documents/docs.cloud.google.com/storage/docs/creating-buckets` The name
+//     must not exceed 500 characters; values longer than 500 characters will
+//     result in an `INVALID_ARGUMENT` error.
 func (r *DocumentsService) Get(name string) *DocumentsGetCall {
 	c := &DocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -857,7 +861,8 @@ func (c *DocumentsSearchDocumentChunksCall) PageToken(pageToken string) *Documen
 
 // Query sets the optional parameter "query": Required. Provides the raw query
 // string provided by the user, such as "How to create a Cloud Storage
-// bucket?".
+// bucket?". The query must not exceed 500 characters; values longer than 500
+// characters will result in an `INVALID_ARGUMENT` error.
 func (c *DocumentsSearchDocumentChunksCall) Query(query string) *DocumentsSearchDocumentChunksCall {
 	c.urlParams_.Set("query", query)
 	return c

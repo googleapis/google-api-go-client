@@ -235,15 +235,44 @@ func (s AnswerCitation) MarshalJSON() ([]byte, error) {
 
 // AnswerQueryRequest: Request message for DeveloperKnowledge.AnswerQuery.
 type AnswerQueryRequest struct {
+	// Filter: Optional. Applies a strict filter to the search results used to
+	// ground the answer. The expression supports a subset of the syntax described
+	// at https://google.aip.dev/160. Supported fields for filtering: *
+	// `content_length_bytes` (INTEGER): The length of the `Document.content` field
+	// in bytes. * `data_source` (STRING): The source of the document, e.g.
+	// `docs.cloud.google.com`. See
+	// https://developers.google.com/knowledge/reference/corpus-reference for the
+	// complete list of data sources in the corpus. * `update_time` (TIMESTAMP):
+	// The timestamp of when the document was last meaningfully updated. A
+	// meaningful update is one that changes document's markdown content or
+	// metadata. * `uri` (STRING): The document URI, e.g.
+	// `https://docs.cloud.google.com/bigquery/docs/tables`. INTEGER fields support
+	// `=`, `<`, `<=`, `>`, and `>=` operators. STRING fields support `=` (equals)
+	// and `!=` (not equals) operators for **exact match** on the whole string.
+	// Partial match, prefix match, and regexp match are not supported. TIMESTAMP
+	// fields support `=`, `<`, `<=`, `>`, and `>=` operators. Timestamps must be
+	// in RFC-3339 format, e.g., "2025-01-01T00:00:00Z". You can combine
+	// expressions using `AND`, `OR`, and `NOT` (or `-`) logical operators. `OR`
+	// has higher precedence than `AND`. Use parentheses for explicit precedence
+	// grouping. Examples: * Filter by `Document.content_length_bytes`:
+	// `content_length_bytes < 50000` * `data_source = "docs.cloud.google.com" OR
+	// data_source = "firebase.google.com" * `data_source !=
+	// "firebase.google.com" * `update_time < "2024-01-01T00:00:00Z" *
+	// `update_time >= "2025-01-22T00:00:00Z" AND (data_source =
+	// "developer.chrome.com" OR data_source = "web.dev")` * `uri =
+	// "https://docs.cloud.google.com/release-notes" The `filter` string must not
+	// exceed 500 characters; values longer than 500 characters will result in an
+	// `INVALID_ARGUMENT` error.
+	Filter string `json:"filter,omitempty"`
 	// Query: Required. The query to answer.
 	Query string `json:"query,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Query") to include in API
+	// NullFields is a list of field names (e.g. "Filter") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -351,8 +380,9 @@ func (s CitationSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Document: A Document represents a piece of content from the Developer
-// Knowledge corpus.
+// Document: A Document represents a page of documentation in the Developer
+// Knowledge corpus, like the page at
+// https://docs.cloud.google.com/storage/docs/creating-buckets.
 type Document struct {
 	// Content: Output only. Contains the full content of the document in Markdown
 	// format.
@@ -434,6 +464,10 @@ type DocumentChunk struct {
 	// is from. Format: `documents/{uri_without_scheme}` Example:
 	// `documents/docs.cloud.google.com/storage/docs/creating-buckets`
 	Parent string `json:"parent,omitempty"`
+	// RelevanceScore: Output only. Represents the relevance score of the chunk to
+	// the search query. Higher score indicates higher chunk relevance. The score
+	// is in range [0.0, 1.0].
+	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -450,6 +484,20 @@ type DocumentChunk struct {
 func (s DocumentChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentChunk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *DocumentChunk) UnmarshalJSON(data []byte) error {
+	type NoMethod DocumentChunk
+	var s1 struct {
+		RelevanceScore gensupport.JSONFloat64 `json:"relevanceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RelevanceScore = float64(s1.RelevanceScore)
+	return nil
 }
 
 // DocumentReference: Represents a reference to a document.
@@ -478,9 +526,8 @@ func (s DocumentReference) MarshalJSON() ([]byte, error) {
 // SearchDocumentChunksResponse: Response message for
 // DeveloperKnowledge.SearchDocumentChunks.
 type SearchDocumentChunksResponse struct {
-	// NextPageToken: Optional. Provides a token that can be sent as `page_token`
-	// to retrieve the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: Provides a token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Results: Contains the search results for the given query. Each DocumentChunk
 	// in this list contains a snippet of content relevant to the search query. Use
@@ -527,7 +574,9 @@ func (r *DocumentsService) BatchGet() *DocumentsBatchGetCall {
 // the documents to retrieve. A maximum of 20 documents can be retrieved in a
 // batch. The documents are returned in the same order as the `names` in the
 // request. Format: `documents/{uri_without_scheme}` Example:
-// `documents/docs.cloud.google.com/storage/docs/creating-buckets`
+// `documents/docs.cloud.google.com/storage/docs/creating-buckets` Each name
+// must not exceed 500 characters; values longer than 500 characters will
+// result in an `INVALID_ARGUMENT` error.
 func (c *DocumentsBatchGetCall) Names(names ...string) *DocumentsBatchGetCall {
 	c.urlParams_.SetMulti("names", append([]string{}, names...))
 	return c
@@ -661,7 +710,9 @@ type DocumentsGetCall struct {
 //
 //   - name: Specifies the name of the document to retrieve. Format:
 //     `documents/{uri_without_scheme}` Example:
-//     `documents/docs.cloud.google.com/storage/docs/creating-buckets`.
+//     `documents/docs.cloud.google.com/storage/docs/creating-buckets` The name
+//     must not exceed 500 characters; values longer than 500 characters will
+//     result in an `INVALID_ARGUMENT` error.
 func (r *DocumentsService) Get(name string) *DocumentsGetCall {
 	c := &DocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -857,7 +908,8 @@ func (c *DocumentsSearchDocumentChunksCall) PageToken(pageToken string) *Documen
 
 // Query sets the optional parameter "query": Required. Provides the raw query
 // string provided by the user, such as "How to create a Cloud Storage
-// bucket?".
+// bucket?". The query must not exceed 500 characters; values longer than 500
+// characters will result in an `INVALID_ARGUMENT` error.
 func (c *DocumentsSearchDocumentChunksCall) Query(query string) *DocumentsSearchDocumentChunksCall {
 	c.urlParams_.Set("query", query)
 	return c

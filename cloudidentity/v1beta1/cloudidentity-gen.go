@@ -4431,7 +4431,7 @@ type SendUserInvitationRequest struct {
 
 // Setting: Setting
 type Setting struct {
-	// Type: Required. Immutable. The type of the Setting. .
+	// Type: Required. Immutable. The type of the Setting.
 	Type string `json:"type,omitempty"`
 	// Value: Required. The value of the Setting.
 	Value googleapi.RawMessage `json:"value,omitempty"`

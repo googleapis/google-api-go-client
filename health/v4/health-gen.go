@@ -5445,7 +5445,7 @@ type Settings struct {
 	// automatically. Updates to this field are currently not supported.
 	AutoStrideEnabled bool `json:"autoStrideEnabled,omitempty"`
 	// DistanceUnit: Optional. The measurement unit defined in the user's account
-	// settings. Updates to this field are currently not supported.
+	// settings.
 	//
 	// Possible values:
 	//   "DISTANCE_UNIT_UNSPECIFIED" - Distance unit is not specified.
@@ -5584,6 +5584,10 @@ type Sleep struct {
 	// OutOfBedSegments: Optional. “Out of bed” segments that can overlap with
 	// sleep stages.
 	OutOfBedSegments []*OutOfBedSegment `json:"outOfBedSegments,omitempty"`
+	// ShortAwakenings: Output only. List of short awake segments (under a set
+	// threshold) that are part of the sleep session. These can overlap with sleep
+	// stages.
+	ShortAwakenings []*SleepStage `json:"shortAwakenings,omitempty"`
 	// Stages: Optional. List of non-overlapping contiguous sleep stage segments
 	// that cover the sleep period.
 	Stages []*SleepStage `json:"stages,omitempty"`

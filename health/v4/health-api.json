@@ -1078,7 +1078,7 @@
       }
     }
   },
-  "revision": "20260803",
+  "revision": "20260804",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {
@@ -5272,7 +5272,7 @@
           "type": "boolean"
         },
         "distanceUnit": {
-          "description": "Optional. The measurement unit defined in the user's account settings. Updates to this field are currently not supported.",
+          "description": "Optional. The measurement unit defined in the user's account settings.",
           "enum": [
             "DISTANCE_UNIT_UNSPECIFIED",
             "DISTANCE_UNIT_MILES",
@@ -5453,6 +5453,14 @@
           "items": {
             "$ref": "OutOfBedSegment"
           },
+          "type": "array"
+        },
+        "shortAwakenings": {
+          "description": "Output only. List of short awake segments (under a set threshold) that are part of the sleep session. These can overlap with sleep stages.",
+          "items": {
+            "$ref": "SleepStage"
+          },
+          "readOnly": true,
           "type": "array"
         },
         "stages": {

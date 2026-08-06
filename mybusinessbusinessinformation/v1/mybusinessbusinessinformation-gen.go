@@ -1886,7 +1886,9 @@ type TimePeriod struct {
 	//   "SUNDAY" - Sunday
 	CloseDay string `json:"closeDay,omitempty"`
 	// CloseTime: Required. Valid values are 00:00-24:00, where 24:00 represents
-	// midnight at the end of the specified day field.
+	// midnight at the end of the specified day field. Note: In Proto3 JSON
+	// mapping, default zero values (00:00) are omitted, producing `{}` for
+	// close_time.
 	CloseTime *TimeOfDay `json:"closeTime,omitempty"`
 	// OpenDay: Required. Indicates the day of the week this period starts on.
 	//
@@ -1901,7 +1903,9 @@ type TimePeriod struct {
 	//   "SUNDAY" - Sunday
 	OpenDay string `json:"openDay,omitempty"`
 	// OpenTime: Required. Valid values are 00:00-24:00, where 24:00 represents
-	// midnight at the end of the specified day field.
+	// midnight at the end of the specified day field. Note: In Proto3 JSON
+	// mapping, default zero values (00:00) are omitted, producing `{}` for
+	// open_time.
 	OpenTime *TimeOfDay `json:"openTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloseDay") to
 	// unconditionally include in API requests. By default, fields with empty or

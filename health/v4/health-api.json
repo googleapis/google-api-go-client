@@ -970,9 +970,17 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
-                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
+                    "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
                 "rollUp": {
@@ -1078,7 +1086,7 @@
       }
     }
   },
-  "revision": "20260804",
+  "revision": "20260805",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {

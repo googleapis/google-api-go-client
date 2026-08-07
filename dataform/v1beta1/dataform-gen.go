@@ -601,6 +601,9 @@ type CodeCompilationConfig struct {
 	DefaultNotebookRuntimeOptions *NotebookRuntimeOptions `json:"defaultNotebookRuntimeOptions,omitempty"`
 	// DefaultSchema: Optional. The default schema (BigQuery dataset ID).
 	DefaultSchema string `json:"defaultSchema,omitempty"`
+	// PipelineConfig: Optional. The pipeline options which defines the pipeline
+	// type and path within the Git repository.
+	PipelineConfig *PipelineConfig `json:"pipelineConfig,omitempty"`
 	// SchemaSuffix: Optional. The suffix that should be appended to all schema
 	// (BigQuery dataset ID) names.
 	SchemaSuffix string `json:"schemaSuffix,omitempty"`
@@ -868,6 +871,9 @@ type CompilationResult struct {
 	// DataformCoreVersion: Output only. The version of `@dataform/core` that was
 	// used for compilation.
 	DataformCoreVersion string `json:"dataformCoreVersion,omitempty"`
+	// GcsRepositorySnapshotMetadata: Output only. Metadata about the repository
+	// snapshot used by scheduled notebooks.
+	GcsRepositorySnapshotMetadata *GcsRepositorySnapshotMetadata `json:"gcsRepositorySnapshotMetadata,omitempty"`
 	// GitCommitish: Immutable. Git commit/tag/branch name at which the repository
 	// should be compiled. Must exist in the remote repository. Examples: - a
 	// commit SHA: `12ade345` - a tag: `tag1` - a branch name: `branch1`
@@ -1640,6 +1646,60 @@ func (s FolderContentsEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GcsRepositorySnapshotDestination: Configures the destination for a
+// repository snapshot.
+type GcsRepositorySnapshotDestination struct {
+	// RepositorySnapshotUri: Optional. The Google Cloud Storage destination to
+	// upload the repository snapshot to. Format: `gs://bucket-name/path/`.
+	RepositorySnapshotUri string `json:"repositorySnapshotUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RepositorySnapshotUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RepositorySnapshotUri") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcsRepositorySnapshotDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsRepositorySnapshotDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GcsRepositorySnapshotMetadata: Metadata about a repository snapshot stored
+// in Google Cloud Storage.
+type GcsRepositorySnapshotMetadata struct {
+	// Crc32cChecksum: Output only. The crc32c checksum of the repository snapshot,
+	// big-endian base64 encoded.
+	Crc32cChecksum string `json:"crc32cChecksum,omitempty"`
+	// Generation: Output only. The generation number of the Cloud Storage object.
+	// See https://cloud.google.com/storage/docs/metadata#generation-number.
+	Generation int64 `json:"generation,omitempty,string"`
+	// RepositorySnapshotUri: Output only. The Google Cloud Storage URI of the
+	// repository snapshot.
+	RepositorySnapshotUri string `json:"repositorySnapshotUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Crc32cChecksum") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Crc32cChecksum") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcsRepositorySnapshotMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsRepositorySnapshotMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GitRemoteSettings: Controls Git remote configuration for a repository.
 type GitRemoteSettings struct {
 	// AuthenticationTokenSecretVersion: Optional. The name of the Secret Manager
@@ -1788,6 +1848,25 @@ func (s IncrementalTableConfig) MarshalJSON() ([]byte, error) {
 
 // InstallNpmPackagesRequest: `InstallNpmPackages` request message.
 type InstallNpmPackagesRequest struct {
+	// PipelineConfig: Optional. The pipeline options which defines the pipeline
+	// type and path within the Git repository.
+	PipelineConfig *PipelineConfig `json:"pipelineConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PipelineConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PipelineConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstallNpmPackagesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InstallNpmPackagesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstallNpmPackagesResponse: `InstallNpmPackages` response message.
@@ -2365,6 +2444,8 @@ func (s Notebook) MarshalJSON() ([]byte, error) {
 type NotebookAction struct {
 	// Contents: Output only. The code contents of a Notebook to be run.
 	Contents string `json:"contents,omitempty"`
+	// FilePath: Output only. The path to the notebook file in the repository.
+	FilePath string `json:"filePath,omitempty"`
 	// JobId: Output only. The ID of the Gemini Enterprise Agent Platform job that
 	// executed the notebook in contents and also the ID used for the outputs
 	// created in Google Cloud Storage buckets. Only set once the job has started
@@ -2399,6 +2480,10 @@ type NotebookRuntimeOptions struct {
 	// GcsOutputBucket: Optional. The Google Cloud Storage location to upload the
 	// result to. Format: `gs://bucket-name`.
 	GcsOutputBucket string `json:"gcsOutputBucket,omitempty"`
+	// GcsRepositorySnapshotDestination: Optional. The Google Cloud Storage
+	// destination to upload the snapshot to. For empty URI it defaults to the
+	// provided gcs_output_bucket. Format: `gs://bucket-name/path/`.
+	GcsRepositorySnapshotDestination *GcsRepositorySnapshotDestination `json:"gcsRepositorySnapshotDestination,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AiPlatformNotebookRuntimeTemplate") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -2535,6 +2620,39 @@ type Operations struct {
 
 func (s Operations) MarshalJSON() ([]byte, error) {
 	type NoMethod Operations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PipelineConfig: Defines the pipeline type and path within the Git
+// repository.
+type PipelineConfig struct {
+	// Path: Required. The relative path within the Git repository where the
+	// pipeline is defined. For example, for a Dataform pipeline, it is a path to
+	// the folder where `workflow_settings.yaml` or `dataform.json` is located.
+	Path string `json:"path,omitempty"`
+	// PipelineType: Required. The type of the pipeline.
+	//
+	// Possible values:
+	//   "PIPELINE_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "DATAFORM" - Regular Dataform pipeline.
+	//   "SQL" - SQL single file asset.
+	//   "NOTEBOOK" - Notebook single file asset.
+	PipelineType string `json:"pipelineType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PipelineConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PipelineConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3149,7 +3267,7 @@ type ReleaseConfig struct {
 	// TimeZone: Optional. Specifies the time zone to be used when interpreting
 	// cron_schedule. Must be a time zone name from the time zone database
 	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left
-	// unspecified, the default is UTC.
+	// unspecified, the default is `UTC`.
 	TimeZone string `json:"timeZone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3909,14 +4027,13 @@ type WorkflowConfig struct {
 	// TimeZone: Optional. Specifies the time zone to be used when interpreting
 	// cron_schedule. Must be a time zone name from the time zone database
 	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left
-	// unspecified, the default is UTC.
+	// unspecified, the default is `UTC`.
 	TimeZone string `json:"timeZone,omitempty"`
 	// UpdateTime: Output only. The timestamp of when the WorkflowConfig was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// WorkflowTriggerConfig: Optional. Optional trigger configuration for this
-	// workflow. If present, the workflow will be triggered based on the specified
-	// triggers.
+	// WorkflowTriggerConfig: Optional. Trigger configuration for this workflow. If
+	// present, the workflow will be triggered based on the specified triggers.
 	WorkflowTriggerConfig *WorkflowTriggerConfig `json:"workflowTriggerConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3958,6 +4075,9 @@ type WorkflowInvocation struct {
 	InvocationTiming *Interval `json:"invocationTiming,omitempty"`
 	// Name: Output only. The workflow invocation's name.
 	Name string `json:"name,omitempty"`
+	// PipelineConfig: Output only. The pipeline options which defines the pipeline
+	// type and path within the Git repository.
+	PipelineConfig *PipelineConfig `json:"pipelineConfig,omitempty"`
 	// PrivateResourceMetadata: Output only. Metadata indicating whether this
 	// resource is user-scoped. `WorkflowInvocation` resource is `user_scoped` only
 	// if it is sourced from a compilation result and the compilation result is
@@ -4105,7 +4225,7 @@ type WorkflowTriggerConfig struct {
 	MaxWaitDuration string `json:"maxWaitDuration,omitempty"`
 	// MinExecutionDuration: Optional. Minimum duration between two consecutive
 	// executions. If not specified, the workflow will be executed every time
-	// trigger conditions are met and no ongoing workflow execution.
+	// trigger conditions are met and there is no ongoing workflow execution.
 	MinExecutionDuration string `json:"minExecutionDuration,omitempty"`
 	// RecentTriggerEvaluationRecords: Output only. Records of the 10 most recent
 	// trigger evaluations, ordered in descending order of `evaluation_time`.

@@ -425,7 +425,7 @@
       }
     }
   },
-  "revision": "20260801",
+  "revision": "20260804",
   "rootUrl": "https://webcontentpublisher.googleapis.com/",
   "schemas": {
     "CheckFreeAccessResponse": {
@@ -590,6 +590,10 @@
         },
         "nameRequired": {
           "description": "Optional. Whether the user is required to provide their name to sign up.",
+          "type": "boolean"
+        },
+        "optInRequired": {
+          "description": "Optional. Whether checking the opt-in checkbox is required.",
           "type": "boolean"
         },
         "title": {

@@ -412,6 +412,8 @@ type NewsletterConfig struct {
 	// NameRequired: Optional. Whether the user is required to provide their name
 	// to sign up.
 	NameRequired bool `json:"nameRequired,omitempty"`
+	// OptInRequired: Optional. Whether checking the opt-in checkbox is required.
+	OptInRequired bool `json:"optInRequired,omitempty"`
 	// Title: Required. The title of the newsletter signup prompt.
 	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomConsentText") to

@@ -6,7 +6,7 @@
 
 // Package ftp provides access to the Cloud FTP API.
 //
-// For product documentation, see: https://cloud.google.com/
+// For product documentation, see: https://cloud.google.com/cloud-ftp/overview
 //
 // # Library status
 //

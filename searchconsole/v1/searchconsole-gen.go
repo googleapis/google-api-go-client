@@ -447,12 +447,15 @@ func (s ApiDimensionFilter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ApiDimensionFilterGroup: A set of dimension value filters to test against
+// ApiDimensionFilterGroup: A set of `dimension` value filters to test against
 // each row. Only rows that pass all filter groups will be returned. All
 // results within a filter group are either AND'ed or OR'ed together, depending
 // on the group type selected. All filter groups are AND'ed together.
 type ApiDimensionFilterGroup struct {
+	// Filters: Optional. A list of single-value filters in this group.
 	Filters []*ApiDimensionFilter `json:"filters,omitempty"`
+	// GroupType: Optional. The logic operator between filters of the same group.
+	//
 	// Possible values:
 	//   "AND"
 	GroupType string `json:"groupType,omitempty"`

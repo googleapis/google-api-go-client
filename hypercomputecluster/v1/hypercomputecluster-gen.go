@@ -1227,6 +1227,7 @@ type NewBucketConfig struct {
 	//   "COLDLINE" - Very low-cost storage for infrequently accessed data.
 	//   "ARCHIVE" - Lowest-cost storage for data archiving, online backup, and
 	// disaster recovery.
+	//   "RAPID" - Storage class optimized for I/O intensive workloads.
 	StorageClass string `json:"storageClass,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Autoclass") to
 	// unconditionally include in API requests. By default, fields with empty or

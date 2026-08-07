@@ -924,14 +924,15 @@ type AdAsset struct {
 	EntityStatus string `json:"entityStatus,omitempty"`
 	// Name: Identifier. The resource name of the ad asset.
 	Name string `json:"name,omitempty"`
-	// SyntheticContentAttestationStatus: Optional. Whether the asset contains
-	// synthetic content or was created using AI.
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// asset as created or edited using AI when served in regions with local AI
+	// labeling regulations.
 	//
 	// Possible values:
-	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - Attestation status is
-	// unspecified.
-	//   "NOT_SYNTHETIC" - Not synthetic content.
-	//   "IS_SYNTHETIC" - Is synthetic content.
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
 	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// YoutubeVideoAsset: Youtube video asset data.
 	YoutubeVideoAsset *YoutubeVideoAsset `json:"youtubeVideoAsset,omitempty"`
@@ -6160,8 +6161,7 @@ func (s Consent) MarshalJSON() ([]byte, error) {
 // ContactInfo: Contact information defining a Customer Match audience member.
 type ContactInfo struct {
 	// CountryCode: Optional. Country code of the member. Must also be set with the
-	// following fields: * country_code * hashed_first_name * hashed_last_name *
-	// zip_codes
+	// following fields: * hashed_first_name * hashed_last_name * zip_codes
 	CountryCode string `json:"countryCode,omitempty"`
 	// HashedEmails: Optional. A list of SHA256 hashed email of the member. Before
 	// hashing, remove all whitespace and make sure the string is all lowercase.
@@ -7359,14 +7359,15 @@ type Creative struct {
 	// This field is only supported for the following creative_type: *
 	// `CREATIVE_TYPE_VIDEO`
 	Skippable bool `json:"skippable,omitempty"`
-	// SyntheticContentAttestationStatus: Optional. Whether the creative contains
-	// synthetic content or was created using AI.
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// creative as created or edited using AI when served in regions with local AI
+	// labeling regulations.
 	//
 	// Possible values:
-	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - Attestation status is
-	// unspecified.
-	//   "NOT_SYNTHETIC" - Not synthetic content.
-	//   "IS_SYNTHETIC" - Is synthetic content.
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
 	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ThirdPartyTag: Optional. The original third-party tag used for the creative.
 	// Required and only valid for third-party tag creatives. Third-party tag
@@ -18247,14 +18248,15 @@ type UploadAdAssetRequest struct {
 	// extension. The filename must be UTF-8 encoded with a maximum size of 240
 	// bytes.
 	Filename string `json:"filename,omitempty"`
-	// SyntheticContentAttestationStatus: Optional. Whether the asset contains
-	// synthetic content or was created using AI.
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// asset as created or edited using AI when served in regions with local AI
+	// labeling regulations.
 	//
 	// Possible values:
-	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - Attestation status is
-	// unspecified.
-	//   "NOT_SYNTHETIC" - Not synthetic content.
-	//   "IS_SYNTHETIC" - Is synthetic content.
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
 	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdAssetType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -20983,8 +20985,8 @@ type AdvertisersAdAssetsPatchCall struct {
 
 // Patch: Updates an ad asset. Returns the updated ad asset if successful.
 // Supports updating assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO` and
-// `AD_ASSET_TYPE_IMAGE`. Only the `synthetic_content_attestation_status` field
-// is mutable.
+// `AD_ASSET_TYPE_IMAGE`. Only the AdAsset.synthetic_content_attestation_status
+// field is mutable.
 //
 //   - adAssetId: Output only. The ID of the ad asset. Referred to as the asset
 //     ID when assigned to an ad.
@@ -31780,7 +31782,9 @@ type AdvertisersReachForecastGenerateReachForecastCall struct {
 }
 
 // GenerateReachForecast: Generates a reach forecast for a given advertiser and
-// targeting configuration.
+// targeting configuration. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 // - advertiserId: The ID of the advertiser that will run the planned campaign.
 func (r *AdvertisersReachForecastService) GenerateReachForecast(advertiserId int64, generatereachforecastrequest *GenerateReachForecastRequest) *AdvertisersReachForecastGenerateReachForecastCall {
@@ -31885,7 +31889,9 @@ type AdvertisersReachForecastRetrievePlannableLocationsCall struct {
 }
 
 // RetrievePlannableLocations: Retrieves the list of countries where reach
-// forecasting is supported.
+// forecasting is supported. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 // - advertiserId: The ID of the advertiser to list plannable locations for.
 func (r *AdvertisersReachForecastService) RetrievePlannableLocations(advertiserId int64) *AdvertisersReachForecastRetrievePlannableLocationsCall {
@@ -31996,7 +32002,9 @@ type AdvertisersReachForecastRetrievePlannableProductsCall struct {
 }
 
 // RetrievePlannableProducts: Retrieves the list of products that can be
-// planned for a location.
+// planned for a location. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 // - advertiserId: The ID of the advertiser to list plannable products for.
 func (r *AdvertisersReachForecastService) RetrievePlannableProducts(advertiserId int64) *AdvertisersReachForecastRetrievePlannableProductsCall {
@@ -32114,7 +32122,9 @@ type AdvertisersReachForecastRetrievePlannableUserInterestsCall struct {
 }
 
 // RetrievePlannableUserInterests: Retrieves Google Audiences (User Interests)
-// available for forecasting.
+// available for forecasting. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 //   - advertiserId: The ID of the advertiser to list plannable user interests
 //     for.
@@ -32239,7 +32249,9 @@ type AdvertisersReachForecastRetrievePlannableUserListsCall struct {
 }
 
 // RetrievePlannableUserLists: Retrieves first and third party user lists
-// available for forecasting.
+// available for forecasting. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 //   - advertiserId: The ID of the advertiser to retrieve plannable user lists
 //     for.

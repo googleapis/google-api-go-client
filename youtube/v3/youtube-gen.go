@@ -1196,6 +1196,113 @@ func (s ActivitySnippet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AvailabilityConfig: Common proto for Live and VOD geo-restrictions
+type AvailabilityConfig struct {
+	// GlobalConfig: Video is available in all regions except the ones specified in
+	// the config.
+	GlobalConfig *AvailabilityConfigGlobalConfig `json:"globalConfig,omitempty"`
+	// RegionsConfig: Video is available in the specified regions only.
+	RegionsConfig *AvailabilityConfigRegionsConfig `json:"regionsConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GlobalConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GlobalConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AvailabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailabilityConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AvailabilityConfigGlobalConfig: Video is available in all regions except the
+// ones specified in the excluded_region_codes list.
+type AvailabilityConfigGlobalConfig struct {
+	// ExcludedRegionCodes: Optional. Regions where video is blocked
+	ExcludedRegionCodes []string `json:"excludedRegionCodes,omitempty"`
+	// Interval: Default time window where video is available for all non-blocked
+	// regions Not supported for upcoming / active live broadcasts. If start time
+	// is unspecified, video is already available If end time is unspecified, video
+	// is available forever Specified start and end times cannot be more than five
+	// years in the future.
+	Interval *Interval `json:"interval,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExcludedRegionCodes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExcludedRegionCodes") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AvailabilityConfigGlobalConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailabilityConfigGlobalConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AvailabilityConfigRegionsConfig: Video is available in the specified regions
+// only.
+type AvailabilityConfigRegionsConfig struct {
+	// RegionIntervals: Required. List of regions and time windows where video is
+	// available. If a region is specified multiple times, the union of all
+	// intervals is used.
+	RegionIntervals []*AvailabilityConfigRegionsConfigRegionInterval `json:"regionIntervals,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RegionIntervals") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RegionIntervals") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AvailabilityConfigRegionsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailabilityConfigRegionsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AvailabilityConfigRegionsConfigRegionInterval: Region and time window where
+// video is available for the region.
+type AvailabilityConfigRegionsConfigRegionInterval struct {
+	// Interval: Time window where video is available for the region. Not supported
+	// for upcoming / active live broadcasts. If start time is unspecified, video
+	// is already available If end time is unspecified, video is available forever
+	// Specified start and end times cannot be more than five years in the future.
+	Interval *Interval `json:"interval,omitempty"`
+	// RegionCode: Required. Region where video is available
+	RegionCode string `json:"regionCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AvailabilityConfigRegionsConfigRegionInterval) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailabilityConfigRegionsConfigRegionInterval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // BatchGetStatsResponse: Response for the Videos.stats API. Returns VideoStat
 // information about a batch of videos. VideoStat contains a subset of the
 // information in Video that is relevant to statistics and content details.
@@ -4098,6 +4205,37 @@ func (s IngestionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Interval: Represents a time interval, encoded as a Timestamp start
+// (inclusive) and a Timestamp end (exclusive). The start must be less than or
+// equal to the end. When the start equals the end, the interval is empty
+// (matches no time). When both start and end are unspecified, the interval
+// matches any time.
+type Interval struct {
+	// EndTime: Optional. Exclusive end of the interval. If specified, a Timestamp
+	// matching this interval will have to be before the end.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Optional. Inclusive start of the interval. If specified, a
+	// Timestamp matching this interval will have to be the same or after the
+	// start.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Interval) MarshalJSON() ([]byte, error) {
+	type NoMethod Interval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InvideoBranding: Describes an invideo branding.
 type InvideoBranding struct {
 	// ImageBytes: The bytes the uploaded image. Only used in api to youtube
@@ -4299,6 +4437,10 @@ func (s LiveBroadcast) MarshalJSON() ([]byte, error) {
 
 // LiveBroadcastContentDetails: Detailed settings of a broadcast.
 type LiveBroadcastContentDetails struct {
+	// AvailabilityConfig: Optional. The broadcast's availability config. Used to
+	// set specific region availability or block specific regions It is optional -
+	// if not set, it is not enforced.
+	AvailabilityConfig *AvailabilityConfig `json:"availabilityConfig,omitempty"`
 	// BoundStreamId: This value uniquely identifies the live stream bound to the
 	// broadcast.
 	BoundStreamId string `json:"boundStreamId,omitempty"`
@@ -4397,15 +4539,15 @@ type LiveBroadcastContentDetails struct {
 	//   "leftRight"
 	//   "topBottom"
 	StereoLayout string `json:"stereoLayout,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BoundStreamId") to
+	// ForceSendFields is a list of field names (e.g. "AvailabilityConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BoundStreamId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AvailabilityConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

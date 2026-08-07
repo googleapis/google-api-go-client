@@ -1663,7 +1663,7 @@ func (s GoogleIdentityAccesscontextmanagerV1MethodSelector) MarshalJSON() ([]byt
 // GoogleIdentityAccesscontextmanagerV1Modifier: Modifier to apply to the API
 // requests.
 type GoogleIdentityAccesscontextmanagerV1Modifier struct {
-	// AddRequestHeader: Adds additional HTTP request headers.
+	// AddRequestHeader: Adds an additional HTTP request header.
 	AddRequestHeader *GoogleIdentityAccesscontextmanagerV1AddRequestHeader `json:"addRequestHeader,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddRequestHeader") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1758,7 +1758,7 @@ type GoogleIdentityAccesscontextmanagerV1ServicePattern struct {
 	Modifiers []*GoogleIdentityAccesscontextmanagerV1Modifier `json:"modifiers,omitempty"`
 	// Pattern: URL pattern to allow. Only patterns of ".googleapis.com/*",
 	// "www.googleapis.com//*" and "*.appspot.com/* forms are supported, where
-	// should be alphanumerical name.
+	// should be an alphanumeric name.
 	Pattern string `json:"pattern,omitempty"`
 	// Service: Supported service to allow.
 	Service string `json:"service,omitempty"`
@@ -1928,8 +1928,8 @@ type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
 	// patterns.
 	//
 	// Possible values:
-	//   "SERVICE_PATTERNS_ENFORCEMENT_SCOPE_UNSPECIFIED" - Default value. This can
-	// not be used.
+	//   "SERVICE_PATTERNS_ENFORCEMENT_SCOPE_UNSPECIFIED" - Default value. This
+	// cannot be used.
 	//   "GOOGLE_APIS_VIA_PRIVATE_PATH" - Enables VPC Accessible Services
 	// enforcement for all APIs (including unsupported APIs) for Private Google
 	// Access configured with Private VIP and Private Service Connect Endpoint for

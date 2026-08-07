@@ -12,9 +12,9 @@
   "baseUrl": "https://ftp.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "Cloud FTP",
-  "description": "",
+  "description": "Cloud FTP is a managed service that allows transferring files directly to Google Cloud Storage using SFTP.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://cloud.google.com/",
+  "documentationLink": "https://cloud.google.com/cloud-ftp/overview",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -788,7 +788,7 @@
       }
     }
   },
-  "revision": "20260722",
+  "revision": "20260729",
   "rootUrl": "https://ftp.googleapis.com/",
   "schemas": {
     "AllowedConsumer": {

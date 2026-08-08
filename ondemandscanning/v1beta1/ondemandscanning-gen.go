@@ -216,13 +216,16 @@ type ProjectsLocationsScansVulnerabilitiesService struct {
 type AISkillAnalysisOccurrence struct {
 	// Findings: Findings produced by the analysis.
 	Findings []*Finding `json:"findings,omitempty"`
-	// MaxSeverity: Maximum severity found among findings.
+	// MaxSeverity: Maximum severity found among findings. Per scanner verdict
+	// details.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
 	//   "CRITICAL" - Critical severity.
 	//   "HIGH" - High severity.
 	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// PerScannerVerdict: Per scanner verdict.
+	PerScannerVerdict *PerScannerVerdict `json:"perScannerVerdict,omitempty"`
 	// SkillName: Name of the skill that produced this analysis.
 	SkillName string `json:"skillName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Findings") to
@@ -2314,6 +2317,108 @@ func (s Maintainer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MaliciousContentLLMResult: Result of Malicious Content LLM scan.
+type MaliciousContentLLMResult struct {
+	// MaxSeverity: Tracks max severity found.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// ScanStatus: Status of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATUS_UNSPECIFIED" - Unspecified scan status.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanStatus string `json:"scanStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxSeverity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxSeverity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MaliciousContentLLMResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MaliciousContentLLMResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MaliciousContentStaticResult: Result of Malicious Content Static scan.
+type MaliciousContentStaticResult struct {
+	// MaxSeverity: Tracks max severity found.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// ScanStatus: Status of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATUS_UNSPECIFIED" - Unspecified scan status.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanStatus string `json:"scanStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxSeverity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxSeverity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MaliciousContentStaticResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MaliciousContentStaticResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MalwareScanResult: Result of Malware scan.
+type MalwareScanResult struct {
+	// ScanStatus: Status of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATUS_UNSPECIFIED" - Unspecified scan status.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanStatus string `json:"scanStatus,omitempty"`
+	// Verdict: Verdict of the scan.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unspecified verdict.
+	//   "PASSED" - Scanner passed.
+	//   "FAILED" - Scanner failed.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScanStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScanStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MalwareScanResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MalwareScanResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type Material struct {
 	Digest map[string]string `json:"digest,omitempty"`
 	Uri    string            `json:"uri,omitempty"`
@@ -2748,6 +2853,33 @@ type PackageVersion struct {
 
 func (s PackageVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type PerScannerVerdict struct {
+	// MaliciousContentLlmResult: Malicious Content LLM scan result.
+	MaliciousContentLlmResult *MaliciousContentLLMResult `json:"maliciousContentLlmResult,omitempty"`
+	// MaliciousContentStaticResult: Malicious Content Static scan result.
+	MaliciousContentStaticResult *MaliciousContentStaticResult `json:"maliciousContentStaticResult,omitempty"`
+	// MalwareScan: Malware scan result.
+	MalwareScan *MalwareScanResult `json:"malwareScan,omitempty"`
+	// WorkspacePolicy: Workspace Policy scan result.
+	WorkspacePolicy *WorkspacePolicyResult `json:"workspacePolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaliciousContentLlmResult")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaliciousContentLlmResult") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerScannerVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod PerScannerVerdict
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3954,6 +4086,40 @@ type WindowsUpdate struct {
 
 func (s WindowsUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsUpdate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkspacePolicyResult: Result of Workspace Policy scan.
+type WorkspacePolicyResult struct {
+	// ScanStatus: Status of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATUS_UNSPECIFIED" - Unspecified scan status.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanStatus string `json:"scanStatus,omitempty"`
+	// Verdict: Verdict of the scan.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unspecified verdict.
+	//   "PASSED" - Scanner passed.
+	//   "FAILED" - Scanner failed.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScanStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScanStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkspacePolicyResult) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkspacePolicyResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

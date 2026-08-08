@@ -535,6 +535,8 @@ func (s Configuration) MarshalJSON() ([]byte, error) {
 // ConfigurationDetail: Wrapper class that contains the union struct for all
 // the various configuration detail specific classes.
 type ConfigurationDetail struct {
+	// CustomThreatScenario: Custom Threat Scenario detail config.
+	CustomThreatScenario *CustomThreatScenarioConfig `json:"customThreatScenario,omitempty"`
 	// CustomerProfile: Customer Profile detail config.
 	CustomerProfile *CustomerProfileConfig `json:"customerProfile,omitempty"`
 	// DetailType: Output only. Name of the detail type. Will be set by the server
@@ -542,15 +544,15 @@ type ConfigurationDetail struct {
 	DetailType string `json:"detailType,omitempty"`
 	// TechnologyWatchlist: Technology Watchlist detail config.
 	TechnologyWatchlist *TechnologyWatchListConfig `json:"technologyWatchlist,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomerProfile") to
+	// ForceSendFields is a list of field names (e.g. "CustomThreatScenario") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerProfile") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomThreatScenario") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -585,6 +587,30 @@ type ConfigurationRevision struct {
 
 func (s ConfigurationRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigurationRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomThreatScenarioConfig: CustomThreatScenarioConfig represents a
+// user-defined threat scenario configuration.
+type CustomThreatScenarioConfig struct {
+	// DocumentCondition: Required. The condition driving the scenario, stored as a
+	// stringified JSON. This is used to query/filter documents.
+	DocumentCondition string `json:"documentCondition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DocumentCondition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DocumentCondition") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomThreatScenarioConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomThreatScenarioConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

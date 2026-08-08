@@ -259,6 +259,31 @@ type ProjectsLocationsSupportedDatabaseFlagsService struct {
 	s *Service
 }
 
+// AlloydbClhErrorsAlloyDbInternalDebugInfo: AlloyDbInternalDebugInfo contains
+// internal debugging information for AlloyDB errors. It is explicitly kept out
+// of the allowlist (errors.yaml) to ensure it is sanitized (stripped) by
+// OnePlatform for all external requests. Used only to carry internal error
+// details to across UPC/FlowLib boundary for ObservabilityInfo.
+type AlloydbClhErrorsAlloyDbInternalDebugInfo struct {
+	OriginalError string `json:"originalError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OriginalError") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OriginalError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlloydbClhErrorsAlloyDbInternalDebugInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AlloydbClhErrorsAlloyDbInternalDebugInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AuthorizedNetwork: AuthorizedNetwork contains metadata for an authorized
 // network.
 type AuthorizedNetwork struct {

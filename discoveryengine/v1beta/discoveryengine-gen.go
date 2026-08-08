@@ -3661,12 +3661,8 @@ func (s GoogleCloudDiscoveryengineV1DataConnector) MarshalJSON() ([]byte, error)
 
 // GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata: User-facing
 // metadata for the connector, shown on the connector detail page (title,
-// description, short_description, author, authenticated_account, note).
+// description, short_description, author, note).
 type GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata struct {
-	// AuthenticatedAccount: Optional. The end user's account as authenticated to
-	// the connector, so the end user can see which account is connected. May be an
-	// email, a username, or any identifier the connector/third party provides.
-	AuthenticatedAccount string `json:"authenticatedAccount,omitempty"`
 	// Author: Optional. The party that authored the connector, e.g. "Google" or a
 	// third-party provider name. Lets end users see who authored a connector
 	// (future: third-party-authored connectors).
@@ -3682,15 +3678,15 @@ type GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata struct {
 	ShortDescription string `json:"shortDescription,omitempty"`
 	// Title: Optional. Display title of the connector.
 	Title string `json:"title,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AuthenticatedAccount") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AuthenticatedAccount") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4891,10 +4887,11 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `disable-projects` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence`
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `skills`
+	// * `skill-sharing` * `skill-sharing-without-admin-approval` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -11410,12 +11407,8 @@ func (s GoogleCloudDiscoveryengineV1alphaDataConnector) MarshalJSON() ([]byte, e
 
 // GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata: User-facing
 // metadata for the connector, shown on the connector detail page (title,
-// description, short_description, author, authenticated_account, note).
+// description, short_description, author, note).
 type GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata struct {
-	// AuthenticatedAccount: Optional. The end user's account as authenticated to
-	// the connector, so the end user can see which account is connected. May be an
-	// email, a username, or any identifier the connector/third party provides.
-	AuthenticatedAccount string `json:"authenticatedAccount,omitempty"`
 	// Author: Optional. The party that authored the connector, e.g. "Google" or a
 	// third-party provider name. Lets end users see who authored a connector
 	// (future: third-party-authored connectors).
@@ -11431,15 +11424,15 @@ type GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata struct {
 	ShortDescription string `json:"shortDescription,omitempty"`
 	// Title: Optional. Display title of the connector.
 	Title string `json:"title,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AuthenticatedAccount") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AuthenticatedAccount") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -12861,10 +12854,11 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `disable-projects` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence`
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `skills`
+	// * `skill-sharing` * `skill-sharing-without-admin-approval` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -18998,6 +18992,8 @@ type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponsePersonSuggesti
 	//   "CLOUD_IDENTITY" - The suggestion is from a GOOGLE_IDENTITY source.
 	//   "THIRD_PARTY_IDENTITY" - The suggestion is from a THIRD_PARTY_IDENTITY
 	// source.
+	//   "GOOGLE_GROUP" - The suggestion is a group (e.g. a Google Group), not an
+	// individual.
 	PersonType string `json:"personType,omitempty"`
 	// Score: The score of each suggestion. The score is in the range of [0, 1].
 	Score float64 `json:"score,omitempty"`
@@ -22041,8 +22037,8 @@ type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest struct {
 	// associated license config, the user license will be deleted. By default
 	// which is false, the user license will be updated to unassigned state.
 	DeleteUnassignedUserLicenses bool `json:"deleteUnassignedUserLicenses,omitempty"`
-	// InlineSource: The inline source for the input content for document
-	// embeddings.
+	// InlineSource: The inline source for the input content for license
+	// assignment.
 	InlineSource *GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource `json:"inlineSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "DeleteUnassignedUserLicenses") to unconditionally include in API requests.
@@ -25313,10 +25309,11 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `disable-projects` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence`
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `skills`
+	// * `skill-sharing` * `skill-sharing-without-admin-approval` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -36012,6 +36009,114 @@ func (c *ProjectsLocationsObtainCrawlRateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.obtainCrawlRate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsProvisionCall struct {
+	s                                                       *Service
+	name                                                    string
+	googleclouddiscoveryenginev1betaprovisionprojectrequest *GoogleCloudDiscoveryengineV1betaProvisionProjectRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Provision: Provisions the project resource. During the process, related
+// systems will get prepared and initialized. Caller must read the Terms for
+// data use (https://cloud.google.com/retail/data-use-terms), and optionally
+// specify in request to provide consent to that service terms.
+//
+//   - name: Full resource name of a Project, such as
+//     `projects/{project_id_or_number}`.
+func (r *ProjectsLocationsService) Provision(name string, googleclouddiscoveryenginev1betaprovisionprojectrequest *GoogleCloudDiscoveryengineV1betaProvisionProjectRequest) *ProjectsLocationsProvisionCall {
+	c := &ProjectsLocationsProvisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1betaprovisionprojectrequest = googleclouddiscoveryenginev1betaprovisionprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsProvisionCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvisionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsProvisionCall) Context(ctx context.Context) *ProjectsLocationsProvisionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsProvisionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvisionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betaprovisionprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:provision")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.provision", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.provision" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvisionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.provision", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

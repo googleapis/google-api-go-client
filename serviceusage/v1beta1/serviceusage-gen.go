@@ -1300,6 +1300,18 @@ type ConsumerQuotaLimit struct {
 	// SupportedLocations: List of all supported locations. This field is present
 	// only if the limit has a {region} or {zone} dimension.
 	SupportedLocations []string `json:"supportedLocations,omitempty"`
+	// TrafficSource: Indicates the traffic type attribution for this quota limit
+	// (e.g. agentic). This is an informational field used to categorize and filter
+	// the quota limits.
+	//
+	// Possible values:
+	//   "TRAFFIC_SOURCE_UNSPECIFIED" - This quota limit applies to all traffic.
+	// This is the default value.
+	//   "TRAFFIC_SOURCE_NONAGENTIC" - This quota limit applies to traffic not
+	// recognized as agentic.
+	//   "TRAFFIC_SOURCE_AGENTIC" - This quota limit applies to only agentic
+	// traffic.
+	TrafficSource string `json:"trafficSource,omitempty"`
 	// Unit: The limit unit. An example unit would be `1/{project}/{region}` Note
 	// that `{project}` and `{region}` are not placeholders in this example; the
 	// literal characters `{` and `}` occur in the string.

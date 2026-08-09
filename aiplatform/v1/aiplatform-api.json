@@ -26215,6 +26215,34 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "compact": {
+                      "description": "Compacts the event history of a given Session, which may run an LLM summarization call and rewrite the full event history. Compaction is a storage-side rewrite that can apply a stackable pipeline of rules (event-horizon preservation, tool-response truncation, thought stripping, and LLM summarization etc.)",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reasoningEngines/{reasoningEnginesId}/sessions/{sessionsId}:compact",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.reasoningEngines.sessions.compact",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The resource name of the session to compact. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sessions/{session}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/reasoningEngines/[^/]+/sessions/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:compact",
+                      "request": {
+                        "$ref": "GoogleCloudAiplatformV1CompactSessionRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleLongrunningOperation"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "create": {
                       "description": "Creates a new Session.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reasoningEngines/{reasoningEnginesId}/sessions",
@@ -35461,7 +35489,7 @@
       }
     }
   },
-  "revision": "20260725",
+  "revision": "20260801",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoExperiments": {
@@ -36988,11 +37016,20 @@
         },
         "languageAuto": {
           "$ref": "GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageAuto",
-          "description": "Optional. The model will detect the language automatically."
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use top-level `language_codes` instead. The model will detect the language automatically."
+        },
+        "languageCodes": {
+          "description": "Optional. BCP-47 language codes providing hints about the languages present in the audio. If omitted or empty, defaults to automatic language detection.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "languageHints": {
           "$ref": "GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints",
-          "description": "Optional. Specifies one or more languages in the audio."
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use top-level `language_codes` instead. Specifies one or more languages in the audio."
         },
         "wordTimestamp": {
           "description": "Optional. Configures word-level timestamp generation.",
@@ -37002,17 +37039,20 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageAuto": {
-      "description": "Indicates the language of the audio should be automatically detected.",
+      "deprecated": true,
+      "description": "Deprecated: Use top-level `language_codes` instead. Indicates the language of the audio should be automatically detected.",
       "id": "GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageAuto",
       "properties": {},
       "type": "object"
     },
     "GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints": {
-      "description": "Provides hints to the model about possible languages present in the audio.",
+      "deprecated": true,
+      "description": "Deprecated: Use top-level `language_codes` instead. Provides hints to the model about possible languages present in the audio.",
       "id": "GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints",
       "properties": {
         "languageCodes": {
-          "description": "Required. BCP-47 language codes. At least one must be specified.",
+          "deprecated": true,
+          "description": "Required. Deprecated: Use top-level `language_codes` instead. BCP-47 language codes. At least one must be specified.",
           "items": {
             "type": "string"
           },
@@ -38908,6 +38948,70 @@
           "enumDescriptions": [
             "Comet version unspecified.",
             "Comet 22 for translation + source + reference (source-reference-combined)."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1CompactSessionRequest": {
+      "description": "Request message for SessionService.CompactSession.",
+      "id": "GoogleCloudAiplatformV1CompactSessionRequest",
+      "properties": {
+        "compaction": {
+          "$ref": "GoogleCloudAiplatformV1CompactionConfig",
+          "description": "Required. The compaction configuration to apply. At least one compaction category (summarization or event editing) must be enabled within it."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1CompactionConfig": {
+      "description": "Configuration for session compaction. Compaction has two independent categories that may be enabled individually or together. When both are enabled they run as a stackable pipeline (deterministic event editing first, then summarization if the session is still above the target). At least one category must be enabled; a config with neither is rejected (enforced server-side). This message is standalone so it can be reused across surfaces (e.g. on the compact request today, and on session creation for a future reactive trigger).",
+      "id": "GoogleCloudAiplatformV1CompactionConfig",
+      "properties": {
+        "eventEditing": {
+          "$ref": "GoogleCloudAiplatformV1CompactionConfigEventEditingConfig",
+          "description": "Optional. Event-history editing compaction configuration. Set to enable deterministic event editing (e.g. masking oversized tool responses). Can be combined with `summarization`."
+        },
+        "summarization": {
+          "$ref": "GoogleCloudAiplatformV1CompactionConfigLlmSummarizationConfig",
+          "description": "Optional. LLM summarization compaction configuration. Set to enable summarization-based compaction. Can be combined with `event_editing`."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1CompactionConfigEventEditingConfig": {
+      "description": "Configuration for event-history editing-based compaction. When set, the event history is rewritten in place using deterministic rules (e.g. truncating/masking oversized tool responses, stripping model thoughts).",
+      "id": "GoogleCloudAiplatformV1CompactionConfigEventEditingConfig",
+      "properties": {
+        "mode": {
+          "description": "Required. The event-editing mode. Only `AUTO` is supported for MVP.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "AUTO"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Requests must set an explicit mode.",
+            "Platform-managed editing with server-side defaults (e.g. 5KB tool-response truncation threshold)."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1CompactionConfigLlmSummarizationConfig": {
+      "description": "Configuration for LLM summarization-based compaction. When set, the session context is summarized with an LLM once it exceeds the summarizer target threshold.",
+      "id": "GoogleCloudAiplatformV1CompactionConfigLlmSummarizationConfig",
+      "properties": {
+        "mode": {
+          "description": "Required. The summarization mode. Only `AUTO` is supported for MVP.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "AUTO"
+          ],
+          "enumDescriptions": [
+            "Unspecified. Requests must set an explicit mode.",
+            "Platform-managed summarization with server-side defaults."
           ],
           "type": "string"
         }
@@ -42412,6 +42516,10 @@
           "deprecated": true,
           "description": "Optional. Deprecated: Use `agent_eval_data` instead. Data used for agent evaluation."
         },
+        "interactionsDataSource": {
+          "$ref": "GoogleCloudAiplatformV1EvaluationInstanceInteractionsDataSource",
+          "description": "Optional. Source for populating `AgentData` from an Interactions API interaction. If set, no other agent data source fields (`cloud_trace_agent_data_source`, `agent_eval_data`, `agent_data`) may be set. The request will be rejected with INVALID_ARGUMENT if multiple agent data sources are provided."
+        },
         "otherData": {
           "$ref": "GoogleCloudAiplatformV1EvaluationInstanceMapInstance",
           "description": "Optional. Other data used to populate placeholders based on their key. If a key conflicts with a field in the EvaluationInstance (e.g. `prompt`), the value of the field will take precedence over the value in other_data."
@@ -42648,6 +42756,21 @@
             "$ref": "GoogleCloudAiplatformV1Content"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1EvaluationInstanceInteractionsDataSource": {
+      "description": "Source for populating `AgentData` from an Interactions API interaction.",
+      "id": "GoogleCloudAiplatformV1EvaluationInstanceInteractionsDataSource",
+      "properties": {
+        "geminiAgentConfig": {
+          "$ref": "GoogleCloudAiplatformV1GeminiAgentConfig",
+          "description": "Optional. Gemini Agent (Vertex AI Agent resource)."
+        },
+        "interaction": {
+          "description": "Required. The interaction to evaluate. Format: `projects/{project}/locations/{location}/interactions/{interaction}`.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -42979,6 +43102,10 @@
           "description": "Required. The display name of the Evaluation Run.",
           "type": "string"
         },
+        "encryptionSpec": {
+          "$ref": "GoogleCloudAiplatformV1EncryptionSpec",
+          "description": "Optional. Customer-managed encryption key spec for this EvaluationRun. If set, this EvaluationRun will be secured by this key."
+        },
         "error": {
           "$ref": "GoogleRpcStatus",
           "description": "Output only. Only populated when the evaluation run's state is FAILED or CANCELLED.",
@@ -43208,6 +43335,10 @@
         "agentEngine": {
           "description": "Optional. The resource name of the Agent Engine. Format: projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine} For example: projects/123/locations/us-central1/reasoningEngines/456",
           "type": "string"
+        },
+        "geminiAgentConfig": {
+          "$ref": "GoogleCloudAiplatformV1GeminiAgentConfig",
+          "description": "Optional. Config for scraping a Gemini Agent via the Interactions API. The scraping service creates interactions against the agent and returns the resulting interaction traces for evaluation."
         },
         "sessionInput": {
           "$ref": "GoogleCloudAiplatformV1EvaluationRunInferenceConfigSessionInput",
@@ -46712,7 +46843,7 @@
       "id": "GoogleCloudAiplatformV1GatewayConfig",
       "properties": {
         "allowedProjects": {
-          "description": "Optional. Additional consumer projects permitted to attach their own PSC endpoint to this gateway's ServiceAttachment. This is the \"decoupled\" mode, where the customer creates the PSC endpoint in a project other than this gateway's `network` project. Each listed project is VPC-SC enforced: it must be within the caller's service perimeter. The owning SemanticGovernancePolicyEngine's own project is always permitted implicitly and need not be listed. Format: project ID or number.",
+          "description": "Optional. Additional consumer projects permitted to attach their own PSC endpoint to this gateway's ServiceAttachment. This is the \"decoupled\" mode, where the customer creates the PSC endpoint in a project other than this gateway's `network` project. Each listed project is VPC-SC enforced: it must be within the caller's service perimeter. The owning SemanticGovernancePolicyEngine's own project is always permitted implicitly and need not be listed. Format: `projects/{project}` (ID or number).",
           "items": {
             "type": "string"
           },
@@ -46800,6 +46931,17 @@
       "properties": {
         "zone": {
           "description": "GDC zone. A cluster will be designated for the Vertex AI workload in this zone.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1GeminiAgentConfig": {
+      "description": "Config for scraping a Gemini Agent (a Vertex AI Agent resource scraped via the Vertex Interactions API).",
+      "id": "GoogleCloudAiplatformV1GeminiAgentConfig",
+      "properties": {
+        "geminiAgent": {
+          "description": "Required. The resource name of the Gemini Agent. Format: `projects/{project}/locations/{location}/agents/{agent}`. For example: `projects/123/locations/us-central1/agents/my-agent`.",
           "type": "string"
         }
       },
@@ -47080,6 +47222,7 @@
             "ON_DEMAND",
             "ON_DEMAND_PRIORITY",
             "ON_DEMAND_FLEX",
+            "ON_DEMAND_OFFPEAK",
             "PROVISIONED_THROUGHPUT"
           ],
           "enumDescriptions": [
@@ -47087,6 +47230,7 @@
             "The request was processed using Pay-As-You-Go quota.",
             "Type for Priority Pay-As-You-Go traffic.",
             "Type for Flex traffic.",
+            "Type for Off-Peak Pay-As-You-Go traffic.",
             "Type for Provisioned Throughput traffic."
           ],
           "readOnly": true,
@@ -47419,6 +47563,10 @@
         "allowCrossRegionModel": {
           "description": "Optional. Allows the scenario generation to use cross region models. When this flag is set, the service may route traffic to other regions if a model is unavailable in the current region (e.g., to a `global` endpoint). If a fully-qualified model endpoint resource name with a different region than the request location is provided elsewhere in the request, this flag must be set to true or the request will fail.",
           "type": "boolean"
+        },
+        "geminiAgentConfig": {
+          "$ref": "GoogleCloudAiplatformV1GeminiAgentConfig",
+          "description": "Optional. Config for a Gemini Agent to generate user scenarios for."
         },
         "rootAgentId": {
           "description": "Optional. The agent id to identify the root agent. Required unless `gemini_agent_config` is set, in which case it is derived from the referenced Gemini Agent.",
@@ -48612,6 +48760,10 @@
         "inlineSource": {
           "$ref": "GoogleCloudAiplatformV1ImportEvaluationSetRequestInlineSource",
           "description": "Inline source for small payloads (\u003c 4MB)."
+        },
+        "interactionsSource": {
+          "$ref": "GoogleCloudAiplatformV1ImportEvaluationSetRequestInteractionsSource",
+          "description": "Optional. Source for importing Interactions API interactions."
         }
       },
       "type": "object"
@@ -48721,6 +48873,24 @@
         "importSchemaConfig": {
           "$ref": "GoogleCloudAiplatformV1ImportEvaluationSetRequestImportSchemaConfig",
           "description": "Required. Schema configuration for the inline data."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1ImportEvaluationSetRequestInteractionsSource": {
+      "description": "Source for importing interactions from the Interactions API into an EvaluationSet. The agent identity is specified once, with a list of interaction IDs to import.",
+      "id": "GoogleCloudAiplatformV1ImportEvaluationSetRequestInteractionsSource",
+      "properties": {
+        "geminiAgentConfig": {
+          "$ref": "GoogleCloudAiplatformV1GeminiAgentConfig",
+          "description": "Optional. Gemini Agent (Vertex AI Agent resource)."
+        },
+        "interactions": {
+          "description": "Required. The interactions to import. Format: `projects/{project}/locations/{location}/interactions/{interaction}`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -60595,6 +60765,11 @@
           "description": "Output only. The internal IP address of the SandboxEnvironment.",
           "readOnly": true,
           "type": "string"
+        },
+        "serviceAttachment": {
+          "description": "Output only. The name of the PSC-E service attachment created for private ingress to this SandboxEnvironment. Only populated when the template enables private ingress (see SandboxEnvironmentTemplate.ingress_control_config). VPC-SC customers use this to create a PSC endpoint in their VPC.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -60739,6 +60914,10 @@
           "$ref": "GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig",
           "description": "Optional. The configuration for egress control of this template."
         },
+        "ingressControlConfig": {
+          "$ref": "GoogleCloudAiplatformV1PrivateServiceConnectConfig",
+          "description": "Optional. The configuration for private ingress (PSC-E) of this template. When set, the sandbox router is exposed privately via a PSC service attachment so VPC-SC customers can connect from their VPC over a private endpoint instead of the public internet. The resulting service attachment is surfaced on `SandboxEnvironment.connection_info.service_attachment`. Only the PSC-E (service-attachment/ingress) portion of `PrivateServiceConnectConfig` applies here: `enable_private_service_connect` and `project_allowlist` (the consumer projects allowed to connect). The nested `psc_interface_config` (PSC-I / egress) is not used for sandbox ingress; sandbox egress is configured via `egress_control_config` instead."
+        },
         "name": {
           "description": "Identifier. The resource name of the SandboxEnvironmentTemplate. Format: `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine}/sandboxEnvironmentTemplates/{sandbox_environment_template}`",
           "type": "string"
@@ -60851,7 +61030,7 @@
           "type": "boolean"
         },
         "networkAttachment": {
-          "description": "Optional. The name of the customer VPC NetworkAttachment used to draw a PSC interface IP into the customer VPC for sandbox egress.",
+          "description": "Optional. The name of the customer VPC `NetworkAttachment` used to draw a PSC interface IP into the customer VPC for sandbox egress.",
           "type": "string"
         }
       },
@@ -60866,11 +61045,11 @@
           "type": "string"
         },
         "targetNetwork": {
-          "description": "Required. The VPC network name in the target_project where the DNS zone specified by 'domain' is visible.",
+          "description": "Required. The VPC network name in the target_project where the DNS zone specified by `domain` is visible.",
           "type": "string"
         },
         "targetProject": {
-          "description": "Required. The project ID hosting the Cloud DNS managed zone that contains the 'domain'. The Vertex AI Service Agent requires the dns.peer role on this project.",
+          "description": "Required. The project ID hosting the Cloud DNS managed zone that contains the `domain`. The Vertex AI Service Agent requires the dns.peer role on this project.",
           "type": "string"
         }
       },
@@ -70157,6 +70336,7 @@
             "ON_DEMAND",
             "ON_DEMAND_PRIORITY",
             "ON_DEMAND_FLEX",
+            "ON_DEMAND_OFFPEAK",
             "PROVISIONED_THROUGHPUT"
           ],
           "enumDescriptions": [
@@ -70164,6 +70344,7 @@
             "Type for Pay-As-You-Go traffic.",
             "Type for Priority Pay-As-You-Go traffic.",
             "Type for Flex traffic.",
+            "Type for Off-Peak Pay-As-You-Go traffic.",
             "Type for Provisioned Throughput traffic."
           ],
           "readOnly": true,
@@ -70447,6 +70628,10 @@
         },
         "gcsUri": {
           "description": "Optional. The Google Cloud Storage URI to store the video output. Required for Vertex if delivery is URI.",
+          "type": "string"
+        },
+        "resolution": {
+          "description": "Optional. The video output resolution. Supported values: \"360p\", \"720p\", \"1080p\", \"4k\".",
           "type": "string"
         }
       },

@@ -7717,6 +7717,9 @@ type GoogleCloudContactcenterinsightsV1QaScorecard struct {
 	// scorecard created by the user.
 	//   "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
 	// created through discovery engine deployment.
+	//   "QA_SCORECARD_SOURCE_INTENT_TAXONOMY" - The scorecard is derived from the
+	// custom intent taxonomy. Customers can edit question content, but cannot
+	// delete the scorecard or add/remove questions.
 	Source string `json:"source,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the scorecard was
 	// updated.
@@ -42093,6 +42096,11 @@ func (c *ProjectsLocationsQaScorecardsListCall) PageToken(pageToken string) *Pro
 //	"QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
 //
 // created through discovery engine deployment.
+//
+//	"QA_SCORECARD_SOURCE_INTENT_TAXONOMY" - The scorecard is derived from the
+//
+// custom intent taxonomy. Customers can edit question content, but cannot
+// delete the scorecard or add/remove questions.
 func (c *ProjectsLocationsQaScorecardsListCall) QaScorecardSources(qaScorecardSources ...string) *ProjectsLocationsQaScorecardsListCall {
 	c.urlParams_.SetMulti("qaScorecardSources", append([]string{}, qaScorecardSources...))
 	return c
@@ -42825,6 +42833,11 @@ func (c *ProjectsLocationsQaScorecardsRevisionsListCall) PageToken(pageToken str
 //	"QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
 //
 // created through discovery engine deployment.
+//
+//	"QA_SCORECARD_SOURCE_INTENT_TAXONOMY" - The scorecard is derived from the
+//
+// custom intent taxonomy. Customers can edit question content, but cannot
+// delete the scorecard or add/remove questions.
 func (c *ProjectsLocationsQaScorecardsRevisionsListCall) QaScorecardSources(qaScorecardSources ...string) *ProjectsLocationsQaScorecardsRevisionsListCall {
 	c.urlParams_.SetMulti("qaScorecardSources", append([]string{}, qaScorecardSources...))
 	return c

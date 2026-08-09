@@ -1233,6 +1233,10 @@ type CryptoKeyVersion struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "KEM_ECDH_P256" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-256 key that returns shared secret.
+	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-384 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -1452,6 +1456,10 @@ type CryptoKeyVersionTemplate struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "KEM_ECDH_P256" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-256 key that returns shared secret.
+	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-384 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -2274,6 +2282,10 @@ type ImportCryptoKeyVersionRequest struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "KEM_ECDH_P256" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-256 key that returns shared secret.
+	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-384 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -2606,6 +2618,10 @@ type ImportTrustedKeyWrappedCryptoKeyVersionRequest struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "KEM_ECDH_P256" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-256 key that returns shared secret.
+	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-384 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -3718,6 +3734,10 @@ type PublicKey struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "KEM_ECDH_P256" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-256 key that returns shared secret.
+	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-384 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`

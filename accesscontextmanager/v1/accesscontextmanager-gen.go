@@ -2358,11 +2358,14 @@ type SessionSettings struct {
 	// SessionLength: Optional. The session length. Setting this field to zero is
 	// equal to disabling session. Also can set infinite session by flipping the
 	// enabled bit to false below. If use_oidc_max_age is true, for OIDC apps, the
-	// session length will be the minimum of this field and OIDC max_age param.
+	// session length will be the minimum of this field and OIDC max_age param. If
+	// this field is set to zero, session_length_enabled must be set to false or
+	// left unset.
 	SessionLength string `json:"sessionLength,omitempty"`
 	// SessionLengthEnabled: Optional. This field enables or disables Google Cloud
 	// session length. When false, all fields set above will be disregarded and the
-	// session length is basically infinite.
+	// session length is basically infinite. If session_length is set to zero, this
+	// field must be false.
 	SessionLengthEnabled bool `json:"sessionLengthEnabled,omitempty"`
 	// SessionReauthMethod: Optional. Session method when user's Google Cloud
 	// session is up.
@@ -6764,6 +6767,16 @@ type OrganizationsGcpUserAccessBindingsListCall struct {
 func (r *OrganizationsGcpUserAccessBindingsService) List(parent string) *OrganizationsGcpUserAccessBindingsListCall {
 	c := &OrganizationsGcpUserAccessBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The literal filter to apply to
+// the results returned. See https://google.aip.dev/160 for more details.
+// Accepts values: * principal:group_key * principal:service_account OR
+// principal:service_account_project_number. If this field is empty or not one
+// of the above, the default value is "principal:group_key".
+func (c *OrganizationsGcpUserAccessBindingsListCall) Filter(filter string) *OrganizationsGcpUserAccessBindingsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

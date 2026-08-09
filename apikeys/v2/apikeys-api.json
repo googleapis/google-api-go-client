@@ -212,6 +212,21 @@
                     "name"
                   ],
                   "parameters": {
+                    "checkExistingUsage": {
+                      "description": "Optional. Defines the behavior for checking existing usage when deleting a key.",
+                      "enum": [
+                        "CHECK_EXISTING_USAGE_UNSPECIFIED",
+                        "SKIP",
+                        "CHECK"
+                      ],
+                      "enumDescriptions": [
+                        "When unset, the default behavior is used, which is SKIP.",
+                        "If set, skip checking existing usage when deleting a key.",
+                        "If set, existing usage is checked when deleting the key. If the key has usage in the last 7 days, the request returns a FAILED_PRECONDITION error."
+                      ],
+                      "location": "query",
+                      "type": "string"
+                    },
                     "etag": {
                       "description": "Optional. The etag known to the client for the expected state of the key. This is to be used for optimistic concurrency.",
                       "location": "query",
@@ -411,7 +426,7 @@
       }
     }
   },
-  "revision": "20260721",
+  "revision": "20260731",
   "rootUrl": "https://apikeys.googleapis.com/",
   "schemas": {
     "Operation": {

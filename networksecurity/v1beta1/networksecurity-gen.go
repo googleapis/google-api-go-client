@@ -7857,6 +7857,13 @@ func (c *OrganizationsLocationsFirewallEndpointsCreateCall) RequestId(requestId 
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set, validate
+// the request and preview the endpoint, but do not actually create it.
+func (c *OrganizationsLocationsFirewallEndpointsCreateCall) ValidateOnly(validateOnly bool) *OrganizationsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -16980,6 +16987,13 @@ func (c *ProjectsLocationsFirewallEndpointsCreateCall) RequestId(requestId strin
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set, validate
+// the request and preview the endpoint, but do not actually create it.
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -24794,6 +24808,18 @@ type ProjectsLocationsSacAttachmentsDeleteCall struct {
 func (r *ProjectsLocationsSacAttachmentsService) Delete(name string) *ProjectsLocationsSacAttachmentsDeleteCall {
 	c := &ProjectsLocationsSacAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// IgnorePartnerDeletionErrors sets the optional parameter
+// "ignorePartnerDeletionErrors": If set to true, the request will delete the
+// SAC Attachment even if some steps fail (e.g. deleting the remote Symantec
+// Location). This option is a no-op for partners where it does not apply (e.g.
+// Palo Alto Networks). WARNING: Enabling this option may leave dangling
+// resources in the Broadcom/Symantec customer portal that requires manual
+// cleanup.
+func (c *ProjectsLocationsSacAttachmentsDeleteCall) IgnorePartnerDeletionErrors(ignorePartnerDeletionErrors bool) *ProjectsLocationsSacAttachmentsDeleteCall {
+	c.urlParams_.Set("ignorePartnerDeletionErrors", fmt.Sprint(ignorePartnerDeletionErrors))
 	return c
 }
 

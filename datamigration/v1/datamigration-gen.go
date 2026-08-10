@@ -4424,6 +4424,8 @@ type PrivateConnection struct {
 	Name string `json:"name,omitempty"`
 	// PscInterfaceConfig: PSC Interface configuration.
 	PscInterfaceConfig *PscInterfaceConfig `json:"pscInterfaceConfig,omitempty"`
+	// ReservedPublicIpConfig: Reserved Public IP configuration.
+	ReservedPublicIpConfig *ReservedPublicIpConfig `json:"reservedPublicIpConfig,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
@@ -4692,6 +4694,30 @@ type RequestInfo struct {
 
 func (s RequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod RequestInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservedPublicIpConfig: Reserved Public IP configuration.
+type ReservedPublicIpConfig struct {
+	// EgressPublicIps: Output only. The reserved public IPs.
+	EgressPublicIps []string `json:"egressPublicIps,omitempty"`
+	// NatIpsCount: Optional. Number of static public IP addresses to reserve.
+	NatIpsCount int64 `json:"natIpsCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EgressPublicIps") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EgressPublicIps") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservedPublicIpConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservedPublicIpConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6434,6 +6460,15 @@ type ProjectsLocationsFetchStaticIpsCall struct {
 func (r *ProjectsLocationsService) FetchStaticIps(name string) *ProjectsLocationsFetchStaticIpsCall {
 	c := &ProjectsLocationsFetchStaticIpsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// FetchReservedPublicIps sets the optional parameter "fetchReservedPublicIps":
+// Indicates whether to fetch the reserved public IP addresses allocated for
+// private connections in this location. If false or not set, fetches the
+// shared external static IP addresses instead.
+func (c *ProjectsLocationsFetchStaticIpsCall) FetchReservedPublicIps(fetchReservedPublicIps bool) *ProjectsLocationsFetchStaticIpsCall {
+	c.urlParams_.Set("fetchReservedPublicIps", fmt.Sprint(fetchReservedPublicIps))
 	return c
 }
 

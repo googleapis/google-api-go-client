@@ -1703,6 +1703,8 @@ func (s GoogleCloudBeyondcorpSecuritygatewaysV1ApplicationUpstreamNetwork) Marsh
 type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeaders struct {
 	// DeviceInfo: Optional. The device information configuration.
 	DeviceInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo `json:"deviceInfo,omitempty"`
+	// DispatchInfo: Optional. The dispatch information configuration.
+	DispatchInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDispatchInfo `json:"dispatchInfo,omitempty"`
 	// GroupInfo: Optional. Group details.
 	GroupInfo *GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedGroupInfo `json:"groupInfo,omitempty"`
 	// OutputType: Optional. Default output type for all enabled headers.
@@ -1759,6 +1761,36 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo
 
 func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDeviceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDispatchInfo
+// : The delegated dispatch information configuration.
+type GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDispatchInfo struct {
+	// OutputType: Optional. The output type details for the delegated dispatch
+	// information.
+	//
+	// Possible values:
+	//   "OUTPUT_TYPE_UNSPECIFIED" - The unspecified output type.
+	//   "PROTOBUF" - Protobuf output type.
+	//   "JSON" - JSON output type.
+	//   "NONE" - Explicitly disable header output.
+	OutputType string `json:"outputType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDispatchInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1ContextualHeadersDelegatedDispatchInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

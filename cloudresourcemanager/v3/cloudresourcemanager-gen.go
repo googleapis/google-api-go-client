@@ -139,6 +139,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.TagBindings = NewTagBindingsService(s)
 	s.TagKeys = NewTagKeysService(s)
 	s.TagValues = NewTagValuesService(s)
+	s.V3 = NewV3Service(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -182,6 +183,8 @@ type Service struct {
 	TagKeys *TagKeysService
 
 	TagValues *TagValuesService
+
+	V3 *V3Service
 }
 
 func (s *Service) userAgent() string {
@@ -326,6 +329,15 @@ func NewTagValuesTagHoldsService(s *Service) *TagValuesTagHoldsService {
 }
 
 type TagValuesTagHoldsService struct {
+	s *Service
+}
+
+func NewV3Service(s *Service) *V3Service {
+	rs := &V3Service{s: s}
+	return rs
+}
+
+type V3Service struct {
 	s *Service
 }
 
@@ -844,6 +856,36 @@ type Expr struct {
 
 func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchResourceSemanticsResponse: Response message for FetchResourceSemantics.
+type FetchResourceSemanticsResponse struct {
+	// FullResourceName: The full resource name for which semantics are returned.
+	// Examples:
+	// "//compute.googleapis.com/projects/123/zones/us-central1-a/instances/my-insta
+	// nce" "//storage.googleapis.com/projects/_/buckets/my_bucket"
+	FullResourceName string `json:"fullResourceName,omitempty"`
+	// Semantics: Map of resource semantics (e.g., "ENVIRONMENT": "PRODUCTION").
+	Semantics map[string]string `json:"semantics,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FullResourceName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullResourceName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchResourceSemanticsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchResourceSemanticsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9632,4 +9674,118 @@ func (c *TagValuesTagHoldsListCall) Pages(ctx context.Context, f func(*ListTagHo
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type V3FetchResourceSemanticsCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchResourceSemantics: Returns the semantics associated with the specified
+// resource.
+func (r *V3Service) FetchResourceSemantics() *V3FetchResourceSemanticsCall {
+	c := &V3FetchResourceSemanticsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// FullResourceName sets the optional parameter "fullResourceName": Required.
+// The full resource name of the GCP resource to retrieve semantics for.
+// Examples:
+// "//compute.googleapis.com/projects/123/zones/us-central1-a/instances/my-insta
+// nce" "//storage.googleapis.com/projects/_/buckets/my_bucket"
+func (c *V3FetchResourceSemanticsCall) FullResourceName(fullResourceName string) *V3FetchResourceSemanticsCall {
+	c.urlParams_.Set("fullResourceName", fullResourceName)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *V3FetchResourceSemanticsCall) Fields(s ...googleapi.Field) *V3FetchResourceSemanticsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *V3FetchResourceSemanticsCall) IfNoneMatch(entityTag string) *V3FetchResourceSemanticsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *V3FetchResourceSemanticsCall) Context(ctx context.Context) *V3FetchResourceSemanticsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *V3FetchResourceSemanticsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V3FetchResourceSemanticsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3:fetchResourceSemantics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.fetchResourceSemantics", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.fetchResourceSemantics" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchResourceSemanticsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *V3FetchResourceSemanticsCall) Do(opts ...googleapi.CallOption) (*FetchResourceSemanticsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchResourceSemanticsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.fetchResourceSemantics", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

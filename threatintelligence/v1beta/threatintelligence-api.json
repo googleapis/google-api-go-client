@@ -315,7 +315,7 @@
             },
             "getPassword": {
               "description": "Get the decrypted password of an alert.",
-              "flatPath": "v1beta/projects/{projectsId}/alerts/{alertsId}:GetPassword",
+              "flatPath": "v1beta/projects/{projectsId}/alerts/{alertsId}:getPassword",
               "httpMethod": "GET",
               "id": "threatintelligence.projects.alerts.getPassword",
               "parameterOrder": [
@@ -330,7 +330,7 @@
                   "type": "string"
                 }
               },
-              "path": "v1beta/{+name}:GetPassword",
+              "path": "v1beta/{+name}:getPassword",
               "response": {
                 "$ref": "Alert"
               },
@@ -842,7 +842,7 @@
       }
     }
   },
-  "revision": "20260719",
+  "revision": "20260803",
   "rootUrl": "https://threatintelligence.googleapis.com/",
   "schemas": {
     "Alert": {
@@ -1210,6 +1210,10 @@
       "description": "Wrapper class that contains the union struct for all the various configuration detail specific classes.",
       "id": "ConfigurationDetail",
       "properties": {
+        "customThreatScenario": {
+          "$ref": "CustomThreatScenarioConfig",
+          "description": "Custom Threat Scenario detail config."
+        },
         "customerProfile": {
           "$ref": "CustomerProfileConfig",
           "description": "Customer Profile detail config."
@@ -1243,6 +1247,17 @@
         "snapshot": {
           "$ref": "Configuration",
           "description": "The snapshot of the configuration"
+        }
+      },
+      "type": "object"
+    },
+    "CustomThreatScenarioConfig": {
+      "description": "CustomThreatScenarioConfig represents a user-defined threat scenario configuration.",
+      "id": "CustomThreatScenarioConfig",
+      "properties": {
+        "documentCondition": {
+          "description": "Required. The condition driving the scenario, stored as a stringified JSON. This is used to query/filter documents.",
+          "type": "string"
         }
       },
       "type": "object"

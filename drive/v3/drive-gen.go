@@ -1922,7 +1922,8 @@ type FileCapabilities struct {
 	// owner of the file. Not populated for shared drive files.
 	CanAcceptOwnership bool `json:"canAcceptOwnership,omitempty"`
 	// CanAccessViaGenAi: Whether the current user can access this file via Gen AI
-	// features.
+	// features. For more information, see Drive MCP file eligibility
+	// (https://developers.google.com/workspace/drive/api/guides/drive-mcp-server-file-eligibility).
 	CanAccessViaGenAi bool `json:"canAccessViaGenAi,omitempty"`
 	// CanAddChildren: Output only. Whether the current user can add children to
 	// this folder. This is always `false` when the item isn't a folder.

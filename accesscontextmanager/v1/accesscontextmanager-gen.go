@@ -1267,9 +1267,13 @@ type GcpUserAccessBinding struct {
 	// Should not be specified by the client during creation. Example:
 	// "organizations/256/gcpUserAccessBindings/b3-BhcX_Ud5N"
 	Name string `json:"name,omitempty"`
-	// RestrictedClientApplications: Optional. A list of applications that are
-	// subject to this binding's restrictions. If the list is empty, the binding
-	// restrictions will universally apply to all applications.
+	// Principal: Optional. Immutable. The principal that is subject to the access
+	// policies in this policy binding.
+	Principal *Principal `json:"principal,omitempty"`
+	// RestrictedClientApplications: Optional. Deprecated: use
+	// scoped_access_settings instead. A list of applications that are subject to
+	// this binding's restrictions. If the list is empty, the binding restrictions
+	// will universally apply to all applications.
 	RestrictedClientApplications []*Application `json:"restrictedClientApplications,omitempty"`
 	// ScopedAccessSettings: Optional. A list of scoped access settings that set
 	// this binding's restrictions on a subset of applications. This field cannot
@@ -1985,6 +1989,38 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Principal: The comprehensive identity container supporting identities
+// including groups, service accounts and federated identities. Only one of
+// them can be set to create an access binding.
+type Principal struct {
+	// ServiceAccount: Immutable. Service account email used to assign policies to
+	// a specific service account. If a service account is subject to multiple
+	// policies (e.g., if there is a policy for all service accounts in a project
+	// and a policy for the service account), the closest (i.e. the most specific)
+	// dry-run policy will be used for the dry-run functionality and the closest
+	// policy will be used for the enforcement.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// ServiceAccountProjectNumber: Immutable. Cloud project number used to assign
+	// policies to all service accounts owned by the project.
+	ServiceAccountProjectNumber string `json:"serviceAccountProjectNumber,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Principal) MarshalJSON() ([]byte, error) {
+	type NoMethod Principal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PrivateServiceConnectEndpoint: Specifies the Private Service Connect
 // endpoint that an API call refers to.
 type PrivateServiceConnectEndpoint struct {
@@ -2322,11 +2358,14 @@ type SessionSettings struct {
 	// SessionLength: Optional. The session length. Setting this field to zero is
 	// equal to disabling session. Also can set infinite session by flipping the
 	// enabled bit to false below. If use_oidc_max_age is true, for OIDC apps, the
-	// session length will be the minimum of this field and OIDC max_age param.
+	// session length will be the minimum of this field and OIDC max_age param. If
+	// this field is set to zero, session_length_enabled must be set to false or
+	// left unset.
 	SessionLength string `json:"sessionLength,omitempty"`
 	// SessionLengthEnabled: Optional. This field enables or disables Google Cloud
 	// session length. When false, all fields set above will be disregarded and the
-	// session length is basically infinite.
+	// session length is basically infinite. If session_length is set to zero, this
+	// field must be false.
 	SessionLengthEnabled bool `json:"sessionLengthEnabled,omitempty"`
 	// SessionReauthMethod: Optional. Session method when user's Google Cloud
 	// session is up.
@@ -6728,6 +6767,16 @@ type OrganizationsGcpUserAccessBindingsListCall struct {
 func (r *OrganizationsGcpUserAccessBindingsService) List(parent string) *OrganizationsGcpUserAccessBindingsListCall {
 	c := &OrganizationsGcpUserAccessBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The literal filter to apply to
+// the results returned. See https://google.aip.dev/160 for more details.
+// Accepts values: * principal:group_key * principal:service_account OR
+// principal:service_account_project_number. If this field is empty or not one
+// of the above, the default value is "principal:group_key".
+func (c *OrganizationsGcpUserAccessBindingsListCall) Filter(filter string) *OrganizationsGcpUserAccessBindingsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 

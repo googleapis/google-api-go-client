@@ -7013,6 +7013,13 @@ func (c *OrganizationsLocationsFirewallEndpointsCreateCall) RequestId(requestId 
 	return c
 }
 
+// ValidateOnly sets the optional parameter "validateOnly": If set, validate
+// the request and preview the endpoint, but do not actually create it.
+func (c *OrganizationsLocationsFirewallEndpointsCreateCall) ValidateOnly(validateOnly bool) *OrganizationsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -15748,6 +15755,13 @@ func (c *ProjectsLocationsFirewallEndpointsCreateCall) FirewallEndpointId(firewa
 // supported (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsFirewallEndpointsCreateCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, validate
+// the request and preview the endpoint, but do not actually create it.
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 

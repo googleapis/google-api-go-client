@@ -1886,7 +1886,9 @@ type TimePeriod struct {
 	//   "SUNDAY" - Sunday
 	CloseDay string `json:"closeDay,omitempty"`
 	// CloseTime: Required. Valid values are 00:00-24:00, where 24:00 represents
-	// midnight at the end of the specified day field.
+	// midnight at the end of the specified day field. Note: In Proto3 JSON
+	// mapping, default zero values (00:00) are omitted, producing `{}` for
+	// close_time.
 	CloseTime *TimeOfDay `json:"closeTime,omitempty"`
 	// OpenDay: Required. Indicates the day of the week this period starts on.
 	//
@@ -1901,7 +1903,9 @@ type TimePeriod struct {
 	//   "SUNDAY" - Sunday
 	OpenDay string `json:"openDay,omitempty"`
 	// OpenTime: Required. Valid values are 00:00-24:00, where 24:00 represents
-	// midnight at the end of the specified day field.
+	// midnight at the end of the specified day field. Note: In Proto3 JSON
+	// mapping, default zero values (00:00) are omitted, producing `{}` for
+	// open_time.
 	OpenTime *TimeOfDay `json:"openTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloseDay") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2262,7 +2266,8 @@ func (r *AttributesService) List() *AttributesListCall {
 
 // CategoryName sets the optional parameter "categoryName": The primary
 // category stable ID to find available attributes. Must be of the format
-// categories/{category_id}.
+// `categories/{category_id}` (e.g., `categories/gcid:restaurant`). Required if
+// `parent` is not set and `show_all` is false.
 func (c *AttributesListCall) CategoryName(categoryName string) *AttributesListCall {
 	c.urlParams_.Set("categoryName", categoryName)
 	return c
@@ -2291,25 +2296,25 @@ func (c *AttributesListCall) PageToken(pageToken string) *AttributesListCall {
 }
 
 // Parent sets the optional parameter "parent": Resource name of the location
-// to look up available attributes. If this field is set, category_name,
-// region_code, language_code and show_all are not required and must not be
-// set.
+// to look up available attributes. If this field is set, `category_name`,
+// `region_code`, `language_code` and `show_all` are not required and must not
+// be set. Format: `locations/{location_id}` (e.g., `locations/1234567890`).
 func (c *AttributesListCall) Parent(parent string) *AttributesListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
 // RegionCode sets the optional parameter "regionCode": The ISO 3166-1 alpha-2
-// country code to find available attributes.
+// country code to find available attributes. Required if `parent` is not set.
 func (c *AttributesListCall) RegionCode(regionCode string) *AttributesListCall {
 	c.urlParams_.Set("regionCode", regionCode)
 	return c
 }
 
-// ShowAll sets the optional parameter "showAll": Metadata for all available
-// attributes are returned when this field is set to true, disregarding parent
-// and category_name fields. language_code and region_code are required when
-// show_all is set to true.
+// ShowAll sets the optional parameter "showAll": If set to true, metadata for
+// all available attributes are returned, disregarding `parent` and
+// `category_name` fields. `language_code` and `region_code` are required when
+// `show_all` is set to true.
 func (c *AttributesListCall) ShowAll(showAll bool) *AttributesListCall {
 	c.urlParams_.Set("showAll", fmt.Sprint(showAll))
 	return c

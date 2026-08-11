@@ -252,11 +252,11 @@ func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 // AccessConfig: An access configuration attached to an instance's network
 // interface.
 type AccessConfig struct {
-	// ExternalIp: An external IP address associated with this instance. Specify an
-	// unused static external IP address available to the project or leave this
-	// field undefined to use an IP from a shared ephemeral IP address pool. If you
-	// specify a static external IP address, it must live in the same region as the
-	// zone of the instance.
+	// ExternalIp: Optional. An external IP address associated with this instance.
+	// Specify an unused static external IP address available to the project or
+	// leave this field undefined to use an IP from a shared ephemeral IP address
+	// pool. If you specify a static external IP address, it must live in the same
+	// region as the zone of the instance.
 	ExternalIp string `json:"externalIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalIp") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -377,8 +377,8 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 
 // BootDisk: The definition of a boot disk.
 type BootDisk struct {
-	// DiskEncryption: Optional. Input only. Disk encryption method used on the
-	// boot and data disks, defaults to GMEK.
+	// DiskEncryption: Optional. Disk encryption method used on the boot and data
+	// disks, defaults to GMEK.
 	//
 	// Possible values:
 	//   "DISK_ENCRYPTION_UNSPECIFIED" - Disk encryption is not specified.
@@ -409,8 +409,8 @@ type BootDisk struct {
 	//   "HYPERDISK_ML" - Represents the Hyperdisk ML persistent disk type. Can be
 	// used as a boot disk or data disk.
 	DiskType string `json:"diskType,omitempty"`
-	// KmsKey: Optional. Input only. The KMS key used to encrypt the disks, only
-	// applicable if disk_encryption is CMEK. Format:
+	// KmsKey: Optional. The KMS key used to encrypt the disks, only applicable if
+	// disk_encryption is CMEK. Format:
 	// `projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys
 	// /{key_id}` Learn more about using your own encryption keys.
 	KmsKey string `json:"kmsKey,omitempty"`
@@ -620,8 +620,8 @@ func (s ContainerImage) MarshalJSON() ([]byte, error) {
 
 // DataDisk: An instance-attached disk resource.
 type DataDisk struct {
-	// DiskEncryption: Optional. Input only. Disk encryption method used on the
-	// boot and data disks, defaults to GMEK.
+	// DiskEncryption: Optional. Disk encryption method used on the boot and data
+	// disks, defaults to GMEK.
 	//
 	// Possible values:
 	//   "DISK_ENCRYPTION_UNSPECIFIED" - Disk encryption is not specified.
@@ -652,8 +652,8 @@ type DataDisk struct {
 	//   "HYPERDISK_ML" - Represents the Hyperdisk ML persistent disk type. Can be
 	// used as a boot disk or data disk.
 	DiskType string `json:"diskType,omitempty"`
-	// KmsKey: Optional. Input only. The KMS key used to encrypt the disks, only
-	// applicable if disk_encryption is CMEK. Format:
+	// KmsKey: Optional. The KMS key used to encrypt the disks, only applicable if
+	// disk_encryption is CMEK. Format:
 	// `projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys
 	// /{key_id}` Learn more about using your own encryption keys.
 	KmsKey string `json:"kmsKey,omitempty"`
@@ -3512,7 +3512,11 @@ func (c *ProjectsLocationsInstancesPatchCall) RequestId(requestId string) *Proje
 // `gce_setup.reservation_affinity.values` * `gce_setup.tags` *
 // `gce_setup.container_image` * `gce_setup.container_image.repository` *
 // `gce_setup.container_image.tag` * `gce_setup.disable_public_ip` *
-// `disable_proxy_access`
+// `disable_proxy_access` Note: `gce_setup.disable_public_ip` and
+// `disable_proxy_access` are one-way on update -- they can only be used to
+// *disable* the feature (set the field to `true`). Requests that set either
+// field back to `false` (re-enabling the external IP or proxy access) are
+// rejected with `INVALID_ARGUMENT`.
 func (c *ProjectsLocationsInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInstancesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

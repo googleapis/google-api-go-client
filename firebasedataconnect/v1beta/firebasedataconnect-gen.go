@@ -1539,6 +1539,8 @@ func (s Schema) MarshalJSON() ([]byte, error) {
 type Service struct {
 	// Annotations: Optional. Stores small amounts of arbitrary data.
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// Connectors: Output only. The list of connectors in this service.
+	Connectors []*Connector `json:"connectors,omitempty"`
 	// CreateTime: Output only. [Output only] Create time stamp.
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: Optional. Mutable human-readable name. 63 character limit.
@@ -1559,6 +1561,11 @@ type Service struct {
 	// Reconciling: Output only. A field that if true, indicates that the system is
 	// working update the service.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// Schemas: Output only. The list of schemas in this service.
+	Schemas []*Schema `json:"schemas,omitempty"`
+	// Source: Optional. Input only. The source files for service, schemas, and
+	// connectors.
+	Source *Source `json:"source,omitempty"`
 	// Uid: Output only. System-assigned, unique identifier.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. [Output only] Update time stamp.

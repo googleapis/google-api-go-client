@@ -1629,9 +1629,14 @@ type DailyRollUpDataPointsRequest struct {
 	// DataSourceFamily: Optional. The data source family name to roll up. If
 	// empty, data points from all available data sources will be rolled up.
 	// Format: `users/me/dataSourceFamilies/{data_source_family}` The supported
-	// values are: - `users/me/dataSourceFamilies/all-sources` - default value -
-	// `users/me/dataSourceFamilies/google-wearables` - tracker devices -
-	// `users/me/dataSourceFamilies/google-sources` - Google first party sources
+	// values are: - `users/me/dataSourceFamilies/all-sources` - Default value.
+	// Includes data from all available data sources. -
+	// `users/me/dataSourceFamilies/google-wearables` - Includes data from Google
+	// and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+	// Excludes manually logged data. -
+	// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
+	// data, such as data from tracker devices, manually logged data, and Health
+	// Connect.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
 	// unspecified, at most 1440 data points will be returned. The maximum page
@@ -2008,6 +2013,11 @@ type DataPoint struct {
 	// IrregularRhythmNotification: Optional. Data for points in the
 	// `irregular-rhythm-notification` session data type collection.
 	IrregularRhythmNotification *IrregularRhythmNotification `json:"irregularRhythmNotification,omitempty"`
+	// MenstrualPeriod: Optional. Data for points in the `menstrual-period`
+	// interval data type collection.
+	MenstrualPeriod *MenstrualPeriod `json:"menstrualPeriod,omitempty"`
+	// Moods: Optional. Data for points in the `moods` sample data type collection.
+	Moods *Moods `json:"moods,omitempty"`
 	// Name: Identifier. Data point name, only supported for the subset of
 	// identifiable data types. For the majority of the data types, individual data
 	// points do not need to be identified and this field would be empty. Format:
@@ -2023,6 +2033,9 @@ type DataPoint struct {
 	// NutritionLog: Optional. Data for points in the `nutrition-log` session data
 	// type collection.
 	NutritionLog *NutritionLog `json:"nutritionLog,omitempty"`
+	// OvulationTest: Optional. Data for points in the `ovulation-test` sample data
+	// type collection.
+	OvulationTest *OvulationTest `json:"ovulationTest,omitempty"`
 	// OxygenSaturation: Optional. Data for points in the `oxygen-saturation`
 	// sample data type collection.
 	OxygenSaturation *OxygenSaturation `json:"oxygenSaturation,omitempty"`
@@ -2044,6 +2057,9 @@ type DataPoint struct {
 	// SwimLengthsData: Optional. Data for points in the `swim-lengths-data`
 	// interval data type collection.
 	SwimLengthsData *SwimLengthsData `json:"swimLengthsData,omitempty"`
+	// Symptoms: Optional. Data for points in the `symptoms` sample data type
+	// collection.
+	Symptoms *Symptoms `json:"symptoms,omitempty"`
 	// TimeInHeartRateZone: Optional. Data for points in the
 	// `time-in-heart-rate-zone` interval data type collection.
 	TimeInHeartRateZone *TimeInHeartRateZone `json:"timeInHeartRateZone,omitempty"`
@@ -2529,7 +2545,11 @@ type Exercise struct {
 	// CreateTime: Output only. Represents the timestamp of the creation of the
 	// exercise.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Required. Exercise display name.
+	// DisplayName: Required. The localized, human-readable name of the exercise.
+	// For all exercise types other than `OTHER`, the system ignores client input
+	// and overrides this field with a generated name based on `exercise_type`
+	// (e.g., "Walking" for `WALKING`). If `exercise_type` is `OTHER`, this field
+	// can contain the user's custom, free-form display name.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExerciseEvents: Optional. Exercise events that happen during an exercise,
 	// such as pause & restarts.
@@ -3901,6 +3921,30 @@ func (s MedicalDeviceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MenstrualPeriod: Menstrual period record.
+type MenstrualPeriod struct {
+	// Interval: Required. Observed interval.
+	Interval *ObservationTimeInterval `json:"interval,omitempty"`
+	// Notes: Optional. Standard free-form notes captured at manual logging.
+	Notes string `json:"notes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MenstrualPeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod MenstrualPeriod
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MetricsSummary: Summary metrics for an exercise.
 type MetricsSummary struct {
 	// ActiveZoneMinutes: Optional. Total active zone minutes for the exercise.
@@ -4030,6 +4074,97 @@ func (s *MobilityMetrics) UnmarshalJSON(data []byte) error {
 	s.AvgCadenceStepsPerMinute = float64(s1.AvgCadenceStepsPerMinute)
 	s.AvgVerticalRatio = float64(s1.AvgVerticalRatio)
 	return nil
+}
+
+// Moods: Moods record.
+type Moods struct {
+	// Moods: Required. The moods logged.
+	//
+	// Possible values:
+	//   "MOOD_UNSPECIFIED" - Unspecified mood.
+	//   "AMAZED" - Amazed.
+	//   "AMUSED" - Amused.
+	//   "ANGRY" - Angry.
+	//   "ANNOYED" - Annoyed.
+	//   "ANXIOUS" - Anxious.
+	//   "HAPPY" - Happy.
+	//   "CONTENT" - Content.
+	//   "SAD" - Sad.
+	//   "WORRIED" - Worried.
+	//   "FRUSTRATED" - Frustrated.
+	//   "EXCITED" - Excited.
+	//   "CALM" - Calm.
+	//   "STRESSED" - Stressed.
+	//   "ASHAMED" - Ashamed.
+	//   "BRAVE" - Brave.
+	//   "CONFIDENT" - Confident.
+	//   "DISAPPOINTED" - Disappointed.
+	//   "DISCOURAGED" - Discouraged.
+	//   "DISGUSTED" - Disgusted.
+	//   "DRAINED" - Drained.
+	//   "EMBARRASSED" - Embarrassed.
+	//   "GRATEFUL" - Grateful.
+	//   "GUILTY" - Guilty.
+	//   "HOPEFUL" - Hopeful.
+	//   "HOPELESS" - Hopeless.
+	//   "INDIFFERENT" - Indifferent.
+	//   "IRRITATED" - Irritated.
+	//   "JEALOUS" - Jealous.
+	//   "JOYFUL" - Joyful.
+	//   "LONELY" - Lonely.
+	//   "OVERWHELMED" - Overwhelmed.
+	//   "PASSIONATE" - Passionate.
+	//   "PEACEFUL" - Peaceful.
+	//   "PROUD" - Proud.
+	//   "RELIEVED" - Relieved.
+	//   "SATISFIED" - Satisfied.
+	//   "SCARED" - Scared.
+	//   "SURPRISED" - Surprised.
+	//   "ENERGIZED" - Energized.
+	//   "FATIGUED" - Fatigued.
+	//   "VERY_CALM" - Very calm.
+	//   "VERY_STRESSED" - Very stressed.
+	//   "NEUTRAL" - Neutral.
+	//   "AFRAID" - Afraid.
+	//   "HURTING" - Hurting.
+	//   "BORED" - Bored.
+	//   "BITTER" - Bitter.
+	//   "ENVIOUS" - Envious.
+	//   "CONFUSED" - Confused.
+	//   "CURIOUS" - Curious.
+	//   "AWESTRUCK" - Awestruck.
+	//   "INSPIRED" - Inspired.
+	//   "LONGING" - Longing.
+	//   "ACCOMPLISHED" - Accomplished.
+	//   "LOVING" - Loving.
+	//   "COMPASSIONATE" - Compassionate.
+	Moods []string `json:"moods,omitempty"`
+	// SampleTime: Required. The time at which moods were measured.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// Valences: Optional. The valences.
+	//
+	// Possible values:
+	//   "VALENCE_UNSPECIFIED" - Unspecified valence.
+	//   "UNPLEASANT" - Unpleasant.
+	//   "BASELINE" - Baseline.
+	//   "PLEASANT" - Pleasant.
+	Valences []string `json:"valences,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Moods") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Moods") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Moods) MarshalJSON() ([]byte, error) {
+	type NoMethod Moods
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NutrientQuantity: Represents the quantity of a nutrient.
@@ -4403,6 +4538,38 @@ type OutOfBedSegment struct {
 
 func (s OutOfBedSegment) MarshalJSON() ([]byte, error) {
 	type NoMethod OutOfBedSegment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OvulationTest: Ovulation test record.
+type OvulationTest struct {
+	// Result: Required. The result of the ovulation test.
+	//
+	// Possible values:
+	//   "OVULATION_TEST_RESULT_UNSPECIFIED" - Unspecified result.
+	//   "NEGATIVE" - Negative result.
+	//   "LUTEINIZING_HORMONE_SURGE" - Luteinizing hormone surge.
+	//   "ESTROGEN_SURGE" - Estrogen surge.
+	//   "POSITIVE" - Positive result.
+	//   "INDETERMINATE" - Indeterminate result.
+	Result string `json:"result,omitempty"`
+	// SampleTime: Required. The time at which ovulation test was measured.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Result") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Result") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OvulationTest) MarshalJSON() ([]byte, error) {
+	type NoMethod OvulationTest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4882,9 +5049,14 @@ type RollUpDataPointsRequest struct {
 	// DataSourceFamily: Optional. The data source family name to roll up. If
 	// empty, data points from all available data sources will be rolled up.
 	// Format: `users/me/dataSourceFamilies/{data_source_family}` The supported
-	// values are: - `users/me/dataSourceFamilies/all-sources` - default value -
-	// `users/me/dataSourceFamilies/google-wearables` - tracker devices -
-	// `users/me/dataSourceFamilies/google-sources` - Google first party sources
+	// values are: - `users/me/dataSourceFamilies/all-sources` - Default value.
+	// Includes data from all available data sources. -
+	// `users/me/dataSourceFamilies/google-wearables` - Includes data from Google
+	// and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+	// Excludes manually logged data. -
+	// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
+	// data, such as data from tracker devices, manually logged data, and Health
+	// Connect.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
 	// unspecified, at most 1440 data points will be returned. The maximum page
@@ -5273,7 +5445,7 @@ type Settings struct {
 	// automatically. Updates to this field are currently not supported.
 	AutoStrideEnabled bool `json:"autoStrideEnabled,omitempty"`
 	// DistanceUnit: Optional. The measurement unit defined in the user's account
-	// settings. Updates to this field are currently not supported.
+	// settings.
 	//
 	// Possible values:
 	//   "DISTANCE_UNIT_UNSPECIFIED" - Distance unit is not specified.
@@ -5406,12 +5578,16 @@ type Sleep struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Interval: Required. Observed sleep interval.
 	Interval *SessionTimeInterval `json:"interval,omitempty"`
-	// Metadata: Optional. Sleep metadata: processing, main, manually edited,
-	// stages status.
+	// Metadata: Optional. Sleep metadata: `processed`, `main_sleep`,
+	// `manually_edited`, and `stages_status`.
 	Metadata *SleepMetadata `json:"metadata,omitempty"`
 	// OutOfBedSegments: Optional. “Out of bed” segments that can overlap with
 	// sleep stages.
 	OutOfBedSegments []*OutOfBedSegment `json:"outOfBedSegments,omitempty"`
+	// ShortAwakenings: Output only. List of short awake segments (under a set
+	// threshold) that are part of the sleep session. These can overlap with sleep
+	// stages.
+	ShortAwakenings []*SleepStage `json:"shortAwakenings,omitempty"`
 	// Stages: Optional. List of non-overlapping contiguous sleep stage segments
 	// that cover the sleep period.
 	Stages []*SleepStage `json:"stages,omitempty"`
@@ -5452,6 +5628,11 @@ type SleepMetadata struct {
 	// ExternalId: Optional. Sleep identifier relevant in the context of the data
 	// source.
 	ExternalId string `json:"externalId,omitempty"`
+	// MainSleep: Output only. `main_sleep`: the longest sleep session with stages
+	// within one day. If no sleep session has stages, then the longest sleep is
+	// the `main_sleep`. If there are multiple days of sleep in the response, there
+	// is one `main_sleep` per day.
+	MainSleep bool `json:"mainSleep,omitempty"`
 	// ManuallyEdited: Output only. Some sleeps autodetected by algorithms can be
 	// manually edited by users.
 	ManuallyEdited bool `json:"manuallyEdited,omitempty"`
@@ -5946,6 +6127,62 @@ type SwimLengthsDataRollupValue struct {
 
 func (s SwimLengthsDataRollupValue) MarshalJSON() ([]byte, error) {
 	type NoMethod SwimLengthsDataRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Symptoms: Symptoms logged by the user.
+type Symptoms struct {
+	// SampleTime: Required. Time when the symptoms were logged.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// Symptoms: Required. List of symptoms experienced.
+	//
+	// Possible values:
+	//   "SYMPTOM_VALUE_UNSPECIFIED" - Unspecified symptom value.
+	//   "CRAMPS" - Abdominal cramps.
+	//   "HEADACHE" - Headache.
+	//   "TENDER_BREASTS" - Tender breasts.
+	//   "ACNE" - Acne.
+	//   "SICK" - Feeling sick or unwell.
+	//   "BLOATED" - Bloating or abdominal swelling.
+	//   "HOT_FLASHES" - Hot flashes.
+	//   "PMS" - Premenstrual syndrome symptoms.
+	//   "COUGH" - Coughing.
+	//   "FEVER" - Fever or elevated body temperature.
+	//   "DIFFICULTY_BREATHING" - Difficulty breathing or shortness of breath.
+	//   "BACK_PAIN" - Back pain.
+	//   "SHAKINESS" - Shakiness or tremors.
+	//   "HUNGER" - Excessive hunger.
+	//   "SWEATING" - Excessive sweating.
+	//   "ANXIETY" - Anxiety or nervousness.
+	//   "THIRST" - Excessive thirst.
+	//   "FREQUENT_URINATION" - Frequent urination.
+	//   "BLURRED_VISION" - Blurred vision.
+	//   "OTHER" - Other symptoms.
+	//   "SEX_DRIVE_HIGH" - High sex drive.
+	//   "SEX_DRIVE_MEDIUM" - Medium sex drive.
+	//   "SEX_DRIVE_LOW" - Low sex drive.
+	//   "HEART_PALPITATIONS" - Heart palpitations or racing heart.
+	//   "FAINTING" - Fainting or loss of consciousness.
+	//   "CHEST_PAIN" - Chest pain or discomfort.
+	//   "FATIGUE" - Fatigue or extreme tiredness.
+	//   "CONFUSION" - Confusion or mental fogginess.
+	//   "DIZZINESS" - Dizziness or lightheadedness.
+	Symptoms []string `json:"symptoms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SampleTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SampleTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Symptoms) MarshalJSON() ([]byte, error) {
+	type NoMethod Symptoms
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9361,10 +9598,15 @@ func (r *UsersDataTypesDataPointsService) Reconcile(parent string) *UsersDataTyp
 // DataSourceFamily sets the optional parameter "dataSourceFamily": The data
 // source family name to reconcile. If empty, data points from all data sources
 // will be reconciled. Format:
-// `users/me/dataSourceFamilies/{data_source_family}` The supported values are:
-// - `users/me/dataSourceFamilies/all-sources` - default value -
-// `users/me/dataSourceFamilies/google-wearables` - tracker devices -
-// `users/me/dataSourceFamilies/google-sources` - Google first party sources
+// `users/me/dataSourceFamilies/{data_source_family}` -
+// `users/me/dataSourceFamilies/all-sources` - Default value. Includes data
+// from all available data sources. -
+// `users/me/dataSourceFamilies/google-wearables` - Includes data from Google
+// and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+// Excludes manually logged data. -
+// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
+// data, such as data from tracker devices, manually logged data, and Health
+// Connect.
 func (c *UsersDataTypesDataPointsReconcileCall) DataSourceFamily(dataSourceFamily string) *UsersDataTypesDataPointsReconcileCall {
 	c.urlParams_.Set("dataSourceFamily", dataSourceFamily)
 	return c

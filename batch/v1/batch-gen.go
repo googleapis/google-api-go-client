@@ -1697,16 +1697,24 @@ func (s Location) MarshalJSON() ([]byte, error) {
 }
 
 type LocationPolicy struct {
-	// AllowedLocations: A list of allowed location names represented by internal
-	// URLs. Each location can be a region or a zone. Only one region or multiple
-	// zones in one region is supported now. For example, ["regions/us-central1"]
-	// allow VMs in any zones in region us-central1. ["zones/us-central1-a",
-	// "zones/us-central1-c"] only allow VMs in zones us-central1-a and
-	// us-central1-c. Mixing locations from different regions would cause errors.
-	// For example, ["regions/us-central1", "zones/us-central1-a",
-	// "zones/us-central1-b", "zones/us-west1-a"] contains locations from two
-	// distinct regions: us-central1 and us-west1. This combination will trigger an
-	// error.
+	// AllowedLocations: A list of location names that are allowed for the job's
+	// VMs formatted as URLs. Each location can be a region or a zone, but you can
+	// only specify one region or multiple zones in one region per job. For
+	// example, `["regions/us-central1"]` allow VMs in any zones in region
+	// `us-central1`, and `["zones/us-central1-a", "zones/us-central1-c"]` only
+	// allow VMs in zones `us-central1-a` and `us-central1-c`. However,
+	// `["regions/us-central1", "zones/us-central1-a", "zones/us-central1-b",
+	// "zones/us-west1-a"]` causes an error because it contains multiple regions
+	// (`us-central1` and `us-west1`). The specified region or zones must be in the
+	// same region in which the job is created starting on the following dates: +
+	// For projects that have successfully submitted before July 31, 2026 at least
+	// one job that uses the `allowedLocations[]` field with any region or zones
+	// outside of the job's location, the changes are starting on _June 30, 2027_.
+	// + For all other projects, the changes are starting on _July 31, 2026_. For
+	// example, for job `projects/123/locations/us-central1/jobs/jobid`, the
+	// specified region or zones must be in `us-central1`. Using a different region
+	// (e.g. `regions/us-west1`) or a zone not in `us-central1` (e.g.
+	// `zones/us-west1-a`) causes an error.
 	AllowedLocations []string `json:"allowedLocations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedLocations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1867,6 +1875,14 @@ type NetworkInterface struct {
 	// https://www.googleapis.com/compute/v1/projects/{project}/global/networks/{network}
 	// * projects/{project}/global/networks/{network} * global/networks/{network}
 	Network string `json:"network,omitempty"`
+	// NicType: Optional. The NIC type of the network interface.
+	//
+	// Possible values:
+	//   "NIC_TYPE_UNSPECIFIED" - No type specified.
+	//   "GVNIC" - GVNIC
+	//   "IRDMA" - IRDMA
+	//   "MRDMA" - MRDMA
+	NicType string `json:"nicType,omitempty"`
 	// NoExternalIpAddress: Default is false (with an external IP address).
 	// Required if no external public IP address is attached to the VM. If no
 	// external public IP address, additional configuration is required to allow

@@ -994,6 +994,25 @@ func (r *ProjectsLocationsKeysService) Delete(name string) *ProjectsLocationsKey
 	return c
 }
 
+// CheckExistingUsage sets the optional parameter "checkExistingUsage": Defines
+// the behavior for checking existing usage when deleting a key.
+//
+// Possible values:
+//
+//	"CHECK_EXISTING_USAGE_UNSPECIFIED" - When unset, the default behavior is
+//
+// used, which is SKIP.
+//
+//	"SKIP" - If set, skip checking existing usage when deleting a key.
+//	"CHECK" - If set, existing usage is checked when deleting the key. If the
+//
+// key has usage in the last 7 days, the request returns a FAILED_PRECONDITION
+// error.
+func (c *ProjectsLocationsKeysDeleteCall) CheckExistingUsage(checkExistingUsage string) *ProjectsLocationsKeysDeleteCall {
+	c.urlParams_.Set("checkExistingUsage", checkExistingUsage)
+	return c
+}
+
 // Etag sets the optional parameter "etag": The etag known to the client for
 // the expected state of the key. This is to be used for optimistic
 // concurrency.
@@ -1481,6 +1500,25 @@ func (r *ProjectsLocationsKeysService) Patch(name string, v2key *V2Key) *Project
 	c := &ProjectsLocationsKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.v2key = v2key
+	return c
+}
+
+// CheckExistingUsage sets the optional parameter "checkExistingUsage": Defines
+// the behavior for checking existing usage when updating a key.
+//
+// Possible values:
+//
+//	"CHECK_EXISTING_USAGE_UNSPECIFIED" - When unset, the default behavior is
+//
+// used, which is SKIP.
+//
+//	"SKIP" - If set, skip checking existing usage when updating a key.
+//	"CHECK" - If set, existing usage is checked when updating the key. If the
+//
+// key has usage in the last 7 days, the request returns a FAILED_PRECONDITION
+// error.
+func (c *ProjectsLocationsKeysPatchCall) CheckExistingUsage(checkExistingUsage string) *ProjectsLocationsKeysPatchCall {
+	c.urlParams_.Set("checkExistingUsage", checkExistingUsage)
 	return c
 }
 

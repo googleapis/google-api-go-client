@@ -4,6 +4,9 @@
       "scopes": {
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
+        },
+        "https://www.googleapis.com/auth/securitycenter": {
+          "description": "See, edit, configure, and delete your Google Cloud Security Command Center data and see the email address for your Google Account"
         }
       }
     }
@@ -145,7 +148,8 @@
             "$ref": "OrganizationSettings"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/securitycenter"
           ]
         },
         "updateOrganizationSettings": {
@@ -178,7 +182,8 @@
             "$ref": "OrganizationSettings"
           },
           "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/securitycenter"
           ]
         }
       },
@@ -209,7 +214,8 @@
                 "$ref": "GroupAssetsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "list": {
@@ -265,7 +271,8 @@
                 "$ref": "ListAssetsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "runDiscovery": {
@@ -292,7 +299,8 @@
                 "$ref": "Operation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "updateSecurityMarks": {
@@ -329,7 +337,8 @@
                 "$ref": "GoogleCloudSecuritycenterV1beta1SecurityMarks"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             }
           }
@@ -360,7 +369,8 @@
                 "$ref": "Empty"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "delete": {
@@ -384,7 +394,8 @@
                 "$ref": "Empty"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "get": {
@@ -408,7 +419,8 @@
                 "$ref": "Operation"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "list": {
@@ -449,7 +461,8 @@
                 "$ref": "ListOperationsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             }
           }
@@ -480,7 +493,8 @@
                 "$ref": "Source"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "get": {
@@ -504,7 +518,8 @@
                 "$ref": "Source"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "getIamPolicy": {
@@ -531,7 +546,8 @@
                 "$ref": "Policy"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "list": {
@@ -564,7 +580,8 @@
                 "$ref": "ListSourcesResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "patch": {
@@ -596,7 +613,8 @@
                 "$ref": "Source"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "setIamPolicy": {
@@ -623,7 +641,8 @@
                 "$ref": "Policy"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             },
             "testIamPermissions": {
@@ -650,7 +669,8 @@
                 "$ref": "TestIamPermissionsResponse"
               },
               "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
+                "https://www.googleapis.com/auth/cloud-platform",
+                "https://www.googleapis.com/auth/securitycenter"
               ]
             }
           },
@@ -685,7 +705,8 @@
                     "$ref": "GoogleCloudSecuritycenterV1beta1Finding"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/securitycenter"
                   ]
                 },
                 "group": {
@@ -712,7 +733,8 @@
                     "$ref": "GroupFindingsResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/securitycenter"
                   ]
                 },
                 "list": {
@@ -763,7 +785,8 @@
                     "$ref": "ListFindingsResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/securitycenter"
                   ]
                 },
                 "patch": {
@@ -795,7 +818,8 @@
                     "$ref": "GoogleCloudSecuritycenterV1beta1Finding"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/securitycenter"
                   ]
                 },
                 "setState": {
@@ -822,7 +846,8 @@
                     "$ref": "GoogleCloudSecuritycenterV1beta1Finding"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/securitycenter"
                   ]
                 },
                 "updateSecurityMarks": {
@@ -859,7 +884,8 @@
                     "$ref": "GoogleCloudSecuritycenterV1beta1SecurityMarks"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/securitycenter"
                   ]
                 }
               }
@@ -869,7 +895,7 @@
       }
     }
   },
-  "revision": "20260710",
+  "revision": "20260724",
   "rootUrl": "https://securitycenter.googleapis.com/",
   "schemas": {
     "Access": {

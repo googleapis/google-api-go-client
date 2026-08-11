@@ -412,6 +412,8 @@ type NewsletterConfig struct {
 	// NameRequired: Optional. Whether the user is required to provide their name
 	// to sign up.
 	NameRequired bool `json:"nameRequired,omitempty"`
+	// OptInRequired: Optional. Whether checking the opt-in checkbox is required.
+	OptInRequired bool `json:"optInRequired,omitempty"`
 	// Title: Required. The title of the newsletter signup prompt.
 	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomConsentText") to
@@ -483,6 +485,14 @@ type Publication struct {
 	// PublicationTosUrl: Optional. The URL to the publisher's own Terms of
 	// Service.
 	PublicationTosUrl string `json:"publicationTosUrl,omitempty"`
+	// PublicationType: Optional. The publication entity type (for-profit vs
+	// non-profit). Defaults to FOR_PROFIT if omitted.
+	//
+	// Possible values:
+	//   "PUBLICATION_TYPE_UNSPECIFIED" - Unspecified publication type.
+	//   "FOR_PROFIT" - For-profit entity.
+	//   "NON_PROFIT" - Non-profit entity.
+	PublicationType string `json:"publicationType,omitempty"`
 	// RegionCode: Required. The ISO 3166-1 alpha-2 region code where the
 	// publication is registered (e.g., "US").
 	RegionCode string `json:"regionCode,omitempty"`
@@ -566,19 +576,22 @@ func (s SlProduct) MarshalJSON() ([]byte, error) {
 
 // TosAcceptance: Details about the acceptance of the Terms of Service (TOS).
 type TosAcceptance struct {
+	// EmailOptIn: Optional. Whether the user opted in to receive product updates
+	// and email communications.
+	EmailOptIn bool `json:"emailOptIn,omitempty"`
 	// Signer: Optional. The name of the person who accepted the TOS.
 	Signer string `json:"signer,omitempty"`
 	// SignerTitle: Optional. The job title or role of the signer.
 	SignerTitle string `json:"signerTitle,omitempty"`
 	// UserAccepted: Required. Whether the user has accepted the Terms of Service.
 	UserAccepted bool `json:"userAccepted,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Signer") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "EmailOptIn") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Signer") to include in API
+	// NullFields is a list of field names (e.g. "EmailOptIn") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1443,6 +1456,117 @@ func (c *OrganizationsPublicationsCtasListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type OrganizationsPublicationsCtasPatchCall struct {
+	s          *Service
+	name       string
+	cta        *Cta
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a CTA.
+//
+//   - name: Identifier. The resource name of the Cta. Format:
+//     organizations/{organization}/publications/{publication}/ctas/{cta}.
+func (r *OrganizationsPublicationsCtasService) Patch(name string, cta *Cta) *OrganizationsPublicationsCtasPatchCall {
+	c := &OrganizationsPublicationsCtasPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cta = cta
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *OrganizationsPublicationsCtasPatchCall) UpdateMask(updateMask string) *OrganizationsPublicationsCtasPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsPublicationsCtasPatchCall) Fields(s ...googleapi.Field) *OrganizationsPublicationsCtasPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsPublicationsCtasPatchCall) Context(ctx context.Context) *OrganizationsPublicationsCtasPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsPublicationsCtasPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsPublicationsCtasPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cta)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "webcontentpublisher.organizations.publications.ctas.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webcontentpublisher.organizations.publications.ctas.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Cta.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsPublicationsCtasPatchCall) Do(opts ...googleapi.CallOption) (*Cta, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Cta{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "webcontentpublisher.organizations.publications.ctas.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type PublicationsCheckFreeAccessCall struct {

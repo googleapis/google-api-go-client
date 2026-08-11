@@ -2233,6 +2233,57 @@ func (s ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CrossDevicePolicies: Policies controlling cross-device communication.
+type CrossDevicePolicies struct {
+	// NearbyAppStreaming: Optional. Manages video streaming of apps on the device
+	// for fully managed devices or in the work profile for devices with work
+	// profiles to nearby devices. This is supported on Android 13 and above.
+	//
+	// Possible values:
+	//   "NEARBY_APP_STREAMING_UNSPECIFIED" - Unspecified. Defaults to
+	// NEARBY_APP_STREAMING_USER_CHOICE_SAME_MANAGED_ACCOUNT.
+	//   "NEARBY_APP_STREAMING_USER_CHOICE" - The user is allowed to choose whether
+	// to stream apps to nearby devices.
+	//   "NEARBY_APP_STREAMING_DISABLED" - Disables app streaming to nearby
+	// devices.
+	//   "NEARBY_APP_STREAMING_USER_CHOICE_SAME_MANAGED_ACCOUNT" - The user is
+	// allowed to choose whether to stream apps to other nearby devices which are
+	// signed in with the same authenticated managed account.
+	NearbyAppStreaming string `json:"nearbyAppStreaming,omitempty"`
+	// NearbyNotificationStreaming: Optional. Manages streaming of notifications
+	// from apps on the device for fully managed devices or in the work profile for
+	// devices with work profiles to nearby devices. This is supported on Android
+	// 13 and above.
+	//
+	// Possible values:
+	//   "NEARBY_NOTIFICATION_STREAMING_UNSPECIFIED" - Unspecified. Defaults to
+	// NEARBY_NOTIFICATION_STREAMING_USER_CHOICE_SAME_MANAGED_ACCOUNT.
+	//   "NEARBY_NOTIFICATION_STREAMING_USER_CHOICE" - The user is allowed to
+	// choose whether to stream notifications to nearby devices.
+	//   "NEARBY_NOTIFICATION_STREAMING_DISABLED" - Disables notification streaming
+	// to nearby devices.
+	//   "NEARBY_NOTIFICATION_STREAMING_USER_CHOICE_SAME_MANAGED_ACCOUNT" - The
+	// user is allowed to choose whether to stream notifications to other nearby
+	// devices which are signed in with the same authenticated managed account.
+	NearbyNotificationStreaming string `json:"nearbyNotificationStreaming,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NearbyAppStreaming") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NearbyAppStreaming") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrossDevicePolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossDevicePolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CrossProfilePolicies: Controls the data from the work profile that can be
 // accessed from the personal profile and vice versa. A NonComplianceDetail
 // with MANAGEMENT_MODE is reported if the device does not have a work profile.
@@ -6434,6 +6485,9 @@ type Policy struct {
 	CredentialProviderPolicyDefault string `json:"credentialProviderPolicyDefault,omitempty"`
 	// CredentialsConfigDisabled: Whether configuring user credentials is disabled.
 	CredentialsConfigDisabled bool `json:"credentialsConfigDisabled,omitempty"`
+	// CrossDevicePolicies: Optional. Policies controlling cross-device
+	// communication.
+	CrossDevicePolicies *CrossDevicePolicies `json:"crossDevicePolicies,omitempty"`
 	// CrossProfilePolicies: Cross-profile policies applied on the device.
 	CrossProfilePolicies *CrossProfilePolicies `json:"crossProfilePolicies,omitempty"`
 	// DataRoamingDisabled: Whether roaming data services are disabled.
@@ -8981,7 +9035,7 @@ type WorkAccountSetupConfig struct {
 	// GOOGLE_AUTHENTICATED. This must be an enterprise account and not a consumer
 	// account. Once set and a Google authenticated account is added to the device,
 	// changing this field will have no effect, and thus recommended to be set only
-	// once.
+	// once. The email address must be all lowercase.
 	RequiredAccountEmail string `json:"requiredAccountEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
 	// unconditionally include in API requests. By default, fields with empty or

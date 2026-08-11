@@ -6862,14 +6862,15 @@ type Creative struct {
 	// This field is only supported for the following creative_type: *
 	// `CREATIVE_TYPE_VIDEO`
 	Skippable bool `json:"skippable,omitempty"`
-	// SyntheticContentAttestationStatus: Optional. Whether the creative contains
-	// synthetic content or was created using AI.
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// creative as created or edited using AI when served in regions with local AI
+	// labeling regulations.
 	//
 	// Possible values:
-	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - Attestation status is
-	// unspecified.
-	//   "NOT_SYNTHETIC" - Not synthetic content.
-	//   "IS_SYNTHETIC" - Is synthetic content.
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
 	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ThirdPartyTag: Optional. The original third-party tag used for the creative.
 	// Required and only valid for third-party tag creatives. Third-party tag

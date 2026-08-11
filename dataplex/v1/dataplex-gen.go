@@ -879,17 +879,20 @@ type GoogleCloudDataplexV1ActionUnauthorizedResource struct {
 // GoogleCloudDataplexV1ApproveChangeRequestRequest: Request message for
 // ApproveChangeRequest.
 type GoogleCloudDataplexV1ApproveChangeRequestRequest struct {
+	// Comment: Optional. The comment or reason for approving the ChangeRequest.
+	// Maximum length is 1024 characters.
+	Comment string `json:"comment,omitempty"`
 	// Etag: Optional. The etag of the ChangeRequest.
 	Etag string `json:"etag,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Etag") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1742,6 +1745,9 @@ type GoogleCloudDataplexV1ChangeRequest struct {
 	// //dataplex.googleapis.com/projects/my-project/locations/us-central1/entryGrou
 	// ps/my-group/entries/my-entry
 	Resource string `json:"resource,omitempty"`
+	// ReviewerComment: Output only. The comment provided by the reviewer when
+	// approving or rejecting the ChangeRequest. Maximum length is 1024 characters.
+	ReviewerComment string `json:"reviewerComment,omitempty"`
 	// State: Output only. The current state of the ChangeRequest.
 	//
 	// Possible values:
@@ -6559,6 +6565,39 @@ type GoogleCloudDataplexV1EntryLinkEvent struct {
 
 func (s GoogleCloudDataplexV1EntryLinkEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntryLinkEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1EntryLinkTypeEvent: Payload associated with
+// EntryLinkType related log events.
+type GoogleCloudDataplexV1EntryLinkTypeEvent struct {
+	// EntryLinkTypeId: Name of the resource.
+	EntryLinkTypeId string `json:"entryLinkTypeId,omitempty"`
+	// EventType: The type of the event.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - An unspecified event type.
+	//   "ENTRY_LINK_TYPE_CREATE" - EntryLinkType create event.
+	//   "ENTRY_LINK_TYPE_UPDATE" - EntryLinkType update event.
+	//   "ENTRY_LINK_TYPE_DELETE" - EntryLinkType delete event.
+	EventType string `json:"eventType,omitempty"`
+	// Message: The log message.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EntryLinkTypeId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EntryLinkTypeId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1EntryLinkTypeEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1EntryLinkTypeEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

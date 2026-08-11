@@ -1956,6 +1956,29 @@ func (s ForwardInfo) MarshalJSON() ([]byte, error) {
 type ForwardingRuleInfo struct {
 	// DisplayName: Name of the forwarding rule.
 	DisplayName string `json:"displayName,omitempty"`
+	// EnvoyHealthCheckFirewallsConfigState: Output only. State of the firewalls
+	// allowing health check traffic to the load balancer frontend (Envoy proxies).
+	// This is the result of the firewall configuration analysis verifying that
+	// health check traffic from required IP ranges to the the Envoy-based load
+	// balancer frontend is allowed by firewall rules with the load balancer
+	// target.
+	//
+	// Possible values:
+	//   "HEALTH_CHECK_FIREWALLS_CONFIG_STATE_UNSPECIFIED" - Configuration state
+	// unspecified. It usually means that there are no relevant health checks for
+	// this load balancer frontend, or there was an unexpected configuration error
+	// preventing Connectivity Tests from verifying health check configuration.
+	//   "FIREWALLS_CONFIGURED" - Firewall rules (policies) allow health check
+	// traffic to the load balancer frontend.
+	//   "FIREWALLS_PARTIALLY_CONFIGURED" - Firewall rules (policies) allow health
+	// check traffic to the load balancer frontend only from a part of the required
+	// IP ranges.
+	//   "FIREWALLS_NOT_CONFIGURED" - Firewall rules (policies) deny health check
+	// traffic to the load balancer frontend.
+	//   "FIREWALLS_UNSUPPORTED" - Connectivity Tests doesn't support evaluating
+	// some of the firewall rules in the network, so it's not able to verify health
+	// check configuration status.
+	EnvoyHealthCheckFirewallsConfigState string `json:"envoyHealthCheckFirewallsConfigState,omitempty"`
 	// LoadBalancerName: Name of the load balancer the forwarding rule belongs to.
 	// Empty for forwarding rules not related to load balancers (like PSC
 	// forwarding rules).
@@ -3183,6 +3206,8 @@ type NatInfo struct {
 	// RouterUri: URI of the Cloud Router. Only valid when type is CLOUD_NAT.
 	// Format: `projects/{project_id}/regions/{region}/routers/{router_id}`
 	RouterUri string `json:"routerUri,omitempty"`
+	// RuleNumber: The number of the NAT rule that was matched.
+	RuleNumber int64 `json:"ruleNumber,omitempty"`
 	// Type: Type of NAT.
 	//
 	// Possible values:

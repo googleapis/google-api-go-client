@@ -1944,10 +1944,10 @@ type Preview struct {
 	Build string `json:"build,omitempty"`
 	// CreateTime: Output only. Time the preview was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Deployment: Optional. Optional deployment reference. If specified, the
-	// preview will be performed using the provided deployment's current state and
-	// use any relevant fields from the deployment unless explicitly specified in
-	// the preview create request.
+	// Deployment: Optional. Deployment reference. If specified, the preview will
+	// be performed using the provided deployment's current state and use any
+	// relevant fields from the deployment unless explicitly specified in the
+	// preview create request.
 	Deployment string `json:"deployment,omitempty"`
 	// ErrorCode: Output only. Code describing any errors that may have occurred.
 	//

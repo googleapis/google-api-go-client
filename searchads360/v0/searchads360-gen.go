@@ -1043,8 +1043,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// includes all conversions regardless of the value of
 	// include_in_conversions_metric. When this column is selected with date, the
 	// values in date column means the conversion date. Details for the
-	// by_conversion_date columns are available at
-	// https://support.google.com/sa360/answer/9250611.
+	// `by_conversion_date` columns are available at About the "All conversions"
+	// column (https://support.google.com/sa360/answer/9250611).
 	AllConversionsByConversionDate float64 `json:"allConversionsByConversionDate,omitempty"`
 	// AllConversionsFromClickToCall: The number of times people clicked the "Call"
 	// button to call a business during or after clicking an ad. This number
@@ -1084,8 +1084,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	AllConversionsValue float64 `json:"allConversionsValue,omitempty"`
 	// AllConversionsValueByConversionDate: The value of all conversions. When this
 	// column is selected with date, the values in date column means the conversion
-	// date. Details for the by_conversion_date columns are available at
-	// https://support.google.com/sa360/answer/9250611.
+	// date. Details for the `by_conversion_date` columns are available at About
+	// the "All conversions" column
+	// (https://support.google.com/sa360/answer/9250611).
 	AllConversionsValueByConversionDate float64 `json:"allConversionsValueByConversionDate,omitempty"`
 	// AllConversionsValuePerCost: The value of all conversions divided by the
 	// total cost of ad interactions (such as clicks for text ads or views for
@@ -1104,13 +1105,14 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	AverageCost float64 `json:"averageCost,omitempty"`
 	// AverageCpc: The total cost of all clicks divided by the total number of
 	// clicks received. This metric is a monetary value and returned in the
-	// customer's currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// customer's currency by default. See the `metrics_currency` parameter at
+	// PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	AverageCpc float64 `json:"averageCpc,omitempty"`
 	// AverageCpm: Average cost-per-thousand impressions (CPM). This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	AverageCpm float64 `json:"averageCpm,omitempty"`
 	// AverageImpressionFrequencyPerUser: The average number of times a unique user
 	// saw your ad during the requested time period. This metric cannot be
@@ -1132,14 +1134,14 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	Clicks int64 `json:"clicks,omitempty,string"`
 	// ClientAccountConversions: The number of client account conversions. This
 	// only includes conversion actions which
-	// include_in_client_account_conversions_metric attribute is set to true. If
-	// you use conversion-based bidding, your bid strategies will optimize for
+	// `include_in_client_account_conversions_metric` attribute is set to `true`.
+	// If you use conversion-based bidding, your bid strategies will optimize for
 	// these conversions.
 	ClientAccountConversions float64 `json:"clientAccountConversions,omitempty"`
 	// ClientAccountConversionsValue: The value of client account conversions. This
 	// only includes conversion actions which
-	// include_in_client_account_conversions_metric attribute is set to true. If
-	// you use conversion-based bidding, your bid strategies will optimize for
+	// `include_in_client_account_conversions_metric` attribute is set to `true`.
+	// If you use conversion-based bidding, your bid strategies will optimize for
 	// these conversions.
 	ClientAccountConversionsValue float64 `json:"clientAccountConversionsValue,omitempty"`
 	// ClientAccountCrossSellCostOfGoodsSoldMicros: Client account cross-sell cost
@@ -1156,8 +1158,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// cost of goods sold value of $5. The cross-sell cost of goods sold for this
 	// order is $5. This metric is only available if you report conversions with
 	// cart data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountCrossSellCostOfGoodsSoldMicros int64 `json:"clientAccountCrossSellCostOfGoodsSoldMicros,omitempty,string"`
 	// ClientAccountCrossSellGrossProfitMicros: Client account cross-sell gross
 	// profit is the profit you made from products sold as a result of advertising
@@ -1173,8 +1176,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// cost of goods sold value of $5. The cross-sell gross profit of this order is
 	// $15 = $20 - $5. This metric is only available if you report conversions with
 	// cart data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountCrossSellGrossProfitMicros int64 `json:"clientAccountCrossSellGrossProfitMicros,omitempty,string"`
 	// ClientAccountCrossSellRevenueMicros: Client account cross-sell revenue is
 	// the total amount you made from products sold as a result of advertising a
@@ -1189,8 +1193,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// priced $10 and the shirt is priced $20. The cross-sell revenue of this order
 	// is $20. This metric is only available if you report conversions with cart
 	// data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountCrossSellRevenueMicros int64 `json:"clientAccountCrossSellRevenueMicros,omitempty,string"`
 	// ClientAccountCrossSellUnitsSold: Client account cross-sell units sold is the
 	// total number of products sold as a result of advertising a different
@@ -1218,8 +1223,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// value of $5. The lead cost of goods sold for this order is $3. This metric
 	// is only available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountLeadCostOfGoodsSoldMicros int64 `json:"clientAccountLeadCostOfGoodsSoldMicros,omitempty,string"`
 	// ClientAccountLeadGrossProfitMicros: Client account lead gross profit is the
 	// profit you made from products sold as a result of advertising the same
@@ -1235,8 +1240,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// lead gross profit of this order is $7 = $10 - $3. This metric is only
 	// available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountLeadGrossProfitMicros int64 `json:"clientAccountLeadGrossProfitMicros,omitempty,string"`
 	// ClientAccountLeadRevenueMicros: Client account lead revenue is the total
 	// amount you made from products sold as a result of advertising the same
@@ -1251,8 +1256,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// shirt is priced $20. The lead revenue of this order is $10. This metric is
 	// only available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountLeadRevenueMicros int64 `json:"clientAccountLeadRevenueMicros,omitempty,string"`
 	// ClientAccountLeadUnitsSold: Client account lead units sold is the total
 	// number of products sold as a result of advertising the same product. How it
@@ -1295,8 +1300,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	Conversions float64 `json:"conversions,omitempty"`
 	// ConversionsByConversionDate: The sum of conversions by conversion date for
 	// biddable conversion types. Can be fractional due to attribution modeling.
-	// When this column is selected with date, the values in date column means the
-	// conversion date.
+	// When this column is selected with date, the values in the date column mean
+	// the conversion date.
 	ConversionsByConversionDate float64 `json:"conversionsByConversionDate,omitempty"`
 	// ConversionsFromInteractionsRate: Average biddable conversions (from
 	// interaction) per conversion eligible interaction. Shows how often, on
@@ -1304,9 +1309,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	ConversionsFromInteractionsRate float64 `json:"conversionsFromInteractionsRate,omitempty"`
 	// ConversionsFromInteractionsValuePerInteraction: The value of conversions
 	// from interactions divided by the number of ad interactions. This only
-	// includes conversion actions which include_in_conversions_metric attribute is
-	// set to true. If you use conversion-based bidding, your bid strategies will
-	// optimize for these conversions.
+	// includes conversion actions which `include_in_conversions_metric` attribute
+	// is set to `true`. If you use conversion-based bidding, your bid strategies
+	// will optimize for these conversions.
 	ConversionsFromInteractionsValuePerInteraction float64 `json:"conversionsFromInteractionsValuePerInteraction,omitempty"`
 	// ConversionsValue: The sum of conversion values for the conversions included
 	// in the "conversions" field. This metric is useful only if you entered a
@@ -1321,9 +1326,10 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	ConversionsValuePerCost float64 `json:"conversionsValuePerCost,omitempty"`
 	// CostMicros: The sum of your cost-per-click (CPC) and cost-per-thousand
 	// impressions (CPM) costs during this period. This metric is a monetary value
-	// and returned in the customer's currency by default. See the metrics_currency
-	// parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// and returned in the customer's currency by default. See the
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause)
+	// for more details.
 	CostMicros int64 `json:"costMicros,omitempty,string"`
 	// CostOfGoodsSoldMicros: Cost of goods sold (COGS) is the total cost of the
 	// products you sold in orders attributed to your ads. How it works: You can
@@ -1343,24 +1349,26 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	CostPerConversion float64 `json:"costPerConversion,omitempty"`
 	// CostPerCurrentModelAttributedConversion: The cost of ad interactions divided
 	// by current model attributed conversions. This only includes conversion
-	// actions which include_in_conversions_metric attribute is set to true. If you
-	// use conversion-based bidding, your bid strategies will optimize for these
-	// conversions.
+	// actions which `include_in_conversions_metric` attribute is set to `true`. If
+	// you use conversion-based bidding, your bid strategies will optimize for
+	// these conversions.
 	CostPerCurrentModelAttributedConversion float64 `json:"costPerCurrentModelAttributedConversion,omitempty"`
 	// CrossDeviceConversions: Conversions from when a customer clicks on an ad on
 	// one device, then converts on a different device or browser. Cross-device
-	// conversions are already included in all_conversions.
+	// conversions are already included in `all_conversions`.
 	CrossDeviceConversions float64 `json:"crossDeviceConversions,omitempty"`
 	// CrossDeviceConversionsByConversionDate: The number of cross-device
-	// conversions by conversion date. Details for the by_conversion_date columns
-	// are available at https://support.google.com/sa360/answer/9250611.
+	// conversions by conversion date. Details for the `by_conversion_date` columns
+	// are available at About the "All conversions" column
+	// (https://support.google.com/sa360/answer/9250611)
 	CrossDeviceConversionsByConversionDate float64 `json:"crossDeviceConversionsByConversionDate,omitempty"`
 	// CrossDeviceConversionsValue: The sum of the value of cross-device
 	// conversions.
 	CrossDeviceConversionsValue float64 `json:"crossDeviceConversionsValue,omitempty"`
 	// CrossDeviceConversionsValueByConversionDate: The sum of cross-device
-	// conversions value by conversion date. Details for the by_conversion_date
-	// columns are available at https://support.google.com/sa360/answer/9250611.
+	// conversions value by conversion date. Details for the `by_conversion_date`
+	// columns are available at About the "All conversions" column
+	// (https://support.google.com/sa360/answer/9250611)
 	CrossDeviceConversionsValueByConversionDate float64 `json:"crossDeviceConversionsValueByConversionDate,omitempty"`
 	// CrossSellCostOfGoodsSoldMicros: Cross-sell cost of goods sold (COGS) is the
 	// total cost of products sold as a result of advertising a different product.
@@ -1375,9 +1383,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// value of $3, the shirt has a cost of goods sold value of $5. The cross-sell
 	// cost of goods sold for this order is $5. This metric is only available if
 	// you report conversions with cart data. This metric is a monetary value and
-	// returned in the customer's currency by default. See the metrics_currency
-	// parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// returned in the customer's currency by default. See the `metrics_currency`
+	// parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	CrossSellCostOfGoodsSoldMicros int64 `json:"crossSellCostOfGoodsSoldMicros,omitempty,string"`
 	// CrossSellGrossProfitMicros: Cross-sell gross profit is the profit you made
 	// from products sold as a result of advertising a different product, minus
@@ -1393,8 +1401,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// cross-sell gross profit of this order is $15 = $20 - $5. This metric is only
 	// available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	CrossSellGrossProfitMicros int64 `json:"crossSellGrossProfitMicros,omitempty,string"`
 	// CrossSellRevenueMicros: Cross-sell revenue is the total amount you made from
 	// products sold as a result of advertising a different product. How it works:
@@ -1409,8 +1417,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// priced $20. The cross-sell revenue of this order is $20. This metric is only
 	// available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	CrossSellRevenueMicros int64 `json:"crossSellRevenueMicros,omitempty,string"`
 	// CrossSellUnitsSold: Cross-sell units sold is the total number of products
 	// sold as a result of advertising a different product. How it works: You
@@ -1434,15 +1442,15 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// that are detected through routine means of filtration (that is, known
 	// invalid data-center traffic, bots and spiders or other crawlers, irregular
 	// patterns, etc). You're not charged for them, and they don't affect your
-	// account statistics. See the help page at
-	// https://support.google.com/campaignmanager/answer/6076504 for details.
+	// account statistics. See Filtering invalid traffic to ensure quality
+	// (https://support.google.com/campaignmanager/answer/6076504).
 	GeneralInvalidClickRate float64 `json:"generalInvalidClickRate,omitempty"`
 	// GeneralInvalidClicks: Number of general invalid clicks. These are a subset
 	// of your invalid clicks that are detected through routine means of filtration
 	// (such as known invalid data-center traffic, bots and spiders or other
 	// crawlers, irregular patterns, etc.). You're not charged for them, and they
-	// don't affect your account statistics. See the help page at
-	// https://support.google.com/campaignmanager/answer/6076504 for details.
+	// don't affect your account statistics. See Filtering invalid traffic to
+	// ensure quality (https://support.google.com/campaignmanager/answer/6076504).
 	GeneralInvalidClicks int64 `json:"generalInvalidClicks,omitempty,string"`
 	// GrossProfitMargin: Gross profit margin is the percentage gross profit you
 	// made from orders attributed to your ads, after taking out the cost of goods
@@ -1550,9 +1558,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// value of $3, the shirt has a cost of goods sold value of $5. The lead cost
 	// of goods sold for this order is $3. This metric is only available if you
 	// report conversions with cart data. This metric is a monetary value and
-	// returned in the customer's currency by default. See the metrics_currency
-	// parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// returned in the customer's currency by default. See the `metrics_currency`
+	// parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	LeadCostOfGoodsSoldMicros int64 `json:"leadCostOfGoodsSoldMicros,omitempty,string"`
 	// LeadGrossProfitMicros: Lead gross profit is the profit you made from
 	// products sold as a result of advertising the same product, minus cost of
@@ -1567,8 +1575,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// has a cost of goods sold value of $3. The lead gross profit of this order is
 	// $7 = $10 - $3. This metric is only available if you report conversions with
 	// cart data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	LeadGrossProfitMicros int64 `json:"leadGrossProfitMicros,omitempty,string"`
 	// LeadRevenueMicros: Lead revenue is the total amount you made from products
 	// sold as a result of advertising the same product. How it works: You report
@@ -1582,8 +1591,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// hat is priced $10 and the shirt is priced $20. The lead revenue of this
 	// order is $10. This metric is only available if you report conversions with
 	// cart data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	LeadRevenueMicros int64 `json:"leadRevenueMicros,omitempty,string"`
 	// LeadUnitsSold: Lead units sold is the total number of products sold as a
 	// result of advertising the same product. How it works: You report conversions
@@ -1624,8 +1634,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	RevenueMicros int64 `json:"revenueMicros,omitempty,string"`
 	// SearchAbsoluteTopImpressionShare: The percentage of the customer's Shopping
 	// or Search ad impressions that are shown in the most prominent Shopping
-	// position. See https://support.google.com/sa360/answer/9566729 for details.
-	// Any value below 0.1 is reported as 0.0999.
+	// position. See About top and absolute top metrics
+	// (https://support.google.com/sa360/answer/9566729) for details. Any value
+	// below 0.1 is reported as 0.0999.
 	SearchAbsoluteTopImpressionShare float64 `json:"searchAbsoluteTopImpressionShare,omitempty"`
 	// SearchBudgetLostAbsoluteTopImpressionShare: The number estimating how often
 	// your ad wasn't the very first ad among the top ads in the search results due
@@ -1638,10 +1649,10 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// was too low. Note: Search budget lost impression share is reported in the
 	// range of 0 to 0.9. Any value above 0.9 is reported as 0.9001.
 	SearchBudgetLostImpressionShare float64 `json:"searchBudgetLostImpressionShare,omitempty"`
-	// SearchBudgetLostTopImpressionShare: The number estimating how often your ad
-	// didn't show adjacent to the top organic search results due to a low budget.
-	// Note: Search budget lost top impression share is reported in the range of 0
-	// to 0.9. Any value above 0.9 is reported as 0.9001.
+	// SearchBudgetLostTopImpressionShare: The estimated percent of times that your
+	// ad didn't show adjacent to the top organic search results due to a low
+	// budget. Note: Search budget lost top impression share is reported in the
+	// range of 0 to 0.9. Any value above 0.9 is reported as 0.9001.
 	SearchBudgetLostTopImpressionShare float64 `json:"searchBudgetLostTopImpressionShare,omitempty"`
 	// SearchClickShare: The number of clicks you've received on the Search Network
 	// divided by the estimated number of clicks you were eligible to receive.
@@ -1705,8 +1716,8 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// ValuePerAllConversionsByConversionDate: The value of all conversions divided
 	// by the number of all conversions. When this column is selected with date,
 	// the values in date column means the conversion date. Details for the
-	// by_conversion_date columns are available at
-	// https://support.google.com/sa360/answer/9250611.
+	// `by_conversion_date` columns are available at About the "All conversions"
+	// column (https://support.google.com/sa360/answer/9250611).
 	ValuePerAllConversionsByConversionDate float64 `json:"valuePerAllConversionsByConversionDate,omitempty"`
 	// ValuePerConversion: The value of biddable conversion divided by the number
 	// of biddable conversions. Shows how much, on average, each of the biddable
@@ -2008,7 +2019,8 @@ func (s GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo) 
 }
 
 // GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo: A Search Ads
-// 360 expanded text ad.
+// 360 expanded text ad. Expanded text ads are deprecated. Use
+// SearchAds360ResponsiveSearchAd instead.
 type GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo struct {
 	// AdTrackingId: The tracking id of the ad.
 	AdTrackingId int64 `json:"adTrackingId,omitempty,string"`
@@ -2449,6 +2461,76 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 
 func (s GoogleAdsSearchads360V0Common__Segments) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Common__Segments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__SyntheticContentAttestation: Represents an
+// attestation about synthetic content from a single source.
+type GoogleAdsSearchads360V0Common__SyntheticContentAttestation struct {
+	// Source: The source of the synthetic content attestation.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return values only. Represents value unknown in this
+	// version.
+	//   "ADVERTISER_ATTESTED" - Attestation provided by the advertiser.
+	//   "GOOGLE_GENERATED_ADVERTISER_REVIEWED" - Google-generated content with
+	// advertiser review or input.
+	//   "GOOGLE_GENERATED_FULLY_AUTOMATED" - Google-autogenerated content without
+	// advertiser review.
+	Source string `json:"source,omitempty"`
+	// Status: Indicates whether the content is considered synthetic by this
+	// source.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return values only. Represents value unknown in this
+	// version.
+	//   "NOT_SYNTHETIC" - The content is attested as not synthetic.
+	//   "IS_SYNTHETIC" - The content is attested as synthetic.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Source") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Common__SyntheticContentAttestation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__SyntheticContentAttestation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Common__SyntheticContentInfo: Container for synthetic
+// content attestations from different sources, such as the advertiser and
+// Google systems.
+type GoogleAdsSearchads360V0Common__SyntheticContentInfo struct {
+	// AdvertiserAttestation: Input provided by the advertiser.
+	AdvertiserAttestation *GoogleAdsSearchads360V0Common__SyntheticContentAttestation `json:"advertiserAttestation,omitempty"`
+	// SystemAttestation: Output only. Information about synthetic content
+	// generated by Google's systems.
+	SystemAttestation *GoogleAdsSearchads360V0Common__SyntheticContentAttestation `json:"systemAttestation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdvertiserAttestation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdvertiserAttestation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V0Common__SyntheticContentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Common__SyntheticContentInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3334,6 +3416,10 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	// "last" date.
 	//   "CANNOT_MODIFY_START_DATE_IF_ALREADY_STARTED" - Trying to change start
 	// date on a resource that has started.
+	//   "REQUESTED_DATE_GRANULARITY_NOT_SUPPORTED" - The requested time
+	// granularity is not supported for the date range in the query. Metrics with
+	// daily, hourly, or weekly segmentation are only available for the last 37
+	// months.
 	DateRangeError string `json:"dateRangeError,omitempty"`
 	// DistinctError: The reasons for the distinct error
 	//
@@ -4733,6 +4819,8 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	// dynamic search ad.
 	ExpandedDynamicSearchAd *GoogleAdsSearchads360V0Common__SearchAds360ExpandedDynamicSearchAdInfo `json:"expandedDynamicSearchAd,omitempty"`
 	// ExpandedTextAd: Immutable. Details pertaining to an expanded text ad.
+	// Expanded text ads are deprecated. Use `SearchAds360ResponsiveSearchAd`
+	// instead.
 	ExpandedTextAd *GoogleAdsSearchads360V0Common__SearchAds360ExpandedTextAdInfo `json:"expandedTextAd,omitempty"`
 	// FinalAppUrls: A list of final app URLs that will be used on mobile if the
 	// user has the specific app installed.
@@ -4758,6 +4846,11 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	ResourceName string `json:"resourceName,omitempty"`
 	// ResponsiveSearchAd: Immutable. Details pertaining to a responsive search ad.
 	ResponsiveSearchAd *GoogleAdsSearchads360V0Common__SearchAds360ResponsiveSearchAdInfo `json:"responsiveSearchAd,omitempty"`
+	// SyntheticContentInfo: Synthetic content info for the ad. Only ads with
+	// specific ad types are eligible for updates using the
+	// `synthetic_content_info` field. Allowed `AdType` values: * `HTML5_UPLOAD_AD`
+	// * `DYNAMIC_HTML5_AD` * `IMAGE_AD`
+	SyntheticContentInfo *GoogleAdsSearchads360V0Common__SyntheticContentInfo `json:"syntheticContentInfo,omitempty"`
 	// TextAd: Immutable. Details pertaining to a text ad.
 	TextAd *GoogleAdsSearchads360V0Common__SearchAds360TextAdInfo `json:"textAd,omitempty"`
 	// TrackingUrlTemplate: The URL template for constructing a tracking URL.
@@ -4769,7 +4862,8 @@ type GoogleAdsSearchads360V0Resources__Ad struct {
 	//   "UNKNOWN" - The received value is not known in this version. This is a
 	// response-only value.
 	//   "TEXT_AD" - The ad is a text ad.
-	//   "EXPANDED_TEXT_AD" - The ad is an expanded text ad.
+	//   "EXPANDED_TEXT_AD" - The ad is an expanded text ad. Expanded text ads are
+	// deprecated.
 	//   "CALL_ONLY_AD" - The ad is a call only ad.
 	//   "EXPANDED_DYNAMIC_SEARCH_AD" - The ad is an expanded dynamic search ad.
 	//   "HOTEL_AD" - The ad is a hotel ad.
@@ -5616,6 +5710,13 @@ func (s GoogleAdsSearchads360V0Resources__AdGroupLabel) MarshalJSON() ([]byte, e
 }
 
 // GoogleAdsSearchads360V0Resources__AgeRangeView: An age range view.
+// Represents the view of a customer's performance metrics (like impressions
+// and clicks) aggregated by age range. All statistics are aggregated at the ad
+// group level. Note: While you can segment metrics by age range using
+// `age_range_view` or by gender using `gender_view`, the Search Ads 360 API
+// does not support segmenting metrics by both age range and gender
+// simultaneously in a single query. Analyzing performance across both
+// dimensions combined is not supported in the Search Ads 360 API.
 type GoogleAdsSearchads360V0Resources__AgeRangeView struct {
 	// ResourceName: Output only. The resource name of the age range view. Age
 	// range view resource names have the form:
@@ -5708,6 +5809,11 @@ type GoogleAdsSearchads360V0Resources__Asset struct {
 	//   "PENDING_SYSTEM_GENERATED" - The asset is system generated pending user
 	// review.
 	Status string `json:"status,omitempty"`
+	// SyntheticContentInfo: Synthetic content info for the asset. Only assets with
+	// specific asset types are eligible for updates using the
+	// `synthetic_content_info` field. Allowed `AssetType` values: * `IMAGE` *
+	// `MEDIA_BUNDLE` * `YOUTUBE_VIDEO`
+	SyntheticContentInfo *GoogleAdsSearchads360V0Common__SyntheticContentInfo `json:"syntheticContentInfo,omitempty"`
 	// TextAsset: Output only. A text asset.
 	TextAsset *GoogleAdsSearchads360V0Common__TextAsset `json:"textAsset,omitempty"`
 	// TrackingUrlTemplate: URL template for constructing a tracking URL.
@@ -7497,9 +7603,9 @@ type GoogleAdsSearchads360V0Resources__ConversionAction struct {
 	// products and services after interacting with an ad. Read only.
 	//   "LEAD_FORM_SUBMIT" - Conversions reported when a user submits a lead form.
 	// Read only.
-	//   "SALESFORCE" - Deprecated: The Salesforce integration will be going away
-	// and replaced with an improved way to import your conversions from
-	// Salesforce. - see https://support.google.com/google-ads/answer/14728349
+	//   "SALESFORCE" - Deprecated: The Salesforce integration ended on May 31,
+	// 2025. See [Legacy Salesforce integration for conversions upgrade
+	// FAQ](//support.google.com/google-ads/answer/14728349).
 	//   "SEARCH_ADS_360" - Conversions imported from Search Ads 360 Floodlight
 	// data. Read only.
 	//   "SMART_CAMPAIGN_AD_CLICKS_TO_CALL" - Call conversions that occur on Smart
@@ -8174,10 +8280,14 @@ func (s GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V0Resources__GenderView: A gender view. The gender_view
-// resource reflects the effective serving state, rather than what criteria
-// were added. An ad group without gender criteria by default shows to all
-// genders, so all genders appear in gender_view with stats.
+// GoogleAdsSearchads360V0Resources__GenderView: A gender view resource.
+// Represents the view of a customer's performance metrics aggregated by
+// gender. All statistics are aggregated at the ad group level. Note: While you
+// can segment metrics by age range using `age_range_view` or by gender using
+// `gender_view`, the Search Ads 360 API does not support segmenting metrics by
+// both age range and gender simultaneously in a single query. Analyzing
+// performance across both dimensions combined is not supported in the Search
+// Ads 360 API.
 type GoogleAdsSearchads360V0Resources__GenderView struct {
 	// ResourceName: Output only. The resource name of the gender view. Gender view
 	// resource names have the form:
@@ -10972,6 +11082,13 @@ type GoogleAdsSearchads360V23Errors__ErrorCode struct {
 	//   "ACTION_NOT_PERMITTED_FOR_SUSPENDED_ACCOUNT" - The user does not have
 	// permission to perform this action on the resource or method because the
 	// Google Ads account is suspended.
+	//   "SEARCH_ADS360_OTHER_ENGINE_MUTATE_DENIED" - The user does not have
+	// permission to perform mutates on accounts that are not owned by Search Ads
+	// 360.
+	//   "SEARCH_ADS360_MUTATE_ALLOWLIST_DENIED" - This account does not have
+	// permission to perform mutates using the Search Ads 360 API.
+	//   "SEARCH_ADS360_MUTATE_FIELD_DENIED" - This field is not allowed for
+	// mutates.
 	AuthorizationError string `json:"authorizationError,omitempty"`
 	// AutomaticallyCreatedAssetRemovalError: The reasons for error in
 	// automatically created asset removal action.
@@ -12756,6 +12873,10 @@ type GoogleAdsSearchads360V23Errors__ErrorCode struct {
 	// "last" date.
 	//   "CANNOT_MODIFY_START_DATE_IF_ALREADY_STARTED" - Trying to change start
 	// date on a resource that has started.
+	//   "REQUESTED_DATE_GRANULARITY_NOT_SUPPORTED" - The requested time
+	// granularity is not supported for the date range in the query. Metrics with
+	// daily, hourly, or weekly segmentation are only available for the last 37
+	// months.
 	DateRangeError string `json:"dateRangeError,omitempty"`
 	// DistinctError: The reasons for the distinct error
 	//

@@ -682,14 +682,14 @@ type ProjectsStoredInfoTypesService struct {
 }
 
 // GooglePrivacyDlpV2Action: A task to execute on the completion of a job. See
-// https://cloud.google.com/sensitive-data-protection/docs/concepts-actions to
-// learn more.
+// https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-actions
+// to learn more.
 type GooglePrivacyDlpV2Action struct {
 	// Deidentify: Create a de-identified copy of the input data.
 	Deidentify *GooglePrivacyDlpV2Deidentify `json:"deidentify,omitempty"`
 	// JobNotificationEmails: Sends an email when the job completes. The email goes
 	// to IAM project owners and technical Essential Contacts
-	// (https://cloud.google.com/resource-manager/docs/managing-notification-contacts).
+	// (https://docs.cloud.google.com/resource-manager/docs/managing-notification-contacts).
 	JobNotificationEmails *GooglePrivacyDlpV2JobNotificationEmails `json:"jobNotificationEmails,omitempty"`
 	// PubSub: Publish a notification to a Pub/Sub topic.
 	PubSub *GooglePrivacyDlpV2PublishToPubSub `json:"pubSub,omitempty"`
@@ -762,7 +762,7 @@ type GooglePrivacyDlpV2AdjustByImageFindings struct {
 	ImageContainmentType *GooglePrivacyDlpV2ImageContainmentType `json:"imageContainmentType,omitempty"`
 	// InfoTypes: A list of image-supported infoTypes—excluding document
 	// infoTypes
-	// (https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents)—to
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents)—to
 	// be used as context for the adjustment rule. Sensitive Data Protection
 	// adjusts the likelihood of an image finding if its bounding box has the
 	// specified spatial relationship (defined by `image_containment_type`) with a
@@ -1337,7 +1337,7 @@ type GooglePrivacyDlpV2BigQueryOptions struct {
 	// inclusively. Both 0 and 100 means no limit. Defaults to 0. Only one of
 	// rows_limit and rows_limit_percent can be specified. Cannot be used in
 	// conjunction with TimespanConfig. Caution: A known issue
-	// (https://cloud.google.com/sensitive-data-protection/docs/known-issues#bq-sampling)
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/known-issues#bq-sampling)
 	// is causing the `rowsLimitPercent` field to behave unexpectedly. We recommend
 	// using `rowsLimit` instead.
 	RowsLimitPercent int64 `json:"rowsLimitPercent,omitempty"`
@@ -1573,7 +1573,7 @@ func (s GooglePrivacyDlpV2Bucket) MarshalJSON() ([]byte, error) {
 // string, timestamp. If the bound `Value` type differs from the type of data
 // being transformed, we will first attempt converting the type of the data to
 // be transformed to match the type of the bound before comparing. See
-// https://cloud.google.com/sensitive-data-protection/docs/concepts-bucketing
+// https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-bucketing
 // to learn more.
 type GooglePrivacyDlpV2BucketingConfig struct {
 	// Buckets: Set of buckets. Ranges must be non-overlapping.
@@ -1855,8 +1855,8 @@ func (s GooglePrivacyDlpV2CloudSqlDiscoveryTarget) MarshalJSON() ([]byte, error)
 // GooglePrivacyDlpV2CloudSqlIamCredential: Use IAM authentication to connect.
 // This requires the Cloud SQL IAM feature to be enabled on the instance, which
 // is not the default for Cloud SQL. See
-// https://cloud.google.com/sql/docs/postgres/authentication and
-// https://cloud.google.com/sql/docs/mysql/authentication.
+// https://docs.cloud.google.com/sql/docs/postgres/authentication and
+// https://docs.cloud.google.com/sql/docs/mysql/authentication.
 type GooglePrivacyDlpV2CloudSqlIamCredential struct {
 }
 
@@ -1970,7 +1970,7 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// `bytes_limit_per_file_percent` can be specified. This field can't be set if
 	// de-identification is requested. For certain file types, setting this field
 	// has no effect. For more information, see Limits on bytes scanned per file
-	// (https://cloud.google.com/sensitive-data-protection/docs/supported-file-types#max-byte-size-per-file).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/supported-file-types#max-byte-size-per-file).
 	BytesLimitPerFile int64 `json:"bytesLimitPerFile,omitempty,string"`
 	// BytesLimitPerFilePercent: Max percentage of bytes to scan from a file. The
 	// rest are omitted. The number of bytes scanned is rounded down. Must be
@@ -1979,7 +1979,7 @@ type GooglePrivacyDlpV2CloudStorageOptions struct {
 	// specified. This field can't be set if de-identification is requested. For
 	// certain file types, setting this field has no effect. For more information,
 	// see Limits on bytes scanned per file
-	// (https://cloud.google.com/sensitive-data-protection/docs/supported-file-types#max-byte-size-per-file).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/supported-file-types#max-byte-size-per-file).
 	BytesLimitPerFilePercent int64 `json:"bytesLimitPerFilePercent,omitempty"`
 	// FileSet: The set of one or more files to scan.
 	FileSet *GooglePrivacyDlpV2FileSet `json:"fileSet,omitempty"`
@@ -2278,8 +2278,8 @@ type GooglePrivacyDlpV2ColumnDataProfile struct {
 	// table.
 	DatasetId string `json:"datasetId,omitempty"`
 	// DatasetLocation: If supported, the location where the dataset's data is
-	// stored. See https://cloud.google.com/bigquery/docs/locations for supported
-	// BigQuery locations.
+	// stored. See https://docs.cloud.google.com/bigquery/docs/locations for
+	// supported BigQuery locations.
 	DatasetLocation string `json:"datasetLocation,omitempty"`
 	// DatasetProjectId: The Google Cloud project ID that owns the profiled
 	// resource.
@@ -2555,7 +2555,7 @@ type GooglePrivacyDlpV2ContentItem struct {
 	// chronological order.
 	Conversation *GooglePrivacyDlpV2Conversation `json:"conversation,omitempty"`
 	// Table: Structured content for inspection. See
-	// https://cloud.google.com/sensitive-data-protection/docs/inspecting-text#inspecting_a_table
+	// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-text#inspecting_a_table
 	// to learn more.
 	Table *GooglePrivacyDlpV2Table `json:"table,omitempty"`
 	// Value: String data to inspect or redact.
@@ -3102,8 +3102,8 @@ func (s GooglePrivacyDlpV2CryptoDeterministicConfig) MarshalJSON() ([]byte, erro
 // either 32 or 64 bytes. Outputs a base64 encoded representation of the hashed
 // output (for example, L7k0BHmF1ha5U3NfGykjro4xWi1MPVQPjhMAZbSV9mM=).
 // Currently, only string and integer values can be hashed. See
-// https://cloud.google.com/sensitive-data-protection/docs/pseudonymization to
-// learn more.
+// https://docs.cloud.google.com/sensitive-data-protection/docs/pseudonymization
+// to learn more.
 type GooglePrivacyDlpV2CryptoHashConfig struct {
 	// CryptoKey: The key used by the hash function.
 	CryptoKey *GooglePrivacyDlpV2CryptoKey `json:"cryptoKey,omitempty"`
@@ -3163,9 +3163,9 @@ func (s GooglePrivacyDlpV2CryptoKey) MarshalJSON() ([]byte, error) {
 // crypto key and context, the same identifier will be replaced with the same
 // surrogate. Identifiers must be at least two characters long. In the case
 // that the identifier is the empty string, it will be skipped. See
-// https://cloud.google.com/sensitive-data-protection/docs/pseudonymization to
-// learn more. Note: We recommend using CryptoDeterministicConfig for all use
-// cases which do not require preserving the input alphabet space and size,
+// https://docs.cloud.google.com/sensitive-data-protection/docs/pseudonymization
+// to learn more. Note: We recommend using CryptoDeterministicConfig for all
+// use cases which do not require preserving the input alphabet space and size,
 // plus warrant referential integrity. FPE incurs significant latency costs.
 type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// CommonAlphabet: Common alphabets.
@@ -3212,7 +3212,7 @@ type GooglePrivacyDlpV2CryptoReplaceFfxFpeConfig struct {
 	// full replacement value will be: 'MY_TOKEN_INFO_TYPE(3):abc' This annotation
 	// identifies the surrogate when inspecting content using the custom infoType
 	// `SurrogateType`
-	// (https://cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/InspectConfig#surrogatetype).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/InspectConfig#surrogatetype).
 	// This facilitates reversal of the surrogate when it occurs in free text. In
 	// order for inspection to work properly, the name of this infoType must not
 	// occur naturally anywhere in your data; otherwise, inspection may find a
@@ -3327,7 +3327,7 @@ type GooglePrivacyDlpV2DataProfileAction struct {
 	// PublishToChronicle: Publishes generated data profiles to Google Security
 	// Operations. For more information, see Use Sensitive Data Protection data in
 	// context-aware analytics
-	// (https://cloud.google.com/chronicle/docs/detection/usecase-dlp-high-risk-user-download).
+	// (https://docs.cloud.google.com/chronicle/docs/detection/usecase-dlp-high-risk-user-download).
 	PublishToChronicle *GooglePrivacyDlpV2PublishToChronicle `json:"publishToChronicle,omitempty"`
 	// PublishToDataplexCatalog: Publishes a portion of each profile to Dataplex
 	// Universal Catalog with the aspect type Sensitive Data Protection Profile.
@@ -3435,7 +3435,7 @@ type GooglePrivacyDlpV2DataProfileFinding struct {
 	// the resource profiled for this finding.
 	FullResourceName string `json:"fullResourceName,omitempty"`
 	// Infotype: The type of content
-	// (https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference)
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference)
 	// that might have been found.
 	Infotype *GooglePrivacyDlpV2InfoType `json:"infotype,omitempty"`
 	// Location: Where the content was found.
@@ -3534,7 +3534,7 @@ func (s GooglePrivacyDlpV2DataProfileFindingRecordLocation) MarshalJSON() ([]byt
 // to scan resources for profile generation. Only one data profile
 // configuration may exist per organization, folder, or project. The generated
 // data profiles are retained according to the [data retention policy]
-// (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+// (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 type GooglePrivacyDlpV2DataProfileJobConfig struct {
 	// DataProfileActions: Actions to execute at the completion of the job.
 	DataProfileActions []*GooglePrivacyDlpV2DataProfileAction `json:"dataProfileActions,omitempty"`
@@ -3547,7 +3547,7 @@ type GooglePrivacyDlpV2DataProfileJobConfig struct {
 	// "global" template is specified, it will be copied to that region and used
 	// instead. If no global or region-specific template is provided for a region
 	// with data, that region's data will not be scanned. For more information, see
-	// https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
+	// https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
 	InspectTemplates []string `json:"inspectTemplates,omitempty"`
 	// Location: The data to scan.
 	Location *GooglePrivacyDlpV2DataProfileLocation `json:"location,omitempty"`
@@ -3895,7 +3895,7 @@ func (s GooglePrivacyDlpV2DatastoreOptions) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2DateShiftConfig: Shifts dates by random number of days,
 // with option to be consistent for the same context. See
-// https://cloud.google.com/sensitive-data-protection/docs/concepts-date-shifting
+// https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-date-shifting
 // to learn more.
 type GooglePrivacyDlpV2DateShiftConfig struct {
 	// Context: Points to the field that contains the context, for example, an
@@ -4248,7 +4248,7 @@ func (s GooglePrivacyDlpV2DeidentifyDataSourceStats) MarshalJSON() ([]byte, erro
 
 // GooglePrivacyDlpV2DeidentifyTemplate: DeidentifyTemplates contains
 // instructions on how to de-identify content. See
-// https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
 // to learn more.
 type GooglePrivacyDlpV2DeidentifyTemplate struct {
 	// CreateTime: Output only. The creation timestamp of an inspectTemplate.
@@ -4493,10 +4493,10 @@ func (s GooglePrivacyDlpV2DetectionRule) MarshalJSON() ([]byte, error) {
 // "jennifer". Dictionary words containing a large number of characters that
 // are not letters or digits may result in unexpected findings because such
 // characters are treated as whitespace. The limits
-// (https://cloud.google.com/sensitive-data-protection/limits) page contains
-// details about the size limits of dictionaries. For dictionaries that do not
-// fit within these constraints, consider using `LargeCustomDictionaryConfig`
-// in the `StoredInfoType` API.
+// (https://docs.cloud.google.com/sensitive-data-protection/limits) page
+// contains details about the size limits of dictionaries. For dictionaries
+// that do not fit within these constraints, consider using
+// `LargeCustomDictionaryConfig` in the `StoredInfoType` API.
 type GooglePrivacyDlpV2Dictionary struct {
 	// CloudStoragePath: Newline-delimited file of words in Cloud Storage. Only a
 	// single file is accepted.
@@ -4737,11 +4737,11 @@ type GooglePrivacyDlpV2DiscoveryCloudStorageConditions struct {
 	//   "CLOUD_STORAGE_BUCKET_ATTRIBUTE_UNSPECIFIED" - Unused.
 	//   "ALL_SUPPORTED_BUCKETS" - Scan buckets regardless of the attribute.
 	//   "AUTOCLASS_DISABLED" - Buckets with
-	// [Autoclass](https://cloud.google.com/storage/docs/autoclass) disabled. Only
-	// one of AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set.
+	// [Autoclass](https://docs.cloud.google.com/storage/docs/autoclass) disabled.
+	// Only one of AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set.
 	//   "AUTOCLASS_ENABLED" - Buckets with
-	// [Autoclass](https://cloud.google.com/storage/docs/autoclass) enabled. Only
-	// one of AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set. Scanning
+	// [Autoclass](https://docs.cloud.google.com/storage/docs/autoclass) enabled.
+	// Only one of AUTOCLASS_DISABLED or AUTOCLASS_ENABLED should be set. Scanning
 	// Autoclass-enabled buckets can affect object storage classes.
 	IncludedBucketAttributes []string `json:"includedBucketAttributes,omitempty"`
 	// IncludedObjectAttributes: Required. Only objects with the specified
@@ -4864,7 +4864,7 @@ func (s GooglePrivacyDlpV2DiscoveryCloudStorageGenerationCadence) MarshalJSON() 
 // resources for profile generation. Only one discovery configuration may exist
 // per organization, folder, or project. The generated data profiles are
 // retained according to the [data retention policy]
-// (https://cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
+// (https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#retention).
 type GooglePrivacyDlpV2DiscoveryConfig struct {
 	// Actions: Actions to execute at the completion of scanning.
 	Actions []*GooglePrivacyDlpV2DataProfileAction `json:"actions,omitempty"`
@@ -4886,7 +4886,7 @@ type GooglePrivacyDlpV2DiscoveryConfig struct {
 	// "global" template is specified, it will be copied to that region and used
 	// instead. If no global or region-specific template is provided for a region
 	// with data, that region's data will not be scanned. For more information, see
-	// https://cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
+	// https://docs.cloud.google.com/sensitive-data-protection/docs/data-profiles#data-residency.
 	InspectTemplates []string `json:"inspectTemplates,omitempty"`
 	// LastRunTime: Output only. The timestamp of the last time this config was
 	// executed.
@@ -5544,11 +5544,11 @@ type GooglePrivacyDlpV2Domain struct {
 	// example, text, image, multimodal). The `TEXT_EMBEDDING` signal might also be
 	// present if the table contains text embeddings.
 	//   "VERTEX_PLUGIN" - The [Cloud SQL Vertex
-	// AI](https://cloud.google.com/sql/docs/postgres/integrate-cloud-sql-with-verte
-	// x-ai) plugin is installed on the database.
+	// AI](https://docs.cloud.google.com/sql/docs/postgres/integrate-cloud-sql-with-
+	// vertex-ai) plugin is installed on the database.
 	//   "VECTOR_PLUGIN" - Support for [Cloud SQL vector
-	// embeddings](https://cloud.google.com/sql/docs/mysql/enable-vector-search) is
-	// enabled on the database.
+	// embeddings](https://docs.cloud.google.com/sql/docs/mysql/enable-vector-search
+	// ) is enabled on the database.
 	//   "SOURCE_CODE" - Source code is present.
 	//   "SERVICE" - If the service determines the category type. For example,
 	// Vertex AI assets would always have a `Category` of `AI`.
@@ -5680,7 +5680,7 @@ type GooglePrivacyDlpV2ExcludeByImageFindings struct {
 	ImageContainmentType *GooglePrivacyDlpV2ImageContainmentType `json:"imageContainmentType,omitempty"`
 	// InfoTypes: A list of image-supported infoTypes—excluding document
 	// infoTypes
-	// (https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents)—to
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#documents)—to
 	// be used as context for the exclusion rule. A finding is excluded if its
 	// bounding box has the specified spatial relationship (defined by
 	// `image_containment_type`) with a finding of an infoType in this list. For
@@ -5807,9 +5807,9 @@ type GooglePrivacyDlpV2Export struct {
 	// the dataset and table are created, the discovery scan configuration will be
 	// updated with the dataset and table names. * See Analyze data profiles stored
 	// in BigQuery
-	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles).
 	// * See Sample queries for your BigQuery table
-	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#sample_sql_queries).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#sample_sql_queries).
 	// * Data is inserted using streaming insert
 	// (https://cloud.google.com/blog/products/bigquery/life-of-a-bigquery-streaming-insert)
 	// and so data may be in the buffer for a period of time after the profile has
@@ -5818,7 +5818,7 @@ type GooglePrivacyDlpV2Export struct {
 	// the time your topic receives the Pub/Sub notification. * The best practice
 	// is to use the same table for an entire organization so that you can take
 	// advantage of the provided Data Studio reports
-	// (https://cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#use_a_premade_report).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/analyze-data-profiles#use_a_premade_report).
 	// If you use VPC Service Controls to define security perimeters, then you must
 	// use a separate table for each boundary.
 	ProfileTable *GooglePrivacyDlpV2BigQueryTable `json:"profileTable,omitempty"`
@@ -6135,7 +6135,7 @@ type GooglePrivacyDlpV2FileStoreCollection struct {
 	// must have all of the provided tags attached. Tags refer to Resource Manager
 	// tags bound to the resource or its ancestors. For more information, see
 	// Manage schedules
-	// (https://cloud.google.com/sensitive-data-protection/docs/profile-project-cloud-storage#manage-schedules).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/profile-project-cloud-storage#manage-schedules).
 	IncludeTags *GooglePrivacyDlpV2TagFilters `json:"includeTags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IncludeRegexes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6184,8 +6184,8 @@ type GooglePrivacyDlpV2FileStoreDataProfile struct {
 	// operation failed, this is false.
 	FileStoreIsEmpty bool `json:"fileStoreIsEmpty,omitempty"`
 	// FileStoreLocation: The location of the file store. * Cloud Storage:
-	// https://cloud.google.com/storage/docs/locations#available-locations * Amazon
-	// S3:
+	// https://docs.cloud.google.com/storage/docs/locations#available-locations *
+	// Amazon S3:
 	// https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints
 	FileStoreLocation string `json:"fileStoreLocation,omitempty"`
 	// FileStorePath: The file store path. * Cloud Storage: `gs://{bucket}` *
@@ -6475,7 +6475,7 @@ type GooglePrivacyDlpV2FinishDlpJobRequest struct {
 // of type: double, long. If the bound Value type differs from the type of data
 // being transformed, we will first attempt converting the type of the data to
 // be transformed to match the type of the bound before comparing. See
-// https://cloud.google.com/sensitive-data-protection/docs/concepts-bucketing
+// https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-bucketing
 // to learn more.
 type GooglePrivacyDlpV2FixedSizeBucketingConfig struct {
 	// BucketSize: Required. Size of each bucket (except for minimum and maximum
@@ -6605,7 +6605,7 @@ type GooglePrivacyDlpV2HotwordRule struct {
 	// the hotword regex "\(xxx\)", where "xxx" is the area code in question. For
 	// tabular data, if you want to modify the likelihood of an entire column of
 	// findngs, see [Hotword example: Set the match likelihood of a table column]
-	// (https://cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes-likelihood#match-column-values).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes-likelihood#match-column-values).
 	Proximity *GooglePrivacyDlpV2Proximity `json:"proximity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HotwordRegex") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6999,7 +6999,7 @@ func (s GooglePrivacyDlpV2ImageTransformations) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2InfoType struct {
 	// Name: Name of the information type. Either a name of your choosing when
 	// creating a CustomInfoType, or one of the names listed at
-	// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+	// https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
 	// when specifying a built-in type. When sending Cloud DLP results to Data
 	// Catalog, infoType names should conform to the pattern
 	// `[A-Za-z0-9$_-]{1,64}`.
@@ -7428,7 +7428,7 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	//   "CONTENT_IMAGE" - Images found in the data.
 	ContentOptions []string `json:"contentOptions,omitempty"`
 	// CustomInfoTypes: CustomInfoTypes provided by the user. See
-	// https://cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes
+	// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes
 	// to learn more.
 	CustomInfoTypes []*GooglePrivacyDlpV2CustomInfoType `json:"customInfoTypes,omitempty"`
 	// ExcludeInfoTypes: When true, excludes type information of the findings. This
@@ -7440,7 +7440,7 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	IncludeQuote bool `json:"includeQuote,omitempty"`
 	// InfoTypes: Restricts what info_types to look for. The values must correspond
 	// to InfoType values returned by ListInfoTypes or listed at
-	// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference.
+	// https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference.
 	// When no InfoTypes or CustomInfoTypes are specified in a request, the system
 	// may automatically choose a default list of detectors to run, which may
 	// change over time. If you need precise control and predictability as to what
@@ -7462,7 +7462,7 @@ type GooglePrivacyDlpV2InspectConfig struct {
 	// default is POSSIBLE. In general, the highest likelihood setting yields the
 	// fewest findings in results and the lowest chance of a false positive. For
 	// more information, see Match likelihood
-	// (https://cloud.google.com/sensitive-data-protection/docs/likelihood).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/likelihood).
 	//
 	// Possible values:
 	//   "LIKELIHOOD_UNSPECIFIED" - Default value; same as POSSIBLE.
@@ -7648,7 +7648,7 @@ func (s GooglePrivacyDlpV2InspectResult) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2InspectTemplate: The inspectTemplate contains a
 // configuration (set of types of sensitive data to be detected) to be used
 // anywhere you otherwise would normally specify InspectConfig. See
-// https://cloud.google.com/sensitive-data-protection/docs/concepts-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-templates
 // to learn more.
 type GooglePrivacyDlpV2InspectTemplate struct {
 	// AllowLimitedAvailabilityInfoTypes: Optional. Enables the use of
@@ -7752,13 +7752,13 @@ func (s GooglePrivacyDlpV2InspectionRuleSet) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2JobNotificationEmails: Sends an email when the job
 // completes. The email goes to IAM project owners and technical Essential
 // Contacts
-// (https://cloud.google.com/resource-manager/docs/managing-notification-contacts).
+// (https://docs.cloud.google.com/resource-manager/docs/managing-notification-contacts).
 type GooglePrivacyDlpV2JobNotificationEmails struct {
 }
 
 // GooglePrivacyDlpV2JobTrigger: Contains a configuration to make API calls on
 // a repeating basis. See
-// https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
 // to learn more.
 type GooglePrivacyDlpV2JobTrigger struct {
 	// CreateTime: Output only. The creation timestamp of a triggeredJob.
@@ -8181,7 +8181,7 @@ func (s GooglePrivacyDlpV2KindExpression) MarshalJSON() ([]byte, error) {
 // key. Authorization requires the following IAM permissions when sending a
 // request to perform a crypto transformation using a KMS-wrapped crypto key:
 // dlp.kms.encrypt For more information, see [Creating a wrapped key]
-// (https://cloud.google.com/sensitive-data-protection/docs/create-wrapped-key).
+// (https://docs.cloud.google.com/sensitive-data-protection/docs/create-wrapped-key).
 // Note: When you use Cloud KMS for cryptographic operations, charges apply
 // (https://cloud.google.com/kms/pricing).
 type GooglePrivacyDlpV2KmsWrappedCryptoKey struct {
@@ -8379,7 +8379,7 @@ func (s GooglePrivacyDlpV2LabelFieldMetadata) MarshalJSON() ([]byte, error) {
 // GooglePrivacyDlpV2LargeCustomDictionaryConfig: Configuration for a custom
 // dictionary created from a data source of any size up to the maximum size
 // defined in the limits
-// (https://cloud.google.com/sensitive-data-protection/limits) page. The
+// (https://docs.cloud.google.com/sensitive-data-protection/limits) page. The
 // artifacts of dictionary creation are stored in the specified Cloud Storage
 // location. Consider using `CustomInfoType.Dictionary` for smaller
 // dictionaries that satisfy the size requirements.
@@ -9177,7 +9177,7 @@ func (s GooglePrivacyDlpV2OtherCloudDiscoveryStartingLocation) MarshalJSON() ([]
 // GooglePrivacyDlpV2OtherCloudDiscoveryTarget: Target used to match against
 // for discovery of resources from other clouds. An AWS connector in Security
 // Command Center (Enterprise
-// (https://cloud.google.com/security-command-center/docs/connect-scc-to-aws)
+// (https://docs.cloud.google.com/security-command-center/docs/connect-scc-to-aws)
 // is required to use this feature.
 type GooglePrivacyDlpV2OtherCloudDiscoveryTarget struct {
 	// Conditions: Optional. In addition to matching the filter, these conditions
@@ -9739,7 +9739,7 @@ type GooglePrivacyDlpV2Proximity struct {
 	// tabular data, if you want to modify the likelihood of an entire column of
 	// findngs, set this to 1. For more information, see [Hotword example: Set the
 	// match likelihood of a table column]
-	// (https://cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes-likelihood#match-column-values).
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes-likelihood#match-column-values).
 	WindowBefore int64 `json:"windowBefore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "WindowAfter") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9896,7 +9896,7 @@ type GooglePrivacyDlpV2PublishFindingsToCloudDataCatalog struct {
 // DlpJob to Dataplex Universal Catalog as a
 // `sensitive-data-protection-job-result` aspect. For more information, see
 // Send inspection results to Dataplex Universal Catalog as aspects
-// (https://cloud.google.com/sensitive-data-protection/docs/add-aspects-inspection-job).
+// (https://docs.cloud.google.com/sensitive-data-protection/docs/add-aspects-inspection-job).
 // Aspects are stored in Dataplex Universal Catalog storage and are governed by
 // service-specific policies for Dataplex Universal Catalog. For more
 // information, see Service Specific Terms
@@ -9926,7 +9926,7 @@ type GooglePrivacyDlpV2PublishToChronicle struct {
 // GooglePrivacyDlpV2PublishToDataplexCatalog: Create Dataplex Universal
 // Catalog aspects for profiled resources with the aspect type Sensitive Data
 // Protection Profile. To learn more about aspects, see
-// https://cloud.google.com/sensitive-data-protection/docs/add-aspects.
+// https://docs.cloud.google.com/sensitive-data-protection/docs/add-aspects.
 type GooglePrivacyDlpV2PublishToDataplexCatalog struct {
 	// LowerDataRiskToLow: Whether creating a Dataplex Universal Catalog aspect for
 	// a profiled resource should lower the risk of the profile for that resource.
@@ -9955,7 +9955,7 @@ func (s GooglePrivacyDlpV2PublishToDataplexCatalog) MarshalJSON() ([]byte, error
 // GooglePrivacyDlpV2PublishToPubSub: Publish a message into a given Pub/Sub
 // topic when DlpJob has completed. The message contains a single field,
 // `DlpJobName`, which is equal to the finished job's `DlpJob.name`
-// (https://cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/projects.dlpJobs#DlpJob).
+// (https://docs.cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/projects.dlpJobs#DlpJob).
 // Compatible with: Inspect, Risk
 type GooglePrivacyDlpV2PublishToPubSub struct {
 	// Topic: Cloud Pub/Sub topic to send notifications to. The topic must have
@@ -10507,8 +10507,8 @@ func (s GooglePrivacyDlpV2RelatedResource) MarshalJSON() ([]byte, error) {
 // value randomly selected from the dictionary.
 type GooglePrivacyDlpV2ReplaceDictionaryConfig struct {
 	// WordList: A list of words to select from for random replacement. The limits
-	// (https://cloud.google.com/sensitive-data-protection/limits) page contains
-	// details about the size limits of dictionaries.
+	// (https://docs.cloud.google.com/sensitive-data-protection/limits) page
+	// contains details about the size limits of dictionaries.
 	WordList *GooglePrivacyDlpV2WordList `json:"wordList,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "WordList") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10671,7 +10671,7 @@ func (s GooglePrivacyDlpV2Result) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2RiskAnalysisJobConfig: Configuration for a risk analysis
 // job. See
-// https://cloud.google.com/sensitive-data-protection/docs/concepts-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/concepts-risk-analysis
 // to learn more.
 type GooglePrivacyDlpV2RiskAnalysisJobConfig struct {
 	// Actions: Actions to execute at the completion of the job. Are executed in
@@ -10902,7 +10902,7 @@ func (s GooglePrivacyDlpV2SecretManagerCredential) MarshalJSON() ([]byte, error)
 // for secrets daily. No inspect template should be included in the discovery
 // config for a security benchmarks scan. Instead, the built-in list of secrets
 // and credentials infoTypes will be used (see
-// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference#credentials_and_secrets).
+// https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference#credentials_and_secrets).
 // Credentials and secrets discovered will be reported as vulnerabilities to
 // Security Command Center.
 type GooglePrivacyDlpV2SecretsDiscoveryTarget struct {
@@ -11137,7 +11137,7 @@ func (s GooglePrivacyDlpV2StoredInfoType) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2StoredInfoTypeConfig: Configuration for stored infoTypes.
 // All fields and subfield are provided by the user. For more information, see
-// https://cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes.
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-custom-infotypes.
 type GooglePrivacyDlpV2StoredInfoTypeConfig struct {
 	// Description: Description of the StoredInfoType (max 256 characters).
 	Description string `json:"description,omitempty"`
@@ -11331,7 +11331,7 @@ func (s GooglePrivacyDlpV2SummaryResult) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2SurrogateType: Message for detecting output from
 // deidentification transformations such as `CryptoReplaceFfxFpeConfig`
-// (https://cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/organizations.deidentifyTemplates#cryptoreplaceffxfpeconfig).
+// (https://docs.cloud.google.com/sensitive-data-protection/docs/reference/rest/v2/organizations.deidentifyTemplates#cryptoreplaceffxfpeconfig).
 // These types of transformations are those that perform pseudonymization,
 // thereby producing a "surrogate" as output. This should be used in
 // conjunction with a field on the transformation such as
@@ -11342,7 +11342,7 @@ type GooglePrivacyDlpV2SurrogateType struct {
 
 // GooglePrivacyDlpV2Table: Structured content to inspect. Up to 50,000
 // `Value`s per request allowed. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-structured-text#inspecting_a_table
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-structured-text#inspecting_a_table
 // to learn more.
 type GooglePrivacyDlpV2Table struct {
 	// Headers: Headers of the table.
@@ -11381,8 +11381,8 @@ type GooglePrivacyDlpV2TableDataProfile struct {
 	// DatasetId: If the resource is BigQuery, the dataset ID.
 	DatasetId string `json:"datasetId,omitempty"`
 	// DatasetLocation: If supported, the location where the dataset's data is
-	// stored. See https://cloud.google.com/bigquery/docs/locations for supported
-	// locations.
+	// stored. See https://docs.cloud.google.com/bigquery/docs/locations for
+	// supported locations.
 	DatasetLocation string `json:"datasetLocation,omitempty"`
 	// DatasetProjectId: The Google Cloud project ID that owns the resource.
 	DatasetProjectId string `json:"datasetProjectId,omitempty"`
@@ -11681,17 +11681,17 @@ func (s GooglePrivacyDlpV2TagFilters) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2TagResources: If set, attaches the [tags]
-// (https://cloud.google.com/resource-manager/docs/tags/tags-overview) provided
-// to profiled resources. Tags support access control
-// (https://cloud.google.com/iam/docs/tags-access-control). You can
+// (https://docs.cloud.google.com/resource-manager/docs/tags/tags-overview)
+// provided to profiled resources. Tags support access control
+// (https://docs.cloud.google.com/iam/docs/tags-access-control). You can
 // conditionally grant or deny access to a resource based on whether the
 // resource has a specific tag.
 type GooglePrivacyDlpV2TagResources struct {
 	// LowerDataRiskToLow: Whether applying a tag to a resource should lower the
 	// risk of the profile for that resource. For example, in conjunction with an
-	// IAM deny policy (https://cloud.google.com/iam/docs/deny-overview), you can
-	// deny all principals a permission if a tag value is present, mitigating the
-	// risk of the resource. This also lowers the data risk of resources at the
+	// IAM deny policy (https://docs.cloud.google.com/iam/docs/deny-overview), you
+	// can deny all principals a permission if a tag value is present, mitigating
+	// the risk of the resource. This also lowers the data risk of resources at the
 	// lower levels of the resource hierarchy. For example, reducing the data risk
 	// of a table data profile also reduces the data risk of the constituent column
 	// data profiles.
@@ -11865,7 +11865,7 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	// starts. This is because streaming buffer rows are not read during inspection
 	// and reading up to the current timestamp will result in skipped rows. See the
 	// known issue
-	// (https://cloud.google.com/sensitive-data-protection/docs/known-issues#recently-streamed-data)
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/known-issues#recently-streamed-data)
 	// related to this operation.
 	EnableAutoPopulationOfTimespanConfig bool `json:"enableAutoPopulationOfTimespanConfig,omitempty"`
 	// EndTime: Exclude files, tables, or rows newer than this value. If not set,
@@ -11883,7 +11883,7 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	// Valid data types of the provided BigQuery column are: `INTEGER`, `DATE`,
 	// `TIMESTAMP`, and `DATETIME`. If your BigQuery table is partitioned at
 	// ingestion time
-	// (https://cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time),
+	// (https://docs.cloud.google.com/bigquery/docs/partitioned-tables#ingestion_time),
 	// you can use any of the following pseudo-columns as your timestamp field.
 	// When used with Cloud DLP, these pseudo-column names are case sensitive. -
 	// `_PARTITIONTIME` - `_PARTITIONDATE` - `_PARTITION_LOAD_TIME` **For
@@ -11892,7 +11892,7 @@ type GooglePrivacyDlpV2TimespanConfig struct {
 	// timestamp property or contains empty or invalid values, then it is included.
 	// Valid data types of the provided timestamp property are: `TIMESTAMP`. See
 	// the known issue
-	// (https://cloud.google.com/sensitive-data-protection/docs/known-issues#bq-timespan)
+	// (https://docs.cloud.google.com/sensitive-data-protection/docs/known-issues#bq-timespan)
 	// related to this operation.
 	TimestampField *GooglePrivacyDlpV2FieldId `json:"timestampField,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
@@ -12965,7 +12965,7 @@ type InfoTypesListCall struct {
 
 // List: Returns a list of the sensitive information types that the DLP API
 // supports. See
-// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+// https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
 // to learn more.
 func (r *InfoTypesService) List() *InfoTypesListCall {
 	c := &InfoTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13101,7 +13101,7 @@ type LocationsInfoTypesListCall struct {
 
 // List: Returns a list of the sensitive information types that the DLP API
 // supports. See
-// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+// https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
 // to learn more.
 //
 //   - parent: The parent resource name. The format of this value is as follows:
@@ -13237,13 +13237,13 @@ type OrganizationsDeidentifyTemplatesCreateCall struct {
 
 // Create: Creates a DeidentifyTemplate for reusing frequently used
 // configuration for de-identifying content, images, and storage. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -13355,7 +13355,7 @@ type OrganizationsDeidentifyTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes a DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of the organization and deidentify template to be
@@ -13459,7 +13459,7 @@ type OrganizationsDeidentifyTemplatesGetCall struct {
 }
 
 // Get: Gets a DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of the organization and deidentify template to be
@@ -13573,13 +13573,13 @@ type OrganizationsDeidentifyTemplatesListCall struct {
 }
 
 // List: Lists DeidentifyTemplates. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -13754,7 +13754,7 @@ type OrganizationsDeidentifyTemplatesPatchCall struct {
 }
 
 // Patch: Updates the DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of organization and deidentify template to be updated,
@@ -13863,13 +13863,13 @@ type OrganizationsInspectTemplatesCreateCall struct {
 
 // Create: Creates an InspectTemplate for reusing frequently used configuration
 // for inspecting content, images, and storage. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -13981,7 +13981,7 @@ type OrganizationsInspectTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes an InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of the organization and inspectTemplate to be deleted,
@@ -14084,7 +14084,7 @@ type OrganizationsInspectTemplatesGetCall struct {
 }
 
 // Get: Gets an InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of the organization and inspectTemplate to be read,
@@ -14198,13 +14198,13 @@ type OrganizationsInspectTemplatesListCall struct {
 }
 
 // List: Lists InspectTemplates. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -14379,7 +14379,7 @@ type OrganizationsInspectTemplatesPatchCall struct {
 }
 
 // Patch: Updates the InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of organization and inspectTemplate to be updated, for
@@ -15523,13 +15523,13 @@ type OrganizationsLocationsDeidentifyTemplatesCreateCall struct {
 
 // Create: Creates a DeidentifyTemplate for reusing frequently used
 // configuration for de-identifying content, images, and storage. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -15641,7 +15641,7 @@ type OrganizationsLocationsDeidentifyTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes a DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of the organization and deidentify template to be
@@ -15745,7 +15745,7 @@ type OrganizationsLocationsDeidentifyTemplatesGetCall struct {
 }
 
 // Get: Gets a DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of the organization and deidentify template to be
@@ -15859,13 +15859,13 @@ type OrganizationsLocationsDeidentifyTemplatesListCall struct {
 }
 
 // List: Lists DeidentifyTemplates. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -16040,7 +16040,7 @@ type OrganizationsLocationsDeidentifyTemplatesPatchCall struct {
 }
 
 // Patch: Updates the DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of organization and deidentify template to be updated,
@@ -16735,14 +16735,14 @@ type OrganizationsLocationsDlpJobsListCall struct {
 }
 
 // List: Lists DlpJobs that match the specified filter in the request. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -17352,7 +17352,7 @@ type OrganizationsLocationsInfoTypesListCall struct {
 
 // List: Returns a list of the sensitive information types that the DLP API
 // supports. See
-// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+// https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
 // to learn more.
 //
 //   - parent: The parent resource name. The format of this value is as follows:
@@ -17488,13 +17488,13 @@ type OrganizationsLocationsInspectTemplatesCreateCall struct {
 
 // Create: Creates an InspectTemplate for reusing frequently used configuration
 // for inspecting content, images, and storage. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -17606,7 +17606,7 @@ type OrganizationsLocationsInspectTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes an InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of the organization and inspectTemplate to be deleted,
@@ -17709,7 +17709,7 @@ type OrganizationsLocationsInspectTemplatesGetCall struct {
 }
 
 // Get: Gets an InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of the organization and inspectTemplate to be read,
@@ -17823,13 +17823,13 @@ type OrganizationsLocationsInspectTemplatesListCall struct {
 }
 
 // List: Lists InspectTemplates. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -18004,7 +18004,7 @@ type OrganizationsLocationsInspectTemplatesPatchCall struct {
 }
 
 // Patch: Updates the InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of organization and inspectTemplate to be updated, for
@@ -18113,12 +18113,12 @@ type OrganizationsLocationsJobTriggersCreateCall struct {
 
 // Create: Creates a job trigger to run DLP actions such as scanning storage
 // for sensitive information on a set schedule. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -18227,7 +18227,7 @@ type OrganizationsLocationsJobTriggersDeleteCall struct {
 }
 
 // Delete: Deletes a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -18329,7 +18329,7 @@ type OrganizationsLocationsJobTriggersGetCall struct {
 }
 
 // Get: Gets a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -18442,12 +18442,12 @@ type OrganizationsLocationsJobTriggersListCall struct {
 }
 
 // List: Lists job triggers. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -18654,7 +18654,7 @@ type OrganizationsLocationsJobTriggersPatchCall struct {
 }
 
 // Patch: Updates a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -19053,13 +19053,13 @@ type OrganizationsLocationsStoredInfoTypesCreateCall struct {
 }
 
 // Create: Creates a pre-built stored infoType to be used for inspection. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -19171,7 +19171,7 @@ type OrganizationsLocationsStoredInfoTypesDeleteCall struct {
 }
 
 // Delete: Deletes a stored infoType. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of the organization and storedInfoType to be deleted,
@@ -19274,7 +19274,7 @@ type OrganizationsLocationsStoredInfoTypesGetCall struct {
 }
 
 // Get: Gets a stored infoType. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of the organization and storedInfoType to be read, for
@@ -19388,13 +19388,13 @@ type OrganizationsLocationsStoredInfoTypesListCall struct {
 }
 
 // List: Lists stored infoTypes. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -19567,7 +19567,7 @@ type OrganizationsLocationsStoredInfoTypesPatchCall struct {
 
 // Patch: Updates the stored infoType by creating a new version. The existing
 // version will continue to be used until the new version is ready. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of organization and storedInfoType to be updated, for
@@ -20073,13 +20073,13 @@ type OrganizationsStoredInfoTypesCreateCall struct {
 }
 
 // Create: Creates a pre-built stored infoType to be used for inspection. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -20191,7 +20191,7 @@ type OrganizationsStoredInfoTypesDeleteCall struct {
 }
 
 // Delete: Deletes a stored infoType. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of the organization and storedInfoType to be deleted,
@@ -20294,7 +20294,7 @@ type OrganizationsStoredInfoTypesGetCall struct {
 }
 
 // Get: Gets a stored infoType. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of the organization and storedInfoType to be read, for
@@ -20408,13 +20408,13 @@ type OrganizationsStoredInfoTypesListCall struct {
 }
 
 // List: Lists stored infoTypes. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -20587,7 +20587,7 @@ type OrganizationsStoredInfoTypesPatchCall struct {
 
 // Patch: Updates the stored infoType by creating a new version. The existing
 // version will continue to be used until the new version is ready. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of organization and storedInfoType to be updated, for
@@ -20696,7 +20696,7 @@ type ProjectsContentDeidentifyCall struct {
 
 // Deidentify: De-identifies potentially sensitive info from a ContentItem.
 // This method has limits on input size and output size. See
-// https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
+// https://docs.cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
 // to learn more. When no InfoTypes or CustomInfoTypes are specified in this
 // request, the system will automatically choose what detectors to run. By
 // default this may be all types, but may change over time as detectors are
@@ -20704,7 +20704,7 @@ type ProjectsContentDeidentifyCall struct {
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -20818,12 +20818,13 @@ type ProjectsContentInspectCall struct {
 // CustomInfoTypes are specified in this request, the system will automatically
 // choose what detectors to run. By default this may be all types, but may
 // change over time as detectors are updated. For how to guides, see
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-images
-// and https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-images
+// and
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-text,
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -20933,12 +20934,12 @@ type ProjectsContentReidentifyCall struct {
 }
 
 // Reidentify: Re-identifies content that has been de-identified. See
-// https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
+// https://docs.cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -21049,13 +21050,13 @@ type ProjectsDeidentifyTemplatesCreateCall struct {
 
 // Create: Creates a DeidentifyTemplate for reusing frequently used
 // configuration for de-identifying content, images, and storage. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -21167,7 +21168,7 @@ type ProjectsDeidentifyTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes a DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of the organization and deidentify template to be
@@ -21271,7 +21272,7 @@ type ProjectsDeidentifyTemplatesGetCall struct {
 }
 
 // Get: Gets a DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of the organization and deidentify template to be
@@ -21385,13 +21386,13 @@ type ProjectsDeidentifyTemplatesListCall struct {
 }
 
 // List: Lists DeidentifyTemplates. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -21566,7 +21567,7 @@ type ProjectsDeidentifyTemplatesPatchCall struct {
 }
 
 // Patch: Updates the DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of organization and deidentify template to be updated,
@@ -21676,9 +21677,9 @@ type ProjectsDlpJobsCancelCall struct {
 // Cancel: Starts asynchronous cancellation on a long-running DlpJob. The
 // server makes a best effort to cancel the DlpJob, but success is not
 // guaranteed. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 // - name: The name of the DlpJob resource to be cancelled.
@@ -21784,16 +21785,16 @@ type ProjectsDlpJobsCreateCall struct {
 }
 
 // Create: Creates a new job to inspect storage or calculate risk metrics. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect
 // jobs, the system will automatically choose what detectors to run. By default
 // this may be all types, but may change over time as detectors are updated.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -21904,9 +21905,9 @@ type ProjectsDlpJobsDeleteCall struct {
 // Delete: Deletes a long-running DlpJob. This method indicates that the client
 // is no longer interested in the DlpJob result. The job will be canceled if
 // possible. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 // - name: The name of the DlpJob resource to be deleted.
@@ -22007,9 +22008,9 @@ type ProjectsDlpJobsGetCall struct {
 }
 
 // Get: Gets the latest state of a long-running DlpJob. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 // - name: The name of the DlpJob resource.
@@ -22121,14 +22122,14 @@ type ProjectsDlpJobsListCall struct {
 }
 
 // List: Lists DlpJobs that match the specified filter in the request. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -22335,7 +22336,7 @@ type ProjectsImageRedactCall struct {
 
 // Redact: Redacts potentially sensitive info from an image. This method has
 // limits on input size, processing time, and output size. See
-// https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
+// https://docs.cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
 // to learn more. When no InfoTypes or CustomInfoTypes are specified in this
 // request, the system will automatically choose what detectors to run. By
 // default this may be all types, but may change over time as detectors are
@@ -22344,7 +22345,7 @@ type ProjectsImageRedactCall struct {
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -22455,13 +22456,13 @@ type ProjectsInspectTemplatesCreateCall struct {
 
 // Create: Creates an InspectTemplate for reusing frequently used configuration
 // for inspecting content, images, and storage. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -22573,7 +22574,7 @@ type ProjectsInspectTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes an InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of the organization and inspectTemplate to be deleted,
@@ -22676,7 +22677,7 @@ type ProjectsInspectTemplatesGetCall struct {
 }
 
 // Get: Gets an InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of the organization and inspectTemplate to be read,
@@ -22790,13 +22791,13 @@ type ProjectsInspectTemplatesListCall struct {
 }
 
 // List: Lists InspectTemplates. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -22971,7 +22972,7 @@ type ProjectsInspectTemplatesPatchCall struct {
 }
 
 // Patch: Updates the InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of organization and inspectTemplate to be updated, for
@@ -23186,12 +23187,12 @@ type ProjectsJobTriggersCreateCall struct {
 
 // Create: Creates a job trigger to run DLP actions such as scanning storage
 // for sensitive information on a set schedule. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -23300,7 +23301,7 @@ type ProjectsJobTriggersDeleteCall struct {
 }
 
 // Delete: Deletes a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -23402,7 +23403,7 @@ type ProjectsJobTriggersGetCall struct {
 }
 
 // Get: Gets a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -23515,12 +23516,12 @@ type ProjectsJobTriggersListCall struct {
 }
 
 // List: Lists job triggers. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -23727,7 +23728,7 @@ type ProjectsJobTriggersPatchCall struct {
 }
 
 // Patch: Updates a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -24870,7 +24871,7 @@ type ProjectsLocationsContentDeidentifyCall struct {
 
 // Deidentify: De-identifies potentially sensitive info from a ContentItem.
 // This method has limits on input size and output size. See
-// https://cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
+// https://docs.cloud.google.com/sensitive-data-protection/docs/deidentify-sensitive-data
 // to learn more. When no InfoTypes or CustomInfoTypes are specified in this
 // request, the system will automatically choose what detectors to run. By
 // default this may be all types, but may change over time as detectors are
@@ -24878,7 +24879,7 @@ type ProjectsLocationsContentDeidentifyCall struct {
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -24992,12 +24993,13 @@ type ProjectsLocationsContentInspectCall struct {
 // CustomInfoTypes are specified in this request, the system will automatically
 // choose what detectors to run. By default this may be all types, but may
 // change over time as detectors are updated. For how to guides, see
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-images
-// and https://cloud.google.com/sensitive-data-protection/docs/inspecting-text,
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-images
+// and
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-text,
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -25107,12 +25109,12 @@ type ProjectsLocationsContentReidentifyCall struct {
 }
 
 // Reidentify: Re-identifies content that has been de-identified. See
-// https://cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
+// https://docs.cloud.google.com/sensitive-data-protection/docs/pseudonymization#re-identification_in_free_text_code_example
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -25793,13 +25795,13 @@ type ProjectsLocationsDeidentifyTemplatesCreateCall struct {
 
 // Create: Creates a DeidentifyTemplate for reusing frequently used
 // configuration for de-identifying content, images, and storage. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -25911,7 +25913,7 @@ type ProjectsLocationsDeidentifyTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes a DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of the organization and deidentify template to be
@@ -26015,7 +26017,7 @@ type ProjectsLocationsDeidentifyTemplatesGetCall struct {
 }
 
 // Get: Gets a DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of the organization and deidentify template to be
@@ -26129,13 +26131,13 @@ type ProjectsLocationsDeidentifyTemplatesListCall struct {
 }
 
 // List: Lists DeidentifyTemplates. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -26310,7 +26312,7 @@ type ProjectsLocationsDeidentifyTemplatesPatchCall struct {
 }
 
 // Patch: Updates the DeidentifyTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates-deid
 // to learn more.
 //
 //   - name: Resource name of organization and deidentify template to be updated,
@@ -27007,9 +27009,9 @@ type ProjectsLocationsDlpJobsCancelCall struct {
 // Cancel: Starts asynchronous cancellation on a long-running DlpJob. The
 // server makes a best effort to cancel the DlpJob, but success is not
 // guaranteed. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 // - name: The name of the DlpJob resource to be cancelled.
@@ -27115,16 +27117,16 @@ type ProjectsLocationsDlpJobsCreateCall struct {
 }
 
 // Create: Creates a new job to inspect storage or calculate risk metrics. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more. When no InfoTypes or CustomInfoTypes are specified in inspect
 // jobs, the system will automatically choose what detectors to run. By default
 // this may be all types, but may change over time as detectors are updated.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -27235,9 +27237,9 @@ type ProjectsLocationsDlpJobsDeleteCall struct {
 // Delete: Deletes a long-running DlpJob. This method indicates that the client
 // is no longer interested in the DlpJob result. The job will be canceled if
 // possible. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 // - name: The name of the DlpJob resource to be deleted.
@@ -27443,9 +27445,9 @@ type ProjectsLocationsDlpJobsGetCall struct {
 }
 
 // Get: Gets the latest state of a long-running DlpJob. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 // - name: The name of the DlpJob resource.
@@ -27663,14 +27665,14 @@ type ProjectsLocationsDlpJobsListCall struct {
 }
 
 // List: Lists DlpJobs that match the specified filter in the request. See
-// https://cloud.google.com/sensitive-data-protection/docs/inspecting-storage
+// https://docs.cloud.google.com/sensitive-data-protection/docs/inspecting-storage
 // and
-// https://cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
+// https://docs.cloud.google.com/sensitive-data-protection/docs/compute-risk-analysis
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -28280,7 +28282,7 @@ type ProjectsLocationsImageRedactCall struct {
 
 // Redact: Redacts potentially sensitive info from an image. This method has
 // limits on input size, processing time, and output size. See
-// https://cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
+// https://docs.cloud.google.com/sensitive-data-protection/docs/redacting-sensitive-data-images
 // to learn more. When no InfoTypes or CustomInfoTypes are specified in this
 // request, the system will automatically choose what detectors to run. By
 // default this may be all types, but may change over time as detectors are
@@ -28289,7 +28291,7 @@ type ProjectsLocationsImageRedactCall struct {
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -28400,7 +28402,7 @@ type ProjectsLocationsInfoTypesListCall struct {
 
 // List: Returns a list of the sensitive information types that the DLP API
 // supports. See
-// https://cloud.google.com/sensitive-data-protection/docs/infotypes-reference
+// https://docs.cloud.google.com/sensitive-data-protection/docs/infotypes-reference
 // to learn more.
 //
 //   - parent: The parent resource name. The format of this value is as follows:
@@ -28536,13 +28538,13 @@ type ProjectsLocationsInspectTemplatesCreateCall struct {
 
 // Create: Creates an InspectTemplate for reusing frequently used configuration
 // for inspecting content, images, and storage. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -28654,7 +28656,7 @@ type ProjectsLocationsInspectTemplatesDeleteCall struct {
 }
 
 // Delete: Deletes an InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of the organization and inspectTemplate to be deleted,
@@ -28757,7 +28759,7 @@ type ProjectsLocationsInspectTemplatesGetCall struct {
 }
 
 // Get: Gets an InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of the organization and inspectTemplate to be read,
@@ -28871,13 +28873,13 @@ type ProjectsLocationsInspectTemplatesListCall struct {
 }
 
 // List: Lists InspectTemplates. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -29052,7 +29054,7 @@ type ProjectsLocationsInspectTemplatesPatchCall struct {
 }
 
 // Patch: Updates the InspectTemplate. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-templates
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-templates
 // to learn more.
 //
 //   - name: Resource name of organization and inspectTemplate to be updated, for
@@ -29267,12 +29269,12 @@ type ProjectsLocationsJobTriggersCreateCall struct {
 
 // Create: Creates a job trigger to run DLP actions such as scanning storage
 // for sensitive information on a set schedule. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -29381,7 +29383,7 @@ type ProjectsLocationsJobTriggersDeleteCall struct {
 }
 
 // Delete: Deletes a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -29483,7 +29485,7 @@ type ProjectsLocationsJobTriggersGetCall struct {
 }
 
 // Get: Gets a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -29703,12 +29705,12 @@ type ProjectsLocationsJobTriggersListCall struct {
 }
 
 // List: Lists job triggers. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     whether you have specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -29915,7 +29917,7 @@ type ProjectsLocationsJobTriggersPatchCall struct {
 }
 
 // Patch: Updates a job trigger. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-job-triggers
 // to learn more.
 //
 //   - name: Resource name of the project and the triggeredJob, for example
@@ -30314,13 +30316,13 @@ type ProjectsLocationsStoredInfoTypesCreateCall struct {
 }
 
 // Create: Creates a pre-built stored infoType to be used for inspection. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -30432,7 +30434,7 @@ type ProjectsLocationsStoredInfoTypesDeleteCall struct {
 }
 
 // Delete: Deletes a stored infoType. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of the organization and storedInfoType to be deleted,
@@ -30535,7 +30537,7 @@ type ProjectsLocationsStoredInfoTypesGetCall struct {
 }
 
 // Get: Gets a stored infoType. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of the organization and storedInfoType to be read, for
@@ -30649,13 +30651,13 @@ type ProjectsLocationsStoredInfoTypesListCall struct {
 }
 
 // List: Lists stored infoTypes. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -30828,7 +30830,7 @@ type ProjectsLocationsStoredInfoTypesPatchCall struct {
 
 // Patch: Updates the stored infoType by creating a new version. The existing
 // version will continue to be used until the new version is ready. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of organization and storedInfoType to be updated, for
@@ -31334,13 +31336,13 @@ type ProjectsStoredInfoTypesCreateCall struct {
 }
 
 // Create: Creates a pre-built stored infoType to be used for inspection. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` +
@@ -31452,7 +31454,7 @@ type ProjectsStoredInfoTypesDeleteCall struct {
 }
 
 // Delete: Deletes a stored infoType. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of the organization and storedInfoType to be deleted,
@@ -31555,7 +31557,7 @@ type ProjectsStoredInfoTypesGetCall struct {
 }
 
 // Get: Gets a stored infoType. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of the organization and storedInfoType to be read, for
@@ -31669,13 +31671,13 @@ type ProjectsStoredInfoTypesListCall struct {
 }
 
 // List: Lists stored infoTypes. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
 //     the scope of the request (project or organization) and whether you have
 //     specified a processing location
-//     (https://cloud.google.com/sensitive-data-protection/docs/specifying-location):
+//     (https://docs.cloud.google.com/sensitive-data-protection/docs/specifying-location):
 //   - Projects scope, location specified:
 //     `projects/{project_id}/locations/{location_id}` + Projects scope, no
 //     location specified (defaults to global): `projects/{project_id}` The
@@ -31848,7 +31850,7 @@ type ProjectsStoredInfoTypesPatchCall struct {
 
 // Patch: Updates the stored infoType by creating a new version. The existing
 // version will continue to be used until the new version is ready. See
-// https://cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
+// https://docs.cloud.google.com/sensitive-data-protection/docs/creating-stored-infotypes
 // to learn more.
 //
 //   - name: Resource name of organization and storedInfoType to be updated, for

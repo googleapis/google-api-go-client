@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	orgpolicyService, err := orgpolicy.NewService(ctx, option.WithScopes(orgpolicy.OrganizationpolicyReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,22 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Organization Policy data
+	// and see the email address for your Google Account
+	OrganizationpolicyScope = "https://www.googleapis.com/auth/organizationpolicy"
+
+	// See your Google Cloud Organization Policy data and the email address of your
+	// Google Account
+	OrganizationpolicyReadonlyScope = "https://www.googleapis.com/auth/organizationpolicy.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/organizationpolicy",
+		"https://www.googleapis.com/auth/organizationpolicy.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

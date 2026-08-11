@@ -268,6 +268,7 @@ func NewCustomersService(s *Service) *CustomersService {
 	rs.Recommendations = NewCustomersRecommendationsService(s)
 	rs.RemarketingActions = NewCustomersRemarketingActionsService(s)
 	rs.SearchAds360 = NewCustomersSearchAds360Service(s)
+	rs.SearchAds360Campaigns = NewCustomersSearchAds360CampaignsService(s)
 	rs.SharedCriteria = NewCustomersSharedCriteriaService(s)
 	rs.SharedSets = NewCustomersSharedSetsService(s)
 	rs.SmartCampaignSettings = NewCustomersSmartCampaignSettingsService(s)
@@ -451,6 +452,8 @@ type CustomersService struct {
 	RemarketingActions *CustomersRemarketingActionsService
 
 	SearchAds360 *CustomersSearchAds360Service
+
+	SearchAds360Campaigns *CustomersSearchAds360CampaignsService
 
 	SharedCriteria *CustomersSharedCriteriaService
 
@@ -1239,6 +1242,15 @@ type CustomersSearchAds360Service struct {
 	s *Service
 }
 
+func NewCustomersSearchAds360CampaignsService(s *Service) *CustomersSearchAds360CampaignsService {
+	rs := &CustomersSearchAds360CampaignsService{s: s}
+	return rs
+}
+
+type CustomersSearchAds360CampaignsService struct {
+	s *Service
+}
+
 func NewCustomersSharedCriteriaService(s *Service) *CustomersSharedCriteriaService {
 	rs := &CustomersSharedCriteriaService{s: s}
 	return rs
@@ -1544,6 +1556,10 @@ type GoogleAdsSearchads360V0Errors__ErrorCode struct {
 	// "last" date.
 	//   "CANNOT_MODIFY_START_DATE_IF_ALREADY_STARTED" - Trying to change start
 	// date on a resource that has started.
+	//   "REQUESTED_DATE_GRANULARITY_NOT_SUPPORTED" - The requested time
+	// granularity is not supported for the date range in the query. Metrics with
+	// daily, hourly, or weekly segmentation are only available for the last 37
+	// months.
 	DateRangeError string `json:"dateRangeError,omitempty"`
 	// DistinctError: The reasons for the distinct error
 	//
@@ -6594,6 +6610,7 @@ func (s GoogleAdsSearchads360V23Common__ExpandedDynamicSearchAdInfo) MarshalJSON
 }
 
 // GoogleAdsSearchads360V23Common__ExpandedTextAdInfo: An expanded text ad.
+// Expanded text ads are deprecated.
 type GoogleAdsSearchads360V23Common__ExpandedTextAdInfo struct {
 	// Description: The description of the ad.
 	Description string `json:"description,omitempty"`
@@ -9541,8 +9558,8 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// includes all conversions regardless of the value of
 	// include_in_conversions_metric. When this column is selected with date, the
 	// values in date column means the conversion date. Details for the
-	// by_conversion_date columns are available at
-	// https://support.google.com/sa360/answer/9250611.
+	// `by_conversion_date` columns are available at About the "All conversions"
+	// column (https://support.google.com/sa360/answer/9250611).
 	AllConversionsByConversionDate float64 `json:"allConversionsByConversionDate,omitempty"`
 	// AllConversionsFromClickToCall: The number of times people clicked the "Call"
 	// button to call a business during or after clicking an ad. This number
@@ -9582,8 +9599,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	AllConversionsValue float64 `json:"allConversionsValue,omitempty"`
 	// AllConversionsValueByConversionDate: The value of all conversions. When this
 	// column is selected with date, the values in date column means the conversion
-	// date. Details for the by_conversion_date columns are available at
-	// https://support.google.com/sa360/answer/9250611.
+	// date. Details for the `by_conversion_date` columns are available at About
+	// the "All conversions" column
+	// (https://support.google.com/sa360/answer/9250611).
 	AllConversionsValueByConversionDate float64 `json:"allConversionsValueByConversionDate,omitempty"`
 	// AllConversionsValuePerCost: The value of all conversions divided by the
 	// total cost of ad interactions (such as clicks for text ads or views for
@@ -9602,13 +9620,14 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	AverageCost float64 `json:"averageCost,omitempty"`
 	// AverageCpc: The total cost of all clicks divided by the total number of
 	// clicks received. This metric is a monetary value and returned in the
-	// customer's currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// customer's currency by default. See the `metrics_currency` parameter at
+	// PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	AverageCpc float64 `json:"averageCpc,omitempty"`
 	// AverageCpm: Average cost-per-thousand impressions (CPM). This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	AverageCpm float64 `json:"averageCpm,omitempty"`
 	// AverageImpressionFrequencyPerUser: The average number of times a unique user
 	// saw your ad during the requested time period. This metric cannot be
@@ -9630,14 +9649,14 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	Clicks int64 `json:"clicks,omitempty,string"`
 	// ClientAccountConversions: The number of client account conversions. This
 	// only includes conversion actions which
-	// include_in_client_account_conversions_metric attribute is set to true. If
-	// you use conversion-based bidding, your bid strategies will optimize for
+	// `include_in_client_account_conversions_metric` attribute is set to `true`.
+	// If you use conversion-based bidding, your bid strategies will optimize for
 	// these conversions.
 	ClientAccountConversions float64 `json:"clientAccountConversions,omitempty"`
 	// ClientAccountConversionsValue: The value of client account conversions. This
 	// only includes conversion actions which
-	// include_in_client_account_conversions_metric attribute is set to true. If
-	// you use conversion-based bidding, your bid strategies will optimize for
+	// `include_in_client_account_conversions_metric` attribute is set to `true`.
+	// If you use conversion-based bidding, your bid strategies will optimize for
 	// these conversions.
 	ClientAccountConversionsValue float64 `json:"clientAccountConversionsValue,omitempty"`
 	// ClientAccountCrossSellCostOfGoodsSoldMicros: Client account cross-sell cost
@@ -9654,8 +9673,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// cost of goods sold value of $5. The cross-sell cost of goods sold for this
 	// order is $5. This metric is only available if you report conversions with
 	// cart data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountCrossSellCostOfGoodsSoldMicros int64 `json:"clientAccountCrossSellCostOfGoodsSoldMicros,omitempty,string"`
 	// ClientAccountCrossSellGrossProfitMicros: Client account cross-sell gross
 	// profit is the profit you made from products sold as a result of advertising
@@ -9671,8 +9691,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// cost of goods sold value of $5. The cross-sell gross profit of this order is
 	// $15 = $20 - $5. This metric is only available if you report conversions with
 	// cart data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountCrossSellGrossProfitMicros int64 `json:"clientAccountCrossSellGrossProfitMicros,omitempty,string"`
 	// ClientAccountCrossSellRevenueMicros: Client account cross-sell revenue is
 	// the total amount you made from products sold as a result of advertising a
@@ -9687,8 +9708,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// priced $10 and the shirt is priced $20. The cross-sell revenue of this order
 	// is $20. This metric is only available if you report conversions with cart
 	// data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountCrossSellRevenueMicros int64 `json:"clientAccountCrossSellRevenueMicros,omitempty,string"`
 	// ClientAccountCrossSellUnitsSold: Client account cross-sell units sold is the
 	// total number of products sold as a result of advertising a different
@@ -9716,8 +9738,8 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// value of $5. The lead cost of goods sold for this order is $3. This metric
 	// is only available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountLeadCostOfGoodsSoldMicros int64 `json:"clientAccountLeadCostOfGoodsSoldMicros,omitempty,string"`
 	// ClientAccountLeadGrossProfitMicros: Client account lead gross profit is the
 	// profit you made from products sold as a result of advertising the same
@@ -9733,8 +9755,8 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// lead gross profit of this order is $7 = $10 - $3. This metric is only
 	// available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountLeadGrossProfitMicros int64 `json:"clientAccountLeadGrossProfitMicros,omitempty,string"`
 	// ClientAccountLeadRevenueMicros: Client account lead revenue is the total
 	// amount you made from products sold as a result of advertising the same
@@ -9749,8 +9771,8 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// shirt is priced $20. The lead revenue of this order is $10. This metric is
 	// only available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	ClientAccountLeadRevenueMicros int64 `json:"clientAccountLeadRevenueMicros,omitempty,string"`
 	// ClientAccountLeadUnitsSold: Client account lead units sold is the total
 	// number of products sold as a result of advertising the same product. How it
@@ -9793,8 +9815,8 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	Conversions float64 `json:"conversions,omitempty"`
 	// ConversionsByConversionDate: The sum of conversions by conversion date for
 	// biddable conversion types. Can be fractional due to attribution modeling.
-	// When this column is selected with date, the values in date column means the
-	// conversion date.
+	// When this column is selected with date, the values in the date column mean
+	// the conversion date.
 	ConversionsByConversionDate float64 `json:"conversionsByConversionDate,omitempty"`
 	// ConversionsFromInteractionsRate: Average biddable conversions (from
 	// interaction) per conversion eligible interaction. Shows how often, on
@@ -9802,9 +9824,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	ConversionsFromInteractionsRate float64 `json:"conversionsFromInteractionsRate,omitempty"`
 	// ConversionsFromInteractionsValuePerInteraction: The value of conversions
 	// from interactions divided by the number of ad interactions. This only
-	// includes conversion actions which include_in_conversions_metric attribute is
-	// set to true. If you use conversion-based bidding, your bid strategies will
-	// optimize for these conversions.
+	// includes conversion actions which `include_in_conversions_metric` attribute
+	// is set to `true`. If you use conversion-based bidding, your bid strategies
+	// will optimize for these conversions.
 	ConversionsFromInteractionsValuePerInteraction float64 `json:"conversionsFromInteractionsValuePerInteraction,omitempty"`
 	// ConversionsValue: The sum of conversion values for the conversions included
 	// in the "conversions" field. This metric is useful only if you entered a
@@ -9819,9 +9841,10 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	ConversionsValuePerCost float64 `json:"conversionsValuePerCost,omitempty"`
 	// CostMicros: The sum of your cost-per-click (CPC) and cost-per-thousand
 	// impressions (CPM) costs during this period. This metric is a monetary value
-	// and returned in the customer's currency by default. See the metrics_currency
-	// parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// and returned in the customer's currency by default. See the
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause)
+	// for more details.
 	CostMicros int64 `json:"costMicros,omitempty,string"`
 	// CostOfGoodsSoldMicros: Cost of goods sold (COGS) is the total cost of the
 	// products you sold in orders attributed to your ads. How it works: You can
@@ -9841,24 +9864,26 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	CostPerConversion float64 `json:"costPerConversion,omitempty"`
 	// CostPerCurrentModelAttributedConversion: The cost of ad interactions divided
 	// by current model attributed conversions. This only includes conversion
-	// actions which include_in_conversions_metric attribute is set to true. If you
-	// use conversion-based bidding, your bid strategies will optimize for these
-	// conversions.
+	// actions which `include_in_conversions_metric` attribute is set to `true`. If
+	// you use conversion-based bidding, your bid strategies will optimize for
+	// these conversions.
 	CostPerCurrentModelAttributedConversion float64 `json:"costPerCurrentModelAttributedConversion,omitempty"`
 	// CrossDeviceConversions: Conversions from when a customer clicks on an ad on
 	// one device, then converts on a different device or browser. Cross-device
-	// conversions are already included in all_conversions.
+	// conversions are already included in `all_conversions`.
 	CrossDeviceConversions float64 `json:"crossDeviceConversions,omitempty"`
 	// CrossDeviceConversionsByConversionDate: The number of cross-device
-	// conversions by conversion date. Details for the by_conversion_date columns
-	// are available at https://support.google.com/sa360/answer/9250611.
+	// conversions by conversion date. Details for the `by_conversion_date` columns
+	// are available at About the "All conversions" column
+	// (https://support.google.com/sa360/answer/9250611)
 	CrossDeviceConversionsByConversionDate float64 `json:"crossDeviceConversionsByConversionDate,omitempty"`
 	// CrossDeviceConversionsValue: The sum of the value of cross-device
 	// conversions.
 	CrossDeviceConversionsValue float64 `json:"crossDeviceConversionsValue,omitempty"`
 	// CrossDeviceConversionsValueByConversionDate: The sum of cross-device
-	// conversions value by conversion date. Details for the by_conversion_date
-	// columns are available at https://support.google.com/sa360/answer/9250611.
+	// conversions value by conversion date. Details for the `by_conversion_date`
+	// columns are available at About the "All conversions" column
+	// (https://support.google.com/sa360/answer/9250611)
 	CrossDeviceConversionsValueByConversionDate float64 `json:"crossDeviceConversionsValueByConversionDate,omitempty"`
 	// CrossSellCostOfGoodsSoldMicros: Cross-sell cost of goods sold (COGS) is the
 	// total cost of products sold as a result of advertising a different product.
@@ -9873,9 +9898,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// value of $3, the shirt has a cost of goods sold value of $5. The cross-sell
 	// cost of goods sold for this order is $5. This metric is only available if
 	// you report conversions with cart data. This metric is a monetary value and
-	// returned in the customer's currency by default. See the metrics_currency
-	// parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// returned in the customer's currency by default. See the `metrics_currency`
+	// parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	CrossSellCostOfGoodsSoldMicros int64 `json:"crossSellCostOfGoodsSoldMicros,omitempty,string"`
 	// CrossSellGrossProfitMicros: Cross-sell gross profit is the profit you made
 	// from products sold as a result of advertising a different product, minus
@@ -9891,8 +9916,8 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// cross-sell gross profit of this order is $15 = $20 - $5. This metric is only
 	// available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	CrossSellGrossProfitMicros int64 `json:"crossSellGrossProfitMicros,omitempty,string"`
 	// CrossSellRevenueMicros: Cross-sell revenue is the total amount you made from
 	// products sold as a result of advertising a different product. How it works:
@@ -9907,8 +9932,8 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// priced $20. The cross-sell revenue of this order is $20. This metric is only
 	// available if you report conversions with cart data. This metric is a
 	// monetary value and returned in the customer's currency by default. See the
-	// metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// `metrics_currency` parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	CrossSellRevenueMicros int64 `json:"crossSellRevenueMicros,omitempty,string"`
 	// CrossSellUnitsSold: Cross-sell units sold is the total number of products
 	// sold as a result of advertising a different product. How it works: You
@@ -9932,15 +9957,15 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// that are detected through routine means of filtration (that is, known
 	// invalid data-center traffic, bots and spiders or other crawlers, irregular
 	// patterns, etc). You're not charged for them, and they don't affect your
-	// account statistics. See the help page at
-	// https://support.google.com/campaignmanager/answer/6076504 for details.
+	// account statistics. See Filtering invalid traffic to ensure quality
+	// (https://support.google.com/campaignmanager/answer/6076504).
 	GeneralInvalidClickRate float64 `json:"generalInvalidClickRate,omitempty"`
 	// GeneralInvalidClicks: Number of general invalid clicks. These are a subset
 	// of your invalid clicks that are detected through routine means of filtration
 	// (such as known invalid data-center traffic, bots and spiders or other
 	// crawlers, irregular patterns, etc.). You're not charged for them, and they
-	// don't affect your account statistics. See the help page at
-	// https://support.google.com/campaignmanager/answer/6076504 for details.
+	// don't affect your account statistics. See Filtering invalid traffic to
+	// ensure quality (https://support.google.com/campaignmanager/answer/6076504).
 	GeneralInvalidClicks int64 `json:"generalInvalidClicks,omitempty,string"`
 	// GrossProfitMargin: Gross profit margin is the percentage gross profit you
 	// made from orders attributed to your ads, after taking out the cost of goods
@@ -10048,9 +10073,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// value of $3, the shirt has a cost of goods sold value of $5. The lead cost
 	// of goods sold for this order is $3. This metric is only available if you
 	// report conversions with cart data. This metric is a monetary value and
-	// returned in the customer's currency by default. See the metrics_currency
-	// parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// returned in the customer's currency by default. See the `metrics_currency`
+	// parameter at PARAMETERS clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	LeadCostOfGoodsSoldMicros int64 `json:"leadCostOfGoodsSoldMicros,omitempty,string"`
 	// LeadGrossProfitMicros: Lead gross profit is the profit you made from
 	// products sold as a result of advertising the same product, minus cost of
@@ -10065,8 +10090,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// has a cost of goods sold value of $3. The lead gross profit of this order is
 	// $7 = $10 - $3. This metric is only available if you report conversions with
 	// cart data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	LeadGrossProfitMicros int64 `json:"leadGrossProfitMicros,omitempty,string"`
 	// LeadRevenueMicros: Lead revenue is the total amount you made from products
 	// sold as a result of advertising the same product. How it works: You report
@@ -10080,8 +10106,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// hat is priced $10 and the shirt is priced $20. The lead revenue of this
 	// order is $10. This metric is only available if you report conversions with
 	// cart data. This metric is a monetary value and returned in the customer's
-	// currency by default. See the metrics_currency parameter at
-	// https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause
+	// currency by default. See the `metrics_currency` parameter at PARAMETERS
+	// clause
+	// (https://developers.google.com/search-ads/reporting/query/query-structure#parameters_clause).
 	LeadRevenueMicros int64 `json:"leadRevenueMicros,omitempty,string"`
 	// LeadUnitsSold: Lead units sold is the total number of products sold as a
 	// result of advertising the same product. How it works: You report conversions
@@ -10122,8 +10149,9 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	RevenueMicros int64 `json:"revenueMicros,omitempty,string"`
 	// SearchAbsoluteTopImpressionShare: The percentage of the customer's Shopping
 	// or Search ad impressions that are shown in the most prominent Shopping
-	// position. See https://support.google.com/sa360/answer/9566729 for details.
-	// Any value below 0.1 is reported as 0.0999.
+	// position. See About top and absolute top metrics
+	// (https://support.google.com/sa360/answer/9566729) for details. Any value
+	// below 0.1 is reported as 0.0999.
 	SearchAbsoluteTopImpressionShare float64 `json:"searchAbsoluteTopImpressionShare,omitempty"`
 	// SearchBudgetLostAbsoluteTopImpressionShare: The number estimating how often
 	// your ad wasn't the very first ad among the top ads in the search results due
@@ -10136,10 +10164,10 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// was too low. Note: Search budget lost impression share is reported in the
 	// range of 0 to 0.9. Any value above 0.9 is reported as 0.9001.
 	SearchBudgetLostImpressionShare float64 `json:"searchBudgetLostImpressionShare,omitempty"`
-	// SearchBudgetLostTopImpressionShare: The number estimating how often your ad
-	// didn't show adjacent to the top organic search results due to a low budget.
-	// Note: Search budget lost top impression share is reported in the range of 0
-	// to 0.9. Any value above 0.9 is reported as 0.9001.
+	// SearchBudgetLostTopImpressionShare: The estimated percent of times that your
+	// ad didn't show adjacent to the top organic search results due to a low
+	// budget. Note: Search budget lost top impression share is reported in the
+	// range of 0 to 0.9. Any value above 0.9 is reported as 0.9001.
 	SearchBudgetLostTopImpressionShare float64 `json:"searchBudgetLostTopImpressionShare,omitempty"`
 	// SearchClickShare: The number of clicks you've received on the Search Network
 	// divided by the estimated number of clicks you were eligible to receive.
@@ -10203,8 +10231,8 @@ type GoogleAdsSearchads360V23Common__Metrics struct {
 	// ValuePerAllConversionsByConversionDate: The value of all conversions divided
 	// by the number of all conversions. When this column is selected with date,
 	// the values in date column means the conversion date. Details for the
-	// by_conversion_date columns are available at
-	// https://support.google.com/sa360/answer/9250611.
+	// `by_conversion_date` columns are available at About the "All conversions"
+	// column (https://support.google.com/sa360/answer/9250611).
 	ValuePerAllConversionsByConversionDate float64 `json:"valuePerAllConversionsByConversionDate,omitempty"`
 	// ValuePerConversion: The value of biddable conversion divided by the number
 	// of biddable conversions. Shows how much, on average, each of the biddable
@@ -12102,7 +12130,8 @@ func (s GoogleAdsSearchads360V23Common__SearchAds360ExpandedDynamicSearchAdInfo)
 }
 
 // GoogleAdsSearchads360V23Common__SearchAds360ExpandedTextAdInfo: A Search Ads
-// 360 expanded text ad.
+// 360 expanded text ad. Expanded text ads are deprecated. Use
+// SearchAds360ResponsiveSearchAd instead.
 type GoogleAdsSearchads360V23Common__SearchAds360ExpandedTextAdInfo struct {
 	// AdTrackingId: The tracking id of the ad.
 	AdTrackingId int64 `json:"adTrackingId,omitempty,string"`
@@ -12399,6 +12428,17 @@ type GoogleAdsSearchads360V23Common__Segments struct {
 	Hour int64 `json:"hour,omitempty"`
 	// Keyword: Keyword criterion.
 	Keyword *GoogleAdsSearchads360V23Common__Keyword `json:"keyword,omitempty"`
+	// MobileDevicePlatform: Mobile device platform to which metrics apply.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version. Non-mobile and non-desktop devices will fall into this segment.
+	//   "ANDROID" - Android devices.
+	//   "IOS" - iOS devices.
+	//   "OTHER_MOBILE" - Mobile devices that are not Android or iOS devices.
+	//   "DESKTOP" - Desktop devices.
+	MobileDevicePlatform string `json:"mobileDevicePlatform,omitempty"`
 	// Month: Month as represented by the date of the first day of a month.
 	// Formatted as yyyy-MM-dd.
 	Month string `json:"month,omitempty"`
@@ -12959,6 +12999,76 @@ type GoogleAdsSearchads360V23Common__StructuredSnippetAsset struct {
 
 func (s GoogleAdsSearchads360V23Common__StructuredSnippetAsset) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V23Common__StructuredSnippetAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Common__SyntheticContentAttestation: Represents an
+// attestation about synthetic content from a single source.
+type GoogleAdsSearchads360V23Common__SyntheticContentAttestation struct {
+	// Source: The source of the synthetic content attestation.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return values only. Represents value unknown in this
+	// version.
+	//   "ADVERTISER_ATTESTED" - Attestation provided by the advertiser.
+	//   "GOOGLE_GENERATED_ADVERTISER_REVIEWED" - Google-generated content with
+	// advertiser review or input.
+	//   "GOOGLE_GENERATED_FULLY_AUTOMATED" - Google-autogenerated content without
+	// advertiser review.
+	Source string `json:"source,omitempty"`
+	// Status: Indicates whether the content is considered synthetic by this
+	// source.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return values only. Represents value unknown in this
+	// version.
+	//   "NOT_SYNTHETIC" - The content is attested as not synthetic.
+	//   "IS_SYNTHETIC" - The content is attested as synthetic.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Source") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Common__SyntheticContentAttestation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Common__SyntheticContentAttestation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Common__SyntheticContentInfo: Container for
+// synthetic content attestations from different sources, such as the
+// advertiser and Google systems.
+type GoogleAdsSearchads360V23Common__SyntheticContentInfo struct {
+	// AdvertiserAttestation: Input provided by the advertiser.
+	AdvertiserAttestation *GoogleAdsSearchads360V23Common__SyntheticContentAttestation `json:"advertiserAttestation,omitempty"`
+	// SystemAttestation: Output only. Information about synthetic content
+	// generated by Google's systems.
+	SystemAttestation *GoogleAdsSearchads360V23Common__SyntheticContentAttestation `json:"systemAttestation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdvertiserAttestation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdvertiserAttestation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Common__SyntheticContentInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Common__SyntheticContentInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16357,6 +16467,13 @@ type GoogleAdsSearchads360V23Errors__ErrorCode struct {
 	//   "ACTION_NOT_PERMITTED_FOR_SUSPENDED_ACCOUNT" - The user does not have
 	// permission to perform this action on the resource or method because the
 	// Google Ads account is suspended.
+	//   "SEARCH_ADS360_OTHER_ENGINE_MUTATE_DENIED" - The user does not have
+	// permission to perform mutates on accounts that are not owned by Search Ads
+	// 360.
+	//   "SEARCH_ADS360_MUTATE_ALLOWLIST_DENIED" - This account does not have
+	// permission to perform mutates using the Search Ads 360 API.
+	//   "SEARCH_ADS360_MUTATE_FIELD_DENIED" - This field is not allowed for
+	// mutates.
 	AuthorizationError string `json:"authorizationError,omitempty"`
 	// AutomaticallyCreatedAssetRemovalError: The reasons for error in
 	// automatically created asset removal action.
@@ -18141,6 +18258,10 @@ type GoogleAdsSearchads360V23Errors__ErrorCode struct {
 	// "last" date.
 	//   "CANNOT_MODIFY_START_DATE_IF_ALREADY_STARTED" - Trying to change start
 	// date on a resource that has started.
+	//   "REQUESTED_DATE_GRANULARITY_NOT_SUPPORTED" - The requested time
+	// granularity is not supported for the date range in the query. Metrics with
+	// daily, hourly, or weekly segmentation are only available for the last 37
+	// months.
 	DateRangeError string `json:"dateRangeError,omitempty"`
 	// DistinctError: The reasons for the distinct error
 	//
@@ -21921,9 +22042,14 @@ type GoogleAdsSearchads360V23ResourcesCampaignAssetAutomationSetting struct {
 	//   "UNSPECIFIED" - Not specified.
 	//   "UNKNOWN" - Used as a return value only. Represents value unknown in this
 	// version.
-	//   "TEXT_ASSET_AUTOMATION" - Text asset automation includes headlines and
-	// descriptions. By default, advertisers are opted-in for Performance Max and
-	// opted-out for Search.
+	//   "TEXT_ASSET_AUTOMATION" - Text asset automation (text customization)
+	// includes headlines and descriptions, allowing Google to create customized
+	// text assets using your existing ads, landing page copy, and generative AI
+	// across your campaign's ads. By default, advertisers are opted-in for
+	// Performance Max and opted-out for Search. Contrast this with
+	// `FINAL_URL_EXPANSION_TEXT_ASSET_AUTOMATION`, which dynamically generates
+	// text assets to match the content of dynamically selected landing pages when
+	// final URL expansion is active.
 	//   "GENERATE_VERTICAL_YOUTUBE_VIDEOS" - Converts horizontal video assets to
 	// vertical orientation using content-aware technology. By default, advertisers
 	// are opted in for DemandGenVideoResponsiveAd.
@@ -21935,6 +22061,9 @@ type GoogleAdsSearchads360V23ResourcesCampaignAssetAutomationSetting struct {
 	// (or you have permission to share the images with Google). You hereby
 	// instruct Google to publish these images on your behalf for advertising or
 	// other commercial purposes.
+	//   "GENERATE_LANDING_PAGE_TEXT" - Generates text information from the landing
+	// page to be shown in the engagement panel. Opted in by default for
+	// DemandGenVideoResponsiveAd.
 	//   "GENERATE_ENHANCED_YOUTUBE_VIDEOS" - Generates video enhancements
 	// (vertical and shorter videos) for PMax campaigns. Opted in by default.
 	//   "GENERATE_IMAGE_ENHANCEMENT" - Generates image enhancements (AutoCrop and
@@ -21949,7 +22078,11 @@ type GoogleAdsSearchads360V23ResourcesCampaignAssetAutomationSetting struct {
 	// dynamic landing pages from the final URL and generating text assets from the
 	// content of those landing pages. This setting is turned OFF by default for
 	// Search campaigns, but it is turned ON by default for Performance Max
-	// campaigns.
+	// campaigns. Enabling final URL expansion also enables text asset automation.
+	// There is no way to opt out of text asset automation and still use final URL
+	// expansion. Contrast this with standard `TEXT_ASSET_AUTOMATION` (text
+	// customization), which customizes copy across all ads in the campaign even
+	// when final URL expansion does not occur.
 	//   "GENERATE_VIDEOS_FROM_OTHER_ASSETS" - Generates videos using other Assets
 	// as input, such as images and text. By default, advertisers are opted in for
 	// DemandGenMultiAssetAd.
@@ -26198,7 +26331,8 @@ type GoogleAdsSearchads360V23Resources__Ad struct {
 	// information provided by `dynamic_search_ads_setting` linked at the campaign
 	// level.
 	ExpandedDynamicSearchAd *GoogleAdsSearchads360V23Common__ExpandedDynamicSearchAdInfo `json:"expandedDynamicSearchAd,omitempty"`
-	// ExpandedTextAd: Details pertaining to an expanded text ad.
+	// ExpandedTextAd: Details pertaining to an expanded text ad. Expanded text ads
+	// are deprecated. Use `ResponsiveSearchAd` instead.
 	ExpandedTextAd *GoogleAdsSearchads360V23Common__ExpandedTextAdInfo `json:"expandedTextAd,omitempty"`
 	// FinalAppUrls: A list of final app URLs that will be used on mobile if the
 	// user has the specific app installed.
@@ -26242,7 +26376,8 @@ type GoogleAdsSearchads360V23Resources__Ad struct {
 	// expanded dynamic search ad.
 	SearchAds360ExpandedDynamicSearchAd *GoogleAdsSearchads360V23Common__SearchAds360ExpandedDynamicSearchAdInfo `json:"searchAds360ExpandedDynamicSearchAd,omitempty"`
 	// SearchAds360ExpandedTextAd: Immutable. Details pertaining to an expanded
-	// text ad.
+	// text ad. Expanded text ads are deprecated. Use
+	// `SearchAds360ResponsiveSearchAd` instead.
 	SearchAds360ExpandedTextAd *GoogleAdsSearchads360V23Common__SearchAds360ExpandedTextAdInfo `json:"searchAds360ExpandedTextAd,omitempty"`
 	// SearchAds360ResponsiveSearchAd: Immutable. Details pertaining to a
 	// responsive search ad.
@@ -26258,6 +26393,11 @@ type GoogleAdsSearchads360V23Resources__Ad struct {
 	ShoppingSmartAd *GoogleAdsSearchads360V23Common__ShoppingSmartAdInfo `json:"shoppingSmartAd,omitempty"`
 	// SmartCampaignAd: Details pertaining to a Smart campaign ad.
 	SmartCampaignAd *GoogleAdsSearchads360V23Common__SmartCampaignAdInfo `json:"smartCampaignAd,omitempty"`
+	// SyntheticContentInfo: Synthetic content info for the ad. Only ads with
+	// specific ad types are eligible for updates using the
+	// `synthetic_content_info` field. Allowed `AdType` values: * `HTML5_UPLOAD_AD`
+	// * `DYNAMIC_HTML5_AD` * `IMAGE_AD`
+	SyntheticContentInfo *GoogleAdsSearchads360V23Common__SyntheticContentInfo `json:"syntheticContentInfo,omitempty"`
 	// SystemManagedResourceSource: Output only. If this ad is system managed, then
 	// this field will indicate the source. This field is read-only.
 	//
@@ -26280,7 +26420,8 @@ type GoogleAdsSearchads360V23Resources__Ad struct {
 	//   "UNKNOWN" - The received value is not known in this version. This is a
 	// response-only value.
 	//   "TEXT_AD" - The ad is a text ad.
-	//   "EXPANDED_TEXT_AD" - The ad is an expanded text ad.
+	//   "EXPANDED_TEXT_AD" - The ad is an expanded text ad. Expanded text ads are
+	// deprecated.
 	//   "EXPANDED_DYNAMIC_SEARCH_AD" - The ad is an expanded dynamic search ad.
 	//   "HOTEL_AD" - The ad is a hotel ad.
 	//   "SHOPPING_SMART_AD" - The ad is a Smart Shopping ad.
@@ -26975,9 +27116,14 @@ type GoogleAdsSearchads360V23Resources__AdGroupAdAssetAutomationSetting struct {
 	//   "UNSPECIFIED" - Not specified.
 	//   "UNKNOWN" - Used as a return value only. Represents value unknown in this
 	// version.
-	//   "TEXT_ASSET_AUTOMATION" - Text asset automation includes headlines and
-	// descriptions. By default, advertisers are opted-in for Performance Max and
-	// opted-out for Search.
+	//   "TEXT_ASSET_AUTOMATION" - Text asset automation (text customization)
+	// includes headlines and descriptions, allowing Google to create customized
+	// text assets using your existing ads, landing page copy, and generative AI
+	// across your campaign's ads. By default, advertisers are opted-in for
+	// Performance Max and opted-out for Search. Contrast this with
+	// `FINAL_URL_EXPANSION_TEXT_ASSET_AUTOMATION`, which dynamically generates
+	// text assets to match the content of dynamically selected landing pages when
+	// final URL expansion is active.
 	//   "GENERATE_VERTICAL_YOUTUBE_VIDEOS" - Converts horizontal video assets to
 	// vertical orientation using content-aware technology. By default, advertisers
 	// are opted in for DemandGenVideoResponsiveAd.
@@ -26989,6 +27135,9 @@ type GoogleAdsSearchads360V23Resources__AdGroupAdAssetAutomationSetting struct {
 	// (or you have permission to share the images with Google). You hereby
 	// instruct Google to publish these images on your behalf for advertising or
 	// other commercial purposes.
+	//   "GENERATE_LANDING_PAGE_TEXT" - Generates text information from the landing
+	// page to be shown in the engagement panel. Opted in by default for
+	// DemandGenVideoResponsiveAd.
 	//   "GENERATE_ENHANCED_YOUTUBE_VIDEOS" - Generates video enhancements
 	// (vertical and shorter videos) for PMax campaigns. Opted in by default.
 	//   "GENERATE_IMAGE_ENHANCEMENT" - Generates image enhancements (AutoCrop and
@@ -27003,7 +27152,11 @@ type GoogleAdsSearchads360V23Resources__AdGroupAdAssetAutomationSetting struct {
 	// dynamic landing pages from the final URL and generating text assets from the
 	// content of those landing pages. This setting is turned OFF by default for
 	// Search campaigns, but it is turned ON by default for Performance Max
-	// campaigns.
+	// campaigns. Enabling final URL expansion also enables text asset automation.
+	// There is no way to opt out of text asset automation and still use final URL
+	// expansion. Contrast this with standard `TEXT_ASSET_AUTOMATION` (text
+	// customization), which customizes copy across all ads in the campaign even
+	// when final URL expansion does not occur.
 	//   "GENERATE_VIDEOS_FROM_OTHER_ASSETS" - Generates videos using other Assets
 	// as input, such as images and text. By default, advertisers are opted in for
 	// DemandGenMultiAssetAd.
@@ -28643,6 +28796,13 @@ func (s GoogleAdsSearchads360V23Resources__AdvertisingPartnerLinkInvitationIdent
 }
 
 // GoogleAdsSearchads360V23Resources__AgeRangeView: An age range view.
+// Represents the view of a customer's performance metrics (like impressions
+// and clicks) aggregated by age range. All statistics are aggregated at the ad
+// group level. Note: While you can segment metrics by age range using
+// `age_range_view` or by gender using `gender_view`, the Search Ads 360 API
+// does not support segmenting metrics by both age range and gender
+// simultaneously in a single query. Analyzing performance across both
+// dimensions combined is not supported in the Search Ads 360 API.
 type GoogleAdsSearchads360V23Resources__AgeRangeView struct {
 	// ResourceName: Output only. The resource name of the age range view. Age
 	// range view resource names have the form:
@@ -29010,6 +29170,11 @@ type GoogleAdsSearchads360V23Resources__Asset struct {
 	Status string `json:"status,omitempty"`
 	// StructuredSnippetAsset: A structured snippet asset.
 	StructuredSnippetAsset *GoogleAdsSearchads360V23Common__StructuredSnippetAsset `json:"structuredSnippetAsset,omitempty"`
+	// SyntheticContentInfo: Synthetic content info for the asset. Only assets with
+	// specific asset types are eligible for updates using the
+	// `synthetic_content_info` field. Allowed `AssetType` values: * `IMAGE` *
+	// `MEDIA_BUNDLE` * `YOUTUBE_VIDEO`
+	SyntheticContentInfo *GoogleAdsSearchads360V23Common__SyntheticContentInfo `json:"syntheticContentInfo,omitempty"`
 	// TextAsset: Immutable. A text asset.
 	TextAsset *GoogleAdsSearchads360V23Common__TextAsset `json:"textAsset,omitempty"`
 	// TrackingUrlTemplate: URL template for constructing a tracking URL.
@@ -33628,9 +33793,9 @@ type GoogleAdsSearchads360V23Resources__ConversionAction struct {
 	// products and services after interacting with an ad. Read only.
 	//   "LEAD_FORM_SUBMIT" - Conversions reported when a user submits a lead form.
 	// Read only.
-	//   "SALESFORCE" - Deprecated: The Salesforce integration will be going away
-	// and replaced with an improved way to import your conversions from
-	// Salesforce. - see https://support.google.com/google-ads/answer/14728349
+	//   "SALESFORCE" - Deprecated: The Salesforce integration ended on May 31,
+	// 2025. See [Legacy Salesforce integration for conversions upgrade
+	// FAQ](//support.google.com/google-ads/answer/14728349).
 	//   "SEARCH_ADS_360" - Conversions imported from Search Ads 360 Floodlight
 	// data. Read only.
 	//   "SMART_CAMPAIGN_AD_CLICKS_TO_CALL" - Call conversions that occur on Smart
@@ -35256,11 +35421,13 @@ func (s GoogleAdsSearchads360V23Resources__CustomerCustomizer) MarshalJSON() ([]
 // increasing permissions with login-customer-id.
 type GoogleAdsSearchads360V23Resources__CustomerLabel struct {
 	// Customer: Output only. The resource name of the customer to which the label
-	// is attached. Read only.
+	// is attached. This field should not be set when creating a new
+	// `CustomerLabel`.
 	Customer string `json:"customer,omitempty"`
 	// Label: Output only. The resource name of the label assigned to the customer.
-	// Note: the Customer ID portion of the label resource name is not validated
-	// when creating a new CustomerLabel.
+	// This field should not be set when creating a new `CustomerLabel`. Note: the
+	// Customer ID portion of the label resource name is not validated when
+	// creating a new `CustomerLabel`.
 	Label string `json:"label,omitempty"`
 	// ResourceName: Immutable. Name of the resource. Customer label resource names
 	// have the form: `customers/{customer_id}/customerLabels/{label_id}`
@@ -35820,12 +35987,15 @@ func (s GoogleAdsSearchads360V23Resources__DetailContentSuitabilityPlacementView
 }
 
 // GoogleAdsSearchads360V23Resources__DetailPlacementView: A view with metrics
-// aggregated by ad group and URL or YouTube video. This view primarily
-// surfaces placement data from the Google Display Network. While you can
-// select segments like `segments.ad_network_type`, this view generally does
-// not include placement data from other networks, such as the Search Partners
-// network. To understand performance on Search Partners, consider other
-// reports and segmentations.
+// aggregated by ad group and URL or YouTube video. Provides granular
+// performance data about specific URLs, YouTube videos, and apps where your
+// ads showed. This offers a more detailed breakdown compared to the
+// group_placement_view. This view primarily surfaces placement data from the
+// Google Display Network. While you can select segments like
+// `segments.ad_network_type`, this view generally does not include placement
+// data from other networks, such as the Search Partners network. To understand
+// performance on Search Partners, consider other reports and segmentations.
+// Data for low-traffic placements may be aggregated.
 type GoogleAdsSearchads360V23Resources__DetailPlacementView struct {
 	// DisplayName: Output only. The display name is URL name for websites, YouTube
 	// video name for YouTube videos, and translated mobile app name for mobile
@@ -36241,7 +36411,9 @@ func (s GoogleAdsSearchads360V23Resources__Experiment) MarshalJSON() ([]byte, er
 // for users to experiment changes on multiple campaigns, compare the
 // performance, and apply the effective changes.
 type GoogleAdsSearchads360V23Resources__ExperimentArm struct {
-	// AssetGroups: List of asset groups in the experiment arm.
+	// AssetGroups: List of asset groups in the experiment arm. The max length is
+	// one. In the Optimize Assets experiment construction, the control arm and
+	// treatment arm should both contain the same asset group ID.
 	AssetGroups []*GoogleAdsSearchads360V23ResourcesExperimentArmAssetGroupInfo `json:"assetGroups,omitempty"`
 	// Campaigns: List of campaigns in the trial arm. The max length is one.
 	Campaigns []string `json:"campaigns,omitempty"`
@@ -36403,10 +36575,14 @@ func (s GoogleAdsSearchads360V23Resources__FinalUrlExpansionAssetView) MarshalJS
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V23Resources__GenderView: A gender view. The
-// gender_view resource reflects the effective serving state, rather than what
-// criteria were added. An ad group without gender criteria by default shows to
-// all genders, so all genders appear in gender_view with stats.
+// GoogleAdsSearchads360V23Resources__GenderView: A gender view resource.
+// Represents the view of a customer's performance metrics aggregated by
+// gender. All statistics are aggregated at the ad group level. Note: While you
+// can segment metrics by age range using `age_range_view` or by gender using
+// `gender_view`, the Search Ads 360 API does not support segmenting metrics by
+// both age range and gender simultaneously in a single query. Analyzing
+// performance across both dimensions combined is not supported in the Search
+// Ads 360 API.
 type GoogleAdsSearchads360V23Resources__GenderView struct {
 	// ResourceName: Output only. The resource name of the gender view. Gender view
 	// resource names have the form:
@@ -36741,8 +36917,12 @@ func (s GoogleAdsSearchads360V23Resources__GroupContentSuitabilityPlacementView)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V23Resources__GroupPlacementView: A group placement
-// view.
+// GoogleAdsSearchads360V23Resources__GroupPlacementView: A view showing
+// performance data for where your ads actually served on the Display Network
+// and YouTube, including both targeted (managed) and automatic placements.
+// Data for low-traffic placements may be aggregated. The scope of placements
+// shown is influenced by the ad group's `TargetingSetting` for the `PLACEMENT`
+// dimension.
 type GoogleAdsSearchads360V23Resources__GroupPlacementView struct {
 	// DisplayName: Output only. Domain name for websites and YouTube channel name
 	// for YouTube channels.
@@ -38564,8 +38744,8 @@ func (s GoogleAdsSearchads360V23Resources__LocationView) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V23Resources__ManagedPlacementView: A managed placement
-// view.
+// GoogleAdsSearchads360V23Resources__ManagedPlacementView: A view providing
+// performance data for placements explicitly targeted in your ad groups.
 type GoogleAdsSearchads360V23Resources__ManagedPlacementView struct {
 	// ResourceName: Output only. The resource name of the Managed Placement view.
 	// Managed placement view resource names have the form:
@@ -41587,7 +41767,7 @@ type GoogleAdsSearchads360V23Resources__TopicConstant struct {
 	// element in the array describes a more specific sub-category. For example,
 	// {"Pets & Animals", "Pets", "Dogs"} represents the "Pets & Animals/Pets/Dogs"
 	// category. List of available topic categories at
-	// https://developers.google.com/google-ads/api/reference/data/verticals
+	// https://developers.google.com/google-ads/api/data/topics
 	Path []string `json:"path,omitempty"`
 	// ResourceName: Output only. The resource name of the topic constant. topic
 	// constant resource names have the form: `topicConstants/{topic_id}`
@@ -43007,6 +43187,50 @@ type GoogleAdsSearchads360V23ServicesCampaignToForecastCampaignBiddingStrategy s
 func (s GoogleAdsSearchads360V23ServicesCampaignToForecastCampaignBiddingStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V23ServicesCampaignToForecastCampaignBiddingStrategy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23ServicesCartDataItem: Contains data of the items
+// purchased.
+type GoogleAdsSearchads360V23ServicesCartDataItem struct {
+	// ProductId: The shopping id of the item. Must be equal to the Merchant Center
+	// product identifier.
+	ProductId string `json:"productId,omitempty"`
+	// Quantity: Number of items sold.
+	Quantity int64 `json:"quantity,omitempty"`
+	// UnitPrice: Unit price excluding tax, shipping, and any transaction level
+	// discounts. The currency code is the same as that in the `ClickConversion`
+	// message.
+	UnitPrice float64 `json:"unitPrice,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProductId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProductId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23ServicesCartDataItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23ServicesCartDataItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V23ServicesCartDataItem) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V23ServicesCartDataItem
+	var s1 struct {
+		UnitPrice gensupport.JSONFloat64 `json:"unitPrice"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.UnitPrice = float64(s1.UnitPrice)
+	return nil
 }
 
 // GoogleAdsSearchads360V23ServicesDismissRecommendationRequestDismissRecommenda
@@ -45573,6 +45797,100 @@ func (s GoogleAdsSearchads360V23Services__BrandCampaignAssets) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V23Services__CallConversion: A call conversion.
+type GoogleAdsSearchads360V23Services__CallConversion struct {
+	// CallStartDateTime: The date time at which the call occurred. The timezone
+	// must be specified. The format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example,
+	// "2019-01-01 12:32:45-08:00".
+	CallStartDateTime string `json:"callStartDateTime,omitempty"`
+	// CallerId: The caller id from which this call was placed. Caller id is
+	// expected to be in E.164 format with preceding '+' sign, for example,
+	// "+16502531234".
+	CallerId string `json:"callerId,omitempty"`
+	// Consent: The consent setting for the event.
+	Consent *GoogleAdsSearchads360V23Common__Consent `json:"consent,omitempty"`
+	// ConversionAction: Resource name of the conversion action associated with
+	// this conversion. Note: Although this resource name consists of a customer id
+	// and a conversion action id, validation will ignore the customer id and use
+	// the conversion action id as the sole identifier of the conversion action.
+	ConversionAction string `json:"conversionAction,omitempty"`
+	// ConversionDateTime: The date time at which the conversion occurred. Must be
+	// after the call time. The timezone must be specified. The format is
+	// "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example, "2019-01-01 12:32:45-08:00".
+	ConversionDateTime string `json:"conversionDateTime,omitempty"`
+	// ConversionValue: The value of the conversion for the advertiser.
+	ConversionValue float64 `json:"conversionValue,omitempty"`
+	// CurrencyCode: Currency associated with the conversion value. This is the ISO
+	// 4217 3-character currency code. For example: USD, EUR.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// CustomVariables: The custom variables associated with this conversion.
+	CustomVariables []*GoogleAdsSearchads360V23Services__CustomVariable `json:"customVariables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CallStartDateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CallStartDateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__CallConversion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__CallConversion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V23Services__CallConversion) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V23Services__CallConversion
+	var s1 struct {
+		ConversionValue gensupport.JSONFloat64 `json:"conversionValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConversionValue = float64(s1.ConversionValue)
+	return nil
+}
+
+// GoogleAdsSearchads360V23Services__CallConversionResult: Identifying
+// information for a successfully processed CallConversionUpload.
+type GoogleAdsSearchads360V23Services__CallConversionResult struct {
+	// CallStartDateTime: The date time at which the call occurred. The format is
+	// "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example, "2019-01-01 12:32:45-08:00".
+	CallStartDateTime string `json:"callStartDateTime,omitempty"`
+	// CallerId: The caller id from which this call was placed. Caller id is
+	// expected to be in E.164 format with preceding '+' sign.
+	CallerId string `json:"callerId,omitempty"`
+	// ConversionAction: Resource name of the conversion action associated with
+	// this conversion.
+	ConversionAction string `json:"conversionAction,omitempty"`
+	// ConversionDateTime: The date time at which the conversion occurred. The
+	// format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example, "2019-01-01
+	// 12:32:45-08:00".
+	ConversionDateTime string `json:"conversionDateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CallStartDateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CallStartDateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__CallConversionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__CallConversionResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V23Services__CampaignAssetOperation: A single operation
 // (create, remove) on a campaign asset.
 type GoogleAdsSearchads360V23Services__CampaignAssetOperation struct {
@@ -46125,6 +46443,210 @@ func (s *GoogleAdsSearchads360V23Services__CampaignToForecast) UnmarshalJSON(dat
 	return nil
 }
 
+// GoogleAdsSearchads360V23Services__CartData: Contains additional information
+// about cart data.
+type GoogleAdsSearchads360V23Services__CartData struct {
+	// FeedCountryCode: The country code associated with the feed where the items
+	// are uploaded.
+	FeedCountryCode string `json:"feedCountryCode,omitempty"`
+	// FeedLanguageCode: The language code associated with the feed where the items
+	// are uploaded.
+	FeedLanguageCode string `json:"feedLanguageCode,omitempty"`
+	// Items: Data of the items purchased.
+	Items []*GoogleAdsSearchads360V23ServicesCartDataItem `json:"items,omitempty"`
+	// LocalTransactionCost: Sum of all transaction level discounts, such as free
+	// shipping and coupon discounts for the whole cart. The currency code is the
+	// same as that in the `ClickConversion` message.
+	LocalTransactionCost float64 `json:"localTransactionCost,omitempty"`
+	// MerchantId: The Merchant Center ID where the items are uploaded.
+	MerchantId int64 `json:"merchantId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FeedCountryCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FeedCountryCode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__CartData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__CartData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V23Services__CartData) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V23Services__CartData
+	var s1 struct {
+		LocalTransactionCost gensupport.JSONFloat64 `json:"localTransactionCost"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.LocalTransactionCost = float64(s1.LocalTransactionCost)
+	return nil
+}
+
+// GoogleAdsSearchads360V23Services__ClickConversion: A click conversion.
+type GoogleAdsSearchads360V23Services__ClickConversion struct {
+	// CartData: The cart data associated with this conversion.
+	CartData *GoogleAdsSearchads360V23Services__CartData `json:"cartData,omitempty"`
+	// Consent: The consent setting for the event.
+	Consent *GoogleAdsSearchads360V23Common__Consent `json:"consent,omitempty"`
+	// ConversionAction: Resource name of the conversion action associated with
+	// this conversion. Note: Although this resource name consists of a customer id
+	// and a conversion action id, validation will ignore the customer id and use
+	// the conversion action id as the sole identifier of the conversion action.
+	ConversionAction string `json:"conversionAction,omitempty"`
+	// ConversionDateTime: The date time at which the conversion occurred. Must be
+	// after the click time. The timezone must be specified. The format is
+	// "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example, "2019-01-01 12:32:45-08:00".
+	ConversionDateTime string `json:"conversionDateTime,omitempty"`
+	// ConversionEnvironment: The environment this conversion was recorded on, for
+	// example, App or Web.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "APP" - The conversion was recorded on an app.
+	//   "WEB" - The conversion was recorded on a website.
+	ConversionEnvironment string `json:"conversionEnvironment,omitempty"`
+	// ConversionValue: The value of the conversion for the advertiser.
+	ConversionValue float64 `json:"conversionValue,omitempty"`
+	// CurrencyCode: Currency associated with the conversion value. This is the ISO
+	// 4217 3-character currency code. For example: USD, EUR.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// CustomVariables: The custom variables associated with this conversion.
+	CustomVariables []*GoogleAdsSearchads360V23Services__CustomVariable `json:"customVariables,omitempty"`
+	// CustomerType: Type of the customer associated with the conversion (new or
+	// returning).
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - The value is unknown in this version.
+	//   "NEW" - Converting user is new to the advertiser.
+	//   "RETURNING" - Converting user is returning to the advertiser. Definition
+	// of returning differs among conversion types, such as a second store visit
+	// versus a second online purchase.
+	CustomerType string `json:"customerType,omitempty"`
+	// ExternalAttributionData: Additional data about externally attributed
+	// conversions. This field is required for conversions with an externally
+	// attributed conversion action, but should not be set otherwise.
+	ExternalAttributionData *GoogleAdsSearchads360V23Services__ExternalAttributionData `json:"externalAttributionData,omitempty"`
+	// Gbraid: The URL parameter for clicks associated with app conversions.
+	Gbraid string `json:"gbraid,omitempty"`
+	// Gclid: The Google click ID (gclid) associated with this conversion.
+	Gclid string `json:"gclid,omitempty"`
+	// OrderId: The order ID associated with the conversion. An order id can only
+	// be used for one conversion per conversion action.
+	OrderId string `json:"orderId,omitempty"`
+	// SessionAttributesEncoded: The session attributes for the event, represented
+	// as a base64-encoded JSON string. The content should be generated by
+	// Google-provided library. To set session attributes individually, use
+	// session_attributes_key_value_pairs instead. This field is only available to
+	// allowlisted users. To include this field in conversion imports, upgrade to
+	// the Data Manager API.
+	SessionAttributesEncoded string `json:"sessionAttributesEncoded,omitempty"`
+	// SessionAttributesKeyValuePairs: The session attributes for the event,
+	// represented as key-value pairs. This field is only available to allowlisted
+	// users. To include this field in conversion imports, upgrade to the Data
+	// Manager API.
+	SessionAttributesKeyValuePairs *GoogleAdsSearchads360V23Services__SessionAttributesKeyValuePairs `json:"sessionAttributesKeyValuePairs,omitempty"`
+	// UserIdentifiers: The user identifiers associated with this conversion. Only
+	// hashed_email and hashed_phone_number are supported for conversion uploads.
+	// The maximum number of user identifiers for each conversion is 5.
+	UserIdentifiers []*GoogleAdsSearchads360V23Common__UserIdentifier `json:"userIdentifiers,omitempty"`
+	// UserIpAddress: The IP address of the customer when they arrived on the
+	// landing page after an ad click but before a conversion event. This is the IP
+	// address of the customer's device, not the advertiser's server. Google Ads
+	// does not support IP address matching for end users in the European Economic
+	// Area (EEA), United Kingdom (UK), or Switzerland (CH). Add logic to
+	// conditionally exclude sharing IP addresses from users from these regions and
+	// ensure that you provide users with clear and comprehensive information about
+	// the data you collect on your sites, apps, and other properties and get
+	// consent where required by law or any applicable Google policies. See About
+	// offline conversion imports (//support.google.com/google-ads/answer/2998031)
+	// page for more details. This field is only available to allowlisted users. To
+	// include this field in conversion imports, upgrade to the Data Manager API.
+	UserIpAddress string `json:"userIpAddress,omitempty"`
+	// Wbraid: The URL parameter for clicks associated with web conversions.
+	Wbraid string `json:"wbraid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CartData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CartData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__ClickConversion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__ClickConversion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V23Services__ClickConversion) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V23Services__ClickConversion
+	var s1 struct {
+		ConversionValue gensupport.JSONFloat64 `json:"conversionValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ConversionValue = float64(s1.ConversionValue)
+	return nil
+}
+
+// GoogleAdsSearchads360V23Services__ClickConversionResult: Identifying
+// information for a successfully processed `ClickConversion`.
+type GoogleAdsSearchads360V23Services__ClickConversionResult struct {
+	// ConversionAction: Resource name of the conversion action associated with
+	// this conversion.
+	ConversionAction string `json:"conversionAction,omitempty"`
+	// ConversionDateTime: The date time at which the conversion occurred. The
+	// format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example, "2019-01-01
+	// 12:32:45-08:00".
+	ConversionDateTime string `json:"conversionDateTime,omitempty"`
+	// Gbraid: The URL parameter for clicks associated with app conversions.
+	Gbraid string `json:"gbraid,omitempty"`
+	// Gclid: The Google Click ID (gclid) associated with this conversion.
+	Gclid string `json:"gclid,omitempty"`
+	// UserIdentifiers: The user identifiers associated with this conversion. Only
+	// hashed_email and hashed_phone_number are supported for conversion uploads.
+	// The maximum number of user identifiers for each conversion is 5.
+	UserIdentifiers []*GoogleAdsSearchads360V23Common__UserIdentifier `json:"userIdentifiers,omitempty"`
+	// Wbraid: The URL parameter for clicks associated with web conversions.
+	Wbraid string `json:"wbraid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversionAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversionAction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__ClickConversionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__ClickConversionResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V23Services__ConfigureCampaignLifecycleGoalsRequest:
 // Request message for
 // CampaignLifecycleGoalService.ConfigureCampaignLifecycleGoals.
@@ -46364,6 +46886,119 @@ type GoogleAdsSearchads360V23Services__ConversionActionOperation struct {
 
 func (s GoogleAdsSearchads360V23Services__ConversionActionOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V23Services__ConversionActionOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__ConversionAdjustment: A conversion
+// adjustment.
+type GoogleAdsSearchads360V23Services__ConversionAdjustment struct {
+	// AdjustmentDateTime: The date time at which the adjustment occurred. Must be
+	// after the conversion_date_time. The timezone must be specified. The format
+	// is "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example, "2019-01-01 12:32:45-08:00".
+	AdjustmentDateTime string `json:"adjustmentDateTime,omitempty"`
+	// AdjustmentType: The adjustment type.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Represents value unknown in this version.
+	//   "RETRACTION" - Negates a conversion so that its total value and count are
+	// both zero.
+	//   "RESTATEMENT" - Changes the value of a conversion.
+	//   "ENHANCEMENT" - Supplements an existing conversion with provided user
+	// identifiers and user agent, which can be used by Google to enhance the
+	// conversion count.
+	AdjustmentType string `json:"adjustmentType,omitempty"`
+	// ConversionAction: Resource name of the conversion action associated with
+	// this conversion adjustment. Note: Although this resource name consists of a
+	// customer id and a conversion action id, validation will ignore the customer
+	// id and use the conversion action id as the sole identifier of the conversion
+	// action.
+	ConversionAction string `json:"conversionAction,omitempty"`
+	// GclidDateTimePair: For adjustments, uniquely identifies a conversion that
+	// was reported without an order ID specified. If the adjustment_type is
+	// ENHANCEMENT, this value is optional but may be set in addition to the
+	// order_id.
+	GclidDateTimePair *GoogleAdsSearchads360V23Services__GclidDateTimePair `json:"gclidDateTimePair,omitempty"`
+	// OrderId: The order ID of the conversion to be adjusted. If the conversion
+	// was reported with an order ID specified, that order ID must be used as the
+	// identifier here. The order ID is required for enhancements.
+	OrderId string `json:"orderId,omitempty"`
+	// RestatementValue: Information needed to restate the conversion's value.
+	// Required for restatements. Should not be supplied for retractions. An error
+	// will be returned if provided for a retraction. NOTE: If you want to upload a
+	// second restatement with a different adjusted value, it must have a new, more
+	// recent, adjustment occurrence time. Otherwise, it will be treated as a
+	// duplicate of the previous restatement and ignored.
+	RestatementValue *GoogleAdsSearchads360V23Services__RestatementValue `json:"restatementValue,omitempty"`
+	// UserAgent: The user agent to enhance the original conversion. This can be
+	// found in your user's HTTP request header when they convert on your web page.
+	// Example, "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X)". User
+	// agent can only be specified in enhancements with user identifiers.
+	UserAgent string `json:"userAgent,omitempty"`
+	// UserIdentifiers: The user identifiers to enhance the original conversion.
+	// ConversionAdjustmentUploadService only accepts user identifiers in
+	// enhancements. The maximum number of user identifiers for each enhancement is
+	// 5.
+	UserIdentifiers []*GoogleAdsSearchads360V23Common__UserIdentifier `json:"userIdentifiers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdjustmentDateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdjustmentDateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__ConversionAdjustment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__ConversionAdjustment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__ConversionAdjustmentResult: Information
+// identifying a successfully processed ConversionAdjustment.
+type GoogleAdsSearchads360V23Services__ConversionAdjustmentResult struct {
+	// AdjustmentDateTime: The date time at which the adjustment occurred. The
+	// format is "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example, "2019-01-01
+	// 12:32:45-08:00".
+	AdjustmentDateTime string `json:"adjustmentDateTime,omitempty"`
+	// AdjustmentType: The adjustment type.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Represents value unknown in this version.
+	//   "RETRACTION" - Negates a conversion so that its total value and count are
+	// both zero.
+	//   "RESTATEMENT" - Changes the value of a conversion.
+	//   "ENHANCEMENT" - Supplements an existing conversion with provided user
+	// identifiers and user agent, which can be used by Google to enhance the
+	// conversion count.
+	AdjustmentType string `json:"adjustmentType,omitempty"`
+	// ConversionAction: Resource name of the conversion action associated with
+	// this conversion adjustment.
+	ConversionAction string `json:"conversionAction,omitempty"`
+	// GclidDateTimePair: The gclid and conversion date time of the conversion.
+	GclidDateTimePair *GoogleAdsSearchads360V23Services__GclidDateTimePair `json:"gclidDateTimePair,omitempty"`
+	// OrderId: The order ID of the conversion to be adjusted.
+	OrderId string `json:"orderId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdjustmentDateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdjustmentDateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__ConversionAdjustmentResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__ConversionAdjustmentResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -47095,6 +47730,36 @@ type GoogleAdsSearchads360V23Services__CustomInterestOperation struct {
 
 func (s GoogleAdsSearchads360V23Services__CustomInterestOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V23Services__CustomInterestOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__CustomVariable: A custom variable.
+type GoogleAdsSearchads360V23Services__CustomVariable struct {
+	// ConversionCustomVariable: Resource name of the custom variable associated
+	// with this conversion. Note: Although this resource name consists of a
+	// customer id and a conversion custom variable id, validation will ignore the
+	// customer id and use the conversion custom variable id as the sole identifier
+	// of the conversion custom variable.
+	ConversionCustomVariable string `json:"conversionCustomVariable,omitempty"`
+	// Value: The value string of this custom variable. The value of the custom
+	// variable should not contain private customer data, such as email addresses
+	// or phone numbers.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversionCustomVariable")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversionCustomVariable") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__CustomVariable) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__CustomVariable
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -47912,6 +48577,46 @@ func (s GoogleAdsSearchads360V23Services__ExperimentOperation) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V23Services__ExternalAttributionData: Contains
+// additional information about externally attributed conversions.
+type GoogleAdsSearchads360V23Services__ExternalAttributionData struct {
+	// ExternalAttributionCredit: Represents the fraction of the conversion that is
+	// attributed to the Google Ads click.
+	ExternalAttributionCredit float64 `json:"externalAttributionCredit,omitempty"`
+	// ExternalAttributionModel: Specifies the attribution model name.
+	ExternalAttributionModel string `json:"externalAttributionModel,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalAttributionCredit")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalAttributionCredit") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__ExternalAttributionData) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__ExternalAttributionData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V23Services__ExternalAttributionData) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V23Services__ExternalAttributionData
+	var s1 struct {
+		ExternalAttributionCredit gensupport.JSONFloat64 `json:"externalAttributionCredit"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ExternalAttributionCredit = float64(s1.ExternalAttributionCredit)
+	return nil
+}
+
 // GoogleAdsSearchads360V23Services__FetchIncentiveResponse: Response from
 // getting the acquisition incentive for a user when they visit a specific
 // marketing page.
@@ -48115,6 +48820,34 @@ type GoogleAdsSearchads360V23Services__FrequencyCap struct {
 
 func (s GoogleAdsSearchads360V23Services__FrequencyCap) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V23Services__FrequencyCap
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__GclidDateTimePair: Uniquely identifies a
+// conversion that was reported without an order ID specified.
+type GoogleAdsSearchads360V23Services__GclidDateTimePair struct {
+	// ConversionDateTime: The date time at which the original conversion for this
+	// adjustment occurred. The timezone must be specified. The format is
+	// "yyyy-mm-dd hh:mm:ss+|-hh:mm", for example, "2019-01-01 12:32:45-08:00".
+	ConversionDateTime string `json:"conversionDateTime,omitempty"`
+	// Gclid: Google click ID (gclid) associated with the original conversion for
+	// this adjustment.
+	Gclid string `json:"gclid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversionDateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversionDateTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__GclidDateTimePair) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__GclidDateTimePair
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -56659,7 +57392,10 @@ func (s GoogleAdsSearchads360V23Services__MutateCustomerLabelResult) MarshalJSON
 }
 
 // GoogleAdsSearchads360V23Services__MutateCustomerLabelsRequest: Request
-// message for CustomerLabelService.MutateCustomerLabels.
+// message for CustomerLabelService.MutateCustomerLabels. A single
+// `MutateCustomerLabelsRequest` can only modify labels for the single customer
+// account specified in the request. To apply a label to multiple different
+// accounts, separate `MutateCustomerLabelsRequest` calls must be made.
 type GoogleAdsSearchads360V23Services__MutateCustomerLabelsRequest struct {
 	// Operations: Required. The list of operations to perform on customer-label
 	// relationships.
@@ -58675,6 +59411,76 @@ func (s GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignResult) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsRequest:
+// Request message for SearchAds360CampaignService.MutateSearchAds360Campaigns.
+type GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsRequest struct {
+	// Operations: Required. The list of operations to perform on individual Search
+	// Ads 360 campaigns.
+	Operations []*GoogleAdsSearchads360V23Services__SearchAds360CampaignOperation `json:"operations,omitempty"`
+	// PartialFailure: If true, successful operations will be carried out and
+	// invalid operations will return errors. If false, all operations will be
+	// carried out in one transaction if and only if they are all valid. Default is
+	// false.
+	PartialFailure bool `json:"partialFailure,omitempty"`
+	// ResponseContentType: The response content type setting. Determines whether
+	// the mutable resource or just the resource name should be returned post
+	// mutation.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified. Will return the resource name only in the
+	// response.
+	//   "RESOURCE_NAME_ONLY" - The mutate response will be the resource name.
+	//   "MUTABLE_RESOURCE" - The mutate response will contain the resource name
+	// and the resource with mutable fields if possible. Otherwise, only the
+	// resource name will be returned.
+	ResponseContentType string `json:"responseContentType,omitempty"`
+	// ValidateOnly: If true, the request is validated but not executed. Only
+	// errors are returned, not results.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Operations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Operations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsResponse:
+// Response message for Search Ads 360 campaign mutate.
+type GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsResponse struct {
+	// Results: All results for the mutate.
+	Results []*GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Results") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Results") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V23Services__MutateSearchAds360Request: Request message
 // for Service.Mutate.
 type GoogleAdsSearchads360V23Services__MutateSearchAds360Request struct {
@@ -60511,6 +61317,53 @@ func (s GoogleAdsSearchads360V23Services__RemoveProductLinkResponse) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V23Services__RestatementValue: Contains information
+// needed to restate a conversion's value.
+type GoogleAdsSearchads360V23Services__RestatementValue struct {
+	// AdjustedValue: The restated conversion value. This is the value of the
+	// conversion after restatement. For example, to change the value of a
+	// conversion from 100 to 70, an adjusted value of 70 should be reported. NOTE:
+	// If you want to upload a second restatement with a different adjusted value,
+	// it must have a new, more recent, adjustment occurrence time. Otherwise, it
+	// will be treated as a duplicate of the previous restatement and ignored.
+	AdjustedValue float64 `json:"adjustedValue,omitempty"`
+	// CurrencyCode: The currency of the restated value. If not provided, then the
+	// default currency from the conversion action is used, and if that is not set
+	// then the account currency is used. This is the ISO 4217 3-character currency
+	// code for example, USD or EUR.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdjustedValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdjustedValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__RestatementValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__RestatementValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V23Services__RestatementValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V23Services__RestatementValue
+	var s1 struct {
+		AdjustedValue gensupport.JSONFloat64 `json:"adjustedValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AdjustedValue = float64(s1.AdjustedValue)
+	return nil
+}
+
 // GoogleAdsSearchads360V23Services__RunBatchJobRequest: Request message for
 // BatchJobService.RunBatchJob.
 type GoogleAdsSearchads360V23Services__RunBatchJobRequest struct {
@@ -61241,6 +62094,54 @@ type GoogleAdsSearchads360V23Services__SearchSettings struct {
 
 func (s GoogleAdsSearchads360V23Services__SearchSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V23Services__SearchSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__SessionAttributeKeyValuePair: Contains one
+// session attribute of the conversion.
+type GoogleAdsSearchads360V23Services__SessionAttributeKeyValuePair struct {
+	// SessionAttributeKey: Required. The name of the session attribute.
+	SessionAttributeKey string `json:"sessionAttributeKey,omitempty"`
+	// SessionAttributeValue: Required. The value of the session attribute.
+	SessionAttributeValue string `json:"sessionAttributeValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionAttributeKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionAttributeKey") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__SessionAttributeKeyValuePair) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__SessionAttributeKeyValuePair
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__SessionAttributesKeyValuePairs: Contains
+// session attributes of the conversion, represented as key-value pairs.
+type GoogleAdsSearchads360V23Services__SessionAttributesKeyValuePairs struct {
+	// KeyValuePairs: Required. The session attributes for the conversion.
+	KeyValuePairs []*GoogleAdsSearchads360V23Services__SessionAttributeKeyValuePair `json:"keyValuePairs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyValuePairs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyValuePairs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__SessionAttributesKeyValuePairs) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__SessionAttributesKeyValuePairs
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -62397,6 +63298,221 @@ type GoogleAdsSearchads360V23Services__UpdateProductLinkInvitationResponse struc
 
 func (s GoogleAdsSearchads360V23Services__UpdateProductLinkInvitationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V23Services__UpdateProductLinkInvitationResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__UploadCallConversionsRequest: Request
+// message for ConversionUploadService.UploadCallConversions.
+type GoogleAdsSearchads360V23Services__UploadCallConversionsRequest struct {
+	// Conversions: Required. The conversions that are being uploaded.
+	Conversions []*GoogleAdsSearchads360V23Services__CallConversion `json:"conversions,omitempty"`
+	// PartialFailure: Required. If `true`, successful operations will be carried
+	// out and invalid operations will return errors. If `false`, all operations
+	// will be carried out in one transaction if and only if they are all valid.
+	// This should always be set to `true`.
+	PartialFailure bool `json:"partialFailure,omitempty"`
+	// ValidateOnly: If true, the request is validated but not executed. Only
+	// errors are returned, not results.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__UploadCallConversionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__UploadCallConversionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__UploadCallConversionsResponse: Response
+// message for ConversionUploadService.UploadCallConversions.
+type GoogleAdsSearchads360V23Services__UploadCallConversionsResponse struct {
+	// PartialFailureError: Errors that pertain to conversion failures in the
+	// partial failure mode. Returned when all errors occur inside the conversions.
+	// If any errors occur outside the conversions (for example, auth errors), we
+	// return an RPC level error.
+	PartialFailureError *GoogleRpc__Status `json:"partialFailureError,omitempty"`
+	// Results: Returned for successfully processed conversions. Proto will be
+	// empty for rows that received an error. Results are not returned when
+	// `validate_only` is `true`.
+	Results []*GoogleAdsSearchads360V23Services__CallConversionResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "PartialFailureError") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartialFailureError") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__UploadCallConversionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__UploadCallConversionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__UploadClickConversionsRequest: Request
+// message for ConversionUploadService.UploadClickConversions.
+type GoogleAdsSearchads360V23Services__UploadClickConversionsRequest struct {
+	// Conversions: Required. The conversions that are being uploaded.
+	Conversions []*GoogleAdsSearchads360V23Services__ClickConversion `json:"conversions,omitempty"`
+	// JobId: Optional. Optional input to set job ID. Must be a non-negative number
+	// that is less than 2^31 if provided. If this field is not provided, the API
+	// will generate a job ID in the range [2^31, (2^63)-1]. The API will return
+	// the value for this request in the `job_id` field of the
+	// `UploadClickConversionsResponse`.
+	JobId int64 `json:"jobId,omitempty"`
+	// PartialFailure: Required. If `true`, successful operations will be carried
+	// out and invalid operations will return errors. If `false`, all operations
+	// will be carried out in one transaction if and only if they are all valid.
+	// This should always be set to `true`.
+	PartialFailure bool `json:"partialFailure,omitempty"`
+	// ValidateOnly: If `true`, the request is validated but not executed. Only
+	// errors are returned, not results.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conversions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conversions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__UploadClickConversionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__UploadClickConversionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__UploadClickConversionsResponse: Response
+// message for ConversionUploadService.UploadClickConversions.
+type GoogleAdsSearchads360V23Services__UploadClickConversionsResponse struct {
+	// JobId: Job ID for the upload batch.
+	JobId int64 `json:"jobId,omitempty,string"`
+	// PartialFailureError: Errors that pertain to conversion failures in the
+	// partial failure mode. Returned when all errors occur inside the conversions.
+	// If any errors occur outside the conversions (for example, auth errors), we
+	// return an RPC level error.
+	PartialFailureError *GoogleRpc__Status `json:"partialFailureError,omitempty"`
+	// Results: Returned for successfully processed conversions. Proto will be
+	// empty for rows that received an error. Results are not returned when
+	// `validate_only` is `true`.
+	Results []*GoogleAdsSearchads360V23Services__ClickConversionResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "JobId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JobId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__UploadClickConversionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__UploadClickConversionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsRequest:
+// Request message for
+// ConversionAdjustmentUploadService.UploadConversionAdjustments.
+type GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsRequest struct {
+	// ConversionAdjustments: Required. The conversion adjustments that are being
+	// uploaded.
+	ConversionAdjustments []*GoogleAdsSearchads360V23Services__ConversionAdjustment `json:"conversionAdjustments,omitempty"`
+	// JobId: Optional. Optional input to set job ID. Must be a non-negative number
+	// that is less than 2^31 if provided. If this field is not provided, the API
+	// will generate a job ID in the range [2^31, (2^63)-1]. The API will return
+	// the value for this request in the `job_id` field of the
+	// `UploadConversionAdjustmentsResponse`.
+	JobId int64 `json:"jobId,omitempty"`
+	// PartialFailure: Required. If true, successful operations will be carried out
+	// and invalid operations will return errors. If false, all operations will be
+	// carried out in one transaction if and only if they are all valid. This
+	// should always be set to true. See
+	// https://developers.google.com/google-ads/api/docs/best-practices/partial-failures
+	// for more information about partial failure.
+	PartialFailure bool `json:"partialFailure,omitempty"`
+	// ValidateOnly: If true, the request is validated but not executed. Only
+	// errors are returned, not results.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConversionAdjustments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConversionAdjustments") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsResponse:
+// Response message for
+// ConversionAdjustmentUploadService.UploadConversionAdjustments.
+type GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsResponse struct {
+	// JobId: Job ID for the upload batch.
+	JobId int64 `json:"jobId,omitempty,string"`
+	// PartialFailureError: Errors that pertain to conversion adjustment failures
+	// in the partial failure mode. Returned when all errors occur inside the
+	// adjustments. If any errors occur outside the adjustments (for example, auth
+	// errors), we return an RPC level error. See
+	// https://developers.google.com/google-ads/api/docs/best-practices/partial-failures
+	// for more information about partial failure.
+	PartialFailureError *GoogleRpc__Status `json:"partialFailureError,omitempty"`
+	// Results: Returned for successfully processed conversion adjustments. Proto
+	// will be empty for rows that received an error. Results are not returned when
+	// validate_only is true.
+	Results []*GoogleAdsSearchads360V23Services__ConversionAdjustmentResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "JobId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JobId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -65330,6 +66446,326 @@ func (c *CustomersSuggestTravelAssetsCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "searchads360.customers.suggestTravelAssets", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersUploadCallConversionsCall struct {
+	s                                                              *Service
+	customerId                                                     string
+	googleadssearchads360v23services__uploadcallconversionsrequest *GoogleAdsSearchads360V23Services__UploadCallConversionsRequest
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// UploadCallConversions: Processes the given call conversions. List of thrown
+// errors: AuthenticationError () [AuthorizationError]() HeaderError ()
+// [InternalError]() PartialFailureError () [QuotaError]() RequestError ()
+//
+// - customerId: The ID of the customer performing the upload.
+func (r *CustomersService) UploadCallConversions(customerId string, googleadssearchads360v23services__uploadcallconversionsrequest *GoogleAdsSearchads360V23Services__UploadCallConversionsRequest) *CustomersUploadCallConversionsCall {
+	c := &CustomersUploadCallConversionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customerId = customerId
+	c.googleadssearchads360v23services__uploadcallconversionsrequest = googleadssearchads360v23services__uploadcallconversionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersUploadCallConversionsCall) Fields(s ...googleapi.Field) *CustomersUploadCallConversionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersUploadCallConversionsCall) Context(ctx context.Context) *CustomersUploadCallConversionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersUploadCallConversionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersUploadCallConversionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleadssearchads360v23services__uploadcallconversionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v23/customers/{+customerId}:uploadCallConversions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "searchads360.customers.uploadCallConversions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "searchads360.customers.uploadCallConversions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAdsSearchads360V23Services__UploadCallConversionsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersUploadCallConversionsCall) Do(opts ...googleapi.CallOption) (*GoogleAdsSearchads360V23Services__UploadCallConversionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAdsSearchads360V23Services__UploadCallConversionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "searchads360.customers.uploadCallConversions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersUploadClickConversionsCall struct {
+	s                                                               *Service
+	customerId                                                      string
+	googleadssearchads360v23services__uploadclickconversionsrequest *GoogleAdsSearchads360V23Services__UploadClickConversionsRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// UploadClickConversions: Processes the given click conversions. List of
+// thrown errors: AuthenticationError () [AuthorizationError]()
+// ConversionUploadError () [HeaderError]() InternalError ()
+// [PartialFailureError]() QuotaError () [RequestError]()
+//
+// - customerId: The ID of the customer performing the upload.
+func (r *CustomersService) UploadClickConversions(customerId string, googleadssearchads360v23services__uploadclickconversionsrequest *GoogleAdsSearchads360V23Services__UploadClickConversionsRequest) *CustomersUploadClickConversionsCall {
+	c := &CustomersUploadClickConversionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customerId = customerId
+	c.googleadssearchads360v23services__uploadclickconversionsrequest = googleadssearchads360v23services__uploadclickconversionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersUploadClickConversionsCall) Fields(s ...googleapi.Field) *CustomersUploadClickConversionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersUploadClickConversionsCall) Context(ctx context.Context) *CustomersUploadClickConversionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersUploadClickConversionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersUploadClickConversionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleadssearchads360v23services__uploadclickconversionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v23/customers/{+customerId}:uploadClickConversions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "searchads360.customers.uploadClickConversions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "searchads360.customers.uploadClickConversions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAdsSearchads360V23Services__UploadClickConversionsResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersUploadClickConversionsCall) Do(opts ...googleapi.CallOption) (*GoogleAdsSearchads360V23Services__UploadClickConversionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAdsSearchads360V23Services__UploadClickConversionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "searchads360.customers.uploadClickConversions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type CustomersUploadConversionAdjustmentsCall struct {
+	s                                                                    *Service
+	customerId                                                           string
+	googleadssearchads360v23services__uploadconversionadjustmentsrequest *GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsRequest
+	urlParams_                                                           gensupport.URLParams
+	ctx_                                                                 context.Context
+	header_                                                              http.Header
+}
+
+// UploadConversionAdjustments: Processes the given conversion adjustments.
+// List of thrown errors: AuthenticationError () [AuthorizationError]()
+// HeaderError () [InternalError]() PartialFailureError () [QuotaError]()
+// RequestError ()
+//
+// - customerId: The ID of the customer performing the upload.
+func (r *CustomersService) UploadConversionAdjustments(customerId string, googleadssearchads360v23services__uploadconversionadjustmentsrequest *GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsRequest) *CustomersUploadConversionAdjustmentsCall {
+	c := &CustomersUploadConversionAdjustmentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customerId = customerId
+	c.googleadssearchads360v23services__uploadconversionadjustmentsrequest = googleadssearchads360v23services__uploadconversionadjustmentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersUploadConversionAdjustmentsCall) Fields(s ...googleapi.Field) *CustomersUploadConversionAdjustmentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersUploadConversionAdjustmentsCall) Context(ctx context.Context) *CustomersUploadConversionAdjustmentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersUploadConversionAdjustmentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersUploadConversionAdjustmentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleadssearchads360v23services__uploadconversionadjustmentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v23/customers/{+customerId}:uploadConversionAdjustments")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "searchads360.customers.uploadConversionAdjustments", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "searchads360.customers.uploadConversionAdjustments" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersUploadConversionAdjustmentsCall) Do(opts ...googleapi.CallOption) (*GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAdsSearchads360V23Services__UploadConversionAdjustmentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "searchads360.customers.uploadConversionAdjustments", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -77727,6 +79163,114 @@ func (c *CustomersSearchAds360SearchCall) Pages(ctx context.Context, f func(*Goo
 		}
 		c.googleadssearchads360v23services__searchsearchads360request.PageToken = x.NextPageToken
 	}
+}
+
+type CustomersSearchAds360CampaignsMutateCall struct {
+	s                                                                    *Service
+	customerId                                                           string
+	googleadssearchads360v23services__mutatesearchads360campaignsrequest *GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsRequest
+	urlParams_                                                           gensupport.URLParams
+	ctx_                                                                 context.Context
+	header_                                                              http.Header
+}
+
+// Mutate: Updates Search Ads 360 campaigns. Operation statuses are returned.
+// List of thrown errors: AuthenticationError () [AuthorizationError]()
+// HeaderError () [InternalError]() MutateError () [QuotaError]() RequestError
+// ()
+//
+//   - customerId: The ID of the customer whose Search Ads 360 campaigns are
+//     being modified.
+func (r *CustomersSearchAds360CampaignsService) Mutate(customerId string, googleadssearchads360v23services__mutatesearchads360campaignsrequest *GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsRequest) *CustomersSearchAds360CampaignsMutateCall {
+	c := &CustomersSearchAds360CampaignsMutateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customerId = customerId
+	c.googleadssearchads360v23services__mutatesearchads360campaignsrequest = googleadssearchads360v23services__mutatesearchads360campaignsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersSearchAds360CampaignsMutateCall) Fields(s ...googleapi.Field) *CustomersSearchAds360CampaignsMutateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersSearchAds360CampaignsMutateCall) Context(ctx context.Context) *CustomersSearchAds360CampaignsMutateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersSearchAds360CampaignsMutateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersSearchAds360CampaignsMutateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleadssearchads360v23services__mutatesearchads360campaignsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v23/customers/{+customerId}/searchAds360Campaigns:mutate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customerId": c.customerId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "searchads360.customers.searchAds360Campaigns.mutate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "searchads360.customers.searchAds360Campaigns.mutate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *CustomersSearchAds360CampaignsMutateCall) Do(opts ...googleapi.CallOption) (*GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAdsSearchads360V23Services__MutateSearchAds360CampaignsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "searchads360.customers.searchAds360Campaigns.mutate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type CustomersSharedCriteriaMutateCall struct {

@@ -9035,7 +9035,7 @@ type WorkAccountSetupConfig struct {
 	// GOOGLE_AUTHENTICATED. This must be an enterprise account and not a consumer
 	// account. Once set and a Google authenticated account is added to the device,
 	// changing this field will have no effect, and thus recommended to be set only
-	// once.
+	// once. The email address must be all lowercase.
 	RequiredAccountEmail string `json:"requiredAccountEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
 	// unconditionally include in API requests. By default, fields with empty or

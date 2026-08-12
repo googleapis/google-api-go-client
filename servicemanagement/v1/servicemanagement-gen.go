@@ -3216,23 +3216,35 @@ func (s MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
 // MetricRule: Bind API methods to metrics. Binding a method to a metric causes
 // that metric's configured quota behaviors to apply to the method call.
 type MetricRule struct {
+	// AgenticMetricCosts: Optional. Metrics to update when the selected methods
+	// are called, and the associated cost applied to each metric, iff the source
+	// of the call is an agent. The key of the map is the metric name, and the
+	// values are the amount increased for the metric against which the quota
+	// limits are defined. The value must not be negative.
+	AgenticMetricCosts map[string]string `json:"agenticMetricCosts,omitempty"`
 	// MetricCosts: Metrics to update when the selected methods are called, and the
 	// associated cost applied to each metric. The key of the map is the metric
 	// name, and the values are the amount increased for the metric against which
 	// the quota limits are defined. The value must not be negative.
 	MetricCosts map[string]string `json:"metricCosts,omitempty"`
+	// NonagenticMetricCosts: Optional. Metrics to update when the selected methods
+	// are called, and the associated cost applied to each metric, iff the source
+	// of the call is not an agent. The key of the map is the metric name, and the
+	// values are the amount increased for the metric against which the quota
+	// limits are defined. The value must not be negative.
+	NonagenticMetricCosts map[string]string `json:"nonagenticMetricCosts,omitempty"`
 	// Selector: Selects the methods to which this rule applies. Refer to selector
 	// for syntax details.
 	Selector string `json:"selector,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MetricCosts") to
+	// ForceSendFields is a list of field names (e.g. "AgenticMetricCosts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MetricCosts") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgenticMetricCosts") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4021,6 +4033,18 @@ type QuotaLimit struct {
 	// unique within the service. The name can only include alphanumeric characters
 	// as well as '-'. The maximum length of the limit name is 64 characters.
 	Name string `json:"name,omitempty"`
+	// TrafficSource: Optional. This is only informational, the logic to allocate
+	// the quota to the correct metric (such as in `metric_rules`) should identify
+	// which quota metrics to allocate to.
+	//
+	// Possible values:
+	//   "TRAFFIC_SOURCE_UNSPECIFIED" - This quota limit applies to all traffic.
+	// This is the default value.
+	//   "TRAFFIC_SOURCE_NONAGENTIC" - This quota limit applies to traffic not
+	// recognized as agentic.
+	//   "TRAFFIC_SOURCE_AGENTIC" - This quota limit applies to only agentic
+	// traffic.
+	TrafficSource string `json:"trafficSource,omitempty"`
 	// Unit: Specify the unit of the quota limit. It uses the same syntax as
 	// MetricDescriptor.unit. The supported unit kinds are determined by the quota
 	// backend system. Here are some examples: * "1/min/{project}" for quota per

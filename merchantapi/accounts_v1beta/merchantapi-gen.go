@@ -751,10 +751,6 @@ type AccountService struct {
 	// ProviderDisplayName: Output only. The human-readable display name of the
 	// provider account.
 	ProviderDisplayName string `json:"providerDisplayName,omitempty"`
-	// UcpCheckoutManagement: Service type for UCP Checkout Management. The
-	// provider is managing the UCP Checkout capability integration for the
-	// merchant.
-	UcpCheckoutManagement *UcpCheckoutManagement `json:"ucpCheckoutManagement,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3656,7 +3652,8 @@ type ProductsManagement struct {
 // enables products from a business's store to be shown across Google for free.
 // The following list is the available set of program resource IDs accessible
 // through the API: * `checkout` * `free-listings` * `product-ratings` *
-// `shopping-ads` * `youtube-affiliate` * `youtube-shopping-checkout`
+// `shopping-ads` * `ucp-integration` (limited access) * `youtube-affiliate` *
+// `youtube-shopping-checkout`
 type Program struct {
 	// ActiveRegionCodes: Output only. The regions in which the account is actively
 	// participating in the program. Active regions are defined as those where all
@@ -4405,7 +4402,7 @@ type TermsOfService struct {
 	//
 	// Possible values:
 	//   "TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-	//   "MERCHANT_CENTER" - Terms of service for the Merchant Center application.
+	//   "MERCHANT_CENTER" - Terms of Service for the Merchant Center application.
 	Kind string `json:"kind,omitempty"`
 	// Name: Identifier. The resource name of the terms of service version. Format:
 	// `termsOfService/{version}`
@@ -4471,7 +4468,7 @@ type TermsOfServiceAgreementState struct {
 	//
 	// Possible values:
 	//   "TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-	//   "MERCHANT_CENTER" - Terms of service for the Merchant Center application.
+	//   "MERCHANT_CENTER" - Terms of Service for the Merchant Center application.
 	TermsOfServiceKind string `json:"termsOfServiceKind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4606,10 +4603,6 @@ type TransitTimeValue struct {
 func (s TransitTimeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitTimeValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// UcpCheckoutManagement: `UcpCheckoutManagement` payload.
-type UcpCheckoutManagement struct {
 }
 
 // UnclaimHomepageRequest: Request message for the `UnclaimHomepage` method.
@@ -13464,7 +13457,7 @@ func (r *TermsOfServiceService) RetrieveLatest() *TermsOfServiceRetrieveLatestCa
 // Possible values:
 //
 //	"TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-//	"MERCHANT_CENTER" - Terms of service for the Merchant Center application.
+//	"MERCHANT_CENTER" - Terms of Service for the Merchant Center application.
 func (c *TermsOfServiceRetrieveLatestCall) Kind(kind string) *TermsOfServiceRetrieveLatestCall {
 	c.urlParams_.Set("kind", kind)
 	return c

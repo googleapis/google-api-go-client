@@ -333,16 +333,16 @@ func (s GoogleCloudAiplatformV1beta1AudioResponseFormat) MarshalJSON() ([]byte, 
 }
 
 // GoogleCloudAiplatformV1beta1AudioTranscription: The transcription of an
-// audio part. For multi-speaker audio, each speaker segment is a separate Part
-// with its own AudioTranscription carrying the speaker_label.
+// audio part. For multi-speaker audio, each speaker segment is a separate
+// `Part` with its own `AudioTranscription` carrying the `speaker_label`.
 type GoogleCloudAiplatformV1beta1AudioTranscription struct {
 	// SpeakerLabel: Optional. A label identifying the speaker of this audio
-	// segment (e.g. "spk_1", "spk_2"). Present when diarization is set.
+	// segment (e.g. `spk_1`, `spk_2`). Present when `diarization` is set.
 	SpeakerLabel string `json:"speakerLabel,omitempty"`
 	// Text: Required. The transcription text of this audio segment.
 	Text string `json:"text,omitempty"`
 	// Words: Optional. Detailed word-level transcriptions and timing details.
-	// Present when word_timestamp is set.
+	// Present when `word_timestamp` is set.
 	Words []*GoogleCloudAiplatformV1beta1AudioTranscriptionWordInfo `json:"words,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SpeakerLabel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -365,8 +365,8 @@ func (s GoogleCloudAiplatformV1beta1AudioTranscription) MarshalJSON() ([]byte, e
 // GoogleCloudAiplatformV1beta1AudioTranscriptionConfig: Configuration for
 // speech recognition (transcription).
 type GoogleCloudAiplatformV1beta1AudioTranscriptionConfig struct {
-	// AdaptationPhrases: Optional. A list of phrases to bias the ASR model
-	// towards.
+	// AdaptationPhrases: Optional. Deprecated: Use `custom_vocabulary` instead. A
+	// list of phrases to bias the speech recognition model towards.
 	AdaptationPhrases []string `json:"adaptationPhrases,omitempty"`
 	// CustomVocabulary: Optional. A list of custom vocabulary phrases to bias the
 	// speech recognition model toward recognizing specific terms.
@@ -1760,8 +1760,8 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	// the request to the model. This can be useful for synchronizing audio with
 	// other modalities in the response.
 	AudioTimestamp bool `json:"audioTimestamp,omitempty"`
-	// AudioTranscriptionConfig: Optional. Config for audio transcription (speech
-	// recognition).
+	// AudioTranscriptionConfig: Optional. Configuration for audio transcription
+	// (speech recognition).
 	AudioTranscriptionConfig *GoogleCloudAiplatformV1beta1AudioTranscriptionConfig `json:"audioTranscriptionConfig,omitempty"`
 	// CandidateCount: Optional. The number of candidate responses to generate. A
 	// higher `candidate_count` can provide more options to choose from, but it
@@ -2936,7 +2936,7 @@ func (s GoogleCloudAiplatformV1beta1MultiSpeakerVoiceConfig) MarshalJSON() ([]by
 // `inline_data` or `file_data` field is filled with raw bytes.
 type GoogleCloudAiplatformV1beta1Part struct {
 	// AudioTranscription: Optional. Audio (input or output) transcription. This is
-	// only set when this Part contains audio data.
+	// only set when this `Part` contains audio data.
 	AudioTranscription *GoogleCloudAiplatformV1beta1AudioTranscription `json:"audioTranscription,omitempty"`
 	// CodeExecutionResult: Optional. The result of executing the ExecutableCode.
 	CodeExecutionResult *GoogleCloudAiplatformV1beta1CodeExecutionResult `json:"codeExecutionResult,omitempty"`

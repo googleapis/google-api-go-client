@@ -11749,6 +11749,19 @@ type GoogleAdsSearchads360V23Errors__ErrorCode struct {
 	// customer lifecycle optimization goal, campaign type should be supported.
 	//   "CUSTOMER_NOT_ALLOWLISTED_FOR_RETENTION_ONLY" - Customer must be
 	// allowlisted to use retention only goal.
+	//
+	// "CAMPAIGN_OVERRIDE_VALUES_SET_FOR_NEW_CUSTOMER_ACQUISITION_TARGET_SPECIFIC_OP
+	// TION" - New customer acquisition customer lifecycle optimization goal
+	// targeting only new customers should not have campaign override values set.
+	//   "CAMPAIGN_OVERRIDE_HIGH_LIFETIME_VALUE_NOT_SUPPORTED_FOR_CAMPAIGN_TYPE" -
+	// New customer acquisition customer lifecycle optimization goal campaign
+	// override high lifetime values should only be set for supported campaign
+	// type.
+	//   "CANNOT_USE_INCOMPATIBLE_CLO_GOALS" - Error when the campaign is
+	// attempting to combine incompatible CLO goals.
+	//   "LOYALTY_RETENTION_GOAL_INVALID_MODE" - At least one mode (either enabling
+	// bid adjustments or showing benefits in PLA) must be enabled for loyalty
+	// retention goal.
 	CampaignGoalConfigError string `json:"campaignGoalConfigError,omitempty"`
 	// CampaignLifecycleGoalError: The reasons for the campaign lifecycle goal
 	// error

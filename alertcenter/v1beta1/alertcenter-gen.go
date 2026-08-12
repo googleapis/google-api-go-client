@@ -1983,6 +1983,7 @@ type RuleViolationInfo struct {
 	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
 	//   "CHROME_WATERMARK" - Send watermark alert
 	//   "CHROME_FORCE_SAVE_TO_CLOUD" - Force save to cloud storage.
+	//   "CHROME_KEEP_IN_MANAGED_CHROME" - Keep in managed Chrome.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent out.
 	//   "CHAT_WARN_USER" - Warn end user about Chat content.
@@ -2046,6 +2047,7 @@ type RuleViolationInfo struct {
 	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
 	//   "CHROME_WATERMARK" - Send watermark alert
 	//   "CHROME_FORCE_SAVE_TO_CLOUD" - Force save to cloud storage.
+	//   "CHROME_KEEP_IN_MANAGED_CHROME" - Keep in managed Chrome.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent out.
 	//   "CHAT_WARN_USER" - Warn end user about Chat content.

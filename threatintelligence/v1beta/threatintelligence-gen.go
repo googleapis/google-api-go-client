@@ -1298,6 +1298,31 @@ func (s GenerateOrgProfileConfigurationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GetPasswordResponse: Response message for GetPassword.
+type GetPasswordResponse struct {
+	// Password: The decrypted cleartext password for the compromised credential.
+	Password string `json:"password,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Password") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Password") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetPasswordResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetPasswordResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InitialAccessBrokerAlertDetail: Captures the specific details of
 // InitialAccessBroker (IAB) alert.
 type InitialAccessBrokerAlertDetail struct {
@@ -3015,7 +3040,8 @@ type ProjectsAlertsGetPasswordCall struct {
 
 // GetPassword: Get the decrypted password of an alert.
 //
-// - name: Name of the alert to get. Format: projects/{project}/alerts/{alert}.
+//   - name: Name of the alert to get password for. Format:
+//     projects/{project}/alerts/{alert}.
 func (r *ProjectsAlertsService) GetPassword(name string) *ProjectsAlertsGetPasswordCall {
 	c := &ProjectsAlertsGetPasswordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3076,10 +3102,11 @@ func (c *ProjectsAlertsGetPasswordCall) doRequest(alt string) (*http.Response, e
 
 // Do executes the "threatintelligence.projects.alerts.getPassword" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *Alert.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsAlertsGetPasswordCall) Do(opts ...googleapi.CallOption) (*Alert, error) {
+// *GetPasswordResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAlertsGetPasswordCall) Do(opts ...googleapi.CallOption) (*GetPasswordResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -3098,7 +3125,7 @@ func (c *ProjectsAlertsGetPasswordCall) Do(opts ...googleapi.CallOption) (*Alert
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &Alert{
+	ret := &GetPasswordResponse{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

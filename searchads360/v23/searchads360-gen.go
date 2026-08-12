@@ -1932,6 +1932,75 @@ func (s GoogleAdsSearchads360V0Errors__SearchAds360Failure) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignLoyaltyRetentionGoa
+// lSettings: Loyalty retention campaign goal settings.
+type GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignLoyaltyRetentionGoalSettings struct {
+	// EnableBidAdjustmentsForLoyaltyMembers: Whether to adjust bids for loyalty
+	// members.
+	EnableBidAdjustmentsForLoyaltyMembers bool `json:"enableBidAdjustmentsForLoyaltyMembers,omitempty"`
+	// ShowTargetedLoyaltyMemberBenefitsInPla: Whether to show targeted loyalty
+	// member benefits in PLA format in eligible countries.
+	ShowTargetedLoyaltyMemberBenefitsInPla bool `json:"showTargetedLoyaltyMemberBenefitsInPla,omitempty"`
+	// ValueSettingsOverride: Loyalty retention goal campaign specific value
+	// settings.
+	ValueSettingsOverride *GoogleAdsSearchads360V23Common__CustomerLifecycleOptimizationValueSettings `json:"valueSettingsOverride,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableBidAdjustmentsForLoyaltyMembers") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "EnableBidAdjustmentsForLoyaltyMembers") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignLoyaltyRetentionGoalSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignLoyaltyRetentionGoalSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignNewCustomerAcquisit
+// ionGoalSettings: New Customer Acquisition campaign goal settings.
+type GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignNewCustomerAcquisitionGoalSettings struct {
+	// TargetOption: New Customer Acquisition goal optimization mode for this
+	// campaign. Defaults to TARGET_ALL. Whether the campaign is targeting new
+	// customers only.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
+	// version.
+	//   "TARGET_ALL" - The mode is used when the campaign optimizes for all
+	// customers, which is the default value.
+	//   "TARGET_SPECIFIC" - This mode configures the campaign to target only
+	// customers who have previously interacted but are now lapsed or disengaged.
+	TargetOption string `json:"targetOption,omitempty"`
+	// ValueSettingsOverride: New Customer Acquisition goal campaign specific value
+	// settings.
+	ValueSettingsOverride *GoogleAdsSearchads360V23Common__CustomerLifecycleOptimizationValueSettings `json:"valueSettingsOverride,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetOption") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetOption") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignNewCustomerAcquisitionGoalSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignNewCustomerAcquisitionGoalSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignRetentionGoalSettin
 // gs: Retention campaign goal settings.
 type GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignRetentionGoalSettings struct {
@@ -17134,6 +17203,19 @@ type GoogleAdsSearchads360V23Errors__ErrorCode struct {
 	// customer lifecycle optimization goal, campaign type should be supported.
 	//   "CUSTOMER_NOT_ALLOWLISTED_FOR_RETENTION_ONLY" - Customer must be
 	// allowlisted to use retention only goal.
+	//
+	// "CAMPAIGN_OVERRIDE_VALUES_SET_FOR_NEW_CUSTOMER_ACQUISITION_TARGET_SPECIFIC_OP
+	// TION" - New customer acquisition customer lifecycle optimization goal
+	// targeting only new customers should not have campaign override values set.
+	//   "CAMPAIGN_OVERRIDE_HIGH_LIFETIME_VALUE_NOT_SUPPORTED_FOR_CAMPAIGN_TYPE" -
+	// New customer acquisition customer lifecycle optimization goal campaign
+	// override high lifetime values should only be set for supported campaign
+	// type.
+	//   "CANNOT_USE_INCOMPATIBLE_CLO_GOALS" - Error when the campaign is
+	// attempting to combine incompatible CLO goals.
+	//   "LOYALTY_RETENTION_GOAL_INVALID_MODE" - At least one mode (either enabling
+	// bid adjustments or showing benefits in PLA) must be enabled for loyalty
+	// retention goal.
 	CampaignGoalConfigError string `json:"campaignGoalConfigError,omitempty"`
 	// CampaignLifecycleGoalError: The reasons for the campaign lifecycle goal
 	// error
@@ -32623,6 +32705,11 @@ func (s GoogleAdsSearchads360V23Resources__CampaignEffectiveLabel) MarshalJSON()
 type GoogleAdsSearchads360V23Resources__CampaignGoalConfig struct {
 	// Campaign: Immutable. The resource name of the campaign for this link.
 	Campaign string `json:"campaign,omitempty"`
+	// CampaignLoyaltyRetentionSettings: Loyalty retention goal campaign settings.
+	CampaignLoyaltyRetentionSettings *GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignLoyaltyRetentionGoalSettings `json:"campaignLoyaltyRetentionSettings,omitempty"`
+	// CampaignNewCustomerAcquisitionSettings: New customer acquisition goal
+	// campaign settings.
+	CampaignNewCustomerAcquisitionSettings *GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignNewCustomerAcquisitionGoalSettings `json:"campaignNewCustomerAcquisitionSettings,omitempty"`
 	// CampaignRetentionSettings: Retention goal campaign settings.
 	CampaignRetentionSettings *GoogleAdsSearchads360V23CommonCampaignGoalSettingsCampaignRetentionGoalSettings `json:"campaignRetentionSettings,omitempty"`
 	// Goal: Immutable. The resource name of the goal this link is attached to.

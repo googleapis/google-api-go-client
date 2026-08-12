@@ -674,27 +674,26 @@ func (s AccessPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Activity: An *activity* resource contains information about an action that a
-// particular channel, or user, has taken on YouTube.The actions reported in
-// activity feeds include rating a video, sharing a video, marking a video as a
-// favorite, commenting on a video, uploading a video, and so forth. Each
-// activity resource identifies the type of action, the channel associated with
-// the action, and the resource(s) associated with the action, such as the
-// video that was rated or uploaded.
+// Activity: An `activity` resource contains information about an action that a
+// particular channel, or user, has taken on YouTube. The actions reported in
+// activity feeds include sharing a video, uploading a video, and so forth.
+// Each `activity` resource identifies the type of action, the channel
+// associated with the action, and the resource(s) associated with the action,
+// such as the video that was rated or uploaded.
 type Activity struct {
-	// ContentDetails: The contentDetails object contains information about the
-	// content associated with the activity. For example, if the snippet.type value
-	// is videoRated, then the contentDetails object's content identifies the rated
-	// video.
+	// ContentDetails: The `contentDetails` object contains information about the
+	// content associated with the activity. For example, if the `snippet.type`
+	// value is `videoRated`, then the `contentDetails` object's content identifies
+	// the rated video.
 	ContentDetails *ActivityContentDetails `json:"contentDetails,omitempty"`
 	// Etag: Etag of this resource
 	Etag string `json:"etag,omitempty"`
 	// Id: The ID that YouTube uses to uniquely identify the activity.
 	Id string `json:"id,omitempty"`
-	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// Kind: Identifies what kind of resource this is. Value: The fixed string
 	// "youtube#activity".
 	Kind string `json:"kind,omitempty"`
-	// Snippet: The snippet object contains basic details about the activity,
+	// Snippet: The `snippet` object contains basic details about the activity,
 	// including the activity's type and group ID.
 	Snippet *ActivitySnippet `json:"snippet,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentDetails") to
@@ -718,46 +717,48 @@ func (s Activity) MarshalJSON() ([]byte, error) {
 // ActivityContentDetails: Details about the content of an activity: the video
 // that was shared, the channel that was subscribed to, etc.
 type ActivityContentDetails struct {
-	// Bulletin: The bulletin object contains details about a channel bulletin
-	// post. This object is only present if the snippet.type is bulletin.
+	// Bulletin: The `bulletin` object contains details about a channel bulletin
+	// post. This object is only present if the `snippet.type` is `bulletin`.
 	Bulletin *ActivityContentDetailsBulletin `json:"bulletin,omitempty"`
-	// ChannelItem: The channelItem object contains details about a resource which
-	// was added to a channel. This property is only present if the snippet.type is
-	// channelItem.
+	// ChannelItem: The `channelItem` object contains details about a resource
+	// which was added to a channel. This property is only present if the
+	// `snippet.type` is `channelItem`.
 	ChannelItem *ActivityContentDetailsChannelItem `json:"channelItem,omitempty"`
-	// Comment: The comment object contains information about a resource that
-	// received a comment. This property is only present if the snippet.type is
-	// comment.
+	// Comment: The `comment` object contains information about a resource that
+	// received a comment. This property is only present if the `snippet.type` is
+	// `comment`.
 	Comment *ActivityContentDetailsComment `json:"comment,omitempty"`
-	// Favorite: The favorite object contains information about a video that was
+	// Favorite: The `favorite` object contains information about a video that was
 	// marked as a favorite video. This property is only present if the
-	// snippet.type is favorite.
+	// `snippet.type` is `favorite`. Deprecated: This property is no longer
+	// returned.
 	Favorite *ActivityContentDetailsFavorite `json:"favorite,omitempty"`
-	// Like: The like object contains information about a resource that received a
-	// positive (like) rating. This property is only present if the snippet.type is
-	// like.
+	// Like: The `like` object contains information about a resource that received
+	// a positive (like) rating. This property is only present if the
+	// `snippet.type` is `like`. Deprecated: This property is no longer returned.
 	Like *ActivityContentDetailsLike `json:"like,omitempty"`
-	// PlaylistItem: The playlistItem object contains information about a new
-	// playlist item. This property is only present if the snippet.type is
-	// playlistItem.
+	// PlaylistItem: The `playlistItem` object contains information about a new
+	// playlist item. This property is only present if the `snippet.type` is
+	// `playlistItem`.
 	PlaylistItem *ActivityContentDetailsPlaylistItem `json:"playlistItem,omitempty"`
-	// PromotedItem: The promotedItem object contains details about a resource
-	// which is being promoted. This property is only present if the snippet.type
-	// is promotedItem.
+	// PromotedItem: The `promotedItem` object contains details about a resource
+	// which is being promoted. This property is only present if the `snippet.type`
+	// is `promotedItem`.
 	PromotedItem *ActivityContentDetailsPromotedItem `json:"promotedItem,omitempty"`
-	// Recommendation: The recommendation object contains information about a
-	// recommended resource. This property is only present if the snippet.type is
-	// recommendation.
+	// Recommendation: The `recommendation` object contains information about a
+	// recommended resource. This property is only present if the `snippet.type` is
+	// `recommendation`.
 	Recommendation *ActivityContentDetailsRecommendation `json:"recommendation,omitempty"`
-	// Social: The social object contains details about a social network post. This
-	// property is only present if the snippet.type is social.
+	// Social: The `social` object contains details about a social network post.
+	// This property is only present if the `snippet.type` is `social`.
 	Social *ActivityContentDetailsSocial `json:"social,omitempty"`
-	// Subscription: The subscription object contains information about a channel
-	// that a user subscribed to. This property is only present if the snippet.type
-	// is subscription.
+	// Subscription: The `subscription` object contains information about a channel
+	// that a user subscribed to. This property is only present if the
+	// `snippet.type` is `subscription`. Deprecated: This property is no longer
+	// returned.
 	Subscription *ActivityContentDetailsSubscription `json:"subscription,omitempty"`
-	// Upload: The upload object contains information about the uploaded video.
-	// This property is only present if the snippet.type is upload.
+	// Upload: The `upload` object contains information about the uploaded video.
+	// This property is only present if the `snippet.type` is `upload`.
 	Upload *ActivityContentDetailsUpload `json:"upload,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Bulletin") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -779,7 +780,7 @@ func (s ActivityContentDetails) MarshalJSON() ([]byte, error) {
 
 // ActivityContentDetailsBulletin: Details about a channel bulletin post.
 type ActivityContentDetailsBulletin struct {
-	// ResourceId: The resourceId object contains information that identifies the
+	// ResourceId: The `resourceId` object contains information that identifies the
 	// resource associated with a bulletin post. @mutable youtube.activities.insert
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
@@ -803,7 +804,7 @@ func (s ActivityContentDetailsBulletin) MarshalJSON() ([]byte, error) {
 // ActivityContentDetailsChannelItem: Details about a resource which was added
 // to a channel.
 type ActivityContentDetailsChannelItem struct {
-	// ResourceId: The resourceId object contains information that identifies the
+	// ResourceId: The `resourceId` object contains information that identifies the
 	// resource that was added to the channel.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
@@ -827,7 +828,7 @@ func (s ActivityContentDetailsChannelItem) MarshalJSON() ([]byte, error) {
 // ActivityContentDetailsComment: Information about a resource that received a
 // comment.
 type ActivityContentDetailsComment struct {
-	// ResourceId: The resourceId object contains information that identifies the
+	// ResourceId: The `resourceId` object contains information that identifies the
 	// resource associated with the comment.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
@@ -849,9 +850,9 @@ func (s ActivityContentDetailsComment) MarshalJSON() ([]byte, error) {
 }
 
 // ActivityContentDetailsFavorite: Information about a video that was marked as
-// a favorite video.
+// a favorite video. Deprecated: This resource is no longer returned.
 type ActivityContentDetailsFavorite struct {
-	// ResourceId: The resourceId object contains information that identifies the
+	// ResourceId: The `resourceId` object contains information that identifies the
 	// resource that was marked as a favorite.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
@@ -873,9 +874,9 @@ func (s ActivityContentDetailsFavorite) MarshalJSON() ([]byte, error) {
 }
 
 // ActivityContentDetailsLike: Information about a resource that received a
-// positive (like) rating.
+// positive (like) rating. Deprecated: This resource is no longer returned.
 type ActivityContentDetailsLike struct {
-	// ResourceId: The resourceId object contains information that identifies the
+	// ResourceId: The `resourceId` object contains information that identifies the
 	// rated resource.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
@@ -902,7 +903,7 @@ type ActivityContentDetailsPlaylistItem struct {
 	PlaylistId string `json:"playlistId,omitempty"`
 	// PlaylistItemId: ID of the item within the playlist.
 	PlaylistItemId string `json:"playlistItemId,omitempty"`
-	// ResourceId: The resourceId object contains information about the resource
+	// ResourceId: The `resourceId` object contains information about the resource
 	// that was added to the playlist.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlaylistId") to
@@ -983,14 +984,14 @@ type ActivityContentDetailsRecommendation struct {
 	//
 	// Possible values:
 	//   "reasonUnspecified"
-	//   "videoFavorited"
-	//   "videoLiked"
+	//   "videoFavorited" - Deprecated: This reason is no longer used.
+	//   "videoLiked" - Deprecated: This reason is no longer used.
 	//   "videoWatched"
 	Reason string `json:"reason,omitempty"`
-	// ResourceId: The resourceId object contains information that identifies the
+	// ResourceId: The `resourceId` object contains information that identifies the
 	// recommended resource.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
-	// SeedResourceId: The seedResourceId object contains information about the
+	// SeedResourceId: The `seedResourceId` object contains information about the
 	// resource that caused the recommendation.
 	SeedResourceId *ResourceId `json:"seedResourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
@@ -1019,7 +1020,7 @@ type ActivityContentDetailsSocial struct {
 	ImageUrl string `json:"imageUrl,omitempty"`
 	// ReferenceUrl: The URL of the social network post.
 	ReferenceUrl string `json:"referenceUrl,omitempty"`
-	// ResourceId: The resourceId object encapsulates information that identifies
+	// ResourceId: The `resourceId` object encapsulates information that identifies
 	// the resource associated with a social network post.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 	// Type: The name of the social network.
@@ -1049,9 +1050,9 @@ func (s ActivityContentDetailsSocial) MarshalJSON() ([]byte, error) {
 }
 
 // ActivityContentDetailsSubscription: Information about a channel that a user
-// subscribed to.
+// subscribed to. Deprecated: This resource is no longer returned.
 type ActivityContentDetailsSubscription struct {
-	// ResourceId: The resourceId object contains information that identifies the
+	// ResourceId: The `resourceId` object contains information that identifies the
 	// resource that the user subscribed to.
 	ResourceId *ResourceId `json:"resourceId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceId") to
@@ -1148,10 +1149,10 @@ type ActivitySnippet struct {
 	Description string `json:"description,omitempty"`
 	// GroupId: The group ID associated with the activity. A group ID identifies
 	// user events that are associated with the same user and resource. For
-	// example, if a user rates a video and marks the same video as a favorite, the
-	// entries for those events would have the same group ID in the user's activity
-	// feed. In your user interface, you can avoid repetition by grouping events
-	// with the same groupId value.
+	// example, if a user uploads a video and watches the same video, the entries
+	// for those events would have the same group ID in the user's activity feed.
+	// In your user interface, you can avoid repetition by grouping events with the
+	// same `groupId` value.
 	GroupId string `json:"groupId,omitempty"`
 	// PublishedAt: The date and time that the video was uploaded.
 	PublishedAt string `json:"publishedAt,omitempty"`
@@ -1167,10 +1168,10 @@ type ActivitySnippet struct {
 	// Possible values:
 	//   "typeUnspecified"
 	//   "upload"
-	//   "like"
-	//   "favorite"
+	//   "like" - Deprecated: This type is no longer supported.
+	//   "favorite" - Deprecated: This type is no longer supported.
 	//   "comment"
-	//   "subscription"
+	//   "subscription" - Deprecated: This type is no longer supported.
 	//   "playlistItem"
 	//   "recommendation"
 	//   "bulletin"

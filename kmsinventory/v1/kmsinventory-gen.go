@@ -648,8 +648,6 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// NIST P-256 key that returns shared secret.
 	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
 	// NIST P-384 key that returns shared secret.
-	//   "KEM_ECDH_P521" - Key encapsulation: Elliptic Curve Diffie-Hellman with
-	// NIST P-521 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -871,8 +869,6 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	// NIST P-256 key that returns shared secret.
 	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
 	// NIST P-384 key that returns shared secret.
-	//   "KEM_ECDH_P521" - Key encapsulation: Elliptic Curve Diffie-Hellman with
-	// NIST P-521 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -914,7 +910,7 @@ func (s GoogleCloudKmsV1CryptoKeyVersionTemplate) MarshalJSON() ([]byte, error) 
 type GoogleCloudKmsV1ExternalProtectionLevelOptions struct {
 	// EkmConnectionBackendOverride: Optional. The resource name of the backend
 	// environment where the key material of CryptoKeyVersions is associated with.
-	// Setting this field overrides the CryptoKeyBackend. This field may be set
+	// Setting this field overrides the crypto_key_backend. This field may be set
 	// when CryptoKeyVersions is set to EXTERNAL_VPC. Format:
 	// `projects/*/locations/*/ekmConnections/*`.
 	EkmConnectionBackendOverride string `json:"ekmConnectionBackendOverride,omitempty"`

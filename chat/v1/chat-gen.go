@@ -9938,6 +9938,7 @@ func (r *SpacesService) Search() *SpacesSearchCall {
 // `membership_count.joined_direct_human_user_count ASC` - `last_active_time
 // DESC` - `last_active_time ASC` - `create_time DESC` - `create_time ASC` When
 // `useAdminAccess` is set to `false`: - `create_time DESC` - `relevance DESC`
+// Developer Preview (https://developers.google.com/workspace/preview).
 func (c *SpacesSearchCall) OrderBy(orderBy string) *SpacesSearchCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

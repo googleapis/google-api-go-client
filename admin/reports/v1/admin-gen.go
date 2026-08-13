@@ -1144,6 +1144,8 @@ type OwnerIdentity struct {
 	CustomerIdentity *CustomerIdentity `json:"customerIdentity,omitempty"`
 	// GroupIdentity: Identity of the group who owns the resource.
 	GroupIdentity *GroupIdentity `json:"groupIdentity,omitempty"`
+	// SharedDriveIdentity: Identity of the shared drive who owns the resource.
+	SharedDriveIdentity *SharedDriveIdentity `json:"sharedDriveIdentity,omitempty"`
 	// UserIdentity: Identity of the user who owns the resource.
 	UserIdentity *UserIdentity `json:"userIdentity,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomerIdentity") to
@@ -1219,6 +1221,30 @@ type ResourceDetails struct {
 
 func (s ResourceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SharedDriveIdentity: Identity of the shared drive who owns the resource.
+type SharedDriveIdentity struct {
+	// Id: Shared drive gaia id.
+	Id string `json:"id,omitempty"`
+	// SharedDriveName: Shared drive name.
+	SharedDriveName string `json:"sharedDriveName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SharedDriveIdentity) MarshalJSON() ([]byte, error) {
+	type NoMethod SharedDriveIdentity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -3313,6 +3313,35 @@ type BusinessChainTargetingOptionDetails struct {
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
+	//   "GEO_REGION_TYPE_TOWN" - The geographic region is a town.
+	//   "GEO_REGION_TYPE_VILLAGE" - The geographic region is a village.
+	//   "GEO_REGION_TYPE_CITY_DISTRICT" - The geographic region is a city
+	// district.
+	//   "GEO_REGION_TYPE_SUBURB" - The geographic region is a suburb.
+	//   "GEO_REGION_TYPE_HAMLET" - The geographic region is a hamlet.
+	//   "GEO_REGION_TYPE_MUNICIPAL_DISTRICT" - The geographic region is a
+	// municipal district.
+	//   "GEO_REGION_TYPE_COMMUNITY" - The geographic region is a community.
+	//   "GEO_REGION_TYPE_TOWNSHIP" - The geographic region is a township.
+	//   "GEO_REGION_TYPE_URBAN_DISTRICT" - The geographic region is an urban
+	// district.
+	//   "GEO_REGION_TYPE_RESIDENTIAL_AREA" - The geographic region is a
+	// residential area.
+	//   "GEO_REGION_TYPE_INDEPENDENT_CITY" - The geographic region is an
+	// independent city.
+	//   "GEO_REGION_TYPE_SECTOR" - The geographic region is a sector.
+	//   "GEO_REGION_TYPE_AREA" - The geographic region is an area.
+	//   "GEO_REGION_TYPE_ESTATE" - The geographic region is an estate.
+	//   "GEO_REGION_TYPE_PARISH" - The geographic region is a parish.
+	//   "GEO_REGION_TYPE_SETTLEMENT" - The geographic region is a settlement.
+	//   "GEO_REGION_TYPE_ZONE" - The geographic region is a zone.
+	//   "GEO_REGION_TYPE_COLONY" - The geographic region is a colony.
+	//   "GEO_REGION_TYPE_INDUSTRIAL_AREA" - The geographic region is an industrial
+	// area.
+	//   "GEO_REGION_TYPE_PROVINCIAL_CITY" - The geographic region is a provincial
+	// city.
+	//   "GEO_REGION_TYPE_RURAL_DISTRICT" - The geographic region is a rural
+	// district.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessChain") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4619,6 +4648,7 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	//   "SDF_VERSION_10" - SDF version 10.
+	//   "SDF_VERSION_10_1" - SDF version 10.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7369,6 +7399,35 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
+	//   "GEO_REGION_TYPE_TOWN" - The geographic region is a town.
+	//   "GEO_REGION_TYPE_VILLAGE" - The geographic region is a village.
+	//   "GEO_REGION_TYPE_CITY_DISTRICT" - The geographic region is a city
+	// district.
+	//   "GEO_REGION_TYPE_SUBURB" - The geographic region is a suburb.
+	//   "GEO_REGION_TYPE_HAMLET" - The geographic region is a hamlet.
+	//   "GEO_REGION_TYPE_MUNICIPAL_DISTRICT" - The geographic region is a
+	// municipal district.
+	//   "GEO_REGION_TYPE_COMMUNITY" - The geographic region is a community.
+	//   "GEO_REGION_TYPE_TOWNSHIP" - The geographic region is a township.
+	//   "GEO_REGION_TYPE_URBAN_DISTRICT" - The geographic region is an urban
+	// district.
+	//   "GEO_REGION_TYPE_RESIDENTIAL_AREA" - The geographic region is a
+	// residential area.
+	//   "GEO_REGION_TYPE_INDEPENDENT_CITY" - The geographic region is an
+	// independent city.
+	//   "GEO_REGION_TYPE_SECTOR" - The geographic region is a sector.
+	//   "GEO_REGION_TYPE_AREA" - The geographic region is an area.
+	//   "GEO_REGION_TYPE_ESTATE" - The geographic region is an estate.
+	//   "GEO_REGION_TYPE_PARISH" - The geographic region is a parish.
+	//   "GEO_REGION_TYPE_SETTLEMENT" - The geographic region is a settlement.
+	//   "GEO_REGION_TYPE_ZONE" - The geographic region is a zone.
+	//   "GEO_REGION_TYPE_COLONY" - The geographic region is a colony.
+	//   "GEO_REGION_TYPE_INDUSTRIAL_AREA" - The geographic region is an industrial
+	// area.
+	//   "GEO_REGION_TYPE_PROVINCIAL_CITY" - The geographic region is a provincial
+	// city.
+	//   "GEO_REGION_TYPE_RURAL_DISTRICT" - The geographic region is a rural
+	// district.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
@@ -7476,6 +7535,35 @@ type GeoRegionTargetingOptionDetails struct {
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
+	//   "GEO_REGION_TYPE_TOWN" - The geographic region is a town.
+	//   "GEO_REGION_TYPE_VILLAGE" - The geographic region is a village.
+	//   "GEO_REGION_TYPE_CITY_DISTRICT" - The geographic region is a city
+	// district.
+	//   "GEO_REGION_TYPE_SUBURB" - The geographic region is a suburb.
+	//   "GEO_REGION_TYPE_HAMLET" - The geographic region is a hamlet.
+	//   "GEO_REGION_TYPE_MUNICIPAL_DISTRICT" - The geographic region is a
+	// municipal district.
+	//   "GEO_REGION_TYPE_COMMUNITY" - The geographic region is a community.
+	//   "GEO_REGION_TYPE_TOWNSHIP" - The geographic region is a township.
+	//   "GEO_REGION_TYPE_URBAN_DISTRICT" - The geographic region is an urban
+	// district.
+	//   "GEO_REGION_TYPE_RESIDENTIAL_AREA" - The geographic region is a
+	// residential area.
+	//   "GEO_REGION_TYPE_INDEPENDENT_CITY" - The geographic region is an
+	// independent city.
+	//   "GEO_REGION_TYPE_SECTOR" - The geographic region is a sector.
+	//   "GEO_REGION_TYPE_AREA" - The geographic region is an area.
+	//   "GEO_REGION_TYPE_ESTATE" - The geographic region is an estate.
+	//   "GEO_REGION_TYPE_PARISH" - The geographic region is a parish.
+	//   "GEO_REGION_TYPE_SETTLEMENT" - The geographic region is a settlement.
+	//   "GEO_REGION_TYPE_ZONE" - The geographic region is a zone.
+	//   "GEO_REGION_TYPE_COLONY" - The geographic region is a colony.
+	//   "GEO_REGION_TYPE_INDUSTRIAL_AREA" - The geographic region is an industrial
+	// area.
+	//   "GEO_REGION_TYPE_PROVINCIAL_CITY" - The geographic region is a provincial
+	// city.
+	//   "GEO_REGION_TYPE_RURAL_DISTRICT" - The geographic region is a rural
+	// district.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12105,6 +12193,7 @@ type SdfConfig struct {
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	//   "SDF_VERSION_10" - SDF version 10.
+	//   "SDF_VERSION_10_1" - SDF version 10.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -12190,6 +12279,7 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	//   "SDF_VERSION_10" - SDF version 10.
+	//   "SDF_VERSION_10_1" - SDF version 10.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or

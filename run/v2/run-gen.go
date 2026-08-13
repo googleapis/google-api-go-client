@@ -187,6 +187,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Jobs = NewProjectsLocationsJobsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Services = NewProjectsLocationsServicesService(s)
+	rs.SourceUploads = NewProjectsLocationsSourceUploadsService(s)
 	rs.WorkerPools = NewProjectsLocationsWorkerPoolsService(s)
 	return rs
 }
@@ -203,6 +204,8 @@ type ProjectsLocationsService struct {
 	Operations *ProjectsLocationsOperationsService
 
 	Services *ProjectsLocationsServicesService
+
+	SourceUploads *ProjectsLocationsSourceUploadsService
 
 	WorkerPools *ProjectsLocationsWorkerPoolsService
 }
@@ -285,6 +288,15 @@ func NewProjectsLocationsServicesRevisionsService(s *Service) *ProjectsLocations
 }
 
 type ProjectsLocationsServicesRevisionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSourceUploadsService(s *Service) *ProjectsLocationsSourceUploadsService {
+	rs := &ProjectsLocationsSourceUploadsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSourceUploadsService struct {
 	s *Service
 }
 
@@ -3706,6 +3718,57 @@ type GoogleCloudRunV2TrafficTargetStatus struct {
 
 func (s GoogleCloudRunV2TrafficTargetStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2TrafficTargetStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2UploadSourceRequest: The request message for the
+// UploadSource method.
+type GoogleCloudRunV2UploadSourceRequest struct {
+	// Service: The name of Cloud Run Service upload source archive will be used
+	// for.
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Service") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2UploadSourceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2UploadSourceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2UploadSourceResponse: The response message for the
+// UploadSource method.
+type GoogleCloudRunV2UploadSourceResponse struct {
+	// CloudStorageSource: The Cloud Storage object path the source archive is
+	// uploaded to.
+	CloudStorageSource *GoogleCloudRunV2CloudStorageSource `json:"cloudStorageSource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CloudStorageSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudStorageSource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2UploadSourceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2UploadSourceResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12359,6 +12422,179 @@ func (c *ProjectsLocationsServicesRevisionsListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsSourceUploadsUploadCall struct {
+	s                                   *Service
+	parent                              string
+	googlecloudrunv2uploadsourcerequest *GoogleCloudRunV2UploadSourceRequest
+	urlParams_                          gensupport.URLParams
+	mediaInfo_                          *gensupport.MediaInfo
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Upload: Uploads a source archive to a Google Cloud Storage bucket through
+// Cloud Run. The uploaded source object should be used for Cloud Run resource
+// deployments. User is responsible for managing the lifecycle of the uploaded
+// object. If uploading through the Cloud Run API to Cloud Storage is not
+// desired, you can use the IAM Deny Policy to deny the
+// `run.locations.uploadSource` permission for all principals.
+//
+//   - parent: The project and location in which the source archive should be
+//     uploaded to, specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsSourceUploadsService) Upload(parent string, googlecloudrunv2uploadsourcerequest *GoogleCloudRunV2UploadSourceRequest) *ProjectsLocationsSourceUploadsUploadCall {
+	c := &ProjectsLocationsSourceUploadsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudrunv2uploadsourcerequest = googlecloudrunv2uploadsourcerequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsSourceUploadsUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *ProjectsLocationsSourceUploadsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsSourceUploadsUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *ProjectsLocationsSourceUploadsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsSourceUploadsUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourceUploadsUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Context(ctx context.Context) *ProjectsLocationsSourceUploadsUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourceUploadsUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudrunv2uploadsourcerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}:uploadSource")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v2/{+parent}:uploadSource")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, newBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "run.projects.locations.sourceUploads.upload", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.sourceUploads.upload" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2UploadSourceResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2UploadSourceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &GoogleCloudRunV2UploadSourceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "run.projects.locations.sourceUploads.upload", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsWorkerPoolsCreateCall struct {

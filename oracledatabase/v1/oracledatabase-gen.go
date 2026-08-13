@@ -2003,6 +2003,22 @@ type CloudVmClusterProperties struct {
 	// TimeZone: Optional. Time zone of VM Cluster to set. Defaults to UTC if not
 	// specified.
 	TimeZone *TimeZone `json:"timeZone,omitempty"`
+	// VmBackupStorageType: Optional. Specifies whether VM backups are stored on
+	// local DB server storage or Exascale storage.
+	//
+	// Possible values:
+	//   "VM_BACKUP_STORAGE_TYPE_UNSPECIFIED" - Unspecified storage type.
+	//   "VM_BACKUP_STORAGE_TYPE_LOCAL" - Local DB server storage.
+	//   "VM_BACKUP_STORAGE_TYPE_EXASCALE" - Exascale storage.
+	VmBackupStorageType string `json:"vmBackupStorageType,omitempty"`
+	// VmFileSystemStorageType: Optional. Specifies whether VM file system storage
+	// / VM images are stored on local DB server storage or Exascale storage.
+	//
+	// Possible values:
+	//   "VM_FILE_SYSTEM_STORAGE_TYPE_UNSPECIFIED" - Unspecified storage type.
+	//   "VM_FILE_SYSTEM_STORAGE_TYPE_LOCAL" - Local DB server storage.
+	//   "VM_FILE_SYSTEM_STORAGE_TYPE_EXASCALE" - Exascale storage.
+	VmFileSystemStorageType string `json:"vmFileSystemStorageType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClusterName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2045,6 +2061,9 @@ type ConfigureExascaleCloudExadataInfrastructureRequest struct {
 	// TotalStorageSizeGb: Required. The total storage to be allocated to Exascale
 	// in GBs.
 	TotalStorageSizeGb int64 `json:"totalStorageSizeGb,omitempty"`
+	// TotalVmStorageSizeGb: Optional. Storage size needed for VM storage on
+	// Exascale in GBs.
+	TotalVmStorageSizeGb int64 `json:"totalVmStorageSizeGb,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3474,9 +3493,15 @@ type ExascaleConfig struct {
 	// AvailableStorageSizeGb: Output only. Available storage size for Exascale in
 	// GBs.
 	AvailableStorageSizeGb int64 `json:"availableStorageSizeGb,omitempty"`
+	// AvailableVmStorageSizeGb: Output only. Available storage size for VM storage
+	// on Exascale in GBs.
+	AvailableVmStorageSizeGb int64 `json:"availableVmStorageSizeGb,omitempty"`
 	// TotalStorageSizeGb: Output only. Total storage size needed for Exascale in
 	// GBs.
 	TotalStorageSizeGb int64 `json:"totalStorageSizeGb,omitempty"`
+	// TotalVmStorageSizeGb: Output only. Storage size needed for VM storage on
+	// Exascale in GBs.
+	TotalVmStorageSizeGb int64 `json:"totalVmStorageSizeGb,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AvailableStorageSizeGb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

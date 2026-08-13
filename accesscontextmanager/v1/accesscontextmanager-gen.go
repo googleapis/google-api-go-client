@@ -776,6 +776,9 @@ type ClientScope struct {
 	// RestrictedClientApplication: Optional. The application that is subject to
 	// this binding's scope.
 	RestrictedClientApplication *Application `json:"restrictedClientApplication,omitempty"`
+	// RestrictedProject: Optional. The GCP project that is subject to this
+	// binding's scope.
+	RestrictedProject *Project `json:"restrictedProject,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "RestrictedClientApplication") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -1270,8 +1273,8 @@ type GcpUserAccessBinding struct {
 	// Principal: Optional. Immutable. The principal that is subject to the access
 	// policies in this policy binding.
 	Principal *Principal `json:"principal,omitempty"`
-	// RestrictedClientApplications: Optional. Deprecated: use
-	// scoped_access_settings instead. A list of applications that are subject to
+	// RestrictedClientApplications: Optional. Deprecated: Use
+	// `scoped_access_settings` instead. A list of applications that are subject to
 	// this binding's restrictions. If the list is empty, the binding restrictions
 	// will universally apply to all applications.
 	RestrictedClientApplications []*Application `json:"restrictedClientApplications,omitempty"`
@@ -1788,7 +1791,7 @@ func (s MethodSelector) MarshalJSON() ([]byte, error) {
 
 // Modifier: Modifier to apply to the API requests.
 type Modifier struct {
-	// AddRequestHeader: Adds additional HTTP request headers.
+	// AddRequestHeader: Adds an additional HTTP request header.
 	AddRequestHeader *AddRequestHeader `json:"addRequestHeader,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddRequestHeader") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1990,28 +1993,36 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 }
 
 // Principal: The comprehensive identity container supporting identities
-// including groups, service accounts and federated identities. Only one of
+// including groups, service accounts, and federated identities. Only one of
 // them can be set to create an access binding.
 type Principal struct {
+	// FederatedPrincipal: Immutable. IAM federated principal name to assign
+	// policies to workforce/workload federated identities. Can be principal set or
+	// single principal, here are some examples: Single principal:
+	// principal://iam.googleapis.com/projects/{project_number}/locations/global/wor
+	// kloadIdentityPools/{pool_id}/subject/{subject_attribute_value} PrincipalSet:
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/global/
+	// workloadIdentityPools/{pool_id}/*
+	FederatedPrincipal string `json:"federatedPrincipal,omitempty"`
 	// ServiceAccount: Immutable. Service account email used to assign policies to
 	// a specific service account. If a service account is subject to multiple
 	// policies (e.g., if there is a policy for all service accounts in a project
 	// and a policy for the service account), the closest (i.e. the most specific)
 	// dry-run policy will be used for the dry-run functionality and the closest
-	// policy will be used for the enforcement.
+	// enforcement policy will be used for the enforcement.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// ServiceAccountProjectNumber: Immutable. Cloud project number used to assign
 	// policies to all service accounts owned by the project.
 	ServiceAccountProjectNumber string `json:"serviceAccountProjectNumber,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ServiceAccount") to
+	// ForceSendFields is a list of field names (e.g. "FederatedPrincipal") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ServiceAccount") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "FederatedPrincipal") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2044,6 +2055,31 @@ type PrivateServiceConnectEndpoint struct {
 
 func (s PrivateServiceConnectEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateServiceConnectEndpoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Project: A GCP project which contains applications and resources that users
+// can access.
+type Project struct {
+	// Name: The GCP project resource name. Format: "projects/{project_number}"
+	// (Only the numeric project name variation is supported). Example:
+	// "projects/1234567890"
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Project) MarshalJSON() ([]byte, error) {
+	type NoMethod Project
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2194,7 +2230,7 @@ type ServicePattern struct {
 	Modifiers []*Modifier `json:"modifiers,omitempty"`
 	// Pattern: URL pattern to allow. Only patterns of ".googleapis.com/*",
 	// "www.googleapis.com//*" and "*.appspot.com/* forms are supported, where
-	// should be alphanumerical name.
+	// should be an alphanumeric name.
 	Pattern string `json:"pattern,omitempty"`
 	// Service: Supported service to allow.
 	Service string `json:"service,omitempty"`
@@ -2355,17 +2391,18 @@ type SessionSettings struct {
 	// MaxInactivity: Optional. How long a user is allowed to take between actions
 	// before a new access token must be issued. Only set for Google Cloud apps.
 	MaxInactivity string `json:"maxInactivity,omitempty"`
-	// SessionLength: Optional. The session length. Setting this field to zero is
-	// equal to disabling session. Also can set infinite session by flipping the
-	// enabled bit to false below. If use_oidc_max_age is true, for OIDC apps, the
-	// session length will be the minimum of this field and OIDC max_age param. If
-	// this field is set to zero, session_length_enabled must be set to false or
-	// left unset.
+	// SessionLength: Optional. The session length. Setting this field to zero
+	// allows for sessions that are active indefinitely. Also, setting
+	// `session_length_enabled` to false disregards session limits, which means
+	// that sessions never expire. If use_oidc_max_age is true, for OIDC apps, the
+	// session length will be the minimum of this field and the OIDC max_age param.
+	// If this field is set to zero, `session_length_enabled` must be set to false
+	// or left unset.
 	SessionLength string `json:"sessionLength,omitempty"`
 	// SessionLengthEnabled: Optional. This field enables or disables Google Cloud
 	// session length. When false, all fields set above will be disregarded and the
-	// session length is basically infinite. If session_length is set to zero, this
-	// field must be false.
+	// session length is basically infinite. If `session_length` is set to zero,
+	// this field must be set to false.
 	SessionLengthEnabled bool `json:"sessionLengthEnabled,omitempty"`
 	// SessionReauthMethod: Optional. Session method when user's Google Cloud
 	// session is up.
@@ -2625,8 +2662,8 @@ type VpcAccessibleServices struct {
 	// patterns.
 	//
 	// Possible values:
-	//   "SERVICE_PATTERNS_ENFORCEMENT_SCOPE_UNSPECIFIED" - Default value. This can
-	// not be used.
+	//   "SERVICE_PATTERNS_ENFORCEMENT_SCOPE_UNSPECIFIED" - Default value. This
+	// cannot be used.
 	//   "GOOGLE_APIS_VIA_PRIVATE_PATH" - Enables VPC Accessible Services
 	// enforcement for all APIs (including unsupported APIs) for Private Google
 	// Access configured with Private VIP and Private Service Connect Endpoint for
@@ -6772,9 +6809,9 @@ func (r *OrganizationsGcpUserAccessBindingsService) List(parent string) *Organiz
 
 // Filter sets the optional parameter "filter": The literal filter to apply to
 // the results returned. See https://google.aip.dev/160 for more details.
-// Accepts values: * principal:group_key * principal:service_account OR
-// principal:service_account_project_number. If this field is empty or not one
-// of the above, the default value is "principal:group_key".
+// Accepts values: * `principal:group_key` * `principal:service_account` OR
+// `principal:service_account_project_number`. If this field is empty or not
+// one of the above, the default value is "principal:group_key".
 func (c *OrganizationsGcpUserAccessBindingsListCall) Filter(filter string) *OrganizationsGcpUserAccessBindingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

@@ -272,6 +272,9 @@ type Assignment struct {
 	// refreshing search indexes upon BigQuery table columns. Reservations with
 	// this job type take priority over a default BACKGROUND reservation assignment
 	// (if it exists).
+	//   "AUTOMATIC_MATERIALIZED_VIEW_REFRESH" - Automated materialized view
+	// refresh jobs will use the reservation. Reservations with this job type will
+	// take priority over a default QUERY reservation assignment (if it exists).
 	JobType string `json:"jobType,omitempty"`
 	// Name: Output only. Name of the resource. E.g.:
 	// `projects/myproject/locations/US/reservations/team1-prod/assignments/123`.

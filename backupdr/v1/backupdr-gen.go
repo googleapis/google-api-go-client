@@ -2117,17 +2117,23 @@ func (s CloudSqlInstanceInitializationConfig) MarshalJSON() ([]byte, error) {
 // ComputeInstanceBackupPlanProperties: Properties for a compute instance
 // backup plan.
 type ComputeInstanceBackupPlanProperties struct {
+	// BootDiskOnly: Optional. If true, only the boot disk will be backed up.
+	BootDiskOnly bool `json:"bootDiskOnly,omitempty"`
+	// DiskExclusionLabels: Optional. Labels used to identify disks for exclusion
+	// from the backup. If a disk carries any of these labels, it will be excluded
+	// (OR logic).
+	DiskExclusionLabels *DiskExclusionLabels `json:"diskExclusionLabels,omitempty"`
 	// GuestFlush: Optional. Indicates whether to perform a guest flush operation
 	// before taking a compute backup. When set to false, the system will create
 	// crash-consistent backups. Default value is false.
 	GuestFlush bool `json:"guestFlush,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GuestFlush") to
+	// ForceSendFields is a list of field names (e.g. "BootDiskOnly") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GuestFlush") to include in API
+	// NullFields is a list of field names (e.g. "BootDiskOnly") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2156,6 +2162,8 @@ type ComputeInstanceBackupProperties struct {
 	// Disk: An array of disks that are associated with the instances that are
 	// created from these properties.
 	Disk []*AttachedDisk `json:"disk,omitempty"`
+	// ExcludedDisks: Optional. List of disks excluded from the backup.
+	ExcludedDisks []string `json:"excludedDisks,omitempty"`
 	// GuestAccelerator: A list of guest accelerator cards' type and count to use
 	// for instances created from these properties.
 	GuestAccelerator []*AcceleratorConfig `json:"guestAccelerator,omitempty"`
@@ -2163,6 +2171,8 @@ type ComputeInstanceBackupProperties struct {
 	// before taking a compute backup. When set to false, the system will create
 	// crash-consistent backups. Default value is false.
 	GuestFlush bool `json:"guestFlush,omitempty"`
+	// IncludedDisks: Optional. List of disks included in the backup.
+	IncludedDisks []string `json:"includedDisks,omitempty"`
 	// KeyRevocationActionType: KeyRevocationActionType of the instance. Supported
 	// options are "STOP" and "NONE". The default value is "NONE" if it is not
 	// specified.
@@ -2885,6 +2895,30 @@ type DiskDataSourceProperties struct {
 
 func (s DiskDataSourceProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskDataSourceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DiskExclusionLabels: Message for selective disk backup exclusion labels.
+type DiskExclusionLabels struct {
+	// Labels: Optional. Labels used to identify disks for exclusion from the
+	// backup. If a disk carries any of these labels, it will be excluded (OR
+	// logic).
+	Labels []*LabelKeyValPair `json:"labels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiskExclusionLabels) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskExclusionLabels
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3917,6 +3951,39 @@ type InstanceParams struct {
 
 func (s InstanceParams) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LabelKeyValPair: Message for a label key-value pair.
+type LabelKeyValPair struct {
+	// Key: Key of the label. The key must follow the format:
+	// `\\p{Ll}\\p{Lo}{0,62}`. This means the key must start with a lowercase
+	// letter or a lowercase international character, followed by zero or more
+	// lowercase letters, lowercase international characters, numbers, underscores,
+	// or dashes. The key must be at most 63 characters long. International
+	// characters are allowed.
+	Key string `json:"key,omitempty"`
+	// Value: Value of the label. The value must follow the format:
+	// `[\\p{Ll}\\p{Lo}\\p{N}_-]{1,63}`. This means the value must be one or more
+	// lowercase letters, lowercase international characters, numbers, underscores,
+	// or dashes. The value must be at most 63 characters long. International
+	// characters are allowed.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LabelKeyValPair) MarshalJSON() ([]byte, error) {
+	type NoMethod LabelKeyValPair
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

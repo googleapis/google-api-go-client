@@ -6,7 +6,7 @@
 
 // Package ftp provides access to the Cloud FTP API.
 //
-// For product documentation, see: https://cloud.google.com/cloud-ftp/overview
+// For product documentation, see: https://docs.cloud.google.com/cloud-ftp
 //
 // # Library status
 //
@@ -1673,9 +1673,10 @@ func (c *ProjectsLocationsServersCreateCall) RequestId(requestId string) *Projec
 	return c
 }
 
-// ServerId sets the optional parameter "serverId": Required. Id of the
-// requesting object If auto-generating Id server-side, remove this field and
-// server_id from the method_signature of Create RPC
+// ServerId sets the optional parameter "serverId": Required. A unique ID for
+// the server. Must start with a lowercase letter, and end with a lowercase
+// letter or number. Can contain lowercase letters, numbers, and hyphens.
+// Maximum length is 30 characters.
 func (c *ProjectsLocationsServersCreateCall) ServerId(serverId string) *ProjectsLocationsServersCreateCall {
 	c.urlParams_.Set("serverId", serverId)
 	return c
@@ -2541,9 +2542,9 @@ func (c *ProjectsLocationsServersUsersCreateCall) RequestId(requestId string) *P
 	return c
 }
 
-// UserId sets the optional parameter "userId": Required. Id of the requesting
-// object If auto-generating Id server-side, remove this field and server_id
-// from the method_signature of Create RPC
+// UserId sets the optional parameter "userId": Required. A unique user ID for
+// the SFTP user. The user ID must start with a lowercase letter and can
+// include lowercase letters, numbers, or hyphens.
 func (c *ProjectsLocationsServersUsersCreateCall) UserId(userId string) *ProjectsLocationsServersUsersCreateCall {
 	c.urlParams_.Set("userId", userId)
 	return c

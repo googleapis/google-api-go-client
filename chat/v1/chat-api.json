@@ -2077,7 +2077,7 @@
       }
     }
   },
-  "revision": "20260806",
+  "revision": "20260809",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessPermissionSetting": {
@@ -2324,12 +2324,14 @@
           "enum": [
             "APP_COMMAND_TYPE_UNSPECIFIED",
             "SLASH_COMMAND",
-            "QUICK_COMMAND"
+            "QUICK_COMMAND",
+            "MESSAGE_ACTION"
           ],
           "enumDescriptions": [
             "Default value. Unspecified.",
             "A slash command. The user sends the command in a Chat message.",
-            "A quick command. The user selects the command from the Chat menu in the message reply area."
+            "A quick command. The user selects the command from the Chat menu in the message reply area.",
+            "A message action. The user selects the command from the message context menu in Chat."
           ],
           "type": "string"
         }

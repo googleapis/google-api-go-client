@@ -892,6 +892,8 @@ type AppCommandMetadata struct {
 	// message.
 	//   "QUICK_COMMAND" - A quick command. The user selects the command from the
 	// Chat menu in the message reply area.
+	//   "MESSAGE_ACTION" - A message action. The user selects the command from the
+	// message context menu in Chat.
 	AppCommandType string `json:"appCommandType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppCommandId") to
 	// unconditionally include in API requests. By default, fields with empty or

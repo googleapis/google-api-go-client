@@ -574,6 +574,48 @@ func (s AutoscalingEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AutoscalingSchedule: A schedule for autoscaling.
+type AutoscalingSchedule struct {
+	// Crontab: Optional. A crontab specification of when this schedule should
+	// trigger applying overrides. The overrides will be applied from the trigger
+	// time until the specified duration elapses.
+	Crontab string `json:"crontab,omitempty"`
+	// Duration: Optional. The duration for which the parameter overrides for this
+	// schedule will be applied when triggered by the crontab.
+	Duration string `json:"duration,omitempty"`
+	// Name: Optional. The name of the schedule.
+	Name string `json:"name,omitempty"`
+	// Parameters: Optional. The parameters to use for autoscaling when this
+	// schedule is active.
+	Parameters *Parameters `json:"parameters,omitempty"`
+	// Priority: Optional. Specifies the priority of the schedule. If two schedules
+	// overlap, the one with the higher priority will be used. The higher the
+	// value, the higher the priority of the schedule.
+	Priority int64 `json:"priority,omitempty,string"`
+	// TimeZone: Optional. The time zone for the schedule. The value of this field
+	// must be a time zone name from the tz database
+	// (http://en.wikipedia.org/wiki/Tz_database). The default value is UTC.
+	TimeZone string `json:"timeZone,omitempty"`
+	// UpdateTime: Output only. When the customer last updated the schedule.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Crontab") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Crontab") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoscalingSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AutoscalingSettings: Settings for WorkerPool autoscaling.
 type AutoscalingSettings struct {
 	// Algorithm: The algorithm to use for autoscaling.
@@ -4206,6 +4248,50 @@ func (s ParameterMetadataEnumOption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Parameters: The parameters to use for autoscaling when this schedule is
+// active.
+type Parameters struct {
+	// CpuUtilizationTarget: Optional. The target CPU utilization for this
+	// schedule.
+	CpuUtilizationTarget float64 `json:"cpuUtilizationTarget,omitempty"`
+	// LatencyTarget: Optional. The target latency for this schedule.
+	LatencyTarget string `json:"latencyTarget,omitempty"`
+	// MaxWorkerCount: Optional. The maximum number of workers for this schedule.
+	MaxWorkerCount int64 `json:"maxWorkerCount,omitempty"`
+	// MinWorkerCount: Optional. The minimum number of workers for this schedule.
+	MinWorkerCount int64 `json:"minWorkerCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CpuUtilizationTarget") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CpuUtilizationTarget") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Parameters) MarshalJSON() ([]byte, error) {
+	type NoMethod Parameters
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *Parameters) UnmarshalJSON(data []byte) error {
+	type NoMethod Parameters
+	var s1 struct {
+		CpuUtilizationTarget gensupport.JSONFloat64 `json:"cpuUtilizationTarget"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CpuUtilizationTarget = float64(s1.CpuUtilizationTarget)
+	return nil
+}
+
 // PartialGroupByKeyInstruction: An instruction that does a partial
 // group-by-key. One input and one output.
 type PartialGroupByKeyInstruction struct {
@@ -4869,6 +4955,8 @@ type RuntimeUpdatableParams struct {
 	// MinNumWorkers: The minimum number of workers to scale down to. This field is
 	// currently only supported for Streaming Engine jobs.
 	MinNumWorkers int64 `json:"minNumWorkers,omitempty"`
+	// Schedules: Optional. The schedule for autoscaling.
+	Schedules []*AutoscalingSchedule `json:"schedules,omitempty"`
 	// WorkerUtilizationHint: Target worker utilization, compared against the
 	// aggregate utilization of the worker pool by autoscaler, to determine
 	// upscaling and downscaling when absent other constraints such as backlog. For
@@ -7850,7 +7938,8 @@ type ProjectsJobsAggregatedCall struct {
 }
 
 // Aggregated: List the jobs of a project across all regions. **Note:** This
-// method doesn't support filtering the list of jobs by name.
+// method doesn't support filtering the list of jobs by name. # IAM Permissions
+// Requires the `dataflow.jobs.list` permission on the project.
 //
 // - projectId: The project which owns the jobs.
 func (r *ProjectsJobsService) Aggregated(projectId string) *ProjectsJobsAggregatedCall {
@@ -8073,7 +8162,10 @@ type ProjectsJobsCreateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.create` is not recommended, as your job will always start in
 // `us-central1`. Do not enter confidential information when you supply string
-// values using the API.
+// values using the API. # IAM Permissions 1. Requires the
+// `dataflow.jobs.create` permission on the project. 2.
+// `resourcemanager.projects.get` (Specifically required for regional endpoints
+// to resolve regional resource metadata)
 //
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
 func (r *ProjectsJobsService) Create(projectId string, job *Job) *ProjectsJobsCreateCall {
@@ -8229,7 +8321,8 @@ type ProjectsJobsGetCall struct {
 // endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.get` is not recommended, as you can only get the state of
-// jobs that are running in `us-central1`.
+// jobs that are running in `us-central1`. # IAM Permissions Requires the
+// `dataflow.jobs.get` permission on the job.
 //
 // - jobId: The job ID.
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
@@ -8387,7 +8480,8 @@ type ProjectsJobsGetMetricsCall struct {
 // endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.getMetrics` is not recommended, as you can only request the
-// status of jobs that are running in `us-central1`.
+// status of jobs that are running in `us-central1`. # IAM Permissions Requires
+// the `dataflow.metrics.get` permission on the job.
 //
 // - jobId: The job to get metrics for.
 // - projectId: A project id.
@@ -8522,7 +8616,8 @@ type ProjectsJobsListCall struct {
 // `projects.jobs.list` is not recommended, because you can only get the list
 // of jobs that are running in `us-central1`. `projects.locations.jobs.list`
 // and `projects.jobs.list` support filtering the list of jobs by name.
-// Filtering by name isn't supported by `projects.jobs.aggregated`.
+// Filtering by name isn't supported by `projects.jobs.aggregated`. # IAM
+// Permissions Requires the `dataflow.jobs.list` permission on the project.
 //
 // - projectId: The project which owns the jobs.
 func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
@@ -8741,7 +8836,8 @@ type ProjectsJobsSnapshotCall struct {
 	header_            http.Header
 }
 
-// Snapshot: Snapshot the state of a streaming job.
+// Snapshot: Snapshot the state of a streaming job. # IAM Permissions Requires
+// the `dataflow.jobs.snapshot` permission on the job.
 //
 // - jobId: The job to be snapshotted.
 // - projectId: The project which owns the job to be snapshotted.
@@ -8853,7 +8949,9 @@ type ProjectsJobsUpdateCall struct {
 // `projects.locations.jobs.update` with a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.update` is not recommended, as you can only update the state
-// of jobs that are running in `us-central1`.
+// of jobs that are running in `us-central1`. # IAM Permissions 1. Requires the
+// `dataflow.jobs.cancel` permission to cancel a job. 2. Requires the
+// `dataflow.jobs.updateContents` permission to update runtime parameters.
 //
 // - jobId: The job ID.
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
@@ -9200,7 +9298,8 @@ type ProjectsJobsMessagesListCall struct {
 // using `projects.locations.jobs.messages.list` with a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.messages.list` is not recommended, as you can only request
-// the status of jobs that are running in `us-central1`.
+// the status of jobs that are running in `us-central1`. # IAM Permissions
+// Requires the `dataflow.messages.list` permission on the job.
 //
 // - jobId: The job to get messages about.
 // - projectId: A project id.
@@ -9746,7 +9845,11 @@ type ProjectsLocationsFlexTemplatesLaunchCall struct {
 	header_                   http.Header
 }
 
-// Launch: Launch a job with a FlexTemplate.
+// Launch: Launch a job with a FlexTemplate. # IAM Permissions Requires the
+// following IAM permission(s) on the resource: - `dataflow.jobs.create` -
+// `resourcemanager.projects.get` - `iam.serviceAccounts.actAs` -
+// `storage.buckets.get` - `storage.buckets.create` (Required if the default
+// staging bucket must be created)
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
@@ -9861,7 +9964,10 @@ type ProjectsLocationsJobsCreateCall struct {
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.create` is not recommended, as your job will always start in
 // `us-central1`. Do not enter confidential information when you supply string
-// values using the API.
+// values using the API. # IAM Permissions 1. Requires the
+// `dataflow.jobs.create` permission on the project. 2.
+// `resourcemanager.projects.get` (Specifically required for regional endpoints
+// to resolve regional resource metadata)
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
@@ -10015,7 +10121,8 @@ type ProjectsLocationsJobsGetCall struct {
 // endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.get` is not recommended, as you can only get the state of
-// jobs that are running in `us-central1`.
+// jobs that are running in `us-central1`. # IAM Permissions Requires the
+// `dataflow.jobs.get` permission on the job.
 //
 //   - jobId: The job ID.
 //   - location: The [regional endpoint]
@@ -10168,7 +10275,8 @@ type ProjectsLocationsJobsGetExecutionDetailsCall struct {
 
 // GetExecutionDetails: Request detailed information about the execution status
 // of the job. EXPERIMENTAL. This API is subject to change or removal without
-// notice.
+// notice. # IAM Permissions Requires the `dataflow.metrics.get` permission on
+// the job.
 //
 //   - jobId: The job to get execution details for.
 //   - location: The [regional endpoint]
@@ -10331,7 +10439,8 @@ type ProjectsLocationsJobsGetMetricsCall struct {
 // endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.getMetrics` is not recommended, as you can only request the
-// status of jobs that are running in `us-central1`.
+// status of jobs that are running in `us-central1`. # IAM Permissions Requires
+// the `dataflow.metrics.get` permission on the job.
 //
 //   - jobId: The job to get metrics for.
 //   - location: The [regional endpoint]
@@ -10464,7 +10573,8 @@ type ProjectsLocationsJobsListCall struct {
 // `projects.jobs.list` is not recommended, because you can only get the list
 // of jobs that are running in `us-central1`. `projects.locations.jobs.list`
 // and `projects.jobs.list` support filtering the list of jobs by name.
-// Filtering by name isn't supported by `projects.jobs.aggregated`.
+// Filtering by name isn't supported by `projects.jobs.aggregated`. # IAM
+// Permissions Requires the `dataflow.jobs.list` permission on the project.
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
@@ -10681,7 +10791,8 @@ type ProjectsLocationsJobsSnapshotCall struct {
 	header_            http.Header
 }
 
-// Snapshot: Snapshot the state of a streaming job.
+// Snapshot: Snapshot the state of a streaming job. # IAM Permissions Requires
+// the `dataflow.jobs.snapshot` permission on the job.
 //
 // - jobId: The job to be snapshotted.
 // - location: The location that contains this job.
@@ -10797,7 +10908,9 @@ type ProjectsLocationsJobsUpdateCall struct {
 // `projects.locations.jobs.update` with a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.update` is not recommended, as you can only update the state
-// of jobs that are running in `us-central1`.
+// of jobs that are running in `us-central1`. # IAM Permissions 1. Requires the
+// `dataflow.jobs.cancel` permission to cancel a job. 2. Requires the
+// `dataflow.jobs.updateContents` permission to update runtime parameters.
 //
 //   - jobId: The job ID.
 //   - location: The [regional endpoint]
@@ -11268,7 +11381,8 @@ type ProjectsLocationsJobsMessagesListCall struct {
 // using `projects.locations.jobs.messages.list` with a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.jobs.messages.list` is not recommended, as you can only request
-// the status of jobs that are running in `us-central1`.
+// the status of jobs that are running in `us-central1`. # IAM Permissions
+// Requires the `dataflow.messages.list` permission on the job.
 //
 //   - jobId: The job to get messages about.
 //   - location: The [regional endpoint]
@@ -11607,7 +11721,8 @@ type ProjectsLocationsJobsStagesGetExecutionDetailsCall struct {
 
 // GetExecutionDetails: Request detailed information about the execution status
 // of a stage of the job. EXPERIMENTAL. This API is subject to change or
-// removal without notice.
+// removal without notice. # IAM Permissions Requires the
+// `dataflow.metrics.get` permission on the job.
 //
 //   - jobId: The job to get execution details for.
 //   - location: The [regional endpoint]
@@ -12361,7 +12476,9 @@ type ProjectsLocationsTemplatesCreateCall struct {
 // a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.templates.create` is not recommended, because your job will always
-// start in `us-central1`.
+// start in `us-central1`. # IAM Permissions Requires the following IAM
+// permission(s) on the project: - `dataflow.jobs.create` -
+// `resourcemanager.projects.get`
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
@@ -12475,7 +12592,8 @@ type ProjectsLocationsTemplatesGetCall struct {
 // endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.templates.get` is not recommended, because only templates that are
-// running in `us-central1` are retrieved.
+// running in `us-central1` are retrieved. # IAM Permissions Requires the
+// `resourcemanager.projects.get` permission on the project.
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
@@ -12616,7 +12734,9 @@ type ProjectsLocationsTemplatesLaunchCall struct {
 // `projects.locations.templates.launch` with a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.templates.launch` is not recommended, because jobs launched from
-// the template will always start in `us-central1`.
+// the template will always start in `us-central1`. # IAM Permissions Requires
+// the following IAM permission(s) on the project: - `dataflow.jobs.create` -
+// `resourcemanager.projects.get`
 //
 //   - location: The [regional endpoint]
 //     (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) to
@@ -13008,7 +13128,9 @@ type ProjectsTemplatesCreateCall struct {
 // a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.templates.create` is not recommended, because your job will always
-// start in `us-central1`.
+// start in `us-central1`. # IAM Permissions Requires the following IAM
+// permission(s) on the project: - `dataflow.jobs.create` -
+// `resourcemanager.projects.get`
 //
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
 func (r *ProjectsTemplatesService) Create(projectId string, createjobfromtemplaterequest *CreateJobFromTemplateRequest) *ProjectsTemplatesCreateCall {
@@ -13116,7 +13238,8 @@ type ProjectsTemplatesGetCall struct {
 // endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.templates.get` is not recommended, because only templates that are
-// running in `us-central1` are retrieved.
+// running in `us-central1` are retrieved. # IAM Permissions Requires the
+// `resourcemanager.projects.get` permission on the project.
 //
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
 func (r *ProjectsTemplatesService) Get(projectId string) *ProjectsTemplatesGetCall {
@@ -13259,7 +13382,9 @@ type ProjectsTemplatesLaunchCall struct {
 // `projects.locations.templates.launch` with a [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints). Using
 // `projects.templates.launch` is not recommended, because jobs launched from
-// the template will always start in `us-central1`.
+// the template will always start in `us-central1`. # IAM Permissions Requires
+// the following IAM permission(s) on the project: - `dataflow.jobs.create` -
+// `resourcemanager.projects.get`
 //
 // - projectId: The ID of the Cloud Platform project that the job belongs to.
 func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparameters *LaunchTemplateParameters) *ProjectsTemplatesLaunchCall {

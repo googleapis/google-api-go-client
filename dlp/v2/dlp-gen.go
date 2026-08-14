@@ -1510,7 +1510,8 @@ func (s GooglePrivacyDlpV2BigQueryTableTypes) MarshalJSON() ([]byte, error) {
 }
 
 // GooglePrivacyDlpV2BoundingBox: Bounding box encompassing detected text
-// within an image.
+// within an image. Coordinates are in pixels and strictly within the image or
+// frame bounds.
 type GooglePrivacyDlpV2BoundingBox struct {
 	// Height: Height of the bounding box in pixels.
 	Height int64 `json:"height,omitempty"`

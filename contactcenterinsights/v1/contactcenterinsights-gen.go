@@ -793,6 +793,9 @@ func (s GoogleCloudCesV1mainSpan) MarshalJSON() ([]byte, error) {
 // GoogleCloudCesV1mainToolCall: Request for the client or the agent to execute
 // the specified tool.
 type GoogleCloudCesV1mainToolCall struct {
+	// AgentName: Output only. Human-readable name of the agent that issued this
+	// call, e.g. "Contract Architect". Empty when the root agent issued it.
+	AgentName string `json:"agentName,omitempty"`
 	// Args: Optional. The input parameters and values for the tool in JSON object
 	// format.
 	Args googleapi.RawMessage `json:"args,omitempty"`
@@ -802,20 +805,25 @@ type GoogleCloudCesV1mainToolCall struct {
 	// client should return the execution result with the matching ID in
 	// ToolResponse.
 	Id string `json:"id,omitempty"`
+	// ParentToolCallId: Output only. The id of the tool call that caused this one,
+	// when it was issued by a sub-agent working on behalf of a parent call. Empty
+	// for top-level calls. Lets a client group a sub-agent's work under the call
+	// that started it instead of rendering every step as a sibling.
+	ParentToolCallId string `json:"parentToolCallId,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
 	// ToolsetTool: Optional. The toolset tool to execute.
 	ToolsetTool *GoogleCloudCesV1mainToolsetTool `json:"toolsetTool,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Args") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AgentName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -828,10 +836,18 @@ func (s GoogleCloudCesV1mainToolCall) MarshalJSON() ([]byte, error) {
 // GoogleCloudCesV1mainToolResponse: The execution result of a specific tool
 // from the client or the agent.
 type GoogleCloudCesV1mainToolResponse struct {
+	// AgentName: Output only. Human-readable name of the agent that issued this
+	// call, e.g. "Contract Architect". Empty when the root agent issued it.
+	AgentName string `json:"agentName,omitempty"`
 	// DisplayName: Output only. Display name of the tool.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: Optional. The matching ID of the tool call the response is for.
 	Id string `json:"id,omitempty"`
+	// ParentToolCallId: Output only. The id of the tool call that caused this one,
+	// when it was issued by a sub-agent working on behalf of a parent call. Empty
+	// for top-level calls. Lets a client group a sub-agent's work under the call
+	// that started it instead of rendering every step as a sibling.
+	ParentToolCallId string `json:"parentToolCallId,omitempty"`
 	// Response: Required. The tool execution result in JSON object format. Use
 	// "output" key to specify tool response and "error" key to specify error
 	// details (if any). If "output" and "error" keys are not specified, then whole
@@ -842,13 +858,13 @@ type GoogleCloudCesV1mainToolResponse struct {
 	Tool string `json:"tool,omitempty"`
 	// ToolsetTool: Optional. The toolset tool that got executed.
 	ToolsetTool *GoogleCloudCesV1mainToolsetTool `json:"toolsetTool,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "AgentName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// NullFields is a list of field names (e.g. "AgentName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

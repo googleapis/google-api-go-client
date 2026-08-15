@@ -130,6 +130,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Organizations = NewOrganizationsService(s)
 	s.Publications = NewPublicationsService(s)
+	s.Users = NewUsersService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -157,6 +158,8 @@ type Service struct {
 	Organizations *OrganizationsService
 
 	Publications *PublicationsService
+
+	Users *UsersService
 }
 
 func (s *Service) userAgent() string {
@@ -205,6 +208,15 @@ func NewPublicationsService(s *Service) *PublicationsService {
 }
 
 type PublicationsService struct {
+	s *Service
+}
+
+func NewUsersService(s *Service) *UsersService {
+	rs := &UsersService{s: s}
+	return rs
+}
+
+type UsersService struct {
 	s *Service
 }
 
@@ -341,6 +353,37 @@ type DomainProperty struct {
 
 func (s DomainProperty) MarshalJSON() ([]byte, error) {
 	type NoMethod DomainProperty
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GeneratePlatformSiteTokensRequest: Request message for
+// `GeneratePlatformSiteTokens`.
+type GeneratePlatformSiteTokensRequest struct {
+}
+
+// GeneratePlatformSiteTokensResponse: Response message for
+// `GeneratePlatformSiteTokens`.
+type GeneratePlatformSiteTokensResponse struct {
+	// SiteTokens: List of domain-scoped secure token mappings.
+	SiteTokens []*SiteToken `json:"siteTokens,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "SiteTokens") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SiteTokens") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GeneratePlatformSiteTokensResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratePlatformSiteTokensResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -546,6 +589,30 @@ type RrmProduct struct {
 
 func (s RrmProduct) MarshalJSON() ([]byte, error) {
 	type NoMethod RrmProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SiteToken: Represents a domain-scoped secure token mapping.
+type SiteToken struct {
+	// Domain: The domain scope this token is valid for.
+	Domain string `json:"domain,omitempty"`
+	// Token: The domain-scoped secure token value (ESUT).
+	Token string `json:"token,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SiteToken) MarshalJSON() ([]byte, error) {
+	type NoMethod SiteToken
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1690,5 +1757,111 @@ func (c *PublicationsCheckFreeAccessCall) Do(opts ...googleapi.CallOption) (*Che
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "webcontentpublisher.publications.checkFreeAccess", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type UsersGeneratePlatformSiteTokensCall struct {
+	s                                 *Service
+	name                              string
+	generateplatformsitetokensrequest *GeneratePlatformSiteTokensRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// GeneratePlatformSiteTokens: Returns user tokens mapped to their canonical
+// domains for all publications the authenticated user is entitled to.
+//
+//   - name: The resource name of the user to generate tokens for. Format:
+//     users/{user}.
+func (r *UsersService) GeneratePlatformSiteTokens(name string, generateplatformsitetokensrequest *GeneratePlatformSiteTokensRequest) *UsersGeneratePlatformSiteTokensCall {
+	c := &UsersGeneratePlatformSiteTokensCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generateplatformsitetokensrequest = generateplatformsitetokensrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *UsersGeneratePlatformSiteTokensCall) Fields(s ...googleapi.Field) *UsersGeneratePlatformSiteTokensCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *UsersGeneratePlatformSiteTokensCall) Context(ctx context.Context) *UsersGeneratePlatformSiteTokensCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *UsersGeneratePlatformSiteTokensCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersGeneratePlatformSiteTokensCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateplatformsitetokensrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generatePlatformSiteTokens")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "webcontentpublisher.users.generatePlatformSiteTokens", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webcontentpublisher.users.generatePlatformSiteTokens" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GeneratePlatformSiteTokensResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *UsersGeneratePlatformSiteTokensCall) Do(opts ...googleapi.CallOption) (*GeneratePlatformSiteTokensResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GeneratePlatformSiteTokensResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "webcontentpublisher.users.generatePlatformSiteTokens", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

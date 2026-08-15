@@ -2421,8 +2421,16 @@ type ConversationTurn struct {
 	// Messages: Optional. List of messages in the conversation turn, including
 	// user input, agent responses and intermediate events during the processing.
 	Messages []*Message `json:"messages,omitempty"`
+	// ResolvedDeveloperInstruction: Output only. The full dynamically resolved
+	// developer instruction generated from templates. This field is only populated
+	// on-demand when requested during history retrieval. It is not persisted.
+	ResolvedDeveloperInstruction string `json:"resolvedDeveloperInstruction,omitempty"`
 	// RootSpan: Optional. The root span of the action processing.
 	RootSpan *Span `json:"rootSpan,omitempty"`
+	// TemplateAttributes: Optional. Variables or configurations referenced by the
+	// template engine during dynamic prompt generation. This allows reconstructing
+	// the exact prompt sent to the model for this turn.
+	TemplateAttributes googleapi.RawMessage `json:"templateAttributes,omitempty"`
 	// UserIntendedText: Optional. The intended ground-truth text from the
 	// Simulated Caller (Polysynth). Only populated when word error rate metrics
 	// are enabled.
@@ -15395,6 +15403,27 @@ func (r *ProjectsLocationsAppsConversationsService) Get(name string) *ProjectsLo
 // purposes.
 func (c *ProjectsLocationsAppsConversationsGetCall) Source(source string) *ProjectsLocationsAppsConversationsGetCall {
 	c.urlParams_.Set("source", source)
+	return c
+}
+
+// View sets the optional parameter "view": The view specifying which fields in
+// the response should be populated.
+//
+// Possible values:
+//
+//	"CONVERSATION_VIEW_UNSPECIFIED" - Not specified, defaults to
+//
+// CONVERSATION_VIEW_BASIC.
+//
+//	"CONVERSATION_VIEW_BASIC" - The basic view. Returns everything except
+//
+// resolved instructions.
+//
+//	"CONVERSATION_VIEW_FULL" - The full view. Includes resolved instructions
+//
+// dynamically per turn.
+func (c *ProjectsLocationsAppsConversationsGetCall) View(view string) *ProjectsLocationsAppsConversationsGetCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

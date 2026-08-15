@@ -3407,6 +3407,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	// AnchorLastFrame: Optional. If true, anchors the last frame in video
 	// generation by generating a custom border mask.
 	AnchorLastFrame bool `json:"anchorLastFrame,omitempty"`
+	// AudioControl: Optional. Audio control configuration.
+	AudioControl *CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig `json:"audioControl,omitempty"`
 	// CfgScale: CFG scale for video-transform, perf-generation, a2v,
 	// video-textures models.
 	CfgScale float64 `json:"cfgScale,omitempty"`
@@ -3441,6 +3443,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	// artifacts so users can reproduce their requests. This field is populated by
 	// the API handler and is not user-settable.
 	OriginalRequestJson string `json:"originalRequestJson,omitempty"`
+	// OutpaintConfig: Config for Outpainting task.
+	OutpaintConfig *CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig `json:"outpaintConfig,omitempty"`
 	// PromptInputs: Prompt chunks for "ProModel" prompting. If set, the prompt
 	// will not be rewritten, and top-level prompt ignored.
 	PromptInputs *CloudAiLargeModelsVisionPromptInputs `json:"promptInputs,omitempty"`
@@ -3462,6 +3466,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	// __video_file__ inputs. Set to false to preserve the existing fail-fast
 	// behavior.
 	TruncateInputVideo bool `json:"truncateInputVideo,omitempty"`
+	// VideoTransform: Video transform configuration for omni editing models.
+	VideoTransform *CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform `json:"videoTransform,omitempty"`
 	// VideoTransformMaskGcsUri: GCS URI of the grayscale video mask for
 	// Differential Diffusion. Maps to sdedit_video_tmax_scale_map
 	VideoTransformMaskGcsUri string `json:"videoTransformMaskGcsUri,omitempty"`
@@ -3500,6 +3506,36 @@ func (s *CloudAiLargeModelsVisionGenerateVideoExperiments) UnmarshalJSON(data []
 	s.CfgScale = float64(s1.CfgScale)
 	s.VideoTransformStrength = float64(s1.VideoTransformStrength)
 	return nil
+}
+
+// CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig:
+// Configuration for audio control.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig struct {
+	// TargetAudio: Optional. Audio file to use as the target audio input to Omni.
+	// Only used when `use_target_audio_from_video` is false. Cannot be set
+	// simultaneously with `use_target_audio_from_video = true`.
+	TargetAudio *CloudAiLargeModelsVisionGenerateVideoRequestAudio `json:"targetAudio,omitempty"`
+	// UseTargetAudioFromVideo: Optional. When true, uses the audio track from the
+	// input video as the target audio instead of regenerating it. Mutually
+	// exclusive with `target_audio` below. Requires the input to be a video file,
+	// not an image sequence.
+	UseTargetAudioFromVideo bool `json:"useTargetAudioFromVideo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetAudio") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetAudio") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudAiLargeModelsVisionGenerateVideoExperimentsColorAlignmentConfig:
@@ -3589,6 +3625,73 @@ func (s *CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig) Unm
 	return nil
 }
 
+// CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig: Config for
+// Outpainting task.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig struct {
+	// InputFrames: The input frames for outpainting. Required.
+	InputFrames []*CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource `json:"inputFrames,omitempty"`
+	// OutputSpec: The output specification (defines target resolution and frame
+	// count). Required.
+	//
+	// Possible values:
+	//   "OUTPUT_SPEC_UNSPECIFIED"
+	//   "OUTPUT_SPEC_1920X1072x72" - High spec: 1920x1072 resolution, 72 total
+	// frames.
+	//   "OUTPUT_SPEC_1280X720x192" - Medium spec: 1280x720 resolution, 192 total
+	// frames.
+	//   "OUTPUT_SPEC_960X544x432" - Low spec: 960x544 resolution, 432 total
+	// frames.
+	OutputSpec string `json:"outputSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InputFrames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InputFrames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource:
+// The input frame(s). It can be a full path or a glob pattern to images. The
+// proto can be extended in the future for alternative ways to specify source
+// of frames.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource struct {
+	GlobPattern string `json:"globPattern,omitempty"`
+	// HorizontalOffset: Horizontal offset in pixels to shift the input frame from
+	// center. Positive values shift right, negative values shift left. Optional.
+	// Default is 0 (centered).
+	HorizontalOffset int64 `json:"horizontalOffset,omitempty"`
+	// VerticalOffset: Vertical offset in pixels to shift the input frame from
+	// center. Positive values shift down, negative values shift up. Optional.
+	// Default is 0 (centered).
+	VerticalOffset int64 `json:"verticalOffset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GlobPattern") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GlobPattern") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig:
 // Configuration for spatial alignment.
 type CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig struct {
@@ -3636,6 +3739,77 @@ func (s CloudAiLargeModelsVisionGenerateVideoExperimentsVESchedulingConfig) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform struct {
+	// InitializationVideo: Optional. Input for video transform (sdedit, diffdiff).
+	// Note the input video from the main GenerateVideoRequest will be used as the
+	// conditioning.
+	InitializationVideo *CloudAiLargeModelsVisionGenerateVideoRequestVideo `json:"initializationVideo,omitempty"`
+	// Mask: Optional. Mask for video transform (diffdiff).
+	Mask *CloudAiLargeModelsVisionGenerateVideoRequestVideo `json:"mask,omitempty"`
+	// NoiseStrength: Optional. Noise strength for video transform.
+	NoiseStrength float64 `json:"noiseStrength,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InitializationVideo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InitializationVideo") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform) UnmarshalJSON(data []byte) error {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform
+	var s1 struct {
+		NoiseStrength gensupport.JSONFloat64 `json:"noiseStrength"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NoiseStrength = float64(s1.NoiseStrength)
+	return nil
+}
+
+// CloudAiLargeModelsVisionGenerateVideoRequestAudio: The raw bytes or Cloud
+// Storage URI for an audio input.
+type CloudAiLargeModelsVisionGenerateVideoRequestAudio struct {
+	// BlobId: Blob ID of the audio. This is used for storing the large audio in
+	// the request.
+	BlobId string `json:"blobId,omitempty"`
+	// BytesBase64Encoded: Base64 encoded bytes string representing the audio.
+	BytesBase64Encoded string `json:"bytesBase64Encoded,omitempty"`
+	GcsUri             string `json:"gcsUri,omitempty"`
+	// MimeType: The MIME type of the content of the audio. Only audio in below
+	// listed MIME types are supported. - audio/wav - audio/mp3 - audio/mpeg
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlobId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlobId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoRequestAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoRequestAudio
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudAiLargeModelsVisionGenerateVideoRequestImage: The image bytes or Cloud
 // Storage URI to make the prediction on.
 type CloudAiLargeModelsVisionGenerateVideoRequestImage struct {
@@ -3663,6 +3837,34 @@ type CloudAiLargeModelsVisionGenerateVideoRequestImage struct {
 
 func (s CloudAiLargeModelsVisionGenerateVideoRequestImage) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionGenerateVideoRequestImage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CloudAiLargeModelsVisionGenerateVideoRequestVideo struct {
+	// BlobId: Blob ID of the video. This is used for storing large videos in the
+	// request.
+	BlobId string `json:"blobId,omitempty"`
+	// BytesBase64Encoded: Base64 encoded bytes string representing the video.
+	BytesBase64Encoded string `json:"bytesBase64Encoded,omitempty"`
+	GcsUri             string `json:"gcsUri,omitempty"`
+	// MimeType: The MIME type of the content of the video. Only the video in the
+	// below listed MIME types are supported. - video/mp4
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlobId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlobId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoRequestVideo) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoRequestVideo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5283,16 +5485,16 @@ func (s GoogleCloudAiplatformV1AudioResponseFormat) MarshalJSON() ([]byte, error
 }
 
 // GoogleCloudAiplatformV1AudioTranscription: The transcription of an audio
-// part. For multi-speaker audio, each speaker segment is a separate Part with
-// its own AudioTranscription carrying the speaker_label.
+// part. For multi-speaker audio, each speaker segment is a separate `Part`
+// with its own `AudioTranscription` carrying the `speaker_label`.
 type GoogleCloudAiplatformV1AudioTranscription struct {
 	// SpeakerLabel: Optional. A label identifying the speaker of this audio
-	// segment (e.g. "spk_1", "spk_2"). Present when diarization is set.
+	// segment (e.g. `spk_1`, `spk_2`). Present when `diarization` is set.
 	SpeakerLabel string `json:"speakerLabel,omitempty"`
 	// Text: Required. The transcription text of this audio segment.
 	Text string `json:"text,omitempty"`
 	// Words: Optional. Detailed word-level transcriptions and timing details.
-	// Present when word_timestamp is set.
+	// Present when `word_timestamp` is set.
 	Words []*GoogleCloudAiplatformV1AudioTranscriptionWordInfo `json:"words,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SpeakerLabel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5315,8 +5517,8 @@ func (s GoogleCloudAiplatformV1AudioTranscription) MarshalJSON() ([]byte, error)
 // GoogleCloudAiplatformV1AudioTranscriptionConfig: Configuration for speech
 // recognition (transcription).
 type GoogleCloudAiplatformV1AudioTranscriptionConfig struct {
-	// AdaptationPhrases: Optional. A list of phrases to bias the ASR model
-	// towards.
+	// AdaptationPhrases: Optional. Deprecated: Use `custom_vocabulary` instead. A
+	// list of phrases to bias the speech recognition model towards.
 	AdaptationPhrases []string `json:"adaptationPhrases,omitempty"`
 	// CustomVocabulary: Optional. A list of custom vocabulary phrases to bias the
 	// speech recognition model toward recognizing specific terms.
@@ -20252,8 +20454,8 @@ type GoogleCloudAiplatformV1GenerationConfig struct {
 	// the request to the model. This can be useful for synchronizing audio with
 	// other modalities in the response.
 	AudioTimestamp bool `json:"audioTimestamp,omitempty"`
-	// AudioTranscriptionConfig: Optional. Config for audio transcription (speech
-	// recognition).
+	// AudioTranscriptionConfig: Optional. Configuration for audio transcription
+	// (speech recognition).
 	AudioTranscriptionConfig *GoogleCloudAiplatformV1AudioTranscriptionConfig `json:"audioTranscriptionConfig,omitempty"`
 	// CandidateCount: Optional. The number of candidate responses to generate. A
 	// higher `candidate_count` can provide more options to choose from, but it
@@ -31222,7 +31424,7 @@ func (s GoogleCloudAiplatformV1PairwiseSummarizationQualitySpec) MarshalJSON() (
 // `inline_data` or `file_data` field is filled with raw bytes.
 type GoogleCloudAiplatformV1Part struct {
 	// AudioTranscription: Optional. Audio (input or output) transcription. This is
-	// only set when this Part contains audio data.
+	// only set when this `Part` contains audio data.
 	AudioTranscription *GoogleCloudAiplatformV1AudioTranscription `json:"audioTranscription,omitempty"`
 	// CodeExecutionResult: Optional. The result of executing the ExecutableCode.
 	CodeExecutionResult *GoogleCloudAiplatformV1CodeExecutionResult `json:"codeExecutionResult,omitempty"`
@@ -33809,7 +34011,7 @@ func (s GoogleCloudAiplatformV1QueryDeployedModelsResponse) MarshalJSON() ([]byt
 }
 
 // GoogleCloudAiplatformV1QueryReasoningEngineRequest: Request message for
-// ReasoningEngineExecutionService.Query.
+// ReasoningEngineExecutionService.QueryReasoningEngine.
 type GoogleCloudAiplatformV1QueryReasoningEngineRequest struct {
 	// ClassMethod: Optional. Class method to be used for the query. It is optional
 	// and defaults to "query" if unspecified.
@@ -33836,7 +34038,7 @@ func (s GoogleCloudAiplatformV1QueryReasoningEngineRequest) MarshalJSON() ([]byt
 }
 
 // GoogleCloudAiplatformV1QueryReasoningEngineResponse: Response message for
-// ReasoningEngineExecutionService.Query
+// ReasoningEngineExecutionService.QueryReasoningEngine.
 type GoogleCloudAiplatformV1QueryReasoningEngineResponse struct {
 	// Output: Response provided by users in JSON object format.
 	Output interface{} `json:"output,omitempty"`
@@ -36708,7 +36910,8 @@ type GoogleCloudAiplatformV1ReservationAffinity struct {
 	// the reservation must be identified via the `key` and `values` fields.
 	ReservationAffinityType string `json:"reservationAffinityType,omitempty"`
 	// Values: Optional. Corresponds to the label values of a reservation resource.
-	// This must be the full resource name of the reservation or reservation block.
+	// This must be the resource name of the reservation, reservation block, or
+	// reservation sub- block.
 	Values []string `json:"values,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -47175,7 +47378,7 @@ func (s *GoogleCloudAiplatformV1StratifiedSplit) UnmarshalJSON(data []byte) erro
 }
 
 // GoogleCloudAiplatformV1StreamQueryReasoningEngineRequest: Request message
-// for ReasoningEngineExecutionService.StreamQuery.
+// for ReasoningEngineExecutionService.StreamQueryReasoningEngine.
 type GoogleCloudAiplatformV1StreamQueryReasoningEngineRequest struct {
 	// ClassMethod: Optional. Class method to be used for the stream query. It is
 	// optional and defaults to "stream_query" if unspecified.
@@ -80513,7 +80716,11 @@ type ProjectsLocationsAgentsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists agents in a location.
+// List: Lists the agents in a location that belong to the caller. An agent
+// belongs to the end user recorded as its owner when it was created, so the
+// response holds that caller's agents and no others. It is empty for a caller
+// that is not an end user, and an agent with no recorded owner is listed for
+// nobody.
 //
 //   - parent: The resource name of the location to list agents from. Format:
 //     `projects/{project}/locations/{location}`.

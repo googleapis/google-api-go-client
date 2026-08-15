@@ -7398,7 +7398,7 @@
                   ]
                 },
                 "list": {
-                  "description": "Lists agents in a location.",
+                  "description": "Lists the agents in a location that belong to the caller. An agent belongs to the end user recorded as its owner when it was created, so the response holds that caller's agents and no others. It is empty for a caller that is not an end user, and an agent with no recorded owner is listed for nobody.",
                   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/agents",
                   "httpMethod": "GET",
                   "id": "aiplatform.projects.locations.agents.list",
@@ -35489,7 +35489,7 @@
       }
     }
   },
-  "revision": "20260801",
+  "revision": "20260808",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoExperiments": {
@@ -35499,6 +35499,10 @@
         "anchorLastFrame": {
           "description": "Optional. If true, anchors the last frame in video generation by generating a custom border mask.",
           "type": "boolean"
+        },
+        "audioControl": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig",
+          "description": "Optional. Audio control configuration."
         },
         "cfgScale": {
           "description": "CFG scale for video-transform, perf-generation, a2v, video-textures models.",
@@ -35565,6 +35569,10 @@
           "description": "The original REST API request JSON sent by the user, in the instances/parameters format. Preserved for saving alongside output artifacts so users can reproduce their requests. This field is populated by the API handler and is not user-settable.",
           "type": "string"
         },
+        "outpaintConfig": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig",
+          "description": "Config for Outpainting task."
+        },
         "promptInputs": {
           "$ref": "CloudAiLargeModelsVisionPromptInputs",
           "description": "Prompt chunks for \"ProModel\" prompting. If set, the prompt will not be rewritten, and top-level prompt ignored."
@@ -35589,14 +35597,35 @@
           "description": "If true (default), truncate input videos that exceed the model's maximum frame count by applying a frame_selection_config to __video_file__ inputs. Set to false to preserve the existing fail-fast behavior.",
           "type": "boolean"
         },
+        "videoTransform": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform",
+          "description": "Video transform configuration for omni editing models."
+        },
         "videoTransformMaskGcsUri": {
+          "deprecated": true,
           "description": "GCS URI of the grayscale video mask for Differential Diffusion. Maps to sdedit_video_tmax_scale_map ",
           "type": "string"
         },
         "videoTransformStrength": {
+          "deprecated": true,
           "description": "SDEdit: Scalar noise level (0.0 to 1.0) Maps to sdedit_tmax ",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig": {
+      "description": "Configuration for audio control.",
+      "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig",
+      "properties": {
+        "targetAudio": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoRequestAudio",
+          "description": "Optional. Audio file to use as the target audio input to Omni. Only used when `use_target_audio_from_video` is false. Cannot be set simultaneously with `use_target_audio_from_video = true`."
+        },
+        "useTargetAudioFromVideo": {
+          "description": "Optional. When true, uses the audio track from the input video as the target audio instead of regenerating it. Mutually exclusive with `target_audio` below. Requires the input to be a video file, not an image sequence.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -35644,6 +35673,56 @@
       },
       "type": "object"
     },
+    "CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig": {
+      "description": "Config for Outpainting task.",
+      "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig",
+      "properties": {
+        "inputFrames": {
+          "description": "The input frames for outpainting. Required.",
+          "items": {
+            "$ref": "CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource"
+          },
+          "type": "array"
+        },
+        "outputSpec": {
+          "description": "The output specification (defines target resolution and frame count). Required.",
+          "enum": [
+            "OUTPUT_SPEC_UNSPECIFIED",
+            "OUTPUT_SPEC_1920X1072x72",
+            "OUTPUT_SPEC_1280X720x192",
+            "OUTPUT_SPEC_960X544x432"
+          ],
+          "enumDescriptions": [
+            "",
+            "High spec: 1920x1072 resolution, 72 total frames.",
+            "Medium spec: 1280x720 resolution, 192 total frames.",
+            "Low spec: 960x544 resolution, 432 total frames."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource": {
+      "description": "The input frame(s). It can be a full path or a glob pattern to images. The proto can be extended in the future for alternative ways to specify source of frames.",
+      "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource",
+      "properties": {
+        "globPattern": {
+          "type": "string"
+        },
+        "horizontalOffset": {
+          "description": "Horizontal offset in pixels to shift the input frame from center. Positive values shift right, negative values shift left. Optional. Default is 0 (centered).",
+          "format": "int32",
+          "type": "integer"
+        },
+        "verticalOffset": {
+          "description": "Vertical offset in pixels to shift the input frame from center. Positive values shift down, negative values shift up. Optional. Default is 0 (centered).",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig": {
       "description": "Configuration for spatial alignment.",
       "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig",
@@ -35666,6 +35745,47 @@
       },
       "type": "object"
     },
+    "CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform": {
+      "id": "CloudAiLargeModelsVisionGenerateVideoExperimentsVideoTransform",
+      "properties": {
+        "initializationVideo": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoRequestVideo",
+          "description": "Optional. Input for video transform (sdedit, diffdiff). Note the input video from the main GenerateVideoRequest will be used as the conditioning."
+        },
+        "mask": {
+          "$ref": "CloudAiLargeModelsVisionGenerateVideoRequestVideo",
+          "description": "Optional. Mask for video transform (diffdiff)."
+        },
+        "noiseStrength": {
+          "description": "Optional. Noise strength for video transform.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionGenerateVideoRequestAudio": {
+      "description": "The raw bytes or Cloud Storage URI for an audio input.",
+      "id": "CloudAiLargeModelsVisionGenerateVideoRequestAudio",
+      "properties": {
+        "blobId": {
+          "description": "Blob ID of the audio. This is used for storing the large audio in the request.",
+          "type": "string"
+        },
+        "bytesBase64Encoded": {
+          "description": "Base64 encoded bytes string representing the audio.",
+          "type": "string"
+        },
+        "gcsUri": {
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type of the content of the audio. Only audio in below listed MIME types are supported. - audio/wav - audio/mp3 - audio/mpeg",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CloudAiLargeModelsVisionGenerateVideoRequestImage": {
       "description": "The image bytes or Cloud Storage URI to make the prediction on.",
       "id": "CloudAiLargeModelsVisionGenerateVideoRequestImage",
@@ -35683,6 +35803,27 @@
         },
         "mimeType": {
           "description": "The MIME type of the content of the image. Only the images in below listed MIME types are supported. - image/jpeg - image/png",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiLargeModelsVisionGenerateVideoRequestVideo": {
+      "id": "CloudAiLargeModelsVisionGenerateVideoRequestVideo",
+      "properties": {
+        "blobId": {
+          "description": "Blob ID of the video. This is used for storing large videos in the request.",
+          "type": "string"
+        },
+        "bytesBase64Encoded": {
+          "description": "Base64 encoded bytes string representing the video.",
+          "type": "string"
+        },
+        "gcsUri": {
+          "type": "string"
+        },
+        "mimeType": {
+          "description": "The MIME type of the content of the video. Only the video in the below listed MIME types are supported. - video/mp4",
           "type": "string"
         }
       },
@@ -36970,11 +37111,11 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1AudioTranscription": {
-      "description": "The transcription of an audio part. For multi-speaker audio, each speaker segment is a separate Part with its own AudioTranscription carrying the speaker_label.",
+      "description": "The transcription of an audio part. For multi-speaker audio, each speaker segment is a separate `Part` with its own `AudioTranscription` carrying the `speaker_label`.",
       "id": "GoogleCloudAiplatformV1AudioTranscription",
       "properties": {
         "speakerLabel": {
-          "description": "Optional. A label identifying the speaker of this audio segment (e.g. \"spk_1\", \"spk_2\"). Present when diarization is set.",
+          "description": "Optional. A label identifying the speaker of this audio segment (e.g. `spk_1`, `spk_2`). Present when `diarization` is set.",
           "type": "string"
         },
         "text": {
@@ -36982,7 +37123,7 @@
           "type": "string"
         },
         "words": {
-          "description": "Optional. Detailed word-level transcriptions and timing details. Present when word_timestamp is set.",
+          "description": "Optional. Detailed word-level transcriptions and timing details. Present when `word_timestamp` is set.",
           "items": {
             "$ref": "GoogleCloudAiplatformV1AudioTranscriptionWordInfo"
           },
@@ -36997,7 +37138,7 @@
       "properties": {
         "adaptationPhrases": {
           "deprecated": true,
-          "description": "Optional. A list of phrases to bias the ASR model towards.",
+          "description": "Optional. Deprecated: Use `custom_vocabulary` instead. A list of phrases to bias the speech recognition model towards.",
           "items": {
             "type": "string"
           },
@@ -47656,7 +47797,7 @@
         },
         "audioTranscriptionConfig": {
           "$ref": "GoogleCloudAiplatformV1AudioTranscriptionConfig",
-          "description": "Optional. Config for audio transcription (speech recognition)."
+          "description": "Optional. Configuration for audio transcription (speech recognition)."
         },
         "candidateCount": {
           "description": "Optional. The number of candidate responses to generate. A higher `candidate_count` can provide more options to choose from, but it also consumes more resources. This can be useful for generating a variety of responses and selecting the best one.",
@@ -55726,7 +55867,7 @@
       "properties": {
         "audioTranscription": {
           "$ref": "GoogleCloudAiplatformV1AudioTranscription",
-          "description": "Optional. Audio (input or output) transcription. This is only set when this Part contains audio data."
+          "description": "Optional. Audio (input or output) transcription. This is only set when this `Part` contains audio data."
         },
         "codeExecutionResult": {
           "$ref": "GoogleCloudAiplatformV1CodeExecutionResult",
@@ -57776,7 +57917,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1QueryReasoningEngineRequest": {
-      "description": "Request message for ReasoningEngineExecutionService.Query.",
+      "description": "Request message for ReasoningEngineExecutionService.QueryReasoningEngine.",
       "id": "GoogleCloudAiplatformV1QueryReasoningEngineRequest",
       "properties": {
         "classMethod": {
@@ -57795,7 +57936,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1QueryReasoningEngineResponse": {
-      "description": "Response message for ReasoningEngineExecutionService.Query",
+      "description": "Response message for ReasoningEngineExecutionService.QueryReasoningEngine.",
       "id": "GoogleCloudAiplatformV1QueryReasoningEngineResponse",
       "properties": {
         "output": {
@@ -59632,7 +59773,7 @@
           "type": "string"
         },
         "values": {
-          "description": "Optional. Corresponds to the label values of a reservation resource. This must be the full resource name of the reservation or reservation block.",
+          "description": "Optional. Corresponds to the label values of a reservation resource. This must be the resource name of the reservation, reservation block, or reservation sub- block.",
           "items": {
             "type": "string"
           },
@@ -66532,7 +66673,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1StreamQueryReasoningEngineRequest": {
-      "description": "Request message for ReasoningEngineExecutionService.StreamQuery.",
+      "description": "Request message for ReasoningEngineExecutionService.StreamQueryReasoningEngine.",
       "id": "GoogleCloudAiplatformV1StreamQueryReasoningEngineRequest",
       "properties": {
         "classMethod": {

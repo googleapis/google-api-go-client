@@ -9554,7 +9554,7 @@
       }
     }
   },
-  "revision": "20260802",
+  "revision": "20260809",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiDistribution": {
@@ -32637,6 +32637,10 @@
         "rankSignals": {
           "$ref": "GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals",
           "description": "Optional. A set of ranking signals associated with the result."
+        },
+        "retrievalSignals": {
+          "$ref": "GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals",
+          "description": "Optional. A set of signals used by the relevance filter meant for use to fine-tune the relevance filter thresholds."
         }
       },
       "type": "object"
@@ -32713,6 +32717,35 @@
         },
         "value": {
           "description": "Optional. Float value representing the ranking signal (e.g. 1.25 for BM25).",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals": {
+      "description": "Contains a set of signals used by the relevance filter.",
+      "id": "GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals",
+      "properties": {
+        "retrievalSources": {
+          "description": "Optional. Indicates how the result was retrieved.",
+          "items": {
+            "enum": [
+              "RETRIEVAL_SOURCE_UNSPECIFIED",
+              "KEYWORD_SEARCH",
+              "SEMANTIC_SEARCH"
+            ],
+            "enumDescriptions": [
+              "Unspecified retrieval source.",
+              "Indicates the result was retrieved by keyword search.",
+              "Indicates the result was retrieved by semantic search."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "semanticRelevanceScore": {
+          "description": "Optional. Relevance score used by the filter when semantic_relevance_threshold is set.",
           "format": "float",
           "type": "number"
         }

@@ -729,7 +729,9 @@ type GceHyperdiskBalancedHighAvailability struct {
 	// will never be archived.
 	ArchiveTimeout string `json:"archiveTimeout,omitempty"`
 	// MaxSizeGb: Optional. Maximum size in GB to which this persistent directory
-	// can be resized. Defaults to unlimited if not set.
+	// can be resized. Defaults to `0`, which indicates no maximum limit is
+	// enforced by this configuration. Resizing is still subject to the quotas and
+	// limits of the underlying disk type.
 	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
@@ -987,7 +989,9 @@ type GceRegionalPersistentDisk struct {
 	// empty if source_snapshot is set. Defaults to "ext4".
 	FsType string `json:"fsType,omitempty"`
 	// MaxSizeGb: Optional. Maximum size in GB to which this persistent directory
-	// can be resized. Defaults to unlimited if not set.
+	// can be resized. Defaults to `0`, which indicates no maximum limit is
+	// enforced by this configuration. Resizing is still subject to the quotas and
+	// limits of the underlying disk type.
 	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
@@ -2196,20 +2200,19 @@ type WorkstationConfig struct {
 	// zones within the region are used. Immutable after the workstation
 	// configuration is created.
 	ReplicaZones []string `json:"replicaZones,omitempty"`
-	// RunningTimeout: Optional. Number of seconds that a workstation can run until
-	// it is automatically shut down. We recommend that workstations be shut down
-	// daily to reduce costs and so that security updates can be applied upon
-	// restart. The idle_timeout and running_timeout fields are independent of each
-	// other. Note that the running_timeout field shuts down VMs after the
-	// specified time, regardless of whether or not the VMs are idle. Provide
-	// duration terminated by `s` for seconds—for example, "54000s" (15 hours).
-	// Defaults to "43200s" (12 hours). A value of "0s" indicates that
-	// workstations using this configuration should never time out. If
-	// encryption_key is set, it must be greater than "0s" and less than
-	// "86400s" (24 hours). Warning: A value of "0s" indicates that Cloud
-	// Workstations VMs created with this configuration have no maximum running
-	// time. This is strongly discouraged because you incur costs and will not pick
-	// up security updates.
+	// RunningTimeout: Optional. Number of seconds to wait before automatically
+	// stopping a workstation. We recommend that workstations be stopped daily so
+	// that security updates can be applied upon restart. The idle_timeout and
+	// running_timeout fields are independent of each other. Note that the
+	// running_timeout field stops workstations after the specified time,
+	// regardless of whether or not the workstations are idle. Provide duration
+	// terminated by `s` for seconds—for example, "54000s" (15 hours). Defaults
+	// to "43200s" (12 hours). A value of "0s" indicates that workstations
+	// using this configuration should never time out. If encryption_key is set, it
+	// must be greater than "0s" and less than "86400s" (24 hours). Warning: A
+	// value of "0s" indicates that Cloud Workstations VMs created with this
+	// configuration have no maximum running time. This is strongly discouraged
+	// because you incur costs and will not pick up security updates.
 	RunningTimeout string `json:"runningTimeout,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for this workstation
 	// configuration.

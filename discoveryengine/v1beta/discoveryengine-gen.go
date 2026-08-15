@@ -32361,6 +32361,9 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult struct {
 	ModelScores map[string]GoogleCloudDiscoveryengineV1betaDoubleList `json:"modelScores,omitempty"`
 	// RankSignals: Optional. A set of ranking signals associated with the result.
 	RankSignals *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals `json:"rankSignals,omitempty"`
+	// RetrievalSignals: Optional. A set of signals used by the relevance filter
+	// meant for use to fine-tune the relevance filter thresholds.
+	RetrievalSignals *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals `json:"retrievalSignals,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -32492,6 +32495,51 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCu
 		return err
 	}
 	s.Value = float64(s1.Value)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals:
+// Contains a set of signals used by the relevance filter.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals struct {
+	// RetrievalSources: Optional. Indicates how the result was retrieved.
+	//
+	// Possible values:
+	//   "RETRIEVAL_SOURCE_UNSPECIFIED" - Unspecified retrieval source.
+	//   "KEYWORD_SEARCH" - Indicates the result was retrieved by keyword search.
+	//   "SEMANTIC_SEARCH" - Indicates the result was retrieved by semantic search.
+	RetrievalSources []string `json:"retrievalSources,omitempty"`
+	// SemanticRelevanceScore: Optional. Relevance score used by the filter when
+	// semantic_relevance_threshold is set.
+	SemanticRelevanceScore float64 `json:"semanticRelevanceScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetrievalSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetrievalSources") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals
+	var s1 struct {
+		SemanticRelevanceScore gensupport.JSONFloat64 `json:"semanticRelevanceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SemanticRelevanceScore = float64(s1.SemanticRelevanceScore)
 	return nil
 }
 

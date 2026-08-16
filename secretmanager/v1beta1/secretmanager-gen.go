@@ -889,6 +889,42 @@ func (s Replication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourcePolicyMember: Output-only policy member strings of a Google Cloud
+// resource's built-in identity.
+type ResourcePolicyMember struct {
+	// IamPolicyNamePrincipal: Output only. IAM policy binding member referring to
+	// a Google Cloud resource by user-assigned name (https://google.aip.dev/122).
+	// If a resource is deleted and recreated with the same name, the binding will
+	// be applicable to the new resource. Example:
+	// `principal://parametermanager.googleapis.com/projects/12345/name/locations/us
+	// -central1-a/parameters/my-parameter`
+	IamPolicyNamePrincipal string `json:"iamPolicyNamePrincipal,omitempty"`
+	// IamPolicyUidPrincipal: Output only. IAM policy binding member referring to a
+	// Google Cloud resource by system-assigned unique identifier
+	// (https://google.aip.dev/148#uid). If a resource is deleted and recreated
+	// with the same name, the binding will not be applicable to the new resource
+	// Example:
+	// `principal://parametermanager.googleapis.com/projects/12345/uid/locations/us-
+	// central1-a/parameters/a918fed5`
+	IamPolicyUidPrincipal string `json:"iamPolicyUidPrincipal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamPolicyNamePrincipal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamPolicyNamePrincipal") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourcePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourcePolicyMember
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Secret: A Secret is a logical secret whose value and versions can be
 // accessed. A Secret is made up of zero or more SecretVersions that represent
 // the secret data.

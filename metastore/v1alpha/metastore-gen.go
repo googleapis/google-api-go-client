@@ -797,6 +797,37 @@ func (s CancelMigrationResponse) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// CatalogReport: Aggregated report at the catalog level.
+type CatalogReport struct {
+	// Catalog: The name of the catalog (format: projects/*/catalogs/*).
+	Catalog string `json:"catalog,omitempty"`
+	// CatalogType: The type of catalog.
+	//
+	// Possible values:
+	//   "CATALOG_TYPE_UNSPECIFIED" - The catalog type is unspecified.
+	//   "HIVE" - BigLake Metastore Hive catalog.
+	//   "ICEBERG" - BigLake Metastore Iceberg REST catalog.
+	CatalogType string `json:"catalogType,omitempty"`
+	// DatabaseReports: A map of database names to their respective reports.
+	DatabaseReports map[string]DatabaseReport `json:"databaseReports,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Catalog") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Catalog") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CatalogReport) MarshalJSON() ([]byte, error) {
+	type NoMethod CatalogReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CatalogSummary: Summary of results for a specific destination catalog.
 type CatalogSummary struct {
 	// Catalog: Output only. The catalog resource name (format:
@@ -1157,6 +1188,35 @@ func (s DatabaseDump) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DatabaseReport: Aggregated report at the database level.
+type DatabaseReport struct {
+	// Database: The name of the database.
+	Database string `json:"database,omitempty"`
+	// ExecutionPlan: The discovered intent for the database (what we found and
+	// what we planned).
+	ExecutionPlan *ExecutionPlan `json:"executionPlan,omitempty"`
+	// ExecutionResult: The actual outcome of the database migration.
+	ExecutionResult *ExecutionResult `json:"executionResult,omitempty"`
+	// TableReports: A map of table names to their respective reports.
+	TableReports map[string]TableReport `json:"tableReports,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Database") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseReport) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DatabaseSummary: Summary of results for a specific database in a catalog.
 type DatabaseSummary struct {
 	// Database: Output only. The name of the database.
@@ -1288,6 +1348,76 @@ type ErrorDetails struct {
 
 func (s ErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecutionPlan: Represents the migration plan for a specific resource (e.g.
+// Database, Table).
+type ExecutionPlan struct {
+	// Action: The action that will be taken for a resource during migration.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - The action is unspecified.
+	//   "CREATE" - Resource missing; will be created.
+	//   "UPDATE" - Resource exists at the target, but differs from the source;
+	// will be updated.
+	//   "SKIP" - Resource exists at the target; no changes will be made.
+	//   "DEPENDENCY_FAILURE" - Resource cannot be migrated due to a dependency
+	// failure (e.g., parent resource missing).
+	//   "ERROR" - Resource cannot be migrated due to an error during discovery.
+	Action string `json:"action,omitempty"`
+	// Diffs: A map of field names to their respective value diff.
+	Diffs map[string]ValueDiff `json:"diffs,omitempty"`
+	// Reason: A human-readable string explaining why the action was chosen.
+	Reason string `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecutionPlan) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecutionPlan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecutionResult: Represents the actual migration result for a specific
+// resource (e.g. Database, Table).
+type ExecutionResult struct {
+	// ErrorMessage: Description of the error if the state is FAILED.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// Remediation: Remediation steps for the error if the state is FAILED.
+	Remediation string `json:"remediation,omitempty"`
+	// State: Output only. The state of the migration for a resource.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "SUCCEEDED" - The resource was migrated successfully.
+	//   "FAILED" - The resource failed to migrate.
+	//   "SKIPPED" - The resource was skipped and will not be migrated.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecutionResult) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecutionResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2267,6 +2397,34 @@ func (s MigrationExecution) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MigrationReport: Report containing the results of a migration run. This
+// report is generated at the specified path in the
+// BigLakeMetastoreMigrationConfig after the backfill is complete, or when a
+// dry run is executed.
+type MigrationReport struct {
+	// CatalogReports: Output only. Detailed results for each catalog involved in
+	// the migration.
+	CatalogReports []*CatalogReport `json:"catalogReports,omitempty"`
+	// Summary: Output only. High-level summary of the migration results.
+	Summary *MigrationSummary `json:"summary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CatalogReports") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CatalogReports") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MigrationReport) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrationReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MigrationSummary: Summary of the migration results.
 type MigrationSummary struct {
 	// CatalogSummaries: Output only. Summary of results for each catalog involved
@@ -2494,6 +2652,41 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartitionReport: Partition migration report for a Hive table.
+type PartitionReport struct {
+	// PartitionFailedCount: The number of partitions that failed to migrate at the
+	// target.
+	PartitionFailedCount int64 `json:"partitionFailedCount,omitempty,string"`
+	// PartitionSuccessCount: The number of partitions successfully migrated at the
+	// target.
+	PartitionSuccessCount int64 `json:"partitionSuccessCount,omitempty,string"`
+	// State: Output only. The state of the partition migration.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unspecified.
+	//   "SUCCEEDED" - All partitions migrated successfully at the target.
+	//   "PARTIALLY_SUCCEEDED" - Some partitions migrated successfully at the
+	// target, but others failed.
+	//   "FAILED" - All partitions failed to migrate at the target.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PartitionFailedCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartitionFailedCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartitionReport) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionReport
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3209,6 +3402,39 @@ func (s StatusProto) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TableReport: Aggregated report at the table level.
+type TableReport struct {
+	// ExecutionPlan: The discovered intent for the table (what we found and what
+	// we planned).
+	ExecutionPlan *ExecutionPlan `json:"executionPlan,omitempty"`
+	// ExecutionResult: The actual outcome of the table migration.
+	ExecutionResult *ExecutionResult `json:"executionResult,omitempty"`
+	// PartitionDiscoveredCount: The total number of partitions identified at the
+	// source during discovery. This is only relevant for Hive Partitioned tables.
+	PartitionDiscoveredCount int64 `json:"partitionDiscoveredCount,omitempty,string"`
+	// PartitionReport: Report containing the results of partition migration for
+	// this table. This is only relevant for Hive Partitioned tables.
+	PartitionReport *PartitionReport `json:"partitionReport,omitempty"`
+	// Table: The name of the table.
+	Table string `json:"table,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionPlan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionPlan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableReport) MarshalJSON() ([]byte, error) {
+	type NoMethod TableReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TableSummary: Aggregated summary of results for all tables in a database.
 type TableSummary struct {
 	// PartitionDiscoveredCount: Output only. Partition migration summary across
@@ -3322,6 +3548,31 @@ type TestIamPermissionsResponse struct {
 
 func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ValueDiff: A field-level metadata mismatch for a resource between the source
+// and target.
+type ValueDiff struct {
+	// SourceValue: The value of the field at the source.
+	SourceValue string `json:"sourceValue,omitempty"`
+	// TargetValue: The value of the field at the target.
+	TargetValue string `json:"targetValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ValueDiff) MarshalJSON() ([]byte, error) {
+	type NoMethod ValueDiff
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

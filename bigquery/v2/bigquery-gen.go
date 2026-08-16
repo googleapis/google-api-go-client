@@ -8095,6 +8095,93 @@ type QueryResponse struct {
 	// epoch. This field will be present when the query job transitions from the
 	// PENDING state to either RUNNING or DONE.
 	StartTime int64 `json:"startTime,omitempty,string"`
+	// StatementType: Output only. The type of query statement, if valid. Possible
+	// values: * `SELECT`: `SELECT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/query-syntax#select_list)
+	// statement. * `ASSERT`: `ASSERT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/debugging-statements#assert)
+	// statement. * `INSERT`: `INSERT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#insert_statement)
+	// statement. * `UPDATE`: `UPDATE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#update_statement)
+	// statement. * `DELETE`: `DELETE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language)
+	// statement. * `MERGE`: `MERGE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language)
+	// statement. * `CREATE_TABLE`: `CREATE TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_table_statement)
+	// statement, without `AS SELECT`. * `CREATE_TABLE_AS_SELECT`: `CREATE TABLE AS
+	// SELECT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_table_statement)
+	// statement. * `CREATE_VIEW`: `CREATE VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_view_statement)
+	// statement. * `CREATE_MODEL`: `CREATE MODEL`
+	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-create#create_model_statement)
+	// statement. * `CREATE_MATERIALIZED_VIEW`: `CREATE MATERIALIZED VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_materialized_view_statement)
+	// statement. * `CREATE_FUNCTION`: `CREATE FUNCTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_function_statement)
+	// statement. * `CREATE_TABLE_FUNCTION`: `CREATE TABLE FUNCTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_table_function_statement)
+	// statement. * `CREATE_PROCEDURE`: `CREATE PROCEDURE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_procedure)
+	// statement. * `CREATE_ROW_ACCESS_POLICY`: `CREATE ROW ACCESS POLICY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_row_access_policy_statement)
+	// statement. * `CREATE_SCHEMA`: `CREATE SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_schema_statement)
+	// statement. * `CREATE_SNAPSHOT_TABLE`: `CREATE SNAPSHOT TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_snapshot_table_statement)
+	// statement. * `CREATE_SEARCH_INDEX`: `CREATE SEARCH INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_search_index_statement)
+	// statement. * `DROP_TABLE`: `DROP TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_table_statement)
+	// statement. * `DROP_EXTERNAL_TABLE`: `DROP EXTERNAL TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_external_table_statement)
+	// statement. * `DROP_VIEW`: `DROP VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_view_statement)
+	// statement. * `DROP_MODEL`: `DROP MODEL`
+	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-drop-model)
+	// statement. * `DROP_MATERIALIZED_VIEW`: `DROP MATERIALIZED VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_materialized_view_statement)
+	// statement. * `DROP_FUNCTION` : `DROP FUNCTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_function_statement)
+	// statement. * `DROP_TABLE_FUNCTION` : `DROP TABLE FUNCTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_table_function)
+	// statement. * `DROP_PROCEDURE`: `DROP PROCEDURE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_procedure_statement)
+	// statement. * `DROP_SEARCH_INDEX`: `DROP SEARCH INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_search_index)
+	// statement. * `DROP_SCHEMA`: `DROP SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_schema_statement)
+	// statement. * `DROP_SNAPSHOT_TABLE`: `DROP SNAPSHOT TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_snapshot_table_statement)
+	// statement. * `DROP_ROW_ACCESS_POLICY`: [`DROP ALL] ROW ACCESS
+	// POLICY|POLICIES`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_row_access_policy_statement)
+	// statement. * `ALTER_TABLE`: `ALTER TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_table_set_options_statement)
+	// statement. * `ALTER_VIEW`: `ALTER VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_view_set_options_statement)
+	// statement. * `ALTER_MATERIALIZED_VIEW`: `ALTER MATERIALIZED VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_materialized_view_set_options_statement)
+	// statement. * `ALTER_SCHEMA`: `ALTER SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_schema_set_options_statement)
+	// statement. * `SCRIPT`: `SCRIPT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language).
+	// * `TRUNCATE_TABLE`: `TRUNCATE TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#truncate_table_statement)
+	// statement. * `CREATE_EXTERNAL_TABLE`: `CREATE EXTERNAL TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_external_table_statement)
+	// statement. * `EXPORT_DATA`: `EXPORT DATA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/other-statements#export_data_statement)
+	// statement. * `EXPORT_MODEL`: `EXPORT MODEL`
+	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-export-model)
+	// statement. * `LOAD_DATA`: `LOAD DATA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/other-statements#load_data_statement)
+	// statement. * `CALL`: `CALL`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#call)
+	// statement.
+	StatementType string `json:"statementType,omitempty"`
 	// TotalBytesBilled: Output only. If the project is configured to use on-demand
 	// pricing, then this field contains the total bytes billed for the job. If the
 	// project is configured to use flat-rate pricing, then you are not billed for
@@ -9095,17 +9182,26 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // SkewSource: Details about source stages which produce skewed data.
 type SkewSource struct {
+	// OutputBytesMax: Output only. Max partition output size (in bytes) for this
+	// stage.
+	OutputBytesMax int64 `json:"outputBytesMax,omitempty,string"`
+	// OutputBytesMedian: Output only. Median partition output size (in bytes) for
+	// this stage.
+	OutputBytesMedian int64 `json:"outputBytesMedian,omitempty,string"`
+	// OutputBytesP95: Output only. 95-th percentile of partition output size (in
+	// bytes) for this stage.
+	OutputBytesP95 int64 `json:"outputBytesP95,omitempty,string"`
 	// StageId: Output only. Stage id of the skew source stage.
 	StageId int64 `json:"stageId,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "StageId") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "OutputBytesMax") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "StageId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "OutputBytesMax") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10228,16 +10324,16 @@ type TableFieldSchema struct {
 	Collation string `json:"collation,omitempty"`
 	// DataGovernanceTagsInfo: Optional. Specifies the data governance tags on this
 	// field. This field works with other column-level security fields as follows:
-	// - Precedence: If a data governance tag is attached to a column, it takes
+	// * **Precedence**: If a data governance tag is attached to a column, it takes
 	// precedence over the policy tag attached to the column. However, if a data
 	// policy is attached to a column, it takes precedence over the data governance
-	// tag. - Patching behavior (how this field behaves during a `Table.patch`
-	// schema update): - Unset: If the `data_governance_tags_info` field is omitted
-	// from the update request, the existing tags on the column are preserved. -
-	// Empty Field: To clear data governance tags from a column, send the
-	// `data_governance_tags_info` field as an empty object. This will remove all
-	// tags from the column. - Updating tags: To replace existing tag, send the
-	// field with the new tag.
+	// tag. * **Patching behavior**: Describes how this field behaves during a
+	// `Table.patch` schema update: * **Unset**: If the `data_governance_tags_info`
+	// field is omitted from the update request, the existing tags on the column
+	// are preserved. * **Empty Field**: To clear data governance tags from a
+	// column, send the `data_governance_tags_info` field as an empty object. This
+	// removes all tags from the column. * **Updating tags**: To replace an
+	// existing tag, send the field with the new tag.
 	DataGovernanceTagsInfo *TableFieldSchemaDataGovernanceTagsInfo `json:"dataGovernanceTagsInfo,omitempty"`
 	// DataPolicies: Optional. Data policies attached to this field, used for
 	// field-level access control.
@@ -10372,27 +10468,28 @@ func (s TableFieldSchemaCategories) MarshalJSON() ([]byte, error) {
 
 // TableFieldSchemaDataGovernanceTagsInfo: Optional. Specifies the data
 // governance tags on this field. This field works with other column-level
-// security fields as follows: - Precedence: If a data governance tag is
+// security fields as follows: * **Precedence**: If a data governance tag is
 // attached to a column, it takes precedence over the policy tag attached to
 // the column. However, if a data policy is attached to a column, it takes
-// precedence over the data governance tag. - Patching behavior (how this field
-// behaves during a `Table.patch` schema update): - Unset: If the
-// `data_governance_tags_info` field is omitted from the update request, the
-// existing tags on the column are preserved. - Empty Field: To clear data
-// governance tags from a column, send the `data_governance_tags_info` field as
-// an empty object. This will remove all tags from the column. - Updating tags:
-// To replace existing tag, send the field with the new tag.
+// precedence over the data governance tag. * **Patching behavior**: Describes
+// how this field behaves during a `Table.patch` schema update: * **Unset**: If
+// the `data_governance_tags_info` field is omitted from the update request,
+// the existing tags on the column are preserved. * **Empty Field**: To clear
+// data governance tags from a column, send the `data_governance_tags_info`
+// field as an empty object. This removes all tags from the column. *
+// **Updating tags**: To replace an existing tag, send the field with the new
+// tag.
 type TableFieldSchemaDataGovernanceTagsInfo struct {
 	// DataGovernanceTags: Optional. The data governance tags added to this field
 	// are used for field-level access control. Only one data governance tag is
 	// currently supported on a field. Tag keys are globally unique. Tag key is
-	// expected to be in the namespaced format, for example "123456789012/pii"
-	// where 123456789012 is the ID of the parent organization or project resource
-	// for this tag key. Tag value is expected to be the short name, for example
+	// expected to be in the namespaced format, for example "parent-id/pii" where
+	// parent-id is the ID of the parent organization or project resource for this
+	// tag key. Tag value is expected to be the short name, for example
 	// "sensitive". See Tag definitions
 	// (https://cloud.google.com/iam/docs/tags-access-control#definitions) for more
-	// details. For example: "123456789012/pii": "sensitive",
-	// "myProject/cost_center": "sales"
+	// details. For example: "parent-id/pii": "sensitive", "myProject/cost_center":
+	// "sales"
 	DataGovernanceTags map[string]string `json:"dataGovernanceTags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataGovernanceTags") to
 	// unconditionally include in API requests. By default, fields with empty or

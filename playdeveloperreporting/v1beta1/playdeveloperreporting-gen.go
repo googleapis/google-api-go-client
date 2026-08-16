@@ -179,7 +179,9 @@ type AppsService struct {
 
 func NewVitalsService(s *Service) *VitalsService {
 	rs := &VitalsService{s: s}
+	rs.Anonrssandswapmemoryusage = NewVitalsAnonrssandswapmemoryusageService(s)
 	rs.Anrrate = NewVitalsAnrrateService(s)
+	rs.Bitmapmemoryusage = NewVitalsBitmapmemoryusageService(s)
 	rs.Crashrate = NewVitalsCrashrateService(s)
 	rs.Errors = NewVitalsErrorsService(s)
 	rs.Excessivewakeuprate = NewVitalsExcessivewakeuprateService(s)
@@ -193,7 +195,11 @@ func NewVitalsService(s *Service) *VitalsService {
 type VitalsService struct {
 	s *Service
 
+	Anonrssandswapmemoryusage *VitalsAnonrssandswapmemoryusageService
+
 	Anrrate *VitalsAnrrateService
+
+	Bitmapmemoryusage *VitalsBitmapmemoryusageService
 
 	Crashrate *VitalsCrashrateService
 
@@ -210,12 +216,30 @@ type VitalsService struct {
 	Stuckbackgroundwakelockrate *VitalsStuckbackgroundwakelockrateService
 }
 
+func NewVitalsAnonrssandswapmemoryusageService(s *Service) *VitalsAnonrssandswapmemoryusageService {
+	rs := &VitalsAnonrssandswapmemoryusageService{s: s}
+	return rs
+}
+
+type VitalsAnonrssandswapmemoryusageService struct {
+	s *Service
+}
+
 func NewVitalsAnrrateService(s *Service) *VitalsAnrrateService {
 	rs := &VitalsAnrrateService{s: s}
 	return rs
 }
 
 type VitalsAnrrateService struct {
+	s *Service
+}
+
+func NewVitalsBitmapmemoryusageService(s *Service) *VitalsBitmapmemoryusageService {
+	rs := &VitalsBitmapmemoryusageService{s: s}
+	return rs
+}
+
+type VitalsBitmapmemoryusageService struct {
 	s *Service
 }
 
@@ -428,6 +452,77 @@ func (s GooglePlayDeveloperReportingV1beta1Anomaly) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1beta1AnonRssAndSwapMemoryUsageMetricSet:
+// Singleton resource representing the set of Anon RSS and Swap Memory Usage
+// metrics. This metric set contains anon RSS and swap memory usage data
+// combined with usage data. **Supported aggregation periods:** * DAILY:
+// metrics are aggregated in calendar date intervals. Due to historical
+// constraints, the only supported timezone is `America/Los_Angeles`.
+// **Supported metrics:** * `anonRssAndSwapMemoryUsageP50`
+// (`google.type.Decimal`): 50th percentile of anon RSS and swap memory usage.
+// * `anonRssAndSwapMemoryUsageP75` (`google.type.Decimal`): 75th percentile of
+// anon RSS and swap memory usage. * `anonRssAndSwapMemoryUsageP90`
+// (`google.type.Decimal`): 90th percentile of anon RSS and swap memory usage.
+// * `anonRssAndSwapMemoryUsageP95` (`google.type.Decimal`): 95th percentile of
+// anon RSS and swap memory usage. * `anonRssAndSwapMemoryUsageP99`
+// (`google.type.Decimal`): 99th percentile of anon RSS and swap memory usage.
+// * `distinctUsers` (`google.type.Decimal`): Count of distinct users for which
+// memory metrics were reported during the aggregation period. **Supported
+// dimensions:** * `apiLevel` (string): the API level of Android that was
+// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+// the app that was running on the user's device. * `deviceModel` (string):
+// unique identifier of the user's device model. The form of the identifier is
+// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+// (string): unique identifier of the user's device brand, e.g., google. *
+// `deviceType` (string): the type (also known as form factor) of the user's
+// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+// user's device based on their IP address, represented as a 2-letter ISO-3166
+// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+// Make of the device's primary system-on-chip, e.g., Samsung. *
+// `deviceSocModel` (string): Model of the device's primary system-on-chip,
+// e.g., "Exynos 2100". * `deviceCpuMake` (string): Make of the device's CPU,
+// e.g., Qualcomm. * `deviceCpuModel` (string): Model of the device's CPU,
+// e.g., "Kryo 240". * `deviceGpuMake` (string): Make of the device's GPU,
+// e.g., ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+// Mali. * `deviceGpuVersion` (string): Version of the device's GPU, e.g.,
+// T750. * `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+// device, e.g., mdpi, hdpi. * `processName` (string): the name of the process
+// that was running, e.g., com.example.app. * `appState` (string): the state of
+// the app when memory was collected, e.g., FOREGROUND. **Required
+// permissions**: to access this resource, the calling user needs the _View app
+// information (read-only)_ permission for the app.
+type GooglePlayDeveloperReportingV1beta1AnonRssAndSwapMemoryUsageMetricSet struct {
+	// FreshnessInfo: Output only. * Summary about data freshness in this resource.
+	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
+	// Name: Identifier. * The resource name. Format:
+	// apps/{app}/anonRssAndSwapMemoryUsageMetricSet
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1AnonRssAndSwapMemoryUsageMetricSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1AnonRssAndSwapMemoryUsageMetricSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1beta1AnrRateMetricSet: Singleton resource
 // representing the set of ANR (Application not responding) metrics. This
 // metric set contains ANRs data combined with usage data to produce a
@@ -471,9 +566,9 @@ func (s GooglePlayDeveloperReportingV1beta1Anomaly) MarshalJSON() ([]byte, error
 // form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
-// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
-// etc.). * `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (e.g., 1024
+// for 1-1.5GB, 4096 for 4-6GB). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 // e.g., "Exynos 2100". Reference
@@ -571,6 +666,79 @@ func (s GooglePlayDeveloperReportingV1beta1AppVersion) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1beta1BitmapMemoryUsageMetricSet: Singleton
+// resource representing the set of Bitmap Memory Usage metrics. This metric
+// set contains bitmap memory usage data combined with usage data. **Supported
+// aggregation periods:** * DAILY: metrics are aggregated in calendar date
+// intervals. Due to historical constraints, the only supported timezone is
+// `America/Los_Angeles`. **Supported metrics:** * `bitmapMemoryUsageP50`
+// (`google.type.Decimal`): 50th percentile of bitmap memory usage. *
+// `bitmapMemoryUsageP75` (`google.type.Decimal`): 75th percentile of bitmap
+// memory usage. * `bitmapMemoryUsageP90` (`google.type.Decimal`): 90th
+// percentile of bitmap memory usage. * `bitmapMemoryUsageP95`
+// (`google.type.Decimal`): 95th percentile of bitmap memory usage. *
+// `bitmapMemoryUsageP99` (`google.type.Decimal`): 99th percentile of bitmap
+// memory usage. * `distinctUsers` (`google.type.Decimal`): Count of distinct
+// users for which memory metrics were reported during the aggregation period.
+// Care must be taken not to aggregate this count further, as it may result in
+// users being counted multiple times. The value is rounded to the nearest
+// multiple of 10, 100, 1,000 or 1,000,000, depending on the magnitude of the
+// value. **Supported dimensions:** * `apiLevel` (string): the API level of
+// Android that was running on the user's device, e.g., 26. * `versionCode`
+// (int64): version of the app that was running on the user's device. *
+// `deviceModel` (string): unique identifier of the user's device model. The
+// form of the identifier is 'deviceBrand/device', where deviceBrand
+// corresponds to Build.BRAND and device corresponds to Build.DEVICE, e.g.,
+// google/coral. * `deviceBrand` (string): unique identifier of the user's
+// device brand, e.g., google. * `deviceType` (string): the type (also known as
+// form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
+// the country or region of the user's device based on their IP address,
+// represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
+// etc.). * `deviceSocMake` (string): Make of the device's primary
+// system-on-chip, e.g., Samsung. * `deviceSocModel` (string): Model of the
+// device's primary system-on-chip, e.g., "Exynos 2100". * `deviceCpuMake`
+// (string): Make of the device's CPU, e.g., Qualcomm. * `deviceCpuModel`
+// (string): Model of the device's CPU, e.g., "Kryo 240". * `deviceGpuMake`
+// (string): Make of the device's GPU, e.g., ARM. * `deviceGpuModel` (string):
+// Model of the device's GPU, e.g., Mali. * `deviceGpuVersion` (string):
+// Version of the device's GPU, e.g., T750. * `deviceVulkanVersion` (string):
+// Vulkan version of the device, e.g., "4198400". * `deviceGlEsVersion`
+// (string): OpenGL ES version of the device, e.g., "196610". *
+// `deviceScreenSize` (string): Screen size of the device, e.g., NORMAL, LARGE.
+// * `deviceScreenDpi` (string): Screen density of the device, e.g., mdpi,
+// hdpi. * `processName` (string): the name of the process that was running,
+// e.g., com.example.app. * `appState` (string): the state of the app when
+// memory was collected, e.g., FOREGROUND. **Required permissions**: to access
+// this resource, the calling user needs the _View app information (read-only)_
+// permission for the app.
+type GooglePlayDeveloperReportingV1beta1BitmapMemoryUsageMetricSet struct {
+	// FreshnessInfo: Output only. Summary about data freshness in this resource.
+	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
+	// Name: Identifier. The resource name. Format:
+	// apps/{app}/bitmapMemoryUsageMetricSet
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "FreshnessInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FreshnessInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1BitmapMemoryUsageMetricSet) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1BitmapMemoryUsageMetricSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1beta1CrashRateMetricSet: Singleton resource
 // representing the set of crashrate metrics. This metric set contains crashes
 // data combined with usage data to produce a normalized metric independent of
@@ -617,9 +785,9 @@ func (s GooglePlayDeveloperReportingV1beta1AppVersion) MarshalJSON() ([]byte, er
 // form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
-// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
-// etc.). * `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (e.g., 1024
+// for 1-1.5GB, 4096 for 4-6GB). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 // e.g., "Exynos 2100". Reference
@@ -797,8 +965,9 @@ func (s GooglePlayDeveloperReportingV1beta1DimensionValue) MarshalJSON() ([]byte
 // device's form factor, e.g., PHONE. * `issueId` (string): the id an error was
 // assigned to. The value should correspond to the `{issue}` component of the
 // issue name. * `deviceRamBucket` (int64): RAM of the device, in MB, in
-// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the device's
-// primary system-on-chip, e.g., Samsung. Reference
+// buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). * `deviceSocMake`
+// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+// Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 // e.g., "Exynos 2100". Reference
@@ -1039,9 +1208,9 @@ func (s GooglePlayDeveloperReportingV1beta1ErrorReport) MarshalJSON() ([]byte, e
 // form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
-// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
-// etc.). * `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (e.g., 1024
+// for 1-1.5GB, 4096 for 4-6GB). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 // e.g., "Exynos 2100". Reference
@@ -1242,9 +1411,9 @@ func (s GooglePlayDeveloperReportingV1beta1ListAnomaliesResponse) MarshalJSON() 
 // user's device, e.g., PHONE. * `countryCode` (string): the country or region
 // of the user's device based on their IP address, represented as a 2-letter
 // ISO-3166 code (e.g. US for the United States). * `deviceRamBucket` (int64):
-// RAM of the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake`
-// (string): Make of the device's primary system-on-chip, e.g., Samsung.
-// Reference
+// RAM of the device, in MB, in buckets (e.g., 1024 for 1-1.5GB, 4096 for
+// 4-6GB). * `deviceSocMake` (string): Make of the device's primary
+// system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 // e.g., "Exynos 2100". Reference
@@ -1378,6 +1547,128 @@ func (s GooglePlayDeveloperReportingV1beta1OsVersion) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetReq
+// uest: Request message for QueryAnonRssAndSwapMemoryUsageMetricSet.
+type GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetRequest struct {
+	// Dimensions: Optional. * Dimensions to slice the data by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. *
+	// `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". * `deviceCpuMake` (string): Make of the device's CPU,
+	// e.g., Qualcomm. * `deviceCpuModel` (string): Model of the device's CPU,
+	// e.g., "Kryo 240". * `deviceGpuMake` (string): Make of the device's GPU,
+	// e.g., ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU, e.g.,
+	// T750. * `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi. * `processName` (string): the name of the process
+	// that was running, e.g., com.example.app. * `appState` (string): the state of
+	// the app when memory was collected, e.g., FOREGROUND.
+	Dimensions []string `json:"dimensions,omitempty"`
+	// Filter: Optional. * Filters to apply to data. The filtering expression
+	// follows AIP-160 (https://google.aip.dev/160) standard and supports filtering
+	// by equality of all breakdown dimensions.
+	Filter string `json:"filter,omitempty"`
+	// Metrics: Optional. * Metrics to aggregate. **Supported metrics:** *
+	// `anonRssAndSwapMemoryUsageP50` (`google.type.Decimal`): 50th percentile of
+	// anon RSS and swap memory usage. * `anonRssAndSwapMemoryUsageP75`
+	// (`google.type.Decimal`): 75th percentile of anon RSS and swap memory usage.
+	// * `anonRssAndSwapMemoryUsageP90` (`google.type.Decimal`): 90th percentile of
+	// anon RSS and swap memory usage. * `anonRssAndSwapMemoryUsageP95`
+	// (`google.type.Decimal`): 95th percentile of anon RSS and swap memory usage.
+	// * `anonRssAndSwapMemoryUsageP99` (`google.type.Decimal`): 99th percentile of
+	// anon RSS and swap memory usage. * `distinctUsers` (`google.type.Decimal`):
+	// Count of distinct users for which memory metrics were reported during the
+	// aggregation period. Care must be taken not to aggregate this count further,
+	// as it may result in users being counted multiple times. The value is rounded
+	// to the nearest multiple of 10, 100, 1,000 or 1,000,000, depending on the
+	// magnitude of the value.
+	Metrics []string `json:"metrics,omitempty"`
+	// PageSize: Optional. * Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100000; values above
+	// 100000 will be coerced to 100000.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. * A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
+	PageToken string `json:"pageToken,omitempty"`
+	// TimelineSpec: Optional. * Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// default and only supported timezone is `America/Los_Angeles`.
+	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
+	// UserCohort: Optional. * User view to select. The output data will correspond
+	// to the selected view. The only supported value is `OS_PUBLIC`.
+	//
+	// Possible values:
+	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
+	// automatically choose the default value.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
+	//   "OS_BETA" - This is the view with just android beta data excluding
+	// released OS version data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
+	UserCohort string `json:"userCohort,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetRes
+// ponse: Response message for QueryAnonRssAndSwapMemoryUsageMetricSet.
+type GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetResponse struct {
+	// NextPageToken: * Continuation token to fetch the next page of data.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rows: * Returned rows of data.
+	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest: Request
 // message for QueryAnrRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest struct {
@@ -1393,8 +1684,9 @@ type GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetRequest struct {
 	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter ISO-3166
 	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
-	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
+	// the device, in MB, in buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). *
+	// `deviceSocMake` (string): Make of the device's primary system-on-chip, e.g.,
+	// Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1523,6 +1815,127 @@ func (s GooglePlayDeveloperReportingV1beta1QueryAnrRateMetricSetResponse) Marsha
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetRequest:
+// Request message for QueryBitmapMemoryUsageMetricSet.
+type GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetRequest struct {
+	// Dimensions: Optional. Dimensions to slice the data by. **Supported
+	// dimensions:** * `apiLevel` (string): the API level of Android that was
+	// running on the user's device, e.g., 26. * `versionCode` (int64): version of
+	// the app that was running on the user's device. * `deviceModel` (string):
+	// unique identifier of the user's device model. The form of the identifier is
+	// 'deviceBrand/device', where deviceBrand corresponds to Build.BRAND and
+	// device corresponds to Build.DEVICE, e.g., google/coral. * `deviceBrand`
+	// (string): unique identifier of the user's device brand, e.g., google. *
+	// `deviceType` (string): the type (also known as form factor) of the user's
+	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
+	// user's device based on their IP address, represented as a 2-letter ISO-3166
+	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
+	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
+	// Make of the device's primary system-on-chip, e.g., Samsung. *
+	// `deviceSocModel` (string): Model of the device's primary system-on-chip,
+	// e.g., "Exynos 2100". * `deviceCpuMake` (string): Make of the device's CPU,
+	// e.g., Qualcomm. * `deviceCpuModel` (string): Model of the device's CPU,
+	// e.g., "Kryo 240". * `deviceGpuMake` (string): Make of the device's GPU,
+	// e.g., ARM. * `deviceGpuModel` (string): Model of the device's GPU, e.g.,
+	// Mali. * `deviceGpuVersion` (string): Version of the device's GPU, e.g.,
+	// T750. * `deviceVulkanVersion` (string): Vulkan version of the device, e.g.,
+	// "4198400". * `deviceGlEsVersion` (string): OpenGL ES version of the device,
+	// e.g., "196610". * `deviceScreenSize` (string): Screen size of the device,
+	// e.g., NORMAL, LARGE. * `deviceScreenDpi` (string): Screen density of the
+	// device, e.g., mdpi, hdpi. * `processName` (string): the name of the process
+	// that was running, e.g., com.example.app. * `appState` (string): the state of
+	// the app when memory was collected, e.g., FOREGROUND.
+	Dimensions []string `json:"dimensions,omitempty"`
+	// Filter: Optional. Filters to apply to data. The filtering expression follows
+	// AIP-160 (https://google.aip.dev/160) standard and supports filtering by
+	// equality of all breakdown dimensions.
+	Filter string `json:"filter,omitempty"`
+	// Metrics: Optional. Metrics to aggregate. **Supported metrics:** *
+	// `bitmapMemoryUsageP50` (`google.type.Decimal`): 50th percentile of bitmap
+	// memory usage. * `bitmapMemoryUsageP75` (`google.type.Decimal`): 75th
+	// percentile of bitmap memory usage. * `bitmapMemoryUsageP90`
+	// (`google.type.Decimal`): 90th percentile of bitmap memory usage. *
+	// `bitmapMemoryUsageP95` (`google.type.Decimal`): 95th percentile of bitmap
+	// memory usage. * `bitmapMemoryUsageP99` (`google.type.Decimal`): 99th
+	// percentile of bitmap memory usage. * `distinctUsers`
+	// (`google.type.Decimal`): Count of distinct users for which memory metrics
+	// were reported during the aggregation period. Care must be taken not to
+	// aggregate this count further, as it may result in users being counted
+	// multiple times. The value is rounded to the nearest multiple of 10, 100,
+	// 1,000 or 1,000,000, depending on the magnitude of the value.
+	Metrics []string `json:"metrics,omitempty"`
+	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
+	// most 1000 rows will be returned. The maximum value is 100000; values above
+	// 100000 will be coerced to 100000.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. A page token, received from a previous call. Provide
+	// this to retrieve the subsequent page. When paginating, all other parameters
+	// provided to the request must match the call that provided the page token.
+	PageToken string `json:"pageToken,omitempty"`
+	// TimelineSpec: Optional. Specification of the timeline aggregation
+	// parameters. **Supported aggregation periods:** * DAILY: metrics are
+	// aggregated in calendar date intervals. Due to historical constraints, the
+	// default and only supported timezone is `America/Los_Angeles`.
+	TimelineSpec *GooglePlayDeveloperReportingV1beta1TimelineSpec `json:"timelineSpec,omitempty"`
+	// UserCohort: Optional. User view to select. The output data will correspond
+	// to the selected view. The only supported value is `OS_PUBLIC`.
+	//
+	// Possible values:
+	//   "USER_COHORT_UNSPECIFIED" - Unspecified User cohort. This will
+	// automatically choose the default value.
+	//   "OS_PUBLIC" - This is default view. Contains data from public released
+	// android versions only.
+	//   "OS_BETA" - This is the view with just android beta data excluding
+	// released OS version data.
+	//   "APP_TESTERS" - This is the view with data only from users who have opted
+	// in to be testers for a given app, excluding OS beta data.
+	UserCohort string `json:"userCohort,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dimensions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetResponse:
+// Response message for QueryBitmapMemoryUsageMetricSet.
+type GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetResponse struct {
+	// NextPageToken: Continuation token to fetch the next page of data.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Rows: Returned rows of data.
+	Rows []*GooglePlayDeveloperReportingV1beta1MetricsRow `json:"rows,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest: Request
 // message for QueryCrashRateMetricSet.
 type GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest struct {
@@ -1538,8 +1951,9 @@ type GooglePlayDeveloperReportingV1beta1QueryCrashRateMetricSetRequest struct {
 	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter ISO-3166
 	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
-	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
+	// the device, in MB, in buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). *
+	// `deviceSocMake` (string): Make of the device's primary system-on-chip, e.g.,
+	// Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1686,8 +2100,9 @@ type GooglePlayDeveloperReportingV1beta1QueryErrorCountMetricSetRequest struct {
 	// of the possible values in ErrorType. * `issueId` (string): the id an error
 	// was assigned to. The value should correspond to the `{issue}` component of
 	// the issue name. * `deviceRamBucket` (int64): RAM of the device, in MB, in
-	// buckets (3GB, 4GB, etc.). * `deviceSocMake` (string): Make of the device's
-	// primary system-on-chip, e.g., Samsung. Reference
+	// buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). * `deviceSocMake`
+	// (string): Make of the device's primary system-on-chip, e.g., Samsung.
+	// Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1791,8 +2206,9 @@ type GooglePlayDeveloperReportingV1beta1QueryExcessiveWakeupRateMetricSetRequest
 	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter ISO-3166
 	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
-	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
+	// the device, in MB, in buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). *
+	// `deviceSocMake` (string): Make of the device's primary system-on-chip, e.g.,
+	// Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -1918,8 +2334,9 @@ type GooglePlayDeveloperReportingV1beta1QueryLmkRateMetricSetRequest struct {
 	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter ISO-3166
 	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
-	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
+	// the device, in MB, in buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). *
+	// `deviceSocMake` (string): Make of the device's primary system-on-chip, e.g.,
+	// Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -2186,8 +2603,9 @@ type GooglePlayDeveloperReportingV1beta1QuerySlowStartRateMetricSetRequest struc
 	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter ISO-3166
 	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
-	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
+	// the device, in MB, in buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). *
+	// `deviceSocMake` (string): Make of the device's primary system-on-chip, e.g.,
+	// Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -2310,8 +2728,9 @@ type GooglePlayDeveloperReportingV1beta1QueryStuckBackgroundWakelockRateMetricSe
 	// device, e.g., PHONE. * `countryCode` (string): the country or region of the
 	// user's device based on their IP address, represented as a 2-letter ISO-3166
 	// code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-	// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
-	// Make of the device's primary system-on-chip, e.g., Samsung. Reference
+	// the device, in MB, in buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). *
+	// `deviceSocMake` (string): Make of the device's primary system-on-chip, e.g.,
+	// Samsung. Reference
 	// (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 	// * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 	// e.g., "Exynos 2100". Reference
@@ -2679,9 +3098,9 @@ func (s GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet) MarshalJS
 // form factor) of the user's device, e.g., PHONE. * `countryCode` (string):
 // the country or region of the user's device based on their IP address,
 // represented as a 2-letter ISO-3166 code (e.g. US for the United States). *
-// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (3GB, 4GB,
-// etc.). * `deviceSocMake` (string): Make of the device's primary
-// system-on-chip, e.g., Samsung. Reference
+// `deviceRamBucket` (int64): RAM of the device, in MB, in buckets (e.g., 1024
+// for 1-1.5GB, 4096 for 4-6GB). * `deviceSocMake` (string): Make of the
+// device's primary system-on-chip, e.g., Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 // e.g., "Exynos 2100". Reference
@@ -2759,8 +3178,9 @@ func (s GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet) MarshalJSON()
 // device, e.g., PHONE. * `countryCode` (string): the country or region of the
 // user's device based on their IP address, represented as a 2-letter ISO-3166
 // code (e.g. US for the United States). * `deviceRamBucket` (int64): RAM of
-// the device, in MB, in buckets (3GB, 4GB, etc.). * `deviceSocMake` (string):
-// Make of the device's primary system-on-chip, e.g., Samsung. Reference
+// the device, in MB, in buckets (e.g., 1024 for 1-1.5GB, 4096 for 4-6GB). *
+// `deviceSocMake` (string): Make of the device's primary system-on-chip, e.g.,
+// Samsung. Reference
 // (https://developer.android.com/reference/android/os/Build#SOC_MANUFACTURER)
 // * `deviceSocModel` (string): Model of the device's primary system-on-chip,
 // e.g., "Exynos 2100". Reference
@@ -3459,6 +3879,245 @@ func (c *AppsSearchCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperR
 	}
 }
 
+type VitalsAnonrssandswapmemoryusageGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Describes the properties of the metric set.
+//
+//   - name: * The resource name. Format:
+//     apps/{app}/anonRssAndSwapMemoryUsageMetricSet.
+func (r *VitalsAnonrssandswapmemoryusageService) Get(name string) *VitalsAnonrssandswapmemoryusageGetCall {
+	c := &VitalsAnonrssandswapmemoryusageGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *VitalsAnonrssandswapmemoryusageGetCall) Fields(s ...googleapi.Field) *VitalsAnonrssandswapmemoryusageGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VitalsAnonrssandswapmemoryusageGetCall) IfNoneMatch(entityTag string) *VitalsAnonrssandswapmemoryusageGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *VitalsAnonrssandswapmemoryusageGetCall) Context(ctx context.Context) *VitalsAnonrssandswapmemoryusageGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *VitalsAnonrssandswapmemoryusageGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *VitalsAnonrssandswapmemoryusageGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.anonrssandswapmemoryusage.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.vitals.anonrssandswapmemoryusage.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1AnonRssAndSwapMemoryUsageMetricSet.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *VitalsAnonrssandswapmemoryusageGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1AnonRssAndSwapMemoryUsageMetricSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1beta1AnonRssAndSwapMemoryUsageMetricSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.anonrssandswapmemoryusage.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type VitalsAnonrssandswapmemoryusageQueryCall struct {
+	s                                                                                 *Service
+	name                                                                              string
+	googleplaydeveloperreportingv1beta1queryanonrssandswapmemoryusagemetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetRequest
+	urlParams_                                                                        gensupport.URLParams
+	ctx_                                                                              context.Context
+	header_                                                                           http.Header
+}
+
+// Query: Queries the metrics in the metric set.
+//
+//   - name: * The resource name. Format:
+//     apps/{app}/anonRssAndSwapMemoryUsageMetricSet.
+func (r *VitalsAnonrssandswapmemoryusageService) Query(name string, googleplaydeveloperreportingv1beta1queryanonrssandswapmemoryusagemetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetRequest) *VitalsAnonrssandswapmemoryusageQueryCall {
+	c := &VitalsAnonrssandswapmemoryusageQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleplaydeveloperreportingv1beta1queryanonrssandswapmemoryusagemetricsetrequest = googleplaydeveloperreportingv1beta1queryanonrssandswapmemoryusagemetricsetrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *VitalsAnonrssandswapmemoryusageQueryCall) Fields(s ...googleapi.Field) *VitalsAnonrssandswapmemoryusageQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *VitalsAnonrssandswapmemoryusageQueryCall) Context(ctx context.Context) *VitalsAnonrssandswapmemoryusageQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *VitalsAnonrssandswapmemoryusageQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *VitalsAnonrssandswapmemoryusageQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1queryanonrssandswapmemoryusagemetricsetrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.anonrssandswapmemoryusage.query", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.vitals.anonrssandswapmemoryusage.query" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetRe
+// sponse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *VitalsAnonrssandswapmemoryusageQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.anonrssandswapmemoryusage.query", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *VitalsAnonrssandswapmemoryusageQueryCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1QueryAnonRssAndSwapMemoryUsageMetricSetResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) {
+		c.googleplaydeveloperreportingv1beta1queryanonrssandswapmemoryusagemetricsetrequest.PageToken = pt
+	}(c.googleplaydeveloperreportingv1beta1queryanonrssandswapmemoryusagemetricsetrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleplaydeveloperreportingv1beta1queryanonrssandswapmemoryusagemetricsetrequest.PageToken = x.NextPageToken
+	}
+}
+
 type VitalsAnrrateGetCall struct {
 	s            *Service
 	name         string
@@ -3691,6 +4350,243 @@ func (c *VitalsAnrrateQueryCall) Pages(ctx context.Context, f func(*GooglePlayDe
 			return nil
 		}
 		c.googleplaydeveloperreportingv1beta1queryanrratemetricsetrequest.PageToken = x.NextPageToken
+	}
+}
+
+type VitalsBitmapmemoryusageGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Describes the properties of the metric set.
+//
+// - name: The resource name. Format: apps/{app}/bitmapMemoryUsageMetricSet.
+func (r *VitalsBitmapmemoryusageService) Get(name string) *VitalsBitmapmemoryusageGetCall {
+	c := &VitalsBitmapmemoryusageGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *VitalsBitmapmemoryusageGetCall) Fields(s ...googleapi.Field) *VitalsBitmapmemoryusageGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *VitalsBitmapmemoryusageGetCall) IfNoneMatch(entityTag string) *VitalsBitmapmemoryusageGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *VitalsBitmapmemoryusageGetCall) Context(ctx context.Context) *VitalsBitmapmemoryusageGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *VitalsBitmapmemoryusageGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *VitalsBitmapmemoryusageGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.bitmapmemoryusage.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.vitals.bitmapmemoryusage.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1BitmapMemoryUsageMetricSet.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *VitalsBitmapmemoryusageGetCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1BitmapMemoryUsageMetricSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1beta1BitmapMemoryUsageMetricSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.bitmapmemoryusage.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type VitalsBitmapmemoryusageQueryCall struct {
+	s                                                                         *Service
+	name                                                                      string
+	googleplaydeveloperreportingv1beta1querybitmapmemoryusagemetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetRequest
+	urlParams_                                                                gensupport.URLParams
+	ctx_                                                                      context.Context
+	header_                                                                   http.Header
+}
+
+// Query: Queries the metrics in the metric set.
+//
+// - name: The resource name. Format: apps/{app}/bitmapMemoryUsageMetricSet.
+func (r *VitalsBitmapmemoryusageService) Query(name string, googleplaydeveloperreportingv1beta1querybitmapmemoryusagemetricsetrequest *GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetRequest) *VitalsBitmapmemoryusageQueryCall {
+	c := &VitalsBitmapmemoryusageQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleplaydeveloperreportingv1beta1querybitmapmemoryusagemetricsetrequest = googleplaydeveloperreportingv1beta1querybitmapmemoryusagemetricsetrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *VitalsBitmapmemoryusageQueryCall) Fields(s ...googleapi.Field) *VitalsBitmapmemoryusageQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *VitalsBitmapmemoryusageQueryCall) Context(ctx context.Context) *VitalsBitmapmemoryusageQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *VitalsBitmapmemoryusageQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *VitalsBitmapmemoryusageQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleplaydeveloperreportingv1beta1querybitmapmemoryusagemetricsetrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:query")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.bitmapmemoryusage.query", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "playdeveloperreporting.vitals.bitmapmemoryusage.query" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetResponse.S
+// erverResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *VitalsBitmapmemoryusageQueryCall) Do(opts ...googleapi.CallOption) (*GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "playdeveloperreporting.vitals.bitmapmemoryusage.query", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *VitalsBitmapmemoryusageQueryCall) Pages(ctx context.Context, f func(*GooglePlayDeveloperReportingV1beta1QueryBitmapMemoryUsageMetricSetResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) {
+		c.googleplaydeveloperreportingv1beta1querybitmapmemoryusagemetricsetrequest.PageToken = pt
+	}(c.googleplaydeveloperreportingv1beta1querybitmapmemoryusagemetricsetrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googleplaydeveloperreportingv1beta1querybitmapmemoryusagemetricsetrequest.PageToken = x.NextPageToken
 	}
 }
 

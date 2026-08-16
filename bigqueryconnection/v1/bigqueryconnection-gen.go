@@ -679,13 +679,15 @@ type ConnectorConfiguration struct {
 	// Network: Networking configuration.
 	Network *ConnectorConfigurationNetwork `json:"network,omitempty"`
 	// Parameters: Optional. A map of name-value pairs for connector-specific
-	// parameters. Extra configuration parameters, that are not standardized in
-	// configuration sections. To update a single parameter value call
+	// parameters. These extra configuration parameters aren't standardized in the
+	// configuration sections. To update a single parameter value, call
 	// ConnectionService.UpdateConnection with `update_mask` set to
-	// `configuration.parameters.parameter_id`. If parameter id does not fit
-	// `[a-zA-Z0-9_]+` pattern, it should be escaped with backticks - for example
-	// ``configuration.parameters.`parameter id` ``.
+	// `configuration.parameters.parameter_id`. If ``parameter_id`` doesn't fit the
+	// `[a-zA-Z0-9_]+` pattern, ``parameter_id`` should be escaped with
+	// backticks—for example, ``configuration.parameters.`parameter id` ``.
 	Parameters map[string]ConnectorConfigurationParameterValue `json:"parameters,omitempty"`
+	// Tls: Optional. TLS configuration options.
+	Tls *ConnectorConfigurationTls `json:"tls,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -734,13 +736,13 @@ func (s ConnectorConfigurationAsset) MarshalJSON() ([]byte, error) {
 
 // ConnectorConfigurationAuthentication: Client authentication.
 type ConnectorConfigurationAuthentication struct {
-	// Parameters: Optional. A map of name-value pairs for authentication-specific
-	// parameters. Extra configuration parameters, that are not standardized in
-	// authentication. To update a single parameter value call
+	// Parameters: Optional. A map of name-value pairs for connector-specific
+	// parameters. These extra configuration parameters aren't standardized in the
+	// configuration sections. To update a single parameter value, call
 	// ConnectionService.UpdateConnection with `update_mask` set to
-	// `configuration.authentication.parameters.parameter_id`. If parameter id does
-	// not fit `[a-zA-Z0-9_]+` pattern, it should be escaped with backticks - for
-	// example ``configuration.authentication.parameters.`parameter id` ``.
+	// `configuration.parameters.parameter_id`. If ``parameter_id`` doesn't fit the
+	// `[a-zA-Z0-9_]+` pattern, ``parameter_id`` should be escaped with
+	// backticks—for example, ``configuration.parameters.`parameter id` ``.
 	Parameters map[string]ConnectorConfigurationParameterValue `json:"parameters,omitempty"`
 	// ServiceAccount: Output only. Google-managed service account associated with
 	// this connection, e.g.,
@@ -911,6 +913,69 @@ type ConnectorConfigurationSecret struct {
 func (s ConnectorConfigurationSecret) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationSecret
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationTls: TLS configuration options.
+type ConnectorConfigurationTls struct {
+	// Mode: Optional. The mode of TLS configuration.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - TLS mode unspecified.
+	//   "DISABLE" - TLS is disabled.
+	//   "ENCRYPT_VERIFY_NONE" - Encryption is enabled, but server certificate is
+	// not verified.
+	//   "ENCRYPT_VERIFY_CA" - Encryption is enabled, and server certificate is
+	// verified.
+	//   "ENCRYPT_VERIFY_CA_AND_HOST" - Encryption is enabled, and server
+	// certificate and host are verified.
+	Mode string `json:"mode,omitempty"`
+	// PrivatePki: Optional. Private PKI.
+	PrivatePki *ConnectorConfigurationTlsPrivatePki `json:"privatePki,omitempty"`
+	// WebPki: Optional. Web PKI.
+	WebPki *ConnectorConfigurationTlsWebPki `json:"webPki,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectorConfigurationTls) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationTls
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationTlsPrivatePki: Private PKI.
+type ConnectorConfigurationTlsPrivatePki struct {
+	// TrustedCertificatesPem: Optional. a PEM-encoded list of certificates to
+	// trust
+	TrustedCertificatesPem string `json:"trustedCertificatesPem,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TrustedCertificatesPem") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TrustedCertificatesPem") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectorConfigurationTlsPrivatePki) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationTlsPrivatePki
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationTlsWebPki: Web PKI.
+type ConnectorConfigurationTlsWebPki struct {
 }
 
 // ConnectorConfigurationUsernamePassword: Username and Password

@@ -1688,6 +1688,7 @@ func (s GoogleCloudDialogflowCxV3FormParameterFillBehavior) MarshalJSON() ([]byt
 
 type GoogleCloudDialogflowCxV3Fulfillment struct {
 	AdvancedSettings         *GoogleCloudDialogflowCxV3AdvancedSettings                `json:"advancedSettings,omitempty"`
+	CodeBlockFunction        string                                                    `json:"codeBlockFunction,omitempty"`
 	ConditionalCases         []*GoogleCloudDialogflowCxV3FulfillmentConditionalCases   `json:"conditionalCases,omitempty"`
 	EnableGenerativeFallback bool                                                      `json:"enableGenerativeFallback,omitempty"`
 	Generators               []*GoogleCloudDialogflowCxV3FulfillmentGeneratorSettings  `json:"generators,omitempty"`
@@ -4035,6 +4036,7 @@ func (s GoogleCloudDialogflowCxV3beta1FormParameterFillBehavior) MarshalJSON() (
 
 type GoogleCloudDialogflowCxV3beta1Fulfillment struct {
 	AdvancedSettings         *GoogleCloudDialogflowCxV3beta1AdvancedSettings                `json:"advancedSettings,omitempty"`
+	CodeBlockFunction        string                                                         `json:"codeBlockFunction,omitempty"`
 	ConditionalCases         []*GoogleCloudDialogflowCxV3beta1FulfillmentConditionalCases   `json:"conditionalCases,omitempty"`
 	EnableGenerativeFallback bool                                                           `json:"enableGenerativeFallback,omitempty"`
 	Generators               []*GoogleCloudDialogflowCxV3beta1FulfillmentGeneratorSettings  `json:"generators,omitempty"`
@@ -10565,9 +10567,13 @@ func (s GoogleCloudDialogflowV2KnowledgeAssistDebugInfoKnowledgeAssistBehavior) 
 }
 
 type GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo struct {
-	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
-	PromptTokenCount     int64 `json:"promptTokenCount,omitempty"`
-	TotalTokenCount      int64 `json:"totalTokenCount,omitempty"`
+	CandidatesTokenCount           int64   `json:"candidatesTokenCount,omitempty"`
+	PromptTokenCount               int64   `json:"promptTokenCount,omitempty"`
+	SimilarityToLastQuery          float64 `json:"similarityToLastQuery,omitempty"`
+	SimilarityToLastQueryThreshold float64 `json:"similarityToLastQueryThreshold,omitempty"`
+	ThinkingBudgetTokens           int64   `json:"thinkingBudgetTokens,omitempty"`
+	ThinkingLevel                  string  `json:"thinkingLevel,omitempty"`
+	TotalTokenCount                int64   `json:"totalTokenCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CandidatesTokenCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10584,6 +10590,22 @@ type GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo str
 func (s GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2KnowledgeAssistDebugInfoQueryGenerationDebugInfo
+	var s1 struct {
+		SimilarityToLastQuery          gensupport.JSONFloat64 `json:"similarityToLastQuery"`
+		SimilarityToLastQueryThreshold gensupport.JSONFloat64 `json:"similarityToLastQueryThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SimilarityToLastQuery = float64(s1.SimilarityToLastQuery)
+	s.SimilarityToLastQueryThreshold = float64(s1.SimilarityToLastQueryThreshold)
+	return nil
 }
 
 type GoogleCloudDialogflowV2KnowledgeBase struct {
@@ -16535,9 +16557,13 @@ func (s GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoKnowledgeAssistBehav
 }
 
 type GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo struct {
-	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty"`
-	PromptTokenCount     int64 `json:"promptTokenCount,omitempty"`
-	TotalTokenCount      int64 `json:"totalTokenCount,omitempty"`
+	CandidatesTokenCount           int64   `json:"candidatesTokenCount,omitempty"`
+	PromptTokenCount               int64   `json:"promptTokenCount,omitempty"`
+	SimilarityToLastQuery          float64 `json:"similarityToLastQuery,omitempty"`
+	SimilarityToLastQueryThreshold float64 `json:"similarityToLastQueryThreshold,omitempty"`
+	ThinkingBudgetTokens           int64   `json:"thinkingBudgetTokens,omitempty"`
+	ThinkingLevel                  string  `json:"thinkingLevel,omitempty"`
+	TotalTokenCount                int64   `json:"totalTokenCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CandidatesTokenCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -16554,6 +16580,22 @@ type GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInf
 func (s GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDialogflowV2beta1KnowledgeAssistDebugInfoQueryGenerationDebugInfo
+	var s1 struct {
+		SimilarityToLastQuery          gensupport.JSONFloat64 `json:"similarityToLastQuery"`
+		SimilarityToLastQueryThreshold gensupport.JSONFloat64 `json:"similarityToLastQueryThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SimilarityToLastQuery = float64(s1.SimilarityToLastQuery)
+	s.SimilarityToLastQueryThreshold = float64(s1.SimilarityToLastQueryThreshold)
+	return nil
 }
 
 type GoogleCloudDialogflowV2beta1KnowledgeOperationMetadata struct {

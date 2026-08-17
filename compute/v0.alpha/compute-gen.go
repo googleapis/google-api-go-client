@@ -3310,6 +3310,12 @@ type Address struct {
 	NetworkTier string `json:"networkTier,omitempty"`
 	// PrefixLength: The prefix length if the resource represents an IP range.
 	PrefixLength int64 `json:"prefixLength,omitempty"`
+	// PtrDomainName: The public DNS PTR record to be configured for this
+	// external
+	// IP.
+	PtrDomainName string `json:"ptrDomainName,omitempty"`
+	// PtrDomainNameTtl: The TTL in seconds for public DNS PTR record.
+	PtrDomainNameTtl int64 `json:"ptrDomainNameTtl,omitempty"`
 	// Purpose: The purpose of this resource, which can be one of the following
 	// values:
 	//
@@ -6557,8 +6563,9 @@ type Backend struct {
 	// see
 	// Connection balancing mode.
 	//
-	// Backends must use compatible balancing modes. For more information,
-	// see
+	// Backends must use compatible balancing modes. Backends of a backend
+	// service may use different balancing modes. For more information, see
+	//
 	// Supported balancing modes and target capacity settings and
 	// Restrictions and guidance for instance groups.
 	//
@@ -6606,6 +6613,9 @@ type Backend struct {
 	// Failover: This field designates whether this is a failover backend. More
 	// than one
 	// failover backend can be configured for a given BackendService.
+	//
+	// This field can only be used for a regional external Passthrough Network
+	// Load Balancer or a regional internal Passthrough Network Load Balancer.
 	Failover bool `json:"failover,omitempty"`
 	// Group: The fully-qualified URL of aninstance
 	// group or network endpoint
@@ -6704,6 +6714,16 @@ type Backend struct {
 	//    capacity, backends in this layer would be used and traffic would be
 	//    assigned based on the load balancing algorithm you use. This is the
 	//    default
+	//
+	//
+	//
+	// For global external Passthrough Network Load Balancers, the
+	// following
+	// restrictions apply:
+	//
+	//    - At most one backend can be marked as PREFERRED.
+	//    - PREFERRED and DEFAULT backends cannot reside
+	//    in the same Cloud region.
 	//
 	// Possible values:
 	//   "DEFAULT" - No preference.
@@ -7094,18 +7114,18 @@ type BackendBucketCdnPolicy struct {
 	CacheKeyPolicy *BackendBucketCdnPolicyCacheKeyPolicy `json:"cacheKeyPolicy,omitempty"`
 	// CacheMode: Specifies the cache setting for all responses from this
 	// backend.
-	// The possible values are:USE_ORIGIN_HEADERS Requires the origin to set valid
-	// caching
+	// The possible values are:
+	// USE_ORIGIN_HEADERS Requires the origin to set valid caching
 	// headers to cache content. Responses without these headers will not be
 	// cached at Google's edge, and will require a full trip to the origin on
 	// every request, potentially impacting performance and increasing load on
-	// the origin server.FORCE_CACHE_ALL Cache all content, ignoring any
-	// "private",
+	// the origin server.
+	// FORCE_CACHE_ALL Cache all content, ignoring any "private",
 	// "no-store" or "no-cache" directives in Cache-Control response
 	// headers.
 	// Warning: this may result in Cloud CDN caching private,
-	// per-user (user identifiable) content.CACHE_ALL_STATIC Automatically cache
-	// static content,
+	// per-user (user identifiable) content.
+	// CACHE_ALL_STATIC Automatically cache static content,
 	// including common image formats, media (video and audio), and web
 	// assets
 	// (JavaScript and CSS). Requests and responses that are marked as
@@ -8177,8 +8197,9 @@ type BackendService struct {
 	// and external passthrough Network Load
 	// Balancers
 	// (https://cloud.google.com/load-balancing/docs/network/networklb-failover-overview).
-	//
-	// failoverPolicy cannot be specified with haPolicy.
+	// failoverPolicy cannot be specified with haPolicy.failoverPolicy cannot be
+	// used by global external Passthrough
+	// Network Load Balancers.
 	FailoverPolicy *BackendServiceFailoverPolicy `json:"failoverPolicy,omitempty"`
 	// Fingerprint: Fingerprint of this resource. A hash of the contents stored in
 	// this object.
@@ -8226,10 +8247,11 @@ type BackendService struct {
 	// endpoint health and electing a leader among the healthy
 	// endpoints.
 	// Therefore, haPolicy cannot be specified with healthChecks.
-	//
-	// haPolicy can only be specified for External Passthrough Network
-	// Load
-	// Balancers and Internal Passthrough Network Load Balancers.
+	// haPolicy can only be specified for External Passthrough
+	// Network Load Balancers and Internal Passthrough Network Load
+	// Balancers.haPolicy cannot be used by global external Passthrough
+	// Network
+	// Load Balancers.
 	HaPolicy *BackendServiceHAPolicy `json:"haPolicy,omitempty"`
 	// HealthChecks: The list of URLs to the healthChecks, httpHealthChecks
 	// (legacy), or
@@ -8316,8 +8338,8 @@ type BackendService struct {
 	// LoadBalancingScheme: Specifies the load balancer type. A backend
 	// service
 	// created for one type of load balancer cannot be used with another.
-	// For more information, refer toChoosing
-	// a load balancer.
+	// For more information, refer to
+	// Backend services product and scheme table.
 	//
 	// Possible values:
 	//   "EXTERNAL" - Signifies that this will be used for classic Application Load
@@ -8392,29 +8414,43 @@ type BackendService struct {
 	//    HTTP response header field Endpoint-Load-Metrics. The reported
 	//    metrics to use for computing the weights are specified via
 	// thecustomMetrics field.
+	//    - WEIGHTED_MAGLEV: Per-endpoint weighted load balancing via
+	//    health check reported weights. If set, the backend service must
+	// configure
+	//    an HTTP-based Health Check, and health check replies are expected to
+	//    contain the non-standard HTTP response header
+	// fieldX-Load-Balancing-Endpoint-Weight to specify the per-endpoint
+	//    weights. If set, load balancing is weighted based on the per-endpoint
+	//    weights reported in the last processed health check replies, as long as
+	//    every instance either reported a valid weight or had UNAVAILABLE_WEIGHT.
+	//    Otherwise, load balancing remains equal-weight.
 	//
-	//    This field is applicable to either:
-	//       - A regional backend service with the service protocol set to HTTP,
-	//       HTTPS, HTTP2 or H2C, and load_balancing_scheme set to
-	//       INTERNAL_MANAGED.
-	//       - A global backend service with the
-	//       load_balancing_scheme set to INTERNAL_SELF_MANAGED, INTERNAL_MANAGED,
-	// or
-	//       EXTERNAL_MANAGED.
 	//
 	//
-	//    If sessionAffinity is not configured—that is, if session
-	//    affinity remains at the default value of NONE—then the
-	//    default value for localityLbPolicy
-	//    is ROUND_ROBIN. If session affinity is set to a value other
-	//    than NONE,
-	//    then the default value for localityLbPolicy isMAGLEV.
+	// This field is applicable to either:
 	//
-	//    Only ROUND_ROBIN and RING_HASH are supported
-	//    when the backend service is referenced by a URL map that is bound to
-	//    target gRPC proxy that has validateForProxyless field set to true.
+	//    - A regional backend service with the service protocol set to HTTP,
+	//    HTTPS, HTTP2 or H2C, and load_balancing_scheme set to
+	//    INTERNAL_MANAGED.
+	//    - A global backend service with the
+	//    load_balancing_scheme set to INTERNAL_SELF_MANAGED, INTERNAL_MANAGED, or
+	//    EXTERNAL_MANAGED.
 	//
-	//    localityLbPolicy cannot be specified with haPolicy.
+	//
+	//
+	// If sessionAffinity is not configured—that is, if session
+	// affinity remains at the default value of NONE—then the
+	// default value for localityLbPolicy
+	// is ROUND_ROBIN. If session affinity is set to a value other
+	// than NONE,
+	// then the default value for localityLbPolicy isMAGLEV.
+	//
+	// Only ROUND_ROBIN and RING_HASH are supported
+	// when the backend service is referenced by a URL map that is bound to
+	// target gRPC proxy that has validateForProxyless field set to
+	// true.
+	//
+	// localityLbPolicy cannot be specified with haPolicy.
 	//
 	// Possible values:
 	//   "INVALID_LB_POLICY"
@@ -8604,16 +8640,16 @@ type BackendService struct {
 	// Load
 	// Balancers, omit port_name.
 	PortName string `json:"portName,omitempty"`
-	// Protocol: The protocol this BackendService uses to communicate
-	// with backends.
+	// Protocol: The protocol this BackendService uses to communicate with
+	// backends.
 	//
-	// Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP or
-	// GRPC.
-	// depending on the chosen load balancer or Traffic Director
-	// configuration.
-	// Refer to the documentation for the load balancers or for Traffic
+	// Possible values are HTTP, HTTPS, HTTP2, H2C, TCP, SSL, UDP, GRPC,
+	// or
+	// UNSPECIFIED, depending on the chosen load balancer or Traffic
 	// Director
-	// for more information.
+	// configuration.
+	// Refer to
+	// Load balancing features for more information.
 	//
 	// Must be set to GRPC when the backend service is referenced by a URL map
 	// that is bound to target gRPC proxy.
@@ -8990,18 +9026,18 @@ type BackendServiceCdnPolicy struct {
 	CacheKeyPolicy *CacheKeyPolicy `json:"cacheKeyPolicy,omitempty"`
 	// CacheMode: Specifies the cache setting for all responses from this
 	// backend.
-	// The possible values are:USE_ORIGIN_HEADERS Requires the origin to set valid
-	// caching
+	// The possible values are:
+	// USE_ORIGIN_HEADERS Requires the origin to set valid caching
 	// headers to cache content. Responses without these headers will not be
 	// cached at Google's edge, and will require a full trip to the origin on
 	// every request, potentially impacting performance and increasing load on
-	// the origin server.FORCE_CACHE_ALL Cache all content, ignoring any
-	// "private",
+	// the origin server.
+	// FORCE_CACHE_ALL Cache all content, ignoring any "private",
 	// "no-store" or "no-cache" directives in Cache-Control response
 	// headers.
 	// Warning: this may result in Cloud CDN caching private,
-	// per-user (user identifiable) content.CACHE_ALL_STATIC Automatically cache
-	// static content,
+	// per-user (user identifiable) content.
+	// CACHE_ALL_STATIC Automatically cache static content,
 	// including common image formats, media (video and audio), and web
 	// assets
 	// (JavaScript and CSS). Requests and responses that are marked as
@@ -12540,11 +12576,10 @@ func (s CapacityAdviceRequestInstanceFlexibilityPolicyInstanceSelection) Marshal
 // Attached disk configuration.
 type CapacityAdviceRequestInstanceFlexibilityPolicyInstanceSelectionAttachedDisk struct {
 	// Type: Specifies the type of the disk.
-	// This field must be set to SCRATCH.
 	//
 	// Possible values:
-	//   "DISK_TYPE_UNSPECIFIED"
-	//   "SCRATCH"
+	//   "DISK_TYPE_UNSPECIFIED" - Default value, unspecified disk type.
+	//   "SCRATCH" - Scratch disk (Local SSD).
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -13416,6 +13451,7 @@ type Commitment struct {
 	//   "NETWORK_OPTIMIZED_U4S" - CUD bucket for NETWORK_OPTIMIZED_U4S machines.
 	//   "STORAGE_OPTIMIZED_Z3"
 	//   "STORAGE_OPTIMIZED_Z4D" - CUD bucket for Z4D machines.
+	//   "STORAGE_OPTIMIZED_Z4M" - CUD bucket for Z4M (bare metal) machines.
 	//   "TYPE_UNSPECIFIED" - Note for internal users: When adding a new enum Type
 	// for v1, make sure
 	// to also add it in the comment for the `optional Type type` definition.
@@ -21392,6 +21428,9 @@ type ForwardingRule struct {
 	//
 	//
 	//
+	// The IP address can only be set at creation. Once set, it cannot be
+	// updated.
+	//
 	// The forwarding rule's target or backendService,
 	// and in most cases, also the loadBalancingScheme, determine the
 	// type of IP address that you can use. For detailed information, see
@@ -21401,7 +21440,86 @@ type ForwardingRule struct {
 	//
 	// When reading an IPAddress, the API always returns the IP
 	// address number.
-	IPAddress   string   `json:"IPAddress,omitempty"`
+	//
+	// When creating a global external Passthrough Network Load Balancer
+	// forwarding rule (a parent forwarding rule), you must use theIPAddresses
+	// field, but the Google Cloud generated child
+	// forwarding rules set the IPAddress field instead. Refer to
+	// theavailabilityGroup field for further details.
+	IPAddress string `json:"IPAddress,omitempty"`
+	// IPAddresses: IP addresses for which this forwarding rule accepts traffic.
+	// All IP
+	// addresses must have the same IP version, IPv4 or IPv6. When a client
+	// sends
+	// traffic that matches one of the specified IP addresses, protocol and
+	// ports,
+	// the forwarding rule directs the traffic to the referencedbackendService. All
+	// IP addresses are served by the same set of
+	// backends, and they share the target capacities specified in the
+	// backend
+	// service fairly.
+	//
+	// Global external Passthrough Network Load Balancer requires two IP
+	// addresses
+	// for each forwarding rule to provide high availability when both IP
+	// addresses are used to serve client requests. The two IP addresses must
+	// come
+	// from global IP pools that belong to two distinct Availability
+	// Groups, represented by the
+	// purposePASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0
+	// andPASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1. TheIPAddresses field
+	// specifies zero, one, or two IP addresses:
+	//
+	//    - If omitted, Google Cloud assigns two ephemeral IP addresses, one from
+	//    each Availability Group.
+	//    - If you specify one IP address that references an existing static IP
+	//    address resource from one Availability Group, Google Cloud assigns an
+	//    ephemeral IP address from the other Availability Group.
+	//    - If you specify two IP addresses that reference existing static IP
+	//    address resources, they are required to be from different Availability
+	//    Groups.
+	//
+	//
+	//
+	// For global external Passthrough Network Load Balancer, each IP address can
+	// be one of the following:
+	//
+	//    - A static or ephemeral IPv4 address from a Google-owned IP pool.
+	//    - A static IPv4 address from a global public delegated prefix.
+	//    - A static or ephemeral IPv6 /96 prefix from a Google-owned IP
+	// pool.
+	//
+	//
+	//
+	// For global external Passthrough Network Load Balancer, the two IP
+	// addresses
+	// can be of different types. One IP address can be from a BYOIP prefix
+	// while
+	// the other is from a Google-owned IP pool. One IP address can be static
+	// while the other is ephemeral. However, both IP addresses must have the
+	// same
+	// IP version, IPv4 or IPv6.
+	//
+	// The IP addresses can only be set at creation and cannot be updated.
+	//
+	// When creating a global external Passthrough Network Load Balancer
+	// forwarding rule (a parent forwarding rule), you must use theIPAddresses
+	// field, but the Google Cloud-generated child
+	// forwarding rules set the IPAddress field instead. Refer to
+	// theavailabilityGroup field for further details.
+	//
+	// Refer to the IPAddress field for the formats that can be used
+	// to specify IP addresses while creating a forwarding rule.
+	//
+	// Because Passthrough Network Load Balancers do not terminate or
+	// translate
+	// traffic, the backend stack types must be compatible with the forwarding
+	// rule IP version:
+	//
+	//    - If the forwarding rule IP version is IPv4, backends should be
+	//    configured as dual-stack or IPv4-only.
+	//    - If the forwarding rule IP version is IPv6, backends should be
+	//    configured as dual-stack or IPv6-only.
 	IPAddresses []string `json:"IPAddresses,omitempty"`
 	// IPProtocol: The IP protocol to which this rule applies.
 	//
@@ -21463,13 +21581,40 @@ type ForwardingRule struct {
 	// AttachedExtensions: Output only. [Output Only]. The extensions that are
 	// attached to this ForwardingRule.
 	AttachedExtensions []*ForwardingRuleAttachedExtension `json:"attachedExtensions,omitempty"`
-	// AvailabilityGroup: [Output Only] Specifies the availability group of the
-	// forwarding rule. This
+	// AvailabilityGroup: Output only. [Output Only] Specifies the load balancing
+	// availability group, one of the
+	// two that collectively provide high availability.
+	//
+	// Specifies the availability group of the forwarding rule. This
 	// field is for use by global external passthrough load balancers
 	// (load
-	// balancing scheme EXTERNAL_PASSTHROUGH) and is set for the child
-	// forwarding
-	// rules only.
+	// balancing scheme EXTERNAL_PASSTHROUGH) and is set for the
+	// child forwarding rules only. The possible values are:
+	//
+	//    - AVAILABILITY_GROUP0: Set for the child forwarding rule
+	//    that is programmed on the AVAILABILITY_GROUP0 load balancing
+	//    stack. The child forwarding rule has the same IP protocol, port, and
+	//    backend service settings as the parent forwarding rule, but has only one
+	// of
+	//    the two IP addresses of the parent forwarding rule, the one with the
+	//    purpose PASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP0.
+	//    - AVAILABILITY_GROUP1: Set for the child forwarding rule
+	//    that is programmed on the AVAILABILITY_GROUP1 load balancing
+	//    stack. The child forwarding rule has the same IP protocol, port and
+	// backend
+	//    service settings as the parent forwarding rule, but has only one of the
+	// two
+	//    IP addresses of the parent forwarding rule, the one with the
+	// purposePASSTHROUGH_LOAD_BALANCER_AVAILABILITY_GROUP1.
+	//
+	//
+	//
+	// For each global external Passthrough Network Load Balancer forwarding
+	// rule
+	// (a parent forwarding rule) that you create, Google Cloud generates
+	// two
+	// output-only child forwarding rules, one forAVAILABILITY_GROUP0 and one
+	// forAVAILABILITY_GROUP1.
 	//
 	// Possible values:
 	//   "AVAILABILITY_GROUP0"
@@ -21478,8 +21623,18 @@ type ForwardingRule struct {
 	AvailabilityGroup string `json:"availabilityGroup,omitempty"`
 	// BackendService: Identifies the backend service to which the forwarding rule
 	// sends traffic.
-	// Required for internal and external passthrough Network Load Balancers;
-	// must be omitted for all other load balancer types.
+	//
+	// It is a required field for the following load balancers:
+	//
+	//    - Internal passthrough Network Load Balancers
+	//    - Backend service-based regional external passthrough Network Load
+	//    Balancers
+	//    - Global external passthrough Network Load Balancers
+	//
+	//
+	//
+	// It cannot be set by other load balancer types and protocol forwarding
+	// rules.
 	BackendService string `json:"backendService,omitempty"`
 	// BaseForwardingRule: Output only. [Output Only] The URL for the corresponding
 	// base forwarding rule. By base
@@ -21492,15 +21647,19 @@ type ForwardingRule struct {
 	// sourceIPRanges
 	// specified.
 	BaseForwardingRule string `json:"baseForwardingRule,omitempty"`
-	// ChildForwardingRules: Output only. [Output Only] Applicable only to the
-	// parent forwarding rule of global
+	// ChildForwardingRules: Output only. [Output Only] The resource URLs for the
+	// child forwarding rules.
+	//
+	// Applicable only to the parent forwarding rule of global
 	// external passthrough load balancers. This field contains the list of
 	// child
 	// forwarding rule URLs associated with the parent forwarding rule: one
 	// for
 	// each availability group. AVAILABILITY_GROUP0 will be the first element,
 	// and
-	// AVAILABILITY_GROUP1 will be the second element.
+	// AVAILABILITY_GROUP1 will be the second element. Refer to
+	// theavailabilityGroup field for further details. It cannot be set
+	// by any other forwarding rules.
 	ChildForwardingRules []string `json:"childForwardingRules,omitempty"`
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp
 	// inRFC3339
@@ -21626,8 +21785,8 @@ type ForwardingRule struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// LoadBalancingScheme: Specifies the forwarding rule type.
 	//
-	// For more information about forwarding rules, refer to
-	// Forwarding rule concepts.
+	// For more information, refer to
+	// Forwarding rule product and scheme table.
 	//
 	// Possible values:
 	//   "EXTERNAL"
@@ -21682,6 +21841,18 @@ type ForwardingRule struct {
 	// APIs, the forwarding rule name must be a 1-20 characters string
 	// with
 	// lowercase letters and numbers and must start with a letter.
+	//
+	// For global external Passthrough Network Load Balancer forwarding rules,
+	// the
+	// forwarding rule name must be 1-43 characters long. For each global
+	// external
+	// Passthrough Network Load Balancer forwarding rule (a parent forwarding
+	// rule) that you create, Google Cloud generates two output-only
+	// child
+	// forwarding rules that are named by concatenating the parent forwarding
+	// rule
+	// name with the `-ag0` and `-ag1` suffixes, respectively. Refer to
+	// theavailabilityGroup field for further details.
 	Name string `json:"name,omitempty"`
 	// Network: This field is not used for global external load balancing.
 	//
@@ -21731,8 +21902,10 @@ type ForwardingRule struct {
 	// use
 	// this field. Once set, this field is not mutable.
 	NoAutomateDnsZone bool `json:"noAutomateDnsZone,omitempty"`
-	// ParentForwardingRule: Output only. [Output Only] Applicable only to the
-	// child forwarding rules of global external
+	// ParentForwardingRule: Output only. [Output Only] The resource URL for the
+	// parent forwarding rule.
+	//
+	// Applicable only to the child forwarding rules of global external
 	// passthrough load balancers. This field contains the URL of the
 	// parent
 	// forwarding rule.
@@ -21760,8 +21933,9 @@ type ForwardingRule struct {
 	//
 	// For external forwarding rules, two or more forwarding rules cannot use
 	// the
-	// same [IPAddress, IPProtocol] pair, and cannot have
-	// overlappingportRanges.
+	// same [IPAddress, IPProtocol] pair (specified inIPAddress, IPAddresses,
+	// IPProtocol
+	// fields) if they have overlapping portRanges.
 	//
 	// For internal forwarding rules within the same VPC network, two or
 	// more
@@ -21792,8 +21966,9 @@ type ForwardingRule struct {
 	//
 	// For external forwarding rules, two or more forwarding rules cannot use
 	// the
-	// same [IPAddress, IPProtocol] pair if they share at least one
-	// port number.
+	// same [IPAddress, IPProtocol] pair (specified inIPAddress, IPAddresses,
+	// IPProtocol
+	// fields) if they share at least one port number.
 	//
 	// For internal forwarding rules within the same VPC network, two or
 	// more
@@ -21907,6 +22082,16 @@ type ForwardingRule struct {
 	//      -  For Private Service Connect forwarding rules that forward traffic to
 	// managed services, the target must be a service attachment. The target is not
 	// mutable once set as a service attachment.
+	//
+	//
+	//
+	// The following load balancers cannot set the target field (they should set
+	// the backendService field instead):
+	//
+	//    - Internal passthrough Network Load Balancers
+	//    - Backend service-based regional external passthrough Network Load
+	//    Balancers
+	//    - Global external passthrough Network Load Balancers
 	Target string `json:"target,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -26038,21 +26223,11 @@ type HaController struct {
 	// when you
 	// create the resource.
 	Description string `json:"description,omitempty"`
-	// FailoverCapacity: Capacity guarantee settings for the event of a
-	// failover.
-	// This determines whether capacity is guaranteed to be available
-	// in the zones used by the HaController.
-	// Deprecated: This field is deprecated and has no effect.
-	//
-	// Possible values:
-	//   "BEST_EFFORT_CAPACITY" - Failover will attempt to allocate resources in
-	// the secondary zone
-	// at the time of failover.
-	//   "FAILOVER_CAPACITY_UNSPECIFIED"
-	FailoverCapacity string `json:"failoverCapacity,omitempty"`
 	// FailoverInitiation: Indicates how failover should be initiated.
 	//
 	// Possible values:
+	//   "AUTOMATIC" - Failover will be initiated automatically in case of an
+	// outage
 	//   "FAILOVER_INITIATION_UNSPECIFIED"
 	//   "MANUAL_ONLY" - Failover will be initiated only when
 	// compute.haControllers.failover
@@ -26098,20 +26273,32 @@ type HaController struct {
 	// You must specify this field as part of the HTTP request URL.
 	// It is not settable as a field in the request body.
 	Region string `json:"region,omitempty"`
-	// SecondaryZoneCapacity: Indicates the capacity guarantees in the secondary
-	// zone.
-	//
-	// Possible values:
-	//   "BEST_EFFORT" - Failover will succeed only if at the time of failover the
-	// secondary zone
-	// has enough capacity to host the instance.
-	//   "SECONDARY_ZONE_CAPACITY_UNSPECIFIED"
-	SecondaryZoneCapacity string `json:"secondaryZoneCapacity,omitempty"`
 	// SelfLink: Output only. [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 	// SelfLinkWithId: Output only. [Output Only] Server-defined URL for this
 	// resource with the resource id.
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// State: Output only. The current state of the HA Controller.
+	//
+	// Possible values:
+	//   "ACTIVE" - The HA Controller is active and ready to perform failover.
+	//   "CREATING" - The HA Controller is being created.
+	//   "DELETING" - The HA Controller is being deleted.
+	//   "FAILOVER_IN_PROGRESS" - The HA Controller is in the process of failing
+	// over.
+	//   "FAILOVER_UNAVAILABLE" - The HA Controller is not ready to perform
+	// failover.
+	//   "MULTI_ZONE_FAILURE" - The HA Controller requires a failover operation to
+	// be performed but the
+	// secondary zone is not available to failover to.
+	//   "PENDING_FAILOVER" - The HA Controller requires a failover operation to be
+	// performed.
+	//   "STARTING" - The HA Controller is being started.
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "STOPPED" - The HA Controller is stopped.
+	//   "STOPPING" - The HA Controller is being stopped.
+	//   "UPDATING" - The HA Controller is being updated.
+	State string `json:"state,omitempty"`
 	// Status: Output only. [Output Only] Status information for the HaController
 	// resource.
 	Status *HaControllerStatus `json:"status,omitempty"`
@@ -26265,6 +26452,8 @@ type HaControllerStatusFailoverProgress struct {
 	// failover completion.
 	// Filled only if the failover is completed, in lastFailoverInfo.
 	FailoverCompleteTimestamp string `json:"failoverCompleteTimestamp,omitempty"`
+	// FailoverDuration: Output only. The duration of the last failover.
+	FailoverDuration string `json:"failoverDuration,omitempty"`
 	// FailoverTrigger: Output only. [Output Only] Indicates if failover has been
 	// triggered automatically or
 	// manually.
@@ -33215,9 +33404,14 @@ type Instance struct {
 	//
 	//
 	// For example: zones/us-central1-f/machineTypes/custom-4-5120
+	//
 	// For a full list of restrictions, read theSpecifications
 	// for custom machine types.
 	MachineType string `json:"machineType,omitempty"`
+	// ManagementInterfaces: Map of management interfaces. Keys must be valid
+	// RFC1035 names and at most
+	// 63 characters long.
+	ManagementInterfaces map[string]InstanceManagementInterface `json:"managementInterfaces,omitempty"`
 	// Metadata: The metadata key/value pairs assigned
 	// to this instance. This includes metadata keys that were explicitly
 	// defined
@@ -38992,6 +39186,97 @@ type InstanceManagedByIgmErrorManagedInstanceError struct {
 
 func (s InstanceManagedByIgmErrorManagedInstanceError) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceManagedByIgmErrorManagedInstanceError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceManagementInterface: Represents Out-of-Band (OOB) Host Management
+// Interface configuration
+// details for direct host control.
+type InstanceManagementInterface struct {
+	// AuthenticationConfig: The authentication configuration for secure
+	// connection.
+	AuthenticationConfig *InstanceManagementInterfaceAuthenticationConfig `json:"authenticationConfig,omitempty"`
+	// Ipv4Address: The IPv4 internal IP address assigned to this management
+	// interface
+	// endpoint. This address will be used by the customer to route traffic to
+	// the management interface.
+	Ipv4Address string `json:"ipv4Address,omitempty"`
+	// Ipv6Address: The IPv6 internal IP address assigned to this management
+	// interface
+	// endpoint. This address will be used by the customer to route traffic to
+	// the management interface if IPv6 is supported and configured.
+	Ipv6Address string `json:"ipv6Address,omitempty"`
+	// Network: The URL of the VPC network to which the management interface
+	// endpoint is
+	// attached. The customer must ensure that this network is correctly
+	// configured for routing to the instance.
+	Network string `json:"network,omitempty"`
+	// State: Output only. [Output Only] The current state of the management
+	// interface endpoint.
+	//
+	// Possible values:
+	//   "ACTIVE" - Endpoint is active and ready.
+	//   "INACTIVE" - Endpoint is inactive or failed.
+	//   "PENDING" - Endpoint is pending creation.
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	State string `json:"state,omitempty"`
+	// Subnetwork: The URL of the subnetwork from which to assign the IP address
+	// for the
+	// endpoint. The subnetwork must belong to the specified network and
+	// have
+	// available IP addresses.
+	Subnetwork string `json:"subnetwork,omitempty"`
+	// Type: Required. The type of management service this interface
+	// provides.
+	// Supported types include HOST_MANAGEMENT for direct host control.
+	//
+	// Possible values:
+	//   "HOST_MANAGEMENT" - Host management type.
+	//   "TYPE_UNSPECIFIED" - Type unspecified.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthenticationConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthenticationConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceManagementInterface) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceManagementInterface
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceManagementInterfaceAuthenticationConfig: Authentication
+// configuration for the management interface, typically
+// using mTLS.
+type InstanceManagementInterfaceAuthenticationConfig struct {
+	// TrustConfig: Required. Resource name of the Cloud Certificate Manager
+	// TrustConfig used to
+	// validate client certificates for mTLS.
+	// Format:
+	// projects/{project}/locations/{location}/trustConfigs/{trust_config}
+	TrustConfig string `json:"trustConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TrustConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TrustConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceManagementInterfaceAuthenticationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceManagementInterfaceAuthenticationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -55078,6 +55363,19 @@ type NetworkInterface struct {
 	// InternalIpv6PrefixLength: The prefix length of the primary internal IPv6
 	// range.
 	InternalIpv6PrefixLength int64 `json:"internalIpv6PrefixLength,omitempty"`
+	// InternalNicLoadBalancingIpv6Address: [Output Only] This field specifies the
+	// internal IPv6 network address
+	// assigned to the CX9 Network Interface Card, which facilitates the routing
+	// of traffic between NICs. For any single CX9 Network Interface Card,
+	// the
+	// identical internalNicLoadBalancingIpv6Address is assigned across all
+	// four
+	// associated ports.
+	InternalNicLoadBalancingIpv6Address string `json:"internalNicLoadBalancingIpv6Address,omitempty"`
+	// InternalNicLoadBalancingIpv6PrefixLength: [Output Only] The prefix length of
+	// the internal IPv6 Nic load balancing
+	// prefix.
+	InternalNicLoadBalancingIpv6PrefixLength int64 `json:"internalNicLoadBalancingIpv6PrefixLength,omitempty"`
 	// Ipv6AccessConfigs: An array of IPv6 access configurations for this
 	// interface. Currently, only
 	// one IPv6 access config, DIRECT_IPV6, is supported. If there
@@ -67947,7 +68245,8 @@ func (s Reference) MarshalJSON() ([]byte, error) {
 
 // RegexRewrite: The spec for modifying the path using a regular expression.
 type RegexRewrite struct {
-	// PathPattern: The regular expression used to match against the URL path.
+	// PathPattern: Required. The regular expression used to match against the URL
+	// path.
 	// It uses RE2 syntax with the following constraints:
 	//
 	//
@@ -67972,8 +68271,8 @@ type RegexRewrite struct {
 	//             - Digits range
 	//             - Symbols listed in characters allowed for ranges
 	PathPattern string `json:"pathPattern,omitempty"`
-	// PathSubstitution: Required when path pattern is specified. Used to rewrite
-	// matching parts of
+	// PathSubstitution: Required. Required when path pattern is specified. Used to
+	// rewrite matching parts of
 	// the path.
 	PathSubstitution string `json:"pathSubstitution,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PathPattern") to
@@ -68237,6 +68536,30 @@ type RegionAddressesMoveRequest struct {
 
 func (s RegionAddressesMoveRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionAddressesMoveRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type RegionAddressesUpdatePublicPtrRequest struct {
+	// PtrDomainName: The public DNS PTR record to be configured for this external
+	// IP.
+	PtrDomainName string `json:"ptrDomainName,omitempty"`
+	// PtrDomainNameTtl: The TTL in seconds for public DNS PTR record.
+	PtrDomainNameTtl int64 `json:"ptrDomainNameTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PtrDomainName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PtrDomainName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RegionAddressesUpdatePublicPtrRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RegionAddressesUpdatePublicPtrRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -77312,6 +77635,14 @@ type Router struct {
 	// encrypted VLAN
 	// attachments (interconnectAttachments).
 	EncryptedInterconnectRouter bool `json:"encryptedInterconnectRouter,omitempty"`
+	// Etag: ETag for optimistic concurrency control as described by AIP 154. Used
+	// to
+	// prevent conflicting updates. If provided, the request will succeed only
+	// if
+	// the etag matches the current etag of the router; otherwise, the
+	// request
+	// fails with an ABORTED error.
+	Etag string `json:"etag,omitempty"`
 	// Id: [Output Only] The unique identifier for the resource. This identifier
 	// is
 	// defined by the server.
@@ -93473,7 +93804,8 @@ type TargetPool struct {
 	// applicable only when
 	// the containing target pool is serving a forwarding rule as the primary
 	// pool, and its failoverRatio field is properly set to a value
-	// between [0, 1].backupPool and failoverRatio together define
+	// between [0, 1].
+	// backupPool and failoverRatio together define
 	// the fallback behavior of the primary target pool: if the ratio of
 	// the
 	// healthy instances in the primary pool is at or belowfailoverRatio, traffic
@@ -100138,6 +100470,14 @@ type VpnTunnel struct {
 	// field can
 	// be set only for Classic VPN tunnels.
 	PeerIp string `json:"peerIp,omitempty"`
+	// PqcPhase1: User specified list of PQC key exchange mechanisms (KEMs) to use
+	// for the
+	// phase 1 of the IKE protocol.
+	PqcPhase1 *VpnTunnelPqc `json:"pqcPhase1,omitempty"`
+	// PqcPhase2: User specified list of PQC key exchange mechanisms (KEMs) to use
+	// for the
+	// phase 2 of the IKE protocol.
+	PqcPhase2 *VpnTunnelPqc `json:"pqcPhase2,omitempty"`
 	// Region: [Output Only] URL of the region where the VPN tunnel resides.
 	// You must specify this field as part of the HTTP request URL. It is
 	// not settable as a field in the request body.
@@ -100253,6 +100593,68 @@ type VpnTunnel struct {
 
 func (s VpnTunnel) MarshalJSON() ([]byte, error) {
 	type NoMethod VpnTunnel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VpnTunnelAdditionalKeyExchanges: User specified list of PQC key exchanges.
+type VpnTunnelAdditionalKeyExchanges struct {
+	// Possible values:
+	//   "KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED"
+	//   "KE_NONE"
+	//   "ML_KEM_1024"
+	//   "ML_KEM_768"
+	Ke1s []string `json:"ke1s,omitempty"`
+	// Possible values:
+	//   "KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED"
+	//   "KE_NONE"
+	//   "ML_KEM_1024"
+	//   "ML_KEM_768"
+	Ke2s []string `json:"ke2s,omitempty"`
+	// Possible values:
+	//   "KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED"
+	//   "KE_NONE"
+	//   "ML_KEM_1024"
+	//   "ML_KEM_768"
+	Ke3s []string `json:"ke3s,omitempty"`
+	// Possible values:
+	//   "KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED"
+	//   "KE_NONE"
+	//   "ML_KEM_1024"
+	//   "ML_KEM_768"
+	Ke4s []string `json:"ke4s,omitempty"`
+	// Possible values:
+	//   "KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED"
+	//   "KE_NONE"
+	//   "ML_KEM_1024"
+	//   "ML_KEM_768"
+	Ke5s []string `json:"ke5s,omitempty"`
+	// Possible values:
+	//   "KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED"
+	//   "KE_NONE"
+	//   "ML_KEM_1024"
+	//   "ML_KEM_768"
+	Ke6s []string `json:"ke6s,omitempty"`
+	// Possible values:
+	//   "KEY_ENCAPSULATION_MECHANISM_UNSPECIFIED"
+	//   "KE_NONE"
+	//   "ML_KEM_1024"
+	//   "ML_KEM_768"
+	Ke7s []string `json:"ke7s,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ke1s") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ke1s") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VpnTunnelAdditionalKeyExchanges) MarshalJSON() ([]byte, error) {
+	type NoMethod VpnTunnelAdditionalKeyExchanges
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -100718,6 +101120,31 @@ type VpnTunnelPhase2Algorithms struct {
 
 func (s VpnTunnelPhase2Algorithms) MarshalJSON() ([]byte, error) {
 	type NoMethod VpnTunnelPhase2Algorithms
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type VpnTunnelPqc struct {
+	Keys *VpnTunnelAdditionalKeyExchanges `json:"keys,omitempty"`
+	// Possible values:
+	//   "DISABLED"
+	//   "ENABLED"
+	//   "PQC_MODE_UNSPECIFIED"
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Keys") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Keys") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VpnTunnelPqc) MarshalJSON() ([]byte, error) {
+	type NoMethod VpnTunnelPqc
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -101695,6 +102122,12 @@ type WireProperties struct {
 	// setting is only permitted on port mode pseudowires.
 	//   "NONE" - Default.
 	FaultResponse string `json:"faultResponse,omitempty"`
+	// FlowManagement: The flow management configuration for the wire.
+	//
+	// Possible values:
+	//   "DYNAMIC_PATH" - The wire uses dynamic paths.
+	//   "FIXED_PATH" - The wire uses fixed paths.
+	FlowManagement string `json:"flowManagement,omitempty"`
 	// NetworkServiceClass: The network service class.
 	//
 	// Possible values:

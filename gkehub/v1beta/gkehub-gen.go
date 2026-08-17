@@ -1113,6 +1113,8 @@ type CommonFeatureState struct {
 	Fleetobservability *FleetObservabilityFeatureState `json:"fleetobservability,omitempty"`
 	// Rbacrolebindingactuation: RBAC Role Binding Actuation feature state
 	Rbacrolebindingactuation *RBACRoleBindingActuationFeatureState `json:"rbacrolebindingactuation,omitempty"`
+	// Servicemesh: Service Mesh-specific state.
+	Servicemesh *ServiceMeshFeatureState `json:"servicemesh,omitempty"`
 	// State: Output only. The "running state" of the Feature in this Fleet.
 	State *FeatureState `json:"state,omitempty"`
 	// Workloadidentity: WorkloadIdentity fleet-level state.
@@ -6535,6 +6537,146 @@ func (s ServiceMeshDataPlaneManagement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ServiceMeshFeatureCondition: Condition being reported.
+type ServiceMeshFeatureCondition struct {
+	// Code: Unique identifier of the condition which describes the condition
+	// recognizable to the user.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Default Unspecified code
+	//   "MESH_IAM_PERMISSION_DENIED" - Mesh IAM permission denied error code
+	//   "MESH_IAM_CROSS_PROJECT_PERMISSION_DENIED" - Permission denied error code
+	// for cross-project
+	//   "CNI_CONFIG_UNSUPPORTED" - CNI config unsupported error code
+	//   "GKE_SANDBOX_UNSUPPORTED" - GKE sandbox unsupported error code
+	//   "NODEPOOL_WORKLOAD_IDENTITY_FEDERATION_REQUIRED" - Nodepool workload
+	// identity federation required error code
+	//   "CNI_INSTALLATION_FAILED" - CNI installation failed error code
+	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
+	//   "CLUSTER_HAS_ZERO_NODES" - Cluster has zero node code
+	//   "CANONICAL_SERVICE_ERROR" - Failure to reconcile CanonicalServices
+	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
+	// unsupported error code
+	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control plane.
+	//   "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT" - User is using deprecated
+	// ControlPlaneManagement and they have not yet set Management.
+	//   "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT_SAFE" - User is using deprecated
+	// ControlPlaneManagement and they have already set Management.
+	//   "CONFIG_APPLY_INTERNAL_ERROR" - Configuration (Istio/k8s resources) failed
+	// to apply due to internal error.
+	//   "CONFIG_VALIDATION_ERROR" - Configuration failed to be applied due to
+	// being invalid.
+	//   "CONFIG_VALIDATION_WARNING" - Encountered configuration(s) with possible
+	// unintended behavior or invalid configuration. These configs may not have
+	// been applied.
+	//   "QUOTA_EXCEEDED_BACKEND_SERVICES" - BackendService quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_HEALTH_CHECKS" - HealthCheck quota exceeded error code.
+	//   "QUOTA_EXCEEDED_HTTP_ROUTES" - HTTPRoute quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TCP_ROUTES" - TCPRoute quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TLS_ROUTES" - TLS routes quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TRAFFIC_POLICIES" - TrafficPolicy quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_ENDPOINT_POLICIES" - EndpointPolicy quota exceeded error
+	// code.
+	//   "QUOTA_EXCEEDED_GATEWAYS" - Gateway quota exceeded error code.
+	//   "QUOTA_EXCEEDED_MESHES" - Mesh quota exceeded error code.
+	//   "QUOTA_EXCEEDED_SERVER_TLS_POLICIES" - ServerTLSPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_CLIENT_TLS_POLICIES" - ClientTLSPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_SERVICE_LB_POLICIES" - ServiceLBPolicy quota exceeded
+	// error code.
+	//   "QUOTA_EXCEEDED_HTTP_FILTERS" - HTTPFilter quota exceeded error code.
+	//   "QUOTA_EXCEEDED_TCP_FILTERS" - TCPFilter quota exceeded error code.
+	//   "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS" - NetworkEndpointGroup quota
+	// exceeded error code.
+	//   "CONFIG_APPLY_BLOCKED" - Configuration failed to apply due to fleet being
+	// blocked.
+	//   "LEGACY_MC_SECRETS" - Legacy istio secrets found for multicluster error
+	// code.
+	//   "WORKLOAD_IDENTITY_REQUIRED" - Workload identity required error code.
+	//   "NON_STANDARD_BINARY_USAGE" - Non-standard binary usage error code.
+	//   "UNSUPPORTED_GATEWAY_CLASS" - Unsupported gateway class error code.
+	//   "MANAGED_CNI_NOT_ENABLED" - Managed CNI not enabled error code.
+	//   "MISSING_CONTROL_PLANE_CONFIG" - Missing control plane configuration error
+	// code.
+	//   "SHARED_VPC_MISSING_PERMISSIONS" - Shared VPC missing permissions error
+	// code.
+	//   "REQUIRED_ORG_POLICY_DISABLED" - Required org policy disabled error code.
+	//   "MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION" - One or more Pods have
+	// unsupported annotations.
+	//   "MODERNIZATION_INCOMPATIBLE_CONFIG" - Incompatible config found in the
+	// cluster.
+	//   "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE" - Gateway pods per cluster
+	// limit exceeded.
+	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
+	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
+	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
+	//   "MODERNIZATION_ABORTED" - Modernization is aborted for a cluster.
+	//   "MODERNIZATION_PREPARING" - Preparing cluster so that its workloads can be
+	// migrated.
+	//   "MODERNIZATION_STALLED" - Modernization is stalled for a cluster.
+	//   "MODERNIZATION_PREPARED" - Cluster has been prepared for its workloads to
+	// be migrated.
+	//   "MODERNIZATION_MIGRATING_WORKLOADS" - Migrating the cluster's workloads to
+	// the new implementation.
+	//   "MODERNIZATION_ROLLING_BACK_CLUSTER" - Rollback is in progress for
+	// modernization of a cluster.
+	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
+	// fleet.
+	//   "MODERNIZATION_MANUAL" - Fleet is opted out from automated modernization.
+	//   "MODERNIZATION_ELIGIBLE" - Fleet is eligible for modernization.
+	//   "MODERNIZATION_MODERNIZING" - Modernization of one or more clusters in a
+	// fleet is in progress.
+	//   "MODERNIZATION_MODERNIZED_SOAKING" - Modernization of all the fleet's
+	// clusters is complete. Soaking before finalizing the modernization.
+	//   "MODERNIZATION_FINALIZED" - Modernization is finalized for all clusters in
+	// a fleet. Rollback is no longer allowed.
+	//   "MODERNIZATION_ROLLING_BACK_FLEET" - Rollback is in progress for
+	// modernization of all clusters in a fleet.
+	//   "MODERNIZATION_MODERNIZED" - Modernization of all clusters in the fleet is
+	// complete. Soaking before finalizing the modernization.
+	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
+	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
+	// modernization.
+	//   "MODERNIZATION_INCOMPATIBLE_FLEET_SCALE" - Fleet exceeds service mesh
+	// fleet-level scalability limits.
+	//   "MODERNIZATION_INCOMPATIBLE_FLEET_QUOTA" - Fleet exceeds service mesh
+	// fleet-level quota limits.
+	Code string `json:"code,omitempty"`
+	// Details: A short summary about the issue.
+	Details string `json:"details,omitempty"`
+	// DocumentationLink: Links contains actionable information.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+	// Severity: Severity level of the condition.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity
+	//   "ERROR" - Indicates an issue that prevents the mesh from operating
+	// correctly
+	//   "WARNING" - Indicates a setting is likely wrong, but the mesh is still
+	// able to operate
+	//   "INFO" - An informational message, not requiring any action
+	Severity string `json:"severity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshFeatureCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshFeatureCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ServiceMeshFeatureSpec: **Service Mesh**: Spec for the fleet for the
 // servicemesh feature
 type ServiceMeshFeatureSpec struct {
@@ -6579,6 +6721,29 @@ type ServiceMeshFeatureSpec struct {
 
 func (s ServiceMeshFeatureSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod ServiceMeshFeatureSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceMeshFeatureState: **Service Mesh**: State for the whole Hub, as
+// analyzed by the Service Mesh Hub Controller.
+type ServiceMeshFeatureState struct {
+	// Conditions: Output only. List of conditions reported for this feature.
+	Conditions []*ServiceMeshFeatureCondition `json:"conditions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Conditions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceMeshFeatureState) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshFeatureState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -112,7 +112,8 @@ const (
 
 	// View your Agentspace chat history, including uploaded files and generated
 	// reports and visualizations, and interact with the Agentspace assistant on
-	// your behalf.
+	// your behalf. Also view the artifacts you access through NotebookLM
+	// Enterprise.
 	DiscoveryengineAssistReadwriteScope = "https://www.googleapis.com/auth/discoveryengine.assist.readwrite"
 
 	// View, edit, create, and delete all your data associated with any Discovery
@@ -4882,7 +4883,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
@@ -9432,6 +9433,14 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResul
 	//   "ALLOW" - There was no policy violation.
 	//   "BLOCK" - Processing was blocked by the customer policy.
 	Verdict string `json:"verdict,omitempty"`
+	// ViolationSource: Output only. The source of the violation.
+	//
+	// Possible values:
+	//   "VIOLATION_SOURCE_UNSPECIFIED" - Unknown value.
+	//   "SYSTEM" - Violation found in the system response.
+	//   "PROMPT" - Violation found in the user prompt.
+	//   "ATTACHMENT" - Violation found in the user attachment.
+	ViolationSource string `json:"violationSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PolicyResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12849,7 +12858,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
@@ -21046,6 +21055,14 @@ type GoogleCloudDiscoveryengineV1betaAssistAnswerCustomerPolicyEnforcementResult
 	//   "ALLOW" - There was no policy violation.
 	//   "BLOCK" - Processing was blocked by the customer policy.
 	Verdict string `json:"verdict,omitempty"`
+	// ViolationSource: Output only. The source of the violation.
+	//
+	// Possible values:
+	//   "VIOLATION_SOURCE_UNSPECIFIED" - Unknown value.
+	//   "SYSTEM" - Violation found in the system response.
+	//   "PROMPT" - Violation found in the user prompt.
+	//   "ATTACHMENT" - Violation found in the user attachment.
+	ViolationSource string `json:"violationSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PolicyResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -25304,7 +25321,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
@@ -31794,7 +31811,7 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec) Marsha
 // GoogleCloudDiscoveryengineV1betaSearchResponse: Response message for
 // SearchService.Search method.
 type GoogleCloudDiscoveryengineV1betaSearchResponse struct {
-	// AppliedControls: Controls applied as part of the Control service.
+	// AppliedControls: Optional. Controls applied as part of the Control service.
 	AppliedControls []string `json:"appliedControls,omitempty"`
 	// AttributionToken: A unique search token. This should be included in the
 	// UserEvent logs resulting from this search, which enables accurate

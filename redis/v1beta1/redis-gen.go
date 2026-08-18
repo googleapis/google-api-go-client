@@ -5933,7 +5933,7 @@ type ProjectsLocationsAclPoliciesDeleteCall struct {
 //
 //   - name: Redis ACL policy resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}`
-//     where `location_id` refers to a GCP region.
+//     where `location_id` refers to a Google Cloud region.
 func (r *ProjectsLocationsAclPoliciesService) Delete(name string) *ProjectsLocationsAclPoliciesDeleteCall {
 	c := &ProjectsLocationsAclPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6047,7 +6047,7 @@ type ProjectsLocationsAclPoliciesGetCall struct {
 //
 //   - name: Redis ACL policy resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}`
-//     where `location_id` refers to a GCP region.
+//     where `location_id` refers to a Google Cloud region.
 func (r *ProjectsLocationsAclPoliciesService) Get(name string) *ProjectsLocationsAclPoliciesGetCall {
 	c := &ProjectsLocationsAclPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6437,7 +6437,8 @@ type ProjectsLocationsAclPoliciesRevisionsGetCall struct {
 //
 //   - name: Redis ACL policy revision resource name using the form:
 //     `projects/{project_id}/locations/{location_id}/aclPolicies/{acl_policy_id}/
-//     revisions/{revision_id}` where `location_id` refers to a GCP region.
+//     revisions/{revision_id}` where `location_id` refers to a Google Cloud
+//     region.
 func (r *ProjectsLocationsAclPoliciesRevisionsService) Get(name string) *ProjectsLocationsAclPoliciesRevisionsGetCall {
 	c := &ProjectsLocationsAclPoliciesRevisionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

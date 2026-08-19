@@ -1429,6 +1429,9 @@ func (s ExecutionReference) MarshalJSON() ([]byte, error) {
 
 // ExecutionSpec: ExecutionSpec describes how the execution will look.
 type ExecutionSpec struct {
+	// DelayExecution: Optional. If true, the system will start the execution
+	// within the next 12 hours depending on available capacity.
+	DelayExecution bool `json:"delayExecution,omitempty"`
 	// Parallelism: Optional. Specifies the maximum desired number of tasks the
 	// execution should run at given time. When the job is run, if this field is 0
 	// or unset, the maximum possible value will be used for that execution. The
@@ -1442,15 +1445,15 @@ type ExecutionSpec struct {
 	TaskCount int64 `json:"taskCount,omitempty"`
 	// Template: Optional. The template used to create tasks for this execution.
 	Template *TaskTemplateSpec `json:"template,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Parallelism") to
+	// ForceSendFields is a list of field names (e.g. "DelayExecution") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Parallelism") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DelayExecution") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2626,6 +2629,11 @@ type GoogleDevtoolsCloudbuildV1GitSourceDependency struct {
 	Depth int64 `json:"depth,omitempty,string"`
 	// DestPath: Required. Where should the files be placed on the worker.
 	DestPath string `json:"destPath,omitempty"`
+	// FetchTags: Optional. True if remote tags should be fetched too (default
+	// false). Note: when depth is 1 (default), git fetch only retrieves tags
+	// pointing to commits within the shallow boundary. Set depth to -1 to fetch
+	// all historical tags.
+	FetchTags bool `json:"fetchTags,omitempty"`
 	// RecurseSubmodules: Optional. True if submodules should be fetched too
 	// (default false).
 	RecurseSubmodules bool `json:"recurseSubmodules,omitempty"`
@@ -4593,7 +4601,7 @@ type ObjectMeta struct {
 	// restricted, and the accepted annotations will be different depending on the
 	// resource type. * `autoscaling.knative.dev/maxScale`: Revision. *
 	// `autoscaling.knative.dev/minScale`: Revision. *
-	// `run.googleapis.com/base-images`: Service, Revision. *
+	// `run.googleapis.com/base-images`: Service, Revision . *
 	// `run.googleapis.com/binary-authorization-breakglass`: Service, Job, *
 	// `run.googleapis.com/binary-authorization`: Service, Job, Execution. *
 	// `run.googleapis.com/build-base-image`: Service. *
@@ -4701,6 +4709,9 @@ func (s ObjectMeta) MarshalJSON() ([]byte, error) {
 type Overrides struct {
 	// ContainerOverrides: Per container override specification.
 	ContainerOverrides []*ContainerOverride `json:"containerOverrides,omitempty"`
+	// DelayExecution: Optional. If true, the system will start the execution
+	// within the next 12 hours depending on available capacity.
+	DelayExecution bool `json:"delayExecution,omitempty"`
 	// TaskCount: The desired number of tasks the execution should run. Will
 	// replace existing task_count value.
 	TaskCount int64 `json:"taskCount,omitempty"`

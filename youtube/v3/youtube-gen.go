@@ -4629,6 +4629,8 @@ type LiveBroadcastSnippet struct {
 	// ActualStartTime: The date and time that the broadcast actually started. This
 	// information is only available once the broadcast's state is live.
 	ActualStartTime string `json:"actualStartTime,omitempty"`
+	// CategoryId: The YouTube video category associated with the video broadcast.
+	CategoryId string `json:"categoryId,omitempty"`
 	// ChannelId: The ID that YouTube uses to uniquely identify the channel that is
 	// publishing the broadcast.
 	ChannelId string `json:"channelId,omitempty"`

@@ -4541,6 +4541,9 @@ type Step struct {
 	// StorageBucket: Display information of a Storage Bucket. Used only for return
 	// traces.
 	StorageBucket *StorageBucketInfo `json:"storageBucket,omitempty"`
+	// ViewerPermissionMissingInfo: Display information of a step that is redacted
+	// due to missing permissions.
+	ViewerPermissionMissingInfo *ViewerPermissionMissingInfo `json:"viewerPermissionMissingInfo,omitempty"`
 	// VpcConnector: Display information of a VPC connector.
 	VpcConnector *VpcConnectorInfo `json:"vpcConnector,omitempty"`
 	// VpnGateway: Display information of a Compute Engine VPN gateway.
@@ -4679,6 +4682,36 @@ type Trace struct {
 
 func (s Trace) MarshalJSON() ([]byte, error) {
 	type NoMethod Trace
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ViewerPermissionMissingInfo: For display only. Metadata associated with a
+// step that was redacted due to missing permissions.
+type ViewerPermissionMissingInfo struct {
+	// ResourceTypes: Types of the resources that the user does not have permission
+	// to view.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - Resource type is unspecified.
+	//   "FIREWALL" - Firewall rule.
+	//   "INSTANCE" - Instance.
+	//   "FORWARDING_RULE" - Forwarding rule.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ViewerPermissionMissingInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ViewerPermissionMissingInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

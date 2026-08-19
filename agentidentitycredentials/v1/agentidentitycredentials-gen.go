@@ -200,15 +200,17 @@ type ProjectsLocationsAuthProvidersCredentialsService struct {
 }
 
 // GoogleCloudAgentidentitycredentialsV1ConsentRejected: Indicates the user has
-// rejected the permission delegation or cancelled the request.
+// rejected the permission delegation or canceled the request.
 type GoogleCloudAgentidentitycredentialsV1ConsentRejected struct {
 }
 
 // GoogleCloudAgentidentitycredentialsV1FinalizeCredentialsRequest: Request
-// message for FinalizeCredentials.
+// message for `FinalizeCredentials`.
 type GoogleCloudAgentidentitycredentialsV1FinalizeCredentialsRequest struct {
-	// ConsentNonce: Required. The same consent_nonce value that was provided
-	// during redirect in the UriConsentRequired metadata.
+	// ConsentNonce: Required. The same `consent_nonce` value that was provided
+	// during retrieval in the UriConsentRequired
+	// (https://cloud.google.com/iam/docs/reference/agentidentitycredentials/rest/v1/projects.locations.authProviders.credentials/retrieve#UriConsentRequired)
+	// metadata.
 	ConsentNonce string `json:"consentNonce,omitempty"`
 	// UserId: Required. The identity of the end user.
 	UserId string `json:"userId,omitempty"`
@@ -234,29 +236,30 @@ func (s GoogleCloudAgentidentitycredentialsV1FinalizeCredentialsRequest) Marshal
 }
 
 // GoogleCloudAgentidentitycredentialsV1FinalizeCredentialsResponse: Response
-// message for FinalizeCredentials. Intentionally empty
+// message for `FinalizeCredentials`. Intentionally empty.
 type GoogleCloudAgentidentitycredentialsV1FinalizeCredentialsResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleCloudAgentidentitycredentialsV1Pending: Indicates that the credential
-// retrieval is pending. The caller should retry the RetrieveCredentials
+// retrieval is pending. The caller should retry the `RetrieveCredentials`
 // request after some time.
 type GoogleCloudAgentidentitycredentialsV1Pending struct {
 }
 
 // GoogleCloudAgentidentitycredentialsV1RetrieveCredentialsRequest: Request
-// message for RetrieveCredentials.
+// message for `RetrieveCredentials`.
 type GoogleCloudAgentidentitycredentialsV1RetrieveCredentialsRequest struct {
 	// ContinueUri: Optional. The URI to redirect the user to after consent is
-	// completed. This field is required for authproviders using the 3-legged OAuth
-	// flow. For other authprovider types, this field is unused but not rejected.
+	// completed. This field is required for auth providers using the 3-legged
+	// OAuth flow. For other auth provider types, this field is unused but not
+	// rejected.
 	ContinueUri string `json:"continueUri,omitempty"`
 	// ForceRefreshToken: Optional. Input only. Set this field only if the previous
 	// token was expired or invalid. This value must be the full, previously
-	// returned token string. Will trigger a refresh of the access token with a
-	// stored refresh token, if possible, or a new consent flow.
+	// returned token string. Setting this field triggers a refresh of the access
+	// token with a stored refresh token, if possible, or a new consent flow.
 	ForceRefreshToken string `json:"forceRefreshToken,omitempty"`
 	// Scopes: Optional. The OAuth scopes required for this access.
 	Scopes []string `json:"scopes,omitempty"`
@@ -281,7 +284,7 @@ func (s GoogleCloudAgentidentitycredentialsV1RetrieveCredentialsRequest) Marshal
 }
 
 // GoogleCloudAgentidentitycredentialsV1RetrieveCredentialsResponse: Response
-// message for RetrieveCredentials. Contains the access tokens and related
+// message for `RetrieveCredentials`. Contains the access tokens and related
 // artifacts.
 type GoogleCloudAgentidentitycredentialsV1RetrieveCredentialsResponse struct {
 	// ConsentRejected: Message indicating consent was rejected.
@@ -290,7 +293,7 @@ type GoogleCloudAgentidentitycredentialsV1RetrieveCredentialsResponse struct {
 	Pending *GoogleCloudAgentidentitycredentialsV1Pending `json:"pending,omitempty"`
 	// Success: Message indicating credentials were successfully retrieved.
 	Success *GoogleCloudAgentidentitycredentialsV1Success `json:"success,omitempty"`
-	// UriConsentRequired: Message indicating uri based consent is required.
+	// UriConsentRequired: Message indicating URI-based consent is required.
 	UriConsentRequired *GoogleCloudAgentidentitycredentialsV1UriConsentRequired `json:"uriConsentRequired,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -331,12 +334,12 @@ type GoogleCloudAgentidentitycredentialsV1Success struct {
 	// Callers should verify that all required scopes for their intended use are
 	// included in this list.
 	Scopes []string `json:"scopes,omitempty"`
-	// Token: The retrieved access token or credential for the end user. On MCPTool
-	// call, for an invalid token OAuth spec says this should return 401 or 403,
-	// but MCPServers may implement this differently. If you get any flavor of
-	// `PERMISSION_DENIED`, retry your original request to RetrieveCredentials with
-	// force_refresh_token set to the expired/invalid token string, which will
-	// fetch a new token or initiate a new consent flow.
+	// Token: The retrieved access token or credential for the end user. On an MCP
+	// tool call, for an invalid token the OAuth spec states that this should
+	// return `401` or `403`, but MCP servers may implement this differently. If
+	// you get any flavor of `PERMISSION_DENIED`, retry your original request to
+	// `RetrieveCredentials` with force_refresh_token set to the expired/invalid
+	// token string, which will fetch a new token or initiate a new consent flow.
 	Token string `json:"token,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -359,16 +362,17 @@ func (s GoogleCloudAgentidentitycredentialsV1Success) MarshalJSON() ([]byte, err
 // GoogleCloudAgentidentitycredentialsV1UriConsentRequired: Indicates that the
 // user must visit the provided URI to consent to delegate permission to the
 // agent to act on their behalf. The caller can either poll the
-// `RetrieveCredentials` method, or await the /ValidateUserId callback
+// `RetrieveCredentials` method, or await the /ValidateUserId callback.
 type GoogleCloudAgentidentitycredentialsV1UriConsentRequired struct {
 	// AuthorizationUri: Output only. The URL where the user should be redirected
 	// to grant consent. This will always be present.
 	AuthorizationUri string `json:"authorizationUri,omitempty"`
 	// ConsentNonce: Output only. A one-time, randomly generated value that
 	// validates the entire consent flow is handled by a single user, avoiding CSRF
-	// attacks. It must be submitted with the FinalizeCredentials request to
+	// attacks. It must be submitted with the `FinalizeCredentials` request to
 	// complete the OAuth exchange. This will always be present. Implemented per
-	// https://www.rfc-editor.org/rfc/rfc6819#section-5.3.5
+	// RFC 6819 Section 5.3.5
+	// (https://www.rfc-editor.org/rfc/rfc6819#section-5.3.5).
 	ConsentNonce string `json:"consentNonce,omitempty"`
 	// Uid: Output only. The unique ID of the credentials retrieval operation.
 	Uid string `json:"uid,omitempty"`
@@ -401,7 +405,7 @@ type ProjectsLocationsAuthProvidersCredentialsFinalizeCall struct {
 
 // Finalize: Finalizes the credentials after a successful consent flow.
 //
-//   - authProvider: The resource name of the AuthProvider. Format:
+//   - authProvider: The resource name of the auth provider. Format:
 //     `projects/{project}/locations/{location}/authProviders/{auth_provider}`.
 func (r *ProjectsLocationsAuthProvidersCredentialsService) Finalize(authProvider string, googlecloudagentidentitycredentialsv1Finalizecredentialsrequest *GoogleCloudAgentidentitycredentialsV1FinalizeCredentialsRequest) *ProjectsLocationsAuthProvidersCredentialsFinalizeCall {
 	c := &ProjectsLocationsAuthProvidersCredentialsFinalizeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -504,15 +508,15 @@ type ProjectsLocationsAuthProvidersCredentialsRetrieveCall struct {
 	header_                                                         http.Header
 }
 
-// Retrieve: Retrieves authorization credentials for an authprovider, or
+// Retrieve: Retrieves authorization credentials for an auth provider, or
 // indicates what action needs to be taken to obtain credentials. If the
 // `token` field in the response is populated, credential retrieval was
-// successful. If one of the fields in the `status` oneof is populated, further
+// successful. If one of the fields in the `result` oneof is populated, further
 // action is required to obtain credentials, such as redirecting the user for
 // consent. View comments on `RetrieveCredentialsResponse` for more
 // information.
 //
-//   - authProvider: The parent resource name of the AuthProvider. Format:
+//   - authProvider: The resource name of the auth provider. Format:
 //     `projects/{project}/locations/{location}/authProviders/{auth_provider}`.
 func (r *ProjectsLocationsAuthProvidersCredentialsService) Retrieve(authProvider string, googlecloudagentidentitycredentialsv1Retrievecredentialsrequest *GoogleCloudAgentidentitycredentialsV1RetrieveCredentialsRequest) *ProjectsLocationsAuthProvidersCredentialsRetrieveCall {
 	c := &ProjectsLocationsAuthProvidersCredentialsRetrieveCall{s: r.s, urlParams_: make(gensupport.URLParams)}

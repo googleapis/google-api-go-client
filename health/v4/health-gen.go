@@ -130,10 +130,6 @@ const (
 	// See exercise GPS location data in Google Health
 	GooglehealthLocationReadonlyScope = "https://www.googleapis.com/auth/googlehealth.location.readonly"
 
-	// Add exercise GPS location data to Google Health, and edit or delete the data
-	// it adds.
-	GooglehealthLocationWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.location.writeonly"
-
 	// Add logged symptoms data to Google Health, and edit or delete the data it
 	// adds
 	GooglehealthLoggedSymptomsWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly"
@@ -178,7 +174,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.irn.readonly",
 		"https://www.googleapis.com/auth/googlehealth.location.readonly",
-		"https://www.googleapis.com/auth/googlehealth.location.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
@@ -6167,6 +6162,42 @@ type Symptoms struct {
 	//   "FATIGUE" - Fatigue or extreme tiredness.
 	//   "CONFUSION" - Confusion or mental fogginess.
 	//   "DIZZINESS" - Dizziness or lightheadedness.
+	//   "ABDOMINAL_PAIN" - Abdominal pain.
+	//   "BLADDER_LEAKS" - Bladder leaks.
+	//   "BLEEDING_GUMS" - Bleeding gums.
+	//   "BRAIN_FOG" - Brain fog.
+	//   "BURNING_MOUTH" - Burning mouth.
+	//   "CONSTIPATION" - Constipation.
+	//   "CRAVINGS" - Food cravings.
+	//   "DECREASED_APPETITE" - Decreased appetite.
+	//   "DIARRHEA" - Diarrhea.
+	//   "DRAWING_PAIN" - Drawing pain.
+	//   "DRY_EYES" - Dry eyes.
+	//   "DRY_HAIR" - Dry hair.
+	//   "DRY_SKIN" - Dry skin.
+	//   "EXHAUSTION" - Exhaustion.
+	//   "FEEL_GOOD" - Feeling good or well.
+	//   "FOOD_AVERSIONS" - Food aversions.
+	//   "HAIR_LOSS" - Hair loss.
+	//   "HEARTBURN" - Heartburn.
+	//   "HYPERPIGMENTATION" - Hyperpigmentation.
+	//   "INCREASED_APPETITE" - Increased appetite.
+	//   "INCREASED_APPETITE_V2" - Increased appetite V2.
+	//   "INSOMNIA" - Insomnia or difficulty sleeping.
+	//   "JOINT_PAIN" - Joint pain.
+	//   "LEG_CRAMPS" - Leg cramps.
+	//   "MILKY_NIPPLE_DISCHARGE" - Milky nipple discharge.
+	//   "NAUSEA" - Nausea.
+	//   "NIGHT_SWEATS" - Night sweats.
+	//   "NORMAL_DIGESTION" - Normal digestion.
+	//   "NORMAL_STOOL" - Normal stool.
+	//   "PERINEUM_PAIN" - Perineum pain.
+	//   "SLEEPINESS" - Sleepiness or drowsiness.
+	//   "STRETCH_MARKS" - Stretch marks.
+	//   "SWELLING" - Swelling.
+	//   "VAGINAL_DRYNESS" - Vaginal dryness.
+	//   "VAGINAL_ITCHING" - Vaginal itching.
+	//   "VOMITING" - Vomiting.
 	Symptoms []string `json:"symptoms,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SampleTime") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -10128,6 +10128,8 @@ type GoogleCloudApigeeV1RuntimeAddonsConfig struct {
 	Name string `json:"name,omitempty"`
 	// RevisionId: Revision number used by the runtime to detect config changes.
 	RevisionId string `json:"revisionId,omitempty"`
+	// SpecGenerationConfig: Runtime configuration for Spec Generation add-on.
+	SpecGenerationConfig *GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig `json:"specGenerationConfig,omitempty"`
 	// Uid: UID is to detect if config is recreated after deletion. The add-on
 	// config will only be deleted when the environment itself gets deleted, thus
 	// it will always be the same as the UID of EnvironmentConfig.
@@ -10237,7 +10239,70 @@ func (s GoogleCloudApigeeV1RuntimeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 11 RuntimeTraceConfig
+// GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig: Runtime configuration
+// for the Spec Generation add-on. All fields are proto3 primitives (bool,
+// string, double) rather than google.protobuf.*Value wrappers because the
+// runtime consumer deserializes the JSON via Gson field reflection with no
+// registered type adapters. Wrapper types would serialize as JSON objects/null
+// that Gson cannot bind to Java primitive fields.
+type GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig struct {
+	// ApiObservationsPubsubTopic: Full Pub/Sub topic path in the Apigee Runtime
+	// Tenant Project where the Schema Inferring Engine publishes inferred
+	// ApiObservation messages. Format: projects/{project}/topics/{topic}. Same
+	// sentinel semantics as raw_observations_pubsub_topic. Default: empty string.
+	ApiObservationsPubsubTopic string `json:"apiObservationsPubsubTopic,omitempty"`
+	// Enabled: Whether the Spec Generation add-on is active for this environment.
+	// Default: false.
+	Enabled bool `json:"enabled,omitempty"`
+	// EnabledUntil: ISO-8601 timestamp until which Spec Generation remains active
+	// (e.g. "2026-12-31T23:59:59Z"). Empty string is the canonical "not
+	// configured" sentinel and MUST be treated by the consumer as "expired"
+	// (short-circuit before parsing). Default: empty string.
+	EnabledUntil string `json:"enabledUntil,omitempty"`
+	// RawObservationsPubsubTopic: Full Pub/Sub topic path in the Apigee Runtime
+	// Tenant Project where the message processor publishes captured RawObservation
+	// messages. Format: projects/{project}/topics/{topic}. Empty string is the
+	// "not configured" sentinel; the consumer short-circuits publishing when
+	// empty. Default: empty string.
+	RawObservationsPubsubTopic string `json:"rawObservationsPubsubTopic,omitempty"`
+	// SamplingRate: Fraction of eligible transactions to capture, in [0.0, 1.0].
+	// The consumer enforces an internal upper-bound clamp independently of this
+	// field. Default: 0.0 (omitted from JSON per proto3 default-scalar-omission;
+	// the consumer's field initializer supplies the effective 0.01 fallback).
+	SamplingRate float64 `json:"samplingRate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiObservationsPubsubTopic")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiObservationsPubsubTopic") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig
+	var s1 struct {
+		SamplingRate gensupport.JSONFloat64 `json:"samplingRate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SamplingRate = float64(s1.SamplingRate)
+	return nil
+}
+
+// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 13 RuntimeTraceConfig
 // defines the configurations for distributed trace in an environment.
 type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	// Endpoint: Endpoint of the exporter.
@@ -10256,6 +10321,10 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	//   "OPEN_TELEMETRY_CLOUD_TRACE" - Exports events to Cloud Trace. Compatible
 	// with OpenTelemetry protocol.
 	Exporter string `json:"exporter,omitempty"`
+	// MTlsConfig: Optional. mTLS configuration for the OTel Collector endpoint.
+	// Required when `otel_collector_security_scheme` is `MTLS`; must be absent
+	// otherwise.
+	MTlsConfig *GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig `json:"mTlsConfig,omitempty"`
 	// Name: Name of the trace config in the following format:
 	// `organizations/{org}/environment/{env}/traceConfig`
 	Name string `json:"name,omitempty"`
@@ -10267,6 +10336,21 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	// URL. - If `Exporter` is `CLOUD_TRACE`: - `endpoint` refers to a valid
 	// project ID Deprecated: Use trace_protocol instead.
 	OpenTelemetryProtocolEnabled bool `json:"openTelemetryProtocolEnabled,omitempty"`
+	// OtelCollectorSecurityScheme: Optional. Security scheme for the outbound
+	// connection to the customer-owned OpenTelemetry Collector. Only meaningful
+	// when `exporter` is `OPEN_TELEMETRY_COLLECTOR`. Runtime consumers unaware of
+	// a value should treat it as `OTEL_COLLECTOR_SECURITY_SCHEME_UNSPECIFIED` (==
+	// NONE).
+	//
+	// Possible values:
+	//   "OTEL_COLLECTOR_SECURITY_SCHEME_UNSPECIFIED" - Unspecified. Behavior is
+	// identical to NONE.
+	//   "NONE" - Default. Unauthenticated OTLP/HTTP export. Preserves today's
+	// behavior byte-for-byte for existing configurations.
+	//   "MTLS" - Mutual TLS via customer PKI. Cert material is stored in Apigee
+	// Keystores/Truststores and referenced by resource ID in `mtls_config` (same
+	// mechanism as TargetServer.tls_info).
+	OtelCollectorSecurityScheme string `json:"otelCollectorSecurityScheme,omitempty"`
 	// Overrides: List of trace configuration overrides for spicific API proxies.
 	Overrides []*GoogleCloudApigeeV1RuntimeTraceConfigOverride `json:"overrides,omitempty"`
 	// RevisionCreateTime: The timestamp that the revision was created or updated.
@@ -10309,6 +10393,55 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 
 func (s GoogleCloudApigeeV1RuntimeTraceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeTraceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig: Runtime-side view of
+// `TraceConfig.OtelMtlsConfig` for the outbound OTel Collector mTLS
+// connection. Shape mirrors `TlsInfoConfig` (in this same file, above)
+// exactly. The oneof discriminates between a direct keystore reference and a
+// `ref://`-indirected reference; both are surfaced on the wire without
+// flattening. The referenced keystore must also appear in
+// `EnvironmentConfig.keystores[]` so the underlying alias bytes are available
+// at runtime. Referential integrity is enforced at trace-config update time:
+// any PATCH that references a keystore not already present is rejected in the
+// same transaction that would persist the update, and keystore/alias/reference
+// deletion is blocked while a trace-config references it.
+type GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig struct {
+	// KeyAlias: Full alias resource name of the client-side key/cert alias.
+	// Format:
+	// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{alias}`
+	//  Set when the customer supplied a plain keystore ID in
+	// `TraceConfig.OtelMtlsConfig.key_store`.
+	KeyAlias string `json:"keyAlias,omitempty"`
+	// KeyAliasReference: Reference name and alias-id pair. Set when the customer
+	// supplied a `ref://{referenceID}` URI in
+	// `TraceConfig.OtelMtlsConfig.key_store`. Resolved via the References catalog
+	// the same way as `TlsInfoConfig.key_alias_reference` in target-server TLS.
+	// Reuses the top-level `KeyAliasReference` message defined for `TlsInfoConfig`
+	// above; no new message.
+	KeyAliasReference *GoogleCloudApigeeV1KeyAliasReference `json:"keyAliasReference,omitempty"`
+	// TrustStore: Full resource name of the truststore holding the CA(s) that
+	// signed the OTel Collector's server certificate. Either a keystore or a
+	// reference resource name, mirroring `TlsInfoConfig.trust_store` above:
+	// `organizations/{org}/environments/{env}/keystores/{keystore}`
+	// `organizations/{org}/environments/{env}/references/{reference}`
+	TrustStore string `json:"trustStore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyAlias") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyAlias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12605,6 +12738,24 @@ type GoogleCloudApigeeV1TraceConfig struct {
 	//   "OPEN_TELEMETRY_CLOUD_TRACE" - Exports events to Cloud Trace. Compatible
 	// with OpenTelemetry protocol.
 	Exporter string `json:"exporter,omitempty"`
+	// MtlsConfig: Optional. mTLS configuration for the OTel Collector endpoint.
+	// Required when `otel_collector_security_scheme` == MTLS; must not be set
+	// otherwise.
+	MtlsConfig *GoogleCloudApigeeV1TraceConfigOtelMtlsConfig `json:"mtlsConfig,omitempty"`
+	// OtelCollectorSecurityScheme: Optional. The security scheme for the OTel
+	// Collector endpoint. Defaults to NONE (unauthenticated OTLP/HTTP), preserving
+	// today's behavior for existing configurations. Only applicable when
+	// `exporter` == OPEN_TELEMETRY_COLLECTOR.
+	//
+	// Possible values:
+	//   "OTEL_COLLECTOR_SECURITY_SCHEME_UNSPECIFIED" - Unspecified. Behavior is
+	// identical to NONE.
+	//   "NONE" - Default. Unauthenticated OTLP/HTTP export. Preserves today's
+	// behavior byte-for-byte for existing configurations.
+	//   "MTLS" - Mutual TLS via customer PKI. Cert material is stored in Apigee
+	// Keystores/Truststores and referenced by resource ID in `mtls_config` (same
+	// mechanism as TargetServer.tls_info).
+	OtelCollectorSecurityScheme string `json:"otelCollectorSecurityScheme,omitempty"`
 	// SamplingConfig: Distributed trace configuration for all API proxies in an
 	// environment. You can also override the configuration for a specific API
 	// proxy using the distributed trace configuration overrides API.
@@ -12648,6 +12799,59 @@ type GoogleCloudApigeeV1TraceConfig struct {
 
 func (s GoogleCloudApigeeV1TraceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TraceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1TraceConfigOtelMtlsConfig: OtelMtlsConfig configures
+// mutual TLS for the outbound OTel Collector connection by referencing
+// already-uploaded Keystore/Truststore aliases. Key/cert material is uploaded
+// via the existing Keystore Alias APIs (POST .../keystores/{ks}/aliases), the
+// same APIs used to configure mTLS for `TargetServer.tls_info`. Only the
+// resource IDs of those aliases live in this message; no secret material is
+// inlined into TraceConfig. Field shape mirrors `TlsInfo` used by
+// `TargetServer.tls_info`: - `key_store` and `trust_store` accept either a
+// plain keystore ID or a `ref://{referenceID}` URI (an environment-scoped
+// Reference whose `resource_type` is `KeyStore`/`TrustStore`). References
+// enable rotation without editing the TraceConfig itself. - `key_alias` is the
+// plain alias ID within `key_store`. Fields that would normally appear on
+// `TlsInfo` (enabled, client_auth_enabled, protocols, enforce,
+// ignore_validation_errors) are intentionally omitted from this customer
+// surface. The runtime enforces secure defaults: - Mutual TLS is always
+// required (both server AND client cert exchanged). - Server certificate
+// validation is always strict (no ignoring errors). - TLS 1.2 and TLS 1.3 are
+// enabled; older versions are rejected.
+type GoogleCloudApigeeV1TraceConfigOtelMtlsConfig struct {
+	// KeyAlias: Required. Plain alias ID within `key_store` that contains the
+	// client key/cert used for mTLS.
+	KeyAlias string `json:"keyAlias,omitempty"`
+	// KeyStore: Required. Keystore holding the client-side key/cert alias. Accepts
+	// either a plain keystore ID (e.g. `my-keystore`) resolving to
+	// `organizations/{org}/environments/{env}/keystores/{key_store}`, or a
+	// reference URI of the form `ref://{referenceID}` that points to a Reference
+	// whose `resource_type` is `KeyStore`.
+	KeyStore string `json:"keyStore,omitempty"`
+	// TrustStore: Required. Truststore holding the CA(s) that signed the OTel
+	// Collector's server certificate. Accepts either a plain keystore ID (e.g.
+	// `my-truststore`) resolving to
+	// `organizations/{org}/environments/{env}/keystores/{trust_store}`, or a
+	// reference URI of the form `ref://{referenceID}` that points to a Reference
+	// whose `resource_type` is `KeyStore` (used as a truststore).
+	TrustStore string `json:"trustStore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyAlias") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyAlias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1TraceConfigOtelMtlsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1TraceConfigOtelMtlsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15211,7 +15415,7 @@ func (r *OrganizationsService) UpdateControlPlaneAccess(name string, googlecloud
 
 // UpdateMask sets the optional parameter "updateMask": List of fields to be
 // updated. Fields that can be updated: synchronizer_identities,
-// publisher_identities.
+// analytics_publisher_identities, watcher_identities.
 func (c *OrganizationsUpdateControlPlaneAccessCall) UpdateMask(updateMask string) *OrganizationsUpdateControlPlaneAccessCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

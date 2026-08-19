@@ -4192,7 +4192,7 @@
       }
     }
   },
-  "revision": "20260810",
+  "revision": "20260817",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -8738,6 +8738,10 @@
         "actualStartTime": {
           "description": "The date and time that the broadcast actually started. This information is only available once the broadcast's state is live.",
           "format": "date-time",
+          "type": "string"
+        },
+        "categoryId": {
+          "description": "The YouTube video category associated with the video broadcast.",
           "type": "string"
         },
         "channelId": {

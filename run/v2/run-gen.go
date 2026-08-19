@@ -578,6 +578,8 @@ type GoogleCloudRunV2Condition struct {
 	//   "CANCELLING" - The execution is in the process of being cancelled.
 	//   "DELETED" - The execution was deleted.
 	//   "DELAYED_START_PENDING" - A delayed execution is waiting for a start time.
+	//   "DELAYED_EXECUTION_EXCEEDING_DURATION_LIMIT" - A delayed execution
+	// exceeded the maximum runtime duration.
 	ExecutionReason string `json:"executionReason,omitempty"`
 	// InstanceReason: Output only. A reason for the instance condition.
 	//
@@ -1164,6 +1166,9 @@ type GoogleCloudRunV2ExecutionTemplate struct {
 	Client string `json:"client,omitempty"`
 	// ClientVersion: Optional. Arbitrary version identifier for the API client.
 	ClientVersion string `json:"clientVersion,omitempty"`
+	// DelayExecution: Optional. If true, the system will start the execution
+	// within the next 12 hours depending on available capacity.
+	DelayExecution bool `json:"delayExecution,omitempty"`
 	// Labels: Unstructured key value map that can be used to organize and
 	// categorize objects. User-provided labels are shared with Google's billing
 	// system, so they can be used to filter, or break down billing charges by
@@ -2253,6 +2258,9 @@ func (s GoogleCloudRunV2NodeSelector) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2Overrides struct {
 	// ContainerOverrides: Per container override specification.
 	ContainerOverrides []*GoogleCloudRunV2ContainerOverride `json:"containerOverrides,omitempty"`
+	// DelayExecution: Optional. If true, the system will start the execution
+	// within the next 12 hours depending on available capacity.
+	DelayExecution bool `json:"delayExecution,omitempty"`
 	// TaskCount: Optional. The desired number of tasks the execution should run.
 	// Will replace existing task_count value.
 	TaskCount int64 `json:"taskCount,omitempty"`
@@ -2882,6 +2890,10 @@ type GoogleCloudRunV2Service struct {
 	// Description: User-provided description of the Service. This field currently
 	// has a 512-character limit.
 	Description string `json:"description,omitempty"`
+	// DurableExecution: Optional. Immutable. Indicates whether the Service has
+	// durable execution enabled. This field is immutable once the Service is
+	// created.
+	DurableExecution bool `json:"durableExecution,omitempty"`
 	// Etag: Optional. A system-generated fingerprint for this version of the
 	// resource. May be used to detect modification conflict during updates.
 	Etag string `json:"etag,omitempty"`
@@ -5177,6 +5189,11 @@ type GoogleDevtoolsCloudbuildV1GitSourceDependency struct {
 	Depth int64 `json:"depth,omitempty,string"`
 	// DestPath: Required. Where should the files be placed on the worker.
 	DestPath string `json:"destPath,omitempty"`
+	// FetchTags: Optional. True if remote tags should be fetched too (default
+	// false). Note: when depth is 1 (default), git fetch only retrieves tags
+	// pointing to commits within the shallow boundary. Set depth to -1 to fetch
+	// all historical tags.
+	FetchTags bool `json:"fetchTags,omitempty"`
 	// RecurseSubmodules: Optional. True if submodules should be fetched too
 	// (default false).
 	RecurseSubmodules bool `json:"recurseSubmodules,omitempty"`

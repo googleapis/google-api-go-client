@@ -435,6 +435,10 @@ type DocumentChunk struct {
 	// is from. Format: `documents/{uri_without_scheme}` Example:
 	// `documents/docs.cloud.google.com/storage/docs/creating-buckets`
 	Parent string `json:"parent,omitempty"`
+	// RelevanceScore: Output only. Represents the relevance score of the chunk to
+	// the search query. Higher score indicates higher chunk relevance. The score
+	// is in range [0.0, 1.0].
+	RelevanceScore float64 `json:"relevanceScore,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -451,6 +455,20 @@ type DocumentChunk struct {
 func (s DocumentChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentChunk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *DocumentChunk) UnmarshalJSON(data []byte) error {
+	type NoMethod DocumentChunk
+	var s1 struct {
+		RelevanceScore gensupport.JSONFloat64 `json:"relevanceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RelevanceScore = float64(s1.RelevanceScore)
+	return nil
 }
 
 // DocumentReference: Represents a reference to a document.

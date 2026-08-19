@@ -1704,18 +1704,21 @@ func (s SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, err
 // SubscriptionMigrationDetails: Describes the details of the migrated
 // subscription.
 type SubscriptionMigrationDetails struct {
+	// LegacyCreationTime: Output only. The creation time of the migrated
+	// subscription in the legacy system.
+	LegacyCreationTime string `json:"legacyCreationTime,omitempty"`
 	// MigratedSubscriptionId: Output only. The migrated subscription id in the
 	// legacy system.
 	MigratedSubscriptionId string `json:"migratedSubscriptionId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MigratedSubscriptionId") to
+	// ForceSendFields is a list of field names (e.g. "LegacyCreationTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MigratedSubscriptionId") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "LegacyCreationTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

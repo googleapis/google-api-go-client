@@ -383,6 +383,19 @@ type GoogleCloudAiplatformV1beta1AudioTranscriptionConfig struct {
 	// LanguageHints: Optional. Deprecated: Use top-level `language_codes` instead.
 	// Specifies one or more languages in the audio.
 	LanguageHints *GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints `json:"languageHints,omitempty"`
+	// Mode: Optional. Configures transcription mode. Supported values: `VERBATIM`,
+	// `SMART`. If unspecified, defaults to `VERBATIM` transcription. In `SMART`
+	// mode, the model performs disfluency removal (eliminating filler words,
+	// repetitions, and false starts), light grammatical cleanup, automatic
+	// formatting (paragraphs, bullet points, numbered lists), and minor user edits
+	// (inline self-corrections). Timestamps and diarization are incompatible with
+	// mode `SMART`.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified transcription mode.
+	//   "VERBATIM" - Verbatim transcription mode.
+	//   "SMART" - Smart transcription mode.
+	Mode string `json:"mode,omitempty"`
 	// WordTimestamp: Optional. Configures word-level timestamp generation.
 	WordTimestamp bool `json:"wordTimestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdaptationPhrases") to
@@ -2956,6 +2969,17 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	// InlineData: Optional. The inline data content of the part. This can be used
 	// to include images, audio, or video in a request.
 	InlineData *GoogleCloudAiplatformV1beta1Blob `json:"inlineData,omitempty"`
+	// MediaProcessing: Optional. How the model processes this part's media for
+	// understanding. Only meaningful for video parts (`inline_data` or `file_data`
+	// with video mime). Non-video parts ignore this field.
+	//
+	// Possible values:
+	//   "MEDIA_PROCESSING_UNSPECIFIED" - Default. Uses model-specific processing
+	// (3.5 Pro+ -> `AGENTIC`, older models -> `STATIC`).
+	//   "STATIC" - Fixed-rate frame extraction. All frames placed in context.
+	//   "AGENTIC" - Model-driven dynamic navigation. Recommended for most use
+	// cases.
+	MediaProcessing string `json:"mediaProcessing,omitempty"`
 	// MediaResolution: per part media resolution. Media resolution for the input
 	// media.
 	MediaResolution *GoogleCloudAiplatformV1beta1PartMediaResolution `json:"mediaResolution,omitempty"`

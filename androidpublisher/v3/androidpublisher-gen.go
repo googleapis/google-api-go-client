@@ -120,6 +120,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.Applications = NewApplicationsService(s)
 	s.Apprecovery = NewApprecoveryService(s)
+	s.Appsigning = NewAppsigningService(s)
 	s.Appstoreappsreview = NewAppstoreappsreviewService(s)
 	s.Appstorecatalog = NewAppstorecatalogService(s)
 	s.Edits = NewEditsService(s)
@@ -161,6 +162,8 @@ type Service struct {
 	Applications *ApplicationsService
 
 	Apprecovery *ApprecoveryService
+
+	Appsigning *AppsigningService
 
 	Appstoreappsreview *AppstoreappsreviewService
 
@@ -249,6 +252,15 @@ func NewApprecoveryService(s *Service) *ApprecoveryService {
 }
 
 type ApprecoveryService struct {
+	s *Service
+}
+
+func NewAppsigningService(s *Service) *AppsigningService {
+	rs := &AppsigningService{s: s}
+	return rs
+}
+
+type AppsigningService struct {
 	s *Service
 }
 
@@ -2993,6 +3005,88 @@ func (s CatalogSdkVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CertificateHashes: Hash digests of a certificate.
+type CertificateHashes struct {
+	// CertificateHashMd5: Hex-encoded MD5 hash of the certificate. example:
+	// `43:51:43:A1:B5:FC:8B:B7:0A:3A:A9:B1:0F:66:73:A8`
+	CertificateHashMd5 string `json:"certificateHashMd5,omitempty"`
+	// CertificateHashSha1: Hex-encoded SHA1 hash of the certificate. example:
+	// `86:61:97:1A:D5:EF:E5:74:1E:A7:5B:84:7C:68:37:65:CD:94:16:DE`
+	CertificateHashSha1 string `json:"certificateHashSha1,omitempty"`
+	// CertificateHashSha256: Hex-encoded SHA256 hash of the certificate. example:
+	// `94:49:C7:F3:A9:3C:F0:C5:5A:67:5D:DF:1C:83:73:2D:87:D5:62:55:E7:0B:15:0D:9E:6
+	// F:3C:F8:63:BB:7F:C1`
+	CertificateHashSha256 string `json:"certificateHashSha256,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateHashMd5") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateHashMd5") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CertificateHashes) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateHashes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudKmsKey: Reference to a private key hosted in developer-managed Google
+// Cloud KMS.
+type CloudKmsKey struct {
+	// CryptoKeyVersionResource: Required. Resource identifier of the private key
+	// hosted in Google Cloud KMS. The Google Play service account must be granted
+	// Decrypt and Sign permissions on this resource. Format:
+	// projects//locations//keyRings//cryptoKeys//cryptoKeyVersions/
+	CryptoKeyVersionResource string `json:"cryptoKeyVersionResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CryptoKeyVersionResource")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CryptoKeyVersionResource") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudKmsKey) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudKmsKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudKmsKeyAndCert: Cloud KMS key and the certificate associated with the
+// key.
+type CloudKmsKeyAndCert struct {
+	// CloudKmsKey: Required. Cloud KMS key.
+	CloudKmsKey *CloudKmsKey `json:"cloudKmsKey,omitempty"`
+	// PemCertificate: Required. Certificate associated with the key. The bytes
+	// must contain the certificate in PEM format.
+	PemCertificate string `json:"pemCertificate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKmsKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudKmsKeyAndCert) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudKmsKeyAndCert
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CoarseLocation: Coarse Geographic location details for where the consumption
 // happened.
 type CoarseLocation struct {
@@ -4332,6 +4426,110 @@ type DeviceTierSet struct {
 
 func (s DeviceTierSet) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceTierSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EnrollAppRequest: Request to enroll an app into Play App Signing using a
+// self-hosted Cloud KMS key.
+type EnrollAppRequest struct {
+	// EnrollExistingApp: Enrolls an existing app into Play signing using an
+	// external Cloud KMS key.
+	EnrollExistingApp *EnrollExistingApp `json:"enrollExistingApp,omitempty"`
+	// EnrollNewApp: Changes the signing key of a new app to an external Cloud KMS
+	// key. The app must not have published to Open testing or Production tracks.
+	EnrollNewApp *EnrollNewApp `json:"enrollNewApp,omitempty"`
+	// PemUploadCertificate: The certificate associated with the upload key, in PEM
+	// format.
+	PemUploadCertificate string `json:"pemUploadCertificate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnrollExistingApp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnrollExistingApp") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnrollAppRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EnrollAppRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EnrollAppResponse: Response to enroll an app into Play signing.
+type EnrollAppResponse struct {
+	// SigningCertificate: The signing certificate hashes for the app. Always set.
+	SigningCertificate *CertificateHashes `json:"signingCertificate,omitempty"`
+	// UploadCertificate: The upload certificate hashes for the app. Set iff
+	// pem_upload_certificate was set in the request.
+	UploadCertificate *CertificateHashes `json:"uploadCertificate,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "SigningCertificate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SigningCertificate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnrollAppResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod EnrollAppResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EnrollExistingApp: Enroll an existing app into Play signing.
+type EnrollExistingApp struct {
+	// CloudKmsKey: Required. Self-hosted key. Once enrolled, this key will be used
+	// to sign your app.
+	CloudKmsKey *CloudKmsKey `json:"cloudKmsKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKmsKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKmsKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnrollExistingApp) MarshalJSON() ([]byte, error) {
+	type NoMethod EnrollExistingApp
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EnrollNewApp: Enroll a new app into Play signing.
+type EnrollNewApp struct {
+	// CloudKmsKeyAndCert: Required. Self-hosted key. Once enrolled, this key will
+	// be used to sign your app.
+	CloudKmsKeyAndCert *CloudKmsKeyAndCert `json:"cloudKmsKeyAndCert,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKmsKeyAndCert") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKmsKeyAndCert") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EnrollNewApp) MarshalJSON() ([]byte, error) {
+	type NoMethod EnrollNewApp
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9574,6 +9772,93 @@ type RevokeSubscriptionPurchaseResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// RotateAppSigningKeyRequest: Request to rotate an app's signing key.
+type RotateAppSigningKeyRequest struct {
+	// KeyRotationReason: Required. Reason for rotating the app key.
+	//
+	// Possible values:
+	//   "KEY_ROTATION_REASON_UNSPECIFIED" - Unspecified key rotation reason.
+	// Cannot be used.
+	//   "COMPROMISED_KEY" - Key is compromised.
+	//   "USE_STRONGER_KEY" - Stronger key is required.
+	//   "USE_SAME_KEY_FOR_MULTIPLE_APPS" - Same key is used for multiple apps.
+	//   "ROUTINE_KEY_UPGRADE" - Routine key upgrade.
+	//   "OTHER" - Other reason.
+	KeyRotationReason string `json:"keyRotationReason,omitempty"`
+	// RotatedCloudKmsKey: Required. Self-hosted Cloud KMS key.
+	RotatedCloudKmsKey *RotatedCloudKmsKey `json:"rotatedCloudKmsKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyRotationReason") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyRotationReason") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RotateAppSigningKeyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RotateAppSigningKeyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RotateAppSigningKeyResponse: Response to rotate an app's signing key.
+type RotateAppSigningKeyResponse struct {
+	// RotatedKeyCertificate: The rotated key certificate hashes for the app.
+	// Always set.
+	RotatedKeyCertificate *CertificateHashes `json:"rotatedKeyCertificate,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "RotatedKeyCertificate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RotatedKeyCertificate") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RotateAppSigningKeyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RotateAppSigningKeyResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RotatedCloudKmsKey: Message representing rotated Cloud KMS key. Consists of
+// the Cloud KMS key and its associated proof of rotation.
+type RotatedCloudKmsKey struct {
+	// CloudKmsKeyAndCert: Required. Cloud KMS key and the certificate associated
+	// with the key.
+	CloudKmsKeyAndCert *CloudKmsKeyAndCert `json:"cloudKmsKeyAndCert,omitempty"`
+	// SigningCertificateLineage: Required. Proof-of-rotation. See creating signing
+	// certificate lineages
+	// (https://developer.android.com/studio/command-line/apksigner#rotate_signing_keys_2).
+	SigningCertificateLineage string `json:"signingCertificateLineage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudKmsKeyAndCert") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudKmsKeyAndCert") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RotatedCloudKmsKey) MarshalJSON() ([]byte, error) {
+	type NoMethod RotatedCloudKmsKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SafetyLabelsUpdateRequest: Request to update Safety Labels of an app.
 type SafetyLabelsUpdateRequest struct {
 	// SafetyLabels: Required. Contents of the CSV file containing Data Safety
@@ -13312,6 +13597,228 @@ func (c *ApprecoveryListCall) Do(opts ...googleapi.CallOption) (*ListAppRecoveri
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.apprecovery.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppsigningEnrollAppCall struct {
+	s                *Service
+	name             string
+	enrollapprequest *EnrollAppRequest
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// EnrollApp: Enrolls an app in Play App Signing using a self-hosted Google
+// Cloud KMS key. Warning: Do not use this method for standard Play App Signing
+// enrollment. * Standard enrollment with Google-generated or Google-managed
+// keys cannot be done via API. * This advanced API is strictly for enterprise
+// organizations with mandatory compliance, regulatory, or policy requirements
+// to retain key custody in an external Google Cloud KMS instance. *
+// Prerequisites: Requires an active, properly configured Google Cloud KMS key
+// with appropriate IAM permissions granted to Google Play before calling this
+// method. See Help Center:
+// https://support.google.com/googleplay/android-developer/answer/9842756
+//
+// - name: Either package name or app ID of the app enrolling in Play Signing.
+func (r *AppsigningService) EnrollApp(name string, enrollapprequest *EnrollAppRequest) *AppsigningEnrollAppCall {
+	c := &AppsigningEnrollAppCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.enrollapprequest = enrollapprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppsigningEnrollAppCall) Fields(s ...googleapi.Field) *AppsigningEnrollAppCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AppsigningEnrollAppCall) Context(ctx context.Context) *AppsigningEnrollAppCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppsigningEnrollAppCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsigningEnrollAppCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.enrollapprequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{name}/appSigning:enrollApp")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.appsigning.enrollApp", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.appsigning.enrollApp" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *EnrollAppResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *AppsigningEnrollAppCall) Do(opts ...googleapi.CallOption) (*EnrollAppResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EnrollAppResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.appsigning.enrollApp", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type AppsigningRotateAppSigningKeyCall struct {
+	s                          *Service
+	name                       string
+	rotateappsigningkeyrequest *RotateAppSigningKeyRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// RotateAppSigningKey: Rotates an app's signing key to a new self-hosted
+// Google Cloud KMS key. Warning: This method only applies to apps enrolled
+// with self-hosted Cloud KMS keys. For apps using standard Google-managed Play
+// App Signing, key rotation requests must be initiated through the Google Play
+// Console UI. See Help Center:
+// https://support.google.com/googleplay/android-developer/answer/9842756
+//
+// - name: Either package name or app ID of the app rotating the signing key.
+func (r *AppsigningService) RotateAppSigningKey(name string, rotateappsigningkeyrequest *RotateAppSigningKeyRequest) *AppsigningRotateAppSigningKeyCall {
+	c := &AppsigningRotateAppSigningKeyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rotateappsigningkeyrequest = rotateappsigningkeyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AppsigningRotateAppSigningKeyCall) Fields(s ...googleapi.Field) *AppsigningRotateAppSigningKeyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AppsigningRotateAppSigningKeyCall) Context(ctx context.Context) *AppsigningRotateAppSigningKeyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AppsigningRotateAppSigningKeyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AppsigningRotateAppSigningKeyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.rotateappsigningkeyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{name}/appSigning:rotateAppSigningKey")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.appsigning.rotateAppSigningKey", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.appsigning.rotateAppSigningKey" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RotateAppSigningKeyResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AppsigningRotateAppSigningKeyCall) Do(opts ...googleapi.CallOption) (*RotateAppSigningKeyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RotateAppSigningKeyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.appsigning.rotateAppSigningKey", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

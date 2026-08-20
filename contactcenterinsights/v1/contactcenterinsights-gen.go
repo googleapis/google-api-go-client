@@ -4917,9 +4917,13 @@ type GoogleCloudContactcenterinsightsV1FinalizeAssessmentRequest struct {
 // GoogleCloudContactcenterinsightsV1GcsSource: A Cloud Storage source of
 // conversation data.
 type GoogleCloudContactcenterinsightsV1GcsSource struct {
-	// AudioUri: Cloud Storage URI that points to a file that contains the
-	// conversation audio.
+	// AudioUri: Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI
+	// that points to a file that contains the conversation audio.
 	AudioUri string `json:"audioUri,omitempty"`
+	// AudioUris: Immutable. Cloud Storage URIs that point to files that contain
+	// the conversation audio. Supports both single audio files and multi-leg
+	// session recordings (e.g., call transfers, rolling recording buffers).
+	AudioUris []string `json:"audioUris,omitempty"`
 	// TranscriptUri: Immutable. Cloud Storage URI that points to a file that
 	// contains the conversation transcript.
 	TranscriptUri string `json:"transcriptUri,omitempty"`
@@ -9308,6 +9312,10 @@ type GoogleCloudContactcenterinsightsV1SignedAudioUris struct {
 	// SignedGcsAudioUri: The signed URI for the audio from the Cloud Storage
 	// conversation source.
 	SignedGcsAudioUri string `json:"signedGcsAudioUri,omitempty"`
+	// SignedGcsAudioUris: Output only. The signed URIs for the audio from the
+	// Cloud Storage conversation source when multiple audio files exist (e.g.
+	// multi-leg conversations).
+	SignedGcsAudioUris []string `json:"signedGcsAudioUris,omitempty"`
 	// SignedTurnLevelAudios: The signed URI for the audio corresponding to each
 	// turn in the conversation.
 	SignedTurnLevelAudios []*GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio `json:"signedTurnLevelAudios,omitempty"`
@@ -12793,9 +12801,13 @@ func (s GoogleCloudContactcenterinsightsV1alpha1FeedbackLabel) MarshalJSON() ([]
 // GoogleCloudContactcenterinsightsV1alpha1GcsSource: A Cloud Storage source of
 // conversation data.
 type GoogleCloudContactcenterinsightsV1alpha1GcsSource struct {
-	// AudioUri: Cloud Storage URI that points to a file that contains the
-	// conversation audio.
+	// AudioUri: Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI
+	// that points to a file that contains the conversation audio.
 	AudioUri string `json:"audioUri,omitempty"`
+	// AudioUris: Immutable. Cloud Storage URIs that point to files that contain
+	// the conversation audio. Supports both single audio files and multi-leg
+	// session recordings (e.g., call transfers, rolling recording buffers).
+	AudioUris []string `json:"audioUris,omitempty"`
 	// TranscriptUri: Immutable. Cloud Storage URI that points to a file that
 	// contains the conversation transcript.
 	TranscriptUri string `json:"transcriptUri,omitempty"`
@@ -18561,9 +18573,13 @@ func (s GoogleCloudContactcenterinsightsV1mainFeedbackLabel) MarshalJSON() ([]by
 // GoogleCloudContactcenterinsightsV1mainGcsSource: A Cloud Storage source of
 // conversation data.
 type GoogleCloudContactcenterinsightsV1mainGcsSource struct {
-	// AudioUri: Cloud Storage URI that points to a file that contains the
-	// conversation audio.
+	// AudioUri: Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI
+	// that points to a file that contains the conversation audio.
 	AudioUri string `json:"audioUri,omitempty"`
+	// AudioUris: Immutable. Cloud Storage URIs that point to files that contain
+	// the conversation audio. Supports both single audio files and multi-leg
+	// session recordings (e.g., call transfers, rolling recording buffers).
+	AudioUris []string `json:"audioUris,omitempty"`
 	// TranscriptUri: Immutable. Cloud Storage URI that points to a file that
 	// contains the conversation transcript.
 	TranscriptUri string `json:"transcriptUri,omitempty"`

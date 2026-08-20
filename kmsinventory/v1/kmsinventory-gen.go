@@ -750,9 +750,9 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// destroyed. Additional details can be found in
 	// CryptoKeyVersion.external_destruction_failure_reason.
 	State string `json:"state,omitempty"`
-	// TrustedWrappingEnabled: Immutable. Field indicating that the key may be
-	// wrapped by a trusted key. This field can be set for all key purposes except
-	// ENCRYPT_DECRYPT, and is only valid for keys with protection level
+	// TrustedWrappingEnabled: Optional. Immutable. Field indicating that the key
+	// may be wrapped by a trusted key. This field can be set for all key purposes
+	// except ENCRYPT_DECRYPT, and is only valid for keys with protection level
 	// HSM_SINGLE_TENANT. This field can only be set at creation or import time via
 	// CreateCryptoKeyVersion, or ImportCryptoKeyVersion.
 	TrustedWrappingEnabled bool `json:"trustedWrappingEnabled,omitempty"`
@@ -1036,6 +1036,8 @@ type GoogleCloudKmsV1KeyOperationAttestation struct {
 	// https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/software-key-attestation.html.
 	//   "CAVIUM_V2_COMPRESSED" - Cavium HSM attestation V2 compressed with gzip.
 	// This is a new format introduced in Cavium's version 3.2-08.
+	//   "CAVIUM_V209" - Cavium HSM attestation V209, introduced in Cavium's
+	// version 2.09-0702.
 	Format string `json:"format,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CertChains") to
 	// unconditionally include in API requests. By default, fields with empty or

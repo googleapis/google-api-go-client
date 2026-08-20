@@ -826,7 +826,8 @@ type DeviceIdentifier struct {
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Device type is not specified.
-	//   "DEVICE_TYPE_ANDROID" - Android device
+	//   "DEVICE_TYPE_ANDROID" - Android mobile and Desktop except Googlebooks and
+	// Chromebooks
 	//   "DEVICE_TYPE_CHROME_OS" - Chrome OS device
 	DeviceType string `json:"deviceType,omitempty"`
 	// Imei: The device’s IMEI number. Validated on input.

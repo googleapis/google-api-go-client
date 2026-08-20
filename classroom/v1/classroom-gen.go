@@ -7341,7 +7341,8 @@ func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework 
 // object, an `INVALID_ARGUMENT` error is returned. The following fields may be
 // specified by teachers: * `title` * `description` * `state` * `due_date` *
 // `due_time` * `max_points` * `scheduled_time` *
-// `submission_modification_mode` * `topic_id` * `grading_period_id`
+// `submission_modification_mode` * `topic_id` * `grading_period_id` *
+// `learning_goals`
 func (c *CoursesCourseWorkPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -10899,7 +10900,7 @@ func (r *CoursesCourseWorkMaterialsService) Patch(courseId string, id string, co
 // not support empty values is included in the update mask and not set in the
 // course work material object, an `INVALID_ARGUMENT` error is returned. The
 // following fields may be specified by teachers: * `title` * `description` *
-// `state` * `scheduled_time` * `topic_id`
+// `state` * `scheduled_time` * `topic_id` * `learning_goals`
 func (c *CoursesCourseWorkMaterialsPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkMaterialsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

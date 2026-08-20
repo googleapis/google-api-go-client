@@ -1421,6 +1421,8 @@ type GoogleCloudDatacatalogV1Entry struct {
 	//   "FEATURE_VIEW" - Feature View resource in Vertex AI Feature Store.
 	//   "FEATURE_GROUP" - Feature Group resource in Vertex AI Feature Store.
 	//   "GRAPH" - An entry type for a graph.
+	//   "NODE" - An entry type for a graph node.
+	//   "EDGE" - An entry type for a graph edge.
 	Type string `json:"type,omitempty"`
 	// UsageSignal: Resource usage statistics.
 	UsageSignal *GoogleCloudDatacatalogV1UsageSignal `json:"usageSignal,omitempty"`

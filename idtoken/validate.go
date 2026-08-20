@@ -229,6 +229,14 @@ func (v *Validator) validateES256(ctx context.Context, keyID string, hashedConte
 		X:     new(big.Int).SetBytes(dx),
 		Y:     new(big.Int).SetBytes(dy),
 	}
+	// Validate the signature length before slicing. A JWT with a signature
+	// segment that decodes to fewer than es256KeySize*2 bytes would otherwise
+	// cause an unrecovered panic ("slice bounds out of range") here, since
+	// sig[:es256KeySize] and sig[es256KeySize:] assume exactly two
+	// es256KeySize-byte components (r and s) with no length check.
+	if len(sig) != es256KeySize*2 {
+		return fmt.Errorf("idtoken: invalid ES256 signature length: got %d bytes, want %d", len(sig), es256KeySize*2)
+	}
 	r := big.NewInt(0).SetBytes(sig[:es256KeySize])
 	s := big.NewInt(0).SetBytes(sig[es256KeySize:])
 	if valid := ecdsa.Verify(pk, hashedContent, r, s); !valid {

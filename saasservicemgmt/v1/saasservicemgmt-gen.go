@@ -1369,7 +1369,9 @@ type Saas struct {
 	// the application_template is empty.
 	//
 	// Possible values:
-	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified.
+	//   "STATE_UNSPECIFIED" - State is unspecified.
+	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified. Deprecated: Use
+	// STATE_UNSPECIFIED instead.
 	//   "STATE_ACTIVE" - The Saas is ready
 	//   "STATE_RUNNING" - In the process of importing, synchronizing or
 	// replicating ApplicationTemplates
@@ -1985,7 +1987,7 @@ type UnitOperation struct {
 	// of the unit operation.
 	//
 	// Possible values:
-	//   "UNIT_OPERATION_STATE_UNKNOWN"
+	//   "UNIT_OPERATION_STATE_UNKNOWN" - Unit operation state is unknown.
 	//   "UNIT_OPERATION_STATE_PENDING" - Unit operation is accepted but not ready
 	// to run.
 	//   "UNIT_OPERATION_STATE_SCHEDULED" - Unit operation is accepted and

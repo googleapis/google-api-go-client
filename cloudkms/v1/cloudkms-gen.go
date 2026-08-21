@@ -700,7 +700,7 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AutokeyConfig: Cloud KMS Autokey configuration for a folder.
+// AutokeyConfig: Cloud KMS Autokey configuration for a project or folder.
 type AutokeyConfig struct {
 	// Etag: Optional. A checksum computed by the server based on the value of
 	// other fields. This may be sent on update requests to ensure that the client
@@ -2091,7 +2091,7 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 type ExternalProtectionLevelOptions struct {
 	// EkmConnectionBackendOverride: Optional. The resource name of the backend
 	// environment where the key material of CryptoKeyVersions is associated with.
-	// Setting this field overrides the CryptoKeyBackend. This field may be set
+	// Setting this field overrides the crypto_key_backend. This field may be set
 	// when CryptoKeyVersions is set to EXTERNAL_VPC. Format:
 	// `projects/*/locations/*/ekmConnections/*`.
 	EkmConnectionBackendOverride string `json:"ekmConnectionBackendOverride,omitempty"`
@@ -2867,6 +2867,8 @@ type KeyOperationAttestation struct {
 	// https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/software-key-attestation.html.
 	//   "CAVIUM_V2_COMPRESSED" - Cavium HSM attestation V2 compressed with gzip.
 	// This is a new format introduced in Cavium's version 3.2-08.
+	//   "CAVIUM_V209" - Cavium HSM attestation V209, introduced in Cavium's
+	// version 2.09-0702.
 	Format string `json:"format,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CertChains") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4481,7 +4483,7 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // ShowEffectiveAutokeyConfigResponse: Response message for
-// ShowEffectiveAutokeyConfig.
+// ShowEffectiveAutokeyConfig
 type ShowEffectiveAutokeyConfigResponse struct {
 	// KeyProject: Name of the key project configured in the ancestry of the
 	// project or folder.
@@ -5207,10 +5209,14 @@ type FoldersShowEffectiveAutokeyConfigCall struct {
 }
 
 // ShowEffectiveAutokeyConfig: Returns the effective Cloud KMS Autokey
-// configuration for a given project or folder.
+// configuration for a given project or folder. Note on permissions: - If
+// called on a project (`projects/{project}`), requires
+// `cloudkms.projects.showEffectiveAutokeyConfig`. - If called on a folder
+// (`folders/{folder}`), requires
+// `cloudkms.folders.showEffectiveAutokeyConfig`.
 //
 //   - parent: Name of the resource project or folder to show the effective Cloud
-//     KMS Autokey configuration for. This may be helpful for interrogating the
+//     KMS Autokey configuration for. This may be helpful for evaluating the
 //     effect of nested folder configurations on a given resource project.
 //     Format: * projects/{project} * folders/{folder}.
 func (r *FoldersService) ShowEffectiveAutokeyConfig(parent string) *FoldersShowEffectiveAutokeyConfigCall {
@@ -6003,10 +6009,14 @@ type ProjectsShowEffectiveAutokeyConfigCall struct {
 }
 
 // ShowEffectiveAutokeyConfig: Returns the effective Cloud KMS Autokey
-// configuration for a given project or folder.
+// configuration for a given project or folder. Note on permissions: - If
+// called on a project (`projects/{project}`), requires
+// `cloudkms.projects.showEffectiveAutokeyConfig`. - If called on a folder
+// (`folders/{folder}`), requires
+// `cloudkms.folders.showEffectiveAutokeyConfig`.
 //
 //   - parent: Name of the resource project or folder to show the effective Cloud
-//     KMS Autokey configuration for. This may be helpful for interrogating the
+//     KMS Autokey configuration for. This may be helpful for evaluating the
 //     effect of nested folder configurations on a given resource project.
 //     Format: * projects/{project} * folders/{folder}.
 func (r *ProjectsService) ShowEffectiveAutokeyConfig(parent string) *ProjectsShowEffectiveAutokeyConfigCall {

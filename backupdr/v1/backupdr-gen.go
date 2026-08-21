@@ -2956,6 +2956,9 @@ type DiskRestoreProperties struct {
 	// GuestOsFeature: Optional. A list of features to enable in the guest
 	// operating system. This is applicable only for bootable images.
 	GuestOsFeature []*GuestOsFeature `json:"guestOsFeature,omitempty"`
+	// InstanceBackupSource: Provides options for creating a disk from a source
+	// Compute Instance backup.
+	InstanceBackupSource *RestoreDiskFromInstanceOptions `json:"instanceBackupSource,omitempty"`
 	// Labels: Optional. Labels to apply to this disk. These can be modified later
 	// using setLabels method. Label values can be empty.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -5148,6 +5151,32 @@ type RestoreBackupResponse struct {
 
 func (s RestoreBackupResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreBackupResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RestoreDiskFromInstanceOptions: Options for creating a disk from a source
+// Compute Instance backup.
+type RestoreDiskFromInstanceOptions struct {
+	// BootDisk: Specifies that the boot disk should be restored from the instance
+	// backup. This field should only be set to `true` if selected.
+	BootDisk bool `json:"bootDisk,omitempty"`
+	// SourceDeviceName: The device name of the disk to restore from the VM backup.
+	SourceDeviceName string `json:"sourceDeviceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BootDisk") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BootDisk") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RestoreDiskFromInstanceOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod RestoreDiskFromInstanceOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

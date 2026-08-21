@@ -549,10 +549,17 @@ func (s EmissionsMetadata) MarshalJSON() ([]byte, error) {
 
 // EmissionsProvenance: Information about the provenance of the data used to
 // calculate emissions estimates, including contributing factors and their data
-// sources.
+// sources. In `provenance_entries`, `provenance_entry_type` acts as the "key"
+// identifying the contributing factor, and there is always only one entry per
+// entry type. The remaining fields in each entry describe that specific entry
+// type and may or may not be populated depending on the contributing factor
+// and available data.
 type EmissionsProvenance struct {
 	// ProvenanceEntries: Output only. All contributing factors used to calculate
-	// emissions.
+	// emissions. Each entry type (`provenance_entry_type`) acts as a "key"
+	// identifying the factor, with always only one entry per entry type. The
+	// remaining fields describe that specific factor and may or may not be
+	// populated.
 	ProvenanceEntries []*EmissionsProvenanceEntry `json:"provenanceEntries,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProvenanceEntries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -573,7 +580,9 @@ func (s EmissionsProvenance) MarshalJSON() ([]byte, error) {
 }
 
 // EmissionsProvenanceEntry: Details about a single contributing factor in
-// emissions calculations.
+// emissions calculations. Each entry represents a single factor where
+// `provenance_entry_type` acts as the key identifying the factor, and the
+// other fields describe it and may or may not be populated.
 type EmissionsProvenanceEntry struct {
 	// CargoMassFractionData: Output only. The cargo mass fraction value. If not
 	// set, the cargo mass fraction value is not available.
@@ -644,7 +653,9 @@ type EmissionsProvenanceEntry struct {
 	//   "ACTUAL_CARRIER_ROUTE_YEAR_MONTH" - Historical data matching carrier,
 	// route, year, and month.
 	LoadFactorsT100Strategy string `json:"loadFactorsT100Strategy,omitempty"`
-	// ProvenanceEntryType: Output only. The type of the provenance entry.
+	// ProvenanceEntryType: Output only. The type of the provenance entry. Acts as
+	// the "key" identifying the contributing factor; the remaining fields in this
+	// message describe it and may or may not be populated.
 	//
 	// Possible values:
 	//   "EMISSIONS_PROVENANCE_ENTRY_TYPE_UNSPECIFIED" - Unspecified provenance

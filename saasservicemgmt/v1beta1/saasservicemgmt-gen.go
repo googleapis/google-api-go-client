@@ -455,13 +455,14 @@ func (s AllocationSlot) MarshalJSON() ([]byte, error) {
 // AppParams: AppParams contains the parameters for creating an AppHub
 // Application.
 type AppParams struct {
-	// Group: Grouping used to construct the name of the AppHub Application.
-	// Multiple UnitKinds can specify the same group to use the same Application
-	// across their respective units. Corresponds to the app_boundary_id in the ADC
-	// composite ApplicationTemplate. Defaults to UnitKind.name
+	// Group: Optional. Grouping used to construct the name of the AppHub
+	// Application. Multiple UnitKinds can specify the same group to use the same
+	// Application across their respective units. Corresponds to the
+	// app_boundary_id in the ADC composite ApplicationTemplate. Defaults to
+	// UnitKind.name
 	Group string `json:"group,omitempty"`
-	// Scope: Corresponds to the scope in the ADC composite ApplicationTemplate.
-	// Defaults to TYPE_REGIONAL.
+	// Scope: Optional. Corresponds to the scope in the ADC composite
+	// ApplicationTemplate. Defaults to TYPE_REGIONAL.
 	Scope *Scope `json:"scope,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -519,9 +520,9 @@ type ComponentRef struct {
 	Component string `json:"component,omitempty"`
 	// CompositeRef: Reference to the Composite ApplicationTemplate.
 	CompositeRef *CompositeRef `json:"compositeRef,omitempty"`
-	// Revision: Revision of the component. If the component does not have a
-	// revision, this field will be explicitly set to the revision of the composite
-	// ApplicationTemplate.
+	// Revision: Optional. Revision of the component. If the component does not
+	// have a revision, this field will be explicitly set to the revision of the
+	// composite ApplicationTemplate.
 	Revision string `json:"revision,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Component") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -546,9 +547,9 @@ type CompositeRef struct {
 	// ApplicationTemplate: Required. Reference to the ApplicationTemplate
 	// resource.
 	ApplicationTemplate string `json:"applicationTemplate,omitempty"`
-	// Revision: Revision of the ApplicationTemplate to use. Changes to revision
-	// will trigger manual resynchronization. If empty, ApplicationTemplate will be
-	// ignored.
+	// Revision: Optional. Revision of the ApplicationTemplate to use. Changes to
+	// revision will trigger manual resynchronization. If empty,
+	// ApplicationTemplate will be ignored.
 	Revision string `json:"revision,omitempty"`
 	// SyncOperation: Output only. Reference to on-going AppTemplate import and
 	// replication operation (i.e. the operation_id for the long-running
@@ -950,6 +951,28 @@ func (s FlagAttribute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FlagNameList: Wrapper for a list of flags.
+type FlagNameList struct {
+	// Flags: Required. Flags to be rolled out.
+	Flags []string `json:"flags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Flags") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Flags") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FlagNameList) MarshalJSON() ([]byte, error) {
+	type NoMethod FlagNameList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FlagRelease: A collection of FlagRevisions.
 type FlagRelease struct {
 	// AllFlags: Optional. Immutable. DEPRECATED: Use all_flags_release instead.
@@ -975,6 +998,9 @@ type FlagRelease struct {
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
 	Etag string `json:"etag,omitempty"`
+	// FlagNamesRelease: Optional. Immutable. Specifies the release consisting of a
+	// list of flags.
+	FlagNamesRelease *FlagNameList `json:"flagNamesRelease,omitempty"`
 	// FlagRevisions: Optional. Immutable. DEPRECATED: Use flag_revisions_release
 	// instead. FlagRevisions to be rolled out. Only one of flag_revisions,
 	// all_flags, or flag_sets can be set. It used to be the ultimate source to
@@ -2322,7 +2348,9 @@ type Saas struct {
 	// the application_template is empty.
 	//
 	// Possible values:
-	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified.
+	//   "STATE_UNSPECIFIED" - State is unspecified.
+	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified. Deprecated: Use
+	// STATE_UNSPECIFIED instead.
 	//   "STATE_ACTIVE" - The Saas is ready
 	//   "STATE_RUNNING" - In the process of importing, synchronizing or
 	// replicating ApplicationTemplates
@@ -2984,8 +3012,8 @@ type UnitKind struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// AppParams: AppParams contains the parameters for creating an AppHub
-	// Application.
+	// AppParams: Optional. AppParams contains the parameters for creating an
+	// AppHub Application.
 	AppParams *AppParams `json:"appParams,omitempty"`
 	// ApplicationTemplateComponent: Optional. Reference to component and revision
 	// in a composite ApplicationTemplate.
@@ -3143,7 +3171,7 @@ type UnitOperation struct {
 	// of the unit operation.
 	//
 	// Possible values:
-	//   "UNIT_OPERATION_STATE_UNKNOWN"
+	//   "UNIT_OPERATION_STATE_UNKNOWN" - Unit operation state is unknown.
 	//   "UNIT_OPERATION_STATE_PENDING" - Unit operation is accepted but not ready
 	// to run.
 	//   "UNIT_OPERATION_STATE_SCHEDULED" - Unit operation is accepted and

@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	notebooksService, err := notebooks.NewService(ctx, option.WithScopes(notebooks.NotebooksScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,17 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Agent Platform Workbench
+	// Instances data and see the email address for your Google Account
+	NotebooksScope = "https://www.googleapis.com/auth/notebooks"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/notebooks",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -2005,6 +2015,11 @@ type VmImage struct {
 	// Family: Optional. Use this VM image family to find the image; the newest
 	// image in this family will be used.
 	Family string `json:"family,omitempty"`
+	// ImageDescription: Output only. A human-readable description of the image
+	// running on the instance (for example, "Debian 11, Python 3.10"), derived at
+	// read time from the image release configuration (the source of truth). Set to
+	// "Custom" for unrecognized boot-disk images.
+	ImageDescription string `json:"imageDescription,omitempty"`
 	// Name: Optional. Use VM image name to find the image.
 	Name string `json:"name,omitempty"`
 	// Project: Required. The name of the Google Cloud project that this VM image

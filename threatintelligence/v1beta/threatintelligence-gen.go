@@ -593,18 +593,23 @@ func (s ConfigurationRevision) MarshalJSON() ([]byte, error) {
 // CustomThreatScenarioConfig: CustomThreatScenarioConfig represents a
 // user-defined threat scenario configuration.
 type CustomThreatScenarioConfig struct {
+	// CompiledLuceneQuery: Output only. The compiled Lucene query string.
+	CompiledLuceneQuery string `json:"compiledLuceneQuery,omitempty"`
 	// DocumentCondition: Required. The condition driving the scenario, stored as a
 	// stringified JSON. This is used to query/filter documents.
 	DocumentCondition string `json:"documentCondition,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentCondition") to
+	// LegacyMonitorMetadata: Optional. Legacy metadata associated with this
+	// scenario/monitor.
+	LegacyMonitorMetadata *LegacyMetadata `json:"legacyMonitorMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompiledLuceneQuery") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentCondition") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CompiledLuceneQuery") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1480,6 +1485,76 @@ func (s *InsiderThreatFindingDetail) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.MatchScore = float64(s1.MatchScore)
+	return nil
+}
+
+// LegacyMetadata: Legacy metadata associated with this scenario/monitor.
+type LegacyMetadata struct {
+	// AggregationEnabled: Optional. Whether aggregation is enabled for alerts from
+	// this monitor.
+	AggregationEnabled bool `json:"aggregationEnabled,omitempty"`
+	// AggregationSimilarity: Optional. Similarity threshold for aggregation.
+	AggregationSimilarity float64 `json:"aggregationSimilarity,omitempty"`
+	// ConditionVersion: Optional. Version of the condition schema.
+	ConditionVersion int64 `json:"conditionVersion,omitempty"`
+	// CreatorUserId: Optional. User ID who created the monitor.
+	CreatorUserId string `json:"creatorUserId,omitempty"`
+	// Description: Optional. Description of the legacy monitor.
+	Description string `json:"description,omitempty"`
+	// DisabledCode: Optional. Code indicating why the monitor is disabled (if
+	// applicable).
+	DisabledCode string `json:"disabledCode,omitempty"`
+	// DisabledReason: Optional. Reason why the monitor is disabled (if
+	// applicable).
+	DisabledReason string `json:"disabledReason,omitempty"`
+	// DisplayName: Optional. Name of the legacy monitor.
+	DisplayName string `json:"displayName,omitempty"`
+	// EmailNotificationEnabled: Optional. Whether email notifications are enabled.
+	EmailNotificationEnabled bool `json:"emailNotificationEnabled,omitempty"`
+	// EmailNotificationImmediate: Optional. Whether email notifications are
+	// intermediate/immediate.
+	EmailNotificationImmediate bool `json:"emailNotificationImmediate,omitempty"`
+	// LegacyMonitorId: Optional. Unique identifier of the legacy monitor.
+	LegacyMonitorId string `json:"legacyMonitorId,omitempty"`
+	// StaleTime: Optional. Time the legacy monitor was considered stale.
+	StaleTime string `json:"staleTime,omitempty"`
+	// TemplateId: Optional. ID of the template this monitor was created from.
+	TemplateId string `json:"templateId,omitempty"`
+	// TenantId: Optional. ID of the tenant owning the monitor.
+	TenantId string `json:"tenantId,omitempty"`
+	// UpdaterUserId: Optional. User ID who last updated the monitor.
+	UpdaterUserId string `json:"updaterUserId,omitempty"`
+	// Version: Optional. Version of the monitor configuration.
+	Version int64 `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregationEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregationEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LegacyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LegacyMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *LegacyMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod LegacyMetadata
+	var s1 struct {
+		AggregationSimilarity gensupport.JSONFloat64 `json:"aggregationSimilarity"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AggregationSimilarity = float64(s1.AggregationSimilarity)
 	return nil
 }
 

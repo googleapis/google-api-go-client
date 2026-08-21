@@ -396,11 +396,8 @@ type Company struct {
 	// access as admins but can also add, delete, and edit your organization's
 	// portal users.
 	OwnerEmails []string `json:"ownerEmails,omitempty"`
-	// SkipWelcomeEmail: Input only. If set to true, welcome email will not be sent
-	// to the customer. It is recommended to skip the welcome email if devices will
-	// be claimed with additional DEVICE_PROTECTION service, as the customer will
-	// receive separate emails at device claim time. This field is ignored if this
-	// is not a Zero-touch customer.
+	// SkipWelcomeEmail: Input only. Deprecated: This field is no longer supported
+	// and is ignored by the server.
 	SkipWelcomeEmail bool `json:"skipWelcomeEmail,omitempty"`
 	// TermsStatus: Output only. Whether any user from the company has accepted the
 	// latest Terms of Service (ToS). See TermsStatus.

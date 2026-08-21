@@ -136,9 +136,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Achievements = NewAchievementsService(s)
 	s.Applications = NewApplicationsService(s)
 	s.Events = NewEventsService(s)
+	s.GameStats = NewGameStatsService(s)
 	s.Leaderboards = NewLeaderboardsService(s)
 	s.Metagame = NewMetagameService(s)
-	s.PlayerGameEvents = NewPlayerGameEventsService(s)
 	s.Players = NewPlayersService(s)
 	s.Recall = NewRecallService(s)
 	s.Revisions = NewRevisionsService(s)
@@ -179,11 +179,11 @@ type Service struct {
 
 	Events *EventsService
 
+	GameStats *GameStatsService
+
 	Leaderboards *LeaderboardsService
 
 	Metagame *MetagameService
-
-	PlayerGameEvents *PlayerGameEventsService
 
 	Players *PlayersService
 
@@ -250,6 +250,15 @@ type EventsService struct {
 	s *Service
 }
 
+func NewGameStatsService(s *Service) *GameStatsService {
+	rs := &GameStatsService{s: s}
+	return rs
+}
+
+type GameStatsService struct {
+	s *Service
+}
+
 func NewLeaderboardsService(s *Service) *LeaderboardsService {
 	rs := &LeaderboardsService{s: s}
 	return rs
@@ -265,15 +274,6 @@ func NewMetagameService(s *Service) *MetagameService {
 }
 
 type MetagameService struct {
-	s *Service
-}
-
-func NewPlayerGameEventsService(s *Service) *PlayerGameEventsService {
-	rs := &PlayerGameEventsService{s: s}
-	return rs
-}
-
-type PlayerGameEventsService struct {
 	s *Service
 }
 
@@ -5068,6 +5068,111 @@ func (c *EventsRecordCall) Do(opts ...googleapi.CallOption) (*EventUpdateRespons
 	return ret, nil
 }
 
+type GameStatsBatchRecordEventsCall struct {
+	s                        *Service
+	playerId                 string
+	batchrecordeventsrequest *BatchRecordEventsRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// BatchRecordEvents: Records a batch of player game events for a specific
+// player. This method allows sending multiple events in a single request.
+//
+// - playerId: The player ID of the player that performed the events.
+func (r *GameStatsService) BatchRecordEvents(playerId string, batchrecordeventsrequest *BatchRecordEventsRequest) *GameStatsBatchRecordEventsCall {
+	c := &GameStatsBatchRecordEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.playerId = playerId
+	c.batchrecordeventsrequest = batchrecordeventsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *GameStatsBatchRecordEventsCall) Fields(s ...googleapi.Field) *GameStatsBatchRecordEventsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *GameStatsBatchRecordEventsCall) Context(ctx context.Context) *GameStatsBatchRecordEventsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *GameStatsBatchRecordEventsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GameStatsBatchRecordEventsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchrecordeventsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/players/{playerId}/gameStats:batchRecordEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"playerId": c.playerId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "games.gameStats.batchRecordEvents", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "games.gameStats.batchRecordEvents" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchRecordEventsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *GameStatsBatchRecordEventsCall) Do(opts ...googleapi.CallOption) (*BatchRecordEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchRecordEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "games.gameStats.batchRecordEvents", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type LeaderboardsGetCall struct {
 	s             *Service
 	leaderboardId string
@@ -5591,111 +5696,6 @@ func (c *MetagameListCategoriesByPlayerCall) Pages(ctx context.Context, f func(*
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type PlayerGameEventsBatchRecordEventsCall struct {
-	s                        *Service
-	playerId                 string
-	batchrecordeventsrequest *BatchRecordEventsRequest
-	urlParams_               gensupport.URLParams
-	ctx_                     context.Context
-	header_                  http.Header
-}
-
-// BatchRecordEvents: Records a batch of player game events for a specific
-// player. This method allows sending multiple events in a single request.
-//
-// - playerId: The player ID of the player that performed the events.
-func (r *PlayerGameEventsService) BatchRecordEvents(playerId string, batchrecordeventsrequest *BatchRecordEventsRequest) *PlayerGameEventsBatchRecordEventsCall {
-	c := &PlayerGameEventsBatchRecordEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.playerId = playerId
-	c.batchrecordeventsrequest = batchrecordeventsrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PlayerGameEventsBatchRecordEventsCall) Fields(s ...googleapi.Field) *PlayerGameEventsBatchRecordEventsCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PlayerGameEventsBatchRecordEventsCall) Context(ctx context.Context) *PlayerGameEventsBatchRecordEventsCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PlayerGameEventsBatchRecordEventsCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PlayerGameEventsBatchRecordEventsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchrecordeventsrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "games/v1/players/{playerId}/gameEvents:batchRecordEvents")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"playerId": c.playerId,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "games.playerGameEvents.batchRecordEvents", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "games.playerGameEvents.batchRecordEvents" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *BatchRecordEventsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *PlayerGameEventsBatchRecordEventsCall) Do(opts ...googleapi.CallOption) (*BatchRecordEventsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &BatchRecordEventsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "games.playerGameEvents.batchRecordEvents", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }
 
 type PlayersGetCall struct {

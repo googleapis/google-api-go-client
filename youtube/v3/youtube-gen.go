@@ -7500,14 +7500,20 @@ func (s Thumbnail) MarshalJSON() ([]byte, error) {
 type ThumbnailDetails struct {
 	// Default: The default image for this resource.
 	Default *Thumbnail `json:"default,omitempty"`
+	// Fhd: The full high definition (1080p) quality image for this resource.
+	Fhd *Thumbnail `json:"fhd,omitempty"`
 	// High: The high quality image for this resource.
 	High *Thumbnail `json:"high,omitempty"`
 	// Maxres: The maximum resolution quality image for this resource.
 	Maxres *Thumbnail `json:"maxres,omitempty"`
 	// Medium: The medium quality image for this resource.
 	Medium *Thumbnail `json:"medium,omitempty"`
+	// Qhd: The quad high definition (1440p / 2K) quality image for this resource.
+	Qhd *Thumbnail `json:"qhd,omitempty"`
 	// Standard: The standard quality image for this resource.
 	Standard *Thumbnail `json:"standard,omitempty"`
+	// Uhd: The ultra-high resolution (4K) quality image for this resource.
+	Uhd *Thumbnail `json:"uhd,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Default") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

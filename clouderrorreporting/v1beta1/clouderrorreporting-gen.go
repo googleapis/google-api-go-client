@@ -573,8 +573,8 @@ type ReportedErrorEvent struct {
 	// provided, the message must contain a header (typically consisting of the
 	// exception type name and an error message) and an exception stack trace in
 	// one of the supported programming languages and formats. Supported languages
-	// are Java, Python, JavaScript, Ruby, C#, PHP, and Go. Supported stack trace
-	// formats are: * **Java**: Must be the return value of
+	// are Java, Python, JavaScript, Ruby, C#, PHP, Go, and Rust. Supported stack
+	// trace formats are: * **Java**: Must be the return value of
 	// `Throwable.printStackTrace()`
 	// (https://docs.oracle.com/javase/7/docs/api/java/lang/Throwable.html#printStackTrace%28%29).
 	// * **Python**: Must be the return value of `traceback.format_exc()`
@@ -588,7 +588,10 @@ type ReportedErrorEvent struct {
 	// **PHP**: Must be prefixed with "PHP (Notice|Parse error|Fatal
 	// error|Warning): " and contain the result of `(string)$exception`
 	// (https://php.net/manual/en/exception.tostring.php). * **Go**: Must be the
-	// return value of `debug.Stack()` (https://pkg.go.dev/runtime/debug#Stack).
+	// return value of `debug.Stack()` (https://pkg.go.dev/runtime/debug#Stack). *
+	// **Rust**: Must contain standard `std::backtrace`
+	// (https://doc.rust-lang.org/std/backtrace/index.html) frames. Requires
+	// `RUST_BACKTRACE=1` and debug symbols enabled.
 	Message string `json:"message,omitempty"`
 	// ServiceContext: Required. The service context in which this error has
 	// occurred.

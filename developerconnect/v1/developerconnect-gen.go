@@ -2269,6 +2269,7 @@ type ProviderOAuthConfig struct {
 	//   "NEW_RELIC" - New Relic provider. No scopes are allowed.
 	//   "DATASTAX" - Datastax provider. No scopes are allowed.
 	//   "DYNATRACE" - Dynatrace provider.
+	//   "BITBUCKET_CLOUD" - Bitbucket Cloud provider.
 	SystemProviderId string `json:"systemProviderId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Scopes") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2439,6 +2440,7 @@ type StartOAuthResponse struct {
 	//   "NEW_RELIC" - New Relic provider. No scopes are allowed.
 	//   "DATASTAX" - Datastax provider. No scopes are allowed.
 	//   "DYNATRACE" - Dynatrace provider.
+	//   "BITBUCKET_CLOUD" - Bitbucket Cloud provider.
 	SystemProviderId string `json:"systemProviderId,omitempty"`
 	// Ticket: The ticket to be used for post processing the callback from the
 	// service provider.

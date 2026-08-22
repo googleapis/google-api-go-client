@@ -5276,6 +5276,32 @@ func (s Origin) MarshalJSON() ([]byte, error) {
 type PauseRolloutRequest struct {
 }
 
+// PerStageSoakDurationOverrides: Configuration for per-stage soak duration
+// overrides.
+type PerStageSoakDurationOverrides struct {
+	// StageOverrides: Required. A mapping of stage numbers to their respective
+	// desired soak durations. Key is the stage number, value is the desired soak
+	// duration. Stages omitted from the map will receive the standard soak
+	// duration configured on the sequence for that stage.
+	StageOverrides map[string]string `json:"stageOverrides,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StageOverrides") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StageOverrides") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerStageSoakDurationOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod PerStageSoakDurationOverrides
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which specifies
 // access controls for Google Cloud resources. A `Policy` is a collection of
 // `bindings`. A `binding` binds one or more `members`, or principals, to a
@@ -6120,6 +6146,13 @@ type Rollout struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Etag: Output only. etag of the Rollout Ex. abc1234
 	Etag string `json:"etag,omitempty"`
+	// IgnoreClusterDisruptionBudgets: Optional. If set to true, the rollout will
+	// ignore the disruption budgets of the clusters.
+	IgnoreClusterDisruptionBudgets bool `json:"ignoreClusterDisruptionBudgets,omitempty"`
+	// IgnoreMaintenancePolicies: Optional. If set to true, the rollout will ignore
+	// any maintenance policies (Maintenance Windows and Maintenance Exclusions)
+	// set on the clusters.
+	IgnoreMaintenancePolicies bool `json:"ignoreMaintenancePolicies,omitempty"`
 	// Intent: Output only. The intent of the rollout.
 	//
 	// Possible values:
@@ -6129,6 +6162,8 @@ type Rollout struct {
 	// haven't been patched within the allowed window.
 	//   "END_OF_SUPPORT_ENFORCEMENT" - A mandatory upgrade for clusters that have
 	// reached its end of support.
+	//   "PARTIAL_PATCH" - A patch upgrade for a subset of clusters on a given
+	// minor version.
 	Intent string `json:"intent,omitempty"`
 	// Labels: Optional. Labels for this Rollout.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -6144,6 +6179,11 @@ type Rollout struct {
 	// rollout sequence that initiatied this Rollout. In the format of
 	// `projects/{project}/locations/global/rolloutSequences/{rollout_sequence}`.
 	RolloutSequence string `json:"rolloutSequence,omitempty"`
+	// StageSoakDurationOverrides: Optional. Overrides the soak durations for
+	// specific stages of the rollout. Key is the stage number, value is the
+	// desired soak duration. Stages omitted from the map will receive the standard
+	// soak duration configured on the sequence for that stage.
+	StageSoakDurationOverrides map[string]string `json:"stageSoakDurationOverrides,omitempty"`
 	// Stages: Output only. The stages of the Rollout.
 	Stages []*RolloutStage `json:"stages,omitempty"`
 	// State: Output only. State specifies various states of the Rollout.
@@ -7472,6 +7512,23 @@ type UpgradeRolloutSequenceRequest struct {
 	// stage of the sequence will be cancelled to allow for the creation of the new
 	// rollout.
 	Force bool `json:"force,omitempty"`
+	// IgnoreClusterDisruptionBudgets: Optional. If set to true, the rollout will
+	// ignore the disruption budgets of the clusters.
+	IgnoreClusterDisruptionBudgets bool `json:"ignoreClusterDisruptionBudgets,omitempty"`
+	// IgnoreMaintenancePolicies: Optional. If set to true, the rollout will ignore
+	// any maintenance policies (Maintenance Windows and Maintenance Exclusions)
+	// set on the clusters.
+	IgnoreMaintenancePolicies bool `json:"ignoreMaintenancePolicies,omitempty"`
+	// PatchOnly: Optional. If set to true, the rollout will only upgrade clusters
+	// that match the minor version of the `version` field, but are on an earlier
+	// patch version.
+	PatchOnly bool `json:"patchOnly,omitempty"`
+	// SoakDurationOverrideAllStages: Optional. Overrides the soak duration for all
+	// stages of the rollout.
+	SoakDurationOverrideAllStages string `json:"soakDurationOverrideAllStages,omitempty"`
+	// SoakDurationOverridePerStage: Optional. Overrides the soak durations for
+	// specific stages of the rollout.
+	SoakDurationOverridePerStage *PerStageSoakDurationOverrides `json:"soakDurationOverridePerStage,omitempty"`
 	// UpgradeType: Required. The type of upgrade.
 	//
 	// Possible values:

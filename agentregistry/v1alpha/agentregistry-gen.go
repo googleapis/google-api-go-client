@@ -5447,7 +5447,7 @@ func (c *ProjectsLocationsSkillsCreateCall) RequestId(requestId string) *Project
 
 // SkillId sets the optional parameter "skillId": Required. Custom,
 // user-defined unique container identifier. Must be unique within the parent
-// project and location. This value should be 4-63 characters, and valid
+// project and location. This value should be 4-64 characters, and valid
 // characters are `/a-z-/`.
 func (c *ProjectsLocationsSkillsCreateCall) SkillId(skillId string) *ProjectsLocationsSkillsCreateCall {
 	c.urlParams_.Set("skillId", skillId)
@@ -5684,7 +5684,7 @@ func (c *ProjectsLocationsSkillsGetCall) IfNoneMatch(entityTag string) *Projects
 	return c
 }
 
-// Context sets the context to be used in this call's Do method.
+// Context sets the context to be used in this call's Do and Download methods.
 func (c *ProjectsLocationsSkillsGetCall) Context(ctx context.Context) *ProjectsLocationsSkillsGetCall {
 	c.ctx_ = ctx
 	return c
@@ -5718,6 +5718,22 @@ func (c *ProjectsLocationsSkillsGetCall) doRequest(alt string) (*http.Response, 
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.skills.get", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *ProjectsLocationsSkillsGetCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		res.Body.Close()
+		return nil, gensupport.WrapError(err)
+	}
+	return res, nil
 }
 
 // Do executes the "agentregistry.projects.locations.skills.get" call.

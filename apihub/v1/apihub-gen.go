@@ -717,7 +717,7 @@ func (s GoogleCloudApihubV1AllowedValue) MarshalJSON() ([]byte, error) {
 // GoogleCloudApihubV1Api: An API resource in the API Hub.
 type GoogleCloudApihubV1Api struct {
 	// ApiFunctionalRequirements: Optional. The api functional requirements
-	// associated with the API resource. Carinality is 1 for this attribute. This
+	// associated with the API resource. Cardinality is 1 for this attribute. This
 	// maps to the following system defined attribute:
 	// `projects/{project}/locations/{location}/attributes/system-api-functional-req
 	// uirements` attribute. The value of the attribute should be a proper URI, and
@@ -725,7 +725,7 @@ type GoogleCloudApihubV1Api struct {
 	// a directory.
 	ApiFunctionalRequirements *GoogleCloudApihubV1AttributeValues `json:"apiFunctionalRequirements,omitempty"`
 	// ApiRequirements: Optional. The api requirement doc associated with the API
-	// resource. Carinality is 1 for this attribute. This maps to the following
+	// resource. Cardinality is 1 for this attribute. This maps to the following
 	// system defined attribute:
 	// `projects/{project}/locations/{location}/attributes/system-api-requirements`
 	// attribute. The value of the attribute should be a proper URI, and in case of
@@ -741,7 +741,7 @@ type GoogleCloudApihubV1Api struct {
 	// attribute.
 	ApiStyle *GoogleCloudApihubV1AttributeValues `json:"apiStyle,omitempty"`
 	// ApiTechnicalRequirements: Optional. The api technical requirements
-	// associated with the API resource. Carinality is 1 for this attribute. This
+	// associated with the API resource. Cardinality is 1 for this attribute. This
 	// maps to the following system defined attribute:
 	// `projects/{project}/locations/{location}/attributes/system-api-technical-requ
 	// irements` attribute. The value of the attribute should be a proper URI, and

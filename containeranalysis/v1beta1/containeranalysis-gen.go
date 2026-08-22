@@ -2547,6 +2547,11 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency st
 	Depth int64 `json:"depth,omitempty,string"`
 	// DestPath: Required. Where should the files be placed on the worker.
 	DestPath string `json:"destPath,omitempty"`
+	// FetchTags: Optional. True if remote tags should be fetched too (default
+	// false). Note: when depth is 1 (default), git fetch only retrieves tags
+	// pointing to commits within the shallow boundary. Set depth to -1 to fetch
+	// all historical tags.
+	FetchTags bool `json:"fetchTags,omitempty"`
 	// RecurseSubmodules: Optional. True if submodules should be fetched too
 	// (default false).
 	RecurseSubmodules bool `json:"recurseSubmodules,omitempty"`

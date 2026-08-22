@@ -4192,7 +4192,7 @@
       }
     }
   },
-  "revision": "20260817",
+  "revision": "20260820",
   "rootUrl": "https://youtube.googleapis.com/",
   "schemas": {
     "AbuseReport": {
@@ -11317,6 +11317,10 @@
           "$ref": "Thumbnail",
           "description": "The default image for this resource."
         },
+        "fhd": {
+          "$ref": "Thumbnail",
+          "description": "The full high definition (1080p) quality image for this resource."
+        },
         "high": {
           "$ref": "Thumbnail",
           "description": "The high quality image for this resource."
@@ -11329,9 +11333,17 @@
           "$ref": "Thumbnail",
           "description": "The medium quality image for this resource."
         },
+        "qhd": {
+          "$ref": "Thumbnail",
+          "description": "The quad high definition (1440p / 2K) quality image for this resource."
+        },
         "standard": {
           "$ref": "Thumbnail",
           "description": "The standard quality image for this resource."
+        },
+        "uhd": {
+          "$ref": "Thumbnail",
+          "description": "The ultra-high resolution (4K) quality image for this resource."
         }
       },
       "type": "object"

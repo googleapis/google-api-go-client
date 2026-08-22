@@ -103,6 +103,14 @@ const mtlsBasePath = "https://apikeys.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See, edit, configure, and delete your Google Cloud API Keys data and see the
+	// email address for your Google Account
+	ApikeysScope = "https://www.googleapis.com/auth/apikeys"
+
+	// See your Google Cloud API Keys data and the email address of your Google
+	// Account
+	ApikeysReadonlyScope = "https://www.googleapis.com/auth/apikeys.readonly"
+
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
@@ -115,6 +123,8 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/apikeys",
+		"https://www.googleapis.com/auth/apikeys.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)

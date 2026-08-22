@@ -4851,7 +4851,8 @@ type RemoveEnableRulesResponse struct {
 	// `folders/12345/consumerPolicies/default`, or
 	// `organizations/12345/consumerPolicies/default`.
 	Parent string `json:"parent,omitempty"`
-	// RemovedValues: The values removed from the parent consumer policy.
+	// RemovedValues: Deprecated: This field is no longer populated. Use
+	// GetConsumerPolicy to verify the remaining enabled values.
 	RemovedValues []string `json:"removedValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

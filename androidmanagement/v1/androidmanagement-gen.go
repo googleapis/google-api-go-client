@@ -1155,6 +1155,8 @@ type ApplicationPolicy struct {
 	// governed by credentialProviderPolicyDefault.
 	//   "CREDENTIAL_PROVIDER_ALLOWED" - App is allowed to act as a credential
 	// provider.
+	//   "CREDENTIAL_PROVIDER_DISALLOWED" - App is not allowed to act as a
+	// credential provider.
 	CredentialProviderPolicy string `json:"credentialProviderPolicy,omitempty"`
 	// CustomAppConfig: Optional. Configuration for this custom app.install_type
 	// must be set to CUSTOM for this to be set.
@@ -6482,6 +6484,8 @@ type Policy struct {
 	// credentialProviderPolicy unspecified are not allowed to act as a credential
 	// provider except for the OEM default credential providers. OEM default
 	// credential providers are always allowed to act as credential providers.
+	//   "CREDENTIAL_PROVIDER_DEFAULT_ALLOWED" - Apps with credentialProviderPolicy
+	// unspecified are allowed to act as a credential provider.
 	CredentialProviderPolicyDefault string `json:"credentialProviderPolicyDefault,omitempty"`
 	// CredentialsConfigDisabled: Whether configuring user credentials is disabled.
 	CredentialsConfigDisabled bool `json:"credentialsConfigDisabled,omitempty"`

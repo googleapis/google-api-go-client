@@ -14004,7 +14004,8 @@ func (s GoogleCloudDialogflowV2ToolCallResult) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudDialogflowV2ToolCallResultError struct {
-	Message string `json:"message,omitempty"`
+	Message   string `json:"message,omitempty"`
+	Retryable bool   `json:"retryable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -17347,7 +17348,8 @@ func (s GoogleCloudDialogflowV2beta1ToolCallResult) MarshalJSON() ([]byte, error
 }
 
 type GoogleCloudDialogflowV2beta1ToolCallResultError struct {
-	Message string `json:"message,omitempty"`
+	Message   string `json:"message,omitempty"`
+	Retryable bool   `json:"retryable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

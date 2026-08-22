@@ -3962,8 +3962,9 @@ func (s GenAiFunctionStats) MarshalJSON() ([]byte, error) {
 type GenAiStats struct {
 	// ErrorStats: Job level error stats across all GenAi functions
 	ErrorStats *GenAiErrorStats `json:"errorStats,omitempty"`
-	// FunctionStats: Function level stats for GenAi Functions. See
-	// https://docs.cloud.google.com/bigquery/docs/generative-ai-overview
+	// FunctionStats: Function level stats for GenAI Functions. For more
+	// information, see Generative AI overview
+	// (https://docs.cloud.google.com/bigquery/docs/generative-ai-overview).
 	FunctionStats []*GenAiFunctionStats `json:"functionStats,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorStats") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10767,7 +10768,7 @@ type TableReplicationInfo struct {
 	//   "ACTIVE" - Replication is Active with no errors.
 	//   "SOURCE_DELETED" - Source object is deleted.
 	//   "PERMISSION_DENIED" - Source revoked replication permissions.
-	//   "UNSUPPORTED_CONFIGURATION" - Source configuration doesn’t allow
+	//   "UNSUPPORTED_CONFIGURATION" - Source configuration doesn't allow
 	// replication.
 	ReplicationStatus string `json:"replicationStatus,omitempty"`
 	// SourceTable: Required. Source table reference that is replicated.

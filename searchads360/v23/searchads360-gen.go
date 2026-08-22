@@ -32721,8 +32721,12 @@ type GoogleAdsSearchads360V23Resources__CampaignGoalConfig struct {
 	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
 	// version.
 	//   "CUSTOMER_RETENTION" - Retention goal, which allows advertisers to
-	// optimize campaigns to win back lapsed customers.
-	// (https://support.google.com/google-ads/answer/14792043?hl=en)
+	// optimize campaigns to win back lapsed customers. See
+	// https://support.google.com/google-ads/answer/14792043 to learn more.
+	//   "NEW_CUSTOMER_ACQUISITION" - New customer acquisition goal, which allows
+	// advertisers to optimize campaigns to acquire new customers.
+	//   "LOYALTY_RETENTION" - Loyalty retention goal, which allows advertisers to
+	// optimize campaigns for retaining loyalty program members.
 	GoalType string `json:"goalType,omitempty"`
 	// ResourceName: Immutable. The resource name of the campaign goal config.
 	// campaign goal config resource names have the form:
@@ -36794,8 +36798,12 @@ type GoogleAdsSearchads360V23Resources__Goal struct {
 	//   "UNKNOWN" - Used for return value only. Represents value unknown in this
 	// version.
 	//   "CUSTOMER_RETENTION" - Retention goal, which allows advertisers to
-	// optimize campaigns to win back lapsed customers.
-	// (https://support.google.com/google-ads/answer/14792043?hl=en)
+	// optimize campaigns to win back lapsed customers. See
+	// https://support.google.com/google-ads/answer/14792043 to learn more.
+	//   "NEW_CUSTOMER_ACQUISITION" - New customer acquisition goal, which allows
+	// advertisers to optimize campaigns to acquire new customers.
+	//   "LOYALTY_RETENTION" - Loyalty retention goal, which allows advertisers to
+	// optimize campaigns for retaining loyalty program members.
 	GoalType string `json:"goalType,omitempty"`
 	// OptimizationEligibility: Output only. Indicates if this goal is eligible for
 	// campaign optimization.
@@ -59026,6 +59034,8 @@ type GoogleAdsSearchads360V23Services__MutateOperation struct {
 	CampaignCustomizerOperation *GoogleAdsSearchads360V23Services__CampaignCustomizerOperation `json:"campaignCustomizerOperation,omitempty"`
 	// CampaignDraftOperation: A campaign draft mutate operation.
 	CampaignDraftOperation *GoogleAdsSearchads360V23Services__CampaignDraftOperation `json:"campaignDraftOperation,omitempty"`
+	// CampaignGoalConfigOperation: A campaign goal config mutate operation.
+	CampaignGoalConfigOperation *GoogleAdsSearchads360V23Services__CampaignGoalConfigOperation `json:"campaignGoalConfigOperation,omitempty"`
 	// CampaignGroupOperation: A campaign group mutate operation.
 	CampaignGroupOperation *GoogleAdsSearchads360V23Services__CampaignGroupOperation `json:"campaignGroupOperation,omitempty"`
 	// CampaignLabelOperation: A campaign label mutate operation.
@@ -59187,6 +59197,8 @@ type GoogleAdsSearchads360V23Services__MutateOperationResponse struct {
 	CampaignCustomizerResult *GoogleAdsSearchads360V23Services__MutateCampaignCustomizerResult `json:"campaignCustomizerResult,omitempty"`
 	// CampaignDraftResult: The result for the campaign draft mutate.
 	CampaignDraftResult *GoogleAdsSearchads360V23Services__MutateCampaignDraftResult `json:"campaignDraftResult,omitempty"`
+	// CampaignGoalConfigResult: The result for the campaign goal config mutate.
+	CampaignGoalConfigResult *GoogleAdsSearchads360V23Services__MutateCampaignGoalConfigResult `json:"campaignGoalConfigResult,omitempty"`
 	// CampaignGroupResult: The result for the campaign group mutate.
 	CampaignGroupResult *GoogleAdsSearchads360V23Services__MutateCampaignGroupResult `json:"campaignGroupResult,omitempty"`
 	// CampaignLabelResult: The result for the campaign label mutate.

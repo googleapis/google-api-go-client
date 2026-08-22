@@ -826,6 +826,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("")
 	if a.Name == "storage" {
 		pn("  %q", "github.com/googleapis/gax-go/v2")
+		pn("  %q", "time")
 	}
 	pn("  %q", "github.com/googleapis/gax-go/v2/internallog")
 	for _, imp := range []struct {
@@ -860,6 +861,7 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("var _ = internallog.New")
 	if a.Name == "storage" {
 		pn("var _ = gax.Version")
+		pn("var _ = time.Second")
 	}
 	pn("")
 	pn("const apiId = %q", a.doc.ID)
@@ -2220,6 +2222,16 @@ func (meth *Method) generateCode() {
 		pn("		Backoff:     bo,")
 		pn("		ShouldRetry: errorFunc,")
 		pn("	}")
+		pn("	return c")
+		pn("}")
+		commentStall := "WithStallTimeout sets a per-attempt/request timeout. If a request " +
+			"attempt takes longer than this duration, it is cancelled and retried if retryable."
+		p("\n%s", asComment("", commentStall))
+		pn("func (c *%s) WithStallTimeout(timeout time.Duration) *%s {", callName, callName)
+		pn("	if c.retry == nil {")
+		pn("		c.retry = &gensupport.RetryConfig{}")
+		pn("	}")
+		pn("	c.retry.RequestTimeout = timeout")
 		pn("	return c")
 		pn("}")
 	}

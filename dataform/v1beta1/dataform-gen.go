@@ -563,6 +563,30 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BranchMetadata: Contains metadata about a branch.
+type BranchMetadata struct {
+	// BranchName: The branch name.
+	BranchName string `json:"branchName,omitempty"`
+	// LastCommit: The last commit on the branch.
+	LastCommit *CommitLogEntry `json:"lastCommit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BranchName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BranchName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BranchMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod BranchMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -576,6 +600,38 @@ type CancelWorkflowInvocationRequest struct {
 type CancelWorkflowInvocationResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// CheckoutWorkspaceBranchRequest: `CheckoutWorkspaceBranch` request message.
+type CheckoutWorkspaceBranchRequest struct {
+	// Branch: Required. The name of the branch in the Git repository to which the
+	// workspace should be checked out.
+	Branch string `json:"branch,omitempty"`
+	// CreateIfNotExists: Optional. If set to true and the branch does not exist,
+	// it will be created. Otherwise, an error will be thrown.
+	CreateIfNotExists bool `json:"createIfNotExists,omitempty"`
+	// SourceBranch: Optional. The name of the branch in the Git repository from
+	// which the new branch should be created. If left unset, the workspace's
+	// current branch name will be used. Accepts only branch names from
+	// FetchWorkspaceBranches response, and can only be set if
+	// `create_if_not_exists` is true. Oherwise, an error will be thrown.
+	SourceBranch string `json:"sourceBranch,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Branch") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Branch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CheckoutWorkspaceBranchRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckoutWorkspaceBranchRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CodeCompilationConfig: Configures various aspects of Dataform code
@@ -1146,6 +1202,37 @@ func (s Declaration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeleteBranchRequest: `DeleteBranch` request message.
+type DeleteBranchRequest struct {
+	// Branch: Required. The name of the branch in the Git repository to delete.
+	Branch string `json:"branch,omitempty"`
+	// Force: Optional. If set to true, any non-pushed commits on the branch will
+	// be deleted. Upstream branch name will be the same as the branch to delete.
+	Force bool `json:"force,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Branch") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Branch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteBranchRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteBranchRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteBranchResponse: `DeleteBranch` response message.
+type DeleteBranchResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // DeleteFile: Represents the delete file operation.
 type DeleteFile struct {
 }
@@ -1366,6 +1453,32 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FetchCurrentWorkspaceBranchResponse: Response message for
+// `FetchCurrentWorkspaceBranch` method.
+type FetchCurrentWorkspaceBranchResponse struct {
+	// BranchName: The name of the current branch for the workspace.
+	BranchName string `json:"branchName,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BranchName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BranchName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchCurrentWorkspaceBranchResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchCurrentWorkspaceBranchResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FetchFileDiffResponse: `FetchFileDiff` response message.
 type FetchFileDiffResponse struct {
 	// FormattedDiff: The raw formatted Git diff for the file.
@@ -1496,6 +1609,35 @@ type FetchRepositoryHistoryResponse struct {
 
 func (s FetchRepositoryHistoryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchRepositoryHistoryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchWorkspaceBranchesResponse: Response message for
+// `FetchWorkspaceBranches` method.
+type FetchWorkspaceBranchesResponse struct {
+	// Branches: The branches in the workspace.
+	Branches []*BranchMetadata `json:"branches,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Branches") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Branches") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchWorkspaceBranchesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchWorkspaceBranchesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3741,6 +3883,40 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SyncWorkspaceRefsRequest: `SyncWorkspaceRefs` request message.
+type SyncWorkspaceRefsRequest struct {
+	// Deepen: Optional. Can be used to deepen the commit history of shallow
+	// clones. Git documentation:
+	// https://git-scm.com/docs/git-fetch#Documentation/git-fetch.txt---deependepth
+	Deepen int64 `json:"deepen,omitempty"`
+	// RemoteBranchName: Optional. The name of the branch in the Git remote to
+	// which the refs should be fetched for. If left unset, all remote branches
+	// will be fetched.
+	RemoteBranchName string `json:"remoteBranchName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Deepen") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Deepen") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SyncWorkspaceRefsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SyncWorkspaceRefsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SyncWorkspaceRefsResponse: `SyncWorkspaceRefs` response message.
+type SyncWorkspaceRefsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // TableUpdateTrigger: Represents a table update trigger configuration.
 type TableUpdateTrigger struct {
 	// Table: The target table to trigger the workflow.
@@ -4259,19 +4435,37 @@ type Workspace struct {
 	// DataEncryptionState: Output only. A data encryption state of a Git
 	// repository if this Workspace is protected by a KMS key.
 	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
+	// Depth: Optional. Input only. Immutable. The maximum depth of the Git
+	// repository to checkout for this workspace. If defined and greater than 0,
+	// the Git repository will be created as a shallow clone with the given depth,
+	// otherwise a full clone will be performed. This field is available only for
+	// GitHub, Gitlab and 1p repositories with enabled branch management.
+	Depth int64 `json:"depth,omitempty"`
 	// DisableMoves: Optional. If set to true, workspaces will not be moved if its
 	// linked Repository is moved. Instead, it will be deleted.
 	DisableMoves bool `json:"disableMoves,omitempty"`
+	// EnableBranchManagement: Immutable. Controls the enablement of branch
+	// checkout for the workspace. When set to True, the workspace will be allowed
+	// to checkout branches.
+	EnableBranchManagement bool `json:"enableBranchManagement,omitempty"`
 	// InternalMetadata: Output only. All the metadata information that is used
 	// internally to serve the resource. For example: timestamps, flags, status
 	// fields, etc. The format of this field is a JSON string.
 	InternalMetadata string `json:"internalMetadata,omitempty"`
 	// Name: Identifier. The workspace's name.
 	Name string `json:"name,omitempty"`
+	// OriginalBranch: Optional. Input only. Immutable. The name of the default
+	// upstream branch for all pull/push operations in the remote repository for
+	// this workspace. If empty, the HEAD branch from repository will be used.
+	OriginalBranch string `json:"originalBranch,omitempty"`
 	// PrivateResourceMetadata: Output only. Metadata indicating whether this
 	// resource is user-scoped. For `Workspace` resources, the `user_scoped` field
 	// is always `true`.
 	PrivateResourceMetadata *PrivateResourceMetadata `json:"privateResourceMetadata,omitempty"`
+	// Shallow: Output only. If set to true, the workspace was created as a shallow
+	// clone. Will be set to true if the depth field is set to a value greater than
+	// 0, otherwise it will be set to false.
+	Shallow bool `json:"shallow,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -11053,6 +11247,111 @@ func (c *ProjectsLocationsRepositoriesWorkflowInvocationsQueryCall) Pages(ctx co
 	}
 }
 
+type ProjectsLocationsRepositoriesWorkspacesCheckoutCall struct {
+	s                              *Service
+	name                           string
+	checkoutworkspacebranchrequest *CheckoutWorkspaceBranchRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Checkout: Checkout a branch in a Workspace.
+//
+//   - name: The workspace resource name. Format:
+//     projects/{project}/locations/{location}/repositories/{repository}/workspace
+//     s/{workspace}.
+func (r *ProjectsLocationsRepositoriesWorkspacesService) Checkout(name string, checkoutworkspacebranchrequest *CheckoutWorkspaceBranchRequest) *ProjectsLocationsRepositoriesWorkspacesCheckoutCall {
+	c := &ProjectsLocationsRepositoriesWorkspacesCheckoutCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.checkoutworkspacebranchrequest = checkoutworkspacebranchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesWorkspacesCheckoutCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkspacesCheckoutCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesWorkspacesCheckoutCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkspacesCheckoutCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkspacesCheckoutCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkspacesCheckoutCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.checkoutworkspacebranchrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:checkout")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.checkout", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workspaces.checkout" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesCheckoutCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.checkout", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsRepositoriesWorkspacesCommitCall struct {
 	s                             *Service
 	name                          string
@@ -11363,6 +11662,389 @@ func (c *ProjectsLocationsRepositoriesWorkspacesDeleteCall) Do(opts ...googleapi
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall struct {
+	s                   *Service
+	name                string
+	deletebranchrequest *DeleteBranchRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// DeleteBranch: Deletes a branch in a Workspace.
+//
+//   - name: The workspace resource name. Format:
+//     projects/{project}/locations/{location}/repositories/{repository}/workspace
+//     s/{workspace}.
+func (r *ProjectsLocationsRepositoriesWorkspacesService) DeleteBranch(name string, deletebranchrequest *DeleteBranchRequest) *ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall {
+	c := &ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deletebranchrequest = deletebranchrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deletebranchrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:deleteBranch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.deleteBranch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workspaces.deleteBranch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeleteBranchResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesDeleteBranchCall) Do(opts ...googleapi.CallOption) (*DeleteBranchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeleteBranchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.deleteBranch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchBranches: Fetches branches in a Workspace.
+//
+//   - name: The workspace resource name. Format:
+//     projects/{project}/locations/{location}/repositories/{repository}/workspace
+//     s/{workspace}.
+func (r *ProjectsLocationsRepositoriesWorkspacesService) FetchBranches(name string) *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall {
+	c := &ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter for the returned list.
+//
+// Possible values:
+//
+//	"BRANCH_FILTER_UNSPECIFIED" - Default value. This value is unused.
+//	"LOCAL_ONLY" - Returns local branches.
+//	"REMOTE_ONLY" - Returns remote branches.
+//	"ALL" - Returns all branches.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) Filter(filter string) *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of branches
+// to return. The server may return fewer items than requested. If unspecified,
+// the server will pick an appropriate default. The maximum value is 1000;
+// values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) PageSize(pageSize int64) *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token received from
+// a previous `FetchWorkspaceBranches` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `FetchWorkspaceBranches`, with the exception of `page_size`, must match the
+// call that provided the page token.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) PageToken(pageToken string) *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:fetchBranches")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.fetchBranches", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workspaces.fetchBranches" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchWorkspaceBranchesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) Do(opts ...googleapi.CallOption) (*FetchWorkspaceBranchesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchWorkspaceBranchesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.fetchBranches", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchBranchesCall) Pages(ctx context.Context, f func(*FetchWorkspaceBranchesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchCurrentBranch: Fetches the current branch of a Workspace.
+//
+//   - name: The workspace resource name. Format:
+//     projects/{project}/locations/{location}/repositories/{repository}/workspace
+//     s/{workspace}.
+func (r *ProjectsLocationsRepositoriesWorkspacesService) FetchCurrentBranch(name string) *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall {
+	c := &ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall) IfNoneMatch(entityTag string) *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:fetchCurrentBranch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.fetchCurrentBranch", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workspaces.fetchCurrentBranch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchCurrentWorkspaceBranchResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesFetchCurrentBranchCall) Do(opts ...googleapi.CallOption) (*FetchCurrentWorkspaceBranchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchCurrentWorkspaceBranchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.fetchCurrentBranch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13618,6 +14300,112 @@ func (c *ProjectsLocationsRepositoriesWorkspacesSetIamPolicyCall) Do(opts ...goo
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall struct {
+	s                        *Service
+	name                     string
+	syncworkspacerefsrequest *SyncWorkspaceRefsRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// SyncWorkspaceRefs: Syncs the refs of a Workspace.
+//
+//   - name: The workspace resource name. Format:
+//     projects/{project}/locations/{location}/repositories/{repository}/workspace
+//     s/{workspace}.
+func (r *ProjectsLocationsRepositoriesWorkspacesService) SyncWorkspaceRefs(name string, syncworkspacerefsrequest *SyncWorkspaceRefsRequest) *ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall {
+	c := &ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.syncworkspacerefsrequest = syncworkspacerefsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.syncworkspacerefsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:syncWorkspaceRefs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.syncWorkspaceRefs", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.workspaces.syncWorkspaceRefs" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SyncWorkspaceRefsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesWorkspacesSyncWorkspaceRefsCall) Do(opts ...googleapi.CallOption) (*SyncWorkspaceRefsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SyncWorkspaceRefsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.workspaces.syncWorkspaceRefs", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -776,8 +776,8 @@ type ClientScope struct {
 	// RestrictedClientApplication: Optional. The application that is subject to
 	// this binding's scope.
 	RestrictedClientApplication *Application `json:"restrictedClientApplication,omitempty"`
-	// RestrictedProject: Optional. The GCP project that is subject to this
-	// binding's scope.
+	// RestrictedProject: Optional. The Google Cloud project that is subject to
+	// this binding's scope.
 	RestrictedProject *Project `json:"restrictedProject,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "RestrictedClientApplication") to unconditionally include in API requests.
@@ -1996,13 +1996,20 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 // including groups, service accounts, and federated identities. Only one of
 // them can be set to create an access binding.
 type Principal struct {
-	// FederatedPrincipal: Immutable. IAM federated principal name to assign
-	// policies to workforce/workload federated identities. Can be principal set or
-	// single principal, here are some examples: Single principal:
-	// principal://iam.googleapis.com/projects/{project_number}/locations/global/wor
-	// kloadIdentityPools/{pool_id}/subject/{subject_attribute_value} PrincipalSet:
-	// principalSet://iam.googleapis.com/projects/{project_number}/locations/global/
-	// workloadIdentityPools/{pool_id}/*
+	// FederatedPrincipal: Immutable. The IAM principal identifier of the federated
+	// workforce or workload to assign the policy to. Examples include the
+	// following: * Single principal:
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/global/wo
+	// rkloadIdentityPools/{pool_id}/subject/{subject_attribute_value}` * All
+	// workloads in a workload identity pool:
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/*` * All Workforce Pools in a Google Cloud
+	// organization:
+	// `principalSet://cloudresourcemanager.googleapis.com/organizations/{organizati
+	// on_id}/type/WorkforcePool` Bindings created for all Workforce Pools in a
+	// Google Cloud organization support only `scoped_access_settings` with the
+	// `restricted_project` client scope and active `session_settings`. No other
+	// configurations are allowed.
 	FederatedPrincipal string `json:"federatedPrincipal,omitempty"`
 	// ServiceAccount: Immutable. Service account email used to assign policies to
 	// a specific service account. If a service account is subject to multiple
@@ -2058,12 +2065,12 @@ func (s PrivateServiceConnectEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Project: A GCP project which contains applications and resources that users
-// can access.
+// Project: A Google Cloud project which contains applications and resources
+// that users can access.
 type Project struct {
-	// Name: The GCP project resource name. Format: "projects/{project_number}"
-	// (Only the numeric project name variation is supported). Example:
-	// "projects/1234567890"
+	// Name: The Google Cloud project resource name. Format:
+	// `projects/{project_number}`. Only the project number is supported. Example:
+	// `projects/1234567890`
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2393,11 +2400,11 @@ type SessionSettings struct {
 	MaxInactivity string `json:"maxInactivity,omitempty"`
 	// SessionLength: Optional. The session length. Setting this field to zero
 	// allows for sessions that are active indefinitely. Also, setting
-	// `session_length_enabled` to false disregards session limits, which means
-	// that sessions never expire. If use_oidc_max_age is true, for OIDC apps, the
-	// session length will be the minimum of this field and the OIDC max_age param.
-	// If this field is set to zero, `session_length_enabled` must be set to false
-	// or left unset.
+	// `session_length_enabled` to `false` disregards session limits, which means
+	// that sessions never expire. If `use_oidc_max_age` is `true`, for OIDC apps,
+	// the session length will be the minimum of this field and the OIDC `max_age`
+	// param. If this field is set to zero, `session_length_enabled` must be set to
+	// `false` or left unset.
 	SessionLength string `json:"sessionLength,omitempty"`
 	// SessionLengthEnabled: Optional. This field enables or disables Google Cloud
 	// session length. When false, all fields set above will be disregarded and the
@@ -5408,6 +5415,29 @@ func (r *AccessPoliciesServicePerimetersService) Get(name string) *AccessPolicie
 	return c
 }
 
+// DeletedPrincipalSyntax sets the optional parameter "deletedPrincipalSyntax":
+// If true, the response will contain the deleted principal syntax for
+// identities that support it.
+//
+// Possible values:
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_UNSPECIFIED" - Deleted principal syntax
+//
+// support was not specified.
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_DISABLED" - Deleted principal syntax is
+//
+// disabled and no identities in the request or response will contain deleted
+// principal syntax.
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_ENABLED" - The request and response can
+//
+// contain identities with deleted IAM principal syntax.
+func (c *AccessPoliciesServicePerimetersGetCall) DeletedPrincipalSyntax(deletedPrincipalSyntax string) *AccessPoliciesServicePerimetersGetCall {
+	c.urlParams_.Set("deletedPrincipalSyntax", deletedPrincipalSyntax)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -5516,6 +5546,29 @@ type AccessPoliciesServicePerimetersListCall struct {
 func (r *AccessPoliciesServicePerimetersService) List(parent string) *AccessPoliciesServicePerimetersListCall {
 	c := &AccessPoliciesServicePerimetersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// DeletedPrincipalSyntax sets the optional parameter "deletedPrincipalSyntax":
+// If true, the response will contain the deleted principal syntax for
+// identities that support it.
+//
+// Possible values:
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_UNSPECIFIED" - Deleted principal syntax
+//
+// support was not specified.
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_DISABLED" - Deleted principal syntax is
+//
+// disabled and no identities in the request or response will contain deleted
+// principal syntax.
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_ENABLED" - The request and response can
+//
+// contain identities with deleted IAM principal syntax.
+func (c *AccessPoliciesServicePerimetersListCall) DeletedPrincipalSyntax(deletedPrincipalSyntax string) *AccessPoliciesServicePerimetersListCall {
+	c.urlParams_.Set("deletedPrincipalSyntax", deletedPrincipalSyntax)
 	return c
 }
 
@@ -5670,6 +5723,30 @@ func (r *AccessPoliciesServicePerimetersService) Patch(name string, serviceperim
 	c := &AccessPoliciesServicePerimetersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.serviceperimeter = serviceperimeter
+	return c
+}
+
+// DeletedPrincipalSyntax sets the optional parameter "deletedPrincipalSyntax":
+// If true, the response will contain the deleted principal syntax for
+// identities that support it and the request can contain identities with
+// deleted principal syntax.
+//
+// Possible values:
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_UNSPECIFIED" - Deleted principal syntax
+//
+// support was not specified.
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_DISABLED" - Deleted principal syntax is
+//
+// disabled and no identities in the request or response will contain deleted
+// principal syntax.
+//
+//	"DELETED_PRINCIPAL_SYNTAX_SUPPORT_ENABLED" - The request and response can
+//
+// contain identities with deleted IAM principal syntax.
+func (c *AccessPoliciesServicePerimetersPatchCall) DeletedPrincipalSyntax(deletedPrincipalSyntax string) *AccessPoliciesServicePerimetersPatchCall {
+	c.urlParams_.Set("deletedPrincipalSyntax", deletedPrincipalSyntax)
 	return c
 }
 

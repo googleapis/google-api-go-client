@@ -11488,6 +11488,62 @@
                       ]
                     }
                   }
+                },
+                "responses": {
+                  "methods": {
+                    "delete": {
+                      "description": "Deletes the response from the endpoint.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/endpoints/{endpointsId}/responses/{responsesId}",
+                      "httpMethod": "DELETE",
+                      "id": "aiplatform.projects.locations.endpoints.responses.delete",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the Response resource to be deleted. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}/responses/{response}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/endpoints/[^/]+/responses/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleApiHttpBody"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloud-platform.read-only"
+                      ]
+                    },
+                    "get": {
+                      "description": "Gets the response from the endpoint.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/endpoints/{endpointsId}/responses/{responsesId}",
+                      "httpMethod": "GET",
+                      "id": "aiplatform.projects.locations.endpoints.responses.get",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the Response resource. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}/responses/{response}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/endpoints/[^/]+/responses/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}",
+                      "response": {
+                        "$ref": "GoogleApiHttpBody"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/cloud-platform.read-only"
+                      ]
+                    }
+                  }
                 }
               }
             },
@@ -23496,6 +23552,58 @@
                             "https://www.googleapis.com/auth/cloud-platform",
                             "https://www.googleapis.com/auth/cloud-platform.read-only"
                           ]
+                        },
+                        "delete": {
+                          "description": "Deletes the response from the endpoint.",
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/publishers/{publishersId}/v1/responses/{responsesId}",
+                          "httpMethod": "DELETE",
+                          "id": "aiplatform.projects.locations.publishers.v1.responses.delete",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The name of the Response resource to be deleted. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}/responses/{response}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/publishers/[^/]+/v1/responses/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1/{+name}",
+                          "response": {
+                            "$ref": "GoogleApiHttpBody"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/cloud-platform.read-only"
+                          ]
+                        },
+                        "get": {
+                          "description": "Gets the response from the endpoint.",
+                          "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/publishers/{publishersId}/v1/responses/{responsesId}",
+                          "httpMethod": "GET",
+                          "id": "aiplatform.projects.locations.publishers.v1.responses.get",
+                          "parameterOrder": [
+                            "name"
+                          ],
+                          "parameters": {
+                            "name": {
+                              "description": "Required. The name of the Response resource. Format: `projects/{project}/locations/{location}/endpoints/{endpoint}/responses/{response}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/publishers/[^/]+/v1/responses/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1/{+name}",
+                          "response": {
+                            "$ref": "GoogleApiHttpBody"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
+                            "https://www.googleapis.com/auth/cloud-platform.read-only"
+                          ]
                         }
                       }
                     }
@@ -35489,7 +35597,7 @@
       }
     }
   },
-  "revision": "20260808",
+  "revision": "20260815",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionGenerateVideoExperiments": {
@@ -36464,7 +36572,7 @@
       "id": "GoogleCloudAiplatformV1Agent",
       "properties": {
         "base_agent": {
-          "description": "Required. The base agent for the agent. Supported values: * `antigravity-preview-05-2026`",
+          "description": "Required. Immutable. The base agent for the agent. Supported values: * `antigravity-preview-05-2026` Immutable: `UpdateAgent` rejects a change, including clearing it. The kind of agent this is gets derived from this field when the agent is created and is recorded then; nothing recomputes it afterwards, so a later change would leave the agent described as one kind and behaving as another. Create a new agent instead.",
           "type": "string"
         },
         "base_environment": {
@@ -37171,6 +37279,20 @@
           "$ref": "GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints",
           "deprecated": true,
           "description": "Optional. Deprecated: Use top-level `language_codes` instead. Specifies one or more languages in the audio."
+        },
+        "mode": {
+          "description": "Optional. Configures transcription mode. Supported values: `VERBATIM`, `SMART`. If unspecified, defaults to `VERBATIM` transcription. In `SMART` mode, the model performs disfluency removal (eliminating filler words, repetitions, and false starts), light grammatical cleanup, automatic formatting (paragraphs, bullet points, numbered lists), and minor user edits (inline self-corrections). Timestamps and diarization are incompatible with mode `SMART`.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "VERBATIM",
+            "SMART"
+          ],
+          "enumDescriptions": [
+            "Unspecified transcription mode.",
+            "Verbatim transcription mode.",
+            "Smart transcription mode."
+          ],
+          "type": "string"
         },
         "wordTimestamp": {
           "description": "Optional. Configures word-level timestamp generation.",
@@ -46996,7 +47118,7 @@
           "type": "string"
         },
         "dnsZoneName": {
-          "description": "Optional. FQDN of the private DNS zone to create DNS record set for PSC endpoint.",
+          "description": "Optional. Name of the private Cloud DNS managed zone in which to create the gateway's A-record. This is the managed zone's own name, not its DNS name: for a zone serving `example.internal.`, this field takes the zone name, such as `my-private-zone`. The zone's DNS name is combined with a generated per-gateway label to form the record's fully qualified name, which must stay within the 255-octet DNS limit. If the full name is too long, gateway provisioning fails when it attempts to create the DNS record.",
           "type": "string"
         },
         "ipAddress": {
@@ -55358,6 +55480,10 @@
           "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityOpenTelemetry",
           "description": "Data source follows OpenTelemetry convention."
         },
+        "sessionScope": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScope",
+          "description": "Scope online evaluation to OTel sessions (i.e. group of traces with the same conversation ID)."
+        },
         "traceScope": {
           "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityTraceScope",
           "description": "Scope online evaluation to single traces."
@@ -55410,6 +55536,71 @@
         "semconvVersion": {
           "description": "Required. Defines which version OTel Semantic Convention the data follows. Can be \"1.39.0\" or newer.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScope": {
+      "description": "If chosen, the online evaluator will evaluate sessions matching specified `filter`. A session is a group of traces with a common `gen_ai.conversation.id`.",
+      "id": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScope",
+      "properties": {
+        "filter": {
+          "description": "Optional. A list of predicates to filter sessions. Multiple predicates are combined using AND. The maximum number of predicates is 10.",
+          "items": {
+            "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopePredicate"
+          },
+          "type": "array"
+        },
+        "inactivityTrigger": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopeInactivityTrigger",
+          "description": "Session is considered ready for evaluation when there are no new traces for a specified period of inactivity."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopeInactivityTrigger": {
+      "description": "Configuration for inactivity based session completion.",
+      "id": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopeInactivityTrigger",
+      "properties": {
+        "threshold": {
+          "description": "Required. The amount of time that must pass with no new traces before a session is considered ready for evaluation. This is a required field if InactivityTrigger is used. The value must be a positive duration no greater than 7 days (604800 seconds).",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopePredicate": {
+      "description": "Defines a single filter predicate.",
+      "id": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopePredicate",
+      "properties": {
+        "duration": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate",
+          "description": "Filter on the duration of a session (in seconds)."
+        },
+        "modelCallErrors": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate",
+          "description": "Filter on the number of LLM call errors within a session."
+        },
+        "modelCalls": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate",
+          "description": "Filter on the number of underlying LLM calls within a session."
+        },
+        "toolCallErrors": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate",
+          "description": "Filter on the number of tool call errors within a session."
+        },
+        "toolCalls": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate",
+          "description": "Filter on the number of underlying tool calls within a session."
+        },
+        "totalTokenUsage": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate",
+          "description": "Filter on the total token usage within a session."
+        },
+        "userTurns": {
+          "$ref": "GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate",
+          "description": "Filter on the number of user turns within a session."
         }
       },
       "type": "object"
@@ -58262,6 +58453,14 @@
       "description": "A RagChunk includes the content of a chunk of a RagFile, and associated metadata.",
       "id": "GoogleCloudAiplatformV1RagChunk",
       "properties": {
+        "chunkId": {
+          "description": "The ID of the chunk.",
+          "type": "string"
+        },
+        "fileId": {
+          "description": "The ID of the file that the chunk belongs to.",
+          "type": "string"
+        },
         "pageSpan": {
           "$ref": "GoogleCloudAiplatformV1RagChunkPageSpan",
           "description": "If populated, represents where the chunk starts and ends in the document."
@@ -58880,6 +59079,23 @@
       },
       "type": "object"
     },
+    "GoogleCloudAiplatformV1RayClusterAutoscalingSpec": {
+      "description": "Ray cluster level autoscaling configuration.",
+      "id": "GoogleCloudAiplatformV1RayClusterAutoscalingSpec",
+      "properties": {
+        "idleTimeoutMinutes": {
+          "description": "Optional. The number of minutes that need to pass before an idle worker node is removed by the autoscaler. Default is 5 mins.",
+          "format": "int64",
+          "type": "string"
+        },
+        "upscalingSpeed": {
+          "description": "Optional. The number of nodes allowed to be pending as a multiple of the current number of nodes. [OSS Ray reference](https://docs.ray.io/en/latest/cluster/vms/user-guides/configuring-autoscaling.html#upscaling-and-downscaling-speed)",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudAiplatformV1RayLogsSpec": {
       "description": "Configuration for the Ray OSS Logs.",
       "id": "GoogleCloudAiplatformV1RayLogsSpec",
@@ -58898,6 +59114,10 @@
         "disabled": {
           "description": "Optional. Flag to disable the Ray metrics collection.",
           "type": "boolean"
+        },
+        "enableUsageStatsCollection": {
+          "description": "Optional. Flag to enable the Ray usage stats collection by Anyscale. https://docs.ray.io/en/latest/cluster/usage-stats.html#usage-stats-collection Disable by default.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -58913,6 +59133,10 @@
         "imageUri": {
           "description": "Optional. Default image for user to choose a preferred ML framework (for example, TensorFlow or Pytorch) by choosing from [Vertex prebuilt images](https://cloud.google.com/vertex-ai/docs/training/pre-built-containers). Either this or the resource_pool_images is required. Use this field if you need all the resource pools to have the same Ray image. Otherwise, use the {@code resource_pool_images} field.",
           "type": "string"
+        },
+        "rayClusterAutoscalingSpec": {
+          "$ref": "GoogleCloudAiplatformV1RayClusterAutoscalingSpec",
+          "description": "Optional. Optional Ray autoscaling configurations."
         },
         "rayLogsSpec": {
           "$ref": "GoogleCloudAiplatformV1RayLogsSpec",
@@ -60856,7 +61080,8 @@
             "STATE_RUNNING",
             "STATE_DEPROVISIONING",
             "STATE_TERMINATED",
-            "STATE_DELETED"
+            "STATE_DELETED",
+            "STATE_STOPPING"
           ],
           "enumDescriptions": [
             "The default value. This value is unused.",
@@ -60864,7 +61089,8 @@
             "Sandbox runtime is ready for serving.",
             "Sandbox runtime is halted, performing tear down tasks.",
             "Sandbox has terminated with underlying runtime failure.",
-            "Sandbox runtime has been deleted."
+            "Sandbox runtime has been deleted.",
+            "Sandbox runtime is stopping."
           ],
           "readOnly": true,
           "type": "string"
@@ -60992,6 +61218,10 @@
         "codeExecutionEnvironment": {
           "$ref": "GoogleCloudAiplatformV1SandboxEnvironmentSpecCodeExecutionEnvironment",
           "description": "Optional. The code execution environment."
+        },
+        "shellEnvironment": {
+          "$ref": "GoogleCloudAiplatformV1SandboxEnvironmentSpecShellEnvironment",
+          "description": "Optional. The shell environment for executing shell commands and scripts."
         }
       },
       "type": "object"
@@ -61027,6 +61257,12 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudAiplatformV1SandboxEnvironmentSpecShellEnvironment": {
+      "description": "The shell environment.",
+      "id": "GoogleCloudAiplatformV1SandboxEnvironmentSpecShellEnvironment",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudAiplatformV1SandboxEnvironmentTemplate": {
@@ -63508,6 +63744,13 @@
         "codeRepositoryState": {
           "description": "Serialized state of the code repository. This string will typically contain a JSON representation of the UI's CodeRepositoryService state (files, folders, content, and any metadata). The UI is responsible for serialization and deserialization.",
           "type": "string"
+        },
+        "deployedRegions": {
+          "description": "Optional. The Cloud Run regions in which the application is currently deployed. Used to rediscover and redeploy the app in the regions it already runs in, which may differ from the prompt's location.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "framework": {
           "description": "Optional. Framework used to build the application.",

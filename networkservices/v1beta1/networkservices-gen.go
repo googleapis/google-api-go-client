@@ -1267,9 +1267,11 @@ type ExtensionBindingMatchConditionToDestination struct {
 	// of the form /package.service/method.
 	Paths []*ExtensionBindingMatchConditionStringMatch `json:"paths,omitempty"`
 	// Resources: Optional. A list of non-empty strings whose value is matched
-	// against the resource value. If not specified, any resource is allowed. If
-	// specified, a match occurs if any of the resources matches the resource value
-	// in the request. Limited to 5 resources.
+	// against the resource to which a request is sent (e.g., an Agent in
+	// AiApplication). If not specified, any resource is allowed. If specified, a
+	// match occurs if any of the resources matches the resource value in the
+	// request. Limited to 5 resources. When matching against resources in the
+	// AgentRegistry, use the URNs of the registry resources.
 	Resources []*ExtensionBindingMatchConditionStringMatch `json:"resources,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "HeaderSet") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1319,10 +1321,6 @@ func (s ExtensionBindingMatchConditionToDestinationHeaderSet) MarshalJSON() ([]b
 type ExtensionBindingTarget struct {
 	// Resources: Optional. The reference to the target resource, to which this
 	// binding should attach. Exactly one of `resources` or `scope` must be set.
-	// For Agent Gateway, this would be the full resource name, in the format:
-	// `projects/{project}/locations/{location}/agentGateways/{agent_gateway}`. For
-	// AI App, this would be the full resource name, in the format:
-	// `projects/{project}/locations/{location}/applications/{application}`.
 	Resources []string `json:"resources,omitempty"`
 	// Scope: Optional. Specifies the scope of resources to which this binding
 	// should attach. Exactly one of `resources` or `scope` must be set.
@@ -4416,7 +4414,7 @@ type ProducerExtension struct {
 	ExtensionSettings *ProducerExtensionExtensionSettings `json:"extensionSettings,omitempty"`
 	// Labels: Optional. Set of labels associated with the `ProducerExtension`
 	// resource. The format must comply with the following requirements
-	// ((https://cloud.google.com/compute/docs/labeling-resources#requirements).
+	// (https://cloud.google.com/compute/docs/labeling-resources#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. Name of the `ProducerExtension` resource in the following
 	// format:

@@ -119,6 +119,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -144,6 +145,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Organizations *OrganizationsService
+
 	Projects *ProjectsService
 }
 
@@ -152,6 +155,51 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	rs.Locations = NewOrganizationsLocationsService(s)
+	return rs
+}
+
+type OrganizationsService struct {
+	s *Service
+
+	Locations *OrganizationsLocationsService
+}
+
+func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
+	rs := &OrganizationsLocationsService{s: s}
+	rs.Operations = NewOrganizationsLocationsOperationsService(s)
+	rs.OrgNumberRegistries = NewOrganizationsLocationsOrgNumberRegistriesService(s)
+	return rs
+}
+
+type OrganizationsLocationsService struct {
+	s *Service
+
+	Operations *OrganizationsLocationsOperationsService
+
+	OrgNumberRegistries *OrganizationsLocationsOrgNumberRegistriesService
+}
+
+func NewOrganizationsLocationsOperationsService(s *Service) *OrganizationsLocationsOperationsService {
+	rs := &OrganizationsLocationsOperationsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsOrgNumberRegistriesService(s *Service) *OrganizationsLocationsOrgNumberRegistriesService {
+	rs := &OrganizationsLocationsOrgNumberRegistriesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsOrgNumberRegistriesService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -882,6 +930,37 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListOrgNumberRegistriesResponse: Response message for the
+// CloudNumberRegistry.ListOrgNumberRegistries method.
+type ListOrgNumberRegistriesResponse struct {
+	// NextPageToken: A token to retrieve the next page of results, or empty if
+	// there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// OrgNumberRegistries: The list of OrgNumberRegistries.
+	OrgNumberRegistries []*OrgNumberRegistry `json:"orgNumberRegistries,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListOrgNumberRegistriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOrgNumberRegistriesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListRealmsResponse: Response message for the CloudNumberRegistry.ListRealms
 // method.
 type ListRealmsResponse struct {
@@ -1064,6 +1143,48 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OrgNumberRegistry: An OrgNumberRegistry defines a delegation of authority
+// from an organization to a project, allowing the project to manage IP address
+// data within specified scopes of the organization.
+type OrgNumberRegistry struct {
+	// AdminProject: Required. The project that will act as the admin project for
+	// CNR resources Format: projects/{project_number} or projects/{project_id}
+	AdminProject string `json:"adminProject,omitempty"`
+	// CreateTime: Output only. The time at which the OrgNumberRegistry was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Labels: Optional. User-defined labels.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The resource name of the OrgNumberRegistry.
+	Name string `json:"name,omitempty"`
+	// TargetScopes: Required. The scopes within the organization that the project
+	// is able to manage. Currently only organization scope is supported. For
+	// example, "organizations/1234567890".
+	TargetScopes []string `json:"targetScopes,omitempty"`
+	// UpdateTime: Output only. The time at which the OrgNumberRegistry was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AdminProject") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdminProject") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OrgNumberRegistry) MarshalJSON() ([]byte, error) {
+	type NoMethod OrgNumberRegistry
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1481,6 +1602,1006 @@ type Status struct {
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type OrganizationsLocationsOperationsCancelCall struct {
+	s                      *Service
+	name                   string
+	canceloperationrequest *CancelOperationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
+// `Code.CANCELLED`.
+//
+// - name: The name of the operation resource to be cancelled.
+func (r *OrganizationsLocationsOperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OrganizationsLocationsOperationsCancelCall {
+	c := &OrganizationsLocationsOperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.canceloperationrequest = canceloperationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsOperationsCancelCall) Context(ctx context.Context) *OrganizationsLocationsOperationsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsOperationsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.canceloperationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudnumberregistry.organizations.locations.operations.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.operations.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsOperationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// `google.rpc.Code.UNIMPLEMENTED`.
+//
+// - name: The name of the operation resource to be deleted.
+func (r *OrganizationsLocationsOperationsService) Delete(name string) *OrganizationsLocationsOperationsDeleteCall {
+	c := &OrganizationsLocationsOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsOperationsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsOperationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsOperationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.operations.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudnumberregistry.organizations.locations.operations.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.operations.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsOperationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
+//
+// - name: The name of the operation resource.
+func (r *OrganizationsLocationsOperationsService) Get(name string) *OrganizationsLocationsOperationsGetCall {
+	c := &OrganizationsLocationsOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsOperationsGetCall) Context(ctx context.Context) *OrganizationsLocationsOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.operations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudnumberregistry.organizations.locations.operations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.operations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsOperationsListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns `UNIMPLEMENTED`.
+//
+// - name: The name of the operation's parent resource.
+func (r *OrganizationsLocationsOperationsService) List(name string) *OrganizationsLocationsOperationsListCall {
+	c := &OrganizationsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": The standard list filter.
+func (c *OrganizationsLocationsOperationsListCall) Filter(filter string) *OrganizationsLocationsOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
+func (c *OrganizationsLocationsOperationsListCall) PageSize(pageSize int64) *OrganizationsLocationsOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
+func (c *OrganizationsLocationsOperationsListCall) PageToken(pageToken string) *OrganizationsLocationsOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
+// When set to `true`, operations that are reachable are returned as normal,
+// and those that are unreachable are returned in the
+// ListOperationsResponse.unreachable field. This can only be `true` when
+// reading across collections. For example, when `parent` is set to
+// "projects/example/locations/-". This field is not supported by default and
+// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
+// otherwise in service or product specific documentation.
+func (c *OrganizationsLocationsOperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OrganizationsLocationsOperationsListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsOperationsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsOperationsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsOperationsListCall) Context(ctx context.Context) *OrganizationsLocationsOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.operations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudnumberregistry.organizations.locations.operations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.operations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsOrgNumberRegistriesCreateCall struct {
+	s                 *Service
+	parent            string
+	orgnumberregistry *OrgNumberRegistry
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates a new OrgNumberRegistry in a given organization and
+// location.
+//
+//   - parent: The parent resource name where the OrgNumberRegistry will be
+//     created.
+func (r *OrganizationsLocationsOrgNumberRegistriesService) Create(parent string, orgnumberregistry *OrgNumberRegistry) *OrganizationsLocationsOrgNumberRegistriesCreateCall {
+	c := &OrganizationsLocationsOrgNumberRegistriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.orgnumberregistry = orgnumberregistry
+	return c
+}
+
+// OrgNumberRegistryId sets the optional parameter "orgNumberRegistryId":
+// Required. The ID to use for the OrgNumberRegistry, which will become the
+// final segment of the resource name.
+func (c *OrganizationsLocationsOrgNumberRegistriesCreateCall) OrgNumberRegistryId(orgNumberRegistryId string) *OrganizationsLocationsOrgNumberRegistriesCreateCall {
+	c.urlParams_.Set("orgNumberRegistryId", orgNumberRegistryId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationsLocationsOrgNumberRegistriesCreateCall) RequestId(requestId string) *OrganizationsLocationsOrgNumberRegistriesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsOrgNumberRegistriesCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOrgNumberRegistriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsOrgNumberRegistriesCreateCall) Context(ctx context.Context) *OrganizationsLocationsOrgNumberRegistriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsOrgNumberRegistriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOrgNumberRegistriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.orgnumberregistry)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/orgNumberRegistries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.orgNumberRegistries.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudnumberregistry.organizations.locations.orgNumberRegistries.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsOrgNumberRegistriesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.orgNumberRegistries.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsOrgNumberRegistriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single OrgNumberRegistry.
+//
+// - name: The resource name of the OrgNumberRegistry to delete.
+func (r *OrganizationsLocationsOrgNumberRegistriesService) Delete(name string) *OrganizationsLocationsOrgNumberRegistriesDeleteCall {
+	c := &OrganizationsLocationsOrgNumberRegistriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes after
+// the first request. For example, consider a situation where you make an
+// initial request and the request times out. If you make the request again
+// with the same request ID, the server can check if original operation with
+// the same request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationsLocationsOrgNumberRegistriesDeleteCall) RequestId(requestId string) *OrganizationsLocationsOrgNumberRegistriesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsOrgNumberRegistriesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOrgNumberRegistriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsOrgNumberRegistriesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsOrgNumberRegistriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsOrgNumberRegistriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOrgNumberRegistriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.orgNumberRegistries.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudnumberregistry.organizations.locations.orgNumberRegistries.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsOrgNumberRegistriesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.orgNumberRegistries.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsOrgNumberRegistriesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single OrgNumberRegistry.
+//
+// - name: The resource name of the OrgNumberRegistry to retrieve.
+func (r *OrganizationsLocationsOrgNumberRegistriesService) Get(name string) *OrganizationsLocationsOrgNumberRegistriesGetCall {
+	c := &OrganizationsLocationsOrgNumberRegistriesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsOrgNumberRegistriesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOrgNumberRegistriesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsOrgNumberRegistriesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOrgNumberRegistriesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsOrgNumberRegistriesGetCall) Context(ctx context.Context) *OrganizationsLocationsOrgNumberRegistriesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsOrgNumberRegistriesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOrgNumberRegistriesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.orgNumberRegistries.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudnumberregistry.organizations.locations.orgNumberRegistries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OrgNumberRegistry.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsOrgNumberRegistriesGetCall) Do(opts ...googleapi.CallOption) (*OrgNumberRegistry, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OrgNumberRegistry{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.orgNumberRegistries.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsOrgNumberRegistriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists OrgNumberRegistries in a given organization and location.
+//
+//   - parent: The parent resource name, for example
+//     `organizations/*/locations/*`.
+func (r *OrganizationsLocationsOrgNumberRegistriesService) List(parent string) *OrganizationsLocationsOrgNumberRegistriesListCall {
+	c := &OrganizationsLocationsOrgNumberRegistriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) Filter(filter string) *OrganizationsLocationsOrgNumberRegistriesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) OrderBy(orderBy string) *OrganizationsLocationsOrgNumberRegistriesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) PageSize(pageSize int64) *OrganizationsLocationsOrgNumberRegistriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) PageToken(pageToken string) *OrganizationsLocationsOrgNumberRegistriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsOrgNumberRegistriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsOrgNumberRegistriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) Context(ctx context.Context) *OrganizationsLocationsOrgNumberRegistriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/orgNumberRegistries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.orgNumberRegistries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudnumberregistry.organizations.locations.orgNumberRegistries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOrgNumberRegistriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) Do(opts ...googleapi.CallOption) (*ListOrgNumberRegistriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOrgNumberRegistriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudnumberregistry.organizations.locations.orgNumberRegistries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsOrgNumberRegistriesListCall) Pages(ctx context.Context, f func(*ListOrgNumberRegistriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsGetCall struct {

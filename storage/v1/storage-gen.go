@@ -10327,8 +10327,14 @@ func (c *ObjectsComposeCall) DestinationPredefinedAcl(destinationPredefinedAcl s
 }
 
 // DropContextGroups sets the optional parameter "dropContextGroups": Specifies
-// which groups of Object Contexts from the source object(s) should be dropped
-// from the destination object.
+// which object context groups to drop from the source object(s) during a
+// compose operation. The accepted value is 'custom'.
+// Destination contexts behave as follows:
+// - When request body contexts are provided, they override all source
+// contexts.
+// - When no request body contexts are provided, source contexts are preserved
+// unless 'dropContextGroups' contains 'custom', in which case all contexts are
+// dropped.
 func (c *ObjectsComposeCall) DropContextGroups(dropContextGroups ...string) *ObjectsComposeCall {
 	c.urlParams_.SetMulti("dropContextGroups", append([]string{}, dropContextGroups...))
 	return c
@@ -12439,8 +12445,14 @@ func (c *ObjectsRewriteCall) DestinationPredefinedAcl(destinationPredefinedAcl s
 }
 
 // DropContextGroups sets the optional parameter "dropContextGroups": Specifies
-// which groups of Object Contexts from the source object should be dropped
-// from the destination object.
+// which object context groups to drop from the source object during a copy
+// operation. The accepted value is 'custom'.
+// Destination contexts behave as follows:
+// - When request body contexts are provided, they override all source
+// contexts.
+// - When no request body contexts are provided, source contexts are preserved
+// unless 'dropContextGroups' contains 'custom', in which case all contexts are
+// dropped.
 func (c *ObjectsRewriteCall) DropContextGroups(dropContextGroups ...string) *ObjectsRewriteCall {
 	c.urlParams_.SetMulti("dropContextGroups", append([]string{}, dropContextGroups...))
 	return c

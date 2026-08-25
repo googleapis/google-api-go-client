@@ -239,6 +239,10 @@ type Assignment struct {
 	// Assignee: Optional. The resource which will use the reservation. E.g.
 	// `projects/myproject`, `folders/123`, or `organizations/456`.
 	Assignee string `json:"assignee,omitempty"`
+	// Condition: Optional. Common Expression Language (CEL) condition that defines
+	// the matching criteria for this assignment. The condition must resolve to a
+	// boolean value. Supported variables will be added later.
+	Condition *Expr `json:"condition,omitempty"`
 	// EnableGeminiInBigquery: Optional. Deprecated: "Gemini in BigQuery" is now
 	// available by default for all BigQuery editions and should not be explicitly
 	// set. Controls if "Gemini in BigQuery"
@@ -281,6 +285,13 @@ type Assignment struct {
 	// The assignment_id must only contain lower case alphanumeric characters or
 	// dashes and the max length is 64 characters.
 	Name string `json:"name,omitempty"`
+	// Precedence: Optional. Specifies the priority precedence for this assignment.
+	// Used to resolve ambiguity when multiple assignments match a single job.
+	// Higher numerical values represent higher priority (e.g., 20 is higher than
+	// 10). If unspecified, it defaults to 0. Multiple assignments can share the
+	// same precedence, but it is recommended to use unique precedence values for
+	// assignments within the same assignee scope.
+	Precedence int64 `json:"precedence,omitempty,string"`
 	// Principal: Optional. Represents the principal for this assignment. If not
 	// empty, jobs run by this principal will utilize the associated reservation.
 	// Otherwise, jobs will fall back to using the reservation assigned to the
@@ -1323,6 +1334,8 @@ func (s Reservation) MarshalJSON() ([]byte, error) {
 
 // ReservationGroup: A reservation group is a container for reservations.
 type ReservationGroup struct {
+	// CreationTime: Output only. Creation time of the reservation group.
+	CreationTime string `json:"creationTime,omitempty"`
 	// Name: Identifier. The resource name of the reservation group, e.g.,
 	// `projects/*/locations/*/reservationGroups/team1-prod`. The
 	// reservation_group_id must only contain lower case alphanumeric characters or
@@ -1334,18 +1347,23 @@ type ReservationGroup struct {
 	// non-root reservation groups, or `projects/*/locations/*` for root
 	// reservation groups.
 	ParentGroup string `json:"parentGroup,omitempty"`
+	// UpdateTime: Output only. Last update time of the reservation group via a
+	// user operation. This timestamp is updated only when an update operation
+	// explicitly targets this reservation group directly. It is not updated when
+	// parent or child groups are created, updated, or deleted.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "CreationTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

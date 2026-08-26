@@ -8952,7 +8952,8 @@ func (s WifiSsidPolicy) MarshalJSON() ([]byte, error) {
 // profile. Note: blockAction must also be specified.
 type WipeAction struct {
 	// PreserveFrp: Whether the factory-reset protection data is preserved on the
-	// device. This setting doesn’t apply to work profiles.
+	// device. This setting applies to fully managed devices and work profiles on
+	// company-owned devices.
 	PreserveFrp bool `json:"preserveFrp,omitempty"`
 	// WipeAfterDays: Number of days the policy is non-compliant before the device
 	// or work profile is wiped. wipeAfterDays must be greater than blockAfterDays.

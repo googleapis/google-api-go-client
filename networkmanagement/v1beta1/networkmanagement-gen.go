@@ -735,13 +735,19 @@ func (s CloudRunJobInfo) MarshalJSON() ([]byte, error) {
 type CloudRunRevisionEndpoint struct {
 	// ServiceUri: Output only. The URI of the Cloud Run service that the revision
 	// belongs to. The format is:
-	// projects/{project}/locations/{location}/services/{service}
+	// projects/{project}/locations/{location}/services/{service}. Mutually
+	// exclusive with worker_pool_uri.
 	ServiceUri string `json:"serviceUri,omitempty"`
 	// Uri: A Cloud Run (https://cloud.google.com/run)
 	// [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespaces.rev
 	// isions/get) URI. The format is:
 	// projects/{project}/locations/{location}/revisions/{revision}
 	Uri string `json:"uri,omitempty"`
+	// WorkerPoolUri: Output only. The URI of the worker pool that the revision
+	// belongs to. The format is:
+	// projects/{project}/locations/{location}/workerPools/{workerPool}. Mutually
+	// exclusive with service_uri.
+	WorkerPoolUri string `json:"workerPoolUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ServiceUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -768,11 +774,17 @@ type CloudRunRevisionInfo struct {
 	// Location: Location in which this revision is deployed.
 	Location string `json:"location,omitempty"`
 	// ServiceUri: URI of Cloud Run service this revision belongs to. Format:
-	// `projects/{project_id}/locations/{location}/services/{service_id}`
+	// `projects/{project_id}/locations/{location}/services/{service_id}` Mutually
+	// exclusive with `worker_pool_uri`.
 	ServiceUri string `json:"serviceUri,omitempty"`
 	// Uri: URI of the Cloud Run revision. Format:
 	// `projects/{project_id}/locations/{location}/revisions/{revision_id}`
 	Uri string `json:"uri,omitempty"`
+	// WorkerPoolUri: URI of Cloud Run worker pool this revision belongs to.
+	// Format:
+	// `projects/{project_id}/locations/{location}/workerPools/{worker_pool_id}`.
+	// Mutually exclusive with `service_uri`.
+	WorkerPoolUri string `json:"workerPoolUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

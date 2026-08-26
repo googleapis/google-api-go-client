@@ -646,10 +646,6 @@ type TosAcceptance struct {
 	// EmailOptIn: Optional. Whether the user opted in to receive product updates
 	// and email communications.
 	EmailOptIn bool `json:"emailOptIn,omitempty"`
-	// Signer: Optional. The name of the person who accepted the TOS.
-	Signer string `json:"signer,omitempty"`
-	// SignerTitle: Optional. The job title or role of the signer.
-	SignerTitle string `json:"signerTitle,omitempty"`
 	// UserAccepted: Required. Whether the user has accepted the Terms of Service.
 	UserAccepted bool `json:"userAccepted,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EmailOptIn") to

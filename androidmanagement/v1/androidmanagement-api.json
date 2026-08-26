@@ -1265,7 +1265,7 @@
       }
     }
   },
-  "revision": "20260820",
+  "revision": "20260824",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -8319,7 +8319,7 @@
       "id": "WipeAction",
       "properties": {
         "preserveFrp": {
-          "description": "Whether the factory-reset protection data is preserved on the device. This setting doesn’t apply to work profiles.",
+          "description": "Whether the factory-reset protection data is preserved on the device. This setting applies to fully managed devices and work profiles on company-owned devices.",
           "type": "boolean"
         },
         "wipeAfterDays": {

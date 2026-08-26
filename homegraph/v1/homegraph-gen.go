@@ -1296,12 +1296,10 @@ type TraitData struct {
 	// CommitTime: Other metadata for the trait. The time the client update was
 	// committed in the server.
 	CommitTime string `json:"commitTime,omitempty"`
-	// ProviderVersionTime: Optional in write requests (e.g.
-	// ReportStateAndNotification). If set, represents the provider version
-	// timestamp of the existing trait in the database. The server will perform
-	// optimistic locking validation if this field is present and the experiment is
-	// enabled. It will not be persisted to the database.
-	ProviderVersionTime string `json:"providerVersionTime,omitempty"`
+	// ProviderUpdateTime: The custom timestamp supplied by the provider during a
+	// ReportStateAndNotification update (if provided). This field is returned as
+	// part of the `QueryResponse`.
+	ProviderUpdateTime string `json:"providerUpdateTime,omitempty"`
 	// Trait: The Provider Home API trait payload.
 	Trait googleapi.RawMessage `json:"trait,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommitTime") to

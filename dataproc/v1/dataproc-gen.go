@@ -2065,7 +2065,7 @@ func (s ClusterSelector) MarshalJSON() ([]byte, error) {
 
 // ClusterStatus: The status of a cluster and its instances.
 type ClusterStatus struct {
-	// Detail: Optional. Output only. Details of cluster's state.
+	// Detail: Optional. Details of cluster's state.
 	Detail string `json:"detail,omitempty"`
 	// State: Output only. The cluster's state.
 	//
@@ -4306,8 +4306,8 @@ func (s JobScheduling) MarshalJSON() ([]byte, error) {
 
 // JobStatus: Dataproc job status.
 type JobStatus struct {
-	// Details: Optional. Output only. Job state details, such as an error
-	// description if the state is ERROR.
+	// Details: Optional. Job state details, such as an error description if the
+	// state is ERROR.
 	Details string `json:"details,omitempty"`
 	// State: Output only. A state message specifying the overall job state.
 	//
@@ -5004,8 +5004,8 @@ type Metric struct {
 	// (https://cloud.google.com/dataproc/docs/guides/dataproc-metrics#custom_metrics)
 	// to collect for the metric course (for the SPARK metric source (any Spark
 	// metric (https://spark.apache.org/docs/latest/monitoring.html#metrics) can be
-	// specified).Provide metrics in the following format: METRIC_SOURCE:
-	// INSTANCE:GROUP:METRIC Use camelcase as appropriate.Examples:
+	// specified).Provide metrics in the following format:METRIC_SOURCE:INSTANCE
+	// :GROUP:METRIC Use camelcase as appropriate.Examples:
 	// yarn:ResourceManager:QueueMetrics:AppsCompleted
 	// spark:driver:DAGScheduler:job.allJobs
 	// sparkHistoryServer:JVM:Memory:NonHeapMemoryUsage.committed

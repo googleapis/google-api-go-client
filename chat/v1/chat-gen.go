@@ -218,6 +218,12 @@ const (
 	// Create new conversations and spaces in Google Chat
 	ChatSpacesCreateScope = "https://www.googleapis.com/auth/chat.spaces.create"
 
+	// See, add, and remove pins in your Google Chat spaces
+	ChatSpacesPinsScope = "https://www.googleapis.com/auth/chat.spaces.pins"
+
+	// See pins in your Google Chat spaces
+	ChatSpacesPinsReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.pins.readonly"
+
 	// View chat and spaces in Google Chat
 	ChatSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.readonly"
 
@@ -278,6 +284,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.messages.readonly",
 		"https://www.googleapis.com/auth/chat.spaces",
 		"https://www.googleapis.com/auth/chat.spaces.create",
+		"https://www.googleapis.com/auth/chat.spaces.pins",
+		"https://www.googleapis.com/auth/chat.spaces.pins.readonly",
 		"https://www.googleapis.com/auth/chat.spaces.readonly",
 		"https://www.googleapis.com/auth/chat.users.availability",
 		"https://www.googleapis.com/auth/chat.users.availability.readonly",
@@ -363,6 +371,7 @@ type MediaService struct {
 func NewSpacesService(s *Service) *SpacesService {
 	rs := &SpacesService{s: s}
 	rs.Members = NewSpacesMembersService(s)
+	rs.MessagePins = NewSpacesMessagePinsService(s)
 	rs.Messages = NewSpacesMessagesService(s)
 	rs.SpaceEvents = NewSpacesSpaceEventsService(s)
 	return rs
@@ -372,6 +381,8 @@ type SpacesService struct {
 	s *Service
 
 	Members *SpacesMembersService
+
+	MessagePins *SpacesMessagePinsService
 
 	Messages *SpacesMessagesService
 
@@ -384,6 +395,15 @@ func NewSpacesMembersService(s *Service) *SpacesMembersService {
 }
 
 type SpacesMembersService struct {
+	s *Service
+}
+
+func NewSpacesMessagePinsService(s *Service) *SpacesMessagePinsService {
+	rs := &SpacesMessagePinsService{s: s}
+	return rs
+}
+
+type SpacesMessagePinsService struct {
 	s *Service
 }
 
@@ -5015,6 +5035,34 @@ func (s ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListMessagePinsResponse: Response message for listing message pins.
+type ListMessagePinsResponse struct {
+	// MessagePins: The pinned messages from the specified space.
+	MessagePins []*MessagePin `json:"messagePins,omitempty"`
+	// NextPageToken: You can send a token as `pageToken` to retrieve the next page
+	// of results. If empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MessagePins") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MessagePins") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMessagePinsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMessagePinsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListMessagesResponse: Response message for listing messages.
 type ListMessagesResponse struct {
 	// Messages: List of messages.
@@ -5918,6 +5966,39 @@ func (s MessageDeletedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MessagePin: A pin on a Chat message. For more information see Pin a message
+// (https://support.google.com/chat?p=chat-board-hc).
+type MessagePin struct {
+	// Message: Required. Immutable. The resource name of the message that is
+	// pinned. Format: `spaces/{space}/messages/{message}`
+	Message string `json:"message,omitempty"`
+	// Name: Identifier. The resource name of the message pin. Format:
+	// `spaces/{space}/messagePins/{message_pin}` The resource ID component matches
+	// the resource ID component of the message. For example, a message with
+	// `spaces/AAA/messages/bbb.ccc` corresponds to the message pin with the
+	// resource name `spaces/AAA/messagePins/bbb.ccc`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MessagePin) MarshalJSON() ([]byte, error) {
+	type NoMethod MessagePin
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MessageUpdatedEventData: Event payload for an updated message. Event type:
 // `google.workspace.chat.message.v1.updated`
 type MessageUpdatedEventData struct {
@@ -6687,7 +6768,8 @@ func (s SearchSpaceResult) MarshalJSON() ([]byte, error) {
 // search spaces request.
 type SearchSpacesResponse struct {
 	// NextPageToken: A token that can be used to retrieve the next page. If this
-	// field is empty, there are no subsequent pages.
+	// field is empty, there are no subsequent pages. Only populated when
+	// `useAdminAccess` is set to `true`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Results: Output only. The list of search results that matched the query.
 	Results []*SearchSpaceResult `json:"results,omitempty"`
@@ -6697,7 +6779,8 @@ type SearchSpacesResponse struct {
 	// `results` field.
 	Spaces []*Space `json:"spaces,omitempty"`
 	// TotalSize: The total number of spaces that match the query, across all
-	// pages. If the result is over 10,000 spaces, this value is an estimate.
+	// pages. If the result is over 10,000 spaces, this value is an estimate. Only
+	// populated when `useAdminAccess` is set to `true`.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -9948,8 +10031,10 @@ func (c *SpacesSearchCall) OrderBy(orderBy string) *SpacesSearchCall {
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // spaces to return. The service may return fewer than this value. If
-// unspecified, at most 100 spaces are returned. The maximum value is 1000. If
-// you use a value more than 1000, it's automatically changed to 1000.
+// unspecified, at most 100 spaces are returned. The maximum value is 1000 when
+// `useAdminAccess` is set to `true`. Otherwise, the maximum value is 100. If
+// you use a value more than the maximum value, it's automatically changed to
+// the maximum value.
 func (c *SpacesSearchCall) PageSize(pageSize int64) *SpacesSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10013,7 +10098,9 @@ func (c *SpacesSearchCall) PageToken(pageToken string) *SpacesSearchCall {
 // space_type = "SPACE" (display_name:"Hello" OR display_name:"Fun") AND
 // space_type = "SPACE" (external_user_allowed = "true" AND space_type =
 // "SPACE") // Returns an empty response. (external_user_allowed = "true" AND
-// display_name:"Hello" AND space_type = "SPACE") ```
+// display_name:"Hello" AND space_type = "SPACE") ``` The maximum query length
+// is 1,000 characters. Invalid queries are rejected by the server with an
+// `INVALID_ARGUMENT` error.
 func (c *SpacesSearchCall) Query(query string) *SpacesSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -11098,6 +11185,381 @@ func (c *SpacesMembersPatchCall) Do(opts ...googleapi.CallOption) (*Membership, 
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.members.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type SpacesMessagePinsCreateCall struct {
+	s          *Service
+	parent     string
+	messagepin *MessagePin
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a message pin. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.spaces.pins` -
+// `https://www.googleapis.com/auth/chat.spaces`
+//
+//   - parent: The parent space in which to create the message pin. Format:
+//     spaces/{space}.
+func (r *SpacesMessagePinsService) Create(parent string, messagepin *MessagePin) *SpacesMessagePinsCreateCall {
+	c := &SpacesMessagePinsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.messagepin = messagepin
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagePinsCreateCall) Fields(s ...googleapi.Field) *SpacesMessagePinsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagePinsCreateCall) Context(ctx context.Context) *SpacesMessagePinsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagePinsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagePinsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.messagepin)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messagePins")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messagePins.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MessagePin.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *SpacesMessagePinsCreateCall) Do(opts ...googleapi.CallOption) (*MessagePin, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MessagePin{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type SpacesMessagePinsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a message pin. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.spaces.pins` -
+// `https://www.googleapis.com/auth/chat.spaces`
+//
+//   - name: The resource name of the message pin to remove. Format:
+//     spaces/{space}/messagePins/{message_pin}.
+func (r *SpacesMessagePinsService) Delete(name string) *SpacesMessagePinsDeleteCall {
+	c := &SpacesMessagePinsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagePinsDeleteCall) Fields(s ...googleapi.Field) *SpacesMessagePinsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagePinsDeleteCall) Context(ctx context.Context) *SpacesMessagePinsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagePinsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagePinsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messagePins.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *SpacesMessagePinsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type SpacesMessagePinsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists message pins in a space. Users can pin important messages in
+// spaces for easy access. For more information, see Pin or unpin a
+// conversation in Google Chat
+// (https://support.google.com/chat/answer/15622437). Requires user
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.spaces.pins.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces.pins` -
+// `https://www.googleapis.com/auth/chat.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces`
+//
+//   - parent: The parent space which owns the collection of pinned items Format:
+//     `spaces/{space}`.
+func (r *SpacesMessagePinsService) List(parent string) *SpacesMessagePinsListCall {
+	c := &SpacesMessagePinsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// message pins returned. The service might return fewer messages than this
+// value. The maximum value is 100. If you use a value more than 100, it's
+// automatically changed to 100. If unspecified, at most 100 message pins will
+// be returned. Negative values return an `INVALID_ARGUMENT` error.
+func (c *SpacesMessagePinsListCall) PageSize(pageSize int64) *SpacesMessagePinsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous list message pins call. Provide this parameter to retrieve
+// the subsequent page. When paginating, all other parameters provided should
+// match the call that provided the page token. Passing different values to the
+// other parameters might lead to unexpected results.
+func (c *SpacesMessagePinsListCall) PageToken(pageToken string) *SpacesMessagePinsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagePinsListCall) Fields(s ...googleapi.Field) *SpacesMessagePinsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SpacesMessagePinsListCall) IfNoneMatch(entityTag string) *SpacesMessagePinsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagePinsListCall) Context(ctx context.Context) *SpacesMessagePinsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagePinsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagePinsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messagePins")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messagePins.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMessagePinsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SpacesMessagePinsListCall) Do(opts ...googleapi.CallOption) (*ListMessagePinsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMessagePinsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SpacesMessagePinsListCall) Pages(ctx context.Context, f func(*ListMessagePinsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type SpacesMessagesCreateCall struct {

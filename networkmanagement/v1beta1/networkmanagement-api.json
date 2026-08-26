@@ -1237,7 +1237,7 @@
       }
     }
   },
-  "revision": "20260812",
+  "revision": "20260819",
   "rootUrl": "https://networkmanagement.googleapis.com/",
   "schemas": {
     "AbortInfo": {
@@ -1576,12 +1576,17 @@
       "id": "CloudRunRevisionEndpoint",
       "properties": {
         "serviceUri": {
-          "description": "Output only. The URI of the Cloud Run service that the revision belongs to. The format is: projects/{project}/locations/{location}/services/{service}",
+          "description": "Output only. The URI of the Cloud Run service that the revision belongs to. The format is: projects/{project}/locations/{location}/services/{service}. Mutually exclusive with worker_pool_uri.",
           "readOnly": true,
           "type": "string"
         },
         "uri": {
           "description": "A [Cloud Run](https://cloud.google.com/run) [revision](https://cloud.google.com/run/docs/reference/rest/v1/namespaces.revisions/get) URI. The format is: projects/{project}/locations/{location}/revisions/{revision}",
+          "type": "string"
+        },
+        "workerPoolUri": {
+          "description": "Output only. The URI of the worker pool that the revision belongs to. The format is: projects/{project}/locations/{location}/workerPools/{workerPool}. Mutually exclusive with service_uri.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -1600,11 +1605,15 @@
           "type": "string"
         },
         "serviceUri": {
-          "description": "URI of Cloud Run service this revision belongs to. Format: `projects/{project_id}/locations/{location}/services/{service_id}`",
+          "description": "URI of Cloud Run service this revision belongs to. Format: `projects/{project_id}/locations/{location}/services/{service_id}` Mutually exclusive with `worker_pool_uri`.",
           "type": "string"
         },
         "uri": {
           "description": "URI of the Cloud Run revision. Format: `projects/{project_id}/locations/{location}/revisions/{revision_id}`",
+          "type": "string"
+        },
+        "workerPoolUri": {
+          "description": "URI of Cloud Run worker pool this revision belongs to. Format: `projects/{project_id}/locations/{location}/workerPools/{worker_pool_id}`. Mutually exclusive with `service_uri`.",
           "type": "string"
         }
       },

@@ -2943,7 +2943,10 @@ type Instance struct {
 	// be between 0 and 63 characters long and must conform to the regular
 	// expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`. * No more than 64 labels can be
 	// associated with a given resource. * Keys and values must both be under 128
-	// bytes.
+	// bytes. Labels and Tags (below) are both used to bind metadata to resources,
+	// with different use-cases. See
+	// https://cloud.google.com/resource-manager/docs/tags/tags-overview for an
+	// in-depth overview on the difference between tags and labels.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: The unique name of the instance. Values are of the form
 	// `projects/{project}/instances/a-z+[a-z0-9]`.
@@ -4336,6 +4339,7 @@ type Table struct {
 	// granularity. Should not be returned. When specified during table creation,
 	// MILLIS will be used.
 	//   "MILLIS" - The table keeps data versioned at a granularity of 1ms.
+	//   "MICROS" - The table keeps data versioned at a granularity of 1us.
 	Granularity string `json:"granularity,omitempty"`
 	// Name: The unique name of the table. Values are of the form
 	// `projects/{project}/instances/{instance}/tables/_a-zA-Z0-9*`. Views:

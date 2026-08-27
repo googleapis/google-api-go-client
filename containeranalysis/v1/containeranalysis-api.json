@@ -1715,7 +1715,7 @@
       }
     }
   },
-  "revision": "20260812",
+  "revision": "20260819",
   "rootUrl": "https://containeranalysis.googleapis.com/",
   "schemas": {
     "AISkillAnalysisNote": {
@@ -5883,6 +5883,10 @@
             "Critical severity.",
             "High severity."
           ],
+          "type": "string"
+        },
+        "modelId": {
+          "description": "The base name of the model that performed the scan.",
           "type": "string"
         },
         "scanStatus": {

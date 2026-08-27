@@ -12039,15 +12039,16 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	//   "AUDIO_ENCODING_OGG_OPUS"
 	//   "AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE"
 	//   "AUDIO_ENCODING_ALAW"
-	AudioEncoding                  string                                     `json:"audioEncoding,omitempty"`
-	BargeInConfig                  *GoogleCloudDialogflowV2beta1BargeInConfig `json:"bargeInConfig,omitempty"`
-	DefaultNoSpeechTimeout         string                                     `json:"defaultNoSpeechTimeout,omitempty"`
-	DisableNoSpeechRecognizedEvent bool                                       `json:"disableNoSpeechRecognizedEvent,omitempty"`
-	EnableAutomaticPunctuation     bool                                       `json:"enableAutomaticPunctuation,omitempty"`
-	EnableVoiceActivityEvents      bool                                       `json:"enableVoiceActivityEvents,omitempty"`
-	EnableWordInfo                 bool                                       `json:"enableWordInfo,omitempty"`
-	LanguageCode                   string                                     `json:"languageCode,omitempty"`
-	Model                          string                                     `json:"model,omitempty"`
+	AudioEncoding                  string                                                         `json:"audioEncoding,omitempty"`
+	BargeInConfig                  *GoogleCloudDialogflowV2beta1BargeInConfig                     `json:"bargeInConfig,omitempty"`
+	DefaultNoSpeechTimeout         string                                                         `json:"defaultNoSpeechTimeout,omitempty"`
+	DisableNoSpeechRecognizedEvent bool                                                           `json:"disableNoSpeechRecognizedEvent,omitempty"`
+	EnableAutomaticPunctuation     bool                                                           `json:"enableAutomaticPunctuation,omitempty"`
+	EnableVoiceActivityEvents      bool                                                           `json:"enableVoiceActivityEvents,omitempty"`
+	EnableWordInfo                 bool                                                           `json:"enableWordInfo,omitempty"`
+	GeminiAsrConfig                *GoogleCloudDialogflowV2beta1SpeechToTextConfigGeminiAsrConfig `json:"geminiAsrConfig,omitempty"`
+	LanguageCode                   string                                                         `json:"languageCode,omitempty"`
+	Model                          string                                                         `json:"model,omitempty"`
 	// Possible values:
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED"
 	//   "USE_BEST_AVAILABLE"
@@ -12060,6 +12061,7 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	SampleRateHertz               int64                                        `json:"sampleRateHertz,omitempty"`
 	SingleUtterance               bool                                         `json:"singleUtterance,omitempty"`
 	SpeechContexts                []*GoogleCloudDialogflowV2beta1SpeechContext `json:"speechContexts,omitempty"`
+	UseGeminiAsr                  bool                                         `json:"useGeminiAsr,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15598,18 +15600,20 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	//   "AUDIO_ENCODING_OGG_OPUS"
 	//   "AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE"
 	//   "AUDIO_ENCODING_ALAW"
-	AudioEncoding   string   `json:"audioEncoding,omitempty"`
-	EnableWordInfo  bool     `json:"enableWordInfo,omitempty"`
-	LanguageCode    string   `json:"languageCode,omitempty"`
-	Model           string   `json:"model,omitempty"`
-	PhraseSets      []string `json:"phraseSets,omitempty"`
-	SampleRateHertz int64    `json:"sampleRateHertz,omitempty"`
+	AudioEncoding   string                                                         `json:"audioEncoding,omitempty"`
+	EnableWordInfo  bool                                                           `json:"enableWordInfo,omitempty"`
+	GeminiAsrConfig *GoogleCloudDialogflowV2beta1SpeechToTextConfigGeminiAsrConfig `json:"geminiAsrConfig,omitempty"`
+	LanguageCode    string                                                         `json:"languageCode,omitempty"`
+	Model           string                                                         `json:"model,omitempty"`
+	PhraseSets      []string                                                       `json:"phraseSets,omitempty"`
+	SampleRateHertz int64                                                          `json:"sampleRateHertz,omitempty"`
 	// Possible values:
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED"
 	//   "USE_BEST_AVAILABLE"
 	//   "USE_STANDARD"
 	//   "USE_ENHANCED"
 	SpeechModelVariant         string `json:"speechModelVariant,omitempty"`
+	UseGeminiAsr               bool   `json:"useGeminiAsr,omitempty"`
 	UseTimeoutBasedEndpointing bool   `json:"useTimeoutBasedEndpointing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15626,6 +15630,38 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 
 func (s GoogleCloudDialogflowV2beta1SpeechToTextConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1SpeechToTextConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2beta1SpeechToTextConfigGeminiAsrConfig struct {
+	// Possible values:
+	//   "END_SENSITIVITY_UNSPECIFIED"
+	//   "END_SENSITIVITY_HIGH"
+	//   "END_SENSITIVITY_LOW"
+	EndOfSpeechSensitivity string `json:"endOfSpeechSensitivity,omitempty"`
+	ModelId                string `json:"modelId,omitempty"`
+	PrefixPaddingMs        int64  `json:"prefixPaddingMs,omitempty"`
+	SilenceDurationMs      int64  `json:"silenceDurationMs,omitempty"`
+	// Possible values:
+	//   "START_SENSITIVITY_UNSPECIFIED"
+	//   "START_SENSITIVITY_HIGH"
+	//   "START_SENSITIVITY_LOW"
+	StartOfSpeechSensitivity string `json:"startOfSpeechSensitivity,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndOfSpeechSensitivity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndOfSpeechSensitivity") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1SpeechToTextConfigGeminiAsrConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1SpeechToTextConfigGeminiAsrConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

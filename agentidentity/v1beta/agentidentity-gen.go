@@ -211,33 +211,33 @@ type ProjectsLocationsAuthProvidersAuthorizationsService struct {
 	s *Service
 }
 
-// AccessSummary: Message describing AccessSummary object
+// AccessSummary: Represents an access summary.
 type AccessSummary struct {
-	// AuthProvider: Output only. The auth_provider that this access summary is
+	// AuthProvider: Output only. The auth provider that this access summary is
 	// associated with.
 	AuthProvider string `json:"authProvider,omitempty"`
-	// AuthProviderType: Output only. The type of the connector that was used to
-	// create this access summary.
+	// AuthProviderType: Output only. The auth provider type used to create this
+	// access summary.
 	//
 	// Possible values:
-	//   "AUTH_PROVIDER_TYPE_UNSPECIFIED" - Unspecified auth-provider type.
-	//   "AUTH_PROVIDER_TYPE_THREE_LEGGED_OAUTH" - Three Legged OAuth auth-provider
+	//   "AUTH_PROVIDER_TYPE_UNSPECIFIED" - Unspecified auth provider type.
+	//   "AUTH_PROVIDER_TYPE_THREE_LEGGED_OAUTH" - 3-legged OAuth (3LO) auth
+	// provider type.
+	//   "AUTH_PROVIDER_TYPE_TWO_LEGGED_OAUTH" - 2-legged OAuth (2LO) auth provider
 	// type.
-	//   "AUTH_PROVIDER_TYPE_TWO_LEGGED_OAUTH" - Two Legged OAuth auth-provider
-	// type.
-	//   "AUTH_PROVIDER_TYPE_API_KEY" - API Key auth-provider type.
-	//   "AUTH_PROVIDER_TYPE_GEMINI_ENTERPRISE" - Gemini Enterprise auth-provider
+	//   "AUTH_PROVIDER_TYPE_API_KEY" - API key auth provider type.
+	//   "AUTH_PROVIDER_TYPE_GEMINI_ENTERPRISE" - Gemini Enterprise auth provider
 	// type.
 	AuthProviderType string `json:"authProviderType,omitempty"`
-	// FirstAccessTime: Output only. The first time this user has interacted with
-	// this workload. Rounded to the previous hour.
+	// FirstAccessTime: Output only. The first time this user interacted with this
+	// workload, rounded to the previous hour.
 	FirstAccessTime string `json:"firstAccessTime,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// LastAccessTime: Output only. The most recent time this user has interacted
-	// with this workload. Rounded to the previous hour.
+	// LastAccessTime: Output only. The most recent time this user interacted with
+	// this workload, rounded to the previous hour.
 	LastAccessTime string `json:"lastAccessTime,omitempty"`
-	// Name: Output only. Identifier. Name of the AccessSummary
+	// Name: Output only. Identifier. The resource name of the access summary.
 	Name string `json:"name,omitempty"`
 	// PurgeTime: Output only. The time when this access summary is permanently
 	// deleted.
@@ -245,15 +245,15 @@ type AccessSummary struct {
 	// Scopes: Output only. All scopes that have been used by this user with this
 	// workload. The number of scopes is limited to 200.
 	Scopes []string `json:"scopes,omitempty"`
-	// TokenUrl: Output only. The url of the authentication server that was
+	// TokenUrl: Output only. The URL of the authentication server that was
 	// accessed.
 	TokenUrl string `json:"tokenUrl,omitempty"`
-	// UserId: Output only. The user_id provided by the workload application for
+	// UserId: Output only. The user ID provided by the workload application for
 	// this user. Not verified by Google.
 	UserId string `json:"userId,omitempty"`
 	// WorkloadId: Output only. The identity bound to the workload that this user
-	// interacted with to produce this AccessSummary. Will typically be an agentic
-	// spiffe id
+	// interacted with to produce this access summary. Typically an agentic SPIFFE
+	// ID.
 	WorkloadId string `json:"workloadId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -276,9 +276,9 @@ func (s AccessSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ApiKeyParams: Message describing ApiKeyParams object.
+// ApiKeyParams: Configuration for API key authentication.
 type ApiKeyParams struct {
-	// ApiKey: Optional. Input only. The API key for this auth_provider.
+	// ApiKey: Optional. Input only. The API key for this auth provider.
 	ApiKey string `json:"apiKey,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -374,48 +374,48 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AuthProvider: Message describing AuthProvider object
+// AuthProvider: Represents an auth provider.
 type AuthProvider struct {
 	// AllowedScopes: Optional. List of scopes that are allowed to be requested for
-	// this auth_provider. If this list is non-empty, only scopes within this list
+	// this auth provider. If this list is non-empty, only scopes within this list
 	// may be requested. If this list is empty, all scopes may be requested. Scopes
 	// appearing in `blocked_scopes` are disallowed even if they appear in
 	// `allowed_scopes`. The number of allowed scopes is limited to 200.
 	AllowedScopes []string `json:"allowedScopes,omitempty"`
-	// AuthProviderTypeParams: Required. AuthProvider type specific parameters.
+	// AuthProviderTypeParams: Required. Parameters specific to the auth provider
+	// type.
 	AuthProviderTypeParams *AuthProviderTypeParams `json:"authProviderTypeParams,omitempty"`
 	// BlockedScopes: Optional. List of scopes that are blocked from being
-	// requested for this auth_provider. If a scope appears in this list, it will
+	// requested for this auth provider. If a scope appears in this list, it will
 	// not be requested, even if it also appears in `allowed_scopes`.
 	// `blocked_scopes` takes precedence over `allowed_scopes`. The number of
 	// blocked scopes is limited to 200.
 	BlockedScopes []string `json:"blockedScopes,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// Deleted: Output only. This is set to true if the auth_provider is deleted.
+	// Deleted: Output only. Set to `true` if the auth provider is deleted.
 	Deleted bool `json:"deleted,omitempty"`
 	// Description: Optional. Description of the resource. Must be less than 256
 	// characters.
 	Description string `json:"description,omitempty"`
-	// ExpireTime: Output only. The time when the auth_provider will expire.
+	// ExpireTime: Output only. The time when the auth provider will expire.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. The full resource name of the auth_provider. Format:
+	// Name: Identifier. The full resource name of the auth provider. Format:
 	// projects/{project}/locations/{location}/authProviders/{auth_provider}
 	Name string `json:"name,omitempty"`
-	// State: Output only. The state of the auth_provider.
+	// State: Output only. The state of the auth provider.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
 	//   "ENABLED" - Enabled and can be used.
 	//   "DISABLED" - Disabled and cannot be used.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// WorkloadIds: Optional. Input only. Represents the workload identity in IAM
-	// `principal://` format of the agent(s) that will use this AuthProvider.
-	// Example:
+	// WorkloadIds: Optional. Input only. Identifiers for the agents that will use
+	// this auth provider, starting with `principal://`. For example:
 	// `principal://agents.global.org-${ORG_ID}.system.id.goog/resources/aiplatform/
 	// projects/{PROJECT_ID}/locations/{LOCATIONS}/reasoningEngines/{ID}`
 	WorkloadIds []string `json:"workloadIds,omitempty"`
@@ -440,16 +440,16 @@ func (s AuthProvider) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AuthProviderTypeParams: AuthProvider type specific parameters. Required when
-// creating an auth_provider.
+// AuthProviderTypeParams: Required. Parameters specific to the auth provider
+// type.
 type AuthProviderTypeParams struct {
-	// ApiKey: ApiKey AuthProvider type parameters.
+	// ApiKey: Parameters for API key authentication.
 	ApiKey *ApiKeyParams `json:"apiKey,omitempty"`
-	// GeAuthProvider: GeminiEnterprise auth_provider type parameters.
+	// GeAuthProvider: Parameters for Gemini Enterprise authentication.
 	GeAuthProvider *GeminiEnterpriseAuthProviderParams `json:"geAuthProvider,omitempty"`
-	// ThreeLeggedOauth: ThreeLeggedOAuth AuthProvider type parameters.
+	// ThreeLeggedOauth: Parameters for 3-legged OAuth (3LO) authentication.
 	ThreeLeggedOauth *ThreeLeggedOAuth `json:"threeLeggedOauth,omitempty"`
-	// TwoLeggedOauth: TwoLeggedOAuth AuthProvider type parameters.
+	// TwoLeggedOauth: Parameters for 2-legged OAuth (2LO) authentication.
 	TwoLeggedOauth *TwoLeggedOAuth `json:"twoLeggedOauth,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -469,14 +469,14 @@ func (s AuthProviderTypeParams) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Authorization: Message describing Authorization object
+// Authorization: Represents an authorization.
 type Authorization struct {
-	// ClientUserId: Output only. The client_user_id provided by the client
+	// ClientUserId: Output only. The client user ID provided by the client
 	// application for their end user. Not verified by Google.
 	ClientUserId string `json:"clientUserId,omitempty"`
-	// CreateTime: Output only. [Output only] Create time stamp
+	// CreateTime: Output only. The creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// Name: Identifier. name of resource
+	// Name: Identifier. The resource name of the authorization.
 	Name string `json:"name,omitempty"`
 	// Scopes: Output only. The scopes actually granted by the end user during the
 	// consent flow.
@@ -488,7 +488,7 @@ type Authorization struct {
 	//   "ACTIVE" - Active.
 	//   "SUSPENDED" - Suspended.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. [Output only] Update time stamp
+	// UpdateTime: Output only. The update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -610,7 +610,7 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DisableAuthProviderRequest: Message for disabling an AuthProvider
+// DisableAuthProviderRequest: Request message for `DisableAuthProvider`.
 type DisableAuthProviderRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
@@ -646,7 +646,7 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EnableAuthProviderRequest: Message for enabling an AuthProvider
+// EnableAuthProviderRequest: Request message for `EnableAuthProvider`.
 type EnableAuthProviderRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
@@ -721,14 +721,14 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GeminiEnterpriseAuthProviderParams: Message describing
-// GeminiEnterpriseAuthProviderParams object.
+// GeminiEnterpriseAuthProviderParams: Configuration for Gemini Enterprise
+// authentication.
 type GeminiEnterpriseAuthProviderParams struct {
 }
 
-// ListAccessSummariesResponse: Message for response to listing AccessSummaries
+// ListAccessSummariesResponse: Response message for `ListAccessSummaries`.
 type ListAccessSummariesResponse struct {
-	// AccessSummaries: The list of AccessSummary
+	// AccessSummaries: The list of access summaries.
 	AccessSummaries []*AccessSummary `json:"accessSummaries,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -756,9 +756,9 @@ func (s ListAccessSummariesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAuthProvidersResponse: Message for response to listing AuthProviders
+// ListAuthProvidersResponse: Response message for `ListAuthProviders`.
 type ListAuthProvidersResponse struct {
-	// AuthProviders: The list of AuthProvider
+	// AuthProviders: The list of auth providers.
 	AuthProviders []*AuthProvider `json:"authProviders,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -786,9 +786,9 @@ func (s ListAuthProvidersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAuthorizationsResponse: Message for response to listing Authorizations
+// ListAuthorizationsResponse: Response message for `ListAuthorizations`.
 type ListAuthorizationsResponse struct {
-	// Authorizations: The list of Authorization
+	// Authorizations: The list of authorizations.
 	Authorizations []*Authorization `json:"authorizations,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -974,9 +974,9 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// QueryAuthProvidersResponse: Response message for QueryAuthProviders.
+// QueryAuthProvidersResponse: Response message for `QueryAuthProviders`.
 type QueryAuthProvidersResponse struct {
-	// AuthProviderNames: The unique list of auth_provider resource names used by
+	// AuthProviderNames: The unique list of auth provider resource names used by
 	// the workload.
 	AuthProviderNames []string `json:"authProviderNames,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
@@ -1003,12 +1003,12 @@ func (s QueryAuthProvidersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// QueryWorkloadsResponse: Response message for QueryWorkloads.
+// QueryWorkloadsResponse: Response message for `QueryWorkloads`.
 type QueryWorkloadsResponse struct {
 	// NextPageToken: A token to retrieve the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// WorkloadIds: The unique list of workload identifiers (agents) that used the
-	// auth_provider.
+	// WorkloadIds: The unique list of identifiers for the agents that used this
+	// auth provider, starting with `principal://`.
 	WorkloadIds []string `json:"workloadIds,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1031,7 +1031,7 @@ func (s QueryWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RevokeAuthorizationRequest: Request message for RevokeAuthorization.
+// RevokeAuthorizationRequest: Request message for `RevokeAuthorization`.
 type RevokeAuthorizationRequest struct {
 	// UserId: Required. The identity of the user to revoke authorization for.
 	UserId string `json:"userId,omitempty"`
@@ -1053,7 +1053,7 @@ func (s RevokeAuthorizationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RevokeAuthorizationResponse: Response message for RevokeAuthorization.
+// RevokeAuthorizationResponse: Response message for `RevokeAuthorization`.
 type RevokeAuthorizationResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1140,29 +1140,28 @@ func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ThreeLeggedOAuth: Message describing ThreeLeggedOAuth object.
+// ThreeLeggedOAuth: Configuration for 3-legged OAuth (3LO) authentication.
 type ThreeLeggedOAuth struct {
 	// AuthorizationUrl: Optional. The authorization endpoint to send users to for
-	// consenting to delegate to the agent. eg.
-	// "https://auth.atlassian.com/authorize"
+	// consenting to delegate to the agent. For example,
+	// "https://auth.atlassian.com/authorize".
 	AuthorizationUrl string `json:"authorizationUrl,omitempty"`
 	// ClientId: Optional. The client ID of the OAuth client.
 	ClientId string `json:"clientId,omitempty"`
 	// ClientSecret: Optional. Input only. The client secret of the OAuth client.
 	ClientSecret string `json:"clientSecret,omitempty"`
-	// DefaultContinueUri: Optional. The default continue URI for 3LO flow and it
-	// will be used when no continue URI is provided in the RetrieveCredentials
-	// request.
+	// DefaultContinueUri: Optional. The default continue URI for the 3LO flow,
+	// used when no continue URI is provided in the RetrieveCredentials request.
 	DefaultContinueUri string `json:"defaultContinueUri,omitempty"`
 	// EnablePkce: Optional. Enables Proof Key for Code Exchange (PKCE) for the
 	// OAuth flow to prevent authorization code interception attacks.
 	EnablePkce bool `json:"enablePkce,omitempty"`
-	// RedirectUrl: Output only. The redirect URL this auth_provider uses for the
-	// OAuth exchange. This is deterministic based on the name of the
-	// auth_provider.
+	// RedirectUrl: Output only. The redirect URL this auth provider uses for the
+	// OAuth exchange. This is deterministic based on the name of the auth
+	// provider.
 	RedirectUrl string `json:"redirectUrl,omitempty"`
 	// TokenUrl: Optional. The token endpoint for requesting tokens on behalf of an
-	// end user. eg. "https://auth.atlassian.com/oauth/token"
+	// end user. For example, "https://auth.atlassian.com/oauth/token".
 	TokenUrl string `json:"tokenUrl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthorizationUrl") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1182,7 +1181,7 @@ func (s ThreeLeggedOAuth) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TwoLeggedOAuth: Message describing TwoLeggedOAuth object.
+// TwoLeggedOAuth: Configuration for 2-legged OAuth (2LO) authentication.
 type TwoLeggedOAuth struct {
 	// ClientId: Optional. The client ID of the OAuth client.
 	ClientId string `json:"clientId,omitempty"`
@@ -1208,7 +1207,7 @@ func (s TwoLeggedOAuth) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UndeleteAuthProviderRequest: Message for undeleting a AuthProvider
+// UndeleteAuthProviderRequest: Request message for `UndeleteAuthProvider`.
 type UndeleteAuthProviderRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will
@@ -1526,9 +1525,9 @@ type ProjectsLocationsAccessSummariesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single AccessSummary.
+// Get: Gets details of a single access summary.
 //
-// - name: Name of the resource.
+// - name: The resource name of the access summary.
 func (r *ProjectsLocationsAccessSummariesService) Get(name string) *ProjectsLocationsAccessSummariesGetCall {
 	c := &ProjectsLocationsAccessSummariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1635,8 +1634,8 @@ type ProjectsLocationsAccessSummariesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists AccessSummaries in a given project and location. Supported
-// Filters: - `workload_id`: Filter by the SPIFFE ID of the agent. Example:
+// List: Lists access summaries in a given project and location. Supported
+// filters: - `workload_id`: Filter by the SPIFFE ID of the agent. Example:
 // `workload_id="spiffe://example.com/ns/default/sa/my-agent"
 //
 //   - parent: The parent resource where the search is performed. Format:
@@ -1667,7 +1666,7 @@ func (c *ProjectsLocationsAccessSummariesListCall) OrderBy(orderBy string) *Proj
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. The maximum page size is 1000.
 func (c *ProjectsLocationsAccessSummariesListCall) PageSize(pageSize int64) *ProjectsLocationsAccessSummariesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1802,9 +1801,9 @@ type ProjectsLocationsAuthProvidersCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new AuthProvider in a given project and location.
+// Create: Creates a new auth provider in a given project and location.
 //
-//   - parent: The parent resource where the AuthProvider is created. Format:
+//   - parent: The parent resource where the auth provider is created. Format:
 //     projects/{project}/locations/{location}.
 func (r *ProjectsLocationsAuthProvidersService) Create(parent string, authprovider *AuthProvider) *ProjectsLocationsAuthProvidersCreateCall {
 	c := &ProjectsLocationsAuthProvidersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1814,8 +1813,8 @@ func (r *ProjectsLocationsAuthProvidersService) Create(parent string, authprovid
 }
 
 // AuthProviderId sets the optional parameter "authProviderId": Required. The
-// ID to use for the AuthProvider, which will become the final segment of the
-// AuthProvider's resource name. This value should be 1-63 characters, and
+// ID to use for the auth provider, which will become the final segment of the
+// auth provider's resource name. This value should be 1-63 characters, and
 // valid characters are /a-z-/. The first character must be a lowercase letter,
 // and the last character must be a lowercase letter or a number.
 func (c *ProjectsLocationsAuthProvidersCreateCall) AuthProviderId(authProviderId string) *ProjectsLocationsAuthProvidersCreateCall {
@@ -1931,9 +1930,9 @@ type ProjectsLocationsAuthProvidersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single AuthProvider.
+// Delete: Deletes a single auth provider.
 //
-// - name: Name of the resource.
+// - name: The resource name of the auth provider.
 func (r *ProjectsLocationsAuthProvidersService) Delete(name string) *ProjectsLocationsAuthProvidersDeleteCall {
 	c := &ProjectsLocationsAuthProvidersDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2045,9 +2044,9 @@ type ProjectsLocationsAuthProvidersDisableCall struct {
 	header_                    http.Header
 }
 
-// Disable: Disables a single AuthProvider.
+// Disable: Disables a single auth provider.
 //
-//   - name: Name of the resource Format:
+//   - name: The resource name of the auth provider. Format:
 //     projects/{project}/locations/{location}/authProviders/{auth_provider}.
 func (r *ProjectsLocationsAuthProvidersService) Disable(name string, disableauthproviderrequest *DisableAuthProviderRequest) *ProjectsLocationsAuthProvidersDisableCall {
 	c := &ProjectsLocationsAuthProvidersDisableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2149,9 +2148,9 @@ type ProjectsLocationsAuthProvidersEnableCall struct {
 	header_                   http.Header
 }
 
-// Enable: Enables a single AuthProvider.
+// Enable: Enables a single auth provider.
 //
-//   - name: Name of the resource Format:
+//   - name: The resource name of the auth provider. Format:
 //     projects/{project}/locations/{location}/authProviders/{auth_provider}.
 func (r *ProjectsLocationsAuthProvidersService) Enable(name string, enableauthproviderrequest *EnableAuthProviderRequest) *ProjectsLocationsAuthProvidersEnableCall {
 	c := &ProjectsLocationsAuthProvidersEnableCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2253,9 +2252,9 @@ type ProjectsLocationsAuthProvidersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single AuthProvider.
+// Get: Gets details of a single auth provider.
 //
-// - name: Name of the resource.
+// - name: The resource name of the auth provider.
 func (r *ProjectsLocationsAuthProvidersService) Get(name string) *ProjectsLocationsAuthProvidersGetCall {
 	c := &ProjectsLocationsAuthProvidersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2491,7 +2490,7 @@ type ProjectsLocationsAuthProvidersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists AuthProviders in a given project and location.
+// List: Lists auth providers in a given project and location.
 //
 //   - parent: The parent resource where the search is performed. Format:
 //     projects/{project}/locations/{location}.
@@ -2517,7 +2516,7 @@ func (c *ProjectsLocationsAuthProvidersListCall) OrderBy(orderBy string) *Projec
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. The maximum page size is 1000.
 func (c *ProjectsLocationsAuthProvidersListCall) PageSize(pageSize int64) *ProjectsLocationsAuthProvidersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2531,9 +2530,9 @@ func (c *ProjectsLocationsAuthProvidersListCall) PageToken(pageToken string) *Pr
 	return c
 }
 
-// ShowDeleted sets the optional parameter "showDeleted": Deleted
-// auth_providers will be kept with a soft-delete for 30 days before being
-// purged. If this field is set to true, deleted auth_providers will also be
+// ShowDeleted sets the optional parameter "showDeleted": Deleted auth
+// providers will be kept with a soft-delete for 30 days before being purged.
+// If this field is set to `true`, deleted auth providers will also be
 // returned.
 func (c *ProjectsLocationsAuthProvidersListCall) ShowDeleted(showDeleted bool) *ProjectsLocationsAuthProvidersListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
@@ -2662,9 +2661,9 @@ type ProjectsLocationsAuthProvidersPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates the parameters of a single AuthProvider.
+// Patch: Updates the parameters of a single auth provider.
 //
-//   - name: Identifier. The full resource name of the auth_provider. Format:
+//   - name: Identifier. The full resource name of the auth provider. Format:
 //     projects/{project}/locations/{location}/authProviders/{auth_provider}.
 func (r *ProjectsLocationsAuthProvidersService) Patch(name string, authprovider *AuthProvider) *ProjectsLocationsAuthProvidersPatchCall {
 	c := &ProjectsLocationsAuthProvidersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2690,8 +2689,8 @@ func (c *ProjectsLocationsAuthProvidersPatchCall) RequestId(requestId string) *P
 }
 
 // UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten in the AuthProvider resource by the
-// update. The fields specified in the update_mask are relative to the
+// specify the fields to be overwritten in the auth provider resource by the
+// update. The fields specified in the `update_mask` are relative to the
 // resource, not the full request. A field will be overwritten if it is in the
 // mask. If the user does not provide a mask then all fields present in the
 // request will be overwritten.
@@ -2793,7 +2792,7 @@ type ProjectsLocationsAuthProvidersQueryCall struct {
 	header_      http.Header
 }
 
-// Query: Queries what all auth_providers are used by a given workload_id.
+// Query: Queries which auth providers are used by a given workload ID.
 //
 //   - parent: The parent resource where the search is performed. Format:
 //     projects/{project}/locations/{location}.
@@ -2951,9 +2950,9 @@ type ProjectsLocationsAuthProvidersQueryWorkloadsCall struct {
 	header_      http.Header
 }
 
-// QueryWorkloads: Queries what all workloads are using a given auth_provider.
+// QueryWorkloads: Queries which workloads are using a given auth provider.
 //
-//   - name: The name of the auth_provider to query. Format:
+//   - name: The name of the auth provider to query. Format:
 //     projects/{project}/locations/{location}/authProviders/{auth_provider}.
 func (r *ProjectsLocationsAuthProvidersService) QueryWorkloads(name string) *ProjectsLocationsAuthProvidersQueryWorkloadsCall {
 	c := &ProjectsLocationsAuthProvidersQueryWorkloadsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2963,7 +2962,7 @@ func (r *ProjectsLocationsAuthProvidersService) QueryWorkloads(name string) *Pro
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. The maximum page size is 1000.
 func (c *ProjectsLocationsAuthProvidersQueryWorkloadsCall) PageSize(pageSize int64) *ProjectsLocationsAuthProvidersQueryWorkloadsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2971,8 +2970,8 @@ func (c *ProjectsLocationsAuthProvidersQueryWorkloadsCall) PageSize(pageSize int
 
 // PageToken sets the optional parameter "pageToken": A token, which can be
 // sent as `page_token` to retrieve the next page. When paginating, all other
-// parameters provided to QueryWorkloads must match the call that provided the
-// page token. If this field is omitted, the first page is returned.
+// parameters provided to `QueryWorkloads` must match the call that provided
+// the page token. If this field is omitted, the first page is returned.
 func (c *ProjectsLocationsAuthProvidersQueryWorkloadsCall) PageToken(pageToken string) *ProjectsLocationsAuthProvidersQueryWorkloadsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3101,10 +3100,10 @@ type ProjectsLocationsAuthProvidersRevokeAuthorizationCall struct {
 }
 
 // RevokeAuthorization: Revokes all authorizations for a specific user on an
-// AuthProvider. This deletes all authorization records associated with the
-// user and AuthProvider, effectively revoking access across all agents.
+// auth provider. This deletes all authorization records associated with the
+// user and auth provider, effectively revoking access across all agents.
 //
-//   - name: The resource name of the AuthProvider. Format:
+//   - name: The resource name of the auth provider. Format:
 //     projects/{project}/locations/{location}/authProviders/{auth_provider}.
 func (r *ProjectsLocationsAuthProvidersService) RevokeAuthorization(name string, revokeauthorizationrequest *RevokeAuthorizationRequest) *ProjectsLocationsAuthProvidersRevokeAuthorizationCall {
 	c := &ProjectsLocationsAuthProvidersRevokeAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3425,9 +3424,9 @@ type ProjectsLocationsAuthProvidersUndeleteCall struct {
 	header_                     http.Header
 }
 
-// Undelete: Undeletes a single AuthProvider.
+// Undelete: Undeletes a single auth provider.
 //
-//   - name: Name of the resource Format:
+//   - name: The resource name of the auth provider. Format:
 //     projects/{project}/locations/{location}/authProviders/{auth_provider}.
 func (r *ProjectsLocationsAuthProvidersService) Undelete(name string, undeleteauthproviderrequest *UndeleteAuthProviderRequest) *ProjectsLocationsAuthProvidersUndeleteCall {
 	c := &ProjectsLocationsAuthProvidersUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3528,9 +3527,9 @@ type ProjectsLocationsAuthProvidersAuthorizationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single Authorization.
+// Delete: Deletes a single authorization.
 //
-//   - name: The name of the Authorization to delete. Format:
+//   - name: The resource name of the authorization to delete. Format:
 //     projects/{project}/locations/{location}/authProviders/{auth_provider}/autho
 //     rizations/{authorization}.
 func (r *ProjectsLocationsAuthProvidersAuthorizationsService) Delete(name string) *ProjectsLocationsAuthProvidersAuthorizationsDeleteCall {
@@ -3644,9 +3643,9 @@ type ProjectsLocationsAuthProvidersAuthorizationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single Authorization.
+// Get: Gets details of a single authorization.
 //
-// - name: Name of the resource.
+// - name: The resource name of the authorization.
 func (r *ProjectsLocationsAuthProvidersAuthorizationsService) Get(name string) *ProjectsLocationsAuthProvidersAuthorizationsGetCall {
 	c := &ProjectsLocationsAuthProvidersAuthorizationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3753,7 +3752,7 @@ type ProjectsLocationsAuthProvidersAuthorizationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Authorizations in a given project and location.
+// List: Lists authorizations in a given project and location.
 //
 //   - parent: The parent resource where the search is performed. Format:
 //     projects/{project}/locations/{location}/authProviders/{auth_provider}.
@@ -3780,7 +3779,7 @@ func (c *ProjectsLocationsAuthProvidersAuthorizationsListCall) OrderBy(orderBy s
 
 // PageSize sets the optional parameter "pageSize": Requested page size. Server
 // may return fewer items than requested. If unspecified, server will pick an
-// appropriate default.
+// appropriate default. The maximum page size is 1000.
 func (c *ProjectsLocationsAuthProvidersAuthorizationsListCall) PageSize(pageSize int64) *ProjectsLocationsAuthProvidersAuthorizationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

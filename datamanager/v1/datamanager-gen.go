@@ -941,9 +941,11 @@ type Destination struct {
 	// OperatingAccount: Required. The account to send the data to or remove the
 	// data from.
 	OperatingAccount *ProductAccount `json:"operatingAccount,omitempty"`
-	// ProductDestinationId: Required. The object within the product account to
+	// ProductDestinationId: Optional. The object within the product account to
 	// ingest into. For example, a Google Ads audience ID, a Display & Video 360
-	// audience ID or a Google Ads conversion action ID.
+	// audience ID or a Google Ads conversion action ID. This field is optional for
+	// Google Ad Manager event ingestion and User ingestion. Required for all other
+	// use cases.
 	ProductDestinationId string `json:"productDestinationId,omitempty"`
 	// Reference: Optional. ID for this `Destination` resource, unique within the
 	// request. Use to reference this `Destination` in the IngestEventsRequest and

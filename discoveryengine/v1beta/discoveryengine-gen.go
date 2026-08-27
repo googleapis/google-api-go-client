@@ -9771,19 +9771,22 @@ func (s GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMe
 // GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadat
 // aReference: Referenced content and related document metadata.
 type GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReference struct {
+	// ChunkMetadata: Output only. Generic structured chunk metadata from upstream
+	// data source connectors.
+	ChunkMetadata googleapi.RawMessage `json:"chunkMetadata,omitempty"`
 	// CodeSnippet: Chunk of code snippet from the referenced document.
 	CodeSnippet string `json:"codeSnippet,omitempty"`
 	// Content: Referenced text content.
 	Content string `json:"content,omitempty"`
 	// DocumentMetadata: Document metadata.
 	DocumentMetadata *GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata `json:"documentMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CodeSnippet") to
+	// ForceSendFields is a list of field names (e.g. "ChunkMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CodeSnippet") to include in API
+	// NullFields is a list of field names (e.g. "ChunkMetadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -21657,19 +21660,22 @@ func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMet
 // GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
 // Reference: Referenced content and related document metadata.
 type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReference struct {
+	// ChunkMetadata: Output only. Generic structured chunk metadata from upstream
+	// data source connectors.
+	ChunkMetadata googleapi.RawMessage `json:"chunkMetadata,omitempty"`
 	// CodeSnippet: Chunk of code snippet from the referenced document.
 	CodeSnippet string `json:"codeSnippet,omitempty"`
 	// Content: Referenced text content.
 	Content string `json:"content,omitempty"`
 	// DocumentMetadata: Document metadata.
 	DocumentMetadata *GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata `json:"documentMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CodeSnippet") to
+	// ForceSendFields is a list of field names (e.g. "ChunkMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CodeSnippet") to include in API
+	// NullFields is a list of field names (e.g. "ChunkMetadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -33518,6 +33524,9 @@ func (s GoogleCloudDiscoveryengineV1betaSpannerSource) MarshalJSON() ([]byte, er
 // GoogleCloudDiscoveryengineV1betaStreamAssistRequest: Request for the
 // AssistantService.StreamAssist method.
 type GoogleCloudDiscoveryengineV1betaStreamAssistRequest struct {
+	// AgentsSpec: Optional. Specification of agents that are used to serve the
+	// request.
+	AgentsSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec `json:"agentsSpec,omitempty"`
 	// GenerationSpec: Optional. Specification of the generation configuration for
 	// the request.
 	GenerationSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestGenerationSpec `json:"generationSpec,omitempty"`
@@ -33538,21 +33547,70 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistRequest struct {
 	ToolsSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpec `json:"toolsSpec,omitempty"`
 	// UserMetadata: Optional. Information about the user initiating the query.
 	UserMetadata *GoogleCloudDiscoveryengineV1betaAssistUserMetadata `json:"userMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenerationSpec") to
+	// ForceSendFields is a list of field names (e.g. "AgentsSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenerationSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentsSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec: Specification
+// of agents that are used to serve the request.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec struct {
+	// AgentSpecs: Optional. Specification of agents that are used to serve the
+	// request.
+	AgentSpecs []*GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec `json:"agentSpecs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentSpecs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentSpecs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec:
+// Specification of an agent.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec struct {
+	// AgentId: Required. ID to identify the agent resource serving the request.
+	// This field must conform to RFC-1034 (https://tools.ietf.org/html/rfc1034)
+	// with a length limit of 63 characters.
+	AgentId string `json:"agentId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

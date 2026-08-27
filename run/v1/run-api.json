@@ -3652,7 +3652,7 @@
       }
     }
   },
-  "revision": "20260814",
+  "revision": "20260822",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -7194,7 +7194,7 @@
       "id": "ResourceRecord",
       "properties": {
         "name": {
-          "description": "Relative name of the object affected by this record. Only applicable for `CNAME` records. Example: 'www'.",
+          "description": "Name of the resource record relative to its apex domain, e.g. `www` for `www.example.com`. Omitted for apex records.",
           "type": "string"
         },
         "rrdata": {

@@ -8138,7 +8138,8 @@ func (s PolicyMultipleChoiceResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PolicyResponse: An individual response to a policy question about an app.
+// PolicyResponse: An individual response (answer) to a policy question about
+// an app.
 type PolicyResponse struct {
 	// BooleanResponse: Optional. A boolean response.
 	BooleanResponse *PolicyBooleanResponse `json:"booleanResponse,omitempty"`

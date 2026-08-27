@@ -747,6 +747,14 @@ type GceHyperdiskBalancedHighAvailability struct {
 	// enforced by this configuration. Resizing is still subject to the quotas and
 	// limits of the underlying disk type.
 	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
+	// ProvisionedIops: Optional. Indicates how many IOPS to provision for the
+	// disk. This sets the number of I/O operations per second that the disk can
+	// handle. Values must be between 3000 and 100,000.
+	ProvisionedIops int64 `json:"provisionedIops,omitempty,string"`
+	// ProvisionedThroughput: Optional. Indicates how much throughput to provision
+	// for the disk. This sets the number of throughput mb per second that the disk
+	// can handle. Values must be between 1 and 2,400.
+	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
 	// to `DELETE`.

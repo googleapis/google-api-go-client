@@ -168,6 +168,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.GlobalAddresses = NewGlobalAddressesService(s)
 	s.GlobalFolderOperations = NewGlobalFolderOperationsService(s)
 	s.GlobalForwardingRules = NewGlobalForwardingRulesService(s)
+	s.GlobalFrontendSettings = NewGlobalFrontendSettingsService(s)
 	s.GlobalNetworkEndpointGroups = NewGlobalNetworkEndpointGroupsService(s)
 	s.GlobalOperations = NewGlobalOperationsService(s)
 	s.GlobalOrganizationOperations = NewGlobalOrganizationOperationsService(s)
@@ -368,6 +369,8 @@ type Service struct {
 	GlobalFolderOperations *GlobalFolderOperationsService
 
 	GlobalForwardingRules *GlobalForwardingRulesService
+
+	GlobalFrontendSettings *GlobalFrontendSettingsService
 
 	GlobalNetworkEndpointGroups *GlobalNetworkEndpointGroupsService
 
@@ -838,6 +841,15 @@ func NewGlobalForwardingRulesService(s *Service) *GlobalForwardingRulesService {
 }
 
 type GlobalForwardingRulesService struct {
+	s *Service
+}
+
+func NewGlobalFrontendSettingsService(s *Service) *GlobalFrontendSettingsService {
+	rs := &GlobalFrontendSettingsService{s: s}
+	return rs
+}
+
+type GlobalFrontendSettingsService struct {
 	s *Service
 }
 
@@ -6205,6 +6217,47 @@ type AutoscalingPolicyCpuUtilization struct {
 	// Use
 	// OPTIMIZE_AVAILABILITY instead.
 	PredictiveMethod string `json:"predictiveMethod,omitempty"`
+	// SignalAggregation: Defines how CPU utilization is aggregated in a
+	// group.
+	//
+	// Operates on the results from the `time_aggregation`, reducing
+	// the
+	// per-instance values down to a single aggregate value across the
+	// entire
+	// instance group if samples are available.
+	SignalAggregation *AutoscalingPolicySignalAggregation `json:"signalAggregation,omitempty"`
+	// TimeAggregation: Defines how CPU utilization is aggregated over
+	// time.
+	//
+	// Operates on all CPU utilization samples produced by each instance over
+	// the `time_aggregation.time_window_sec`, reducing them to exactly one
+	// value per instance if samples are available.
+	TimeAggregation *AutoscalingPolicyTimeAggregation `json:"timeAggregation,omitempty"`
+	// UtilizationRange: Defines a target range for CPU utilization. The values
+	// of
+	// `min_utilization` and `max_utilization` must be in
+	// the range (0.0, 1.0].
+	//
+	// If the average CPU is between `min_utilization` and
+	// `max_utilization`, the autoscaler maintains the current size
+	// unless another configured metric requires scaling out.
+	//
+	// If the average CPU is above `max_utilization`, the autoscaler
+	// scales out until the average utilization reaches
+	// the
+	// `utilization_range.utilization_target`.
+	//
+	// If the average CPU is below `min_utilization`, the autoscaler
+	// considers scaling in until the average utilization reaches
+	// the
+	// `utilization_range.utilization_target`. Scaling in can occur only if
+	// all
+	// other configured scaling metrics also suggest scaling in.
+	//
+	// At most one of CpuUtilization.utilization_target
+	// or
+	// CpuUtilization.utilization_range can be set.
+	UtilizationRange *UtilizationRange `json:"utilizationRange,omitempty"`
 	// UtilizationTarget: The target CPU utilization that the autoscaler maintains.
 	// Must be
 	// a float value in the range (0, 1]. If not specified, the default is0.6.
@@ -6552,6 +6605,93 @@ type AutoscalingPolicyScalingSchedule struct {
 
 func (s AutoscalingPolicyScalingSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingPolicyScalingSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingPolicySignalAggregation: Defines how scaling signal is aggregated
+// in a group. Operates on the
+// results of the `TimeAggregation`, reducing the per-instance
+// values down to a single aggregate value across the entire instance group.
+type AutoscalingPolicySignalAggregation struct {
+	// Percentile: If statistic is PERCENTILE, percentile must be defined. This
+	// value is
+	// used only when statistic is PERCENTILE.
+	Percentile int64 `json:"percentile,omitempty"`
+	// Statistic: Required. The aggregator used to aggregate signal samples across
+	// the entire
+	// instance group. This field is required.
+	//
+	// Possible values:
+	//   "AGGREGATOR_UNSPECIFIED" - The default value. This value is used if the
+	// aggregator is unspecified.
+	//   "AVERAGE" - Average value of the signal samples across the instance group.
+	//   "MAX" - Maximum value of the signal samples across the instance group.
+	//   "MIN" - Minimum value of the signal samples across the instance group.
+	//   "PERCENTILE" - Percentage percentile value of the signal samples across
+	// the instance
+	// group.
+	Statistic string `json:"statistic,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Percentile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Percentile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoscalingPolicySignalAggregation) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingPolicySignalAggregation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoscalingPolicyTimeAggregation: Defines how scaling signal is aggregated
+// over a time window. Operates on
+// all signal samples produced over the `time_window_sec`, reducing them
+// to
+// exactly one value.
+type AutoscalingPolicyTimeAggregation struct {
+	// Percentile: If statistic is PERCENTILE, percentile must be defined. This
+	// value is
+	// used only when statistic is PERCENTILE.
+	Percentile int64 `json:"percentile,omitempty"`
+	// Statistic: Required. The aggregator used to aggregate signal samples over
+	// the
+	// `time_window_sec`. This field is required.
+	//
+	// Possible values:
+	//   "AGGREGATOR_UNSPECIFIED" - The default value. This value is used if the
+	// aggregator is unspecified.
+	//   "AVERAGE" - Average value of the signal samples in the time window.
+	//   "LAST_VALUE" - The last value of the signal samples in the time window.
+	//   "MAX" - Maximum value of the signal samples in the time window.
+	//   "MIN" - Minimum value of the signal samples in the time window.
+	//   "PERCENTILE" - Percentage percentile value of the signal samples in the
+	// time window.
+	Statistic string `json:"statistic,omitempty"`
+	// TimeWindowSec: Required. The duration of the time window over which the
+	// signal samples are
+	// aggregated. This field is required.
+	TimeWindowSec int64 `json:"timeWindowSec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Percentile") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Percentile") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoscalingPolicyTimeAggregation) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingPolicyTimeAggregation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14801,6 +14941,7 @@ type ConfidentialInstanceConfig struct {
 	// confidential instance.
 	//
 	// Possible values:
+	//   "BMSAI" - Bare Metal Secure AI.
 	//   "CCA" - Arm Confidential Compute Architecture.
 	//   "CONFIDENTIAL_INSTANCE_TYPE_UNSPECIFIED" - No type specified. Do not use
 	// this value.
@@ -20166,6 +20307,13 @@ func (s FirewallPoliciesScopedListWarningData) MarshalJSON() ([]byte, error) {
 
 // FirewallPolicy: Represents a Firewall Policy resource.
 type FirewallPolicy struct {
+	// ApplySecurityProfileFallbackAction: Optional. If specified, it defines what
+	// should happen in case of backend issues for
+	// rules with apply_security_profile_group action.
+	// Allowed values: ALLOW, DENY. If not specified, the default behavior
+	// is
+	// ALLOW.
+	ApplySecurityProfileFallbackAction string `json:"applySecurityProfileFallbackAction,omitempty"`
 	// Associations: A list of associations that belong to this firewall policy.
 	Associations []*FirewallPolicyAssociation `json:"associations,omitempty"`
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp
@@ -20316,16 +20464,18 @@ type FirewallPolicy struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Associations") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "ApplySecurityProfileFallbackAction") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Associations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	// NullFields is a list of field names (e.g.
+	// "ApplySecurityProfileFallbackAction") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
 	NullFields []string `json:"-"`
 }
 
@@ -22780,6 +22930,7 @@ type FutureReservation struct {
 	// existing commitment.
 	CommitmentInfo *FutureReservationCommitmentInfo `json:"commitmentInfo,omitempty"`
 	// Possible values:
+	//   "CONFIDENTIAL_COMPUTE_TYPE_BMSAI" - Bare Metal Secure AI.
 	//   "CONFIDENTIAL_COMPUTE_TYPE_TDX" - Intel Trust Domain Extensions.
 	//   "CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED"
 	ConfidentialComputeType string `json:"confidentialComputeType,omitempty"`
@@ -24501,7 +24652,7 @@ type GetHealthOperationMetadataHealthInfo struct {
 	// emergent maintenance
 	//   "REPAIR_CATEGORY_PLANNED_MAINTENANCE" - The repair is because of a planned
 	// maintenance
-	//   "REPAIR_CATEGORY_UNSPECIFIED"
+	//   "REPAIR_CATEGORY_UNSPECIFIED" - Unspecified repair category.
 	//   "REPAIR_CATEGORY_USER_REPORTED_FAULT" - The repair is because of a user
 	// reported fault
 	RepairCategory string `json:"repairCategory,omitempty"`
@@ -24642,6 +24793,86 @@ type GlobalAddressesMoveRequest struct {
 
 func (s GlobalAddressesMoveRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GlobalAddressesMoveRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GlobalFrontendSettings: Represents the Global Frontend Bundle settings for a
+// single project.
+type GlobalFrontendSettings struct {
+	// BundleType: Customer-settable bundle type.
+	//
+	// Possible values:
+	//   "BUNDLE_TYPE_UNSPECIFIED" - Bundling is not active
+	//   "GLOBAL_FRONT_END" - Standard Global Frontend bundle
+	//   "INDIVIDUAL" - Ala Carte mode
+	BundleType string `json:"bundleType,omitempty"`
+	// CreationTimestamp: Output only. [Output Only] Creation timestamp in RFC3339
+	// text format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+	// Description: Output only. [Output Only] An optional description of this
+	// resource.
+	Description string `json:"description,omitempty"`
+	// Etag: Output only. For optimistic locking
+	Etag string `json:"etag,omitempty"`
+	// Id: Output only. [Output Only] The unique identifier for the resource. This
+	// identifier is
+	// defined by the server.
+	Id uint64 `json:"id,omitempty,string"`
+	// Name: Output only. OUTPUT_ONLY fields
+	// [Output Only] Name of the resource. Must be 1-63 characters long and
+	// match
+	// the regular expression `[a-z]([-a-z0-9]*[a-z0-9])?` which means the
+	// first
+	// character must be a lowercase letter, and all following characters must
+	// be a dash, lowercase letter, or digit, except the last character,
+	// which
+	// cannot be a dash.
+	Name string `json:"name,omitempty"`
+	// SelfLink: Output only. [Output Only] Server-defined URL for the resource.
+	SelfLink string `json:"selfLink,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BundleType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BundleType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GlobalFrontendSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GlobalFrontendSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GlobalFrontendSettingsPatchResponse: Response to an
+// UpdateGlobalFrontendSettingsRequest.
+type GlobalFrontendSettingsPatchResponse struct {
+	Operation *Operation `json:"operation,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Operation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Operation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GlobalFrontendSettingsPatchResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GlobalFrontendSettingsPatchResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25813,6 +26044,7 @@ type GuestOsFeature struct {
 	//    - IDPF
 	//    - SNP_SVSM_CAPABLE
 	//    - CCA_CAPABLE
+	//    - SUSPEND_SAFE_FPR
 	//
 	//
 	// For more information, see
@@ -25831,6 +26063,9 @@ type GuestOsFeature struct {
 	//   "SEV_LIVE_MIGRATABLE_V2"
 	//   "SEV_SNP_CAPABLE"
 	//   "SNP_SVSM_CAPABLE"
+	//   "SUSPEND_SAFE_FPR" - Indicates the guest OS is safe for free page
+	// reporting (FPR) during
+	// suspend.
 	//   "TDX_CAPABLE"
 	//   "UEFI_COMPATIBLE"
 	//   "VIRTIO_SCSI_MULTIQUEUE"
@@ -36784,12 +37019,6 @@ type InstanceGroupManagerUpdatePolicy struct {
 	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
 	// preserving local SSDs.
 	AllowedActions []string `json:"allowedActions,omitempty"`
-	// DisruptionMode: Whether the boot disk is allowed to be updated with restart.
-	//
-	// Possible values:
-	//   "LEGACY" - Default option: boot disk will not be updated with restart.
-	//   "OPTIMIZED" - Boot disk will be updated with restart.
-	DisruptionMode string `json:"disruptionMode,omitempty"`
 	// InstanceRedistributionType: The
 	// instance redistribution policy for regional managed instance groups.
 	// Valid values are:
@@ -37037,12 +37266,6 @@ type InstanceGroupManagersApplyUpdatesRequest struct {
 	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
 	// preserving local SSDs.
 	AllowedActions []string `json:"allowedActions,omitempty"`
-	// DisruptionMode: Whether the boot disk is allowed to be updated with restart.
-	//
-	// Possible values:
-	//   "LEGACY" - Default option: boot disk will not be updated with restart.
-	//   "OPTIMIZED" - Boot disk will be updated with restart.
-	DisruptionMode string `json:"disruptionMode,omitempty"`
 	// Instances: The list of URLs of one or more instances for which you want to
 	// apply
 	// updates. Each URL can be a full URL or a partial URL, such
@@ -42207,8 +42430,8 @@ type Interconnect struct {
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SelfLink: Output only. [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
-	// SelfLinkWithId: Output only. [Output Only] Server-defined URL for this
-	// resource with the resource id.
+	// SelfLinkWithId: Output only. Server-defined URL for this resource with the
+	// resource id.
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
 	// State: Output only. [Output Only] The current state of Interconnect
 	// functionality, which can
@@ -46214,6 +46437,14 @@ type InterconnectLocationCrossSiteInterconnectInfo struct {
 	// InterconnectLocation city (metropolitan area designator), which itself
 	// may match multiple InterconnectLocations.
 	City string `json:"city,omitempty"`
+	// MaxDynamicPathBandwidthGbps: Output only. The maximum unmetered bandwidth
+	// for dynamic paths allowable per
+	// WireGroup for this metro.
+	MaxDynamicPathBandwidthGbps int64 `json:"maxDynamicPathBandwidthGbps,omitempty,string"`
+	// MaxFixedPathBandwidthGbps: Output only. The maximum unmetered bandwidth for
+	// fixed paths allowable per WireGroup
+	// for this metro.
+	MaxFixedPathBandwidthGbps int64 `json:"maxFixedPathBandwidthGbps,omitempty,string"`
 	// MaxSingleFlowGbps: Output only. The maximum gbps for a single flow to this
 	// metro.
 	// This limits the total bandwidth which may be configured per wire.
@@ -50522,8 +50753,8 @@ type ManagedInstance struct {
 	SizeInUnit float64 `json:"sizeInUnit,omitempty"`
 	// Tag: Output only. [Output Only] Tag describing the version.
 	Tag string `json:"tag,omitempty"`
-	// TargetStatus: Output only. [Output Only] The eventual status of the
-	// instance. The instance group
+	// TargetStatus: Output only. The eventual status of the instance. The instance
+	// group
 	// manager will not be identified as stable till each managed instance
 	// reaches
 	// its targetStatus.
@@ -50533,6 +50764,7 @@ type ManagedInstance struct {
 	// dissociated
 	// from the managed instance group.
 	//   "DELETED" - The managed instance will eventually be DELETED.
+	//   "INVALID" - Only present to map the STATUS_INVALID value.
 	//   "RUNNING" - The managed instance will eventually reach status RUNNING.
 	//   "STOPPED" - The managed instance will eventually reach status TERMINATED.
 	//   "SUSPENDED" - The managed instance will eventually reach status SUSPENDED.
@@ -51279,14 +51511,13 @@ type ManagementInterface struct {
 	Subnetwork string `json:"subnetwork,omitempty"`
 	// Type: Required. The type of management service this interface
 	// provides.
-	// Supported types include NMX-C for partition management, gNMI for
+	// Supported types include NMX-C for partition management and gNMI for
 	// switch
-	// monitoring, and TPU slice management.
+	// monitoring.
 	//
 	// Possible values:
 	//   "TYPE_NVLINK_PARTITION_MANAGEMENT"
 	//   "TYPE_NVLINK_SWITCH_MONITORING"
-	//   "TYPE_TPU_SLICE_MANAGEMENT"
 	//   "TYPE_UNSPECIFIED"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthenticationConfig") to
@@ -61002,8 +61233,7 @@ type Operation struct {
 	// regionNetworkFirewallPolicies.addRule
 	// methods if not explicitly provided by the user.
 	FirewallPolicyRuleOperationMetadata *FirewallPolicyRuleOperationMetadata `json:"firewallPolicyRuleOperationMetadata,omitempty"`
-	// GetHealthOperationMetadata: Output only. [Output Only] Metadata for
-	// GetHealth operations.
+	// GetHealthOperationMetadata: Output only. Metadata for GetHealth operations.
 	GetHealthOperationMetadata  *GetHealthOperationMetadata  `json:"getHealthOperationMetadata,omitempty"`
 	GetVersionOperationMetadata *GetVersionOperationMetadata `json:"getVersionOperationMetadata,omitempty"`
 	// HttpErrorMessage: [Output Only] If the operation fails, this field contains
@@ -67855,8 +68085,8 @@ type RecoverableSnapshotOriginalSnapshot struct {
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp inRFC3339
 	// text format.
 	CreationTimestamp string `json:"creationTimestamp,omitempty"`
-	// DeletionTimestamp: Output only. [Output Only] Purge timestamp of recoverable
-	// snapshot inRFC3339 text format.
+	// DeletionTimestamp: Output only. [Output Only] Deletion timestamp of snapshot
+	// inRFC3339 text format.
 	DeletionTimestamp string `json:"deletionTimestamp,omitempty"`
 	// Description: An optional description of this resource.
 	Description string `json:"description,omitempty"`
@@ -69780,12 +70010,6 @@ type RegionInstanceGroupManagersApplyUpdatesRequest struct {
 	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
 	// preserving local SSDs.
 	AllowedActions []string `json:"allowedActions,omitempty"`
-	// DisruptionMode: Whether the boot disk is allowed to be updated with restart.
-	//
-	// Possible values:
-	//   "LEGACY" - Default option: boot disk will not be updated with restart.
-	//   "OPTIMIZED" - Boot disk will be updated with restart.
-	DisruptionMode string `json:"disruptionMode,omitempty"`
 	// Instances: The list of URLs of one or more instances for which you want to
 	// apply
 	// updates. Each URL can be a full URL or a partial URL, such
@@ -71498,6 +71722,7 @@ type Reservation struct {
 	// displays for reservations that are tied to a commitment.
 	Commitment string `json:"commitment,omitempty"`
 	// Possible values:
+	//   "CONFIDENTIAL_COMPUTE_TYPE_BMSAI" - Bare Metal Secure AI.
 	//   "CONFIDENTIAL_COMPUTE_TYPE_TDX" - Intel Trust Domain Extensions.
 	//   "CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED"
 	ConfidentialComputeType string `json:"confidentialComputeType,omitempty"`
@@ -98271,6 +98496,71 @@ func (s UsageExportLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UtilizationRange: Represents a range of acceptable utilization values.
+// This message is used to configure range-based scaling policies,
+// allowing Autoscaler to maintain utilization within a specified range
+// instead of aiming for a single target point.
+type UtilizationRange struct {
+	// MaxUtilization: Required. The upper bound of the utilization range. Must be
+	// greater or equal to
+	// min_utilization. This value is required when using range-based
+	// scaling.
+	//
+	// Scaling out is triggered if the utilization exceeds this value.
+	MaxUtilization float64 `json:"maxUtilization,omitempty"`
+	// MinUtilization: Required. The lower bound of the utilization range. Must be
+	// smaller or equal to
+	// max_utilization. This value is required when using range-based
+	// scaling.
+	//
+	// Scaling in is considered only if the utilization drops below this value.
+	MinUtilization float64 `json:"minUtilization,omitempty"`
+	// UtilizationTarget: The target utilization that the autoscaler aims to
+	// achieve when scaling
+	// is triggered. This value must be within the range
+	// [min_utilization,
+	// max_utilization].
+	//
+	// If not specified, this will default to the average of max_utilization
+	// and
+	// min_utilization.
+	UtilizationTarget float64 `json:"utilizationTarget,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxUtilization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxUtilization") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UtilizationRange) MarshalJSON() ([]byte, error) {
+	type NoMethod UtilizationRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *UtilizationRange) UnmarshalJSON(data []byte) error {
+	type NoMethod UtilizationRange
+	var s1 struct {
+		MaxUtilization    gensupport.JSONFloat64 `json:"maxUtilization"`
+		MinUtilization    gensupport.JSONFloat64 `json:"minUtilization"`
+		UtilizationTarget gensupport.JSONFloat64 `json:"utilizationTarget"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxUtilization = float64(s1.MaxUtilization)
+	s.MinUtilization = float64(s1.MinUtilization)
+	s.UtilizationTarget = float64(s1.UtilizationTarget)
+	return nil
+}
+
 // VmEndpointNatMappings: Contain information of Nat mapping for a VM endpoint
 // (i.e., NIC).
 type VmEndpointNatMappings struct {
@@ -99408,7 +99698,8 @@ type VmExtensionState struct {
 	// Depending on each extensions' behavior, an extension restart might
 	// be
 	// involved in this process to get new configuration applied properly.
-	//   "ENFORCEMENT_STATE_UNSPECIFIED"
+	//   "ENFORCEMENT_STATE_UNSPECIFIED" - Enforcement state of the extension is
+	// unspecified.
 	//   "INCOMPATIBLE" - None of the extension revisions of the given extension
 	// version is
 	// compatible with the VM's architecture and Operating System.
@@ -99436,12 +99727,12 @@ type VmExtensionState struct {
 	// HealthStatus: The health status of the extension.
 	//
 	// Possible values:
-	//   "CRASHED"
-	//   "HEALTH_STATUS_UNSPECIFIED"
-	//   "RUNNING"
-	//   "STARTING"
-	//   "STOPPED"
-	//   "STOPPING"
+	//   "CRASHED" - The extension crashed.
+	//   "HEALTH_STATUS_UNSPECIFIED" - Health status is unspecified.
+	//   "RUNNING" - The extension is running.
+	//   "STARTING" - The extension is starting.
+	//   "STOPPED" - The extension is stopped.
+	//   "STOPPING" - The extension is stopping.
 	HealthStatus string `json:"healthStatus,omitempty"`
 	// Name: The name of the extension.
 	Name string `json:"name,omitempty"`

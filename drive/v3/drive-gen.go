@@ -4761,7 +4761,12 @@ type ApprovalsListCall struct {
 
 // List: Lists the approvals on a file. For more information, see Manage
 // approvals
-// (https://developers.google.com/workspace/drive/api/guides/approvals).
+// (https://developers.google.com/workspace/drive/api/guides/approvals). By
+// default, this method returns a minimal response that may not include the
+// items array. To retrieve approval details, you must explicitly specify the
+// fields you want using the `fields` query parameter. To return the exact
+// fields you need, see Return specific fields
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 //
 // - fileId: The ID of the file that the approval is on.
 func (r *ApprovalsService) List(fileId string) *ApprovalsListCall {

@@ -4912,8 +4912,8 @@ func (s Probe) MarshalJSON() ([]byte, error) {
 
 // ResourceRecord: A DNS resource record.
 type ResourceRecord struct {
-	// Name: Relative name of the object affected by this record. Only applicable
-	// for `CNAME` records. Example: 'www'.
+	// Name: Name of the resource record relative to its apex domain, e.g. `www`
+	// for `www.example.com`. Omitted for apex records.
 	Name string `json:"name,omitempty"`
 	// Rrdata: Data for this record. Values vary by record type, as defined in RFC
 	// 1035 (section 5) and RFC 1034 (section 3.6.1).

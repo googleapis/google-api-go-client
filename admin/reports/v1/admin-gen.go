@@ -280,7 +280,10 @@ type Activity struct {
 	OwnerDomain string `json:"ownerDomain,omitempty"`
 	// ResourceDetails: Details of the resource on which the action was performed.
 	ResourceDetails []*ResourceDetails `json:"resourceDetails,omitempty"`
-	// UserDeviceInfo: Device details of the user doing the action.
+	// UserDeviceInfo: Device details of the user doing the action. This field is
+	// only exposed for the `contacts`, `gemini_in_workspace_apps`, `keep`,
+	// `meet_hardware`, `meet`, `chat`, `chrome`, `directory_sync`, `drive`,
+	// `groups`, `rules`, `data_studio`, `saml` applications.
 	UserDeviceInfo *ActivityUserDeviceInfo `json:"userDeviceInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Actor") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1629,8 +1632,8 @@ func (c *ActivitiesListCall) GroupIdFilter(groupIdFilter string) *ActivitiesList
 // IncludeSensitiveData sets the optional parameter "includeSensitiveData":
 // When set to `true`, this field allows sensitive user-generated content to be
 // included in the returned audit logs. This parameter is supported only for
-// Rules (DLP) and Chat applications; using it with any other application will
-// result in a permission error.
+// Rules (DLP), Chat and Workspace Studio applications; using it with any other
+// application will result in a permission error.
 func (c *ActivitiesListCall) IncludeSensitiveData(includeSensitiveData bool) *ActivitiesListCall {
 	c.urlParams_.Set("includeSensitiveData", fmt.Sprint(includeSensitiveData))
 	return c

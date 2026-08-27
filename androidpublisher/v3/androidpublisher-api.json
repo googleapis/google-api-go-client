@@ -5970,7 +5970,7 @@
       }
     }
   },
-  "revision": "20260817",
+  "revision": "20260825",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -11626,7 +11626,7 @@
       "type": "object"
     },
     "PolicyResponse": {
-      "description": "An individual response to a policy question about an app.",
+      "description": "An individual response (answer) to a policy question about an app.",
       "id": "PolicyResponse",
       "properties": {
         "booleanResponse": {

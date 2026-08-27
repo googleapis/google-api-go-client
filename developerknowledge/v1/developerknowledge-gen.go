@@ -235,15 +235,44 @@ func (s AnswerCitation) MarshalJSON() ([]byte, error) {
 
 // AnswerQueryRequest: Request message for DeveloperKnowledge.AnswerQuery.
 type AnswerQueryRequest struct {
+	// Filter: Optional. Applies a strict filter to the search results used to
+	// ground the answer. The expression supports a subset of the syntax described
+	// at https://google.aip.dev/160. Supported fields for filtering: *
+	// `content_length_bytes` (INTEGER): The length of the `Document.content` field
+	// in bytes. * `data_source` (STRING): The source of the document, e.g.
+	// `docs.cloud.google.com`. See
+	// https://developers.google.com/knowledge/reference/corpus-reference for the
+	// complete list of data sources in the corpus. * `update_time` (TIMESTAMP):
+	// The timestamp of when the document was last meaningfully updated. A
+	// meaningful update is one that changes document's markdown content or
+	// metadata. * `uri` (STRING): The document URI, e.g.
+	// `https://docs.cloud.google.com/bigquery/docs/tables`. INTEGER fields support
+	// `=`, `<`, `<=`, `>`, and `>=` operators. STRING fields support `=` (equals)
+	// and `!=` (not equals) operators for **exact match** on the whole string.
+	// Partial match, prefix match, and regexp match are not supported. TIMESTAMP
+	// fields support `=`, `<`, `<=`, `>`, and `>=` operators. Timestamps must be
+	// in RFC-3339 format, e.g., "2025-01-01T00:00:00Z". You can combine
+	// expressions using `AND`, `OR`, and `NOT` (or `-`) logical operators. `OR`
+	// has higher precedence than `AND`. Use parentheses for explicit precedence
+	// grouping. Examples: * Filter by `Document.content_length_bytes`:
+	// `content_length_bytes < 50000` * `data_source = "docs.cloud.google.com" OR
+	// data_source = "firebase.google.com" * `data_source !=
+	// "firebase.google.com" * `update_time < "2024-01-01T00:00:00Z" *
+	// `update_time >= "2025-01-22T00:00:00Z" AND (data_source =
+	// "developer.chrome.com" OR data_source = "web.dev")` * `uri =
+	// "https://docs.cloud.google.com/release-notes" The `filter` string must not
+	// exceed 500 characters; values longer than 500 characters will result in an
+	// `INVALID_ARGUMENT` error.
+	Filter string `json:"filter,omitempty"`
 	// Query: Required. The query to answer.
 	Query string `json:"query,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Query") to include in API
+	// NullFields is a list of field names (e.g. "Filter") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

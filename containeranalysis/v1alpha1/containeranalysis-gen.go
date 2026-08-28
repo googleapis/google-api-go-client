@@ -5357,6 +5357,8 @@ type MaliciousContentLLMResult struct {
 	//   "CRITICAL" - Critical severity.
 	//   "HIGH" - High severity.
 	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// ModelId: Optional. The base name of the model that performed the scan.
+	ModelId string `json:"modelId,omitempty"`
 	// ScanState: Output only. State of the scan.
 	//
 	// Possible values:

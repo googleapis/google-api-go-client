@@ -383,19 +383,6 @@ type GoogleCloudAiplatformV1beta1AudioTranscriptionConfig struct {
 	// LanguageHints: Optional. Deprecated: Use top-level `language_codes` instead.
 	// Specifies one or more languages in the audio.
 	LanguageHints *GoogleCloudAiplatformV1beta1AudioTranscriptionConfigLanguageHints `json:"languageHints,omitempty"`
-	// Mode: Optional. Configures transcription mode. Supported values: `VERBATIM`,
-	// `SMART`. If unspecified, defaults to `VERBATIM` transcription. In `SMART`
-	// mode, the model performs disfluency removal (eliminating filler words,
-	// repetitions, and false starts), light grammatical cleanup, automatic
-	// formatting (paragraphs, bullet points, numbered lists), and minor user edits
-	// (inline self-corrections). Timestamps and diarization are incompatible with
-	// mode `SMART`.
-	//
-	// Possible values:
-	//   "MODE_UNSPECIFIED" - Unspecified transcription mode.
-	//   "VERBATIM" - Verbatim transcription mode.
-	//   "SMART" - Smart transcription mode.
-	Mode string `json:"mode,omitempty"`
 	// WordTimestamp: Optional. Configures word-level timestamp generation.
 	WordTimestamp bool `json:"wordTimestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdaptationPhrases") to

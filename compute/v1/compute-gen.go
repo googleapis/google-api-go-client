@@ -12702,6 +12702,7 @@ type ConfidentialInstanceConfig struct {
 	// confidential instance.
 	//
 	// Possible values:
+	//   "BMSAI" - Bare Metal Secure AI.
 	//   "CCA" - Arm Confidential Compute Architecture.
 	//   "CONFIDENTIAL_INSTANCE_TYPE_UNSPECIFIED" - No type specified. Do not use
 	// this value.
@@ -19282,6 +19283,7 @@ type FutureReservation struct {
 	// existing commitment.
 	CommitmentInfo *FutureReservationCommitmentInfo `json:"commitmentInfo,omitempty"`
 	// Possible values:
+	//   "CONFIDENTIAL_COMPUTE_TYPE_BMSAI" - Bare Metal Secure AI.
 	//   "CONFIDENTIAL_COMPUTE_TYPE_TDX" - Intel Trust Domain Extensions.
 	//   "CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED"
 	ConfidentialComputeType string `json:"confidentialComputeType,omitempty"`
@@ -20904,6 +20906,94 @@ func (s GRPCTLSHealthCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GetHealthOperationMetadata: Metadata for GetHealth operations.
+type GetHealthOperationMetadata struct {
+	// HealthInfo: Output only. The health information.
+	HealthInfo *GetHealthOperationMetadataHealthInfo `json:"healthInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HealthInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HealthInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetHealthOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GetHealthOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GetHealthOperationMetadataHealthInfo: Health information.
+type GetHealthOperationMetadataHealthInfo struct {
+	// AvailabilitySloStatus: Output only. The availability SLO status.
+	//
+	// Possible values:
+	//   "AVAILABILITY_SLO_STATUS_IN_SLO" - The slot availability is in SLO.
+	//   "AVAILABILITY_SLO_STATUS_OUT_OF_SLO" - The slot availability is out of
+	// SLO.
+	//   "AVAILABILITY_SLO_STATUS_SLO_UNKNOWN" - The slot availability is unknown.
+	//   "AVAILABILITY_SLO_STATUS_UNSPECIFIED" - Unspecified availability SLO
+	// status.
+	AvailabilitySloStatus string `json:"availabilitySloStatus,omitempty"`
+	// HealthStatus: Output only. The health status.
+	//
+	// Possible values:
+	//   "HEALTH_STATUS_HEALTHY" - The reservation slot is healthy.
+	//   "HEALTH_STATUS_UNHEALTHY" - The reservation slot is unhealthy.
+	//   "HEALTH_STATUS_UNSPECIFIED" - Unspecified health status.
+	HealthStatus string `json:"healthStatus,omitempty"`
+	// RepairCategory: Output only. The repair category.
+	//
+	// Possible values:
+	//   "REPAIR_CATEGORY_CRITICAL_FAILURE" - The repair is because of critical
+	// failures, that are scoped outside
+	// emergent maintenance
+	//   "REPAIR_CATEGORY_EMERGENT_MAINTENANCE" - The repair is because of an
+	// emergent maintenance
+	//   "REPAIR_CATEGORY_PLANNED_MAINTENANCE" - The repair is because of a planned
+	// maintenance
+	//   "REPAIR_CATEGORY_UNSPECIFIED" - Unspecified repair category.
+	//   "REPAIR_CATEGORY_USER_REPORTED_FAULT" - The repair is because of a user
+	// reported fault
+	RepairCategory string `json:"repairCategory,omitempty"`
+	// UnhealthyReason: Output only. The reason for unhealthy status.
+	//
+	// Possible values:
+	//   "UNHEALTHY_REASON_PENDING_USER_APPROVAL" - The slot is unhealthy because
+	// there is a pending repair, waiting for
+	// customer approval
+	//   "UNHEALTHY_REASON_REPAIRING" - The slot is unhealthy because repair is in
+	// progress
+	//   "UNHEALTHY_REASON_UNSCHEDULABLE" - The slot is unhealthy because a vm
+	// cannot be scheduled on it, and no
+	// repairs are running on the slot
+	//   "UNHEALTHY_REASON_UNSPECIFIED" - Unspecified unhealthy reason.
+	UnhealthyReason string `json:"unhealthyReason,omitempty"`
+	// UpdateTime: Output only. The time when health info was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailabilitySloStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailabilitySloStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetHealthOperationMetadataHealthInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GetHealthOperationMetadataHealthInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GetVersionOperationMetadata struct {
 	InlineSbomInfo *GetVersionOperationMetadataSbomInfo `json:"inlineSbomInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InlineSbomInfo") to
@@ -21842,6 +21932,7 @@ type GuestOsFeature struct {
 	//    - IDPF
 	//    - SNP_SVSM_CAPABLE
 	//    - CCA_CAPABLE
+	//    - SUSPEND_SAFE_FPR
 	//
 	//
 	// For more information, see
@@ -21860,6 +21951,9 @@ type GuestOsFeature struct {
 	//   "SEV_LIVE_MIGRATABLE_V2"
 	//   "SEV_SNP_CAPABLE"
 	//   "SNP_SVSM_CAPABLE"
+	//   "SUSPEND_SAFE_FPR" - Indicates the guest OS is safe for free page
+	// reporting (FPR) during
+	// suspend.
 	//   "TDX_CAPABLE"
 	//   "UEFI_COMPATIBLE"
 	//   "VIRTIO_SCSI_MULTIQUEUE"
@@ -35550,6 +35644,9 @@ type Interconnect struct {
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// SelfLink: Output only. [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
+	// SelfLinkWithId: Output only. Server-defined URL for this resource with the
+	// resource id.
+	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
 	// State: Output only. [Output Only] The current state of Interconnect
 	// functionality, which can
 	// take one of the following values:
@@ -39178,6 +39275,14 @@ type InterconnectLocationCrossSiteInterconnectInfo struct {
 	// InterconnectLocation city (metropolitan area designator), which itself
 	// may match multiple InterconnectLocations.
 	City string `json:"city,omitempty"`
+	// MaxDynamicPathBandwidthGbps: Output only. The maximum unmetered bandwidth
+	// for dynamic paths allowable per
+	// WireGroup for this metro.
+	MaxDynamicPathBandwidthGbps int64 `json:"maxDynamicPathBandwidthGbps,omitempty,string"`
+	// MaxFixedPathBandwidthGbps: Output only. The maximum unmetered bandwidth for
+	// fixed paths allowable per WireGroup
+	// for this metro.
+	MaxFixedPathBandwidthGbps int64 `json:"maxFixedPathBandwidthGbps,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "City") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -42279,6 +42384,22 @@ type ManagedInstance struct {
 	// instance is in
 	// `PENDING_STOP` state or there is a programmed stop scheduled.
 	ShutdownDetails *ManagedInstanceShutdownDetails `json:"shutdownDetails,omitempty"`
+	// TargetStatus: Output only. The eventual status of the instance. The instance
+	// group
+	// manager will not be identified as stable till each managed instance
+	// reaches
+	// its targetStatus.
+	//
+	// Possible values:
+	//   "ABANDONED" - The managed instance will eventually be ABANDONED, i.e.
+	// dissociated
+	// from the managed instance group.
+	//   "DELETED" - The managed instance will eventually be DELETED.
+	//   "INVALID" - Only present to map the STATUS_INVALID value.
+	//   "RUNNING" - The managed instance will eventually reach status RUNNING.
+	//   "STOPPED" - The managed instance will eventually reach status TERMINATED.
+	//   "SUSPENDED" - The managed instance will eventually reach status SUSPENDED.
+	TargetStatus string `json:"targetStatus,omitempty"`
 	// Version: Output only. [Output Only] Intended version of this instance.
 	Version *ManagedInstanceVersion `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentAction") to
@@ -44319,6 +44440,10 @@ type NetworkEndpointGroup struct {
 	//
 	// Possible values:
 	//   "GCE_VM_IP" - The network endpoint is represented by an IP address.
+	//   "GCE_VM_IP_DEDICATED_BACKEND" - The network endpoint for targeting a
+	// specific network interface of a
+	// VM instance in configurations with multiple network interfaces on the
+	// same network.
 	//   "GCE_VM_IP_PORT" - The network endpoint is represented by IP address and
 	// port pair.
 	//   "GCE_VM_IP_PORTMAP" - The network endpoint is represented by an IP, Port
@@ -50258,7 +50383,9 @@ type Operation struct {
 	// Error: [Output Only] If errors are generated during processing of the
 	// operation,
 	// this field will be populated.
-	Error                       *OperationError              `json:"error,omitempty"`
+	Error *OperationError `json:"error,omitempty"`
+	// GetHealthOperationMetadata: Output only. Metadata for GetHealth operations.
+	GetHealthOperationMetadata  *GetHealthOperationMetadata  `json:"getHealthOperationMetadata,omitempty"`
 	GetVersionOperationMetadata *GetVersionOperationMetadata `json:"getVersionOperationMetadata,omitempty"`
 	// HttpErrorMessage: [Output Only] If the operation fails, this field contains
 	// the HTTP error
@@ -58002,6 +58129,7 @@ type Reservation struct {
 	// displays for reservations that are tied to a commitment.
 	Commitment string `json:"commitment,omitempty"`
 	// Possible values:
+	//   "CONFIDENTIAL_COMPUTE_TYPE_BMSAI" - Bare Metal Secure AI.
 	//   "CONFIDENTIAL_COMPUTE_TYPE_TDX" - Intel Trust Domain Extensions.
 	//   "CONFIDENTIAL_COMPUTE_TYPE_UNSPECIFIED"
 	ConfidentialComputeType string `json:"confidentialComputeType,omitempty"`
@@ -74157,6 +74285,17 @@ type Subnetwork struct {
 	//
 	// Possible values:
 	//   "ARP_ALL_RANGES" - All ranges assigned to the VM NIC will respond to ARP.
+	//   "ARP_BROADCAST_PRIMARY_RANGE" - VMs will receive an ARP response from a VM
+	// instance owning the target IP
+	// address within the subnetwork's primary CIDR range, if such a VM
+	// instance
+	// exists and is running.
+	//   "ARP_BROADCAST_PRIMARY_RANGE_WITH_LEARNING" - Combines
+	// ARP_BROADCAST_PRIMARY_RANGE with MAC learning. Enables cache
+	// mapping between IP addresses and custom MAC addresses of instances and
+	// use of it to set the correct destination MAC address. If this option
+	// is
+	// chosen, the subnetwork must have /24 or a smaller CIDR range.
 	//   "ARP_PRIMARY_RANGE" - Only the primary range of the VM NIC will respond to
 	// ARP.
 	ResolveSubnetMask string `json:"resolveSubnetMask,omitempty"`

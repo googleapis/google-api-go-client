@@ -3147,8 +3147,8 @@ func (s DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
 
 // DeviceRadioState: Controls for device radio settings.
 type DeviceRadioState struct {
-	// AirplaneModeState: Controls whether airplane mode can be toggled by the user
-	// or not.
+	// AirplaneModeState: Optional. Controls whether airplane mode can be toggled
+	// by the user or not.
 	//
 	// Possible values:
 	//   "AIRPLANE_MODE_STATE_UNSPECIFIED" - Unspecified. Defaults to
@@ -3159,8 +3159,8 @@ type DeviceRadioState struct {
 	// allowed to toggle airplane mode on. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 9.
 	AirplaneModeState string `json:"airplaneModeState,omitempty"`
-	// CellularTwoGState: Controls whether cellular 2G setting can be toggled by
-	// the user or not.
+	// CellularTwoGState: Optional. Controls whether cellular 2G setting can be
+	// toggled by the user or not.
 	//
 	// Possible values:
 	//   "CELLULAR_TWO_G_STATE_UNSPECIFIED" - Unspecified. Defaults to
@@ -3171,8 +3171,8 @@ type DeviceRadioState struct {
 	// allowed to toggle cellular 2G on via settings. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 14.
 	CellularTwoGState string `json:"cellularTwoGState,omitempty"`
-	// MinimumWifiSecurityLevel: The minimum required security level of Wi-Fi
-	// networks that the device can connect to.
+	// MinimumWifiSecurityLevel: Optional. The minimum required security level of
+	// Wi-Fi networks that the device can connect to.
 	//
 	// Possible values:
 	//   "MINIMUM_WIFI_SECURITY_LEVEL_UNSPECIFIED" - Defaults to
@@ -3196,8 +3196,8 @@ type DeviceRadioState struct {
 	// ENTERPRISE_NETWORK_SECURITY. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 13.
 	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
-	// UltraWidebandState: Controls the state of the ultra wideband setting and
-	// whether the user can toggle it on or off.
+	// UltraWidebandState: Optional. Controls the state of the ultra wideband
+	// setting and whether the user can toggle it on or off.
 	//
 	// Possible values:
 	//   "ULTRA_WIDEBAND_STATE_UNSPECIFIED" - Unspecified. Defaults to
@@ -3220,7 +3220,8 @@ type DeviceRadioState struct {
 	// devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for
 	// personally-owned devices.
 	UserInitiatedAddEsimSettings string `json:"userInitiatedAddEsimSettings,omitempty"`
-	// WifiState: Controls current state of Wi-Fi and if user can change its state.
+	// WifiState: Optional. Controls current state of Wi-Fi and if user can change
+	// its state.
 	//
 	// Possible values:
 	//   "WIFI_STATE_UNSPECIFIED" - Unspecified. Defaults to WIFI_STATE_USER_CHOICE
@@ -6544,8 +6545,8 @@ type Policy struct {
 	// DeviceOwnerLockScreenInfo: The device owner information to be shown on the
 	// lock screen.
 	DeviceOwnerLockScreenInfo *UserFacingMessage `json:"deviceOwnerLockScreenInfo,omitempty"`
-	// DeviceRadioState: Covers controls for radio state such as Wi-Fi, bluetooth,
-	// and more.
+	// DeviceRadioState: Optional. Covers controls for radio state such as Wi-Fi,
+	// bluetooth, and more.
 	DeviceRadioState *DeviceRadioState `json:"deviceRadioState,omitempty"`
 	// DisplaySettings: Optional. Controls for the display settings.
 	DisplaySettings *DisplaySettings `json:"displaySettings,omitempty"`

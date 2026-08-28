@@ -128,6 +128,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.Folders = NewFoldersService(s)
+	s.Organizations = NewOrganizationsService(s)
 	s.Projects = NewProjectsService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -153,6 +155,10 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Folders *FoldersService
+
+	Organizations *OrganizationsService
+
 	Projects *ProjectsService
 }
 
@@ -161,6 +167,72 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewFoldersService(s *Service) *FoldersService {
+	rs := &FoldersService{s: s}
+	rs.Locations = NewFoldersLocationsService(s)
+	return rs
+}
+
+type FoldersService struct {
+	s *Service
+
+	Locations *FoldersLocationsService
+}
+
+func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
+	rs := &FoldersLocationsService{s: s}
+	rs.ConfigStoreSettings = NewFoldersLocationsConfigStoreSettingsService(s)
+	return rs
+}
+
+type FoldersLocationsService struct {
+	s *Service
+
+	ConfigStoreSettings *FoldersLocationsConfigStoreSettingsService
+}
+
+func NewFoldersLocationsConfigStoreSettingsService(s *Service) *FoldersLocationsConfigStoreSettingsService {
+	rs := &FoldersLocationsConfigStoreSettingsService{s: s}
+	return rs
+}
+
+type FoldersLocationsConfigStoreSettingsService struct {
+	s *Service
+}
+
+func NewOrganizationsService(s *Service) *OrganizationsService {
+	rs := &OrganizationsService{s: s}
+	rs.Locations = NewOrganizationsLocationsService(s)
+	return rs
+}
+
+type OrganizationsService struct {
+	s *Service
+
+	Locations *OrganizationsLocationsService
+}
+
+func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
+	rs := &OrganizationsLocationsService{s: s}
+	rs.ConfigStoreSettings = NewOrganizationsLocationsConfigStoreSettingsService(s)
+	return rs
+}
+
+type OrganizationsLocationsService struct {
+	s *Service
+
+	ConfigStoreSettings *OrganizationsLocationsConfigStoreSettingsService
+}
+
+func NewOrganizationsLocationsConfigStoreSettingsService(s *Service) *OrganizationsLocationsConfigStoreSettingsService {
+	rs := &OrganizationsLocationsConfigStoreSettingsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsConfigStoreSettingsService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -231,6 +303,7 @@ type ProjectsJobsWorkItemsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.ConfigStoreSettings = NewProjectsLocationsConfigStoreSettingsService(s)
 	rs.FlexTemplates = NewProjectsLocationsFlexTemplatesService(s)
 	rs.Jobs = NewProjectsLocationsJobsService(s)
 	rs.Snapshots = NewProjectsLocationsSnapshotsService(s)
@@ -241,6 +314,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	ConfigStoreSettings *ProjectsLocationsConfigStoreSettingsService
+
 	FlexTemplates *ProjectsLocationsFlexTemplatesService
 
 	Jobs *ProjectsLocationsJobsService
@@ -248,6 +323,15 @@ type ProjectsLocationsService struct {
 	Snapshots *ProjectsLocationsSnapshotsService
 
 	Templates *ProjectsLocationsTemplatesService
+}
+
+func NewProjectsLocationsConfigStoreSettingsService(s *Service) *ProjectsLocationsConfigStoreSettingsService {
+	rs := &ProjectsLocationsConfigStoreSettingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConfigStoreSettingsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsFlexTemplatesService(s *Service) *ProjectsLocationsFlexTemplatesService {
@@ -962,6 +1046,57 @@ type ConcatPosition struct {
 
 func (s ConcatPosition) MarshalJSON() ([]byte, error) {
 	type NoMethod ConcatPosition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigStoreSetting: A ConfigStoreSetting resource.
+type ConfigStoreSetting struct {
+	// Name: Identifier. The resource name of the setting.
+	Name string `json:"name,omitempty"`
+	// Value: Required. The dynamic value of the setting.
+	Value *ConfigStoreSettingValue `json:"value,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigStoreSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigStoreSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConfigStoreSettingValue: Represents a dynamically typed value.
+type ConfigStoreSettingValue struct {
+	// BoolValue: Represents a boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// StringValue: Represents a string value.
+	StringValue string `json:"stringValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConfigStoreSettingValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ConfigStoreSettingValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1710,6 +1845,15 @@ type DynamicSourceSplit struct {
 func (s DynamicSourceSplit) MarshalJSON() ([]byte, error) {
 	type NoMethod DynamicSourceSplit
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // Environment: Describes the environment in which a Dataflow Job runs.
@@ -3540,6 +3684,35 @@ func (s *Linear) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ListConfigStoreSettingsResponse: Response message for
+// ListConfigStoreSettings.
+type ListConfigStoreSettingsResponse struct {
+	// ConfigStoreSettings: The list of ConfigStoreSettings.
+	ConfigStoreSettings []*ConfigStoreSetting `json:"configStoreSettings,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConfigStoreSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConfigStoreSettings") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListConfigStoreSettingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListConfigStoreSettingsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListJobMessagesResponse: Response to a request to list job messages.
 type ListJobMessagesResponse struct {
 	// AutoscalingEvents: Autoscaling events in ascending timestamp order.
@@ -4759,6 +4932,39 @@ func (s *ReportedParallelism) UnmarshalJSON(data []byte) error {
 	}
 	s.Value = float64(s1.Value)
 	return nil
+}
+
+// ResolveConfigStoreSettingRequest: Request message for
+// ResolveConfigStoreSetting.
+type ResolveConfigStoreSettingRequest struct {
+}
+
+// ResolveConfigStoreSettingResponse: Response message for
+// ResolveConfigStoreSetting.
+type ResolveConfigStoreSettingResponse struct {
+	// Choices: The list of settings that were considered during resolution.
+	Choices []*ConfigStoreSetting `json:"choices,omitempty"`
+	// Setting: The dry-run setting result.
+	Setting *ConfigStoreSetting `json:"setting,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Choices") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Choices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResolveConfigStoreSettingResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ResolveConfigStoreSettingResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ResourceUtilizationReport: Worker metrics exported from workers. This
@@ -7712,6 +7918,1140 @@ func (s WriteInstruction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type FoldersLocationsConfigStoreSettingsCreateCall struct {
+	s                  *Service
+	parent             string
+	configstoresetting *ConfigStoreSetting
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new ConfigStoreSetting.
+//
+// - parent: The parent resource where this setting will be created.
+func (r *FoldersLocationsConfigStoreSettingsService) Create(parent string, configstoresetting *ConfigStoreSetting) *FoldersLocationsConfigStoreSettingsCreateCall {
+	c := &FoldersLocationsConfigStoreSettingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.configstoresetting = configstoresetting
+	return c
+}
+
+// ConfigStoreSettingId sets the optional parameter "configStoreSettingId":
+// Required. The ID to use for the setting.
+func (c *FoldersLocationsConfigStoreSettingsCreateCall) ConfigStoreSettingId(configStoreSettingId string) *FoldersLocationsConfigStoreSettingsCreateCall {
+	c.urlParams_.Set("configStoreSettingId", configStoreSettingId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsConfigStoreSettingsCreateCall) Fields(s ...googleapi.Field) *FoldersLocationsConfigStoreSettingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsConfigStoreSettingsCreateCall) Context(ctx context.Context) *FoldersLocationsConfigStoreSettingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsConfigStoreSettingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsConfigStoreSettingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.configstoresetting)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+parent}/configStoreSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.folders.locations.configStoreSettings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ConfigStoreSetting.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersLocationsConfigStoreSettingsCreateCall) Do(opts ...googleapi.CallOption) (*ConfigStoreSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConfigStoreSetting{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsConfigStoreSettingsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing ConfigStoreSetting.
+//
+// - name: The name of the ConfigStoreSetting to delete.
+func (r *FoldersLocationsConfigStoreSettingsService) Delete(name string) *FoldersLocationsConfigStoreSettingsDeleteCall {
+	c := &FoldersLocationsConfigStoreSettingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsConfigStoreSettingsDeleteCall) Fields(s ...googleapi.Field) *FoldersLocationsConfigStoreSettingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsConfigStoreSettingsDeleteCall) Context(ctx context.Context) *FoldersLocationsConfigStoreSettingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsConfigStoreSettingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsConfigStoreSettingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.folders.locations.configStoreSettings.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsConfigStoreSettingsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsConfigStoreSettingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a ConfigStoreSetting.
+//
+// - name: The name of the ConfigStoreSetting to retrieve.
+func (r *FoldersLocationsConfigStoreSettingsService) Get(name string) *FoldersLocationsConfigStoreSettingsGetCall {
+	c := &FoldersLocationsConfigStoreSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsConfigStoreSettingsGetCall) Fields(s ...googleapi.Field) *FoldersLocationsConfigStoreSettingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsConfigStoreSettingsGetCall) IfNoneMatch(entityTag string) *FoldersLocationsConfigStoreSettingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsConfigStoreSettingsGetCall) Context(ctx context.Context) *FoldersLocationsConfigStoreSettingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsConfigStoreSettingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsConfigStoreSettingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.folders.locations.configStoreSettings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ConfigStoreSetting.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersLocationsConfigStoreSettingsGetCall) Do(opts ...googleapi.CallOption) (*ConfigStoreSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConfigStoreSetting{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsConfigStoreSettingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ConfigStoreSettings.
+//
+// - parent: The parent resource whose settings are being listed.
+func (r *FoldersLocationsConfigStoreSettingsService) List(parent string) *FoldersLocationsConfigStoreSettingsListCall {
+	c := &FoldersLocationsConfigStoreSettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// settings to return.
+func (c *FoldersLocationsConfigStoreSettingsListCall) PageSize(pageSize int64) *FoldersLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListConfigStoreSettings` call.
+func (c *FoldersLocationsConfigStoreSettingsListCall) PageToken(pageToken string) *FoldersLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsConfigStoreSettingsListCall) Fields(s ...googleapi.Field) *FoldersLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsConfigStoreSettingsListCall) IfNoneMatch(entityTag string) *FoldersLocationsConfigStoreSettingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsConfigStoreSettingsListCall) Context(ctx context.Context) *FoldersLocationsConfigStoreSettingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsConfigStoreSettingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsConfigStoreSettingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+parent}/configStoreSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.folders.locations.configStoreSettings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListConfigStoreSettingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsConfigStoreSettingsListCall) Do(opts ...googleapi.CallOption) (*ListConfigStoreSettingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListConfigStoreSettingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsConfigStoreSettingsListCall) Pages(ctx context.Context, f func(*ListConfigStoreSettingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FoldersLocationsConfigStoreSettingsResolveCall struct {
+	s                                *Service
+	name                             string
+	resolveconfigstoresettingrequest *ResolveConfigStoreSettingRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Resolve: Resolves effective value of a ConfigStoreSetting.
+//
+// - name: The name of the setting to resolve.
+func (r *FoldersLocationsConfigStoreSettingsService) Resolve(name string, resolveconfigstoresettingrequest *ResolveConfigStoreSettingRequest) *FoldersLocationsConfigStoreSettingsResolveCall {
+	c := &FoldersLocationsConfigStoreSettingsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resolveconfigstoresettingrequest = resolveconfigstoresettingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsConfigStoreSettingsResolveCall) Fields(s ...googleapi.Field) *FoldersLocationsConfigStoreSettingsResolveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsConfigStoreSettingsResolveCall) Context(ctx context.Context) *FoldersLocationsConfigStoreSettingsResolveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsConfigStoreSettingsResolveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsConfigStoreSettingsResolveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resolveconfigstoresettingrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}:resolve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.resolve", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.folders.locations.configStoreSettings.resolve" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResolveConfigStoreSettingResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsConfigStoreSettingsResolveCall) Do(opts ...googleapi.CallOption) (*ResolveConfigStoreSettingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResolveConfigStoreSettingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.folders.locations.configStoreSettings.resolve", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsConfigStoreSettingsCreateCall struct {
+	s                  *Service
+	parent             string
+	configstoresetting *ConfigStoreSetting
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new ConfigStoreSetting.
+//
+// - parent: The parent resource where this setting will be created.
+func (r *OrganizationsLocationsConfigStoreSettingsService) Create(parent string, configstoresetting *ConfigStoreSetting) *OrganizationsLocationsConfigStoreSettingsCreateCall {
+	c := &OrganizationsLocationsConfigStoreSettingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.configstoresetting = configstoresetting
+	return c
+}
+
+// ConfigStoreSettingId sets the optional parameter "configStoreSettingId":
+// Required. The ID to use for the setting.
+func (c *OrganizationsLocationsConfigStoreSettingsCreateCall) ConfigStoreSettingId(configStoreSettingId string) *OrganizationsLocationsConfigStoreSettingsCreateCall {
+	c.urlParams_.Set("configStoreSettingId", configStoreSettingId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConfigStoreSettingsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConfigStoreSettingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConfigStoreSettingsCreateCall) Context(ctx context.Context) *OrganizationsLocationsConfigStoreSettingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConfigStoreSettingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConfigStoreSettingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.configstoresetting)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+parent}/configStoreSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.organizations.locations.configStoreSettings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ConfigStoreSetting.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsConfigStoreSettingsCreateCall) Do(opts ...googleapi.CallOption) (*ConfigStoreSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConfigStoreSetting{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsConfigStoreSettingsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing ConfigStoreSetting.
+//
+// - name: The name of the ConfigStoreSetting to delete.
+func (r *OrganizationsLocationsConfigStoreSettingsService) Delete(name string) *OrganizationsLocationsConfigStoreSettingsDeleteCall {
+	c := &OrganizationsLocationsConfigStoreSettingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConfigStoreSettingsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConfigStoreSettingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConfigStoreSettingsDeleteCall) Context(ctx context.Context) *OrganizationsLocationsConfigStoreSettingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConfigStoreSettingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConfigStoreSettingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.organizations.locations.configStoreSettings.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConfigStoreSettingsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsConfigStoreSettingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a ConfigStoreSetting.
+//
+// - name: The name of the ConfigStoreSetting to retrieve.
+func (r *OrganizationsLocationsConfigStoreSettingsService) Get(name string) *OrganizationsLocationsConfigStoreSettingsGetCall {
+	c := &OrganizationsLocationsConfigStoreSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConfigStoreSettingsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConfigStoreSettingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsConfigStoreSettingsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsConfigStoreSettingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConfigStoreSettingsGetCall) Context(ctx context.Context) *OrganizationsLocationsConfigStoreSettingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConfigStoreSettingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConfigStoreSettingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.organizations.locations.configStoreSettings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ConfigStoreSetting.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsConfigStoreSettingsGetCall) Do(opts ...googleapi.CallOption) (*ConfigStoreSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConfigStoreSetting{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsConfigStoreSettingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ConfigStoreSettings.
+//
+// - parent: The parent resource whose settings are being listed.
+func (r *OrganizationsLocationsConfigStoreSettingsService) List(parent string) *OrganizationsLocationsConfigStoreSettingsListCall {
+	c := &OrganizationsLocationsConfigStoreSettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// settings to return.
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) PageSize(pageSize int64) *OrganizationsLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListConfigStoreSettings` call.
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) PageToken(pageToken string) *OrganizationsLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsConfigStoreSettingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) Context(ctx context.Context) *OrganizationsLocationsConfigStoreSettingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+parent}/configStoreSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.organizations.locations.configStoreSettings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListConfigStoreSettingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) Do(opts ...googleapi.CallOption) (*ListConfigStoreSettingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListConfigStoreSettingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsConfigStoreSettingsListCall) Pages(ctx context.Context, f func(*ListConfigStoreSettingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsConfigStoreSettingsResolveCall struct {
+	s                                *Service
+	name                             string
+	resolveconfigstoresettingrequest *ResolveConfigStoreSettingRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Resolve: Resolves effective value of a ConfigStoreSetting.
+//
+// - name: The name of the setting to resolve.
+func (r *OrganizationsLocationsConfigStoreSettingsService) Resolve(name string, resolveconfigstoresettingrequest *ResolveConfigStoreSettingRequest) *OrganizationsLocationsConfigStoreSettingsResolveCall {
+	c := &OrganizationsLocationsConfigStoreSettingsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resolveconfigstoresettingrequest = resolveconfigstoresettingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsConfigStoreSettingsResolveCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConfigStoreSettingsResolveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsConfigStoreSettingsResolveCall) Context(ctx context.Context) *OrganizationsLocationsConfigStoreSettingsResolveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsConfigStoreSettingsResolveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConfigStoreSettingsResolveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resolveconfigstoresettingrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}:resolve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.resolve", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.organizations.locations.configStoreSettings.resolve" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResolveConfigStoreSettingResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsConfigStoreSettingsResolveCall) Do(opts ...googleapi.CallOption) (*ResolveConfigStoreSettingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResolveConfigStoreSettingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.organizations.locations.configStoreSettings.resolve", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsDeleteSnapshotsCall struct {
 	s          *Service
 	projectId  string
@@ -9832,6 +11172,573 @@ func (c *ProjectsLocationsWorkerMessagesCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.locations.workerMessages", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConfigStoreSettingsCreateCall struct {
+	s                  *Service
+	parent             string
+	configstoresetting *ConfigStoreSetting
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new ConfigStoreSetting.
+//
+// - parent: The parent resource where this setting will be created.
+func (r *ProjectsLocationsConfigStoreSettingsService) Create(parent string, configstoresetting *ConfigStoreSetting) *ProjectsLocationsConfigStoreSettingsCreateCall {
+	c := &ProjectsLocationsConfigStoreSettingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.configstoresetting = configstoresetting
+	return c
+}
+
+// ConfigStoreSettingId sets the optional parameter "configStoreSettingId":
+// Required. The ID to use for the setting.
+func (c *ProjectsLocationsConfigStoreSettingsCreateCall) ConfigStoreSettingId(configStoreSettingId string) *ProjectsLocationsConfigStoreSettingsCreateCall {
+	c.urlParams_.Set("configStoreSettingId", configStoreSettingId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConfigStoreSettingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConfigStoreSettingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConfigStoreSettingsCreateCall) Context(ctx context.Context) *ProjectsLocationsConfigStoreSettingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConfigStoreSettingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConfigStoreSettingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.configstoresetting)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+parent}/configStoreSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.configStoreSettings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ConfigStoreSetting.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConfigStoreSettingsCreateCall) Do(opts ...googleapi.CallOption) (*ConfigStoreSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConfigStoreSetting{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConfigStoreSettingsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing ConfigStoreSetting.
+//
+// - name: The name of the ConfigStoreSetting to delete.
+func (r *ProjectsLocationsConfigStoreSettingsService) Delete(name string) *ProjectsLocationsConfigStoreSettingsDeleteCall {
+	c := &ProjectsLocationsConfigStoreSettingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConfigStoreSettingsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConfigStoreSettingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConfigStoreSettingsDeleteCall) Context(ctx context.Context) *ProjectsLocationsConfigStoreSettingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConfigStoreSettingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConfigStoreSettingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.configStoreSettings.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConfigStoreSettingsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConfigStoreSettingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a ConfigStoreSetting.
+//
+// - name: The name of the ConfigStoreSetting to retrieve.
+func (r *ProjectsLocationsConfigStoreSettingsService) Get(name string) *ProjectsLocationsConfigStoreSettingsGetCall {
+	c := &ProjectsLocationsConfigStoreSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConfigStoreSettingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConfigStoreSettingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConfigStoreSettingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConfigStoreSettingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConfigStoreSettingsGetCall) Context(ctx context.Context) *ProjectsLocationsConfigStoreSettingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConfigStoreSettingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConfigStoreSettingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.configStoreSettings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ConfigStoreSetting.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConfigStoreSettingsGetCall) Do(opts ...googleapi.CallOption) (*ConfigStoreSetting, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ConfigStoreSetting{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConfigStoreSettingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ConfigStoreSettings.
+//
+// - parent: The parent resource whose settings are being listed.
+func (r *ProjectsLocationsConfigStoreSettingsService) List(parent string) *ProjectsLocationsConfigStoreSettingsListCall {
+	c := &ProjectsLocationsConfigStoreSettingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// settings to return.
+func (c *ProjectsLocationsConfigStoreSettingsListCall) PageSize(pageSize int64) *ProjectsLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListConfigStoreSettings` call.
+func (c *ProjectsLocationsConfigStoreSettingsListCall) PageToken(pageToken string) *ProjectsLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConfigStoreSettingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConfigStoreSettingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConfigStoreSettingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConfigStoreSettingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConfigStoreSettingsListCall) Context(ctx context.Context) *ProjectsLocationsConfigStoreSettingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConfigStoreSettingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConfigStoreSettingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+parent}/configStoreSettings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.configStoreSettings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListConfigStoreSettingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConfigStoreSettingsListCall) Do(opts ...googleapi.CallOption) (*ListConfigStoreSettingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListConfigStoreSettingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConfigStoreSettingsListCall) Pages(ctx context.Context, f func(*ListConfigStoreSettingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsConfigStoreSettingsResolveCall struct {
+	s                                *Service
+	name                             string
+	resolveconfigstoresettingrequest *ResolveConfigStoreSettingRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// Resolve: Resolves effective value of a ConfigStoreSetting.
+//
+// - name: The name of the setting to resolve.
+func (r *ProjectsLocationsConfigStoreSettingsService) Resolve(name string, resolveconfigstoresettingrequest *ResolveConfigStoreSettingRequest) *ProjectsLocationsConfigStoreSettingsResolveCall {
+	c := &ProjectsLocationsConfigStoreSettingsResolveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resolveconfigstoresettingrequest = resolveconfigstoresettingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConfigStoreSettingsResolveCall) Fields(s ...googleapi.Field) *ProjectsLocationsConfigStoreSettingsResolveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConfigStoreSettingsResolveCall) Context(ctx context.Context) *ProjectsLocationsConfigStoreSettingsResolveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConfigStoreSettingsResolveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConfigStoreSettingsResolveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resolveconfigstoresettingrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1b3/{+name}:resolve")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.resolve", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataflow.projects.locations.configStoreSettings.resolve" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResolveConfigStoreSettingResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConfigStoreSettingsResolveCall) Do(opts ...googleapi.CallOption) (*ResolveConfigStoreSettingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResolveConfigStoreSettingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataflow.projects.locations.configStoreSettings.resolve", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

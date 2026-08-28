@@ -4429,9 +4429,30 @@ func (s ReadWrite) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RequestOptions: Options for a server request.
+// RequestOptions: Options for a request.
 type RequestOptions struct {
-	// RequestTags: Optional. The request tags for the request.
+	// RequestTags: Optional. The request tags for the request. Request tags are
+	// user-provided strings used for usage monitoring, cost management, and
+	// observability. Callers can associate custom application context (such as
+	// component, microservice, feature name, or operation type) with database
+	// requests. These tags are collected and aggregated in usage and monitoring
+	// reports, allowing billable operations and usage metrics to be sliced and
+	// analyzed by tag. These tags *only* show up in monitoring and are visible in
+	// administrative operations (such as usage reports). They do not affect data
+	// storage, query semantics, or request execution. Cardinality and Best
+	// Practices: - Request tags are most effective when using a bounded set of
+	// distinct values (e.g., fewer than 100 distinct tags across an entire
+	// database). Using a large number of distinct tags may result in tags being
+	// omitted from top usage dashboards. - Use structured identifiers (for
+	// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+	// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+	// document keys. - Do not include sensitive data or personally identifiable
+	// information (PII) in request tags, as they show up in administrative
+	// monitoring. The tags are processed as follows: - Leading and trailing
+	// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+	// Truncated to a maximum of 510 characters. - Deduplicated within the same
+	// request. - Limited to a maximum of 50 tags per request (excess tags are
+	// silently discarded).
 	RequestTags []string `json:"requestTags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestTags") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8749,7 +8770,28 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) MaskFieldPaths(maskFieldP
 }
 
 // RequestOptionsRequestTags sets the optional parameter
-// "requestOptions.requestTags": The request tags for the request.
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
 func (c *ProjectsDatabasesDocumentsCreateDocumentCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsCreateDocumentCall {
 	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
@@ -8875,7 +8917,28 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentUpdateTime(current
 }
 
 // RequestOptionsRequestTags sets the optional parameter
-// "requestOptions.requestTags": The request tags for the request.
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
 func (c *ProjectsDatabasesDocumentsDeleteCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsDeleteCall {
 	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
@@ -9103,7 +9166,28 @@ func (c *ProjectsDatabasesDocumentsGetCall) ReadTime(readTime string) *ProjectsD
 }
 
 // RequestOptionsRequestTags sets the optional parameter
-// "requestOptions.requestTags": The request tags for the request.
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
 func (c *ProjectsDatabasesDocumentsGetCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsGetCall {
 	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
@@ -9291,7 +9375,28 @@ func (c *ProjectsDatabasesDocumentsListCall) Recursive(recursive bool) *Projects
 }
 
 // RequestOptionsRequestTags sets the optional parameter
-// "requestOptions.requestTags": The request tags for the request.
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
 func (c *ProjectsDatabasesDocumentsListCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
@@ -9643,7 +9748,28 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) Recursive(recursive bool) 
 }
 
 // RequestOptionsRequestTags sets the optional parameter
-// "requestOptions.requestTags": The request tags for the request.
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
@@ -10062,7 +10188,28 @@ func (c *ProjectsDatabasesDocumentsPatchCall) MaskFieldPaths(maskFieldPaths ...s
 }
 
 // RequestOptionsRequestTags sets the optional parameter
-// "requestOptions.requestTags": The request tags for the request.
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
 func (c *ProjectsDatabasesDocumentsPatchCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsPatchCall {
 	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c

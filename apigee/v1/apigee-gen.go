@@ -11610,7 +11610,9 @@ type GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation struct {
 	// AttachTime: Output only. The time when environment was attached to the
 	// security profile.
 	AttachTime string `json:"attachTime,omitempty"`
-	// Name: Immutable. Name of the environment that the profile is attached to.
+	// Name: Immutable. The environment ID that the profile is attached to, e.g.
+	// `prod`. This is the bare environment ID, not a full resource name; see
+	// b/288477507.
 	Name string `json:"name,omitempty"`
 	// SecurityProfileRevisionId: DEPRECATED: DO NOT USE Revision ID of the
 	// security profile.

@@ -11964,7 +11964,7 @@
       }
     }
   },
-  "revision": "20260807",
+  "revision": "20260820",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "EdgeConfigstoreBundleBadBundle": {
@@ -20450,7 +20450,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Immutable. Name of the environment that the profile is attached to.",
+          "description": "Immutable. The environment ID that the profile is attached to, e.g. `prod`. This is the bare environment ID, not a full resource name; see b/288477507.",
           "type": "string"
         },
         "securityProfileRevisionId": {

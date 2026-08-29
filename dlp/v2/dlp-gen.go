@@ -25227,9 +25227,8 @@ type ProjectsLocationsContentPoliciesCreateCall struct {
 // Create: Create a ContentPolicy.
 //
 //   - parent: Parent resource name. The format of this value varies depending on
-//     the scope of the request (project or organization): + Projects scope:
-//     `projects/{project_id}/locations/{location_id}` + Organizations scope:
-//     `organizations/{org_id}/locations/{location_id}`.
+//     the scope of the request (project): + Projects scope:
+//     `projects/{project_id}/locations/{location_id}`.
 func (r *ProjectsLocationsContentPoliciesService) Create(parent string, googleprivacydlpv2createcontentpolicyrequest *GooglePrivacyDlpV2CreateContentPolicyRequest) *ProjectsLocationsContentPoliciesCreateCall {
 	c := &ProjectsLocationsContentPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25543,8 +25542,7 @@ type ProjectsLocationsContentPoliciesListCall struct {
 
 // List: Lists ContentPolicies in a parent.
 //
-//   - parent: Resource name of the organization or project, for example,
-//     `organizations/433245324/locations/europe` or
+//   - parent: Resource name of the project, for example,
 //     `projects/project-id/locations/asia`.
 func (r *ProjectsLocationsContentPoliciesService) List(parent string) *ProjectsLocationsContentPoliciesListCall {
 	c := &ProjectsLocationsContentPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}

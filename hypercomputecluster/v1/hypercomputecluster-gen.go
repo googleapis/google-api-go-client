@@ -305,6 +305,8 @@ type Cluster struct {
 	// (https://datatracker.ietf.org/doc/html/rfc1034) (lower-case, alphanumeric,
 	// and at most 63 characters).
 	StorageResources map[string]StorageResource `json:"storageResources,omitempty"`
+	// Uid: Output only. The globally unique identifier for this Cluster.
+	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. Time that the cluster was most recently updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 

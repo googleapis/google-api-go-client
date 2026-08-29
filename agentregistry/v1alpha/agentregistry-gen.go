@@ -5799,10 +5799,14 @@ func (r *ProjectsLocationsSkillsService) List(parent string) *ProjectsLocationsS
 // See instructions
 // (https://docs.cloud.google.com/agent-registry/search-agents-and-tools) for
 // more details. Allowed operators: `=`, `<`, `>`, `NOT`, `AND`, `OR`, and
-// `()`. | Field | `=` | `<`, `>` | |--------------|-----|----------| | state |
-// Yes | No | | targetState | Yes | No | | createTime | Yes | Yes | |
-// updateTime | Yes | Yes | Examples: * `state=ACTIVE` to restrict results to
-// skills in the `ACTIVE` state.
+// `()`. | Field | `=` | `<`, `>` |
+// |----------------------------|-----|----------| | state | Yes | No | |
+// targetState | Yes | No | | createTime | Yes | Yes | | updateTime | Yes | Yes
+// | | publisher | Yes | No | | frontmatter.metadata. | Yes | No | |
+// attributes.. | Yes | No | Examples: * `state=ACTIVE` to restrict results to
+// skills in the `ACTIVE` state. * `frontmatter.metadata.version=10` to
+// restrict results to skills with a frontmatter metadata `version` equal to
+// `10`.
 func (c *ProjectsLocationsSkillsListCall) Filter(filter string) *ProjectsLocationsSkillsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6091,10 +6095,14 @@ func (r *ProjectsLocationsSkillsService) Search(parent string) *ProjectsLocation
 // can be used. See instructions
 // (https://docs.cloud.google.com/agent-registry/search-agents-and-tools) for
 // more details. Allowed operators: `=`, `<`, `>`, `NOT`, `AND`, `OR`, and
-// `()`. | Field | `=` | `<`, `>` | |--------------|-----|----------| | state |
-// Yes | No | | targetState | Yes | No | | createTime | Yes | Yes | |
-// updateTime | Yes | Yes | Examples: * `state=ACTIVE` to restrict results to
-// skills in the `ACTIVE` state.
+// `()`. | Field | `=` | `<`, `>` |
+// |----------------------------|-----|----------| | state | Yes | No | |
+// targetState | Yes | No | | createTime | Yes | Yes | | updateTime | Yes | Yes
+// | | publisher | Yes | No | | frontmatter.metadata. | Yes | No | |
+// attributes.. | Yes | No | Examples: * `state=ACTIVE` to restrict results to
+// skills in the `ACTIVE` state. * `frontmatter.metadata.version=10` to
+// restrict results to skills with a frontmatter metadata `version` equal to
+// `10`.
 func (c *ProjectsLocationsSkillsSearchCall) Filter(filter string) *ProjectsLocationsSkillsSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6128,17 +6136,21 @@ func (c *ProjectsLocationsSkillsSearchCall) PageToken(pageToken string) *Project
 // (https://docs.cloud.google.com/agent-registry/search-agents-and-tools) for
 // more details. Allowed operators: `=`, `:`, `NOT`, `AND`, `OR`, and `()`.
 // Searchable fields: | Field | `=` | `:` | `*` | Keyword Search |
-// |---------------------------|-----|-----|-----|----------------| | skillId |
-// Yes | Yes | Yes | Included | | name | No | Yes | Yes | Included | |
+// |----------------------------|-----|-----|-----|----------------| | skillId
+// | Yes | Yes | Yes | Included | | name | No | Yes | Yes | Included | |
 // displayName | No | Yes | Yes | Included | | description | No | Yes | No |
-// Included | | frontmatter.name | No | Yes | No | Included | |
-// frontmatter.description | No | Yes | No | Included | |
-// frontmatter.compatibility | No | Yes | No | Included | | frontmatter.license
-// | No | Yes | No | Included | Examples: *
+// Included | | publisher | No | Yes | Yes | Excluded | | frontmatter.name | No
+// | Yes | No | Included | | frontmatter.description | No | Yes | No | Included
+// | | frontmatter.compatibility | No | Yes | No | Included | |
+// frontmatter.license | No | Yes | No | Included | | frontmatter.metadata. |
+// No | Yes | No | Excluded | | attributes.. | No | Yes | No | Excluded |
+// Examples: *
 // `skillId="urn:skill:projects-1234:locations:global:private-important-skill"
 // to find the skill with the specified skill ID. * `name:important` to find
 // skills whose name contains `important` as a word. * `displayName:works*` to
-// find skills whose display name contains words that start with `works`.
+// find skills whose display name contains words that start with `works`. *
+// `frontmatter.metadata.author:alice` to find skills whose frontmatter
+// metadata `author` contains words that start with `alice`.
 func (c *ProjectsLocationsSkillsSearchCall) SearchString(searchString string) *ProjectsLocationsSkillsSearchCall {
 	c.urlParams_.Set("searchString", searchString)
 	return c

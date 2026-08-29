@@ -542,6 +542,8 @@ type ConfigurationDetail struct {
 	// DetailType: Output only. Name of the detail type. Will be set by the server
 	// during creation to the name of the field that is set in the detail union.
 	DetailType string `json:"detailType,omitempty"`
+	// DomainConfiguration: Domain Configuration detail config.
+	DomainConfiguration *DomainConfiguration `json:"domainConfiguration,omitempty"`
 	// TechnologyWatchlist: Technology Watchlist detail config.
 	TechnologyWatchlist *TechnologyWatchListConfig `json:"technologyWatchlist,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomThreatScenario") to
@@ -598,6 +600,8 @@ type CustomThreatScenarioConfig struct {
 	// DocumentCondition: Required. The condition driving the scenario, stored as a
 	// stringified JSON. This is used to query/filter documents.
 	DocumentCondition string `json:"documentCondition,omitempty"`
+	// DocumentQuery: Optional. The query used to match documents.
+	DocumentQuery *DocumentQuery `json:"documentQuery,omitempty"`
 	// LegacyMonitorMetadata: Optional. Legacy metadata associated with this
 	// scenario/monitor.
 	LegacyMonitorMetadata *LegacyMetadata `json:"legacyMonitorMetadata,omitempty"`
@@ -1057,6 +1061,120 @@ func (s *DataLeakFindingDetail) UnmarshalJSON(data []byte) error {
 	}
 	s.MatchScore = float64(s1.MatchScore)
 	return nil
+}
+
+// DocumentQuery: Represents a query to match documents.
+type DocumentQuery struct {
+	// DataModel: Required. The data model to query against.
+	//
+	// Possible values:
+	//   "DATA_MODEL_UNSPECIFIED" - Default value, should never be set.
+	//   "DATA_MODEL_GTI" - GTI data model.
+	DataModel string `json:"dataModel,omitempty"`
+	// Query: Required. The query string.
+	Query string `json:"query,omitempty"`
+	// QueryType: Required. The type of query.
+	//
+	// Possible values:
+	//   "QUERY_TYPE_UNSPECIFIED" - Default value, should never be set.
+	//   "QUERY_TYPE_LUCENE" - Lucene query type.
+	QueryType string `json:"queryType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataModel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataModel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DocumentQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainConfiguration: Configuration holding settings for one or more
+// monitored domains.
+type DomainConfiguration struct {
+	// DomainSettings: Optional. A list of settings for individual domains.
+	DomainSettings []*DomainSetting `json:"domainSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DomainSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DomainSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringFeatureConfig: Specific configuration for the Domain
+// Monitoring feature.
+type DomainMonitoringFeatureConfig struct {
+	// Disabled: Optional. Whether the Domain Monitoring feature is disabled for
+	// the domain.
+	Disabled bool `json:"disabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringFeatureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainSetting: Feature settings and toggles for a single specific domain.
+type DomainSetting struct {
+	// Domain: Required. The domain name to match against.
+	Domain string `json:"domain,omitempty"`
+	// DomainMonitoringConfig: Optional. If not present, Domain Monitoring is
+	// enabled.
+	DomainMonitoringConfig *DomainMonitoringFeatureConfig `json:"domainMonitoringConfig,omitempty"`
+	// State: Output only. The verification state of the domain.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PENDING" - Verification is pending. The customer needs to add the TXT
+	// record.
+	//   "VERIFIED" - Verification succeeded.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnumerateAlertFacetsResponse: Response message for EnumerateAlertFacets.

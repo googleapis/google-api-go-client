@@ -1744,12 +1744,11 @@ func (s ServiceType) MarshalJSON() ([]byte, error) {
 // close_time=12:00 start_date=2015-11-23, end_date=2015-11-25,
 // open_time=08:00, close_time=18:00
 type SpecialHourPeriod struct {
-	// CloseTime: Optional. Valid values are `00:00-24:00`, where `24:00`
-	// represents midnight at the end of the specified day field. It must be
-	// specified if `closed` is `false`. Note: In Proto3 JSON mapping, default zero
-	// values (`00:00`) are omitted, producing `{}` for `close_time`.
+	// CloseTime: Optional. Valid values are 00:00-24:00, where 24:00 represents
+	// midnight at the end of the specified day field. Must be specified if
+	// `closed` is false.
 	CloseTime *TimeOfDay `json:"closeTime,omitempty"`
-	// Closed: Optional. If `true`, `end_date`, `open_time`, and `close_time` are
+	// Closed: Optional. If true, `end_date`, `open_time`, and `close_time` are
 	// ignored, and the date specified in `start_date` is treated as the location
 	// being closed for the entire day.
 	Closed bool `json:"closed,omitempty"`
@@ -1757,10 +1756,9 @@ type SpecialHourPeriod struct {
 	// `end_date` field is not set, default to the date specified in `start_date`.
 	// If set, this field must be equal to or at most 1 day after `start_date`.
 	EndDate *Date `json:"endDate,omitempty"`
-	// OpenTime: Optional. Valid values are `00:00-24:00`, where `24:00` represents
-	// midnight at the end of the specified day field. It must be specified if
-	// `closed` is `false`. Note: In Proto3 JSON mapping, default zero values
-	// (`00:00`) are omitted, producing `{}` for `open_time`.
+	// OpenTime: Optional. Valid values are 00:00-24:00 where 24:00 represents
+	// midnight at the end of the specified day field. Must be specified if
+	// `closed` is false.
 	OpenTime *TimeOfDay `json:"openTime,omitempty"`
 	// StartDate: Required. The calendar date this special hour period starts on.
 	StartDate *Date `json:"startDate,omitempty"`
@@ -1887,10 +1885,10 @@ type TimePeriod struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	CloseDay string `json:"closeDay,omitempty"`
-	// CloseTime: Required. Valid values are `00:00-24:00`, where `24:00`
-	// represents midnight at the end of the specified day field. Note: In Proto3
-	// JSON mapping, default zero values (`00:00`) are omitted, producing `{}` for
-	// `close_time`.
+	// CloseTime: Required. Valid values are 00:00-24:00, where 24:00 represents
+	// midnight at the end of the specified day field. Note: In Proto3 JSON
+	// mapping, default zero values (00:00) are omitted, producing `{}` for
+	// close_time.
 	CloseTime *TimeOfDay `json:"closeTime,omitempty"`
 	// OpenDay: Required. Indicates the day of the week this period starts on.
 	//
@@ -1904,10 +1902,10 @@ type TimePeriod struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	OpenDay string `json:"openDay,omitempty"`
-	// OpenTime: Required. Valid values are `00:00-24:00`, where `24:00` represents
+	// OpenTime: Required. Valid values are 00:00-24:00, where 24:00 represents
 	// midnight at the end of the specified day field. Note: In Proto3 JSON
-	// mapping, default zero values (`00:00`) are omitted, producing `{}` for
-	// `open_time`.
+	// mapping, default zero values (00:00) are omitted, producing `{}` for
+	// open_time.
 	OpenTime *TimeOfDay `json:"openTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloseDay") to
 	// unconditionally include in API requests. By default, fields with empty or

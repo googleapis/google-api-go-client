@@ -5863,8 +5863,9 @@ type NodeConfig struct {
 	// ContainerdConfig: Parameters for containerd customization.
 	ContainerdConfig *ContainerdConfig `json:"containerdConfig,omitempty"`
 	// DiskSizeGb: Size of the disk attached to each node, specified in GB. The
-	// smallest allowed disk size is 10GB. If unspecified, the default disk size is
-	// 100GB.
+	// smallest allowed disk size is 15 GB for node pools running GKE versions
+	// 1.36.3-gke.1480000 or later. Or, for earlier versions, the smallest allowed
+	// disk size is 12 GB. If unspecified, the default disk size is 100GB.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
 	// DiskType: Type of the disk attached to each node (e.g. 'pd-standard',
 	// 'pd-ssd' or 'pd-balanced') If unspecified, the default disk type is
@@ -7943,6 +7944,8 @@ type ReleaseChannelConfig struct {
 	// DefaultVersion: The default version for newly created clusters on the
 	// channel.
 	DefaultVersion string `json:"defaultVersion,omitempty"`
+	// PreviewVersions: Output only. List of preview versions for the channel.
+	PreviewVersions []string `json:"previewVersions,omitempty"`
 	// UpgradeTargetVersion: The auto upgrade target version for clusters on the
 	// channel.
 	UpgradeTargetVersion string `json:"upgradeTargetVersion,omitempty"`

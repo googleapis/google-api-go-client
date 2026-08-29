@@ -1811,7 +1811,7 @@ func (s EnableFailure) MarshalJSON() ([]byte, error) {
 // EnableRule: The consumer policy rule that defines enabled services and
 // groups.
 type EnableRule struct {
-	// EnableType: Client and resource project enable type.
+	// EnableType: Deprecated: EnableType is not supported.
 	//
 	// Possible values:
 	//   "ENABLE_TYPE_UNSPECIFIED" - Unspecified enable type, which means enabled

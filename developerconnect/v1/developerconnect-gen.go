@@ -1076,6 +1076,32 @@ func (s FetchUserRepositoriesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FieldVisibility: Visibility rules for individual tool parameters (fields).
+// This allows producers to hide specific fields in tools/list and tools/call.
+type FieldVisibility struct {
+	// Restriction: The visibility restriction labels for this field
+	// (comma-separated).
+	Restriction string `json:"restriction,omitempty"`
+	// Selector: The name of the parameter in the input_schema or output_schema.
+	Selector string `json:"selector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Restriction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Restriction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FieldVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod FieldVisibility
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FinishOAuthResponse: Message for responding to finishing an OAuth flow.
 type FinishOAuthResponse struct {
 	// ExchangeError: The error resulted from exchanging OAuth tokens from the
@@ -1992,6 +2018,44 @@ type Location struct {
 
 func (s Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// McpToolVisibility: Profile describing the visibility restriction of an MCP
+// tool. Key: "google.com/tool.profiles/visibility.restriction"
+type McpToolVisibility struct {
+	// FieldVisibility: A list of field-level visibility restrictions.
+	FieldVisibility []*FieldVisibility `json:"fieldVisibility,omitempty"`
+	// VisibilityEnforcementStrategy: The strategy used to enforce visibility
+	// restrictions. DO NOT USE. This field is not yet implemented.
+	//
+	// Possible values:
+	//   "VISIBILITY_ENFORCEMENT_STRATEGY_UNSPECIFIED" - Default. Equivalent to
+	// COMBINE.
+	//   "COMBINE" - The principal must satisfy both API-level tool-level)
+	// visibility restrictions.
+	//   "OVERRIDE" - Bypasses the API-level visibility restrictions check; access
+	// is determined solely by the tool-level visibility restrictions.
+	VisibilityEnforcementStrategy string `json:"visibilityEnforcementStrategy,omitempty"`
+	// VisibilityRestriction: The visibility restriction labels for the tool itself
+	// (e.g., "PRODUCER_DEFINED_PREVIEW"). Multiple labels can be provided as a
+	// comma-separated string.
+	VisibilityRestriction string `json:"visibilityRestriction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldVisibility") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldVisibility") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s McpToolVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod McpToolVisibility
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

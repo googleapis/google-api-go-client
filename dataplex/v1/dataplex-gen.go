@@ -2672,6 +2672,13 @@ type GoogleCloudDataplexV1DataDocumentationResultQuery struct {
 	Description string `json:"description,omitempty"`
 	// Sql: Output only. The SQL query string which can be executed.
 	Sql string `json:"sql,omitempty"`
+	// SqlDialect: Output only. The SQL dialect of the query.
+	//
+	// Possible values:
+	//   "SQL_DIALECT_UNSPECIFIED" - SQL dialect unspecified.
+	//   "GOOGLE_SQL" - Google SQL dialect.
+	//   "SPARK_SQL" - Spark SQL dialect.
+	SqlDialect string `json:"sqlDialect,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2847,6 +2854,14 @@ type GoogleCloudDataplexV1DataDocumentationSpec struct {
 	//   "BUSINESS_GLOSSARY_TERM_ASSOCIATIONS" - Business glossary term
 	// associations will be generated.
 	GenerationScopes []string `json:"generationScopes,omitempty"`
+	// SqlDialect: Optional. The SQL dialect to use in the generated SQL queries.
+	// If not specified, the default dialect is Google SQL.
+	//
+	// Possible values:
+	//   "SQL_DIALECT_UNSPECIFIED" - SQL dialect unspecified.
+	//   "GOOGLE_SQL" - Google SQL dialect.
+	//   "SPARK_SQL" - Spark SQL dialect.
+	SqlDialect string `json:"sqlDialect,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CatalogPublishingEnabled")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -13855,6 +13870,15 @@ type ProjectsLocationsSearchEntriesCall struct {
 func (r *ProjectsLocationsService) SearchEntries(name string) *ProjectsLocationsSearchEntriesCall {
 	c := &ProjectsLocationsSearchEntriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// Contexts sets the optional parameter "contexts": Specifies the scope of the
+// context in which the search will be performed. This scope will also be used
+// to perform IAM checks, which if passing, will return all resources in the
+// scope.
+func (c *ProjectsLocationsSearchEntriesCall) Contexts(contexts ...string) *ProjectsLocationsSearchEntriesCall {
+	c.urlParams_.SetMulti("contexts", append([]string{}, contexts...))
 	return c
 }
 

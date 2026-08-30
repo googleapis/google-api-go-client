@@ -34,11 +34,6 @@
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate.
-// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
-//
-//	webcontentpublisherService, err := webcontentpublisher.NewService(ctx, option.WithScopes(webcontentpublisher.SubscribewithgooglePublicationsEntitlementsReadonlyScope))
-//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,24 +96,8 @@ const basePath = "https://webcontentpublisher.googleapis.com/"
 const basePathTemplate = "https://webcontentpublisher.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://webcontentpublisher.mtls.googleapis.com/"
 
-// OAuth2 scopes used by this API.
-const (
-	// Private Service:
-	// https://www.googleapis.com/auth/subscribewithgoogle.publications.entitlements.manage
-	SubscribewithgooglePublicationsEntitlementsManageScope = "https://www.googleapis.com/auth/subscribewithgoogle.publications.entitlements.manage"
-
-	// See and review your subscription information
-	SubscribewithgooglePublicationsEntitlementsReadonlyScope = "https://www.googleapis.com/auth/subscribewithgoogle.publications.entitlements.readonly"
-)
-
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
-	scopesOption := internaloption.WithDefaultScopes(
-		"https://www.googleapis.com/auth/subscribewithgoogle.publications.entitlements.manage",
-		"https://www.googleapis.com/auth/subscribewithgoogle.publications.entitlements.readonly",
-	)
-	// NOTE: prepend, so we don't override user-specified scopes.
-	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))

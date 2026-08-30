@@ -951,6 +951,14 @@ type DataSegment struct {
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. Time the data segment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// UserListId: Optional. Immutable. The ID of the User List wrapped by this
+	// Data Segment. Curators with a linked Data Partner account can create a data
+	// segment that wraps a user list owned by the linked Data Partner account.
+	// User lists can be uploaded and managed using the Data Manager API
+	// (https://developers.google.com/data-manager/api/data-partners/audiences).
+	// Linking a user list to a data segment lets you define a segment of inventory
+	// that is based on an audience you create.
+	UserListId string `json:"userListId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

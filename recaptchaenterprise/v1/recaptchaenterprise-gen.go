@@ -2597,6 +2597,10 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// AndroidPackageName: Output only. The name of the Android package with which
 	// the token was generated (Android keys only).
 	AndroidPackageName string `json:"androidPackageName,omitempty"`
+	// ClientSignalsFailed: Output only. Indicates a failure collecting reCAPTCHA
+	// signals at token generation. This might be a transient condition, or
+	// persistent for a user’s environment.
+	ClientSignalsFailed bool `json:"clientSignalsFailed,omitempty"`
 	// CreateTime: Output only. The timestamp corresponding to the generation of
 	// the token.
 	CreateTime string `json:"createTime,omitempty"`
@@ -3121,8 +3125,8 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	AllowedDomains []string `json:"allowedDomains,omitempty"`
 	// ChallengeSecurityPreference: Optional. Settings for the frequency and
 	// difficulty at which this key triggers captcha challenges. This should only
-	// be specified for `IntegrationType` CHECKBOX, INVISIBLE or
-	// POLICY_BASED_CHALLENGE.
+	// be specified for `IntegrationType` CHECKBOX (defaults to BALANCE), INVISIBLE
+	// (defaults to USABILITY), or POLICY_BASED_CHALLENGE (defaults to USABILITY).
 	//
 	// Possible values:
 	//   "CHALLENGE_SECURITY_PREFERENCE_UNSPECIFIED" - Default type that indicates

@@ -1087,6 +1087,37 @@ func (s GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppcheckV1LimitedUseConfig: Configuration for a limited-use
+// App Check token.
+type GoogleFirebaseAppcheckV1LimitedUseConfig struct {
+	// Jti: Optional. Specifies the desired `jti` claim (Section 4.1.7 of RFC 7519)
+	// in the returned App Check token. Limited-use App Check tokens with the same
+	// `jti` will be counted as the same token for the purposes of replay
+	// protection. The size of this field is limited to 500 bytes. If specified,
+	// its length must be at least 16 bytes. If this field is omitted or is empty,
+	// a randomly generated `jti` claim with length between 16 and 500 bytes
+	// (inclusive) will be used in the returned App Check token. Leaving this field
+	// empty is only recommended if your custom attestation provider itself is not
+	// vulnerable to replay attacks.
+	Jti string `json:"jti,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Jti") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Jti") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1LimitedUseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1LimitedUseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirebaseAppcheckV1ListDebugTokensResponse: Response message for the
 // ListDebugTokens method.
 type GoogleFirebaseAppcheckV1ListDebugTokensResponse struct {
@@ -1180,6 +1211,73 @@ type GoogleFirebaseAppcheckV1ListServicesResponse struct {
 
 func (s GoogleFirebaseAppcheckV1ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ListServicesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1MintAppCheckTokenRequest: Request message for the
+// MintAppCheckToken method.
+type GoogleFirebaseAppcheckV1MintAppCheckTokenRequest struct {
+	// LimitedUseConfig: Optional. If specified, the returned App Check token will
+	// be a limited-use token minted according to the specified configuration
+	// options.
+	LimitedUseConfig *GoogleFirebaseAppcheckV1LimitedUseConfig `json:"limitedUseConfig,omitempty"`
+	// TokenTtl: Optional. If specified, the returned App Check token will be a
+	// session token, valid for the specified duration. Must be between 30 minutes
+	// and 7 days, inclusive.
+	TokenTtl string `json:"tokenTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LimitedUseConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LimitedUseConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1MintAppCheckTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1MintAppCheckTokenRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1MintAppCheckTokenResponse: Response message for the
+// MintAppCheckToken method.
+type GoogleFirebaseAppcheckV1MintAppCheckTokenResponse struct {
+	// Token: The App Check token, used to access backend services protected by App
+	// Check. App Check tokens are signed JWTs
+	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
+	// attested app and GCP project. This token is used to access Google services
+	// protected by App Check. These tokens can also be verified by your own custom
+	// backends
+	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
+	// the Firebase Admin SDK or third-party libraries.
+	Token string `json:"token,omitempty"`
+	// Ttl: The duration from the time this token is minted until its expiration.
+	// This field is intended to ease client-side token management, since the
+	// client may have clock skew, but is still able to accurately measure a
+	// duration.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Token") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Token") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1MintAppCheckTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1MintAppCheckTokenResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3621,6 +3719,120 @@ func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsAppsMintAppCheckTokenCall struct {
+	s                                                *Service
+	appid                                            string
+	googlefirebaseappcheckv1mintappchecktokenrequest *GoogleFirebaseAppcheckV1MintAppCheckTokenRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// MintAppCheckToken: Mints a new App Check token for the specified Firebase
+// App. This method is intended to be called from a privileged environment
+// where the caller can be authorized via Cloud IAM; for example, using a
+// service account. To call this method, the caller must have the
+// `firebaseappcheck.googleapis.com/tokens.mint`
+// (https://firebase.google.com/docs/projects/iam/permissions#app-check)
+// permission. Returns a MintAppCheckTokenResponse.
+//
+//   - app: The relative resource name of the app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
+//     `project_number` element can be replaced with the project ID of the
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *ProjectsAppsService) MintAppCheckToken(appid string, googlefirebaseappcheckv1mintappchecktokenrequest *GoogleFirebaseAppcheckV1MintAppCheckTokenRequest) *ProjectsAppsMintAppCheckTokenCall {
+	c := &ProjectsAppsMintAppCheckTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appid = appid
+	c.googlefirebaseappcheckv1mintappchecktokenrequest = googlefirebaseappcheckv1mintappchecktokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsMintAppCheckTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsMintAppCheckTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsMintAppCheckTokenCall) Context(ctx context.Context) *ProjectsAppsMintAppCheckTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsMintAppCheckTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsMintAppCheckTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirebaseappcheckv1mintappchecktokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:mintAppCheckToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.appid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.mintAppCheckToken", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.apps.mintAppCheckToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1MintAppCheckTokenResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsMintAppCheckTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1MintAppCheckTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1MintAppCheckTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.mintAppCheckToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

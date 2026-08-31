@@ -766,6 +766,17 @@ type Environment struct {
 	// [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally
 	// constrained to be <= 128 bytes in size.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Mode: Optional. Selects the environment mode that determines what settings
+	// are customizable and what features are available in the environment.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Represents the default mode, which allows full
+	// customization of the environment. It should be used for all production and
+	// customized test environments.
+	//   "DEVELOPMENT" - Represents the development mode, which has constraints on
+	// the environment configuration, but offers an additional feature (environment
+	// hibernation). It should be used only for test environments.
+	Mode string `json:"mode,omitempty"`
 	// Name: Identifier. The resource name of the environment, in the form:
 	// "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
 	// EnvironmentId must start with a lowercase letter followed by up to 63
@@ -784,6 +795,8 @@ type Environment struct {
 	// for use.
 	//   "UPDATING" - The environment is being updated. It remains usable but
 	// cannot receive additional update requests or be deleted at this time.
+	//   "HIBERNATED" - The environment is currently hibernated. It does not run
+	// any DAGs.
 	//   "DELETING" - The environment is undergoing deletion. It cannot be used.
 	//   "ERROR" - The environment has encountered an error and cannot be used.
 	State string `json:"state,omitempty"`
@@ -1666,6 +1679,8 @@ type OperationMetadata struct {
 	//   "DATABASE_FAILOVER" - Triggers failover of environment's Cloud SQL
 	// instance (only for highly resilient environments).
 	//   "MIGRATE" - Migrates resource to a new major version.
+	//   "HIBERNATE" - Hibernates a resource.
+	//   "RESUME" - Resumes a resource.
 	OperationType string `json:"operationType,omitempty"`
 	// Resource: Output only. The resource being operated on, as a relative
 	// resource name ( /apis/design/resource_names#relative_resource_name).

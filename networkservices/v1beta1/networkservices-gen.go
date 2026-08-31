@@ -171,6 +171,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.AgentConnectivityTemplates = NewProjectsLocationsAgentConnectivityTemplatesService(s)
 	rs.AgentGateways = NewProjectsLocationsAgentGatewaysService(s)
 	rs.AuthzExtensions = NewProjectsLocationsAuthzExtensionsService(s)
+	rs.CdnEdgeExtensions = NewProjectsLocationsCdnEdgeExtensionsService(s)
 	rs.EndpointPolicies = NewProjectsLocationsEndpointPoliciesService(s)
 	rs.ExtensionBindings = NewProjectsLocationsExtensionBindingsService(s)
 	rs.Gateways = NewProjectsLocationsGatewaysService(s)
@@ -199,6 +200,8 @@ type ProjectsLocationsService struct {
 	AgentGateways *ProjectsLocationsAgentGatewaysService
 
 	AuthzExtensions *ProjectsLocationsAuthzExtensionsService
+
+	CdnEdgeExtensions *ProjectsLocationsCdnEdgeExtensionsService
 
 	EndpointPolicies *ProjectsLocationsEndpointPoliciesService
 
@@ -259,6 +262,15 @@ func NewProjectsLocationsAuthzExtensionsService(s *Service) *ProjectsLocationsAu
 }
 
 type ProjectsLocationsAuthzExtensionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCdnEdgeExtensionsService(s *Service) *ProjectsLocationsCdnEdgeExtensionsService {
+	rs := &ProjectsLocationsCdnEdgeExtensionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCdnEdgeExtensionsService struct {
 	s *Service
 }
 
@@ -885,6 +897,87 @@ func (s AuthzExtension) MarshalJSON() ([]byte, error) {
 
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CdnEdgeExtension: `CdnEdgeExtension` is a resource that lets the extension
+// service modify the headers of both requests to the cache and responses from
+// the cache served by an `EdgeCacheService`
+// (https://cloud.google.com/media-cdn/docs/reference/rest/v1/projects.locations.edgeCacheServices).
+type CdnEdgeExtension struct {
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A human-readable description of the resource.
+	Description string `json:"description,omitempty"`
+	// ExtensionChains: Required. A set of ordered extension chains that contain
+	// the match conditions and extensions to execute. Match conditions for each
+	// extension chain are evaluated in sequence for a given request. The first
+	// extension chain that has a condition that matches the request is executed.
+	// Any subsequent extension chains do not execute. Limited to 5 extension
+	// chains per resource.
+	ExtensionChains []*ExtensionChain `json:"extensionChains,omitempty"`
+	// Labels: Optional. Set of labels associated with the `CdnEdgeExtension`
+	// resource. The format must comply with the requirements for labels
+	// (https://cloud.google.com/compute/docs/labeling-resources#requirements) for
+	// Google Cloud resources.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Required. Identifier. Name of the `CdnEdgeExtension` resource in the
+	// following format:
+	// `projects/{project}/locations/{location}/cdnEdgeExtensions/{cdn_edge_extensio
+	// n}`.
+	Name string `json:"name,omitempty"`
+	// Target: Required. Specifies the set of resources to which this extension
+	// should be applied to.
+	Target *CdnEdgeExtensionTarget `json:"target,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CdnEdgeExtension) MarshalJSON() ([]byte, error) {
+	type NoMethod CdnEdgeExtension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CdnEdgeExtensionTarget: Specifies the set of targets to which
+// `CdnEdgeExtension` should be applied to.
+type CdnEdgeExtensionTarget struct {
+	// Resources: Required. A list of references to the resources that are targeted
+	// by `CdnEdgeExtension`. Types of resources supported: `EdgeCacheService`. The
+	// format must be the full resource name of EdgeCacheService
+	// (https://cloud.google.com/media-cdn/docs/reference/rest/v1/projects.locations.edgeCacheServices)
+	// in the following format:
+	// `//networkservices.googleapis.com/projects/{project}/locations/{location}/edg
+	// eCacheServices/{edgeCacheService}`.
+	Resources []string `json:"resources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Resources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CdnEdgeExtensionTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod CdnEdgeExtensionTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DnsPeeringConfig: DNS Peering configuration.
@@ -3361,6 +3454,37 @@ type ListAuthzExtensionsResponse struct {
 
 func (s ListAuthzExtensionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAuthzExtensionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListCdnEdgeExtensionsResponse: Message for response to listing
+// `CdnEdgeExtension` resources.
+type ListCdnEdgeExtensionsResponse struct {
+	// CdnEdgeExtensions: The list of `CdnEdgeExtension` resources.
+	CdnEdgeExtensions []*CdnEdgeExtension `json:"cdnEdgeExtensions,omitempty"`
+	// NextPageToken: A token identifying a page of results that the server
+	// returns.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CdnEdgeExtensions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CdnEdgeExtensions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListCdnEdgeExtensionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCdnEdgeExtensionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7598,6 +7722,653 @@ func (c *ProjectsLocationsAuthzExtensionsPatchCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.authzExtensions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCdnEdgeExtensionsCreateCall struct {
+	s                *Service
+	parent           string
+	cdnedgeextension *CdnEdgeExtension
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new `CdnEdgeExtension` resource in a given project and
+// location.
+//
+//   - parent: The parent resource of the `CdnEdgeExtension` resource. Must be in
+//     the format `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsCdnEdgeExtensionsService) Create(parent string, cdnedgeextension *CdnEdgeExtension) *ProjectsLocationsCdnEdgeExtensionsCreateCall {
+	c := &ProjectsLocationsCdnEdgeExtensionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.cdnedgeextension = cdnedgeextension
+	return c
+}
+
+// CdnEdgeExtensionId sets the optional parameter "cdnEdgeExtensionId":
+// Required. User-provided ID of the `CdnEdgeExtension` resource to be created.
+func (c *ProjectsLocationsCdnEdgeExtensionsCreateCall) CdnEdgeExtensionId(cdnEdgeExtensionId string) *ProjectsLocationsCdnEdgeExtensionsCreateCall {
+	c.urlParams_.Set("cdnEdgeExtensionId", cdnEdgeExtensionId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees that for 60 minutes since the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCdnEdgeExtensionsCreateCall) RequestId(requestId string) *ProjectsLocationsCdnEdgeExtensionsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCdnEdgeExtensionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCdnEdgeExtensionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCdnEdgeExtensionsCreateCall) Context(ctx context.Context) *ProjectsLocationsCdnEdgeExtensionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCdnEdgeExtensionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCdnEdgeExtensionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cdnedgeextension)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/cdnEdgeExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.cdnEdgeExtensions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCdnEdgeExtensionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCdnEdgeExtensionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified `CdnEdgeExtension` resource.
+//
+//   - name: The name of the `CdnEdgeExtension` resource to delete. Must be in
+//     the format
+//     `projects/{project}/locations/{location}/cdnEdgeExtensions/{cdn_edge_extens
+//     ion}`.
+func (r *ProjectsLocationsCdnEdgeExtensionsService) Delete(name string) *ProjectsLocationsCdnEdgeExtensionsDeleteCall {
+	c := &ProjectsLocationsCdnEdgeExtensionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees that for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCdnEdgeExtensionsDeleteCall) RequestId(requestId string) *ProjectsLocationsCdnEdgeExtensionsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCdnEdgeExtensionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCdnEdgeExtensionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCdnEdgeExtensionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsCdnEdgeExtensionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCdnEdgeExtensionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCdnEdgeExtensionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.cdnEdgeExtensions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCdnEdgeExtensionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCdnEdgeExtensionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of the specified `CdnEdgeExtension` resource.
+//
+//   - name: A name of the `CdnEdgeExtension` resource to get. Must be in the
+//     format
+//     `projects/{project}/locations/{location}/cdnEdgeExtensions/{cdn_edge_extens
+//     ion}`.
+func (r *ProjectsLocationsCdnEdgeExtensionsService) Get(name string) *ProjectsLocationsCdnEdgeExtensionsGetCall {
+	c := &ProjectsLocationsCdnEdgeExtensionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCdnEdgeExtensionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCdnEdgeExtensionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCdnEdgeExtensionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCdnEdgeExtensionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCdnEdgeExtensionsGetCall) Context(ctx context.Context) *ProjectsLocationsCdnEdgeExtensionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCdnEdgeExtensionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCdnEdgeExtensionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.cdnEdgeExtensions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CdnEdgeExtension.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCdnEdgeExtensionsGetCall) Do(opts ...googleapi.CallOption) (*CdnEdgeExtension, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CdnEdgeExtension{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCdnEdgeExtensionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `CdnEdgeExtensions` resources in a given project and location.
+//
+//   - parent: The project and location from which the `CdnEdgeExtension`
+//     resources are listed. These values are specified in the following format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsCdnEdgeExtensionsService) List(parent string) *ProjectsLocationsCdnEdgeExtensionsListCall {
+	c := &ProjectsLocationsCdnEdgeExtensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) Filter(filter string) *ProjectsLocationsCdnEdgeExtensionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint about how to order the
+// results.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) OrderBy(orderBy string) *ProjectsLocationsCdnEdgeExtensionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server might return fewer items than requested. If unspecified, the server
+// picks an appropriate default.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) PageSize(pageSize int64) *ProjectsLocationsCdnEdgeExtensionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results that the server returns.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) PageToken(pageToken string) *ProjectsLocationsCdnEdgeExtensionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCdnEdgeExtensionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCdnEdgeExtensionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) Context(ctx context.Context) *ProjectsLocationsCdnEdgeExtensionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/cdnEdgeExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.cdnEdgeExtensions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCdnEdgeExtensionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) Do(opts ...googleapi.CallOption) (*ListCdnEdgeExtensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCdnEdgeExtensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCdnEdgeExtensionsListCall) Pages(ctx context.Context, f func(*ListCdnEdgeExtensionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsCdnEdgeExtensionsPatchCall struct {
+	s                *Service
+	name             string
+	cdnedgeextension *CdnEdgeExtension
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Patch: Updates the parameters of the specified `CdnEdgeExtension` resource.
+//
+//   - name: Identifier. Name of the `CdnEdgeExtension` resource in the following
+//     format:
+//     `projects/{project}/locations/{location}/cdnEdgeExtensions/{cdn_edge_extens
+//     ion}`.
+func (r *ProjectsLocationsCdnEdgeExtensionsService) Patch(name string, cdnedgeextension *CdnEdgeExtension) *ProjectsLocationsCdnEdgeExtensionsPatchCall {
+	c := &ProjectsLocationsCdnEdgeExtensionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cdnedgeextension = cdnedgeextension
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees that for 60 minutes since the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a valid
+// UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCdnEdgeExtensionsPatchCall) RequestId(requestId string) *ProjectsLocationsCdnEdgeExtensionsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Used to specify the
+// fields to be overwritten in the `CdnEdgeExtension` resource by the update.
+// The fields specified in the `update_mask` are relative to the resource, not
+// the full request. A field is overwritten if it is in the mask. If the user
+// does not specify a mask, then all fields are overwritten.
+func (c *ProjectsLocationsCdnEdgeExtensionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCdnEdgeExtensionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCdnEdgeExtensionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCdnEdgeExtensionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCdnEdgeExtensionsPatchCall) Context(ctx context.Context) *ProjectsLocationsCdnEdgeExtensionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCdnEdgeExtensionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCdnEdgeExtensionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cdnedgeextension)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.cdnEdgeExtensions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCdnEdgeExtensionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.cdnEdgeExtensions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

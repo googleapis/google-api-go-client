@@ -3444,6 +3444,10 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	ExrColorSpaceOverride string `json:"exrColorSpaceOverride,omitempty"`
 	// HumanPose: Human pose parameters for Pose Control
 	HumanPose *CloudAiLargeModelsVisionHumanPose `json:"humanPose,omitempty"`
+	// ModelEndpointOverride: Optional. BNS override for model backend. Enabled
+	// only for local and autopush environments by the flag
+	// `lvm_allow_model_zoo_bns_override`.
+	ModelEndpointOverride string `json:"modelEndpointOverride,omitempty"`
 	// ModelName: Model names, as defined in: xyz
 	ModelName string `json:"modelName,omitempty"`
 	// NumDiffusionSteps: Number of diffusion steps
@@ -5551,19 +5555,6 @@ type GoogleCloudAiplatformV1AudioTranscriptionConfig struct {
 	// LanguageHints: Optional. Deprecated: Use top-level `language_codes` instead.
 	// Specifies one or more languages in the audio.
 	LanguageHints *GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints `json:"languageHints,omitempty"`
-	// Mode: Optional. Configures transcription mode. Supported values: `VERBATIM`,
-	// `SMART`. If unspecified, defaults to `VERBATIM` transcription. In `SMART`
-	// mode, the model performs disfluency removal (eliminating filler words,
-	// repetitions, and false starts), light grammatical cleanup, automatic
-	// formatting (paragraphs, bullet points, numbered lists), and minor user edits
-	// (inline self-corrections). Timestamps and diarization are incompatible with
-	// mode `SMART`.
-	//
-	// Possible values:
-	//   "MODE_UNSPECIFIED" - Unspecified transcription mode.
-	//   "VERBATIM" - Verbatim transcription mode.
-	//   "SMART" - Smart transcription mode.
-	Mode string `json:"mode,omitempty"`
 	// WordTimestamp: Optional. Configures word-level timestamp generation.
 	WordTimestamp bool `json:"wordTimestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdaptationPhrases") to
@@ -5934,6 +5925,21 @@ type GoogleCloudAiplatformV1AuthConfigOidcConfig struct {
 func (s GoogleCloudAiplatformV1AuthConfigOidcConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AuthConfigOidcConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessRequest: Request
+// message for
+// SandboxEnvironmentExecutionService.AuthorizeSandboxEnvironmentAccess.
+type GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessRequest struct {
+}
+
+// GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessResponse: Response
+// message for
+// SandboxEnvironmentExecutionService.AuthorizeSandboxEnvironmentAccess.
+// Intentionally empty: a successful response is the authorization result.
+type GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleCloudAiplatformV1AutomaticResources: A description of resources that
@@ -25686,6 +25692,8 @@ func (s *GoogleCloudAiplatformV1MeasurementMetric) UnmarshalJSON(data []byte) er
 
 // GoogleCloudAiplatformV1Memory: A memory.
 type GoogleCloudAiplatformV1Memory struct {
+	// Context: Optional. Represents the context of the memory.
+	Context string `json:"context,omitempty"`
 	// CreateTime: Output only. Represents the timestamp when this Memory was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -25736,13 +25744,13 @@ type GoogleCloudAiplatformV1Memory struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "Context") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -26182,6 +26190,10 @@ func (s *GoogleCloudAiplatformV1MemoryMetadataValue) UnmarshalJSON(data []byte) 
 
 // GoogleCloudAiplatformV1MemoryRevision: A revision of a Memory.
 type GoogleCloudAiplatformV1MemoryRevision struct {
+	// Context: Output only. Represents the context of the Memory Revision. The
+	// context may include context from both the historical revisions and the
+	// extracted content.
+	Context string `json:"context,omitempty"`
 	// CreateTime: Output only. Represents the timestamp when this Memory Revision
 	// was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -26212,13 +26224,13 @@ type GoogleCloudAiplatformV1MemoryRevision struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Context") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// NullFields is a list of field names (e.g. "Context") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -30707,7 +30719,7 @@ func (s GoogleCloudAiplatformV1OnlineEvaluator) MarshalJSON() ([]byte, error) {
 // & Cloud Logging).
 type GoogleCloudAiplatformV1OnlineEvaluatorCloudObservability struct {
 	// LogView: Optional. Optional log view that will be used to query logs. If
-	// empty, the `_Default` view will be used.
+	// empty, the project's default view (`projects/{project_id}`) will be used.
 	LogView string `json:"logView,omitempty"`
 	// OpenTelemetry: Data source follows OpenTelemetry convention.
 	OpenTelemetry *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityOpenTelemetry `json:"openTelemetry,omitempty"`
@@ -30717,8 +30729,9 @@ type GoogleCloudAiplatformV1OnlineEvaluatorCloudObservability struct {
 	// TraceScope: Scope online evaluation to single traces.
 	TraceScope *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityTraceScope `json:"traceScope,omitempty"`
 	// TraceView: Optional. Optional trace view that will be used to query traces.
-	// If empty, the `_Default` view will be used. NOTE: This field is not
-	// supported yet and will be ignored if set.
+	// If empty, the `_AllSpans` view from `_Trace` US bucket will be used, i.e.
+	// `projects/{project_id}/locations/us/buckets/_Trace/datasets/Spans/views/_AllS
+	// pans`.
 	TraceView string `json:"traceView,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LogView") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -39043,9 +39056,6 @@ func (s GoogleCloudAiplatformV1SandboxEnvironmentTemplateDefaultContainerEnviron
 // GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig:
 // Configuration for egress control of sandbox instances.
 type GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig struct {
-	// CustomerVpcNetwork: Optional. The customer VPC network that sandbox egress
-	// is routed into.
-	CustomerVpcNetwork string `json:"customerVpcNetwork,omitempty"`
 	// DnsPeeringConfigs: Optional. DNS peering configurations that allow sandbox
 	// egress to resolve customer-internal domains via the customer VPC.
 	DnsPeeringConfigs []*GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfigDnsPeeringConfig `json:"dnsPeeringConfigs,omitempty"`
@@ -39055,15 +39065,15 @@ type GoogleCloudAiplatformV1SandboxEnvironmentTemplateEgressControlConfig struct
 	// `NetworkAttachment` used to draw a PSC interface IP into the customer VPC
 	// for sandbox egress.
 	NetworkAttachment string `json:"networkAttachment,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomerVpcNetwork") to
+	// ForceSendFields is a list of field names (e.g. "DnsPeeringConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerVpcNetwork") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DnsPeeringConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -80695,6 +80705,18 @@ func (r *ProjectsLocationsAgentsService) Delete(name string) *ProjectsLocationsA
 	return c
 }
 
+// Force sets the optional parameter "force": If true, any `Task` belonging to
+// this agent is deleted along with it. If false or unset and the agent still
+// has at least one `Task`, the request fails with `FAILED_PRECONDITION` and
+// nothing is deleted. This governs `Task` and nothing else. Resources the
+// agent owns but a caller never named -- its AI Application and the tenant
+// project bound to it, its Workspace identity, its service-extension binding
+// -- are torn down with the agent on every delete, whatever this field says.
+func (c *ProjectsLocationsAgentsDeleteCall) Force(force bool) *ProjectsLocationsAgentsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -80887,6 +80909,124 @@ func (c *ProjectsLocationsAgentsGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	return ret, nil
 }
 
+type ProjectsLocationsAgentsGetIamPolicyCall struct {
+	s          *Service
+	resource   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsAgentsService) GetIamPolicy(resource string) *ProjectsLocationsAgentsGetIamPolicyCall {
+	c := &ProjectsLocationsAgentsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsAgentsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsAgentsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsAgentsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.agents.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.agents.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.agents.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAgentsListCall struct {
 	s            *Service
 	parent       string
@@ -80907,6 +81047,25 @@ type ProjectsLocationsAgentsListCall struct {
 func (r *ProjectsLocationsAgentsService) List(parent string) *ProjectsLocationsAgentsListCall {
 	c := &ProjectsLocationsAgentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An AIP-160
+// (https://google.aip.dev/160) filter over the returned agents. An empty
+// filter returns the unfiltered collection. Supported fields: * `created` *
+// `updated` Both are timestamps and take an RFC-3339 value, for example
+// `2026-08-01T00:00:00Z`. Supported operators: `=`, `!=`, `<`, `>`, `<=`,
+// `>=`, `:`, `AND`, `OR`, `NOT` (equivalently `-`), and parentheses. Note that
+// `OR` binds more tightly than `AND`, so `a AND b OR c` means `a AND (b OR
+// c)`; parentheses are recommended, not required. Example: `created >
+// "2026-08-01T00:00:00Z" AND updated < "2026-08-09T00:00:00Z". Not supported:
+// any field other than those listed above, wildcards other than `field:*`,
+// bare literals with no field name, functions, and the regular-expression
+// operators `=~` and `!~`. A filter that names an unsupported field, exceeds
+// 1000 characters, or nests parentheses more than 5 deep fails with
+// `INVALID_ARGUMENT`.
+func (c *ProjectsLocationsAgentsListCall) Filter(filter string) *ProjectsLocationsAgentsListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -81157,6 +81316,228 @@ func (c *ProjectsLocationsAgentsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.agents.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAgentsSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
+// and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsAgentsService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsAgentsSetIamPolicyCall {
+	c := &ProjectsLocationsAgentsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsAgentsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.agents.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.agents.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAgentsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.agents.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAgentsTestIamPermissionsCall struct {
+	s          *Service
+	resource   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *ProjectsLocationsAgentsService) TestIamPermissions(resource string) *ProjectsLocationsAgentsTestIamPermissionsCall {
+	c := &ProjectsLocationsAgentsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// Permissions sets the optional parameter "permissions": The set of
+// permissions to check for the `resource`. Permissions with wildcards (such as
+// `*` or `storage.*`) are not allowed. For more information see IAM Overview
+// (https://cloud.google.com/iam/docs/overview#permissions).
+func (c *ProjectsLocationsAgentsTestIamPermissionsCall) Permissions(permissions ...string) *ProjectsLocationsAgentsTestIamPermissionsCall {
+	c.urlParams_.SetMulti("permissions", append([]string{}, permissions...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsAgentsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.agents.testIamPermissions", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.agents.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1TestIamPermissionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.agents.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -149921,6 +150302,118 @@ func (c *ProjectsLocationsReasoningEnginesSandboxEnvironmentTemplatesOperationsW
 	return ret, nil
 }
 
+type ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall struct {
+	s                                                               *Service
+	name                                                            string
+	googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest *GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// AuthorizeAccess: Checks whether the caller is authorized to access the
+// sandbox environment. Authorization is performed entirely by the API
+// infrastructure from the `method_policy` below; the handler is a no-op. A
+// successful response means the caller holds `sandboxEnvironments.execute` on
+// the named sandbox. Used by the sandbox data-plane proxy, which forwards the
+// caller's credential and proxies traffic only on success.
+//
+//   - name: The resource name of the sandbox environment to authorize access to.
+//     Format:
+//     `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine
+//     }/sandboxEnvironments/{sandbox_environment}`.
+func (r *ProjectsLocationsReasoningEnginesSandboxEnvironmentsService) AuthorizeAccess(name string, googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest *GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessRequest) *ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall {
+	c := &ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest = googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) Fields(s ...googleapi.Field) *ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) Context(ctx context.Context) *ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:authorizeAccess")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.reasoningEngines.sandboxEnvironments.authorizeAccess", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.reasoningEngines.sandboxEnvironments.authorizeAccess" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.reasoningEngines.sandboxEnvironments.authorizeAccess", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsReasoningEnginesSandboxEnvironmentsCreateCall struct {
 	s                                         *Service
 	parent                                    string
@@ -176203,6 +176696,118 @@ func (c *ReasoningEnginesSandboxEnvironmentTemplatesOperationsWaitCall) Do(opts 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.reasoningEngines.sandboxEnvironmentTemplates.operations.wait", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall struct {
+	s                                                               *Service
+	name                                                            string
+	googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest *GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// AuthorizeAccess: Checks whether the caller is authorized to access the
+// sandbox environment. Authorization is performed entirely by the API
+// infrastructure from the `method_policy` below; the handler is a no-op. A
+// successful response means the caller holds `sandboxEnvironments.execute` on
+// the named sandbox. Used by the sandbox data-plane proxy, which forwards the
+// caller's credential and proxies traffic only on success.
+//
+//   - name: The resource name of the sandbox environment to authorize access to.
+//     Format:
+//     `projects/{project}/locations/{location}/reasoningEngines/{reasoning_engine
+//     }/sandboxEnvironments/{sandbox_environment}`.
+func (r *ReasoningEnginesSandboxEnvironmentsService) AuthorizeAccess(name string, googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest *GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessRequest) *ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall {
+	c := &ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest = googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) Fields(s ...googleapi.Field) *ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) Context(ctx context.Context) *ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1authorizesandboxenvironmentaccessrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:authorizeAccess")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.reasoningEngines.sandboxEnvironments.authorizeAccess", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.reasoningEngines.sandboxEnvironments.authorizeAccess" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessResponse.ServerRespo
+// nse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ReasoningEnginesSandboxEnvironmentsAuthorizeAccessCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1AuthorizeSandboxEnvironmentAccessResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.reasoningEngines.sandboxEnvironments.authorizeAccess", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

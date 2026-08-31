@@ -643,6 +643,10 @@ type BigLakeMetastoreMigrationConfig struct {
 	//   "MIGRATION_MODE_UNSPECIFIED" - The migration mode is unspecified.
 	//   "BACKFILL" - Performs the metadata migration of requested resources. The
 	// migration completes once the backfill is finished.
+	//   "INCREMENTAL_SYNC" - Performs the initial backfill, then transitions to an
+	// incremental synchronization state to replicate ongoing source writes.
+	// Requires an explicit CompleteMigration or CancelMigration call to end the
+	// migration. Note: Supported only for Iceberg migrations.
 	Mode string `json:"mode,omitempty"`
 	// ReportPath: Optional. The Cloud Storage path where the backfill / dry run
 	// report should be written. If not provided, the report will be generated in
@@ -858,144 +862,6 @@ type CatalogSummary struct {
 
 func (s CatalogSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod CatalogSummary
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// CdcConfig: Configuration information to start the Change Data Capture (CDC)
-// streams from customer database to backend database of Dataproc Metastore.
-type CdcConfig struct {
-	// Bucket: Optional. The bucket to write the intermediate stream event data in.
-	// The bucket name must be without any prefix like "gs://". See the bucket
-	// naming requirements (https://cloud.google.com/storage/docs/buckets#naming).
-	// This field is optional. If not set, the Artifacts Cloud Storage bucket will
-	// be used.
-	Bucket string `json:"bucket,omitempty"`
-	// Password: Required. Input only. The password for the user that Datastream
-	// service should use for the MySQL connection. This field is not returned on
-	// request.
-	Password string `json:"password,omitempty"`
-	// ReverseProxySubnet: Required. The URL of the subnetwork resource to create
-	// the VM instance hosting the reverse proxy in. More context in
-	// https://cloud.google.com/datastream/docs/private-connectivity#reverse-csql-proxy
-	// The subnetwork should reside in the network provided in the request that
-	// Datastream will peer to and should be in the same region as Datastream, in
-	// the following format.
-	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
-	ReverseProxySubnet string `json:"reverseProxySubnet,omitempty"`
-	// RootPath: Optional. The root path inside the Cloud Storage bucket. The
-	// stream event data will be written to this path. The default value is
-	// /migration.
-	RootPath string `json:"rootPath,omitempty"`
-	// SubnetIpRange: Required. A /29 CIDR IP range for peering with datastream.
-	SubnetIpRange string `json:"subnetIpRange,omitempty"`
-	// Username: Required. The username that the Datastream service should use for
-	// the MySQL connection.
-	Username string `json:"username,omitempty"`
-	// VpcNetwork: Required. Fully qualified name of the Cloud SQL instance's VPC
-	// network or the shared VPC network that Datastream will peer to, in the
-	// following format:
-	// projects/{project_id}/locations/global/networks/{network_id}. More context
-	// in
-	// https://cloud.google.com/datastream/docs/network-connectivity-options#privateconnectivity
-	VpcNetwork string `json:"vpcNetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Bucket") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CdcConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod CdcConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// CloudSQLConnectionConfig: Configuration information to establish customer
-// database connection before the cutover phase of migration
-type CloudSQLConnectionConfig struct {
-	// HiveDatabaseName: Required. The hive database name.
-	HiveDatabaseName string `json:"hiveDatabaseName,omitempty"`
-	// InstanceConnectionName: Required. Cloud SQL database connection name
-	// (project_id:region:instance_name)
-	InstanceConnectionName string `json:"instanceConnectionName,omitempty"`
-	// IpAddress: Required. The private IP address of the Cloud SQL instance.
-	IpAddress string `json:"ipAddress,omitempty"`
-	// NatSubnet: Required. The relative resource name of the subnetwork to be used
-	// for Private Service Connect. Note that this cannot be a regular subnet and
-	// is used only for NAT.
-	// (https://cloud.google.com/vpc/docs/about-vpc-hosted-services#psc-subnets)
-	// This subnet is used to publish the SOCKS5 proxy service. The subnet size
-	// must be at least /29 and it should reside in a network through which the
-	// Cloud SQL instance is accessible. The resource name should be in the format,
-	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
-	NatSubnet string `json:"natSubnet,omitempty"`
-	// Password: Required. Input only. The password for the user that Dataproc
-	// Metastore service will be using to connect to the database. This field is
-	// not returned on request.
-	Password string `json:"password,omitempty"`
-	// Port: Required. The network port of the database.
-	Port int64 `json:"port,omitempty"`
-	// ProxySubnet: Required. The relative resource name of the subnetwork to
-	// deploy the SOCKS5 proxy service in. The subnetwork should reside in a
-	// network through which the Cloud SQL instance is accessible. The resource
-	// name should be in the format,
-	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
-	ProxySubnet string `json:"proxySubnet,omitempty"`
-	// Username: Required. The username that Dataproc Metastore service will use to
-	// connect to the database.
-	Username string `json:"username,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "HiveDatabaseName") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HiveDatabaseName") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CloudSQLConnectionConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod CloudSQLConnectionConfig
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// CloudSQLMigrationConfig: Deprecated: Migrations to Dataproc Metastore are no
-// longer supported. Use BigLake Metastore migration instead. Configuration
-// information for migrating from self-managed hive metastore on Google Cloud
-// using Cloud SQL as the backend database to Dataproc Metastore.
-type CloudSQLMigrationConfig struct {
-	// CdcConfig: Required. Configuration information to start the Change Data
-	// Capture (CDC) streams from customer database to backend database of Dataproc
-	// Metastore. Dataproc Metastore switches to using its backend database after
-	// the cutover phase of migration.
-	CdcConfig *CdcConfig `json:"cdcConfig,omitempty"`
-	// CloudSqlConnectionConfig: Required. Configuration information to establish
-	// customer database connection before the cutover phase of migration
-	CloudSqlConnectionConfig *CloudSQLConnectionConfig `json:"cloudSqlConnectionConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CdcConfig") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CdcConfig") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CloudSQLMigrationConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod CloudSQLMigrationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2324,11 +2190,6 @@ type MigrationExecution struct {
 	// BiglakeMetastoreMigrationConfig: Configuration information specific to
 	// migrating from Dataproc Metastore to BigLake Metastore.
 	BiglakeMetastoreMigrationConfig *BigLakeMetastoreMigrationConfig `json:"biglakeMetastoreMigrationConfig,omitempty"`
-	// CloudSqlMigrationConfig: Deprecated: Migrations to Dataproc Metastore are no
-	// longer supported. Use BigLake Metastore migration instead. Configuration
-	// information specific to migrating from self-managed hive metastore on Google
-	// Cloud using Cloud SQL as the backend database to Dataproc Metastore.
-	CloudSqlMigrationConfig *CloudSQLMigrationConfig `json:"cloudSqlMigrationConfig,omitempty"`
 	// CreateTime: Output only. The time when the migration execution was started.
 	CreateTime string `json:"createTime,omitempty"`
 	// EndTime: Output only. The time when the migration execution finished.
@@ -3301,6 +3162,12 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 type StartMigrationRequest struct {
 	// MigrationExecution: Required. The configuration details for the migration.
 	MigrationExecution *MigrationExecution `json:"migrationExecution,omitempty"`
+	// MigrationExecutionId: Optional. The ID to use for the migration execution,
+	// which will become the final component of the migration execution's resource
+	// name. If not specified, a UUID will be generated.This value must be between
+	// 2 and 63 characters long inclusive, begin with a letter, end with a letter
+	// or number, and valid characters are a-z0-9-.
+	MigrationExecutionId string `json:"migrationExecutionId,omitempty"`
 	// RequestId: Optional. A request ID. Specify a unique request ID to allow the
 	// server to ignore the request if it has completed. The server will ignore
 	// subsequent requests that provide a duplicate request ID for at least 60

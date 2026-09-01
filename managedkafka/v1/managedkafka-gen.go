@@ -529,6 +529,9 @@ type AccessConfig struct {
 	// granted direct access to the Kafka cluster. Minimum of 1 network is
 	// required. Maximum 10 networks can be specified.
 	NetworkConfigs []*NetworkConfig `json:"networkConfigs,omitempty"`
+	// PublicClusterConfig: Optional. The configuration for public connectivity to
+	// the Kafka cluster.
+	PublicClusterConfig *PublicClusterConfig `json:"publicClusterConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NetworkConfigs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -670,6 +673,30 @@ type AddAclEntryResponse struct {
 
 func (s AddAclEntryResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AddAclEntryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BrokerCapacityConfig: Capacity configuration at a per-broker level within
+// the Kafka cluster. The config will be appled to each broker in the cluster.
+type BrokerCapacityConfig struct {
+	// DiskSizeGib: Optional. The disk to provision for each broker in Gibibytes.
+	// Minimum: 100 GiB.
+	DiskSizeGib int64 `json:"diskSizeGib,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "DiskSizeGib") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiskSizeGib") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BrokerCapacityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BrokerCapacityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -821,6 +848,19 @@ func (s CheckCompatibilityResponse) MarshalJSON() ([]byte, error) {
 
 // Cluster: An Apache Kafka cluster deployed in a location.
 type Cluster struct {
+	// BootstrapAddress: Output only. The bootstrap address of the Kafka cluster.
+	// The returned address format is: `bootstrap-...managedkafka.s.cloud.goog` or
+	// `bootstrap...managedkafka..cloud.goog` (legacy format). ## Examples:
+	// `bootstrap-nol2mecj8p94jhx2ge2rg54579a.c0aad26f.europe-west1.managedkafka.s.c
+	// loud.goog` -
+	// `bootstrap.my-cluster.us-central1.managedkafka.my-project.cloud.goog` The
+	// port number is omitted so clients can connect to their target listener (for
+	// example, `:9092` for TLS or `:9094` for mTLS).
+	BootstrapAddress string `json:"bootstrapAddress,omitempty"`
+	// BrokerCapacityConfig: Optional. Capacity configuration at a per-broker level
+	// within the Kafka cluster. The config will be appled to each broker in the
+	// cluster.
+	BrokerCapacityConfig *BrokerCapacityConfig `json:"brokerCapacityConfig,omitempty"`
 	// BrokerDetails: Output only. Only populated when FULL view is requested.
 	// Details of each broker in the cluster.
 	BrokerDetails []*BrokerDetails `json:"brokerDetails,omitempty"`
@@ -828,6 +868,9 @@ type Cluster struct {
 	CapacityConfig *CapacityConfig `json:"capacityConfig,omitempty"`
 	// CreateTime: Output only. The time when the cluster was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// EffectiveCapacityConfig: Output only. Only populated when FULL view is
+	// requested. The effective capacity configuration of the cluster.
+	EffectiveCapacityConfig *EffectiveCapacityConfig `json:"effectiveCapacityConfig,omitempty"`
 	// GcpConfig: Required. Configuration properties for a Kafka cluster deployed
 	// to Google Cloud Platform.
 	GcpConfig *GcpConfig `json:"gcpConfig,omitempty"`
@@ -839,6 +882,9 @@ type Cluster struct {
 	// Name: Identifier. The name of the cluster. Structured like:
 	// projects/{project_number}/locations/{location}/clusters/{cluster_id}
 	Name string `json:"name,omitempty"`
+	// PublicClusterDetails: Output only. Details of the public cluster feature for
+	// the Kafka cluster.
+	PublicClusterDetails *PublicClusterDetails `json:"publicClusterDetails,omitempty"`
 	// RebalanceConfig: Optional. Rebalance configuration for the Kafka cluster.
 	RebalanceConfig *RebalanceConfig `json:"rebalanceConfig,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
@@ -864,15 +910,15 @@ type Cluster struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BrokerDetails") to
+	// ForceSendFields is a list of field names (e.g. "BootstrapAddress") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BrokerDetails") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BootstrapAddress") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1292,6 +1338,32 @@ type CreateVersionResponse struct {
 
 func (s CreateVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateVersionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EffectiveCapacityConfig: Describes the effective capacity configuration of a
+// Kafka cluster, both cluster-wide and per-broker.
+type EffectiveCapacityConfig struct {
+	// BrokerCount: Output only. The number of brokers in the cluster.
+	BrokerCount int64 `json:"brokerCount,omitempty,string"`
+	// BrokerDiskSizeGib: Output only. The disk assigned to each broker in
+	// Gibibytes.
+	BrokerDiskSizeGib int64 `json:"brokerDiskSizeGib,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "BrokerCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BrokerCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EffectiveCapacityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EffectiveCapacityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1839,6 +1911,66 @@ type PauseConnectorRequest struct {
 type PauseConnectorResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// PublicClusterConfig: The configuration for a public Kafka cluster
+type PublicClusterConfig struct {
+	// AllowedSourceIpRanges: Required. The list of IPv4 ranges in CIDR notation
+	// that are allowed to connect to the public Kafka broker endpoints. The Kafka
+	// cluster should only be exposed to trusted external ranges. A maximum of 500
+	// IP ranges can be specified and no single range can be larger than a `/16`.
+	// This field is required if PublicClusterConfig is specified.
+	AllowedSourceIpRanges []string `json:"allowedSourceIpRanges,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedSourceIpRanges") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedSourceIpRanges") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublicClusterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PublicClusterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PublicClusterDetails: Details of the public cluster feature for the Kafka
+// cluster.
+type PublicClusterDetails struct {
+	// DiscoveryDnsRecords: Output only. DNS discovery records that resolve to all
+	// of the external IP addresses associated with the public cluster. Used for
+	// configuring DNS-based egress firewall rules to a public cluster.
+	// discovery_dns_record can be added to this list if the cluster is scaled up.
+	// Must configure DNS based firewalls to resolve ALL DNS records in this list
+	// as large clusters have IP addresses sharded across records. Each record
+	// contains a maximum of 30 IP addresses.
+	DiscoveryDnsRecords []string `json:"discoveryDnsRecords,omitempty"`
+	// ExternalIpAddresses: Output only. All of the external IP addresses
+	// associated with the public cluster used for configuring egress firewall
+	// rules to a public cluster. external_ip_address can be added to this list if
+	// the cluster is scaled up.
+	ExternalIpAddresses []string `json:"externalIpAddresses,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiscoveryDnsRecords") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiscoveryDnsRecords") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublicClusterDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PublicClusterDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // RebalanceConfig: Defines rebalancing behavior of a Kafka cluster.

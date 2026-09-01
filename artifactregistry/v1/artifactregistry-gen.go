@@ -3176,6 +3176,7 @@ type Repository struct {
 	//   "GO" - Go package format.
 	//   "GENERIC" - Generic package format.
 	//   "RUBY" - Ruby package format.
+	//   "CONDA" - Conda package format.
 	Format string `json:"format,omitempty"`
 	// KmsKeyName: The Cloud KMS resource name of the customer managed encryption
 	// key that's used to encrypt the contents of the Repository. Has the form:
@@ -3483,6 +3484,13 @@ type UploadFileRequest struct {
 	// FileId: Optional. The ID of the file. If left empty will default to sha256
 	// digest of the content uploaded.
 	FileId string `json:"fileId,omitempty"`
+	// FileType: Optional. The type of the file to upload. Defaulting to ATTACHMENT
+	// if not specified.
+	//
+	// Possible values:
+	//   "ATTACHMENT" - Attachment file. Default value.
+	//   "ARTIFACT" - Facade specific artifact file.
+	FileType string `json:"fileType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3546,6 +3554,11 @@ type UploadGenericArtifactRequest struct {
 	// and end with a letter or number, only contain letters, numbers, hyphens,
 	// underscores, and periods, and not exceed 256 characters.
 	PackageId string `json:"packageId,omitempty"`
+	// VersionAnnotations: Optional. Client specified annotations to attach to the
+	// version upon creation. This field is only applied if the Version is created
+	// during this upload. If the Version already exists and this field is set, the
+	// request will fail.
+	VersionAnnotations map[string]string `json:"versionAnnotations,omitempty"`
 	// VersionId: The ID of the version of the generic artifact. If the version
 	// does not exist, a new version will be created. The version_id must start and
 	// end with a letter or number, can only contain lowercase letters, numbers,
@@ -3968,14 +3981,15 @@ func (s VirtualRepositoryConfig) MarshalJSON() ([]byte, error) {
 // describing current state.
 type VulnerabilityScanningConfig struct {
 	// EnablementConfig: Optional. Config for whether this repository has
-	// vulnerability scanning disabled.
+	// vulnerability scanning disabled. When unset (ENABLEMENT_CONFIG_UNSPECIFIED),
+	// this is treated as INHERITED for Docker repositories and DISABLED for
+	// non-Docker repositories.
 	//
 	// Possible values:
-	//   "ENABLEMENT_CONFIG_UNSPECIFIED" - Not set. This will be treated as
-	// INHERITED for Docker repositories and DISABLED for non-Docker repositories.
-	//   "INHERITED" - Scanning is Enabled, but dependent on API enablement.
-	//   "DISABLED" - No automatic vulnerability scanning will be performed for
-	// this repository.
+	//   "ENABLEMENT_CONFIG_UNSPECIFIED" - Unspecified enablement configuration.
+	//   "INHERITED" - Enables the feature, but is dependent on parent API
+	// enablement.
+	//   "DISABLED" - Disables the feature for this repository.
 	EnablementConfig string `json:"enablementConfig,omitempty"`
 	// EnablementState: Output only. State of feature enablement, combining
 	// repository enablement config and API enablement state.

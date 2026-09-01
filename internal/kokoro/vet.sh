@@ -8,6 +8,7 @@
 set -ex
 
 if [[ $KOKORO_JOB_NAME != *"latest-version"* ]]; then
+  export GOTOOLCHAIN=local
   exit 0
 fi
 

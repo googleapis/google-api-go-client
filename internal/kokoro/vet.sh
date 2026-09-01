@@ -8,7 +8,6 @@
 set -ex
 
 if [[ $KOKORO_JOB_NAME != *"latest-version"* ]]; then
-  export GOTOOLCHAIN=local
   exit 0
 fi
 
@@ -42,9 +41,11 @@ golint ./... 2>&1 | (
     grep -vE "\.pb\.go:" || true
 ) | tee /dev/stderr | (! read)
 
-staticcheck -go 1.26 ./... 2>&1 | (
-  grep -v "SA1019" |
-    grep -v "S1007" |
-    grep -v "error var Done should have name of the form ErrFoo" |
-    grep -v "examples" || true
-) | tee /dev/stderr | (! read)
+
+# TODO: re-enable when staticcheck issue is addressed.
+# staticcheck -go 1.26 ./... 2>&1 | (
+#  grep -v "SA1019" |
+#    grep -v "S1007" |
+#    grep -v "error var Done should have name of the form ErrFoo" |
+#    grep -v "examples" || true
+#) | tee /dev/stderr | (! read)

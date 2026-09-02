@@ -1,5 +1,12 @@
 # Changes
 
+## [0.297.0](https://github.com/googleapis/google-api-go-client/compare/v0.296.0...v0.297.0) (2026-09-01)
+
+
+### Features
+
+* Move to go1.26.0 as the lowest supported go version ([#3724](https://github.com/googleapis/google-api-go-client/issues/3724)) ([7770e01](https://github.com/googleapis/google-api-go-client/commit/7770e01ef389ba48386a38befceca28a60ab3d1a))
+
 ## [0.296.0](https://github.com/googleapis/google-api-go-client/compare/v0.295.0...v0.296.0) (2026-08-31)
 
 

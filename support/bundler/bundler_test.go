@@ -395,22 +395,29 @@ func TestBundlerTimeBasedFlushDeadlock(t *testing.T) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 	time.AfterFunc(30*time.Second, cancel)
+	ch := make(chan error, goroutines)
 
-	add := func(i int) {
+	add := func(i int, ch chan error) {
 		for j := 0; j < iterations; j++ {
 			if err := b.AddWait(ctx, i, 1); err != nil {
-				t.Fatalf("timed out: %v", err)
+				ch <- fmt.Errorf("timed out: %v", err)
 			}
 			runtime.Gosched()
 		}
 	}
 
 	for i := 0; i < goroutines; i++ {
-		go add(i)
+		go add(i, ch)
 	}
 
 	// verify that we don't block forever
 	wg.Wait()
+	// Close the chan, doublecheck no errors were sent
+	close(ch)
+	if e, ok := <-ch; ok {
+		t.Fatalf("got error %v", e)
+	}
+
 }
 
 type testHandler struct {

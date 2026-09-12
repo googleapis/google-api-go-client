@@ -623,6 +623,7 @@ type DestinationStatus struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -922,6 +923,7 @@ type ItemLevelIssue struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Resolution: Whether the issue can be resolved by the business.
 	Resolution string `json:"resolution,omitempty"`
@@ -1449,9 +1451,8 @@ type ProductAttributes struct {
 	CarrierShipping []*CarrierShipping `json:"carrierShipping,omitempty"`
 	// Certifications: Product Certifications, for example for energy efficiency
 	// labeling of products recorded in the EU EPREL
-	// (https://eprel.ec.europa.eu/screen/home) database. See the Help Center
-	// (https://support.google.com/merchants/answer/13528839) article for more
-	// information.
+	// (https://eprel.ec.europa.eu/screen/home) database. For more information, see
+	// Certification (https://support.google.com/merchants/answer/13528839).
 	Certifications []*ProductCertification `json:"certifications,omitempty"`
 	// CertifiedPreOwned: Whether the vehicle is OEM certified pre-owned
 	// (https://support.google.com/google-ads/answer/14156475).
@@ -1622,6 +1623,7 @@ type ProductAttributes struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 	// ExpirationDate: Date on which the item should expire, as specified upon
 	// insertion, in ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format. The
@@ -1704,6 +1706,7 @@ type ProductAttributes struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	IncludedDestinations []string `json:"includedDestinations,omitempty"`
 	// Installment: Number and amount of installments to pay for an item.
 	Installment *ProductInstallment `json:"installment,omitempty"`
@@ -2184,6 +2187,18 @@ type ProductCertification struct {
 	// CertificationCode: The certification code. Maximum length is 2000
 	// characters.
 	CertificationCode string `json:"certificationCode,omitempty"`
+	// CertificationDocumentLink: Optional. URL to the certification document (eg.
+	// `https://www.example.com/document`), for example, the product data sheet or
+	// fiche required by UK's DESNZ or EU's EPREL. Maximum length is 2000
+	// characters. For more information, see Certification
+	// (https://support.google.com/merchants/answer/13528839).
+	CertificationDocumentLink string `json:"certificationDocumentLink,omitempty"`
+	// CertificationLabelLink: Optional. URL to the certification label (eg.
+	// `https://www.example.com/label`), for example, the energy efficiency label
+	// required by UK's DESNZ or EU's EPREL. Maximum length is 2000 characters. For
+	// more information, see Certification
+	// (https://support.google.com/merchants/answer/13528839).
+	CertificationLabelLink string `json:"certificationLabelLink,omitempty"`
 	// CertificationName: The name of the certification.
 	//
 	// Possible values:
@@ -2277,6 +2292,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2542,6 +2558,9 @@ type ProductInstallment struct {
 	CreditType string `json:"creditType,omitempty"`
 	// Downpayment: The up-front down payment amount the buyer has to pay.
 	Downpayment *Price `json:"downpayment,omitempty"`
+	// MileageAllowance: Optional. The mileage allowance for the lease of the
+	// vehicle. Only applicable to vehicle products.
+	MileageAllowance *Mileage `json:"mileageAllowance,omitempty"`
 	// Months: The number of installments the buyer has to pay.
 	Months int64 `json:"months,omitempty,string"`
 	// TotalAmount: Optional. Total amount the buyer has to pay, including

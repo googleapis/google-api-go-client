@@ -8712,7 +8712,7 @@ type PropertiesKeyEventsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve a single Key Event.
+// Get: Retrieves a single Key Event.
 //
 //   - name: The resource name of the Key Event to retrieve. Format:
 //     properties/{property}/keyEvents/{key_event} Example:

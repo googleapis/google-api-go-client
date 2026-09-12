@@ -1276,6 +1276,42 @@ func (s DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DnsAutomationInfo: DnsAutomationInfo contains information about the DNS
+// automation for the instance.
+type DnsAutomationInfo struct {
+	// FullyQualifiedDomainName: Output only. The fully qualified domain name of
+	// the instance for DNS automation. Example: "...alloydb.goog.". Note: The
+	// AUDIT directive is intentionally omitted because this field contains
+	// sensitive network topology information.
+	FullyQualifiedDomainName string `json:"fullyQualifiedDomainName,omitempty"`
+	// State: Output only. The state of the DNS automation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PENDING_CREATE" - DNS record creation is pending.
+	//   "ACTIVE" - DNS record is active.
+	//   "PENDING_DELETE" - DNS record deletion is pending.
+	//   "CREATE_FAILED" - DNS record creation failed.
+	//   "DELETE_FAILED" - DNS record deletion failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FullyQualifiedDomainName")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullyQualifiedDomainName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DnsAutomationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsAutomationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1831,6 +1867,9 @@ type Instance struct {
 	// PscInstanceConfig: Optional. The configuration for Private Service Connect
 	// (PSC) for the instance.
 	PscInstanceConfig *PscInstanceConfig `json:"pscInstanceConfig,omitempty"`
+	// PscInstanceInfo: Output only. Information about the Private Service Connect
+	// (PSC) for the instance.
+	PscInstanceInfo *PscInstanceInfo `json:"pscInstanceInfo,omitempty"`
 	// PublicIpAddress: Output only. The public IP addresses for the Instance. This
 	// is available ONLY when enable_public_ip is set. This is the connection
 	// endpoint for an end-user application.
@@ -2637,9 +2676,22 @@ type PscAutoConnectionConfig struct {
 	// ConsumerProject: The consumer project to which the PSC service automation
 	// endpoint will be created.
 	ConsumerProject string `json:"consumerProject,omitempty"`
+	// DnsAutomationInfos: Output only. List of DNS automation info for the PSC
+	// auto connection.
+	DnsAutomationInfos []*DnsAutomationInfo `json:"dnsAutomationInfos,omitempty"`
 	// IpAddress: Output only. The IP address of the PSC service automation
 	// endpoint.
 	IpAddress string `json:"ipAddress,omitempty"`
+	// ServiceConnectionPolicy: Output only. The PSC service connection policy
+	// name. The format is "projects//regions//serviceConnectionPolicies/"
+	ServiceConnectionPolicy string `json:"serviceConnectionPolicy,omitempty"`
+	// ServiceConnectionPolicyCreationState: Output only. The creation state or
+	// result of the connection policy. Possible values include: - `ACTIVE`: The
+	// policy was created successfully. - `PERMISSION_DENIED`: Sufficient
+	// permissions were not provided. Note that this field is an unstructured
+	// output and customers should not rely on the specific string value or error
+	// message directly.
+	ServiceConnectionPolicyCreationState string `json:"serviceConnectionPolicyCreationState,omitempty"`
 	// Status: Output only. The status of the PSC service automation connection.
 	// Possible values: "STATE_UNSPECIFIED" - An invalid state as the default case.
 	// "ACTIVE" - The connection has been created successfully. "FAILED" - The
@@ -2699,9 +2751,32 @@ type PscInstanceConfig struct {
 	// AllowedConsumerProjects: Optional. List of consumer projects that are
 	// allowed to create PSC endpoints to service-attachments to this instance.
 	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
+	// PscAutoConnectionPolicyState: Optional. Configuration for setting up PSC
+	// auto connection for the instance.
+	//
+	// Possible values:
+	//   "PSC_AUTO_CONNECTION_POLICY_STATE_UNSPECIFIED" - The state is unspecified.
+	// For old instances, this means the PSC auto connection is disabled. For new
+	// instances, this means the PSC auto connection is enabled by default.
+	//   "ENABLED" - Enables the PSC auto connection for the instance.
+	//   "DISABLED" - Disables the PSC auto connection for the instance.
+	PscAutoConnectionPolicyState string `json:"pscAutoConnectionPolicyState,omitempty"`
 	// PscAutoConnections: Optional. Configurations for setting up PSC service
 	// automation.
 	PscAutoConnections []*PscAutoConnectionConfig `json:"pscAutoConnections,omitempty"`
+	// PscAutoDnsState: Optional. Configuration for setting up PSC auto DNS for the
+	// instance.
+	//
+	// Possible values:
+	//   "PSC_AUTO_DNS_STATE_UNSPECIFIED" - The state is unspecified. For old
+	// instances, this means the PSC auto DNS is disabled. For new instances, this
+	// means the PSC auto DNS is enabled by default. Use
+	// `effective_psc_auto_dns_enabled` to check the effective state of the PSC
+	// auto DNS.
+	//   "PSC_AUTO_DNS_STATE_ENABLED" - Enables the PSC auto DNS for the instance.
+	//   "PSC_AUTO_DNS_STATE_DISABLED" - Disables the PSC auto DNS for the
+	// instance.
+	PscAutoDnsState string `json:"pscAutoDnsState,omitempty"`
 	// PscDnsName: Output only. The DNS name of the instance for PSC connectivity.
 	// Name convention: ...alloydb-psc.goog
 	PscDnsName string `json:"pscDnsName,omitempty"`
@@ -2729,6 +2804,41 @@ type PscInstanceConfig struct {
 
 func (s PscInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PscInstanceInfo: Information about the Private Service Connect (PSC) for the
+// instance.
+type PscInstanceInfo struct {
+	// EffectivePscAutoConnectionPolicy: Output only. Indicates if the PSC auto
+	// connection policy is enabled for the instance. For older instances, this
+	// will be off by default, but for newer instances, this will be auto-enabled.
+	EffectivePscAutoConnectionPolicy bool `json:"effectivePscAutoConnectionPolicy,omitempty"`
+	// EffectivePscAutoDnsEnabled: Output only. The effective state of the PSC auto
+	// DNS for the instance.
+	EffectivePscAutoDnsEnabled bool `json:"effectivePscAutoDnsEnabled,omitempty"`
+	// PscAutoDnsNames: Output only. Specifies the auto DNS names for the instance.
+	PscAutoDnsNames []string `json:"pscAutoDnsNames,omitempty"`
+	// ServiceConnectionPolicy: Output only. The PSC service connection policy
+	// name. The format is "projects//regions//serviceConnectionPolicies/"
+	ServiceConnectionPolicy string `json:"serviceConnectionPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "EffectivePscAutoConnectionPolicy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "EffectivePscAutoConnectionPolicy") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscInstanceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInstanceInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

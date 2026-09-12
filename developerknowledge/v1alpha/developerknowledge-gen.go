@@ -404,7 +404,7 @@ type Document struct {
 	// metadata of the document was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// Uri: Output only. Provides the URI of the content, such as
-	// `docs.cloud.google.com/storage/docs/creating-buckets`.
+	// `https://docs.cloud.google.com/storage/docs/creating-buckets`.
 	Uri string `json:"uri,omitempty"`
 	// View: Output only. Specifies the DocumentView of the document.
 	//

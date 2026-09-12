@@ -969,6 +969,31 @@ func (s CommitSchemaRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CompiledProtoSchema: Configuration specific to compiled Protocol Buffer
+// schemas.
+type CompiledProtoSchema struct {
+	// CompiledBytes: Required. The compiled FileDescriptorSet binary.
+	CompiledBytes string `json:"compiledBytes,omitempty"`
+	// RootMessage: Required. The name of the root message type in the schema.
+	RootMessage string `json:"rootMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompiledBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompiledBytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompiledProtoSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod CompiledProtoSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Compression: Configuration for compressing/decompressing message data using
 // a user-specified compression algorithm.
 type Compression struct {
@@ -2132,6 +2157,10 @@ func (s RollbackSchemaRequest) MarshalJSON() ([]byte, error) {
 
 // Schema: A schema resource.
 type Schema struct {
+	// CompiledProtoSchema: Optional. Configuration for a schema provided as a
+	// pre-compiled Protocol Buffer FileDescriptorSet. The `type` field above must
+	// be set to PROTOCOL_BUFFER.
+	CompiledProtoSchema *CompiledProtoSchema `json:"compiledProtoSchema,omitempty"`
 	// Definition: The definition of the schema. This should contain a string
 	// representing the full definition of the schema that is a valid schema
 	// definition of the type specified in `type`.
@@ -2154,15 +2183,15 @@ type Schema struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Definition") to
+	// ForceSendFields is a list of field names (e.g. "CompiledProtoSchema") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Definition") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CompiledProtoSchema") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

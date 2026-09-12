@@ -552,6 +552,19 @@ func (s GoogleCloudApihubV1AdditionalSpecContent) MarshalJSON() ([]byte, error) 
 
 // GoogleCloudApihubV1Addon: Addon resource.
 type GoogleCloudApihubV1Addon struct {
+	// BoostSpecGeminiRegionId: Output only. The Vertex AI region where the
+	// BoostSpec Gemini model calls run for this API Hub instance. Populated only
+	// for the SpecGen addon (`system-spec-generation`); other addons leave this
+	// field empty. `gemini-2.5-flash` is not available in every API Hub region, so
+	// the effective region may differ from the API Hub instance's own region. The
+	// value follows these semantics: - "": BoostSpec is disabled in this region
+	// (the addon is not SpecGen, or the API Hub instance region has no configured
+	// Gemini endpoint or fallback). - Equal to the API Hub instance region:
+	// BoostSpec calls run in-region. - Differs from the API Hub instance region:
+	// BoostSpec calls run in the specified fallback region. Callers rendering this
+	// field can derive the three display states from this single field combined
+	// with the API Hub instance region.
+	BoostSpecGeminiRegionId string `json:"boostSpecGeminiRegionId,omitempty"`
 	// Config: Required. The configuration of the addon.
 	Config *GoogleCloudApihubV1AddonConfig `json:"config,omitempty"`
 	// CreateTime: Output only. The time at which the addon was created.
@@ -586,15 +599,15 @@ type GoogleCloudApihubV1Addon struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "BoostSpecGeminiRegionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Config") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BoostSpecGeminiRegionId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1038,6 +1051,12 @@ type GoogleCloudApihubV1ApiOperation struct {
 	Attributes map[string]GoogleCloudApihubV1AttributeValues `json:"attributes,omitempty"`
 	// CreateTime: Output only. The time at which the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// Deployments: Optional. The deployments linked directly to this API
+	// operation. For operations parsed from a spec, `UpdateApiOperation` returns
+	// `FAILED_PRECONDITION`; link the parent spec to the deployment via
+	// `Spec.deployments` instead. Format is
+	// `projects/{project}/locations/{location}/deployments/{deployment}`
+	Deployments []string `json:"deployments,omitempty"`
 	// Details: Optional. Operation details. Note: Even though this field is
 	// optional, it is required for CreateApiOperation API and we will fail the
 	// request if not provided.
@@ -2025,6 +2044,9 @@ func (s GoogleCloudApihubV1DependencyErrorDetail) MarshalJSON() ([]byte, error) 
 // entity is a root level entity in the API hub and exists independent of any
 // API.
 type GoogleCloudApihubV1Deployment struct {
+	// ApiOperations: Output only. The API operations linked directly to this
+	// deployment.
+	ApiOperations []string `json:"apiOperations,omitempty"`
 	// ApiVersions: Output only. The API versions linked to this deployment. Note:
 	// A particular deployment could be linked to multiple different API versions
 	// (of same or different APIs).
@@ -2097,6 +2119,11 @@ type GoogleCloudApihubV1Deployment struct {
 	// Google Cloud gateways, this will refer to the project identifier. For others
 	// like Edge/OPDK, this will refer to the org identifier.
 	SourceProject string `json:"sourceProject,omitempty"`
+	// SourceRevision: Optional. A revision identifier for the underlying gateway
+	// configuration that this deployment serves. For Apigee gateway variants, this
+	// is typically the proxy revision number populated automatically when the
+	// deployment is discovered.
+	SourceRevision string `json:"sourceRevision,omitempty"`
 	// SourceUri: Optional. The uri where additional source specific information
 	// for this deployment can be found. This maps to the following system defined
 	// attribute:
@@ -2106,18 +2133,22 @@ type GoogleCloudApihubV1Deployment struct {
 	// attribute should be a valid URI, and in case of Cloud Storage URI, it should
 	// point to a Cloud Storage object, not a directory.
 	SourceUri *GoogleCloudApihubV1AttributeValues `json:"sourceUri,omitempty"`
+	// Specs: Output only. The specs linked directly to this deployment. Note: a
+	// deployment could serve multiple specs (e.g., across different revisions of
+	// the same underlying gateway configuration).
+	Specs []string `json:"specs,omitempty"`
 	// UpdateTime: Output only. The time at which the deployment was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ApiVersions") to
+	// ForceSendFields is a list of field names (e.g. "ApiOperations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ApiVersions") to include in API
+	// NullFields is a list of field names (e.g. "ApiOperations") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4970,6 +5001,9 @@ type GoogleCloudApihubV1Spec struct {
 	Contents *GoogleCloudApihubV1SpecContents `json:"contents,omitempty"`
 	// CreateTime: Output only. The time at which the spec was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// Deployments: Optional. The deployments linked directly to this spec. Format
+	// is `projects/{project}/locations/{location}/deployments/{deployment}`
+	Deployments []string `json:"deployments,omitempty"`
 	// Details: Output only. Details parsed from the spec.
 	Details *GoogleCloudApihubV1SpecDetails `json:"details,omitempty"`
 	// DisplayName: Required. The display name of the spec. This can contain the
@@ -5088,6 +5122,13 @@ func (s GoogleCloudApihubV1SpecDetails) MarshalJSON() ([]byte, error) {
 // GoogleCloudApihubV1SpecMetadata: The metadata associated with a spec of the
 // API version.
 type GoogleCloudApihubV1SpecMetadata struct {
+	// DeploymentResourceUris: Optional. The gateway-side URIs of deployments that
+	// serve this spec. If provided, the API Hub service creates links between this
+	// spec and the deployments identified by these URIs. URIs that don't match any
+	// known deployment are ignored; a subsequent ingestion cycle that includes the
+	// missing deployment will re-establish the link. The maximum number of URIs
+	// allowed is 100.
+	DeploymentResourceUris []string `json:"deploymentResourceUris,omitempty"`
 	// OriginalCreateTime: Optional. Timestamp indicating when the spec was created
 	// at the source.
 	OriginalCreateTime string `json:"originalCreateTime,omitempty"`
@@ -5100,15 +5141,15 @@ type GoogleCloudApihubV1SpecMetadata struct {
 	// Spec: Required. The spec resource to be pushed to Hub's collect layer. The
 	// ID of the spec will be generated by Hub.
 	Spec *GoogleCloudApihubV1Spec `json:"spec,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "OriginalCreateTime") to
+	// ForceSendFields is a list of field names (e.g. "DeploymentResourceUris") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OriginalCreateTime") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeploymentResourceUris") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

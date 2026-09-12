@@ -2828,6 +2828,29 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExpirationDetails: Details regarding the expiration of this role assignment.
+// Used to automatically revoke access when the time limit is reached.
+type ExpirationDetails struct {
+	// ExpireTime: The specific timestamp when the role assignment expires.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExpirationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExpirationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExternalId: External identifier used to link and identify this group across
 // external directory systems.
 type ExternalId struct {
@@ -4217,6 +4240,9 @@ type RoleAssignment struct {
 	Condition string `json:"condition,omitempty"`
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
+	// ExpirationDetails: Optional. Details regarding the expiration of this role
+	// assignment.
+	ExpirationDetails *ExpirationDetails `json:"expirationDetails,omitempty"`
 	// Kind: The type of the API resource. This is always
 	// `admin#directory#roleAssignment`.
 	Kind string `json:"kind,omitempty"`

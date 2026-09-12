@@ -130,9 +130,15 @@ const (
 	// See exercise GPS location data in Google Health
 	GooglehealthLocationReadonlyScope = "https://www.googleapis.com/auth/googlehealth.location.readonly"
 
+	// See your Google Health logged symptoms data
+	GooglehealthLoggedSymptomsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly"
+
 	// Add logged symptoms data to Google Health, and edit or delete the data it
 	// adds
 	GooglehealthLoggedSymptomsWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly"
+
+	// See your Google Health mindfulness data
+	GooglehealthMindfulnessReadonlyScope = "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly"
 
 	// Add mindfulness data to Google Health, and edit or delete the data it adds
 	GooglehealthMindfulnessWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly"
@@ -145,6 +151,9 @@ const (
 
 	// Add profile data to Google Health, and edit or delete the data it adds.
 	GooglehealthProfileWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.profile.writeonly"
+
+	// See your Google Health reproductive health data
+	GooglehealthReproductiveHealthReadonlyScope = "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly"
 
 	// Add reproductive health data to Google Health, and edit or delete the data
 	// it adds
@@ -174,11 +183,14 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.irn.readonly",
 		"https://www.googleapis.com/auth/googlehealth.location.readonly",
+		"https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
 		"https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.mindfulness.readonly",
 		"https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.profile.readonly",
 		"https://www.googleapis.com/auth/googlehealth.profile.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly",
 		"https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.settings.readonly",
 		"https://www.googleapis.com/auth/googlehealth.settings.writeonly",
@@ -1648,7 +1660,10 @@ type DailyRollUpDataPointsRequest struct {
 	// 90 days.
 	Range *CivilTimeInterval `json:"range,omitempty"`
 	// WindowSizeDays: Optional. Aggregation window size, in number of days.
-	// Defaults to 1 if not specified.
+	// Defaults to 1 if not specified. If the requested range is not an exact
+	// multiple of `window_size_days`, the final bucket chronologically will be
+	// truncated at the upper endpoint of the range and will cover a duration
+	// shorter than `window_size_days`.
 	WindowSizeDays int64 `json:"windowSizeDays,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSourceFamily") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3141,6 +3156,84 @@ func (s GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevicesandservicesHealthV4betaDataType: Represents a type of health
+// data a user can have data points recorded for. It matches the parent
+// resource of collection containing data points of the given type. Clients
+// currently do not need to interact with this resource directly.
+type GoogleDevicesandservicesHealthV4betaDataType struct {
+	// Name: Identifier. The resource name of the data type. Format:
+	// `users/{user}/dataTypes/{data_type}` See DataPoint.name for examples and
+	// possible values.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevicesandservicesHealthV4betaDataType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevicesandservicesHealthV4betaDataType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevicesandservicesHealthV4betaUser: Represents a user in the Google
+// Health API. It matches the parent resource of collections owned by the user.
+// Clients currently do not need to interact with this resource directly.
+type GoogleDevicesandservicesHealthV4betaUser struct {
+	// Name: Identifier. The resource name of the user. The `{user}` ID is a
+	// system-generated identifier, as described in Identity.health_user_id.
+	// Format: `users/{user}`
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevicesandservicesHealthV4betaUser) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevicesandservicesHealthV4betaUser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog: Log message
+// for a webhook notification sent by the Google Health API to a subscriber's
+// endpoint. Includes the HTTP response received from the endpoint.
+type GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog struct {
+	// HttpResponse: Required. Represents the HTTP response. This message includes
+	// the status code, reason phrase, headers, and body.
+	HttpResponse *HttpResponse `json:"httpResponse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HttpResponse") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HttpResponse") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HeartBeat: A single heart beat measurement.
 type HeartBeat struct {
 	// BeatsPerMinute: Required. The beats-per-minute value extrapolated from the
@@ -3292,6 +3385,8 @@ func (s *HeartRateRollupValue) UnmarshalJSON(data []byte) error {
 // normal heartbeats or by standard deviation of the inter-beat intervals
 // (SDNN).
 type HeartRateVariability struct {
+	// Metadata: Optional. Metadata used in 1P surfaces.
+	Metadata *HeartRateVariabilityMetadata `json:"metadata,omitempty"`
 	// RootMeanSquareOfSuccessiveDifferencesMilliseconds: Optional. The root mean
 	// square of successive differences between normal heartbeats. This is a
 	// measure of heart rate variability used by Google Health.
@@ -3301,15 +3396,13 @@ type HeartRateVariability struct {
 	// StandardDeviationMilliseconds: Optional. The standard deviation of the heart
 	// rate variability measurement.
 	StandardDeviationMilliseconds float64 `json:"standardDeviationMilliseconds,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "RootMeanSquareOfSuccessiveDifferencesMilliseconds") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "RootMeanSquareOfSuccessiveDifferencesMilliseconds") to include in API
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3334,6 +3427,48 @@ func (s *HeartRateVariability) UnmarshalJSON(data []byte) error {
 	}
 	s.RootMeanSquareOfSuccessiveDifferencesMilliseconds = float64(s1.RootMeanSquareOfSuccessiveDifferencesMilliseconds)
 	s.StandardDeviationMilliseconds = float64(s1.StandardDeviationMilliseconds)
+	return nil
+}
+
+// HeartRateVariabilityMetadata: Metadata for HeartRateVariability.
+type HeartRateVariabilityMetadata struct {
+	// HighFrequencyPower: Optional. The power in interbeat interval fluctuations
+	// within the high frequency band (0.15 Hz - 0.4 Hz).
+	HighFrequencyPower float64 `json:"highFrequencyPower,omitempty"`
+	// LowFrequencyPower: Optional. The power in interbeat interval fluctuations
+	// within the low frequency band (0.04 Hz - 0.15 Hz).
+	LowFrequencyPower float64 `json:"lowFrequencyPower,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HighFrequencyPower") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HighFrequencyPower") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HeartRateVariabilityMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod HeartRateVariabilityMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *HeartRateVariabilityMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod HeartRateVariabilityMetadata
+	var s1 struct {
+		HighFrequencyPower gensupport.JSONFloat64 `json:"highFrequencyPower"`
+		LowFrequencyPower  gensupport.JSONFloat64 `json:"lowFrequencyPower"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.HighFrequencyPower = float64(s1.HighFrequencyPower)
+	s.LowFrequencyPower = float64(s1.LowFrequencyPower)
 	return nil
 }
 
@@ -4714,16 +4849,14 @@ type Profile struct {
 	// this field are currently not supported.
 	Age int64 `json:"age,omitempty"`
 	// AutoRunningStrideLengthMm: Output only. The automatically calculated running
-	// stride length, in millimeters. The user must consent to one of the following
-	// access scopes to access this field: -
+	// stride length, in millimeters. The user must consent to the following access
+	// scope to access this field: -
 	// `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`
-	// - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`
 	AutoRunningStrideLengthMm int64 `json:"autoRunningStrideLengthMm,omitempty"`
 	// AutoWalkingStrideLengthMm: Output only. The automatically calculated walking
-	// stride length, in millimeters. The user must consent to one of the following
-	// access scopes to access this field: -
+	// stride length, in millimeters. The user must consent to the following access
+	// scope to access this field: -
 	// `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`
-	// - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`
 	AutoWalkingStrideLengthMm int64 `json:"autoWalkingStrideLengthMm,omitempty"`
 	// MembershipStartDate: Output only. The date the user created their account.
 	// Updates to this field are currently not supported.
@@ -4736,16 +4869,14 @@ type Profile struct {
 	// the authenticated user.
 	Name string `json:"name,omitempty"`
 	// UserConfiguredRunningStrideLengthMm: Optional. The user's user configured
-	// running stride length, in millimeters. The user must consent to one of the
-	// following access scopes to access this field: -
+	// running stride length, in millimeters. The user must consent to the
+	// following access scope to access this field: -
 	// `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`
-	// - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`
 	UserConfiguredRunningStrideLengthMm int64 `json:"userConfiguredRunningStrideLengthMm,omitempty"`
 	// UserConfiguredWalkingStrideLengthMm: Optional. The user's user configured
-	// walking stride length, in millimeters. The user must consent to one of the
-	// following access scopes to access this field: -
+	// walking stride length, in millimeters. The user must consent to the
+	// following access scope to access this field: -
 	// `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`
-	// - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`
 	UserConfiguredWalkingStrideLengthMm int64 `json:"userConfiguredWalkingStrideLengthMm,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5067,7 +5198,10 @@ type RollUpDataPointsRequest struct {
 	// other data types is 90 days.
 	Range *Interval `json:"range,omitempty"`
 	// WindowSize: Required. The size of the time window to group data points into
-	// before applying the aggregation functions. Must be at least 1 second.
+	// before applying the aggregation functions. Must be at least 1 second. If the
+	// requested range is not an exact multiple of `window_size`, the final bucket
+	// chronologically will be truncated at the upper endpoint of the range and
+	// will cover a duration shorter than `window_size`.
 	WindowSize string `json:"windowSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSourceFamily") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -1358,6 +1358,9 @@ type RegistryBook struct {
 	// Preview, Only project scope is supported. Each scope is in the format of
 	// projects/{project}. Each scope can only be claimed once.
 	ClaimedScopes []string `json:"claimedScopes,omitempty"`
+	// ClaimedScopesInfo: Output only. Detailed scope information corresponding to
+	// each entry in `claimed_scopes`.
+	ClaimedScopesInfo []*ScopeInfo `json:"claimedScopesInfo,omitempty"`
 	// CreateTime: Output only. The time at which the RegistryBook was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// IsDefault: Output only. Whether the RegistryBook is the default one.
@@ -1390,6 +1393,34 @@ func (s RegistryBook) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ScopeInfo: Details of a scope (e.g. project or folder).
+type ScopeInfo struct {
+	// DisplayName: Output only. Human-readable display title of the scope shown in
+	// Console (e.g. "My Cloud Project"). Used for UI display.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Output only. Programmatic string identifier of the scope (e.g. GCP
+	// Project ID "my-project-id"). Used for API and code logic.
+	Id string `json:"id,omitempty"`
+	// Name: Output only. Resource name of the scope, e.g. "projects/1234567890".
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScopeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ScopeInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchIpResourcesRequest: Request message for the
 // CloudNumberRegistry.SearchIpResources method.
 type SearchIpResourcesRequest struct {
@@ -1410,19 +1441,21 @@ type SearchIpResourcesRequest struct {
 	// AIP-160-like format. It has some limitations. You can only specify top level
 	// conjunctions or attribute level negations. Each restriction can only be used
 	// once except the attribute restriction. The available restrictions for Ranges
-	// are: - `realm`: The Realm name to search in. - `ip_address`: The IP address
-	// to search for within Ranges. - `ip_version`: The IP version to filter by
-	// (e.g., "IPV4", "IPV6"). - `parent_range`: The parent Range of the Range to
-	// search for. - `attribute_text`: The attribute text to search for within
-	// Ranges. - `attribute`: The attribute key and value to filter by. The
-	// available restrictions for Realms are: - `ip_version`: The IP version to
-	// search for. - `management_type`: The management type of the Realm (e.g.,
-	// "CNR", "USER"). Only one of attribute_text or multiple attribute filters can
-	// be specified. Examples: - `realm=test-realm` - `realm=test-realm AND
-	// ip_address=10.0.0.0` - `realm=test-realm AND ip_version=IPV6` -
-	// `realm=test-realm AND attribute_text=test` - `ip_address=10.0.0.0 AND
-	// attribute:(key1=value1) AND attribute:(key2=value2)` - `attribute_text=test
-	// AND
+	// are: - `resource_id`: The resource ID to search for within Ranges (only
+	// substring matching using the format `resource_id="*value*" is supported). -
+	// `realm`: The Realm name to search in. - `ip_address`: The IP address to
+	// search for within Ranges. - `ip_version`: The IP version to filter by (e.g.,
+	// "IPV4", "IPV6"). - `parent_range`: The parent Range of the Range to search
+	// for. - `attribute_text`: The attribute text to search for within Ranges. -
+	// `attribute`: The attribute key and value to filter by. The available
+	// restrictions for Realms are: - `ip_version`: The IP version to search for. -
+	// `management_type`: The management type of the Realm (e.g., "CNR", "USER").
+	// Only one of attribute_text or multiple attribute filters can be specified.
+	// Examples: - `realm=test-realm` - `realm=test-realm AND ip_address=10.0.0.0`
+	// - `realm=test-realm AND ip_version=IPV6` - `realm=test-realm AND
+	// resource_id="*my-range*" - `realm=test-realm AND attribute_text=test` -
+	// `ip_address=10.0.0.0 AND attribute:(key1=value1) AND
+	// attribute:(key2=value2)` - `attribute_text=test AND
 	// parent_range=projects/123/locations/global/discoveredRanges/test-parent-range
 	// ` - `management_type=CNR`
 	Query string `json:"query,omitempty"`

@@ -2165,6 +2165,13 @@ type WorkstationCluster struct {
 	// Conditions: Output only. Status conditions describing the workstation
 	// cluster's current state.
 	Conditions []*Status `json:"conditions,omitempty"`
+	// ConsoleBaseUrl: Optional. Specifies a custom base URL for the Google Cloud
+	// Console. This field is intended to be user-configurable to support data
+	// residency for Cloud Workstations users. This will be used generally for user
+	// journeys where users need to go to the Cloud Console from Code OSS. When the
+	// Auth and Launch URLs are unset, this will be used as the base URL for those
+	// endpoints if set.
+	ConsoleBaseUrl string `json:"consoleBaseUrl,omitempty"`
 	// ControlPlaneIp: Output only. The private IP address of the control plane for
 	// this workstation cluster. Workstation VMs need access to this IP address to
 	// work with the service, so make sure that your firewall rules allow egress
@@ -2361,9 +2368,10 @@ type WorkstationConfig struct {
 	//   "SUSPEND" - Suspend the workstation after idle_timeout.
 	IdleAction string `json:"idleAction,omitempty"`
 	// IdleTimeout: Optional. Number of seconds to wait before automatically
-	// stopping a workstation after it last received user traffic. A value of
-	// "0s" indicates that Cloud Workstations VMs created with this configuration
-	// should never time out due to idleness. Provide duration
+	// stopping or suspending a workstation after it last received user traffic.
+	// See idle_action to configure whether to stop or suspend idle workstations. A
+	// value of "0s" indicates that Cloud Workstations VMs created with this
+	// configuration should never time out due to idleness. Provide duration
 	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration)
 	// terminated by `s` for seconds—for example, "7200s" (2 hours). The
 	// default is "1200s" (20 minutes).
@@ -2406,14 +2414,17 @@ type WorkstationConfig struct {
 	// that security updates can be applied upon restart. The idle_timeout and
 	// running_timeout fields are independent of each other. Note that the
 	// running_timeout field stops workstations after the specified time,
-	// regardless of whether or not the workstations are idle. Provide duration
-	// terminated by `s` for seconds—for example, "54000s" (15 hours). Defaults
-	// to "43200s" (12 hours). A value of "0s" indicates that workstations
-	// using this configuration should never time out. If encryption_key is set, it
-	// must be greater than "0s" and less than "86400s" (24 hours). Warning: A
-	// value of "0s" indicates that Cloud Workstations VMs created with this
-	// configuration have no maximum running time. This is strongly discouraged
-	// because you incur costs and will not pick up security updates.
+	// regardless of whether or not the workstations are idle. Note: This timeout
+	// applies to workstations in the following states: * STATE_RUNNING *
+	// STATE_SUSPENDED Suspending a workstation does not reset this timeout.
+	// Provide duration terminated by `s` for seconds—for example, "54000s" (15
+	// hours). Defaults to "43200s" (12 hours). A value of "0s" indicates that
+	// workstations using this configuration should never time out. If
+	// encryption_key is set, it must be greater than "0s" and less than
+	// "86400s" (24 hours). Warning: A value of "0s" indicates that Cloud
+	// Workstations VMs created with this configuration have no maximum running
+	// time. This is strongly discouraged because you incur costs and will not pick
+	// up security updates.
 	RunningTimeout string `json:"runningTimeout,omitempty"`
 	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`

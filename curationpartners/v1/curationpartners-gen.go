@@ -736,7 +736,9 @@ type Field struct {
 	//   "BIDS_IN_AUCTION" - Bids in auction.
 	//   "BID_REQUESTS" - Bid requests.
 	//   "CLICKS" - Clicks.
-	//   "CURATION_PARTNER_FEE" - Curator fee.
+	//   "CURATION_PARTNER_FEE" - Curator fee. This will be redacted to 0.00 if the
+	// package's visibility is set to non-disclosed. Use the PACKAGE_FEE_VISIBILITY
+	// dimension to check if the package's fee is disclosed.
 	//   "DATA_SEGMENT_REQUESTS" - Number of data segment requests sent in the
 	// Real-time curation.
 	//   "IMPRESSIONS" - Impressions.
@@ -1634,7 +1636,9 @@ type ReportDefinition struct {
 	//   "BIDS_IN_AUCTION" - Bids in auction.
 	//   "BID_REQUESTS" - Bid requests.
 	//   "CLICKS" - Clicks.
-	//   "CURATION_PARTNER_FEE" - Curator fee.
+	//   "CURATION_PARTNER_FEE" - Curator fee. This will be redacted to 0.00 if the
+	// package's visibility is set to non-disclosed. Use the PACKAGE_FEE_VISIBILITY
+	// dimension to check if the package's fee is disclosed.
 	//   "DATA_SEGMENT_REQUESTS" - Number of data segment requests sent in the
 	// Real-time curation.
 	//   "IMPRESSIONS" - Impressions.

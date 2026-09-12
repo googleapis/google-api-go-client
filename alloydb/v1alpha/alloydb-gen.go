@@ -1401,6 +1401,42 @@ func (s DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DnsAutomationInfo: DnsAutomationInfo contains information about the DNS
+// automation for the instance.
+type DnsAutomationInfo struct {
+	// FullyQualifiedDomainName: Output only. The fully qualified domain name of
+	// the instance for DNS automation. Example: "...alloydb.goog.". Note: The
+	// AUDIT directive is intentionally omitted because this field contains
+	// sensitive network topology information.
+	FullyQualifiedDomainName string `json:"fullyQualifiedDomainName,omitempty"`
+	// State: Output only. The state of the DNS automation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PENDING_CREATE" - DNS record creation is pending.
+	//   "ACTIVE" - DNS record is active.
+	//   "PENDING_DELETE" - DNS record deletion is pending.
+	//   "CREATE_FAILED" - DNS record creation failed.
+	//   "DELETE_FAILED" - DNS record deletion failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FullyQualifiedDomainName")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FullyQualifiedDomainName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DnsAutomationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsAutomationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -2984,9 +3020,22 @@ type PscAutoConnectionConfig struct {
 	// ConsumerProject: The consumer project to which the PSC service automation
 	// endpoint will be created.
 	ConsumerProject string `json:"consumerProject,omitempty"`
+	// DnsAutomationInfos: Output only. List of DNS automation info for the PSC
+	// auto connection.
+	DnsAutomationInfos []*DnsAutomationInfo `json:"dnsAutomationInfos,omitempty"`
 	// IpAddress: Output only. The IP address of the PSC service automation
 	// endpoint.
 	IpAddress string `json:"ipAddress,omitempty"`
+	// ServiceConnectionPolicy: Output only. The PSC service connection policy
+	// name. The format is "projects//regions//serviceConnectionPolicies/"
+	ServiceConnectionPolicy string `json:"serviceConnectionPolicy,omitempty"`
+	// ServiceConnectionPolicyCreationState: Output only. The creation state or
+	// result of the connection policy. Possible values include: - `ACTIVE`: The
+	// policy was created successfully. - `PERMISSION_DENIED`: Sufficient
+	// permissions were not provided. Note that this field is an unstructured
+	// output and customers should not rely on the specific string value or error
+	// message directly.
+	ServiceConnectionPolicyCreationState string `json:"serviceConnectionPolicyCreationState,omitempty"`
 	// Status: Output only. The status of the PSC service automation connection.
 	// Possible values: "STATE_UNSPECIFIED" - An invalid state as the default case.
 	// "ACTIVE" - The connection has been created successfully. "FAILED" - The

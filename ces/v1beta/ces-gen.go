@@ -572,6 +572,9 @@ type Agent struct {
 	// Name: Identifier. The unique identifier of the agent. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/agents/{agent}`
 	Name string `json:"name,omitempty"`
+	// RemoteA2aAgent: Optional. The remote A2A (https://github.com/a2aproject/A2A)
+	// agent to be used for the agent execution.
+	RemoteA2aAgent *AgentRemoteA2aAgent `json:"remoteA2aAgent,omitempty"`
 	// RemoteDialogflowAgent: Optional. The remote Dialogflow
 	// (https://cloud.google.com/dialogflow/cx/docs/concept/console-conversational-agents)
 	// agent to be used for the agent execution. If this field is set, all other
@@ -713,6 +716,54 @@ func (s AgentInterface) MarshalJSON() ([]byte, error) {
 // AgentLlmAgent: Default agent type. The agent uses instructions and callbacks
 // specified in the agent to perform the task using a large language model.
 type AgentLlmAgent struct {
+}
+
+// AgentRegistryDeployment: Configuration and status for Agent Registry
+// deployment.
+type AgentRegistryDeployment struct {
+	// AgentRegistryServiceName: Optional. Output only. The resource name of the
+	// deployed Agent Registry service. Format:
+	// `projects/{project}/locations/{location}/services/{service}`
+	AgentRegistryServiceName string `json:"agentRegistryServiceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentRegistryServiceName")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentRegistryServiceName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentRegistryDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentRegistryDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentRemoteA2aAgent: The agent which will transfer execution to a remote A2A
+// (https://github.com/a2aproject/A2A) agent.
+type AgentRemoteA2aAgent struct {
+	// A2aConfig: Required. The A2A connection configuration.
+	A2aConfig *RemoteA2aConfig `json:"a2aConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "A2aConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "A2aConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentRemoteA2aAgent) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentRemoteA2aAgent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentRemoteDialogflowAgent: The agent which will transfer execution to a
@@ -1443,6 +1494,8 @@ type AppVersion struct {
 	Name string `json:"name,omitempty"`
 	// Snapshot: Output only. The snapshot of the app when the version is created.
 	Snapshot *AppSnapshot `json:"snapshot,omitempty"`
+	// UpdateTime: Output only. Timestamp when the app version was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1474,6 +1527,9 @@ type AudioProcessingConfig struct {
 	// BargeInConfig: Optional. Configures the agent behavior for the user barge-in
 	// activities.
 	BargeInConfig *BargeInConfig `json:"bargeInConfig,omitempty"`
+	// CustomVoiceSamples: Optional. Configures custom voice samples for voice
+	// cloning.
+	CustomVoiceSamples []*CustomVoiceSample `json:"customVoiceSamples,omitempty"`
 	// InactivityTimeout: Optional. The duration of user inactivity (no speech or
 	// interaction) before the agent prompts the user for reengagement. If not set,
 	// the agent will not prompt the user for reengagement.
@@ -2066,6 +2122,8 @@ func (s Chunk) MarshalJSON() ([]byte, error) {
 type Citations struct {
 	// CitedChunks: List of cited pieces of information.
 	CitedChunks []*CitationsCitedChunk `json:"citedChunks,omitempty"`
+	// InlineCitations: Optional. List of inline citations in the agent response.
+	InlineCitations []*CitationsInlineCitation `json:"inlineCitations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CitedChunks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2110,6 +2168,35 @@ type CitationsCitedChunk struct {
 
 func (s CitationsCitedChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod CitationsCitedChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CitationsInlineCitation: An inline citation in the response text.
+type CitationsInlineCitation struct {
+	// CitedChunkIndices: The indices of the cited chunks that back this text
+	// segment. Indices refer to the elements in `cited_chunks`.
+	CitedChunkIndices []int64 `json:"citedChunkIndices,omitempty"`
+	// EndIndex: The ending index (in bytes) of the text segment in the agent
+	// response.
+	EndIndex int64 `json:"endIndex,omitempty"`
+	// StartIndex: The starting index (in bytes) of the text segment in the agent
+	// response.
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CitedChunkIndices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CitedChunkIndices") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CitationsInlineCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod CitationsInlineCitation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2445,6 +2532,42 @@ type ConversationTurn struct {
 
 func (s ConversationTurn) MarshalJSON() ([]byte, error) {
 	type NoMethod ConversationTurn
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomVoiceSample: Configuration for a custom voice sample used for voice
+// cloning.
+type CustomVoiceSample struct {
+	// ConsentAudioGcsUri: Optional. Consent audio for voice cloning.
+	ConsentAudioGcsUri string `json:"consentAudioGcsUri,omitempty"`
+	// Name: Optional. The user-defined name for the custom voice sample.
+	Name string `json:"name,omitempty"`
+	// PreviewAudioContent: Output only. Synthesized preview audio for custom
+	// voice, formatted as canonical WAV (LINEAR16, 24kHz, 16-bit, mono).
+	PreviewAudioContent string `json:"previewAudioContent,omitempty"`
+	// PreviewText: Optional. Text for synthesizing preview audio for custom voice.
+	PreviewText string `json:"previewText,omitempty"`
+	// VoiceInstruction: Optional. Natural language instructions for voice style,
+	// tone, pacing, or pronunciation.
+	VoiceInstruction string `json:"voiceInstruction,omitempty"`
+	// VoiceSampleGcsUri: Optional. The Cloud Storage URI to the audio sample for
+	// voice cloning. The audio sample should be a mono-channel, 24kHz WAV file.
+	VoiceSampleGcsUri string `json:"voiceSampleGcsUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsentAudioGcsUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsentAudioGcsUri") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomVoiceSample) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomVoiceSample
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3108,6 +3231,10 @@ func (s DeployChannelResponse) MarshalJSON() ([]byte, error) {
 // Deployment: A deployment represents an immutable, queryable version of the
 // app. It is used to deploy an app version with a specific channel profile.
 type Deployment struct {
+	// AgentRegistryDeployment: Optional. Configuration for deploying this
+	// deployment to Agent Registry. If present, this deployment will be published
+	// to Agent Registry.
+	AgentRegistryDeployment *AgentRegistryDeployment `json:"agentRegistryDeployment,omitempty"`
 	// AppVersion: Optional. The resource name of the app version to deploy.
 	// Format:
 	// `projects/{project}/locations/{location}/apps/{app}/versions/{version}` Use
@@ -3155,15 +3282,15 @@ type Deployment struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AppVersion") to
+	// ForceSendFields is a list of field names (e.g. "AgentRegistryDeployment") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppVersion") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentRegistryDeployment") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -7202,20 +7329,22 @@ func (s GuardrailModelSafetySafetySetting) MarshalJSON() ([]byte, error) {
 
 // Image: Represents an image input or output in the conversation.
 type Image struct {
+	// AltText: Optional. The alternative text for the image.
+	AltText string `json:"altText,omitempty"`
 	// Data: Required. Raw bytes of the image.
 	Data string `json:"data,omitempty"`
 	// MimeType: Required. The IANA standard MIME type of the source data.
 	// Supported image types includes: * image/png * image/jpeg * image/webp
 	MimeType string `json:"mimeType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Data") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AltText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10342,6 +10471,49 @@ func (s RedactionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RemoteA2aConfig: Shared configuration for connecting to a remote A2A
+// (https://github.com/a2aproject/A2A) agent.
+type RemoteA2aConfig struct {
+	// AgentCard: Optional. The full agent card defined inline.
+	AgentCard *AgentCard `json:"agentCard,omitempty"`
+	// AgentRegistry: Optional. Reference to the agent in the Agent Registry.
+	// Format: `projects/{project}/locations/{location}/agents/{agent}`
+	AgentRegistry string `json:"agentRegistry,omitempty"`
+	// ApiAuthentication: Optional. Authentication configuration for calling the
+	// remote agent. Optional if the registry reference already handles
+	// authentication.
+	ApiAuthentication *ApiAuthentication `json:"apiAuthentication,omitempty"`
+	// ContextId: Optional. If not empty, interactions with the remote A2A agent
+	// will use this context ID. This context_id field can refer to a session
+	// variable like `$context.variables.order_agent_session_id`.
+	ContextId string `json:"contextId,omitempty"`
+	// InputVariableMapping: Optional. Mapping of input variable names of remote
+	// agent to GECX variable names.
+	InputVariableMapping map[string]string `json:"inputVariableMapping,omitempty"`
+	// OutputVariableMapping: Optional. Mapping of output variable names of remote
+	// agent to GECX variable names.
+	OutputVariableMapping map[string]string `json:"outputVariableMapping,omitempty"`
+	// StreamingEnabled: Optional. Whether streaming is enabled for the remote
+	// agent.
+	StreamingEnabled bool `json:"streamingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentCard") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentCard") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoteA2aConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteA2aConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RemoteAgentTool: Represents a tool that allows the agent to call another
 // remote agent.
 type RemoteAgentTool struct {
@@ -11106,6 +11278,8 @@ type SessionOutput struct {
 	Image *Image `json:"image,omitempty"`
 	// Payload: Custom payload with structured output from the CES agent.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// Progress: Intermediate progress update from the CES agent.
+	Progress string `json:"progress,omitempty"`
 	// Text: Output text from the CES agent.
 	Text string `json:"text,omitempty"`
 	// ToolCalls: Request for the client to execute the tools.
@@ -24203,6 +24377,117 @@ func (c *ProjectsLocationsAppsVersionsListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsAppsVersionsPatchCall struct {
+	s          *Service
+	nameid     string
+	appversion *AppVersion
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the specified app version.
+//
+//   - name: Identifier. The unique identifier of the app version. Format:
+//     `projects/{project}/locations/{location}/apps/{app}/versions/{version}`.
+func (r *ProjectsLocationsAppsVersionsService) Patch(nameid string, appversion *AppVersion) *ProjectsLocationsAppsVersionsPatchCall {
+	c := &ProjectsLocationsAppsVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.appversion = appversion
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. If empty, fields `display_name` and `description` will be updated.
+func (c *ProjectsLocationsAppsVersionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAppsVersionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsVersionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsVersionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsVersionsPatchCall) Context(ctx context.Context) *ProjectsLocationsAppsVersionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsVersionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.appversion)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.versions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AppVersion.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsVersionsPatchCall) Do(opts ...googleapi.CallOption) (*AppVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AppVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsAppsVersionsRestoreCall struct {

@@ -387,6 +387,11 @@ type Backup struct {
 	//   "REGIONAL" - REGIONAL instances offer the features and availability needed
 	// for mission-critical workloads.
 	SourceInstanceTier string `json:"sourceInstanceTier,omitempty"`
+	// SourceVolume: Optional. The resource name of the Filestore volume that the
+	// backup is created from. Should be in the format:
+	// projects/{project_id}/locations/{location_id}/volumePools/{volume_pool_id}/vo
+	// lumes/{volume_id}
+	SourceVolume string `json:"sourceVolume,omitempty"`
 	// State: Output only. The backup state.
 	//
 	// Possible values:
@@ -1208,73 +1213,6 @@ type Instance struct {
 
 func (s Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// InstanceTemplate: InstanceTemplate representation of a Cloud Filestore
-// volume pool instance template.
-type InstanceTemplate struct {
-	// BackendType: Optional. Backend type.
-	//
-	// Possible values:
-	//   "BACKEND_TYPE_UNSPECIFIED" - Backend type not set.
-	//   "COMPUTE_BASED_BACKEND" - Instance is backed by Compute.
-	//   "FILESTORE_BACKEND" - Instance is backed by Filestore.
-	BackendType string `json:"backendType,omitempty"`
-	// CapacityGb: Optional. Capacity in GB.
-	CapacityGb int64 `json:"capacityGb,omitempty"`
-	// Labels: Optional. Instance labels.
-	Labels map[string]string `json:"labels,omitempty"`
-	// Networks: Optional. Network configurations.
-	Networks []*NetworkConfig `json:"networks,omitempty"`
-	// PerformanceConfig: Optional. Performance configuration.
-	PerformanceConfig *PerformanceConfig `json:"performanceConfig,omitempty"`
-	// Protocol: Optional. File protocol.
-	//
-	// Possible values:
-	//   "FILE_PROTOCOL_UNSPECIFIED" - FILE_PROTOCOL_UNSPECIFIED serves a "not set"
-	// default value when a FileProtocol is a separate field in a message.
-	//   "NFS_V3" - NFS 3.0.
-	//   "NFS_V4_1" - NFS 4.1.
-	Protocol string `json:"protocol,omitempty"`
-	// RequestOverrides: Optional. Request overrides in JSON format.
-	RequestOverrides string `json:"requestOverrides,omitempty"`
-	// Tier: Optional. Tier of the instance.
-	//
-	// Possible values:
-	//   "TIER_UNSPECIFIED" - Not set.
-	//   "STANDARD" - STANDARD tier. BASIC_HDD is the preferred term for this tier.
-	//   "PREMIUM" - PREMIUM tier. BASIC_SSD is the preferred term for this tier.
-	//   "BASIC_HDD" - BASIC instances offer a maximum capacity of 63.9 TB.
-	// BASIC_HDD is an alias for STANDARD Tier, offering economical performance
-	// backed by HDD.
-	//   "BASIC_SSD" - BASIC instances offer a maximum capacity of 63.9 TB.
-	// BASIC_SSD is an alias for PREMIUM Tier, and offers improved performance
-	// backed by SSD.
-	//   "HIGH_SCALE_SSD" - HIGH_SCALE instances offer expanded capacity and
-	// performance scaling capabilities.
-	//   "ENTERPRISE" - ENTERPRISE instances offer the features and availability
-	// needed for mission-critical workloads.
-	//   "ZONAL" - ZONAL instances offer expanded capacity and performance scaling
-	// capabilities.
-	//   "REGIONAL" - REGIONAL instances offer the features and availability needed
-	// for mission-critical workloads.
-	Tier string `json:"tier,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackendType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackendType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s InstanceTemplate) MarshalJSON() ([]byte, error) {
-	type NoMethod InstanceTemplate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2353,9 +2291,13 @@ type Share struct {
 	// projects/{project_id}/locations/{location_id}/backups/{backup_id}. Empty, if
 	// the Share is created from scratch and not restored from a backup.
 	Backup string `json:"backup,omitempty"`
-	// CapacityGb: File share capacity in gigabytes (GB). Filestore defines 1 GB as
-	// 1024^3 bytes. Must be greater than 0.
+	// CapacityGb: Optional. File share capacity in gigabytes (GB). Filestore
+	// defines 1 GB as 1024^3 bytes. Must be greater than 0. Exactly one of
+	// capacity_gb or capacity_mb must be specified.
 	CapacityGb int64 `json:"capacityGb,omitempty,string"`
+	// CapacityMb: Optional. File share capacity in Megabytes (MB). Must be greater
+	// than 0. Exactly one of capacity_gb or capacity_mb must be specified.
+	CapacityMb int64 `json:"capacityMb,omitempty,string"`
 	// CreateTime: Output only. The time when the share was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: A description of the share with 2048 characters or less.
@@ -2612,76 +2554,39 @@ func (s Volume) MarshalJSON() ([]byte, error) {
 
 // VolumePool: VolumePool representation of a Cloud Filestore volume pool.
 type VolumePool struct {
+	// ActiveVolumeIops: Optional. The number of IOPs provisioned per active
+	// volume.
+	ActiveVolumeIops int64 `json:"activeVolumeIops,omitempty"`
 	// CreateTime: Output only. The time when the volume pool was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DefaultVolumeQuotaMib: Optional. The default quota per volume in MiB.
+	// Default: 1024 MiB.
+	DefaultVolumeQuotaMib int64 `json:"defaultVolumeQuotaMib,omitempty"`
 	// Description: Optional. A description of the volume pool with 2048 characters
 	// or less.
 	Description string `json:"description,omitempty"`
-	// InstanceListPageSize: Optional. The page size to use when listing instances.
-	InstanceListPageSize int64 `json:"instanceListPageSize,omitempty"`
-	// InstanceNamePrefix: Optional. Instance name prefix.
-	InstanceNamePrefix string `json:"instanceNamePrefix,omitempty"`
-	// InstanceTemplate: Optional. Instance template details.
-	InstanceTemplate *InstanceTemplate `json:"instanceTemplate,omitempty"`
 	// Labels: Optional. Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
-	// MaxAcquireCandidates: Optional. The maximum number of candidates to fetch
-	// when acquiring a volume.
-	MaxAcquireCandidates int64 `json:"maxAcquireCandidates,omitempty"`
-	// MaxInstances: Optional. Maximum number of instances to create.
-	MaxInstances int64 `json:"maxInstances,omitempty"`
-	// MaxPendingInstanceCreations: Optional. The maximum number of pending
-	// instance creation requests.
-	MaxPendingInstanceCreations int64 `json:"maxPendingInstanceCreations,omitempty"`
-	// MaxPendingVolumeCreationsPerInstance: Optional. The maximum number of
-	// pending volume creation requests per instance.
-	MaxPendingVolumeCreationsPerInstance int64 `json:"maxPendingVolumeCreationsPerInstance,omitempty"`
-	// MaxPendingVolumeDeletionsPerInstance: Optional. The maximum number of
-	// pending volume deletion requests per instance.
-	MaxPendingVolumeDeletionsPerInstance int64 `json:"maxPendingVolumeDeletionsPerInstance,omitempty"`
-	// MaxVolumesPerInstance: Optional. Maximum number of volumes per instance.
-	MaxVolumesPerInstance int64 `json:"maxVolumesPerInstance,omitempty"`
-	// MinAvailableVolumes: Optional. Minimum number of available volumes to
-	// maintain.
-	MinAvailableVolumes int64 `json:"minAvailableVolumes,omitempty"`
-	// MinInstances: Optional. Minimum number of instances to create.
-	MinInstances int64 `json:"minInstances,omitempty"`
 	// Name: Identifier. The resource name of the volume pool, in the format
 	// `projects/{project}/locations/{location}/volumePools/{volume_pool}`.
 	Name string `json:"name,omitempty"`
-	// NegbaInstanceRatio: Optional. The ratio of Negba instances to maintain in
-	// the volume pool, between 0 and 1.
-	NegbaInstanceRatio float64 `json:"negbaInstanceRatio,omitempty"`
-	// OperationPollLimit: Optional. The maximum number of operations to poll in a
-	// single reconciliation run.
-	OperationPollLimit int64 `json:"operationPollLimit,omitempty"`
-	// State: Output only. The volume pool state.
-	//
-	// Possible values:
-	//   "STATE_UNSPECIFIED" - State not set.
-	//   "READY" - Volume pool is ready for use.
-	//   "DELETING" - Volume pool is being deleted.
-	//   "INVALID" - Volume pool is in an invalid state.
-	State string `json:"state,omitempty"`
-	// UniqueId: Output only. Unique ID of the resource, as defined by CCFE.
-	UniqueId string `json:"uniqueId,omitempty"`
-	// VolumeBatchSize: Optional. The number of volumes to create in a single
-	// batch.
-	VolumeBatchSize int64 `json:"volumeBatchSize,omitempty"`
-	// VolumeSizeMb: Optional. Volume size in MiB.
-	VolumeSizeMb int64 `json:"volumeSizeMb,omitempty"`
+	// Network: Required. The VPC network to which the VolumePool should be
+	// attached. Only Private Service Connect (PSC) is supported.
+	Network string `json:"network,omitempty"`
+	// Uid: Output only. System-assigned unique identifier for the volume pool.
+	Uid string `json:"uid,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ActiveVolumeIops") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveVolumeIops") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2689,20 +2594,6 @@ type VolumePool struct {
 func (s VolumePool) MarshalJSON() ([]byte, error) {
 	type NoMethod VolumePool
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-func (s *VolumePool) UnmarshalJSON(data []byte) error {
-	type NoMethod VolumePool
-	var s1 struct {
-		NegbaInstanceRatio gensupport.JSONFloat64 `json:"negbaInstanceRatio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.NegbaInstanceRatio = float64(s1.NegbaInstanceRatio)
-	return nil
 }
 
 // WeeklyCycle: Time window specified for weekly operations.

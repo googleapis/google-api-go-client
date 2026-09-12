@@ -445,8 +445,10 @@ func (s BDRBackupPlanJobLog) MarshalJSON() ([]byte, error) {
 }
 
 // BDRBackupRestoreJobLog: Log entry for Backup and Restore Job for resources
-// using BackupPlan based protection. Next Id: 26
+// using BackupPlan based protection. Next Id: 27
 type BDRBackupRestoreJobLog struct {
+	// AutoProtectionPolicy: The auto-protection policy that created the backup.
+	AutoProtectionPolicy string `json:"autoProtectionPolicy,omitempty"`
 	// BackupConsistencyTime: Backup consistency time.
 	BackupConsistencyTime string `json:"backupConsistencyTime,omitempty"`
 	// BackupName: Full resource name of the backup created in backup jobs and used
@@ -504,15 +506,15 @@ type BDRBackupRestoreJobLog struct {
 	StorageTier string `json:"storageTier,omitempty"`
 	// TargetResourceType: The target resource type for restore jobs.
 	TargetResourceType string `json:"targetResourceType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackupConsistencyTime") to
+	// ForceSendFields is a list of field names (e.g. "AutoProtectionPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupConsistencyTime") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoProtectionPolicy") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

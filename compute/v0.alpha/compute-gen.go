@@ -8696,6 +8696,12 @@ type BackendService struct {
 	// toINTERNAL, or when the load balancing scheme is set toEXTERNAL and haPolicy
 	// fastIpMove is enabled.
 	Network string `json:"network,omitempty"`
+	// NetworkAttachment: Optional. The URL of the network attachment that this
+	// resource
+	// belongs
+	// to.projects/{project}/regions/{region_name}/networkAttachments/{network_attac
+	// hment_name}.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
 	// NetworkPassThroughLbTrafficPolicy: Configures traffic steering properties of
 	// internal passthrough Network
 	// Load Balancers.
@@ -8836,6 +8842,14 @@ type BackendService struct {
 	// Can only be set if load balancing scheme is INTERNAL_SELF_MANAGED.
 	// If set, lists of backends and health checks must be both empty.
 	ServiceBindings []string `json:"serviceBindings,omitempty"`
+	// ServiceClassId: Optional. The service class ID associated with this
+	// resource.
+	// Producer Service's Service class ID for the region of this backend
+	// service. Can only be used with network_attachment. It is not possible to
+	// use on its own; however, network_attachment can be used
+	// without
+	// service_class_id.
+	ServiceClassId string `json:"serviceClassId,omitempty"`
 	// ServiceLbPolicy: URL to networkservices.ServiceLbPolicy resource.
 	//
 	// Can only be set if load balancing scheme is
@@ -9899,8 +9913,8 @@ type BackendServiceHAPolicyLeaderNetworkEndpoint struct {
 	// the
 	// haPolicy.leader.backendGroup.
 	//
-	// The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// The value must be a valid RFC1035 name (1-63 characters) or a valid
+	// instance URL.
 	// Authorization requires the following IAM permission on the
 	// specified resource instance: compute.instances.use
 	Instance string `json:"instance,omitempty"`
@@ -12376,16 +12390,15 @@ func (s CalendarModeAdviceResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CalendarModeExtensionAdviceRequest: A request to recommend the best duration
-// for extending an existing
-// Future Reservation in CALENDAR mode, that is equal or less than the
-// specified
-// extension duration.
+// CalendarModeExtensionAdviceRequest: A request to recommend the maximum
+// duration for extending an existing future
+// reservation in calendar mode. The recommended duration is shorter than
+// or
+// equal to the specified extension duration.
 type CalendarModeExtensionAdviceRequest struct {
-	// EndTimeNotLaterThan: Required. The desired end time after the Future
-	// Reservation is extended.
+	// EndTimeNotLaterThan: Required. The desired end time for the extension.
 	EndTimeNotLaterThan string `json:"endTimeNotLaterThan,omitempty"`
-	// FutureReservation: Required. Reference to the Future Reservation, in the
+	// FutureReservation: Required. Reference to the future reservation, in the
 	// format:
 	// projects/{project}/zones/{zone}/futureReservations/{name}
 	// Full URIs that include hostnames (like compute.googleapis.com
@@ -12410,26 +12423,27 @@ func (s CalendarModeExtensionAdviceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CalendarModeExtensionAdviceResponse: A response containing the recommended
-// duration to extend a
-// Future Reservation in CALENDAR mode based on the available capacity
-// during
-// the extension period.
+// CalendarModeExtensionAdviceResponse: A response that contains the
+// recommended duration for extending
+// a future reservation in calendar mode based on available capacity
+// during the extension period.
 type CalendarModeExtensionAdviceResponse struct {
-	// EndTime: The recommended end time for the extension, which will either
-	// be
-	// the end time requested by the caller or the longest alternative for
-	// which there is sufficient capacity. If extension is not possible, this
-	// field will be empty, and not_recommended_reason will be populated instead.
+	// EndTime: The recommended end time for the extension, which is either the end
+	// time
+	// requested by the caller or the longest alternative with sufficient
+	// capacity. If the extension is not possible, this field is empty,
+	// and
+	// notRecommendedReason is populated instead.
 	EndTime string `json:"endTime,omitempty"`
-	// NotRecommendedReason: Information regarding the reason why the Future
-	// Reservation
-	// cannot be extended at all. If a recommendation is provided, whether that
-	// is
-	// the requested end time or an alternative, this field will be empty.
+	// NotRecommendedReason: The reason why the future reservation can't be
+	// extended. If a
+	// recommendation is provided, whether for the requested end time or
+	// an
+	// alternative, this field is empty.
 	NotRecommendedReason *CalendarModeExtensionAdviceResponseNotRecommendedReason `json:"notRecommendedReason,omitempty"`
-	// RecommendationId: Unique id of the recommendation, a UUID string generated
-	// by the API.
+	// RecommendationId: The unique ID of the recommendation, which is a UUID
+	// string generated by
+	// the API.
 	RecommendationId string `json:"recommendationId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -12455,15 +12469,16 @@ func (s CalendarModeExtensionAdviceResponse) MarshalJSON() ([]byte, error) {
 // CalendarModeExtensionAdviceResponseNotRecommendedReason: Information about
 // why no recommendation was provided.
 type CalendarModeExtensionAdviceResponseNotRecommendedReason struct {
-	// Details: Details (human readable) describing why the recommendation
-	// was not provided. For example, if the status is CONDITION_NOT_MET,
-	// then this field will contain information about why the requested
-	// extension duration is not eligible.
+	// Details: Human-readable details describing why the recommendation wasn't
+	// provided.
+	// For example, if the status is CONDITIONS_NOT_MET, this field explains
+	// why
+	// the requested extension duration isn't possible.
 	Details string `json:"details,omitempty"`
 	// Status: Status of recommendation.
 	//
 	// Possible values:
-	//   "CONDITIONS_NOT_MET" - The requested extension window does not meet
+	//   "CONDITIONS_NOT_MET" - The requested extension window doesn't meet
 	// the
 	// required conditions.
 	//   "NOT_RECOMMENDED_REASON_STATUS_UNSPECIFIED" - Default value, unused.
@@ -12609,7 +12624,7 @@ type CapacityAdviceRequestDistributionPolicy struct {
 	// where
 	// resources are available while distributing VMs as evenly as possible
 	// across selected zones to minimize the impact of zonal failure.
-	//   "TARGET_SHAPE_UNSPECIFIED"
+	//   "TARGET_SHAPE_UNSPECIFIED" - Default value, unused.
 	TargetShape string `json:"targetShape,omitempty"`
 	// Zones: Zones where Capacity Advisor looks for capacity.
 	Zones []*CapacityAdviceRequestDistributionPolicyZoneConfiguration `json:"zones,omitempty"`
@@ -12967,7 +12982,7 @@ type CapacityHistoryRequest struct {
 	// Types: List of history types to get capacity history for.
 	//
 	// Possible values:
-	//   "HISTORY_TYPE_UNSPECIFIED"
+	//   "HISTORY_TYPE_UNSPECIFIED" - Default value, unused.
 	//   "PREEMPTION" - Preemption history.
 	//   "PRICE" - Price history.
 	Types []string `json:"types,omitempty"`
@@ -18787,6 +18802,39 @@ func (s Duration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DynamicCompressionPolicy: Dynamic compression policy for this URL Map's
+// route.
+type DynamicCompressionPolicy struct {
+	// CompressionMode: Compress text responses using Brotli or gzip compression,
+	// based on
+	// the client's Accept-Encoding header.
+	//
+	// Possible values:
+	//   "AUTOMATIC" - Automatically uses the best compression based on the
+	// Accept-Encoding
+	// header sent by the client.
+	//   "DISABLED" - Disables compression. Existing compressed responses cached
+	// by
+	// Cloud CDN will not be served to clients.
+	CompressionMode string `json:"compressionMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompressionMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompressionMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicCompressionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicCompressionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ErrorInfo: Describes the cause of the error with structured
 // details.
 //
@@ -22021,6 +22069,12 @@ type ForwardingRule struct {
 	// Google
 	// APIs, a network must be provided.
 	Network string `json:"network,omitempty"`
+	// NetworkAttachment: Optional. The URL of the network attachment that this
+	// resource
+	// belongs
+	// to.projects/{project}/regions/{region_name}/networkAttachments/{network_attac
+	// hment_name}.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
 	// NetworkTier: This signifies the networking tier used for configuring
 	// this load balancer and can only take the following values:PREMIUM,
 	// STANDARD.
@@ -22158,6 +22212,12 @@ type ForwardingRule struct {
 	// SelfLinkWithId: Output only. [Output Only] Server-defined URL for this
 	// resource with the resource id.
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// ServiceClassId: Optional. Producer Service's Service class ID for the region
+	// of this forwarding rule.
+	// Can only be used with network_attachment. It is not possible to use on
+	// its
+	// own; however, network_attachment can be used without service_class_id.
+	ServiceClassId string `json:"serviceClassId,omitempty"`
 	// ServiceDirectoryRegistrations: Service Directory resources to register this
 	// forwarding rule with.
 	// Currently, only supports a single Service Directory resource.
@@ -26052,6 +26112,9 @@ type GuestOsFeature struct {
 	//
 	// Possible values:
 	//   "BARE_METAL_LINUX_COMPATIBLE"
+	//   "BMSAI_CAPABLE" - Indicates the guest OS is capable of Bare Metal Secure
+	// AI (BMSAI)
+	// confidential computing.
 	//   "CCA_CAPABLE"
 	//   "FEATURE_TYPE_UNSPECIFIED"
 	//   "GVNIC"
@@ -31911,6 +31974,10 @@ type HttpRouteAction struct {
 	//
 	// Not supported when the URL map is bound to a target gRPC proxy.
 	CorsPolicy *CorsPolicy `json:"corsPolicy,omitempty"`
+	// DynamicCompressionPolicy: Dynamic compression policy for this URL Map's
+	// route. Available only for
+	// Global EXTERNAL_MANAGED load balancer schemes.
+	DynamicCompressionPolicy *DynamicCompressionPolicy `json:"dynamicCompressionPolicy,omitempty"`
 	// FaultInjectionPolicy: The specification for fault injection introduced into
 	// traffic to test
 	// the resiliency of clients to backend service failure. As part of
@@ -52681,6 +52748,9 @@ type Network struct {
 	// client when the network is
 	// created.
 	IPv4Range string `json:"IPv4Range,omitempty"`
+	// AdditionalTags: Output only. [Output Only] Additional tags for this
+	// resource.
+	AdditionalTags []string `json:"additionalTags,omitempty"`
 	// AutoCreateSubnetworks: Must be set to create a VPC network. If not set, a
 	// legacy network is
 	// created.
@@ -75744,6 +75814,10 @@ type ResourceStatusPhysicalHostTopology struct {
 	// Instances on the same host experience the lowest possible network
 	// latency.
 	Host string `json:"host,omitempty"`
+	// Machine: Output only. [Output Only] The ID of the machine on which the
+	// running instance is
+	// located. It is only populated for machines which have multiple hosts.
+	Machine string `json:"machine,omitempty"`
 	// Subblock: [Output Only] The ID of the sub-block in which the running
 	// instance is
 	// located. Instances in the same sub-block experience lower network

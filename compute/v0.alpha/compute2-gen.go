@@ -2981,13 +2981,12 @@ type AdviceCalendarModeExtensionCall struct {
 	header_                            http.Header
 }
 
-// CalendarModeExtension: Advise on whether extending an existing Future
-// Reservation is possible
-// based on the desired extension end time. If capacity is not available
-// for
-// the entire requested duration, the method will recommend the
-// longest
-// possible extension.
+// CalendarModeExtension: Advises on whether extending an existing future
+// reservation is possible
+// based on the desired extension end time. If capacity isn't available for
+// the entire requested duration, the method recommends the longest
+// possible
+// extension.
 //
 // - project: Project ID for this request.
 // - region: Name of the region for this request.

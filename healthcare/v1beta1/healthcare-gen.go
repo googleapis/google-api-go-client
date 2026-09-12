@@ -18196,6 +18196,120 @@ func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Do(opts ...goog
 	return c.doRequest("")
 }
 
+type ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall struct {
+	s          *Service
+	name       string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// BulkExportGroupPost: Export resources using POST.
+//
+//   - name: Name of the `Group` resource that is exported, in format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}/fhir/Group/{group_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) BulkExportGroupPost(name string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c := &ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.body_ = body_
+	return c
+}
+
+// Since sets the optional parameter "_since": If provided, only resources
+// updated after this time are exported. The time uses the format
+// YYYY-MM-DDThh:mm:ss.sss+zz:zz. For example, `2015-02-07T13:28:17.239+02:00`
+// or `2017-01-01T00:00:00Z`. The time must be specified to the second and
+// include a time zone.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Since(Since string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("_since", Since)
+	return c
+}
+
+// Type sets the optional parameter "_type": String of comma-delimited FHIR
+// resource types. If provided, only resources of the specified resource
+// type(s) are exported.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Type(Type string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("_type", Type)
+	return c
+}
+
+// OrganizeOutputBy sets the optional parameter "organizeOutputBy": Required.
+// The FHIR resource type used to organize exported resources. Only supports
+// "Patient". When organized by Patient resource, output files are grouped as
+// follows: * Patient file(s) containing the Patient resources. Each Patient is
+// sequentially followed by all resources the Patient references, and all
+// resources that reference the Patient (equivalent to a GetPatientEverything
+// request). * Individual files grouped by resource type for resources in the
+// Group's member field and the Group resource itself. Resources may be
+// duplicated across multiple Patients. For example, if two Patient resources
+// reference the same Organization resource, it will appear twice, once after
+// each Patient. The Group resource from the request does not appear in the
+// Patient files.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) OrganizeOutputBy(organizeOutputBy string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("organizeOutputBy", organizeOutputBy)
+	return c
+}
+
+// OutputFormat sets the optional parameter "outputFormat": Output format of
+// the export. This field is optional and only `application/fhir+ndjson` is
+// supported.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) OutputFormat(outputFormat string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("outputFormat", outputFormat)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
+	if err != nil {
+		return nil, err
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/$export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.bulk-export-group-post", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.bulk-export-group-post" call.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsFhirStoresBulkDeleteCall struct {
 	s                          *Service
 	name                       string

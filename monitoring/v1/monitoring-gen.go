@@ -3097,6 +3097,32 @@ func (s Tile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TimeRange: Represents a time range.
+type TimeRange struct {
+	// AbsoluteWindow: Optional. Represents a time range with absolute start and
+	// end times. The start time is inclusive, and the end time is exclusive.
+	AbsoluteWindow *Interval `json:"absoluteWindow,omitempty"`
+	// RelativeDuration: Optional. Specifies the duration used to shift the data
+	// relative to current time as the end time. The duration must be positive.
+	RelativeDuration string `json:"relativeDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AbsoluteWindow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AbsoluteWindow") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeRange) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TimeSeriesFilter: A filter that defines a subset of time series data that is
 // displayed in a widget. Time series data is fetched using the ListTimeSeries
 // (https://cloud.google.com/monitoring/api/ref_v3/rest/v3/projects.timeSeries/list)
@@ -3451,6 +3477,10 @@ type Widget struct {
 	SingleViewGroup *SingleViewGroup `json:"singleViewGroup,omitempty"`
 	// Text: A raw string or markdown displaying textual content.
 	Text *Text `json:"text,omitempty"`
+	// TimeRange: Optional. Represents a time range for the widget. When set, this
+	// time range will override the dashboard time range. Supported for line,
+	// stacked area and stacked bar widgets only.
+	TimeRange *TimeRange `json:"timeRange,omitempty"`
 	// TimeSeriesTable: A widget that displays time series data in a tabular
 	// format.
 	TimeSeriesTable *TimeSeriesTable `json:"timeSeriesTable,omitempty"`

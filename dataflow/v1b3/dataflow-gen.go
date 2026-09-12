@@ -9343,6 +9343,13 @@ func (c *ProjectsJobsAggregatedCall) PageToken(pageToken string) *ProjectsJobsAg
 	return c
 }
 
+// RegionalFanoutRequested sets the optional parameter
+// "regionalFanoutRequested":
+func (c *ProjectsJobsAggregatedCall) RegionalFanoutRequested(regionalFanoutRequested bool) *ProjectsJobsAggregatedCall {
+	c.urlParams_.Set("regionalFanoutRequested", fmt.Sprint(regionalFanoutRequested))
+	return c
+}
+
 // View sets the optional parameter "view": Deprecated. ListJobs always returns
 // summaries now. Use GetJob for other JobViews.
 //
@@ -10018,6 +10025,13 @@ func (c *ProjectsJobsListCall) PageSize(pageSize int64) *ProjectsJobsListCall {
 // in a long list.
 func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// RegionalFanoutRequested sets the optional parameter
+// "regionalFanoutRequested":
+func (c *ProjectsJobsListCall) RegionalFanoutRequested(regionalFanoutRequested bool) *ProjectsJobsListCall {
+	c.urlParams_.Set("regionalFanoutRequested", fmt.Sprint(regionalFanoutRequested))
 	return c
 }
 
@@ -12538,6 +12552,13 @@ func (c *ProjectsLocationsJobsListCall) PageSize(pageSize int64) *ProjectsLocati
 // in a long list.
 func (c *ProjectsLocationsJobsListCall) PageToken(pageToken string) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// RegionalFanoutRequested sets the optional parameter
+// "regionalFanoutRequested":
+func (c *ProjectsLocationsJobsListCall) RegionalFanoutRequested(regionalFanoutRequested bool) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("regionalFanoutRequested", fmt.Sprint(regionalFanoutRequested))
 	return c
 }
 

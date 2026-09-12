@@ -5366,6 +5366,9 @@ type MaliciousContentLLMResult struct {
 	//   "PERFORMED" - Scan was performed.
 	//   "NOT_PERFORMED" - Scan was not performed.
 	ScanState string `json:"scanState,omitempty"`
+	// TokenUsage: Output only. Telemetry metrics tracking token usage for the AI
+	// scan.
+	TokenUsage *TokenUsage `json:"tokenUsage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxSeverity") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7559,6 +7562,36 @@ type TimeSpan struct {
 
 func (s TimeSpan) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeSpan
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TokenUsage: Token usage associated with an AI scan.
+type TokenUsage struct {
+	// CacheCount: Output only. Cache matched tokens for implicit cache.
+	CacheCount int64 `json:"cacheCount,omitempty,string"`
+	// CandidateCount: Output only. Tokens in the model response.
+	CandidateCount int64 `json:"candidateCount,omitempty,string"`
+	// PromptCount: Output only. Tokens in the user request.
+	PromptCount int64 `json:"promptCount,omitempty,string"`
+	// ThinkingCount: Output only. Tokens in the thinking output.
+	ThinkingCount int64 `json:"thinkingCount,omitempty,string"`
+	// ToolUsePromptCount: Output only. Prompt tokens for using tools.
+	ToolUsePromptCount int64 `json:"toolUsePromptCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CacheCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CacheCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TokenUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod TokenUsage
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

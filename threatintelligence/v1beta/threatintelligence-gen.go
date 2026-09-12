@@ -602,7 +602,7 @@ type CustomThreatScenarioConfig struct {
 	DocumentCondition string `json:"documentCondition,omitempty"`
 	// DocumentQuery: Optional. The query used to match documents.
 	DocumentQuery *DocumentQuery `json:"documentQuery,omitempty"`
-	// LegacyMonitorMetadata: Optional. Legacy metadata associated with this
+	// LegacyMonitorMetadata: Output only. Legacy metadata associated with this
 	// scenario/monitor.
 	LegacyMonitorMetadata *LegacyMetadata `json:"legacyMonitorMetadata,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompiledLuceneQuery") to
@@ -1608,41 +1608,44 @@ func (s *InsiderThreatFindingDetail) UnmarshalJSON(data []byte) error {
 
 // LegacyMetadata: Legacy metadata associated with this scenario/monitor.
 type LegacyMetadata struct {
-	// AggregationEnabled: Optional. Whether aggregation is enabled for alerts from
-	// this monitor.
+	// AggregationEnabled: Output only. Whether aggregation is enabled for alerts
+	// from this monitor.
 	AggregationEnabled bool `json:"aggregationEnabled,omitempty"`
-	// AggregationSimilarity: Optional. Similarity threshold for aggregation.
+	// AggregationSimilarity: Output only. Similarity threshold for aggregation.
 	AggregationSimilarity float64 `json:"aggregationSimilarity,omitempty"`
-	// ConditionVersion: Optional. Version of the condition schema.
+	// ConditionVersion: Output only. Version of the condition schema.
 	ConditionVersion int64 `json:"conditionVersion,omitempty"`
-	// CreatorUserId: Optional. User ID who created the monitor.
+	// CreatorUserId: Output only. User ID who created the monitor.
 	CreatorUserId string `json:"creatorUserId,omitempty"`
-	// Description: Optional. Description of the legacy monitor.
+	// Description: Output only. Description of the legacy monitor.
 	Description string `json:"description,omitempty"`
-	// DisabledCode: Optional. Code indicating why the monitor is disabled (if
+	// DisabledCode: Output only. Code indicating why the monitor is disabled (if
 	// applicable).
 	DisabledCode string `json:"disabledCode,omitempty"`
-	// DisabledReason: Optional. Reason why the monitor is disabled (if
+	// DisabledReason: Output only. Reason why the monitor is disabled (if
 	// applicable).
 	DisabledReason string `json:"disabledReason,omitempty"`
-	// DisplayName: Optional. Name of the legacy monitor.
+	// DisplayName: Output only. Name of the legacy monitor.
 	DisplayName string `json:"displayName,omitempty"`
-	// EmailNotificationEnabled: Optional. Whether email notifications are enabled.
+	// EmailNotificationEnabled: Output only. Deprecated: Whether email
+	// notifications are enabled. This field will not be used as email
+	// notifications are handled through the GTI Mail Hub.
 	EmailNotificationEnabled bool `json:"emailNotificationEnabled,omitempty"`
-	// EmailNotificationImmediate: Optional. Whether email notifications are
-	// intermediate/immediate.
+	// EmailNotificationImmediate: Output only. Deprecated: Whether email
+	// notifications are intermediate/immediate. This field will not be used as
+	// email notifications are handled through the GTI Mail Hub.
 	EmailNotificationImmediate bool `json:"emailNotificationImmediate,omitempty"`
-	// LegacyMonitorId: Optional. Unique identifier of the legacy monitor.
+	// LegacyMonitorId: Output only. Unique identifier of the legacy monitor.
 	LegacyMonitorId string `json:"legacyMonitorId,omitempty"`
-	// StaleTime: Optional. Time the legacy monitor was considered stale.
+	// StaleTime: Output only. Time the legacy monitor was considered stale.
 	StaleTime string `json:"staleTime,omitempty"`
-	// TemplateId: Optional. ID of the template this monitor was created from.
+	// TemplateId: Output only. ID of the template this monitor was created from.
 	TemplateId string `json:"templateId,omitempty"`
-	// TenantId: Optional. ID of the tenant owning the monitor.
+	// TenantId: Output only. ID of the tenant owning the monitor.
 	TenantId string `json:"tenantId,omitempty"`
-	// UpdaterUserId: Optional. User ID who last updated the monitor.
+	// UpdaterUserId: Output only. User ID who last updated the monitor.
 	UpdaterUserId string `json:"updaterUserId,omitempty"`
-	// Version: Optional. Version of the monitor configuration.
+	// Version: Output only. Version of the monitor configuration.
 	Version int64 `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregationEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or

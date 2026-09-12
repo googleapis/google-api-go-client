@@ -7390,6 +7390,13 @@ func (r *FilesService) Copy(fileId string, file *File) *FilesCopyCall {
 	return c
 }
 
+// CopyComments sets the optional parameter "copyComments": Whether to copy the
+// comments associated with the file.
+func (c *FilesCopyCall) CopyComments(copyComments bool) *FilesCopyCall {
+	c.urlParams_.Set("copyComments", fmt.Sprint(copyComments))
+	return c
+}
+
 // EnforceSingleParent sets the optional parameter "enforceSingleParent":
 // Deprecated: Copying files into multiple folders is no longer supported. Use
 // shortcuts instead.

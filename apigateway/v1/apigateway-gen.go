@@ -671,6 +671,22 @@ type ApigatewayGateway struct {
 	DefaultHostname string `json:"defaultHostname,omitempty"`
 	// DisplayName: Optional. Display name.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveStreamingMode: Output only. The streaming mode this gateway is
+	// actually served with, which the service resolves at creation from
+	// `streaming_mode`, the referenced API Config, and the platform default at the
+	// time. Read this rather than `streaming_mode` to determine whether a gateway
+	// supports response streaming.
+	//
+	// Possible values:
+	//   "EFFECTIVE_STREAMING_MODE_UNSPECIFIED" - The service has not resolved a
+	// mode. Every gateway returned by `GetGateway` and `ListGateways` carries a
+	// resolved mode, so this value should not be returned under normal
+	// circumstances.
+	//   "EFFECTIVE_STREAMING_MODE_DISABLED" - The gateway does not support
+	// response streaming.
+	//   "EFFECTIVE_STREAMING_MODE_ENABLED" - The gateway supports response
+	// streaming.
+	EffectiveStreamingMode string `json:"effectiveStreamingMode,omitempty"`
 	// Labels: Optional. Resource labels to represent user-provided metadata. Refer
 	// to cloud documentation on labels for more details.
 	// https://cloud.google.com/compute/docs/labeling-resources
@@ -688,6 +704,18 @@ type ApigatewayGateway struct {
 	//   "DELETING" - Gateway is being deleted.
 	//   "UPDATING" - Gateway is being updated.
 	State string `json:"state,omitempty"`
+	// StreamingMode: Optional. Immutable. Requests response streaming for a new
+	// gateway. An attempt to change it on update is rejected. If unset, the
+	// service selects the mode. This field records only what was requested and is
+	// never modified by the service; read `effective_streaming_mode` for the mode
+	// the gateway is served with.
+	//
+	// Possible values:
+	//   "STREAMING_MODE_UNSPECIFIED" - The service selects the streaming mode.
+	//   "STREAMING_MODE_ENABLED" - Streaming is enabled. The gateway supports
+	// response streaming: server-sent events, HTTP chunked transfer, WebSockets,
+	// and gRPC/HTTP2 bidirectional streaming.
+	StreamingMode string `json:"streamingMode,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 

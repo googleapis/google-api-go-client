@@ -3840,6 +3840,9 @@ type GoogleCloudApigeeV1ControlPlaneAccess struct {
 	// service accounts
 	// (https://cloud.google.com/apigee/docs/hybrid/latest/sa-about#create-the-service-accounts).
 	SynchronizerIdentities []string `json:"synchronizerIdentities,omitempty"`
+	// WatcherIdentities: Optional. Service accounts granted access to control
+	// plane resources for the apigee-watcher component.
+	WatcherIdentities []string `json:"watcherIdentities,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -8051,6 +8054,54 @@ type GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow struct {
 
 func (s GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1McpServerConfig: Deployed MCP server configuration for an
+// organization. Response for GetMcpServerConfig. Org-scoped singleton: each
+// organization has exactly one McpServerConfig. Multiple logical MCP servers
+// within the same org are expressed inside the Cloud Storage blob
+// (McpServerConfigData.hosts map), not as multiple McpServerConfig resources.
+type GoogleCloudApigeeV1McpServerConfig struct {
+	// McpServerConfigDataLocation: Output only. Cloud Storage URI to the
+	// McpServerConfigData blob in the Apigee tenant project bucket. The sidecar
+	// fetches this URI using Cloud Storage, and deserializes the. protojson blob
+	// to McpServerConfigData. Treat this as an opaque URI — its format may
+	// change. Example:
+	// gs://{apigee-tp-bucket}/apigee-mcp-config-{org}-{revision_id}.json
+	McpServerConfigDataLocation string `json:"mcpServerConfigDataLocation,omitempty"`
+	// Name: Identifier. Resource name in the singleton form:
+	// organizations/{org}/mcpServerConfig
+	Name string `json:"name,omitempty"`
+	// RevisionCreateTime: Output only. Time at which this McpServerConfig revision
+	// was created. Mirrors IngressConfig.revision_create_time.
+	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
+	// RevisionId: Output only. Revision ID that defines the ordering on
+	// McpServerConfig revisions. Higher values indicate more recently deployed
+	// configurations. Monotonically non-decreasing per organization. Mirrors
+	// IngressConfig.revision_id.
+	RevisionId int64 `json:"revisionId,omitempty,string"`
+	// Uid: Output only. Unique ID for the McpServerConfig that will only change if
+	// the organization is deleted and recreated.
+	Uid string `json:"uid,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "McpServerConfigDataLocation") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "McpServerConfigDataLocation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1McpServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1McpServerConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14021,8 +14072,8 @@ type OrganizationsDeleteCall struct {
 
 // Delete: Delete an Apigee organization. For organizations with BillingType
 // EVALUATION, an immediate deletion is performed. For paid organizations
-// (Subscription or Pay-as-you-go), a soft-deletion is performed. The
-// organization can be restored within the soft-deletion period, which is
+// (Subscription or Pay-as-you-go), a soft-deletion is performed by default.
+// The organization can be restored within the soft-deletion period, which is
 // specified using the `retention` field in the request or by filing a support
 // ticket with Apigee. During the data retention period specified in the
 // request, the Apigee organization cannot be recreated in the same Google
@@ -14501,6 +14552,120 @@ func (c *OrganizationsGetDeployedIngressConfigCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.getDeployedIngressConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsGetMcpServerConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetMcpServerConfig: Gets the deployed MCP server configuration for an
+// organization. McpServerConfig is an org-scoped singleton (one per
+// organization). The returned configuration may be up to 30 seconds out of
+// date by default.
+//
+//   - name: Name of the deployed MCP server configuration for the organization
+//     in the singleton form: `organizations/{org}/mcpServerConfig`.
+func (r *OrganizationsService) GetMcpServerConfig(name string) *OrganizationsGetMcpServerConfigCall {
+	c := &OrganizationsGetMcpServerConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsGetMcpServerConfigCall) Fields(s ...googleapi.Field) *OrganizationsGetMcpServerConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsGetMcpServerConfigCall) IfNoneMatch(entityTag string) *OrganizationsGetMcpServerConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsGetMcpServerConfigCall) Context(ctx context.Context) *OrganizationsGetMcpServerConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsGetMcpServerConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetMcpServerConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.getMcpServerConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.getMcpServerConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1McpServerConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsGetMcpServerConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1McpServerConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1McpServerConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.getMcpServerConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

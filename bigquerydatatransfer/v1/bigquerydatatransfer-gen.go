@@ -474,6 +474,9 @@ type DataSourceParameter struct {
 	Repeated bool `json:"repeated,omitempty"`
 	// Required: Is parameter required.
 	Required bool `json:"required,omitempty"`
+	// SecretManagerAllowed: Output only. If true, the parameter value can be
+	// provided through Secret Manager.
+	SecretManagerAllowed bool `json:"secretManagerAllowed,omitempty"`
 	// Type: Parameter type.
 	//
 	// Possible values:
@@ -924,6 +927,31 @@ func (s MetadataDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ParameterConfig: Configuration for data source parameters.
+type ParameterConfig struct {
+	// SecretManagerManagedParams: Optional. The list of parameters that are stored
+	// in Secret Manager. The value of a parameter included in this list will be
+	// interpreted as a Secret Manager key version resource name instead of a raw
+	// value. The raw value will be retrieved from Secret Manager upon execution.
+	SecretManagerManagedParams []string `json:"secretManagerManagedParams,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SecretManagerManagedParams")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SecretManagerManagedParams") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ParameterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ParameterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PartitionDetail: Partition details related to hierarchy.
 type PartitionDetail struct {
 	// Table: Optional. Name of the table which has the partitions.
@@ -1322,6 +1350,8 @@ type TransferConfig struct {
 	// case the user information is not available, this field will not be
 	// populated.
 	OwnerInfo *UserInfo `json:"ownerInfo,omitempty"`
+	// ParamConfig: Optional. The config for values in `params`.
+	ParamConfig *ParameterConfig `json:"paramConfig,omitempty"`
 	// Params: Parameters specific to each data source. For more information see
 	// the bq tab in the 'Setting up a data transfer' section for each data source.
 	// For example the parameters for Cloud Storage transfers are listed here:
@@ -1541,6 +1571,8 @@ type TransferRun struct {
 	// will be sent after this transfer run finishes. The format for specifying a
 	// pubsub topic is: `projects/{project_id}/topics/{topic_id}`
 	NotificationPubsubTopic string `json:"notificationPubsubTopic,omitempty"`
+	// ParameterConfig: Output only. The parameter config of the transfer run.
+	ParameterConfig *ParameterConfig `json:"parameterConfig,omitempty"`
 	// Params: Output only. Parameters specific to each data source. For more
 	// information see the bq tab in the 'Setting up a data transfer' section for
 	// each data source. For example the parameters for Cloud Storage transfers are

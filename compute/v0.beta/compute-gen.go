@@ -3629,6 +3629,17 @@ func (s AdvancedMachineFeatures) MarshalJSON() ([]byte, error) {
 
 // AliasIpRange: An alias IP range attached to an instance's network interface.
 type AliasIpRange struct {
+	// CandidateSubnetworkRangeNames: Identifies the candidate subnetwork range
+	// names for the alias
+	// IPs to be allocated from. When it is set, the IP would be allocated from
+	// any subnetwork range defined here if the IPs are available.
+	// Only one of subnetwork_range_name or candidate_subnetwork_range_names
+	// should be set.
+	CandidateSubnetworkRangeNames []string `json:"candidateSubnetworkRangeNames,omitempty"`
+	// EffectiveSubnetworkRangeName: Output only. [Output Only] The subnetwork
+	// range name where the IP is allocated.
+	// It will be set to the subnetwork range where the IP is allocated only.
+	EffectiveSubnetworkRangeName string `json:"effectiveSubnetworkRangeName,omitempty"`
 	// IpCidrRange: The IP alias ranges to allocate for this interface. This IP
 	// CIDR range
 	// must belong to the specified subnetwork and cannot contain IP
@@ -3641,15 +3652,15 @@ type AliasIpRange struct {
 	// to allocate an IP
 	// alias range. If not specified, the primary range of the subnetwork is used.
 	SubnetworkRangeName string `json:"subnetworkRangeName,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IpCidrRange") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "CandidateSubnetworkRangeNames") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IpCidrRange") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CandidateSubnetworkRangeNames")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9118,8 +9129,8 @@ type BackendServiceHAPolicyLeaderNetworkEndpoint struct {
 	// the
 	// haPolicy.leader.backendGroup.
 	//
-	// The name must be 1-63 characters long, and comply with
-	// RFC1035.
+	// The value must be a valid RFC1035 name (1-63 characters) or a valid
+	// instance URL.
 	// Authorization requires the following IAM permission on the
 	// specified resource instance: compute.instances.use
 	Instance string `json:"instance,omitempty"`
@@ -11520,6 +11531,119 @@ func (s CalendarModeAdviceResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CalendarModeExtensionAdviceRequest: A request to recommend the maximum
+// duration for extending an existing future
+// reservation in calendar mode. The recommended duration is shorter than
+// or
+// equal to the specified extension duration.
+type CalendarModeExtensionAdviceRequest struct {
+	// EndTimeNotLaterThan: Required. The desired end time for the extension.
+	EndTimeNotLaterThan string `json:"endTimeNotLaterThan,omitempty"`
+	// FutureReservation: Required. Reference to the future reservation, in the
+	// format:
+	// projects/{project}/zones/{zone}/futureReservations/{name}
+	// Full URIs that include hostnames (like compute.googleapis.com
+	// or
+	// www.googleapis.com) are also supported.
+	FutureReservation string `json:"futureReservation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTimeNotLaterThan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTimeNotLaterThan") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CalendarModeExtensionAdviceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarModeExtensionAdviceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CalendarModeExtensionAdviceResponse: A response that contains the
+// recommended duration for extending
+// a future reservation in calendar mode based on available capacity
+// during the extension period.
+type CalendarModeExtensionAdviceResponse struct {
+	// EndTime: The recommended end time for the extension, which is either the end
+	// time
+	// requested by the caller or the longest alternative with sufficient
+	// capacity. If the extension is not possible, this field is empty,
+	// and
+	// notRecommendedReason is populated instead.
+	EndTime string `json:"endTime,omitempty"`
+	// NotRecommendedReason: The reason why the future reservation can't be
+	// extended. If a
+	// recommendation is provided, whether for the requested end time or
+	// an
+	// alternative, this field is empty.
+	NotRecommendedReason *CalendarModeExtensionAdviceResponseNotRecommendedReason `json:"notRecommendedReason,omitempty"`
+	// RecommendationId: The unique ID of the recommendation, which is a UUID
+	// string generated by
+	// the API.
+	RecommendationId string `json:"recommendationId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CalendarModeExtensionAdviceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarModeExtensionAdviceResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CalendarModeExtensionAdviceResponseNotRecommendedReason: Information about
+// why no recommendation was provided.
+type CalendarModeExtensionAdviceResponseNotRecommendedReason struct {
+	// Details: Human-readable details describing why the recommendation wasn't
+	// provided.
+	// For example, if the status is CONDITIONS_NOT_MET, this field explains
+	// why
+	// the requested extension duration isn't possible.
+	Details string `json:"details,omitempty"`
+	// Status: Status of recommendation.
+	//
+	// Possible values:
+	//   "CONDITIONS_NOT_MET" - The requested extension window doesn't meet
+	// the
+	// required conditions.
+	//   "NOT_RECOMMENDED_REASON_STATUS_UNSPECIFIED" - Default value, unused.
+	//   "NO_CAPACITY" - There is no available capacity for the extension to be
+	// provided.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CalendarModeExtensionAdviceResponseNotRecommendedReason) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarModeExtensionAdviceResponseNotRecommendedReason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CalendarModeRecommendation: A single recommendation to create requested
 // resources. Contains detailed
 // recommendations for every future resources specification specified
@@ -11597,7 +11721,7 @@ type CapacityAdviceRequestDistributionPolicy struct {
 	// where
 	// resources are available while distributing VMs as evenly as possible
 	// across selected zones to minimize the impact of zonal failure.
-	//   "TARGET_SHAPE_UNSPECIFIED"
+	//   "TARGET_SHAPE_UNSPECIFIED" - Default value, unused.
 	TargetShape string `json:"targetShape,omitempty"`
 	// Zones: Zones where Capacity Advisor looks for capacity.
 	Zones []*CapacityAdviceRequestDistributionPolicyZoneConfiguration `json:"zones,omitempty"`
@@ -11932,7 +12056,7 @@ type CapacityHistoryRequest struct {
 	// Types: List of history types to get capacity history for.
 	//
 	// Possible values:
-	//   "HISTORY_TYPE_UNSPECIFIED"
+	//   "HISTORY_TYPE_UNSPECIFIED" - Default value, unused.
 	//   "PREEMPTION" - Preemption history.
 	//   "PRICE" - Price history.
 	Types []string `json:"types,omitempty"`
@@ -17370,6 +17494,39 @@ type Duration struct {
 
 func (s Duration) MarshalJSON() ([]byte, error) {
 	type NoMethod Duration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DynamicCompressionPolicy: Dynamic compression policy for this URL Map's
+// route.
+type DynamicCompressionPolicy struct {
+	// CompressionMode: Compress text responses using Brotli or gzip compression,
+	// based on
+	// the client's Accept-Encoding header.
+	//
+	// Possible values:
+	//   "AUTOMATIC" - Automatically uses the best compression based on the
+	// Accept-Encoding
+	// header sent by the client.
+	//   "DISABLED" - Disables compression. Existing compressed responses cached
+	// by
+	// Cloud CDN will not be served to clients.
+	CompressionMode string `json:"compressionMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompressionMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompressionMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DynamicCompressionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod DynamicCompressionPolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -23841,6 +23998,9 @@ type GuestOsFeature struct {
 	//
 	// Possible values:
 	//   "BARE_METAL_LINUX_COMPATIBLE"
+	//   "BMSAI_CAPABLE" - Indicates the guest OS is capable of Bare Metal Secure
+	// AI (BMSAI)
+	// confidential computing.
 	//   "CCA_CAPABLE"
 	//   "FEATURE_TYPE_UNSPECIFIED"
 	//   "GVNIC"
@@ -28397,6 +28557,10 @@ type HttpRouteAction struct {
 	//
 	// Not supported when the URL map is bound to a target gRPC proxy.
 	CorsPolicy *CorsPolicy `json:"corsPolicy,omitempty"`
+	// DynamicCompressionPolicy: Dynamic compression policy for this URL Map's
+	// route. Available only for
+	// Global EXTERNAL_MANAGED load balancer schemes.
+	DynamicCompressionPolicy *DynamicCompressionPolicy `json:"dynamicCompressionPolicy,omitempty"`
 	// FaultInjectionPolicy: The specification for fault injection introduced into
 	// traffic to test
 	// the resiliency of clients to backend service failure. As part of
@@ -35781,6 +35945,8 @@ func (s InstanceProperties) MarshalJSON() ([]byte, error) {
 // InstancePropertiesPatch: Represents the change that you want to make to the
 // instance properties.
 type InstancePropertiesPatch struct {
+	// ExposeHostTopology: This optional flag exposes the hashed physical host ID.
+	ExposeHostTopology bool `json:"exposeHostTopology,omitempty"`
 	// Labels: The label key-value pairs that you want to patch onto the instance.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Metadata: The metadata key-value pairs that you want to patch onto the
@@ -35788,15 +35954,15 @@ type InstancePropertiesPatch struct {
 	// more information, see Project and
 	// instance metadata.
 	Metadata map[string]string `json:"metadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Labels") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ExposeHostTopology") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Labels") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExposeHostTopology") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -42301,6 +42467,13 @@ type InterconnectMacsec struct {
 	// amust-secure security policy that drops all traffic if the
 	// MKA session cannot be established with your router.
 	FailOpen bool `json:"failOpen,omitempty"`
+	// InterconnectKeyGroup: Optional. URL of the InterconnectKeyGroup resource to
+	// use for MACsec, in
+	// the
+	// format:
+	// projects/{project}/locations/{region}/interconnectKeyGroups/{interconnectKeyG
+	// roup}.
+	InterconnectKeyGroup string `json:"interconnectKeyGroup,omitempty"`
 	// PreSharedKeys: Required. A keychain placeholder describing a set of named
 	// key objects
 	// along with their start times. A MACsec CKN/CAK is generated for each
@@ -67841,6 +68014,10 @@ type ResourceStatusPhysicalHostTopology struct {
 	// Instances on the same host experience the lowest possible network
 	// latency.
 	Host string `json:"host,omitempty"`
+	// Machine: Output only. [Output Only] The ID of the machine on which the
+	// running instance is
+	// located. It is only populated for machines which have multiple hosts.
+	Machine string `json:"machine,omitempty"`
 	// Subblock: [Output Only] The ID of the sub-block in which the running
 	// instance is
 	// located. Instances in the same sub-block experience lower network
@@ -72624,7 +72801,11 @@ type Scheduling struct {
 	// in. The value
 	// must be a number between 1 and the number of availability domains
 	// specified in the spread placement policy attached to the instance.
-	AvailabilityDomain int64                       `json:"availabilityDomain,omitempty"`
+	AvailabilityDomain int64 `json:"availabilityDomain,omitempty"`
+	// ExposeHostTopology: This optional flag exposes the hashed physical host ID
+	// in the
+	// ResourceStatus resource of the VM.
+	ExposeHostTopology bool                        `json:"exposeHostTopology,omitempty"`
 	GracefulShutdown   *SchedulingGracefulShutdown `json:"gracefulShutdown,omitempty"`
 	// HostErrorTimeoutSeconds: Specify the time in seconds for host error
 	// detection, the value must be

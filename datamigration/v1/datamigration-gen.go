@@ -3315,8 +3315,8 @@ type MigrationJob struct {
 	// OriginalMigrationName: Optional. A failback replication pointer to the
 	// resource name (URI) of the original migration job.
 	OriginalMigrationName string `json:"originalMigrationName,omitempty"`
-	// PerformanceConfig: Optional. Data dump parallelism settings used by the
-	// migration.
+	// PerformanceConfig: Optional. Data dump and load parallelism settings used by
+	// the migration.
 	PerformanceConfig *PerformanceConfig `json:"performanceConfig,omitempty"`
 	// Phase: Output only. The current migration job phase.
 	//
@@ -3712,9 +3712,15 @@ type MySqlConnectionProfile struct {
 	PasswordSet bool `json:"passwordSet,omitempty"`
 	// Port: Required. The network port of the source MySQL database.
 	Port int64 `json:"port,omitempty"`
+	// PrivateConnectivity: Private connectivity.
+	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
+	// PrivateServiceConnectConnectivity: Private Service Connect connectivity.
+	PrivateServiceConnectConnectivity *PrivateServiceConnectConnectivity `json:"privateServiceConnectConnectivity,omitempty"`
 	// Ssl: SSL configuration for the destination to connect to the source
 	// database.
 	Ssl *SslConfig `json:"ssl,omitempty"`
+	// StaticServiceIpConnectivity: Static Service IP connectivity.
+	StaticServiceIpConnectivity *StaticServiceIpConnectivity `json:"staticServiceIpConnectivity,omitempty"`
 	// Username: Required. The username that Database Migration Service will use to
 	// connect to the database. The value is encrypted when stored in Database
 	// Migration Service.
@@ -3998,6 +4004,14 @@ type PerformanceConfig struct {
 	//   "OPTIMAL" - Optimal parallel level.
 	//   "MAX" - Maximum parallel level.
 	DumpParallelLevel string `json:"dumpParallelLevel,omitempty"`
+	// LoadParallelLevel: Optional. Initial load parallelism level.
+	//
+	// Possible values:
+	//   "LOAD_PARALLEL_LEVEL_UNSPECIFIED" - Unknown load parallel level.
+	//   "LOAD_MIN" - Minimal parallel level.
+	//   "LOAD_OPTIMAL" - Optimal parallel level.
+	//   "LOAD_MAX" - Maximum parallel level.
+	LoadParallelLevel string `json:"loadParallelLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DumpParallelLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4176,7 +4190,7 @@ type PostgreSqlConnectionProfile struct {
 	Port int64 `json:"port,omitempty"`
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
-	// PrivateServiceConnectConnectivity: Private service connect connectivity.
+	// PrivateServiceConnectConnectivity: Private Service Connect connectivity.
 	PrivateServiceConnectConnectivity *PrivateServiceConnectConnectivity `json:"privateServiceConnectConnectivity,omitempty"`
 	// Ssl: SSL configuration for the destination to connect to the source
 	// database.

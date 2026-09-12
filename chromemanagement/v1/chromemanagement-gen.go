@@ -2113,6 +2113,101 @@ func (s GoogleChromeManagementV1FindInstalledAppProfilesResponse) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1FindSaasUsageBrowsersResponse: Response to
+// `FindSaasUsageBrowsers` method.
+type GoogleChromeManagementV1FindSaasUsageBrowsersResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SaasUsageBrowsers: The list of SaaS usage browser reports.
+	SaasUsageBrowsers []*GoogleChromeManagementV1SaasUsageBrowser `json:"saasUsageBrowsers,omitempty"`
+	// TotalSize: Total number of SaaS usage browser reports that match the
+	// request.
+	TotalSize int64 `json:"totalSize,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1FindSaasUsageBrowsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1FindSaasUsageBrowsersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1FindSaasUsageProfilesResponse: Response to
+// `FindSaasUsageProfiles` method.
+type GoogleChromeManagementV1FindSaasUsageProfilesResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ProfileReports: The list of SaaS usage profile reports.
+	ProfileReports []*GoogleChromeManagementV1SaasUsageProfileReport `json:"profileReports,omitempty"`
+	// TotalSize: Total number of SaaS usage profile reports that match the
+	// request.
+	TotalSize int64 `json:"totalSize,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1FindSaasUsageProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1FindSaasUsageProfilesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1FindSaasUsageReportsResponse: Response to
+// `FindSaasUsage` method.
+type GoogleChromeManagementV1FindSaasUsageReportsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SaasReports: The list of SaaS usage reports.
+	SaasReports []*GoogleChromeManagementV1SaasUsageReport `json:"saasReports,omitempty"`
+	// TotalSize: Total number of SaaS usage reports that match the request.
+	TotalSize int64 `json:"totalSize,omitempty,string"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1FindSaasUsageReportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1FindSaasUsageReportsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1GraphicsAdapterInfo: Information of a graphics
 // adapter (GPU).
 type GoogleChromeManagementV1GraphicsAdapterInfo struct {
@@ -3163,6 +3258,181 @@ type GoogleChromeManagementV1RuntimeCountersReport struct {
 
 func (s GoogleChromeManagementV1RuntimeCountersReport) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1RuntimeCountersReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1SaasUsageBrowser: Details of a SaaS usage browser.
+type GoogleChromeManagementV1SaasUsageBrowser struct {
+	// DevicePermanentId: Output only. The device permanent ID.
+	DevicePermanentId string `json:"devicePermanentId,omitempty"`
+	// FirstNavigationTime: Output only. The timestamp when the application was
+	// first navigated to by this browser.
+	FirstNavigationTime string `json:"firstNavigationTime,omitempty"`
+	// LastNavigationTime: Output only. The timestamp when the application was last
+	// navigated to by this browser.
+	LastNavigationTime string `json:"lastNavigationTime,omitempty"`
+	// Machine: Output only. The machine name.
+	Machine string `json:"machine,omitempty"`
+	// OrgUnitId: Output only. The ID of the organizational unit.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+	// OsPlatform: Output only. The OS platform.
+	//
+	// Possible values:
+	//   "DEVICE_SYSTEM_UNSPECIFIED" - No operating system specified.
+	//   "SYSTEM_OTHER" - Other operating system.
+	//   "SYSTEM_ANDROID" - Android operating system.
+	//   "SYSTEM_IOS" - Apple iOS operating system.
+	//   "SYSTEM_CROS" - ChromeOS operating system.
+	//   "SYSTEM_WINDOWS" - Microsoft Windows operating system.
+	//   "SYSTEM_MAC" - Apple macOS operating system.
+	//   "SYSTEM_LINUX" - Linux operating system.
+	OsPlatform string `json:"osPlatform,omitempty"`
+	// OsVersion: Output only. The OS version.
+	OsVersion string `json:"osVersion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DevicePermanentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DevicePermanentId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1SaasUsageBrowser) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1SaasUsageBrowser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1SaasUsageProfileReport: Represents a single SaaS
+// report entry grouped by profile.
+type GoogleChromeManagementV1SaasUsageProfileReport struct {
+	// Email: Output only. The email of the user.
+	Email string `json:"email,omitempty"`
+	// FirstNavigationTime: Output only. The timestamp when the application was
+	// first navigated to by this profile.
+	FirstNavigationTime string `json:"firstNavigationTime,omitempty"`
+	// LastNavigationTime: Output only. The timestamp when the application was last
+	// navigated to by this profile.
+	LastNavigationTime string `json:"lastNavigationTime,omitempty"`
+	// OrgUnitId: Output only. The ID of the organizational unit.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+	// OsPlatform: Output only. The OS platform.
+	//
+	// Possible values:
+	//   "DEVICE_SYSTEM_UNSPECIFIED" - No operating system specified.
+	//   "SYSTEM_OTHER" - Other operating system.
+	//   "SYSTEM_ANDROID" - Android operating system.
+	//   "SYSTEM_IOS" - Apple iOS operating system.
+	//   "SYSTEM_CROS" - ChromeOS operating system.
+	//   "SYSTEM_WINDOWS" - Microsoft Windows operating system.
+	//   "SYSTEM_MAC" - Apple macOS operating system.
+	//   "SYSTEM_LINUX" - Linux operating system.
+	OsPlatform string `json:"osPlatform,omitempty"`
+	// OsVersion: Output only. The OS version.
+	OsVersion string `json:"osVersion,omitempty"`
+	// ProfilePermanentId: Output only. The permanent ID of the profile.
+	ProfilePermanentId string `json:"profilePermanentId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1SaasUsageProfileReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1SaasUsageProfileReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1SaasUsageReport: Represents a single SaaS report
+// entry.
+type GoogleChromeManagementV1SaasUsageReport struct {
+	// App: Output only. The name of the application.
+	App string `json:"app,omitempty"`
+	// Category: Output only. The category of the application.
+	Category string `json:"category,omitempty"`
+	// ContentTransferDetails: Output only. Provides information about content
+	// transfer events, if available.
+	ContentTransferDetails *GoogleChromeManagementV1SaasUsageReportContentTransferDetails `json:"contentTransferDetails,omitempty"`
+	// DistinctBrowsersCount: Output only. Number of distinct browsers that visited
+	// the application.
+	DistinctBrowsersCount int64 `json:"distinctBrowsersCount,omitempty,string"`
+	// DistinctUsersCount: Output only. Number of distinct users who visited the
+	// application.
+	DistinctUsersCount int64 `json:"distinctUsersCount,omitempty,string"`
+	// Domains: Output only. A list of domains and subdomains associated with the
+	// application.
+	Domains []string `json:"domains,omitempty"`
+	// EncryptionProtocols: Output only. A list of encryption protocols used to
+	// access the application.
+	EncryptionProtocols []string `json:"encryptionProtocols,omitempty"`
+	// FirstNavigationTime: Output only. The timestamp when the application was
+	// first navigated to.
+	FirstNavigationTime string `json:"firstNavigationTime,omitempty"`
+	// FoundedYear: Output only. The year the organization was founded.
+	FoundedYear int64 `json:"foundedYear,omitempty"`
+	// Headquarters: Output only. The headquarters location of the organization.
+	Headquarters string `json:"headquarters,omitempty"`
+	// LastNavigationTime: Output only. The timestamp when the application was last
+	// navigated to.
+	LastNavigationTime string `json:"lastNavigationTime,omitempty"`
+	// OrgUnitId: Output only. The ID of the organizational unit.
+	OrgUnitId string `json:"orgUnitId,omitempty"`
+	// Organization: Output only. The organization that develops the application.
+	Organization string `json:"organization,omitempty"`
+	// PrimaryDomain: Output only. The primary domain of the application.
+	PrimaryDomain string `json:"primaryDomain,omitempty"`
+	// VisitsCount: Output only. Total number of visits to the application.
+	VisitsCount int64 `json:"visitsCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "App") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "App") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1SaasUsageReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1SaasUsageReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1SaasUsageReportContentTransferDetails: Provides
+// information about content transfer events, if available.
+type GoogleChromeManagementV1SaasUsageReportContentTransferDetails struct {
+	// ContentTransferCount: Output only. Total number of content transfers
+	// associated with the application.
+	ContentTransferCount int64 `json:"contentTransferCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ContentTransferCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentTransferCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementV1SaasUsageReportContentTransferDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1SaasUsageReportContentTransferDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13019,6 +13289,534 @@ func (c *CustomersReportsFindInstalledAppProfilesCall) Do(opts ...googleapi.Call
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *CustomersReportsFindInstalledAppProfilesCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1FindInstalledAppProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CustomersReportsFindSaasUsageCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FindSaasUsage: Find SaaS usage reports of a customer based on the given
+// search and sorting criteria.
+//
+//   - customer: Obfuscated customer ID prefixed with "customers/C" or
+//     "customers/my_customer".
+func (r *CustomersReportsService) FindSaasUsage(customer string) *CustomersReportsFindSaasUsageCall {
+	c := &CustomersReportsFindSaasUsageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to narrow
+// down the SaaS reports to return. Supported operators are: =, !=, <, <=, >,
+// >=, :. Logical operators AND, OR, and NOT are supported. Supported fields: *
+// app * org_unit_id * first_navigation_time * last_navigation_time * category
+// * organization * founded_year * headquarters * primary_domain * domains *
+// encryption_protocols * visits_count * distinct_users_count *
+// distinct_browsers_count * content_transfer_count Example:
+// `(first_navigation_time < "2026-01-31T00:00:00Z" AND last_navigation_time >
+// "2026-01-01T00:00:00Z") AND visits_count > 100`
+func (c *CustomersReportsFindSaasUsageCall) Filter(filter string) *CustomersReportsFindSaasUsageCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order by expression to
+// sort the SaaS reports. Supported fields: * app * category * organization *
+// founded_year * headquarters * primary_domain * visits_count *
+// distinct_users_count * distinct_browsers_count * content_transfer_count
+// Default order is ascending. To specify descending order for a field, append
+// " desc". Example: `visits_count desc`
+func (c *CustomersReportsFindSaasUsageCall) OrderBy(orderBy string) *CustomersReportsFindSaasUsageCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// reports to return. The service may return fewer than this value. If
+// unspecified, at most 100 reports will be returned. The maximum value is 200;
+// values above 200 will be coerced to 200.
+func (c *CustomersReportsFindSaasUsageCall) PageSize(pageSize int64) *CustomersReportsFindSaasUsageCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `FindSaasUsageReports` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `FindSaasUsageReports` must match the call that provided the page token.
+func (c *CustomersReportsFindSaasUsageCall) PageToken(pageToken string) *CustomersReportsFindSaasUsageCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersReportsFindSaasUsageCall) Fields(s ...googleapi.Field) *CustomersReportsFindSaasUsageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersReportsFindSaasUsageCall) IfNoneMatch(entityTag string) *CustomersReportsFindSaasUsageCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersReportsFindSaasUsageCall) Context(ctx context.Context) *CustomersReportsFindSaasUsageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersReportsFindSaasUsageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsFindSaasUsageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:findSaasUsage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.findSaasUsage", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.findSaasUsage" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementV1FindSaasUsageReportsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersReportsFindSaasUsageCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1FindSaasUsageReportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1FindSaasUsageReportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.findSaasUsage", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersReportsFindSaasUsageCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1FindSaasUsageReportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CustomersReportsFindSaasUsageBrowsersCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FindSaasUsageBrowsers: Find SaaS usage reports of a customer grouped by
+// browsers based on the given search and sorting criteria.
+//
+//   - customer: Obfuscated customer ID prefixed with "customers/C" or
+//     "customers/my_customer".
+func (r *CustomersReportsService) FindSaasUsageBrowsers(customer string) *CustomersReportsFindSaasUsageBrowsersCall {
+	c := &CustomersReportsFindSaasUsageBrowsersCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// App sets the optional parameter "app": Required. The name of the SaaS
+// application (e.g., `ChatGPT`, `Gemini`).
+func (c *CustomersReportsFindSaasUsageBrowsersCall) App(app string) *CustomersReportsFindSaasUsageBrowsersCall {
+	c.urlParams_.Set("app", app)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to narrow
+// down the SaaS browser reports to return. Supported operators are: =, !=, <,
+// <=, >, >=, :. Logical operators AND, OR, and NOT are supported. Supported
+// fields: * machine * os_platform * first_navigation_time *
+// last_navigation_time * org_unit_id
+func (c *CustomersReportsFindSaasUsageBrowsersCall) Filter(filter string) *CustomersReportsFindSaasUsageBrowsersCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order by expression to
+// sort the SaaS browser reports. Supported fields: * machine * os_platform *
+// first_navigation_time * last_navigation_time Default order is ascending. To
+// specify descending order for a field, append " desc".
+func (c *CustomersReportsFindSaasUsageBrowsersCall) OrderBy(orderBy string) *CustomersReportsFindSaasUsageBrowsersCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// browsers to return. The service may return fewer than this value. If
+// unspecified, at most 100 browsers will be returned. The maximum value is
+// 200; values above 200 will be coerced to 200.
+func (c *CustomersReportsFindSaasUsageBrowsersCall) PageSize(pageSize int64) *CustomersReportsFindSaasUsageBrowsersCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `FindSaasUsageBrowsers` call. Provide this to retrieve the
+// subsequent page.
+func (c *CustomersReportsFindSaasUsageBrowsersCall) PageToken(pageToken string) *CustomersReportsFindSaasUsageBrowsersCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersReportsFindSaasUsageBrowsersCall) Fields(s ...googleapi.Field) *CustomersReportsFindSaasUsageBrowsersCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersReportsFindSaasUsageBrowsersCall) IfNoneMatch(entityTag string) *CustomersReportsFindSaasUsageBrowsersCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersReportsFindSaasUsageBrowsersCall) Context(ctx context.Context) *CustomersReportsFindSaasUsageBrowsersCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersReportsFindSaasUsageBrowsersCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsFindSaasUsageBrowsersCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:findSaasUsageBrowsers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.findSaasUsageBrowsers", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.findSaasUsageBrowsers" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementV1FindSaasUsageBrowsersResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersReportsFindSaasUsageBrowsersCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1FindSaasUsageBrowsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1FindSaasUsageBrowsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.findSaasUsageBrowsers", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersReportsFindSaasUsageBrowsersCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1FindSaasUsageBrowsersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type CustomersReportsFindSaasUsageProfilesCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FindSaasUsageProfiles: Find SaaS usage reports of a customer grouped by
+// profiles based on the given search and sorting criteria.
+//
+//   - customer: Obfuscated customer ID prefixed with "customers/C" or
+//     "customers/my_customer".
+func (r *CustomersReportsService) FindSaasUsageProfiles(customer string) *CustomersReportsFindSaasUsageProfilesCall {
+	c := &CustomersReportsFindSaasUsageProfilesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// App sets the optional parameter "app": Required. The name of the SaaS
+// application (e.g., `ChatGPT`, `Gemini`).
+func (c *CustomersReportsFindSaasUsageProfilesCall) App(app string) *CustomersReportsFindSaasUsageProfilesCall {
+	c.urlParams_.Set("app", app)
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter expression to narrow
+// down the SaaS profile reports to return. Supported operators are: =, !=, <,
+// <=, >, >=, :. Logical operators AND, OR, and NOT are supported. Supported
+// fields: * email * org_unit_id * os_platform * first_navigation_time *
+// last_navigation_time
+func (c *CustomersReportsFindSaasUsageProfilesCall) Filter(filter string) *CustomersReportsFindSaasUsageProfilesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order by expression to
+// sort the SaaS profile reports. Supported fields: * email * os_platform *
+// first_navigation_time * last_navigation_time Default order is ascending. To
+// specify descending order for a field, append " desc".
+func (c *CustomersReportsFindSaasUsageProfilesCall) OrderBy(orderBy string) *CustomersReportsFindSaasUsageProfilesCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// reports to return. The service may return fewer than this value. If
+// unspecified, at most 100 reports will be returned. The maximum value is 200;
+// values above 200 will be coerced to 200.
+func (c *CustomersReportsFindSaasUsageProfilesCall) PageSize(pageSize int64) *CustomersReportsFindSaasUsageProfilesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `FindSaasUsageProfiles` call. Provide this to retrieve the
+// subsequent page.
+func (c *CustomersReportsFindSaasUsageProfilesCall) PageToken(pageToken string) *CustomersReportsFindSaasUsageProfilesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersReportsFindSaasUsageProfilesCall) Fields(s ...googleapi.Field) *CustomersReportsFindSaasUsageProfilesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersReportsFindSaasUsageProfilesCall) IfNoneMatch(entityTag string) *CustomersReportsFindSaasUsageProfilesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersReportsFindSaasUsageProfilesCall) Context(ctx context.Context) *CustomersReportsFindSaasUsageProfilesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersReportsFindSaasUsageProfilesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsFindSaasUsageProfilesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:findSaasUsageProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.findSaasUsageProfiles", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.findSaasUsageProfiles" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementV1FindSaasUsageProfilesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersReportsFindSaasUsageProfilesCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1FindSaasUsageProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1FindSaasUsageProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.reports.findSaasUsageProfiles", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersReportsFindSaasUsageProfilesCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1FindSaasUsageProfilesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

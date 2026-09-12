@@ -635,6 +635,10 @@ type Server struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. name of resource
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Reserved for future use.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ServiceAgent: Output only. Service agent used to access the customer bucket.
 	ServiceAgent string `json:"serviceAgent,omitempty"`
 	// State: Output only. The state of the server.

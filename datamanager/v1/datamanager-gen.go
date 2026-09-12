@@ -306,172 +306,117 @@ type RequestStatusService struct {
 	s *Service
 }
 
-// AdEvent: An ad event.
 type AdEvent struct {
-	// AdFormat: Enum value for ad format.
-	//
 	// Possible values:
-	//   "AD_FORMAT_UNSPECIFIED" - Unspecified ad format.
-	//   "AD_FORMAT_AR" - AR ad.
-	//   "AD_FORMAT_AUDIO" - Audio ad.
-	//   "AD_FORMAT_BANNER" - Banner ad.
-	//   "AD_FORMAT_BUMPER" - Bumper ad.
-	//   "AD_FORMAT_CAROUSEL" - Carousel ad.
-	//   "AD_FORMAT_COLLECTION" - Collection ad.
-	//   "AD_FORMAT_IMAGE" - Image ad.
-	//   "AD_FORMAT_INTERACTIVE" - Interactive ad.
-	//   "AD_FORMAT_INTERSTITIAL" - Interstitial ad.
-	//   "AD_FORMAT_IN_FEED" - In-feed ad.
-	//   "AD_FORMAT_IN_STREAM" - In-stream ad.
-	//   "AD_FORMAT_IN_STREAM_SKIPPABLE" - In-stream skippable ad.
-	//   "AD_FORMAT_IN_STREAM_NON_SKIPPABLE" - In-stream non-skippable ad.
-	//   "AD_FORMAT_NATIVE" - Native ad.
-	//   "AD_FORMAT_SHORTS" - Shorts ad.
-	//   "AD_FORMAT_STORY" - Story ad.
-	//   "AD_FORMAT_SPONSORED" - Sponsored ad.
-	//   "AD_FORMAT_VIDEO" - Video ad.
-	AdFormat string `json:"adFormat,omitempty"`
-	// AdFormatString: String value for ad format.
+	//   "AD_FORMAT_UNSPECIFIED"
+	//   "AD_FORMAT_AR"
+	//   "AD_FORMAT_AUDIO"
+	//   "AD_FORMAT_BANNER"
+	//   "AD_FORMAT_BUMPER"
+	//   "AD_FORMAT_CAROUSEL"
+	//   "AD_FORMAT_COLLECTION"
+	//   "AD_FORMAT_IMAGE"
+	//   "AD_FORMAT_INTERACTIVE"
+	//   "AD_FORMAT_INTERSTITIAL"
+	//   "AD_FORMAT_IN_FEED"
+	//   "AD_FORMAT_IN_STREAM"
+	//   "AD_FORMAT_IN_STREAM_SKIPPABLE"
+	//   "AD_FORMAT_IN_STREAM_NON_SKIPPABLE"
+	//   "AD_FORMAT_NATIVE"
+	//   "AD_FORMAT_SHORTS"
+	//   "AD_FORMAT_STORY"
+	//   "AD_FORMAT_SPONSORED"
+	//   "AD_FORMAT_VIDEO"
+	AdFormat       string `json:"adFormat,omitempty"`
 	AdFormatString string `json:"adFormatString,omitempty"`
-	// AdGroupId: Optional. The ID of the associated ad group.
-	AdGroupId string `json:"adGroupId,omitempty"`
-	// AdHeight: Optional. The height of the ad in pixels.
-	AdHeight int64 `json:"adHeight,omitempty"`
-	// AdId: Optional. The ID of the associated ad within the group.
-	AdId string `json:"adId,omitempty"`
-	// AdPlacement: Enum value for ad placement.
-	//
+	AdGroupId      string `json:"adGroupId,omitempty"`
+	AdHeight       int64  `json:"adHeight,omitempty"`
+	AdId           string `json:"adId,omitempty"`
 	// Possible values:
-	//   "AD_PLACEMENT_UNSPECIFIED" - Unspecified ad placement.
-	//   "AD_PLACEMENT_DISCOVER" - Discover placement.
-	//   "AD_PLACEMENT_FEED" - Feed placement.
-	//   "AD_PLACEMENT_FOOTER" - Footer placement.
-	//   "AD_PLACEMENT_HEADER" - Header placement.
-	//   "AD_PLACEMENT_HOME" - Home placement.
-	//   "AD_PLACEMENT_IN_CONTENT" - In-content placement.
-	//   "AD_PLACEMENT_PROMOTED" - Promoted placement.
-	//   "AD_PLACEMENT_SEARCH" - Search placement.
-	//   "AD_PLACEMENT_STORY" - Story placement.
-	AdPlacement string `json:"adPlacement,omitempty"`
-	// AdPlacementString: String value for ad placement.
+	//   "AD_PLACEMENT_UNSPECIFIED"
+	//   "AD_PLACEMENT_DISCOVER"
+	//   "AD_PLACEMENT_FEED"
+	//   "AD_PLACEMENT_FOOTER"
+	//   "AD_PLACEMENT_HEADER"
+	//   "AD_PLACEMENT_HOME"
+	//   "AD_PLACEMENT_IN_CONTENT"
+	//   "AD_PLACEMENT_PROMOTED"
+	//   "AD_PLACEMENT_SEARCH"
+	//   "AD_PLACEMENT_STORY"
+	AdPlacement       string `json:"adPlacement,omitempty"`
 	AdPlacementString string `json:"adPlacementString,omitempty"`
-	// AdType: Enum value for ad type.
-	//
 	// Possible values:
-	//   "AD_TYPE_UNSPECIFIED" - Unspecified ad type.
-	//   "AD_TYPE_DISPLAY" - Display ad.
-	//   "AD_TYPE_TEXT" - Text ad.
-	//   "AD_TYPE_IMAGE" - Image ad.
-	//   "AD_TYPE_RICH_MEDIA" - Rich media ad.
-	//   "AD_TYPE_HTML" - HTML ad.
-	//   "AD_TYPE_AUDIO" - Audio ad.
-	//   "AD_TYPE_VIDEO" - Video ad.
-	AdType string `json:"adType,omitempty"`
-	// AdTypeString: String value for ad type.
+	//   "AD_TYPE_UNSPECIFIED"
+	//   "AD_TYPE_DISPLAY"
+	//   "AD_TYPE_TEXT"
+	//   "AD_TYPE_IMAGE"
+	//   "AD_TYPE_RICH_MEDIA"
+	//   "AD_TYPE_HTML"
+	//   "AD_TYPE_AUDIO"
+	//   "AD_TYPE_VIDEO"
+	AdType       string `json:"adType,omitempty"`
 	AdTypeString string `json:"adTypeString,omitempty"`
-	// AdWidth: Optional. The width of the ad in pixels.
-	AdWidth int64 `json:"adWidth,omitempty"`
-	// AdvertiserId: Required. The ID of the advertiser for the ad event. This must
-	// match the ID sent in the linking flow.
+	AdWidth      int64  `json:"adWidth,omitempty"`
 	AdvertiserId string `json:"advertiserId,omitempty"`
-	// AttributionHint: Optional. The partner-assumed attribution status for this
-	// ad event. This acts only as a signal for how the partner assumed attribution
-	// played out, and does not force an end result in final reports.
-	//
 	// Possible values:
-	//   "ATTRIBUTION_HINT_UNSPECIFIED" - Unknown attribution status.
-	//   "ATTRIBUTION_HINT_CONVERTED" - Converted status.
-	//   "ATTRIBUTION_HINT_NOT_CONVERTED" - Not converted status.
-	AttributionHint string `json:"attributionHint,omitempty"`
-	// CampaignId: Required. The ID of the associated campaign.
-	CampaignId string `json:"campaignId,omitempty"`
-	// CampaignName: Required. The name of the associated campaign.
-	CampaignName string `json:"campaignName,omitempty"`
-	// DeviceInfo: Required. Information gathered about the device being used when
-	// the ad event happened.
-	DeviceInfo *DeviceInfo `json:"deviceInfo,omitempty"`
-	// EventId: Optional. An ID created and managed by the caller that uniquely
-	// identifies this event. Required if you want to deduplicate ad events that
-	// are included in multiple requests. Otherwise, this field is optional.
-	EventId string `json:"eventId,omitempty"`
-	// EventSubtype: Enum value for event subtype.
-	//
+	//   "ATTRIBUTION_HINT_UNSPECIFIED"
+	//   "ATTRIBUTION_HINT_CONVERTED"
+	//   "ATTRIBUTION_HINT_NOT_CONVERTED"
+	AttributionHint string      `json:"attributionHint,omitempty"`
+	CampaignId      string      `json:"campaignId,omitempty"`
+	CampaignName    string      `json:"campaignName,omitempty"`
+	DeviceInfo      *DeviceInfo `json:"deviceInfo,omitempty"`
+	EventId         string      `json:"eventId,omitempty"`
 	// Possible values:
-	//   "EVENT_SUBTYPE_UNSPECIFIED" - Unspecified event subtype.
-	//   "EVENT_SUBTYPE_IMPRESSION" - Impression event.
-	//   "EVENT_SUBTYPE_ENGAGED_VIEW" - Engaged view event.
-	//   "EVENT_SUBTYPE_ONSITE_CLICK" - Onsite click event.
-	//   "EVENT_SUBTYPE_OUTBOUND_CLICK" - Outbound click event.
-	EventSubtype string `json:"eventSubtype,omitempty"`
-	// EventSubtypeString: String value for event subtype.
+	//   "EVENT_SUBTYPE_UNSPECIFIED"
+	//   "EVENT_SUBTYPE_IMPRESSION"
+	//   "EVENT_SUBTYPE_ENGAGED_VIEW"
+	//   "EVENT_SUBTYPE_ONSITE_CLICK"
+	//   "EVENT_SUBTYPE_OUTBOUND_CLICK"
+	EventSubtype       string `json:"eventSubtype,omitempty"`
 	EventSubtypeString string `json:"eventSubtypeString,omitempty"`
-	// EventType: Required. The type of the event.
-	//
 	// Possible values:
-	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified event type.
-	//   "EVENT_TYPE_VIEW" - View event.
-	//   "EVENT_TYPE_CLICK" - Click event.
-	EventType string `json:"eventType,omitempty"`
-	// MeasurementAllowed: Optional. Represents if the row is allowed to be used
-	// for measurement purposes, as governed by applicable privacy laws within
-	// regional jurisdiction.
-	MeasurementAllowed bool `json:"measurementAllowed,omitempty"`
-	// Medium: Required. The medium of the ad, akin to the Google Analytics medium.
-	Medium string `json:"medium,omitempty"`
-	// MobileDeviceId: Optional. The device ID of the device that the ad was served
-	// to.
-	MobileDeviceId string `json:"mobileDeviceId,omitempty"`
-	// Platform: Enum value for platform.
-	//
+	//   "EVENT_TYPE_UNSPECIFIED"
+	//   "EVENT_TYPE_VIEW"
+	//   "EVENT_TYPE_CLICK"
+	EventType          string `json:"eventType,omitempty"`
+	IpAddress          string `json:"ipAddress,omitempty"`
+	MeasurementAllowed bool   `json:"measurementAllowed,omitempty"`
+	Medium             string `json:"medium,omitempty"`
+	MobileDeviceId     string `json:"mobileDeviceId,omitempty"`
 	// Possible values:
-	//   "PLATFORM_UNSPECIFIED" - Unspecified platform.
-	//   "PLATFORM_IOS" - iOS platform.
-	//   "PLATFORM_ANDROID" - Android platform.
-	//   "PLATFORM_WEB" - Web platform.
-	Platform string `json:"platform,omitempty"`
-	// PlatformString: String value for platform.
+	//   "PLATFORM_UNSPECIFIED"
+	//   "PLATFORM_IOS"
+	//   "PLATFORM_ANDROID"
+	//   "PLATFORM_WEB"
+	Platform       string `json:"platform,omitempty"`
 	PlatformString string `json:"platformString,omitempty"`
-	// PlatformType: Enum value for platform type.
-	//
 	// Possible values:
-	//   "PLATFORM_TYPE_UNSPECIFIED" - Unspecified platform type.
-	//   "PLATFORM_TYPE_MOBILE" - Mobile platform.
-	//   "PLATFORM_TYPE_DESKTOP" - Desktop platform.
-	//   "PLATFORM_TYPE_CTV" - CTV platform.
-	//   "PLATFORM_TYPE_PHONE" - Phone platform.
-	//   "PLATFORM_TYPE_TABLET" - Tablet platform.
-	PlatformType string `json:"platformType,omitempty"`
-	// PlatformTypeString: String value for platform type.
+	//   "PLATFORM_TYPE_UNSPECIFIED"
+	//   "PLATFORM_TYPE_MOBILE"
+	//   "PLATFORM_TYPE_DESKTOP"
+	//   "PLATFORM_TYPE_CTV"
+	//   "PLATFORM_TYPE_PHONE"
+	//   "PLATFORM_TYPE_TABLET"
+	PlatformType       string `json:"platformType,omitempty"`
 	PlatformTypeString string `json:"platformTypeString,omitempty"`
-	// RegionCode: Optional. The ISO 3166-2 country plus subdivision.
-	RegionCode string `json:"regionCode,omitempty"`
-	// Source: Required. The platform source of the ad, akin to the Google
-	// Analytics source.
-	Source string `json:"source,omitempty"`
-	// TargetingType: Enum value for targeting type.
-	//
+	RegionCode         string `json:"regionCode,omitempty"`
+	Source             string `json:"source,omitempty"`
 	// Possible values:
-	//   "TARGETING_TYPE_UNSPECIFIED" - Unspecified targeting type.
-	//   "TARGETING_TYPE_AUDIENCE" - Audience targeting.
-	//   "TARGETING_TYPE_CONTEXTUAL" - Contextual targeting.
-	//   "TARGETING_TYPE_DEMOGRAPHIC" - Demographic targeting.
-	//   "TARGETING_TYPE_DEVICE" - Device targeting.
-	//   "TARGETING_TYPE_GEO" - Geo targeting.
-	//   "TARGETING_TYPE_INTEREST" - Interest targeting.
-	//   "TARGETING_TYPE_PURCHASE_INTENT" - Purchase intent targeting.
-	//   "TARGETING_TYPE_REMARKETING" - Remarketing targeting.
-	TargetingType string `json:"targetingType,omitempty"`
-	// TargetingTypeString: String value for targeting type.
-	TargetingTypeString string `json:"targetingTypeString,omitempty"`
-	// Timestamp: Required. The time the event occurred.
-	Timestamp string `json:"timestamp,omitempty"`
-	// UserData: Optional. Multiple pieces of user-provided data, representing the
-	// user the event is associated with. It is possible to provide multiple
-	// instances of the same type of data (e.g. email address). The more data
-	// provided, the more likely a match will be found.
-	UserData *UserData `json:"userData,omitempty"`
-	// ViewabilityInfo: Required. Details of the viewability of the ad served.
-	ViewabilityInfo *ViewabilityInfo `json:"viewabilityInfo,omitempty"`
+	//   "TARGETING_TYPE_UNSPECIFIED"
+	//   "TARGETING_TYPE_AUDIENCE"
+	//   "TARGETING_TYPE_CONTEXTUAL"
+	//   "TARGETING_TYPE_DEMOGRAPHIC"
+	//   "TARGETING_TYPE_DEVICE"
+	//   "TARGETING_TYPE_GEO"
+	//   "TARGETING_TYPE_INTEREST"
+	//   "TARGETING_TYPE_PURCHASE_INTENT"
+	//   "TARGETING_TYPE_REMARKETING"
+	TargetingType       string           `json:"targetingType,omitempty"`
+	TargetingTypeString string           `json:"targetingTypeString,omitempty"`
+	Timestamp           string           `json:"timestamp,omitempty"`
+	UserData            *UserData        `json:"userData,omitempty"`
+	ViewabilityInfo     *ViewabilityInfo `json:"viewabilityInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -490,37 +435,19 @@ func (s AdEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdIdentifiers: Identifiers and other information used to match the
-// conversion event with other online activity (such as ad clicks).
 type AdIdentifiers struct {
-	// Dclid: Optional. The display click ID associated with this event.
-	Dclid string `json:"dclid,omitempty"`
-	// EncryptedUserIds: Optional. Any number of encrypted user IDs.
-	EncryptedUserIds []*EncryptedUserId `json:"encryptedUserIds,omitempty"`
-	// Gbraid: Optional. The click identifier for clicks associated with app events
-	// and originating from iOS devices starting with iOS14.
-	Gbraid string `json:"gbraid,omitempty"`
-	// Gclid: Optional. The Google click ID (gclid) associated with this event.
-	Gclid string `json:"gclid,omitempty"`
-	// ImpressionId: Optional. The impression ID associated with this event.
-	ImpressionId string `json:"impressionId,omitempty"`
-	// LandingPageDeviceInfo: Optional. Information gathered about the device being
-	// used (if any) at the time of landing onto the advertiser’s site after
-	// interacting with the ad.
-	LandingPageDeviceInfo *DeviceInfo `json:"landingPageDeviceInfo,omitempty"`
-	// MatchId: Optional. The match ID field used to join this event with a
-	// previous event.
-	MatchId string `json:"matchId,omitempty"`
-	// MobileDeviceId: Optional. The mobile identifier for advertisers. This would
-	// be IDFA on iOS, AdID on Android, or other platforms’ identifiers for
-	// advertisers.
-	MobileDeviceId string `json:"mobileDeviceId,omitempty"`
-	// SessionAttributes: Optional. Session attributes for event attribution and
-	// modeling.
-	SessionAttributes string `json:"sessionAttributes,omitempty"`
-	// Wbraid: Optional. The click identifier for clicks associated with web events
-	// and originating from iOS devices starting with iOS14.
-	Wbraid string `json:"wbraid,omitempty"`
+	Dclid                 string             `json:"dclid,omitempty"`
+	EncryptedUserIds      []*EncryptedUserId `json:"encryptedUserIds,omitempty"`
+	Gbraid                string             `json:"gbraid,omitempty"`
+	Gclid                 string             `json:"gclid,omitempty"`
+	ImpressionId          string             `json:"impressionId,omitempty"`
+	LandingPageDeviceInfo *DeviceInfo        `json:"landingPageDeviceInfo,omitempty"`
+	MatchId               string             `json:"matchId,omitempty"`
+	MobileDeviceId        string             `json:"mobileDeviceId,omitempty"`
+	Ppid                  string             `json:"ppid,omitempty"`
+	SessionAttributes     string             `json:"sessionAttributes,omitempty"`
+	VisitorPpid           string             `json:"visitorPpid,omitempty"`
+	Wbraid                string             `json:"wbraid,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dclid") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -539,33 +466,14 @@ func (s AdIdentifiers) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AddressInfo: Address information for the user.
 type AddressInfo struct {
-	// AddressLine: Optional. The street and number of the user's address. Used
-	// only for Google Analytics. This field is hashed and possibly encrypted.
-	// Normalize the value before hashing: - Remove symbol characters - Convert to
-	// lowercase - Remove leading and trailing whitespace
-	AddressLine string `json:"addressLine,omitempty"`
-	// AdministrativeArea: Optional. The administrative area (state/province) of
-	// the user's address. Used only for Google Analytics. The value should be
-	// normalized as such: - Remove symbol characters - Convert to lowercase -
-	// Remove leading and trailing whitespace
+	AddressLine        string `json:"addressLine,omitempty"`
 	AdministrativeArea string `json:"administrativeArea,omitempty"`
-	// City: Optional. The city of the user's address. Used only for Google
-	// Analytics. The value should be normalized as such: - Remove symbol
-	// characters - Convert to lowercase - Remove leading and trailing whitespace
-	City string `json:"city,omitempty"`
-	// FamilyName: Required. Family (last) name of the user, all lowercase, with no
-	// punctuation, no leading or trailing whitespace, and hashed as SHA-256.
-	FamilyName string `json:"familyName,omitempty"`
-	// GivenName: Required. Given (first) name of the user, all lowercase, with no
-	// punctuation, no leading or trailing whitespace, and hashed as SHA-256.
-	GivenName string `json:"givenName,omitempty"`
-	// PostalCode: Required. The postal code of the user's address.
-	PostalCode string `json:"postalCode,omitempty"`
-	// RegionCode: Required. The 2-letter region code in ISO-3166-1 alpha-2 of the
-	// user's address.
-	RegionCode string `json:"regionCode,omitempty"`
+	City               string `json:"city,omitempty"`
+	FamilyName         string `json:"familyName,omitempty"`
+	GivenName          string `json:"givenName,omitempty"`
+	PostalCode         string `json:"postalCode,omitempty"`
+	RegionCode         string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddressLine") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -584,33 +492,17 @@ func (s AddressInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AudienceMember: The audience member to be operated on.
 type AudienceMember struct {
-	// CompositeData: Group of multiple identifier types.
-	CompositeData *CompositeData `json:"compositeData,omitempty"`
-	// Consent: Optional. The consent setting for the user.
-	Consent *Consent `json:"consent,omitempty"`
-	// DestinationReferences: Optional. Defines which Destination to send the
-	// audience member to.
-	DestinationReferences []string `json:"destinationReferences,omitempty"`
-	// GoogleUserIdData: Encrypted Google User IDs.
-	GoogleUserIdData *GoogleUserIdData `json:"googleUserIdData,omitempty"`
-	// MobileData: Data identifying the user's mobile devices.
-	MobileData *MobileData `json:"mobileData,omitempty"`
-	// PairData: Publisher Advertiser Identity Reconciliation (PAIR) IDs
-	// (//support.google.com/admanager/answer/15067908). This feature is only
-	// available to data partners.
-	PairData *PairData `json:"pairData,omitempty"`
-	// PartnerProvidedIdData: Partner-provided identifiers.
+	CompositeData         *CompositeData         `json:"compositeData,omitempty"`
+	Consent               *Consent               `json:"consent,omitempty"`
+	DestinationReferences []string               `json:"destinationReferences,omitempty"`
+	GoogleUserIdData      *GoogleUserIdData      `json:"googleUserIdData,omitempty"`
+	MobileData            *MobileData            `json:"mobileData,omitempty"`
+	PairData              *PairData              `json:"pairData,omitempty"`
 	PartnerProvidedIdData *PartnerProvidedIdData `json:"partnerProvidedIdData,omitempty"`
-	// PpidData: Data related to publisher provided identifiers. This feature is
-	// only available to data partners.
-	PpidData *PpidData `json:"ppidData,omitempty"`
-	// UserData: User-provided data that identifies the user.
-	UserData *UserData `json:"userData,omitempty"`
-	// UserIdData: Data related to unique identifiers for a user, as defined by the
-	// advertiser.
-	UserIdData *UserIdData `json:"userIdData,omitempty"`
+	PpidData              *PpidData              `json:"ppidData,omitempty"`
+	UserData              *UserData              `json:"userData,omitempty"`
+	UserIdData            *UserIdData            `json:"userIdData,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompositeData") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -629,23 +521,13 @@ func (s AudienceMember) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AwsWrappedKeyInfo: A data encryption key wrapped by an AWS KMS key.
 type AwsWrappedKeyInfo struct {
-	// EncryptedDek: Required. The base64 encoded encrypted data encryption key.
 	EncryptedDek string `json:"encryptedDek,omitempty"`
-	// KekUri: Required. The URI of the AWS KMS key used to decrypt the DEK. Should
-	// be in the format of `arn:{partition}:kms:{region}:{account_id}:key/{key_id}`
-	// or `aws-kms://arn:{partition}:kms:{region}:{account_id}:key/{key_id}`
-	KekUri string `json:"kekUri,omitempty"`
-	// KeyType: Required. The type of algorithm used to encrypt the data.
-	//
+	KekUri       string `json:"kekUri,omitempty"`
 	// Possible values:
-	//   "KEY_TYPE_UNSPECIFIED" - Unspecified key type. Should never be used.
-	//   "XCHACHA20_POLY1305" - Algorithm XChaCha20-Poly1305
+	//   "KEY_TYPE_UNSPECIFIED"
+	//   "XCHACHA20_POLY1305"
 	KeyType string `json:"keyType,omitempty"`
-	// RoleArn: Required. The Amazon Resource Name of the IAM Role to assume for
-	// KMS decryption access. Should be in the format of
-	// `arn:{partition}:iam::{account_id}:role/{role_name}`
 	RoleArn string `json:"roleArn,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptedDek") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -665,14 +547,9 @@ func (s AwsWrappedKeyInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Baseline: Baseline criteria against which insights are compared.
 type Baseline struct {
-	// BaselineLocation: The baseline location of the request. Baseline location is
-	// an OR-list of the requested regions.
-	BaselineLocation *Location `json:"baselineLocation,omitempty"`
-	// LocationAutoDetectionEnabled: If set to true, the service will try to
-	// automatically detect the baseline location for insights.
-	LocationAutoDetectionEnabled bool `json:"locationAutoDetectionEnabled,omitempty"`
+	BaselineLocation             *Location `json:"baselineLocation,omitempty"`
+	LocationAutoDetectionEnabled bool      `json:"locationAutoDetectionEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BaselineLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -691,27 +568,13 @@ func (s Baseline) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CartData: The cart data associated with the event.
 type CartData struct {
-	// CouponCodes: Optional. The list of coupon codes that were applied to the
-	// cart. Cart-level and item-level coupon codes are independent. If the event
-	// is for a Google Analytics destination, only provide a single coupon code.
-	// Google Analytics ignores additional coupon codes.
-	CouponCodes []string `json:"couponCodes,omitempty"`
-	// Items: Optional. The list of items associated with the event.
-	Items []*Item `json:"items,omitempty"`
-	// MerchantFeedLabel: Optional. The Merchant Center feed label associated with
-	// the feed of the items.
-	MerchantFeedLabel string `json:"merchantFeedLabel,omitempty"`
-	// MerchantFeedLanguageCode: Optional. The language code in ISO 639-1
-	// associated with the Merchant Center feed of the items.where your items are
-	// uploaded.
-	MerchantFeedLanguageCode string `json:"merchantFeedLanguageCode,omitempty"`
-	// MerchantId: Optional. The Merchant Center ID associated with the items.
-	MerchantId string `json:"merchantId,omitempty"`
-	// TransactionDiscount: Optional. The sum of all discounts associated with the
-	// transaction.
-	TransactionDiscount float64 `json:"transactionDiscount,omitempty"`
+	CouponCodes              []string `json:"couponCodes,omitempty"`
+	Items                    []*Item  `json:"items,omitempty"`
+	MerchantFeedLabel        string   `json:"merchantFeedLabel,omitempty"`
+	MerchantFeedLanguageCode string   `json:"merchantFeedLanguageCode,omitempty"`
+	MerchantId               string   `json:"merchantId,omitempty"`
+	TransactionDiscount      float64  `json:"transactionDiscount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CouponCodes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -744,13 +607,8 @@ func (s *CartData) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// CompositeData: Composite data holding identifiers and associated data for a
-// user. At least one of `user_data` or `ip_data` is required.
 type CompositeData struct {
-	// IpData: Optional. IP address data representing customer interaction used to
-	// build the audience.
-	IpData []*IpData `json:"ipData,omitempty"`
-	// UserData: Optional. User-provided data that identifies the user.
+	IpData   []*IpData `json:"ipData,omitempty"`
 	UserData *UserData `json:"userData,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpData") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -770,23 +628,16 @@ func (s CompositeData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Consent: Digital Markets Act (DMA)
-// (//digital-markets-act.ec.europa.eu/index_en) consent settings for the user.
 type Consent struct {
-	// AdPersonalization: Optional. Represents if the user consents to ad
-	// personalization.
-	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Not specified.
-	//   "CONSENT_GRANTED" - Granted.
-	//   "CONSENT_DENIED" - Denied.
+	//   "CONSENT_STATUS_UNSPECIFIED"
+	//   "CONSENT_GRANTED"
+	//   "CONSENT_DENIED"
 	AdPersonalization string `json:"adPersonalization,omitempty"`
-	// AdUserData: Optional. Represents if the user consents to ad user data.
-	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Not specified.
-	//   "CONSENT_GRANTED" - Granted.
-	//   "CONSENT_DENIED" - Denied.
+	//   "CONSENT_STATUS_UNSPECIFIED"
+	//   "CONSENT_GRANTED"
+	//   "CONSENT_DENIED"
 	AdUserData string `json:"adUserData,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdPersonalization") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -806,23 +657,15 @@ func (s Consent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ContactIdInfo: Additional information when `CONTACT_ID` is one of the
-// `upload_key_types`.
 type ContactIdInfo struct {
-	// DataSourceType: Optional. Immutable. Source of the upload data
-	//
 	// Possible values:
-	//   "DATA_SOURCE_TYPE_UNSPECIFIED" - Not specified.
-	//   "DATA_SOURCE_TYPE_FIRST_PARTY" - The uploaded data is first-party data.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU" - The uploaded data is from a
-	// third-party credit bureau.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE" - The uploaded data is from a
-	// third-party voter file.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA" - The uploaded data is third
-	// party partner data.
-	DataSourceType string `json:"dataSourceType,omitempty"`
-	// MatchRatePercentage: Output only. Match rate for customer match user lists.
-	MatchRatePercentage int64 `json:"matchRatePercentage,omitempty"`
+	//   "DATA_SOURCE_TYPE_UNSPECIFIED"
+	//   "DATA_SOURCE_TYPE_FIRST_PARTY"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA"
+	DataSourceType      string `json:"dataSourceType,omitempty"`
+	MatchRatePercentage int64  `json:"matchRatePercentage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSourceType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -841,9 +684,7 @@ func (s ContactIdInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CoordinatorKeyInfo: Information about the coordinator key.
 type CoordinatorKeyInfo struct {
-	// KeyId: Required. The ID of the chosen coordinator key.
 	KeyId string `json:"keyId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KeyId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -863,17 +704,10 @@ func (s CoordinatorKeyInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CustomVariable: Custom variable for ads conversions.
 type CustomVariable struct {
-	// DestinationReferences: Optional. Reference string used to determine which of
-	// the Event.destination_references the custom variable should be sent to. If
-	// empty, the Event.destination_references will be used.
 	DestinationReferences []string `json:"destinationReferences,omitempty"`
-	// Value: Optional. The value to store for the custom variable.
-	Value string `json:"value,omitempty"`
-	// Variable: Optional. The name of the custom variable to set. If the variable
-	// is not found for the given destination, it will be ignored.
-	Variable string `json:"variable,omitempty"`
+	Value                 string   `json:"value,omitempty"`
+	Variable              string   `json:"variable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestinationReferences") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -892,18 +726,14 @@ func (s CustomVariable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DataTypeCount: The count for a specific data type.
 type DataTypeCount struct {
-	// Count: The count for this data type.
 	Count int64 `json:"count,omitempty,string"`
-	// Type: The type of data.
-	//
 	// Possible values:
-	//   "DATA_TYPE_UNSPECIFIED" - The data type is unspecified.
-	//   "EMAIL" - The data is an email address.
-	//   "PHONE_NUMBER" - The data is a phone number.
-	//   "ADDRESS" - The data is a physical address.
-	//   "IP_ADDRESS" - The data is an IP address.
+	//   "DATA_TYPE_UNSPECIFIED"
+	//   "EMAIL"
+	//   "PHONE_NUMBER"
+	//   "ADDRESS"
+	//   "IP_ADDRESS"
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -923,34 +753,12 @@ func (s DataTypeCount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Destination: The Google product you're sending data to. For example, a
-// Google Ads account.
 type Destination struct {
-	// LinkedAccount: Optional. An account that the calling user's `login_account`
-	// has access to, through an established account link. For example, a data
-	// partner's `login_account` might have access to a client's `linked_account`.
-	// The partner might use this field to send data from the `linked_account` to
-	// another `operating_account`.
-	LinkedAccount *ProductAccount `json:"linkedAccount,omitempty"`
-	// LoginAccount: Optional. The account used to make this API call. To add or
-	// remove data from the `operating_account`, this `login_account` must have
-	// write access to the `operating_account`. For example, a manager account of
-	// the `operating_account`, or an account with an established link to the
-	// `operating_account`.
-	LoginAccount *ProductAccount `json:"loginAccount,omitempty"`
-	// OperatingAccount: Required. The account to send the data to or remove the
-	// data from.
-	OperatingAccount *ProductAccount `json:"operatingAccount,omitempty"`
-	// ProductDestinationId: Optional. The object within the product account to
-	// ingest into. For example, a Google Ads audience ID, a Display & Video 360
-	// audience ID or a Google Ads conversion action ID. This field is optional for
-	// Google Ad Manager event ingestion and User ingestion. Required for all other
-	// use cases.
-	ProductDestinationId string `json:"productDestinationId,omitempty"`
-	// Reference: Optional. ID for this `Destination` resource, unique within the
-	// request. Use to reference this `Destination` in the IngestEventsRequest and
-	// IngestAudienceMembersRequest.
-	Reference string `json:"reference,omitempty"`
+	LinkedAccount        *ProductAccount `json:"linkedAccount,omitempty"`
+	LoginAccount         *ProductAccount `json:"loginAccount,omitempty"`
+	OperatingAccount     *ProductAccount `json:"operatingAccount,omitempty"`
+	ProductDestinationId string          `json:"productDestinationId,omitempty"`
+	Reference            string          `json:"reference,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LinkedAccount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -969,37 +777,19 @@ func (s Destination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DeviceInfo: Information about the device being used (if any) when the event
-// happened.
 type DeviceInfo struct {
-	// Brand: Optional. The brand of the device.
-	Brand string `json:"brand,omitempty"`
-	// Browser: Optional. The brand or type of the browser.
-	Browser string `json:"browser,omitempty"`
-	// BrowserVersion: Optional. The version of the browser.
-	BrowserVersion string `json:"browserVersion,omitempty"`
-	// Category: Optional. The category of device. For example, “desktop”,
-	// “tablet”, “mobile”, “smart TV”.
-	Category string `json:"category,omitempty"`
-	// IpAddress: Optional. The IP address of the device for the given context.
-	// Required when used in an AdEvent.
-	IpAddress string `json:"ipAddress,omitempty"`
-	// LanguageCode: Optional. The language the device uses in ISO 639-1 format.
-	LanguageCode string `json:"languageCode,omitempty"`
-	// Model: Optional. The model of the device.
-	Model string `json:"model,omitempty"`
-	// OperatingSystem: Optional. The operating system or platform of the device.
-	OperatingSystem string `json:"operatingSystem,omitempty"`
-	// OperatingSystemVersion: Optional. The version of the operating system or
-	// platform.
+	Brand                  string `json:"brand,omitempty"`
+	Browser                string `json:"browser,omitempty"`
+	BrowserVersion         string `json:"browserVersion,omitempty"`
+	Category               string `json:"category,omitempty"`
+	IpAddress              string `json:"ipAddress,omitempty"`
+	LanguageCode           string `json:"languageCode,omitempty"`
+	Model                  string `json:"model,omitempty"`
+	OperatingSystem        string `json:"operatingSystem,omitempty"`
 	OperatingSystemVersion string `json:"operatingSystemVersion,omitempty"`
-	// ScreenHeight: Optional. The height of the screen in pixels.
-	ScreenHeight int64 `json:"screenHeight,omitempty"`
-	// ScreenWidth: Optional. The width of the screen in pixels.
-	ScreenWidth int64 `json:"screenWidth,omitempty"`
-	// UserAgent: Optional. The user-agent string of the device for the given
-	// context.
-	UserAgent string `json:"userAgent,omitempty"`
+	ScreenHeight           int64  `json:"screenHeight,omitempty"`
+	ScreenWidth            int64  `json:"screenWidth,omitempty"`
+	UserAgent              string `json:"userAgent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Brand") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1018,42 +808,27 @@ func (s DeviceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use it as
-// the request or the response type of an API method. For instance: service Foo
-// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// EncryptedUserId: A user identifier issued to be used for attribution. All
-// fields are required if this is used.
 type EncryptedUserId struct {
-	// EncryptedId: Required. The alphanumeric encrypted id.
 	EncryptedId string `json:"encryptedId,omitempty"`
-	// EntityId: Required. The encryption entity ID. This should match the
-	// encryption configuration for ad serving or Data Transfer.
-	EntityId int64 `json:"entityId,omitempty,string"`
-	// EntityType: Required. The encryption entity type. This should match the
-	// encryption configuration for ad serving or Data Transfer.
-	//
+	EntityId    int64  `json:"entityId,omitempty,string"`
 	// Possible values:
-	//   "ENCRYPTION_ENTITY_TYPE_UNSPECIFIED" - Unspecified encryption entity type.
-	//   "CAMPAIGN_MANAGER_ACCOUNT" - Campaign Manager 360 account.
-	//   "CAMPAIGN_MANAGER_ADVERTISER" - Campaign Manager 360 advertiser.
-	//   "DISPLAY_VIDEO_PARTNER" - Display & Video 360 partner.
-	//   "DISPLAY_VIDEO_ADVERTISER" - Display & Video 360 advertiser.
-	//   "GOOGLE_ADS_CUSTOMER" - Google Ads customer.
-	//   "GOOGLE_AD_MANAGER_NETWORK_CODE" - Google Ad Manager network code.
+	//   "ENCRYPTION_ENTITY_TYPE_UNSPECIFIED"
+	//   "CAMPAIGN_MANAGER_ACCOUNT"
+	//   "CAMPAIGN_MANAGER_ADVERTISER"
+	//   "DISPLAY_VIDEO_PARTNER"
+	//   "DISPLAY_VIDEO_ADVERTISER"
+	//   "GOOGLE_ADS_CUSTOMER"
+	//   "GOOGLE_AD_MANAGER_NETWORK_CODE"
 	EntityType string `json:"entityType,omitempty"`
-	// Source: Required. Describes whether the encrypted cookie was received from
-	// ad serving (the %m macro) or from Data Transfer.
-	//
 	// Possible values:
-	//   "ENCRYPTION_SOURCE_UNSPECIFIED" - Unspecified encryption source.
-	//   "AD_SERVING" - Ad serving encryption source.
-	//   "DATA_TRANSFER" - Data transfer encryption source.
+	//   "ENCRYPTION_SOURCE_UNSPECIFIED"
+	//   "AD_SERVING"
+	//   "DATA_TRANSFER"
 	Source string `json:"source,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptedId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1073,16 +848,10 @@ func (s EncryptedUserId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EncryptionInfo: Encryption information for the data being ingested.
 type EncryptionInfo struct {
-	// AwsWrappedKeyInfo: Amazon Web Services wrapped key information.
-	AwsWrappedKeyInfo *AwsWrappedKeyInfo `json:"awsWrappedKeyInfo,omitempty"`
-	// CoordinatorKeyInfo: Key information for the chosen coordinator key. This is
-	// not supported for the IngestEvents, IngestAudienceMembers, and
-	// RemoveAudienceMembers methods.
+	AwsWrappedKeyInfo  *AwsWrappedKeyInfo  `json:"awsWrappedKeyInfo,omitempty"`
 	CoordinatorKeyInfo *CoordinatorKeyInfo `json:"coordinatorKeyInfo,omitempty"`
-	// GcpWrappedKeyInfo: Google Cloud Platform wrapped key information.
-	GcpWrappedKeyInfo *GcpWrappedKeyInfo `json:"gcpWrappedKeyInfo,omitempty"`
+	GcpWrappedKeyInfo  *GcpWrappedKeyInfo  `json:"gcpWrappedKeyInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AwsWrappedKeyInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1101,108 +870,59 @@ func (s EncryptionInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ErrorCount: The error count for a given error reason.
 type ErrorCount struct {
-	// Reason: The error reason of the failed records.
-	//
 	// Possible values:
-	//   "PROCESSING_ERROR_REASON_UNSPECIFIED" - The processing error reason is
-	// unknown.
-	//   "PROCESSING_ERROR_REASON_INVALID_CUSTOM_VARIABLE" - The custom variable is
-	// invalid.
-	//   "PROCESSING_ERROR_REASON_CUSTOM_VARIABLE_NOT_ENABLED" - The status of the
-	// custom variable is not enabled.
-	//   "PROCESSING_ERROR_REASON_EVENT_TOO_OLD" - The conversion is older than max
-	// supported age.
-	//   "PROCESSING_ERROR_REASON_DENIED_CONSENT" - The ad user data is denied,
-	// either by the user or in the advertiser default settings.
-	//   "PROCESSING_ERROR_REASON_NO_CONSENT" - Advertiser did not give 3P consent
-	// for the Ads core platform services.
-	//   "PROCESSING_ERROR_REASON_UNKNOWN_CONSENT" - The overall consent
-	// (determined from row level consent, request level consent, and account
-	// settings) could not be determined for this user
-	//   "PROCESSING_ERROR_REASON_DUPLICATE_GCLID" - A conversion with the same
-	// GCLID and conversion time already exists in the system.
-	//   "PROCESSING_ERROR_REASON_DUPLICATE_TRANSACTION_ID" - A conversion with the
-	// same order id and conversion action combination was already uploaded.
-	//   "PROCESSING_ERROR_REASON_INVALID_GBRAID" - The gbraid could not be
-	// decoded.
-	//   "PROCESSING_ERROR_REASON_INVALID_GCLID" - The google click ID could not be
-	// decoded.
-	//   "PROCESSING_ERROR_REASON_INVALID_MERCHANT_ID" - Merchant id contains
-	// non-digit characters.
-	//   "PROCESSING_ERROR_REASON_INVALID_WBRAID" - The wbraid could not be
-	// decoded.
-	//   "PROCESSING_ERROR_REASON_INTERNAL_ERROR" - Internal error.
+	//   "PROCESSING_ERROR_REASON_UNSPECIFIED"
+	//   "PROCESSING_ERROR_REASON_INVALID_CUSTOM_VARIABLE"
+	//   "PROCESSING_ERROR_REASON_CUSTOM_VARIABLE_NOT_ENABLED"
+	//   "PROCESSING_ERROR_REASON_EVENT_TOO_OLD"
+	//   "PROCESSING_ERROR_REASON_DENIED_CONSENT"
+	//   "PROCESSING_ERROR_REASON_NO_CONSENT"
+	//   "PROCESSING_ERROR_REASON_UNKNOWN_CONSENT"
+	//   "PROCESSING_ERROR_REASON_DUPLICATE_GCLID"
+	//   "PROCESSING_ERROR_REASON_DUPLICATE_TRANSACTION_ID"
+	//   "PROCESSING_ERROR_REASON_INVALID_GBRAID"
+	//   "PROCESSING_ERROR_REASON_INVALID_GCLID"
+	//   "PROCESSING_ERROR_REASON_INVALID_MERCHANT_ID"
+	//   "PROCESSING_ERROR_REASON_INVALID_WBRAID"
+	//   "PROCESSING_ERROR_REASON_INTERNAL_ERROR"
 	//
 	// "PROCESSING_ERROR_REASON_DESTINATION_ACCOUNT_ENHANCED_CONVERSIONS_TERMS_NOT_S
-	// IGNED" - Enhanced conversions terms are not signed in the destination
-	// account.
-	//   "PROCESSING_ERROR_REASON_INVALID_EVENT" - The event is invalid.
-	//   "PROCESSING_ERROR_REASON_INSUFFICIENT_MATCHED_TRANSACTIONS" - The matched
-	// transactions are less than the minimum threshold.
-	//   "PROCESSING_ERROR_REASON_INSUFFICIENT_TRANSACTIONS" - The transactions are
-	// less than the minimum threshold.
-	//   "PROCESSING_ERROR_REASON_INVALID_FORMAT" - The event has format error.
-	//   "PROCESSING_ERROR_REASON_DECRYPTION_ERROR" - The event has a decryption
-	// error.
-	//   "PROCESSING_ERROR_REASON_DEK_DECRYPTION_ERROR" - The DEK failed to be
-	// decrypted.
-	//   "PROCESSING_ERROR_REASON_INVALID_WIP" - The WIP is formatted incorrectly
-	// or the WIP does not exist.
-	//   "PROCESSING_ERROR_REASON_INVALID_KEK" - The KEK cannot decrypt data
-	// because it is the wrong KEK, or it does not exist.
-	//   "PROCESSING_ERROR_REASON_WIP_AUTH_FAILED" - The WIP could not be used
-	// because it was rejected by its attestation condition.
-	//   "PROCESSING_ERROR_REASON_KEK_PERMISSION_DENIED" - The system did not have
-	// the permissions needed to access the KEK.
-	//   "PROCESSING_ERROR_REASON_AWS_AUTH_FAILED" - The system failed to
-	// authenticate with AWS.
-	//   "PROCESSING_ERROR_REASON_USER_IDENTIFIER_DECRYPTION_ERROR" - Failed to
-	// decrypt the UserIdentifier data using the DEK.
-	//   "PROCESSING_ERROR_OPERATING_ACCOUNT_MISMATCH_FOR_AD_IDENTIFIER" - The user
-	// attempted to ingest events with an ad identifier that isn't from the
-	// operating account's ads.
+	// IGNED"
+	//   "PROCESSING_ERROR_REASON_INVALID_EVENT"
+	//   "PROCESSING_ERROR_REASON_INSUFFICIENT_MATCHED_TRANSACTIONS"
+	//   "PROCESSING_ERROR_REASON_INSUFFICIENT_TRANSACTIONS"
+	//   "PROCESSING_ERROR_REASON_INVALID_FORMAT"
+	//   "PROCESSING_ERROR_REASON_DECRYPTION_ERROR"
+	//   "PROCESSING_ERROR_REASON_DEK_DECRYPTION_ERROR"
+	//   "PROCESSING_ERROR_REASON_INVALID_WIP"
+	//   "PROCESSING_ERROR_REASON_INVALID_KEK"
+	//   "PROCESSING_ERROR_REASON_WIP_AUTH_FAILED"
+	//   "PROCESSING_ERROR_REASON_KEK_PERMISSION_DENIED"
+	//   "PROCESSING_ERROR_REASON_AWS_AUTH_FAILED"
+	//   "PROCESSING_ERROR_REASON_USER_IDENTIFIER_DECRYPTION_ERROR"
+	//   "PROCESSING_ERROR_OPERATING_ACCOUNT_MISMATCH_FOR_AD_IDENTIFIER"
 	//
 	// "PROCESSING_ERROR_REASON_ONE_PER_CLICK_CONVERSION_ACTION_NOT_PERMITTED_WITH_B
-	// RAID" - One-per-click conversion actions cannot be used with BRAIDs.
-	//   "PROCESSING_ERROR_REASON_MATCH_ID_NOT_FOUND" - The match ID can not be
-	// found.
-	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_MATCH_ID" - The user ID can
-	// not be found for the match ID.
-	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_GCLID" - The user ID can
-	// not be found for the GCLID.
-	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_DCLID" - The user ID can
-	// not be found for the DCLID.
-	//   "PROCESSING_ERROR_REASON_INVALID_AD_IDENTIFIERS" - There are ad
-	// identifiers that are invalid.
-	//   "PROCESSING_ERROR_REASON_INVALID_MOBILE_ID_FORMAT" - The mobile ID format
-	// is invalid.
-	//   "PROCESSING_ERROR_REASON_ORIGINAL_CONVERSIONS_NOT_FOUND" - The original
-	// conversions can't be found.
-	//   "PROCESSING_ERROR_REASON_EVENT_ID_DECODE_ERROR" - The event ID (dclid or
-	// impression ID) cannot be decoded.
-	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_IMPRESSION_ID" - The user
-	// ID cannot be found for the given impression ID.
-	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND" - The user ID cannot be found.
-	//   "PROCESSING_ERROR_REASON_CONVERSION_PRECEDES_CLICK" - The event timestamp
-	// on the event was earlier than the associated click.
-	//   "PROCESSING_ERROR_REASON_TOO_RECENT_CLICK" - The click occurred too
-	// recently.
-	//   "PROCESSING_ERROR_REASON_INVALID_CLICK" - The event can't be attributed to
-	// a click (GCLID). This may be because the click did not come from a Google
-	// Ads campaign, for example.
-	//   "PROCESSING_ERROR_REASON_INVALID_OPERATING_ACCOUNT_FOR_CLICK" - The click
-	// from the event isn't associated with the `operating_account` of the
-	// destination.
-	//   "PROCESSING_ERROR_REASON_CLICK_NOT_FOUND" - A corresponding click can't be
-	// found that matches the provided attributes.
-	//   "PROCESSING_ERROR_REASON_EXTERNAL_ATTRIBUTION_DATA_MISSING" - External
-	// attribution data is missing. Sending events to a destination for an external
-	// attribution conversion action isn't supported.
-	Reason string `json:"reason,omitempty"`
-	// RecordCount: The count of records that failed to upload for a given reason.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	// RAID"
+	//   "PROCESSING_ERROR_REASON_MATCH_ID_NOT_FOUND"
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_MATCH_ID"
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_GCLID"
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_DCLID"
+	//   "PROCESSING_ERROR_REASON_INVALID_AD_IDENTIFIERS"
+	//   "PROCESSING_ERROR_REASON_INVALID_MOBILE_ID_FORMAT"
+	//   "PROCESSING_ERROR_REASON_ORIGINAL_CONVERSIONS_NOT_FOUND"
+	//   "PROCESSING_ERROR_REASON_EVENT_ID_DECODE_ERROR"
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND_FOR_IMPRESSION_ID"
+	//   "PROCESSING_ERROR_REASON_USER_ID_NOT_FOUND"
+	//   "PROCESSING_ERROR_REASON_CONVERSION_PRECEDES_CLICK"
+	//   "PROCESSING_ERROR_REASON_TOO_RECENT_CLICK"
+	//   "PROCESSING_ERROR_REASON_INVALID_CLICK"
+	//   "PROCESSING_ERROR_REASON_INVALID_OPERATING_ACCOUNT_FOR_CLICK"
+	//   "PROCESSING_ERROR_REASON_CLICK_NOT_FOUND"
+	//   "PROCESSING_ERROR_REASON_EXTERNAL_ATTRIBUTION_DATA_MISSING"
+	Reason      string `json:"reason,omitempty"`
+	RecordCount int64  `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1221,10 +941,7 @@ func (s ErrorCount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ErrorInfo: Error counts for each type of error.
 type ErrorInfo struct {
-	// ErrorCounts: A list of errors and counts per error reason. May not be
-	// populated in all cases.
 	ErrorCounts []*ErrorCount `json:"errorCounts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorCounts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1244,89 +961,38 @@ func (s ErrorInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Event: An event representing a user interaction with an advertiser's website
-// or app.
 type Event struct {
-	// AdIdentifiers: Optional. Identifiers and other information used to match the
-	// conversion event with other online activity (such as ad clicks).
-	AdIdentifiers *AdIdentifiers `json:"adIdentifiers,omitempty"`
-	// AdditionalEventParameters: Optional. A bucket of any event parameters
-	// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events)
-	// to be included within the event that were not already specified using other
-	// structured fields.
+	AdIdentifiers             *AdIdentifiers    `json:"adIdentifiers,omitempty"`
 	AdditionalEventParameters []*EventParameter `json:"additionalEventParameters,omitempty"`
-	// AppInstanceId: Optional. A unique identifier for the user instance of an app
-	// client for this GA4 app stream.
-	AppInstanceId string `json:"appInstanceId,omitempty"`
-	// CartData: Optional. Information about the transaction and items associated
-	// with the event.
-	CartData *CartData `json:"cartData,omitempty"`
-	// ClientId: Optional. A unique identifier for the user instance of a web
-	// client for this GA4 web stream.
-	ClientId string `json:"clientId,omitempty"`
-	// Consent: Optional. Information about whether the associated user has
-	// provided different types of consent.
-	Consent *Consent `json:"consent,omitempty"`
-	// ConversionCount: Optional. The conversion quantity associated with the
-	// event, for counting-based conversions.
-	ConversionCount float64 `json:"conversionCount,omitempty"`
-	// ConversionValue: Optional. The conversion value associated with the event,
-	// for value-based conversions.
-	ConversionValue float64 `json:"conversionValue,omitempty"`
-	// Currency: Optional. The currency code associated with all monetary values
-	// within this event.
-	Currency string `json:"currency,omitempty"`
-	// CustomVariables: Optional. Additional key/value pair information to send to
-	// the conversion containers (conversion action or FL activity).
-	CustomVariables []*CustomVariable `json:"customVariables,omitempty"`
-	// DestinationReferences: Optional. Reference string used to determine the
-	// destination. If empty, the event will be sent to all destinations in the
-	// request.
-	DestinationReferences []string `json:"destinationReferences,omitempty"`
-	// EventDeviceInfo: Optional. Information gathered about the device being used
-	// (if any) when the event happened.
-	EventDeviceInfo *DeviceInfo `json:"eventDeviceInfo,omitempty"`
-	// EventLocation: Optional. Information gathered about the location of the user
-	// when this event occurred.
-	EventLocation *EventLocation `json:"eventLocation,omitempty"`
-	// EventName: Optional. The name of the event. Required for GA4 events.
-	EventName string `json:"eventName,omitempty"`
-	// EventSource: Optional. Signal for where the event happened (web, app,
-	// in-store, etc.).
-	//
+	AppInstanceId             string            `json:"appInstanceId,omitempty"`
+	CartData                  *CartData         `json:"cartData,omitempty"`
+	ClientId                  string            `json:"clientId,omitempty"`
+	Consent                   *Consent          `json:"consent,omitempty"`
+	ConversionCount           float64           `json:"conversionCount,omitempty"`
+	ConversionValue           float64           `json:"conversionValue,omitempty"`
+	Currency                  string            `json:"currency,omitempty"`
+	CustomVariables           []*CustomVariable `json:"customVariables,omitempty"`
+	DestinationReferences     []string          `json:"destinationReferences,omitempty"`
+	EventDeviceInfo           *DeviceInfo       `json:"eventDeviceInfo,omitempty"`
+	EventLocation             *EventLocation    `json:"eventLocation,omitempty"`
+	EventName                 string            `json:"eventName,omitempty"`
 	// Possible values:
-	//   "EVENT_SOURCE_UNSPECIFIED" - Unspecified EventSource. Should never be
-	// used.
-	//   "WEB" - The event was generated from a web browser.
-	//   "APP" - The event was generated from an app.
-	//   "IN_STORE" - The event was generated from an in-store transaction.
-	//   "PHONE" - The event was generated from a phone call.
-	//   "MESSAGE" - The event was generated from a message.
-	//   "OTHER" - The event was generated from other sources.
-	EventSource string `json:"eventSource,omitempty"`
-	// EventTimestamp: Required. The time the event occurred.
-	EventTimestamp string `json:"eventTimestamp,omitempty"`
-	// ExperimentalFields: Optional. A list of key/value pairs for experimental
-	// fields that may eventually be promoted to be part of the API.
-	ExperimentalFields []*ExperimentalField `json:"experimentalFields,omitempty"`
-	// LastUpdatedTimestamp: Optional. The last time the event was updated.
-	LastUpdatedTimestamp string `json:"lastUpdatedTimestamp,omitempty"`
-	// ThirdPartyUserData: Optional. The same type of data provided in user_data,
-	// but explicitly flagged as being provided as owned by a third-party and not
-	// first-party advertiser data.
-	ThirdPartyUserData *UserData `json:"thirdPartyUserData,omitempty"`
-	// TransactionId: Optional. The unique identifier for this event. Required for
-	// events sent as an additional data source for tag conversions.
-	TransactionId string `json:"transactionId,omitempty"`
-	// UserData: Optional. Pieces of user provided data, representing the user the
-	// event is associated with.
-	UserData *UserData `json:"userData,omitempty"`
-	// UserId: Optional. A unique identifier for a user, as defined by the
-	// advertiser.
-	UserId string `json:"userId,omitempty"`
-	// UserProperties: Optional. Advertiser-assessed information about the user at
-	// the time that the event happened.
-	UserProperties *UserProperties `json:"userProperties,omitempty"`
+	//   "EVENT_SOURCE_UNSPECIFIED"
+	//   "WEB"
+	//   "APP"
+	//   "IN_STORE"
+	//   "PHONE"
+	//   "MESSAGE"
+	//   "OTHER"
+	EventSource          string               `json:"eventSource,omitempty"`
+	EventTimestamp       string               `json:"eventTimestamp,omitempty"`
+	ExperimentalFields   []*ExperimentalField `json:"experimentalFields,omitempty"`
+	LastUpdatedTimestamp string               `json:"lastUpdatedTimestamp,omitempty"`
+	ThirdPartyUserData   *UserData            `json:"thirdPartyUserData,omitempty"`
+	TransactionId        string               `json:"transactionId,omitempty"`
+	UserData             *UserData            `json:"userData,omitempty"`
+	UserId               string               `json:"userId,omitempty"`
+	UserProperties       *UserProperties      `json:"userProperties,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdIdentifiers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1361,24 +1027,13 @@ func (s *Event) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// EventLocation: The location where the event occurred.
 type EventLocation struct {
-	// City: Optional. The name of the city where the event occurred.
-	City string `json:"city,omitempty"`
-	// ContinentCode: Optional. The continent code in UN M49 format where the event
-	// occurred.
-	ContinentCode string `json:"continentCode,omitempty"`
-	// RegionCode: Optional. The 2-letter CLDR region code of the user's address.
-	RegionCode string `json:"regionCode,omitempty"`
-	// StoreId: Optional. Required for Store Sales. The identifier to represent a
-	// physical store where the event happened.
-	StoreId string `json:"storeId,omitempty"`
-	// SubcontinentCode: Optional. The subcontinent code in UN M49 format where the
-	// event occurred.
+	City             string `json:"city,omitempty"`
+	ContinentCode    string `json:"continentCode,omitempty"`
+	RegionCode       string `json:"regionCode,omitempty"`
+	StoreId          string `json:"storeId,omitempty"`
 	SubcontinentCode string `json:"subcontinentCode,omitempty"`
-	// SubdivisionCode: Optional. The ISO 3166-2 subdivision code where the event
-	// occurred.
-	SubdivisionCode string `json:"subdivisionCode,omitempty"`
+	SubdivisionCode  string `json:"subdivisionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "City") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1397,13 +1052,9 @@ func (s EventLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EventParameter: Event parameter for GA4 events.
 type EventParameter struct {
-	// ParameterName: Required. The name of the parameter to use.
 	ParameterName string `json:"parameterName,omitempty"`
-	// Value: Required. The string representation of the value of the parameter to
-	// set.
-	Value string `json:"value,omitempty"`
+	Value         string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ParameterName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1422,11 +1073,8 @@ func (s EventParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExperimentalField: Experimental field representing unofficial fields.
 type ExperimentalField struct {
-	// Field: Optional. The name of the field to use.
 	Field string `json:"field,omitempty"`
-	// Value: Optional. The value the field to set.
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Field") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1446,42 +1094,25 @@ func (s ExperimentalField) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FieldWarning: Detailed row-level warning with field paths.
 type FieldWarning struct {
-	// Description: The detailed warning message describing the issue.
 	Description string `json:"description,omitempty"`
-	// Field: The field path that triggered the warning. Uses the same format as
-	// google.rpc.BadRequest.FieldViolation.field.
-	Field string `json:"field,omitempty"`
-	// Reason: The warning reason.
-	//
+	Field       string `json:"field,omitempty"`
 	// Possible values:
-	//   "WARNING_REASON_UNSPECIFIED" - Unspecified warning reason.
-	//   "WARNING_REASON_CUSTOM_VARIABLE_NOT_ENABLED" - A custom variable in
-	// `custom_variables` is not enabled in the account.
-	//   "WARNING_REASON_CUSTOM_VARIABLE_NOT_PREDEFINED" - A custom variable value
-	// in `custom_variables` is not among the predefined allowed values configured
-	// for the custom variable on the destination account.
-	//   "WARNING_REASON_CART_DATA_NOT_SUPPORTED_WITH_GBRAID_OR_WBRAID" - The
-	// `cart_data` is not supported with `gbraid` or `wbraid`.
-	//   "WARNING_REASON_CART_DATA_ITEM_MERCHANT_PRODUCT_ID_MISSING" - The
-	// `merchant_product_id` is missing in the cart item.
-	//   "WARNING_REASON_CART_DATA_ITEM_UNIT_PRICE_MISSING" - The `unit_price` is
-	// missing in the cart item.
-	//   "WARNING_REASON_GENERIC" - Generic warning reason for issues that do not
-	// fit into other specific categories.
-	//   "WARNING_REASON_INVALID_CLIENT_ID" - The `client_id` is invalid.
-	//   "WARNING_REASON_INVALID_SUBDIVISION_CODE" - The `subdivision_code` is
-	// invalid.
-	//   "WARNING_REASON_INVALID_REGION_CODE" - The `region_code` is invalid.
-	//   "WARNING_REASON_INVALID_SUBCONTINENT_CODE" - The `subcontinent_code` is
-	// invalid.
-	//   "WARNING_REASON_INVALID_CONTINENT_CODE" - The `continent_code` is invalid.
-	//   "WARNING_REASON_INVALID_DEVICE_CATEGORY" - The device `category` is
-	// invalid.
-	//   "WARNING_REASON_INVALID_DEVICE_SCREEN_RESOLUTION" - The device
-	// `screen_height` or `screen_width` is invalid.
-	//   "WARNING_REASON_INVALID_MERCHANT_ID" - The `merchant_id` is invalid.
+	//   "WARNING_REASON_UNSPECIFIED"
+	//   "WARNING_REASON_CUSTOM_VARIABLE_NOT_ENABLED"
+	//   "WARNING_REASON_CUSTOM_VARIABLE_NOT_PREDEFINED"
+	//   "WARNING_REASON_CART_DATA_NOT_SUPPORTED_WITH_GBRAID_OR_WBRAID"
+	//   "WARNING_REASON_CART_DATA_ITEM_MERCHANT_PRODUCT_ID_MISSING"
+	//   "WARNING_REASON_CART_DATA_ITEM_UNIT_PRICE_MISSING"
+	//   "WARNING_REASON_GENERIC"
+	//   "WARNING_REASON_INVALID_CLIENT_ID"
+	//   "WARNING_REASON_INVALID_SUBDIVISION_CODE"
+	//   "WARNING_REASON_INVALID_REGION_CODE"
+	//   "WARNING_REASON_INVALID_SUBCONTINENT_CODE"
+	//   "WARNING_REASON_INVALID_CONTINENT_CODE"
+	//   "WARNING_REASON_INVALID_DEVICE_CATEGORY"
+	//   "WARNING_REASON_INVALID_DEVICE_SCREEN_RESOLUTION"
+	//   "WARNING_REASON_INVALID_MERCHANT_ID"
 	Reason string `json:"reason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1501,27 +1132,13 @@ func (s FieldWarning) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GcpWrappedKeyInfo: Information about the Google Cloud Platform wrapped key.
 type GcpWrappedKeyInfo struct {
-	// EncryptedDek: Required. The base64 encoded encrypted data encryption key.
 	EncryptedDek string `json:"encryptedDek,omitempty"`
-	// KekUri: Required. Google Cloud Platform Cloud Key Management Service
-	// resource ID (//cloud.google.com/kms/docs/getting-resource-ids). Should be in
-	// the format of
-	// `projects/{project}/locations/{location}/keyRings/{key_ring}/cryptoKeys/{key}
-	// ` or
-	// `gcp-kms://projects/{project}/locations/{location}/keyRings/{key_ring}/crypto
-	// Keys/{key}`
-	KekUri string `json:"kekUri,omitempty"`
-	// KeyType: Required. The type of algorithm used to encrypt the data.
-	//
+	KekUri       string `json:"kekUri,omitempty"`
 	// Possible values:
-	//   "KEY_TYPE_UNSPECIFIED" - Unspecified key type. Should never be used.
-	//   "XCHACHA20_POLY1305" - Algorithm XChaCha20-Poly1305
-	KeyType string `json:"keyType,omitempty"`
-	// WipProvider: Required. The Workload Identity
-	// (//cloud.google.com/iam/docs/workload-identity-federation) pool provider
-	// required to use KEK.
+	//   "KEY_TYPE_UNSPECIFIED"
+	//   "XCHACHA20_POLY1305"
+	KeyType     string `json:"keyType,omitempty"`
 	WipProvider string `json:"wipProvider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EncryptedDek") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1541,10 +1158,7 @@ func (s GcpWrappedKeyInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleUserIdData: Google user id data holding encrypted google user IDs. At
-// least one google user ID is required.
 type GoogleUserIdData struct {
-	// GoogleUserIds: Required. The list of encrypted google user IDs.
 	GoogleUserIds []string `json:"googleUserIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GoogleUserIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1564,15 +1178,10 @@ func (s GoogleUserIdData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestAdEventsRequest: Request to upload ad events.
 type IngestAdEventsRequest struct {
-	// AdEvents: Required. Required (at least 1). A list of ad events.
-	AdEvents []*AdEvent `json:"adEvents,omitempty"`
-	// EncryptionInfo: Required. Information about encryption keys which are used
-	// to encrypt the data.
+	AdEvents       []*AdEvent      `json:"adEvents,omitempty"`
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
-	// ValidateOnly: Optional. If true, the request is validated, but not executed.
-	ValidateOnly bool `json:"validateOnly,omitempty"`
+	ValidateOnly   bool            `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdEvents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1591,49 +1200,23 @@ func (s IngestAdEventsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestAdEventsResponse: Response from an ad event ingestion operation.
 type IngestAdEventsResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// IngestAudienceMembersRequest: Request to upload audience members to the
-// provided destinations. Returns an IngestAudienceMembersResponse.
 type IngestAudienceMembersRequest struct {
-	// AudienceMembers: Required. The list of users to send to the specified
-	// destinations. At most 10000 AudienceMember resources can be sent in a single
-	// request.
 	AudienceMembers []*AudienceMember `json:"audienceMembers,omitempty"`
-	// Consent: Optional. Request-level consent to apply to all users in the
-	// request. User-level consent overrides request-level consent, and can be
-	// specified in each AudienceMember.
-	Consent *Consent `json:"consent,omitempty"`
-	// Destinations: Required. The list of destinations to send the audience
-	// members to.
-	Destinations []*Destination `json:"destinations,omitempty"`
-	// Encoding: Optional. Required for UserData uploads. The encoding type of the
-	// user identifiers. For hashed user identifiers, this is the encoding type of
-	// the hashed string. For encrypted hashed user identifiers, this is the
-	// encoding type of the outer encrypted string, but not necessarily the inner
-	// hashed string, meaning the inner hashed string could be encoded in a
-	// different way than the outer encrypted string. For non `UserData` uploads,
-	// this field is ignored.
-	//
+	Consent         *Consent          `json:"consent,omitempty"`
+	Destinations    []*Destination    `json:"destinations,omitempty"`
 	// Possible values:
-	//   "ENCODING_UNSPECIFIED" - Unspecified Encoding type. Should never be used.
-	//   "HEX" - Hex encoding.
-	//   "BASE64" - Base 64 encoding.
-	Encoding string `json:"encoding,omitempty"`
-	// EncryptionInfo: Optional. Encryption information for UserData uploads. If
-	// not set, it's assumed that uploaded identifying information is hashed but
-	// not encrypted. For non `UserData` uploads, this field is ignored.
+	//   "ENCODING_UNSPECIFIED"
+	//   "HEX"
+	//   "BASE64"
+	Encoding       string          `json:"encoding,omitempty"`
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
-	// TermsOfService: Optional. The terms of service that the user has
-	// accepted/rejected.
 	TermsOfService *TermsOfService `json:"termsOfService,omitempty"`
-	// ValidateOnly: Optional. For testing purposes. If `true`, the request is
-	// validated but not executed. Only errors are returned, not results.
-	ValidateOnly bool `json:"validateOnly,omitempty"`
+	ValidateOnly   bool            `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceMembers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1652,13 +1235,9 @@ func (s IngestAudienceMembersRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestAudienceMembersResponse: Response from the
-// IngestAudienceMembersRequest.
 type IngestAudienceMembersResponse struct {
-	// FieldWarnings: Detailed row-level warnings with field paths.
 	FieldWarnings []*FieldWarning `json:"fieldWarnings,omitempty"`
-	// RequestId: The auto-generated ID of the request.
-	RequestId string `json:"requestId,omitempty"`
+	RequestId     string          `json:"requestId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1680,33 +1259,15 @@ func (s IngestAudienceMembersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestAudienceMembersStatus: The status of the ingest audience members
-// request.
 type IngestAudienceMembersStatus struct {
-	// CompositeDataIngestionStatus: The status of the composite data ingestion to
-	// the destination.
-	CompositeDataIngestionStatus *IngestCompositeDataStatus `json:"compositeDataIngestionStatus,omitempty"`
-	// GoogleUserIdDataIngestionStatus: The status of the google user id data
-	// ingestion to the destination.
-	GoogleUserIdDataIngestionStatus *IngestGoogleUserIdDataStatus `json:"googleUserIdDataIngestionStatus,omitempty"`
-	// MobileDataIngestionStatus: The status of the mobile data ingestion to the
-	// destination.
-	MobileDataIngestionStatus *IngestMobileDataStatus `json:"mobileDataIngestionStatus,omitempty"`
-	// PairDataIngestionStatus: The status of the pair data ingestion to the
-	// destination.
-	PairDataIngestionStatus *IngestPairDataStatus `json:"pairDataIngestionStatus,omitempty"`
-	// PartnerProvidedIdDataIngestionStatus: The status of the partner provided id
-	// data ingestion to the destination.
+	CompositeDataIngestionStatus         *IngestCompositeDataStatus         `json:"compositeDataIngestionStatus,omitempty"`
+	GoogleUserIdDataIngestionStatus      *IngestGoogleUserIdDataStatus      `json:"googleUserIdDataIngestionStatus,omitempty"`
+	MobileDataIngestionStatus            *IngestMobileDataStatus            `json:"mobileDataIngestionStatus,omitempty"`
+	PairDataIngestionStatus              *IngestPairDataStatus              `json:"pairDataIngestionStatus,omitempty"`
 	PartnerProvidedIdDataIngestionStatus *IngestPartnerProvidedIdDataStatus `json:"partnerProvidedIdDataIngestionStatus,omitempty"`
-	// PpidDataIngestionStatus: The status of the ppid data ingestion to the
-	// destination.
-	PpidDataIngestionStatus *IngestPpidDataStatus `json:"ppidDataIngestionStatus,omitempty"`
-	// UserDataIngestionStatus: The status of the user data ingestion to the
-	// destination.
-	UserDataIngestionStatus *IngestUserDataStatus `json:"userDataIngestionStatus,omitempty"`
-	// UserIdDataIngestionStatus: The status of the user id data ingestion to the
-	// destination.
-	UserIdDataIngestionStatus *IngestUserIdDataStatus `json:"userIdDataIngestionStatus,omitempty"`
+	PpidDataIngestionStatus              *IngestPpidDataStatus              `json:"ppidDataIngestionStatus,omitempty"`
+	UserDataIngestionStatus              *IngestUserDataStatus              `json:"userDataIngestionStatus,omitempty"`
+	UserIdDataIngestionStatus            *IngestUserIdDataStatus            `json:"userIdDataIngestionStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "CompositeDataIngestionStatus") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -1725,40 +1286,21 @@ func (s IngestAudienceMembersStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestCompositeDataStatus: The status of the composite data ingestion to the
-// destination containing stats related to the ingestion.
 type IngestCompositeDataStatus struct {
-	// DataTypeCounts: The total count of data types sent in the upload request for
-	// the destination, broken down by data type. Includes all data types in the
-	// request, regardless of whether they were successfully ingested or not.
 	DataTypeCounts []*DataTypeCount `json:"dataTypeCounts,omitempty"`
-	// RecordCount: The total count of audience members sent in the upload request
-	// for the destination. Includes all audience members in the request,
-	// regardless of whether they were successfully ingested or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
-	// UploadMatchRateRange: The match rate range of the upload.
-	//
+	RecordCount    int64            `json:"recordCount,omitempty,string"`
 	// Possible values:
-	//   "MATCH_RATE_RANGE_UNKNOWN" - The match rate range is unknown.
-	//   "MATCH_RATE_RANGE_NOT_ELIGIBLE" - The match rate range is not eligible.
-	//   "MATCH_RATE_RANGE_LESS_THAN_20" - The match rate range is less than 20%
-	// (in the interval `[0, 20)`).
-	//   "MATCH_RATE_RANGE_20_TO_30" - The match rate range is between 20% and 30%
-	// (in the interval `[20, 31)`).
-	//   "MATCH_RATE_RANGE_31_TO_40" - The match rate range is between 31% and 40%
-	// (in the interval `[31, 41)`).
-	//   "MATCH_RATE_RANGE_41_TO_50" - The match rate range is between 41% and 50%
-	// (in the interval `[41, 51)`).
-	//   "MATCH_RATE_RANGE_51_TO_60" - The match rate range is between 51% and 60%
-	// (in the interval `[51, 61)`.
-	//   "MATCH_RATE_RANGE_61_TO_70" - The match rate range is between 61% and 70%
-	// (in the interval `[61, 71)`).
-	//   "MATCH_RATE_RANGE_71_TO_80" - The match rate range is between 71% and 80%
-	// (in the interval `[71, 81)`).
-	//   "MATCH_RATE_RANGE_81_TO_90" - The match rate range is between 81% and 90%
-	// (in the interval `[81, 91)`).
-	//   "MATCH_RATE_RANGE_91_TO_100" - The match rate range is between 91% and
-	// 100% (in the interval `[91, 100]`).
+	//   "MATCH_RATE_RANGE_UNKNOWN"
+	//   "MATCH_RATE_RANGE_NOT_ELIGIBLE"
+	//   "MATCH_RATE_RANGE_LESS_THAN_20"
+	//   "MATCH_RATE_RANGE_20_TO_30"
+	//   "MATCH_RATE_RANGE_31_TO_40"
+	//   "MATCH_RATE_RANGE_41_TO_50"
+	//   "MATCH_RATE_RANGE_51_TO_60"
+	//   "MATCH_RATE_RANGE_61_TO_70"
+	//   "MATCH_RATE_RANGE_71_TO_80"
+	//   "MATCH_RATE_RANGE_81_TO_90"
+	//   "MATCH_RATE_RANGE_91_TO_100"
 	UploadMatchRateRange string `json:"uploadMatchRateRange,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataTypeCounts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1778,38 +1320,17 @@ func (s IngestCompositeDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestEventsRequest: Request to upload audience members to the provided
-// destinations. Returns an IngestEventsResponse.
 type IngestEventsRequest struct {
-	// Consent: Optional. Request-level consent to apply to all users in the
-	// request. User-level consent overrides request-level consent, and can be
-	// specified in each Event.
-	Consent *Consent `json:"consent,omitempty"`
-	// Destinations: Required. The list of destinations to send the events to.
+	Consent      *Consent       `json:"consent,omitempty"`
 	Destinations []*Destination `json:"destinations,omitempty"`
-	// Encoding: Optional. Required for UserData uploads. The encoding type of the
-	// user identifiers. For hashed user identifiers, this is the encoding type of
-	// the hashed string. For encrypted hashed user identifiers, this is the
-	// encoding type of the outer encrypted string, but not necessarily the inner
-	// hashed string, meaning the inner hashed string could be encoded in a
-	// different way than the outer encrypted string. For non `UserData` uploads,
-	// this field is ignored.
-	//
 	// Possible values:
-	//   "ENCODING_UNSPECIFIED" - Unspecified Encoding type. Should never be used.
-	//   "HEX" - Hex encoding.
-	//   "BASE64" - Base 64 encoding.
-	Encoding string `json:"encoding,omitempty"`
-	// EncryptionInfo: Optional. Encryption information for UserData uploads. If
-	// not set, it's assumed that uploaded identifying information is hashed but
-	// not encrypted. For non `UserData` uploads, this field is ignored.
+	//   "ENCODING_UNSPECIFIED"
+	//   "HEX"
+	//   "BASE64"
+	Encoding       string          `json:"encoding,omitempty"`
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
-	// Events: Required. The list of events to send to the specified destinations.
-	// At most 2000 Event resources can be sent in a single request.
-	Events []*Event `json:"events,omitempty"`
-	// ValidateOnly: Optional. For testing purposes. If `true`, the request is
-	// validated but not executed. Only errors are returned, not results.
-	ValidateOnly bool `json:"validateOnly,omitempty"`
+	Events         []*Event        `json:"events,omitempty"`
+	ValidateOnly   bool            `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Consent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1828,12 +1349,9 @@ func (s IngestEventsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestEventsResponse: Response from the IngestEventsRequest.
 type IngestEventsResponse struct {
-	// FieldWarnings: Detailed row-level warnings with field paths.
 	FieldWarnings []*FieldWarning `json:"fieldWarnings,omitempty"`
-	// RequestId: The auto-generated ID of the request.
-	RequestId string `json:"requestId,omitempty"`
+	RequestId     string          `json:"requestId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1855,11 +1373,7 @@ func (s IngestEventsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestEventsStatus: The status of the events ingestion to the destination.
 type IngestEventsStatus struct {
-	// RecordCount: The total count of events sent in the upload request. Includes
-	// all events in the request, regardless of whether they were successfully
-	// ingested or not.
 	RecordCount int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "RecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1879,17 +1393,9 @@ func (s IngestEventsStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestGoogleUserIdDataStatus: The status of the google user id data
-// ingestion to the destination containing stats related to the ingestion.
 type IngestGoogleUserIdDataStatus struct {
-	// GoogleUserIdCount: The total count of google user ids sent in the upload
-	// request for the destination. Includes all google user ids in the request,
-	// regardless of whether they were successfully ingested or not.
 	GoogleUserIdCount int64 `json:"googleUserIdCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the upload request
-	// for the destination. Includes all audience members in the request,
-	// regardless of whether they were successfully ingested or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	RecordCount       int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "GoogleUserIdCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1908,17 +1414,9 @@ func (s IngestGoogleUserIdDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestMobileDataStatus: The status of the mobile data ingestion to the
-// destination containing stats related to the ingestion.
 type IngestMobileDataStatus struct {
-	// MobileIdCount: The total count of mobile ids sent in the upload request for
-	// the destination. Includes all mobile ids in the request, regardless of
-	// whether they were successfully ingested or not.
 	MobileIdCount int64 `json:"mobileIdCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the upload request
-	// for the destination. Includes all audience members in the request,
-	// regardless of whether they were successfully ingested or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	RecordCount   int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MobileIdCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1937,16 +1435,8 @@ func (s IngestMobileDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestPairDataStatus: The status of the pair data ingestion to the
-// destination containing stats related to the ingestion.
 type IngestPairDataStatus struct {
-	// PairIdCount: The total count of pair ids sent in the upload request for the
-	// destination. Includes all pair ids in the request, regardless of whether
-	// they were successfully ingested or not.
 	PairIdCount int64 `json:"pairIdCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the upload request
-	// for the destination. Includes all audience members in the request,
-	// regardless of whether they were successfully ingested or not.
 	RecordCount int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "PairIdCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1966,17 +1456,9 @@ func (s IngestPairDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestPartnerProvidedIdDataStatus: The status of the partner provided id
-// data ingestion to the destination containing stats related to the ingestion.
 type IngestPartnerProvidedIdDataStatus struct {
-	// PartnerProvidedIdCount: The total count of partner provided ids sent in the
-	// upload request for the destination. Includes all partner provided ids in the
-	// request, regardless of whether they were successfully ingested or not.
 	PartnerProvidedIdCount int64 `json:"partnerProvidedIdCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the upload request
-	// for the destination. Includes all audience members in the request,
-	// regardless of whether they were successfully ingested or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	RecordCount            int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "PartnerProvidedIdCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1995,16 +1477,8 @@ func (s IngestPartnerProvidedIdDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestPpidDataStatus: The status of the ppid data ingestion to the
-// destination containing stats related to the ingestion.
 type IngestPpidDataStatus struct {
-	// PpidCount: The total count of ppids sent in the upload request for the
-	// destination. Includes all ppids in the request, regardless of whether they
-	// were successfully ingested or not.
-	PpidCount int64 `json:"ppidCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the upload request
-	// for the destination. Includes all audience members in the request,
-	// regardless of whether they were successfully ingested or not.
+	PpidCount   int64 `json:"ppidCount,omitempty,string"`
 	RecordCount int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "PpidCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2024,41 +1498,22 @@ func (s IngestPpidDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestUserDataStatus: The status of the user data ingestion to the
-// destination containing stats related to the ingestion.
 type IngestUserDataStatus struct {
-	// RecordCount: The total count of audience members sent in the upload request
-	// for the destination. Includes all audience members in the request,
-	// regardless of whether they were successfully ingested or not.
 	RecordCount int64 `json:"recordCount,omitempty,string"`
-	// UploadMatchRateRange: The match rate range of the upload.
-	//
 	// Possible values:
-	//   "MATCH_RATE_RANGE_UNKNOWN" - The match rate range is unknown.
-	//   "MATCH_RATE_RANGE_NOT_ELIGIBLE" - The match rate range is not eligible.
-	//   "MATCH_RATE_RANGE_LESS_THAN_20" - The match rate range is less than 20%
-	// (in the interval `[0, 20)`).
-	//   "MATCH_RATE_RANGE_20_TO_30" - The match rate range is between 20% and 30%
-	// (in the interval `[20, 31)`).
-	//   "MATCH_RATE_RANGE_31_TO_40" - The match rate range is between 31% and 40%
-	// (in the interval `[31, 41)`).
-	//   "MATCH_RATE_RANGE_41_TO_50" - The match rate range is between 41% and 50%
-	// (in the interval `[41, 51)`).
-	//   "MATCH_RATE_RANGE_51_TO_60" - The match rate range is between 51% and 60%
-	// (in the interval `[51, 61)`.
-	//   "MATCH_RATE_RANGE_61_TO_70" - The match rate range is between 61% and 70%
-	// (in the interval `[61, 71)`).
-	//   "MATCH_RATE_RANGE_71_TO_80" - The match rate range is between 71% and 80%
-	// (in the interval `[71, 81)`).
-	//   "MATCH_RATE_RANGE_81_TO_90" - The match rate range is between 81% and 90%
-	// (in the interval `[81, 91)`).
-	//   "MATCH_RATE_RANGE_91_TO_100" - The match rate range is between 91% and
-	// 100% (in the interval `[91, 100]`).
+	//   "MATCH_RATE_RANGE_UNKNOWN"
+	//   "MATCH_RATE_RANGE_NOT_ELIGIBLE"
+	//   "MATCH_RATE_RANGE_LESS_THAN_20"
+	//   "MATCH_RATE_RANGE_20_TO_30"
+	//   "MATCH_RATE_RANGE_31_TO_40"
+	//   "MATCH_RATE_RANGE_41_TO_50"
+	//   "MATCH_RATE_RANGE_51_TO_60"
+	//   "MATCH_RATE_RANGE_61_TO_70"
+	//   "MATCH_RATE_RANGE_71_TO_80"
+	//   "MATCH_RATE_RANGE_81_TO_90"
+	//   "MATCH_RATE_RANGE_91_TO_100"
 	UploadMatchRateRange string `json:"uploadMatchRateRange,omitempty"`
-	// UserIdentifierCount: The total count of user identifiers sent in the upload
-	// request for the destination. Includes all user identifiers in the request,
-	// regardless of whether they were successfully ingested or not.
-	UserIdentifierCount int64 `json:"userIdentifierCount,omitempty,string"`
+	UserIdentifierCount  int64  `json:"userIdentifierCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "RecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2077,16 +1532,8 @@ func (s IngestUserDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestUserIdDataStatus: The status of the user id data ingestion to the
-// destination containing stats related to the ingestion.
 type IngestUserIdDataStatus struct {
-	// RecordCount: The total count of audience members sent in the upload request
-	// for the destination. Includes all audience members in the request,
-	// regardless of whether they were successfully ingested or not.
 	RecordCount int64 `json:"recordCount,omitempty,string"`
-	// UserIdCount: The total count of user ids sent in the upload request for the
-	// destination. Includes all user ids in the request, regardless of whether
-	// they were successfully ingested or not.
 	UserIdCount int64 `json:"userIdCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "RecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2106,40 +1553,21 @@ func (s IngestUserIdDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IngestedUserListInfo: Represents a user list that is populated by user
-// provided data.
 type IngestedUserListInfo struct {
-	// ContactIdInfo: Optional. Additional information when `CONTACT_ID` is one of
-	// the `upload_key_types`.
-	ContactIdInfo *ContactIdInfo `json:"contactIdInfo,omitempty"`
-	// MobileIdInfo: Optional. Additional information when `MOBILE_ID` is one of
-	// the `upload_key_types`.
-	MobileIdInfo *MobileIdInfo `json:"mobileIdInfo,omitempty"`
-	// PairIdInfo: Optional. Additional information when `PAIR_ID` is one of the
-	// `upload_key_types`. This feature is only available to data partners.
-	PairIdInfo *PairIdInfo `json:"pairIdInfo,omitempty"`
-	// PartnerAudienceInfo: Optional. Additional information for partner audiences.
-	// This feature is only available to data partners.
+	ContactIdInfo       *ContactIdInfo       `json:"contactIdInfo,omitempty"`
+	MobileIdInfo        *MobileIdInfo        `json:"mobileIdInfo,omitempty"`
+	PairIdInfo          *PairIdInfo          `json:"pairIdInfo,omitempty"`
 	PartnerAudienceInfo *PartnerAudienceInfo `json:"partnerAudienceInfo,omitempty"`
-	// PseudonymousIdInfo: Optional. Additional information for `PSEUDONYMOUS_ID`
-	// is one of the `upload_key_types`.
-	PseudonymousIdInfo *PseudonymousIdInfo `json:"pseudonymousIdInfo,omitempty"`
-	// UploadKeyTypes: Required. Immutable. Upload key types of this user list.
-	//
+	PseudonymousIdInfo  *PseudonymousIdInfo  `json:"pseudonymousIdInfo,omitempty"`
 	// Possible values:
-	//   "UPLOAD_KEY_TYPE_UNSPECIFIED" - Not specified.
-	//   "CONTACT_ID" - Customer info such as email address, phone number or
-	// physical address.
-	//   "MOBILE_ID" - Mobile advertising ids.
-	//   "USER_ID" - Third party provided user ids.
-	//   "PAIR_ID" - Publisher advertiser identity reconciliation ids.
-	//   "PSEUDONYMOUS_ID" - Data Management Platform IDs: - Google User ID -
-	// Partner Provided ID - Publisher Provided ID - iOS IDFA - Android advertising
-	// ID - Roku ID - Amazon Fire TV ID - Xbox or Microsoft ID - Generic Device ID
-	UploadKeyTypes []string `json:"uploadKeyTypes,omitempty"`
-	// UserIdInfo: Optional. Additional information when `USER_ID` is one of the
-	// `upload_key_types`.
-	UserIdInfo *UserIdInfo `json:"userIdInfo,omitempty"`
+	//   "UPLOAD_KEY_TYPE_UNSPECIFIED"
+	//   "CONTACT_ID"
+	//   "MOBILE_ID"
+	//   "USER_ID"
+	//   "PAIR_ID"
+	//   "PSEUDONYMOUS_ID"
+	UploadKeyTypes []string    `json:"uploadKeyTypes,omitempty"`
+	UserIdInfo     *UserIdInfo `json:"userIdInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContactIdInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2158,18 +1586,9 @@ func (s IngestedUserListInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IpData: IP address information for a user. We recommend including
-// observe_start_time and observe_end_time to help improve Customer Match match
-// rates.
 type IpData struct {
-	// IpAddress: Required. IP address captured at the time of customer
-	// interaction. Accepts standard string formats for both IPv4 and IPv6.
-	IpAddress string `json:"ipAddress,omitempty"`
-	// ObserveEndTime: Optional. Last recorded interaction time from this IP
-	// address in a session.
-	ObserveEndTime string `json:"observeEndTime,omitempty"`
-	// ObserveStartTime: Optional. First recorded interaction time from this IP
-	// address in a session.
+	IpAddress        string `json:"ipAddress,omitempty"`
+	ObserveEndTime   string `json:"observeEndTime,omitempty"`
 	ObserveStartTime string `json:"observeStartTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpAddress") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2189,44 +1608,17 @@ func (s IpData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Item: Represents an item in the cart associated with the event.
 type Item struct {
-	// AdditionalItemParameters: Optional. A bucket of any event parameters related
-	// to an item
-	// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events)
-	// to be included within the event that were not already specified using other
-	// structured fields.
-	AdditionalItemParameters []*ItemParameter `json:"additionalItemParameters,omitempty"`
-	// ConversionValue: Optional. The conversion value associated with this item
-	// within the event, for cases where the conversion value is different for each
-	// item.
-	ConversionValue float64 `json:"conversionValue,omitempty"`
-	// CustomVariables: Optional. Additional key/value pair information to send to
-	// the conversion containers (conversion action or Floodlight activity), when
-	// tracking per-item conversions.
-	CustomVariables []*ItemCustomVariable `json:"customVariables,omitempty"`
-	// ItemId: Optional. A unique identifier to reference the item.
-	ItemId string `json:"itemId,omitempty"`
-	// MerchantFeedLabel: Optional. The feed label of the Merchant Center feed. If
-	// countries are still being used, the 2-letter country code in ISO-3166-1
-	// alpha-2 can be used instead. For Store Sales events this will override the
-	// value set at the cart level. This field is ignored for other events.
-	MerchantFeedLabel string `json:"merchantFeedLabel,omitempty"`
-	// MerchantFeedLanguageCode: Optional. The language code in ISO 639-1
-	// associated with the Merchant Center feed where your items are uploaded.
-	MerchantFeedLanguageCode string `json:"merchantFeedLanguageCode,omitempty"`
-	// MerchantId: Optional. The Merchant Center ID associated with the item. For
-	// Store Sales events this will override the value set at the cart level. This
-	// field is ignored for other events.
-	MerchantId string `json:"merchantId,omitempty"`
-	// MerchantProductId: Optional. The product ID within the Merchant Center
-	// account.
-	MerchantProductId string `json:"merchantProductId,omitempty"`
-	// Quantity: Optional. The number of this item associated with the event.
-	Quantity int64 `json:"quantity,omitempty,string"`
-	// UnitPrice: Optional. The unit price excluding tax, shipping, and any
-	// transaction level discounts.
-	UnitPrice float64 `json:"unitPrice,omitempty"`
+	AdditionalItemParameters []*ItemParameter      `json:"additionalItemParameters,omitempty"`
+	ConversionValue          float64               `json:"conversionValue,omitempty"`
+	CustomVariables          []*ItemCustomVariable `json:"customVariables,omitempty"`
+	ItemId                   string                `json:"itemId,omitempty"`
+	MerchantFeedLabel        string                `json:"merchantFeedLabel,omitempty"`
+	MerchantFeedLanguageCode string                `json:"merchantFeedLanguageCode,omitempty"`
+	MerchantId               string                `json:"merchantId,omitempty"`
+	MerchantProductId        string                `json:"merchantProductId,omitempty"`
+	Quantity                 int64                 `json:"quantity,omitempty,string"`
+	UnitPrice                float64               `json:"unitPrice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalItemParameters")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2261,17 +1653,10 @@ func (s *Item) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ItemCustomVariable: Item-level custom variable for ads conversions.
 type ItemCustomVariable struct {
-	// DestinationReferences: Optional. Reference string used to determine which of
-	// the Event.destination_references the custom variable should be sent to. If
-	// empty, the Event.destination_references will be used.
 	DestinationReferences []string `json:"destinationReferences,omitempty"`
-	// Value: Optional. The value to store for the custom variable.
-	Value string `json:"value,omitempty"`
-	// Variable: Optional. The name of the custom variable to set. If the variable
-	// is not found for the given destination, it will be ignored.
-	Variable string `json:"variable,omitempty"`
+	Value                 string   `json:"value,omitempty"`
+	Variable              string   `json:"variable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DestinationReferences") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2290,16 +1675,9 @@ func (s ItemCustomVariable) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ItemParameter: A bucket of any event parameters related to an item
-// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/reference/events)
-// to be included within the event that were not already specified using other
-// structured fields.
 type ItemParameter struct {
-	// ParameterName: Required. The name of the parameter to use.
 	ParameterName string `json:"parameterName,omitempty"`
-	// Value: Required. The string representation of the value of the parameter to
-	// set.
-	Value string `json:"value,omitempty"`
+	Value         string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ParameterName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2318,13 +1696,8 @@ func (s ItemParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListUserListDirectLicensesResponse: Response from the
-// ListUserListDirectLicensesRequest.
 type ListUserListDirectLicensesResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UserListDirectLicenses: The licenses for the given user list in the request.
+	NextPageToken          string                   `json:"nextPageToken,omitempty"`
 	UserListDirectLicenses []*UserListDirectLicense `json:"userListDirectLicenses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2347,14 +1720,8 @@ func (s ListUserListDirectLicensesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListUserListGlobalLicenseCustomerInfosResponse: Response from the
-// ListUserListGlobalLicensesCustomerInfoRequest.
 type ListUserListGlobalLicenseCustomerInfosResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UserListGlobalLicenseCustomerInfos: The customer information for the given
-	// license in the request.
+	NextPageToken                      string                               `json:"nextPageToken,omitempty"`
 	UserListGlobalLicenseCustomerInfos []*UserListGlobalLicenseCustomerInfo `json:"userListGlobalLicenseCustomerInfos,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2377,13 +1744,8 @@ func (s ListUserListGlobalLicenseCustomerInfosResponse) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListUserListGlobalLicensesResponse: Response from the
-// ListUserListGlobalLicensesRequest.
 type ListUserListGlobalLicensesResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UserListGlobalLicenses: The licenses for the given user list in the request.
+	NextPageToken          string                   `json:"nextPageToken,omitempty"`
 	UserListGlobalLicenses []*UserListGlobalLicense `json:"userListGlobalLicenses,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2406,13 +1768,9 @@ func (s ListUserListGlobalLicensesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListUserListsResponse: Response message for ListUserLists.
 type ListUserListsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// UserLists: The user lists from the specified account.
-	UserLists []*UserList `json:"userLists,omitempty"`
+	NextPageToken string      `json:"nextPageToken,omitempty"`
+	UserLists     []*UserList `json:"userLists,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2434,10 +1792,7 @@ func (s ListUserListsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Location: The baseline location of the request. Baseline location is on
-// OR-list of ISO 3166-1 alpha-2 region codes of the requested regions.
 type Location struct {
-	// RegionCodes: List of ISO 3166-1 alpha-2 region codes.
 	RegionCodes []string `json:"regionCodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RegionCodes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2457,21 +1812,15 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MarketingDataInsight: Insights for marketing data. This feature is only
-// available to data partners.
 type MarketingDataInsight struct {
-	// Attributes: Insights for values of a given dimension.
 	Attributes []*MarketingDataInsightsAttribute `json:"attributes,omitempty"`
-	// Dimension: The dimension to which the insight belongs.
-	//
 	// Possible values:
-	//   "AUDIENCE_INSIGHTS_DIMENSION_UNSPECIFIED" - Not specified.
-	//   "AUDIENCE_INSIGHTS_DIMENSION_UNKNOWN" - The value is unknown in this
-	// version.
-	//   "AFFINITY_USER_INTEREST" - An Affinity UserInterest.
-	//   "IN_MARKET_USER_INTEREST" - An In-Market UserInterest.
-	//   "AGE_RANGE" - An age range.
-	//   "GENDER" - A gender.
+	//   "AUDIENCE_INSIGHTS_DIMENSION_UNSPECIFIED"
+	//   "AUDIENCE_INSIGHTS_DIMENSION_UNKNOWN"
+	//   "AFFINITY_USER_INTEREST"
+	//   "IN_MARKET_USER_INTEREST"
+	//   "AGE_RANGE"
+	//   "GENDER"
 	Dimension string `json:"dimension,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2491,34 +1840,25 @@ func (s MarketingDataInsight) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MarketingDataInsightsAttribute: Insights for a collection of related
-// attributes of the same dimension.
 type MarketingDataInsightsAttribute struct {
-	// AgeRange: Age range of the audience for which the lift is provided.
-	//
 	// Possible values:
-	//   "AGE_RANGE_UNSPECIFIED" - Not specified.
-	//   "AGE_RANGE_UNKNOWN" - Unknown.
-	//   "AGE_RANGE_18_24" - Between 18 and 24 years old.
-	//   "AGE_RANGE_25_34" - Between 25 and 34 years old.
-	//   "AGE_RANGE_35_44" - Between 35 and 44 years old.
-	//   "AGE_RANGE_45_54" - Between 45 and 54 years old.
-	//   "AGE_RANGE_55_64" - Between 55 and 64 years old.
-	//   "AGE_RANGE_65_UP" - 65 years old and beyond.
+	//   "AGE_RANGE_UNSPECIFIED"
+	//   "AGE_RANGE_UNKNOWN"
+	//   "AGE_RANGE_18_24"
+	//   "AGE_RANGE_25_34"
+	//   "AGE_RANGE_35_44"
+	//   "AGE_RANGE_45_54"
+	//   "AGE_RANGE_55_64"
+	//   "AGE_RANGE_65_UP"
 	AgeRange string `json:"ageRange,omitempty"`
-	// Gender: Gender of the audience for which the lift is provided.
-	//
 	// Possible values:
-	//   "GENDER_UNSPECIFIED" - Not specified.
-	//   "GENDER_UNKNOWN" - Unknown.
-	//   "GENDER_MALE" - Male.
-	//   "GENDER_FEMALE" - Female.
-	Gender string `json:"gender,omitempty"`
-	// Lift: Measure of lift that the audience has for the attribute value as
-	// compared to the baseline. Range [0-1].
-	Lift float64 `json:"lift,omitempty"`
-	// UserInterestId: The user interest ID.
-	UserInterestId int64 `json:"userInterestId,omitempty,string"`
+	//   "GENDER_UNSPECIFIED"
+	//   "GENDER_UNKNOWN"
+	//   "GENDER_MALE"
+	//   "GENDER_FEMALE"
+	Gender         string  `json:"gender,omitempty"`
+	Lift           float64 `json:"lift,omitempty"`
+	UserInterestId int64   `json:"userInterestId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "AgeRange") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2551,13 +1891,7 @@ func (s *MarketingDataInsightsAttribute) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// MobileData: Mobile IDs for the audience. At least one mobile ID is required.
 type MobileData struct {
-	// MobileIds: Required. The list of mobile device IDs (Android advertising ID,
-	// iOS IDFA for Customer Match user lists and Android advertising ID, iOS IDFA,
-	// Xbox or Microsoft ID, Amazon Fire TV ID, Roku ID, Generic Device ID for
-	// basic user lists). At most 10 `mobileIds` can be provided in a single
-	// AudienceMember.
 	MobileIds []string `json:"mobileIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MobileIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2577,30 +1911,19 @@ func (s MobileData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// MobileIdInfo: Additional information when `MOBILE_ID` is one of the
-// `upload_key_types`.
 type MobileIdInfo struct {
-	// AppId: Required. Immutable. A string that uniquely identifies a mobile
-	// application from which the data was collected.
 	AppId string `json:"appId,omitempty"`
-	// DataSourceType: Optional. Immutable. Source of the upload data.
-	//
 	// Possible values:
-	//   "DATA_SOURCE_TYPE_UNSPECIFIED" - Not specified.
-	//   "DATA_SOURCE_TYPE_FIRST_PARTY" - The uploaded data is first-party data.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU" - The uploaded data is from a
-	// third-party credit bureau.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE" - The uploaded data is from a
-	// third-party voter file.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA" - The uploaded data is third
-	// party partner data.
+	//   "DATA_SOURCE_TYPE_UNSPECIFIED"
+	//   "DATA_SOURCE_TYPE_FIRST_PARTY"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA"
 	DataSourceType string `json:"dataSourceType,omitempty"`
-	// KeySpace: Required. Immutable. The key space of mobile IDs.
-	//
 	// Possible values:
-	//   "KEY_SPACE_UNSPECIFIED" - Not specified.
-	//   "IOS" - The iOS keyspace.
-	//   "ANDROID" - The Android keyspace.
+	//   "KEY_SPACE_UNSPECIFIED"
+	//   "IOS"
+	//   "ANDROID"
 	KeySpace string `json:"keySpace,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2620,14 +1943,7 @@ func (s MobileIdInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PairData: PAIR (//support.google.com/admanager/answer/15067908) IDs for the
-// audience. At least one PAIR ID is required. This feature is only available
-// to data partners.
 type PairData struct {
-	// PairIds: Required. Cleanroom-provided PII data, hashed with SHA256, and
-	// encrypted with an EC commutative cipher using publisher key for the PAIR
-	// ((//support.google.com/admanager/answer/15067908)) user list. At most 10
-	// `pairIds` can be provided in a single AudienceMember.
 	PairIds []string `json:"pairIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PairIds") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2647,30 +1963,12 @@ func (s PairData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PairIdInfo: Additional information when `PAIR_ID` is one of the
-// `upload_key_types`. This feature is only available to data partners.
 type PairIdInfo struct {
-	// AdvertiserIdentifierCount: Optional. The count of the advertiser's first
-	// party data records that have been uploaded to a clean room provider. This
-	// does not signify the size of a PAIR user list.
-	AdvertiserIdentifierCount int64 `json:"advertiserIdentifierCount,omitempty,string"`
-	// CleanRoomIdentifier: Required. Immutable. Identifies a unique advertiser to
-	// publisher relationship with one clean room provider or across multiple clean
-	// room providers.
-	CleanRoomIdentifier string `json:"cleanRoomIdentifier,omitempty"`
-	// MatchRatePercentage: Required. This field denotes the percentage of
-	// membership match of this user list with the corresponding publisher's first
-	// party data. Must be between 0 and 100 inclusive.
-	MatchRatePercentage int64 `json:"matchRatePercentage,omitempty"`
-	// PublisherId: Required. Immutable. Identifies the publisher that the
-	// Publisher Advertiser Identity Reconciliation user list is reconciled with.
-	// This field is provided by the cleanroom provider and is only unique in the
-	// scope of that cleanroom. This cannot be used as a global identifier across
-	// multiple cleanrooms.
-	PublisherId int64 `json:"publisherId,omitempty,string"`
-	// PublisherName: Required. Descriptive name of the publisher to be displayed
-	// in the UI for a better targeting experience.
-	PublisherName string `json:"publisherName,omitempty"`
+	AdvertiserIdentifierCount int64  `json:"advertiserIdentifierCount,omitempty,string"`
+	CleanRoomIdentifier       string `json:"cleanRoomIdentifier,omitempty"`
+	MatchRatePercentage       int64  `json:"matchRatePercentage,omitempty"`
+	PublisherId               int64  `json:"publisherId,omitempty,string"`
+	PublisherName             string `json:"publisherName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserIdentifierCount")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2689,21 +1987,13 @@ func (s PairIdInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PartnerAudienceInfo: Additional information for partner audiences. This
-// feature is only available to data partners.
 type PartnerAudienceInfo struct {
-	// CommercePartner: Optional. The commerce partner name. Only allowed if
-	// `partner_audience_source` is `COMMERCE_AUDIENCE`.
 	CommercePartner string `json:"commercePartner,omitempty"`
-	// PartnerAudienceSource: Required. Immutable. The source of the partner
-	// audience.
-	//
 	// Possible values:
-	//   "PARTNER_AUDIENCE_SOURCE_UNSPECIFIED" - Not specified.
-	//   "COMMERCE_AUDIENCE" - Partner Audience source is commerce audience.
-	//   "LINEAR_TV_AUDIENCE" - Partner Audience source is linear TV audience.
-	//   "AGENCY_PROVIDER_AUDIENCE" - Partner Audience source is agency/provider
-	// audience.
+	//   "PARTNER_AUDIENCE_SOURCE_UNSPECIFIED"
+	//   "COMMERCE_AUDIENCE"
+	//   "LINEAR_TV_AUDIENCE"
+	//   "AGENCY_PROVIDER_AUDIENCE"
 	PartnerAudienceSource string `json:"partnerAudienceSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommercePartner") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2723,16 +2013,9 @@ func (s PartnerAudienceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PartnerCustomerAccount: Represents a customer account in the partner's
-// system.
 type PartnerCustomerAccount struct {
-	// AccountId: Required. The identifier of the customer account in the partner's
-	// ID space.
-	AccountId string `json:"accountId,omitempty"`
-	// AccountName: Optional. The name of the account.
+	AccountId   string `json:"accountId,omitempty"`
 	AccountName string `json:"accountName,omitempty"`
-	// AccountType: Optional. The type of the account. Can be used to distinguish
-	// between advertiser accounts and business level accounts, for example.
 	AccountType string `json:"accountType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2752,39 +2035,18 @@ func (s PartnerCustomerAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PartnerLink: A partner link between an owning account and a partner account.
 type PartnerLink struct {
-	// FeatureSet: Optional. Immutable. The set of features supported for the
-	// partner link. If not specified, the system behavior defaults to
-	// FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT.
-	//
 	// Possible values:
-	//   "FEATURE_SET_UNSPECIFIED" - Unspecified feature set. If unspecified, the
-	// system behavior defaults to FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT.
-	//   "FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT" - Indicates a link used for
-	// audience and event management.
-	//   "FEATURE_SET_AD_EVENT_MANAGEMENT" - Indicates a link used for ad event
-	// management.
-	FeatureSet string `json:"featureSet,omitempty"`
-	// Name: Identifier. The name of the partner link. Format:
-	// accountTypes/{account_type}/accounts/{account}/partnerLinks/{partner_link}
-	Name string `json:"name,omitempty"`
-	// OwningAccount: Required. The owning account granting access to the partner
-	// account.
-	OwningAccount *ProductAccount `json:"owningAccount,omitempty"`
-	// PartnerAccount: Required. The partner account granted access by the owning
-	// account.
-	PartnerAccount *ProductAccount `json:"partnerAccount,omitempty"`
-	// PartnerCustomerAccount: Optional. The customer account in the partner
-	// system. This is required for partner links with the
-	// FEATURE_SET_AD_EVENT_MANAGEMENT feature set.
+	//   "FEATURE_SET_UNSPECIFIED"
+	//   "FEATURE_SET_AUDIENCE_AND_EVENT_MANAGEMENT"
+	//   "FEATURE_SET_AD_EVENT_MANAGEMENT"
+	FeatureSet             string                  `json:"featureSet,omitempty"`
+	Name                   string                  `json:"name,omitempty"`
+	OwningAccount          *ProductAccount         `json:"owningAccount,omitempty"`
+	PartnerAccount         *ProductAccount         `json:"partnerAccount,omitempty"`
 	PartnerCustomerAccount *PartnerCustomerAccount `json:"partnerCustomerAccount,omitempty"`
-	// PartnerLinkId: Output only. The partner link ID.
-	PartnerLinkId string `json:"partnerLinkId,omitempty"`
-	// PartnerLinkMetadata: Optional. Metadata associated with the partner link.
-	// This is optional and only accepted for partner links with the
-	// FEATURE_SET_AD_EVENT_MANAGEMENT.
-	PartnerLinkMetadata *PartnerLinkMetadata `json:"partnerLinkMetadata,omitempty"`
+	PartnerLinkId          string                  `json:"partnerLinkId,omitempty"`
+	PartnerLinkMetadata    *PartnerLinkMetadata    `json:"partnerLinkMetadata,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2806,9 +2068,7 @@ func (s PartnerLink) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PartnerLinkMetadata: Represents metadata associated with a partner link.
 type PartnerLinkMetadata struct {
-	// ImplicitAccounts: Optional. The list of implicit accounts.
 	ImplicitAccounts []*PartnerCustomerAccount `json:"implicitAccounts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ImplicitAccounts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2828,10 +2088,7 @@ func (s PartnerLinkMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PartnerProvidedIdData: Partner-provided data holding the partner-provided
-// identifiers. At least one partner-provided identifier is required.
 type PartnerProvidedIdData struct {
-	// PartnerProvidedIds: Required. The list of partner-provided identifiers.
 	PartnerProvidedIds []string `json:"partnerProvidedIds,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PartnerProvidedIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2851,10 +2108,7 @@ func (s PartnerProvidedIdData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PpidData: Publisher provided identifiers data holding the ppids. At least
-// one ppid is required. This feature is only available to data partners.
 type PpidData struct {
-	// Ppids: Required. The list of publisher provided identifiers for a user.
 	Ppids []string `json:"ppids,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Ppids") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2874,33 +2128,25 @@ func (s PpidData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ProductAccount: Represents a specific account.
 type ProductAccount struct {
-	// AccountId: Required. The ID of the account. For example, your Google Ads
-	// account ID.
 	AccountId string `json:"accountId,omitempty"`
-	// AccountType: Required. The type of the account. For example, `GOOGLE_ADS`.
-	// Either `account_type` or the deprecated `product` is required. If both are
-	// set, the values must match.
-	//
 	// Possible values:
-	//   "ACCOUNT_TYPE_UNSPECIFIED" - Unspecified product. Should never be used.
-	//   "GOOGLE_ADS" - Google Ads.
-	//   "DISPLAY_VIDEO_PARTNER" - Display & Video 360 partner.
-	//   "DISPLAY_VIDEO_ADVERTISER" - Display & Video 360 advertiser.
-	//   "DATA_PARTNER" - Data Partner.
-	//   "GOOGLE_ANALYTICS_PROPERTY" - Google Analytics.
-	//   "GOOGLE_AD_MANAGER_AUDIENCE_LINK" - Google Ad Manager audience link.
-	//   "FLOODLIGHT_CONFIG" - Floodlight configuration.
+	//   "ACCOUNT_TYPE_UNSPECIFIED"
+	//   "GOOGLE_ADS"
+	//   "DISPLAY_VIDEO_PARTNER"
+	//   "DISPLAY_VIDEO_ADVERTISER"
+	//   "DATA_PARTNER"
+	//   "GOOGLE_ANALYTICS_PROPERTY"
+	//   "GOOGLE_AD_MANAGER_AUDIENCE_LINK"
+	//   "FLOODLIGHT_CONFIG"
+	//   "GOOGLE_AD_MANAGER"
 	AccountType string `json:"accountType,omitempty"`
-	// Product: Deprecated. Use `account_type` instead.
-	//
 	// Possible values:
-	//   "PRODUCT_UNSPECIFIED" - Unspecified product. Should never be used.
-	//   "GOOGLE_ADS" - Google Ads.
-	//   "DISPLAY_VIDEO_PARTNER" - Display & Video 360 partner.
-	//   "DISPLAY_VIDEO_ADVERTISER" - Display & Video 360 advertiser.
-	//   "DATA_PARTNER" - Data Partner.
+	//   "PRODUCT_UNSPECIFIED"
+	//   "GOOGLE_ADS"
+	//   "DISPLAY_VIDEO_PARTNER"
+	//   "DISPLAY_VIDEO_ADVERTISER"
+	//   "DATA_PARTNER"
 	Product string `json:"product,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2920,22 +2166,13 @@ func (s ProductAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PseudonymousIdInfo: Additional information when `PSEUDONYMOUS_ID` is one of
-// the `upload_key_types`.
 type PseudonymousIdInfo struct {
-	// BillableRecordCount: Optional. Immutable. The number of billable records
-	// (e.g. uploaded or matched).
 	BillableRecordCount int64 `json:"billableRecordCount,omitempty,string"`
-	// SyncStatus: Output only. Sync status of the user list.
-	//
 	// Possible values:
-	//   "SYNC_STATUS_UNSPECIFIED" - Not specified.
-	//   "CREATED" - The user list has been created as a placeholder. List contents
-	// and/or metadata are still being synced. The user list is not ready for use.
-	//   "READY_FOR_USE" - The user list is ready for use. Contents and cookies
-	// have been synced correctly.
-	//   "FAILED" - An error has occurred syncing user list contents and/or
-	// metadata. The user list cannot be used.
+	//   "SYNC_STATUS_UNSPECIFIED"
+	//   "CREATED"
+	//   "READY_FOR_USE"
+	//   "FAILED"
 	SyncStatus string `json:"syncStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BillableRecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2955,19 +2192,10 @@ func (s PseudonymousIdInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveAllAudienceMembersRequest: Request to remove all users from an
-// audience in the provided destinations. Returns a
-// RemoveAllAudienceMembersResponse.
 type RemoveAllAudienceMembersRequest struct {
-	// Destinations: Required. The list of destinations to remove the users from.
-	Destinations []*Destination `json:"destinations,omitempty"`
-	// RemoveAsOfTime: Optional. The remove as of time. If set, only audience
-	// members last added before this time will be removed. If not set, it defaults
-	// to current time. The remove as of time must not be in the future.
-	RemoveAsOfTime string `json:"removeAsOfTime,omitempty"`
-	// ValidateOnly: Optional. For testing purposes. If `true`, the request is
-	// validated but not executed. Only errors are returned, not results.
-	ValidateOnly bool `json:"validateOnly,omitempty"`
+	Destinations   []*Destination `json:"destinations,omitempty"`
+	RemoveAsOfTime string         `json:"removeAsOfTime,omitempty"`
+	ValidateOnly   bool           `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Destinations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2986,10 +2214,7 @@ func (s RemoveAllAudienceMembersRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveAllAudienceMembersResponse: Response from the
-// RemoveAllAudienceMembersRequest.
 type RemoveAllAudienceMembersResponse struct {
-	// RequestId: The auto-generated ID of the request.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3012,34 +2237,19 @@ func (s RemoveAllAudienceMembersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveAllAudienceMembersStatus: The status of the remove all audience
-// members request.
 type RemoveAllAudienceMembersStatus struct {
 }
 
-// RemoveAudienceMembersRequest: Request to remove users from an audience in
-// the provided destinations. Returns a RemoveAudienceMembersResponse.
 type RemoveAudienceMembersRequest struct {
-	// AudienceMembers: Required. The list of users to remove.
 	AudienceMembers []*AudienceMember `json:"audienceMembers,omitempty"`
-	// Destinations: Required. The list of destinations to remove the users from.
-	Destinations []*Destination `json:"destinations,omitempty"`
-	// Encoding: Optional. Required for UserData uploads. The encoding type of the
-	// user identifiers. Applies to only the outer encoding for encrypted user
-	// identifiers. For non `UserData` uploads, this field is ignored.
-	//
+	Destinations    []*Destination    `json:"destinations,omitempty"`
 	// Possible values:
-	//   "ENCODING_UNSPECIFIED" - Unspecified Encoding type. Should never be used.
-	//   "HEX" - Hex encoding.
-	//   "BASE64" - Base 64 encoding.
-	Encoding string `json:"encoding,omitempty"`
-	// EncryptionInfo: Optional. Encryption information for UserData uploads. If
-	// not set, it's assumed that uploaded identifying information is hashed but
-	// not encrypted. For non `UserData` uploads, this field is ignored.
+	//   "ENCODING_UNSPECIFIED"
+	//   "HEX"
+	//   "BASE64"
+	Encoding       string          `json:"encoding,omitempty"`
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
-	// ValidateOnly: Optional. For testing purposes. If `true`, the request is
-	// validated but not executed. Only errors are returned, not results.
-	ValidateOnly bool `json:"validateOnly,omitempty"`
+	ValidateOnly   bool            `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudienceMembers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3058,10 +2268,7 @@ func (s RemoveAudienceMembersRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveAudienceMembersResponse: Response from the
-// RemoveAudienceMembersRequest.
 type RemoveAudienceMembersResponse struct {
-	// RequestId: The auto-generated ID of the request.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3084,33 +2291,15 @@ func (s RemoveAudienceMembersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveAudienceMembersStatus: The status of the remove audience members
-// request.
 type RemoveAudienceMembersStatus struct {
-	// CompositeDataRemovalStatus: The status of the composite data removal from
-	// the destination.
-	CompositeDataRemovalStatus *RemoveCompositeDataStatus `json:"compositeDataRemovalStatus,omitempty"`
-	// GoogleUserIdDataRemovalStatus: The status of the google user id data removal
-	// from the destination.
-	GoogleUserIdDataRemovalStatus *RemoveGoogleUserIdDataStatus `json:"googleUserIdDataRemovalStatus,omitempty"`
-	// MobileDataRemovalStatus: The status of the mobile data removal from the
-	// destination.
-	MobileDataRemovalStatus *RemoveMobileDataStatus `json:"mobileDataRemovalStatus,omitempty"`
-	// PairDataRemovalStatus: The status of the pair data removal from the
-	// destination.
-	PairDataRemovalStatus *RemovePairDataStatus `json:"pairDataRemovalStatus,omitempty"`
-	// PartnerProvidedIdDataRemovalStatus: The status of the partner provided id
-	// data removal from the destination.
+	CompositeDataRemovalStatus         *RemoveCompositeDataStatus         `json:"compositeDataRemovalStatus,omitempty"`
+	GoogleUserIdDataRemovalStatus      *RemoveGoogleUserIdDataStatus      `json:"googleUserIdDataRemovalStatus,omitempty"`
+	MobileDataRemovalStatus            *RemoveMobileDataStatus            `json:"mobileDataRemovalStatus,omitempty"`
+	PairDataRemovalStatus              *RemovePairDataStatus              `json:"pairDataRemovalStatus,omitempty"`
 	PartnerProvidedIdDataRemovalStatus *RemovePartnerProvidedIdDataStatus `json:"partnerProvidedIdDataRemovalStatus,omitempty"`
-	// PpidDataRemovalStatus: The status of the ppid data removal from the
-	// destination.
-	PpidDataRemovalStatus *RemovePpidDataStatus `json:"ppidDataRemovalStatus,omitempty"`
-	// UserDataRemovalStatus: The status of the user data removal from the
-	// destination.
-	UserDataRemovalStatus *RemoveUserDataStatus `json:"userDataRemovalStatus,omitempty"`
-	// UserIdDataRemovalStatus: The status of the user id data removal from the
-	// destination.
-	UserIdDataRemovalStatus *RemoveUserIdDataStatus `json:"userIdDataRemovalStatus,omitempty"`
+	PpidDataRemovalStatus              *RemovePpidDataStatus              `json:"ppidDataRemovalStatus,omitempty"`
+	UserDataRemovalStatus              *RemoveUserDataStatus              `json:"userDataRemovalStatus,omitempty"`
+	UserIdDataRemovalStatus            *RemoveUserIdDataStatus            `json:"userIdDataRemovalStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompositeDataRemovalStatus")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3129,17 +2318,9 @@ func (s RemoveAudienceMembersStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveCompositeDataStatus: The status of the composite data removal from the
-// destination.
 type RemoveCompositeDataStatus struct {
-	// DataTypeCounts: The total count of data types sent in the removal request,
-	// broken down by data type. Includes all data types in the request, regardless
-	// of whether they were successfully removed or not.
 	DataTypeCounts []*DataTypeCount `json:"dataTypeCounts,omitempty"`
-	// RecordCount: The total count of audience members sent in the removal
-	// request. Includes all audience members in the request, regardless of whether
-	// they were successfully removed or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	RecordCount    int64            `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "DataTypeCounts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3158,17 +2339,9 @@ func (s RemoveCompositeDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveGoogleUserIdDataStatus: The status of the google user id data removal
-// from the destination.
 type RemoveGoogleUserIdDataStatus struct {
-	// GoogleUserIdCount: The total count of google user ids sent in the removal
-	// request. Includes all google user ids in the request, regardless of whether
-	// they were successfully removed or not.
 	GoogleUserIdCount int64 `json:"googleUserIdCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the removal
-	// request. Includes all audience members in the request, regardless of whether
-	// they were successfully removed or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	RecordCount       int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "GoogleUserIdCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3187,17 +2360,9 @@ func (s RemoveGoogleUserIdDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveMobileDataStatus: The status of the mobile data removal from the
-// destination.
 type RemoveMobileDataStatus struct {
-	// MobileIdCount: The total count of mobile Ids sent in the removal request.
-	// Includes all mobile ids in the request, regardless of whether they were
-	// successfully removed or not.
 	MobileIdCount int64 `json:"mobileIdCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the removal
-	// request. Includes all audience members in the request, regardless of whether
-	// they were successfully removed or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	RecordCount   int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "MobileIdCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3216,16 +2381,8 @@ func (s RemoveMobileDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemovePairDataStatus: The status of the pair data removal from the
-// destination.
 type RemovePairDataStatus struct {
-	// PairIdCount: The total count of pair ids sent in the removal request.
-	// Includes all pair ids in the request, regardless of whether they were
-	// successfully removed or not.
 	PairIdCount int64 `json:"pairIdCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the removal
-	// request. Includes all audience members in the request, regardless of whether
-	// they were successfully removed or not.
 	RecordCount int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "PairIdCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3245,17 +2402,9 @@ func (s RemovePairDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemovePartnerProvidedIdDataStatus: The status of the partner provided id
-// data removal from the destination.
 type RemovePartnerProvidedIdDataStatus struct {
-	// PartnerProvidedIdCount: The total count of partner provided ids sent in the
-	// removal request. Includes all partner provided ids in the request,
-	// regardless of whether they were successfully removed or not.
 	PartnerProvidedIdCount int64 `json:"partnerProvidedIdCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the removal
-	// request. Includes all audience members in the request, regardless of whether
-	// they were successfully removed or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	RecordCount            int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "PartnerProvidedIdCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3274,16 +2423,8 @@ func (s RemovePartnerProvidedIdDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemovePpidDataStatus: The status of the ppid data removal from the
-// destination.
 type RemovePpidDataStatus struct {
-	// PpidCount: The total count of ppids sent in the removal request. Includes
-	// all ppids in the request, regardless of whether they were successfully
-	// removed or not.
-	PpidCount int64 `json:"ppidCount,omitempty,string"`
-	// RecordCount: The total count of audience members sent in the removal
-	// request. Includes all audience members in the request, regardless of whether
-	// they were successfully removed or not.
+	PpidCount   int64 `json:"ppidCount,omitempty,string"`
 	RecordCount int64 `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "PpidCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3303,16 +2444,8 @@ func (s RemovePpidDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveUserDataStatus: The status of the user data removal from the
-// destination.
 type RemoveUserDataStatus struct {
-	// RecordCount: The total count of audience members sent in the removal
-	// request. Includes all audience members in the request, regardless of whether
-	// they were successfully removed or not.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
-	// UserIdentifierCount: The total count of user identifiers sent in the removal
-	// request. Includes all user identifiers in the request, regardless of whether
-	// they were successfully removed or not.
+	RecordCount         int64 `json:"recordCount,omitempty,string"`
 	UserIdentifierCount int64 `json:"userIdentifierCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "RecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3332,16 +2465,8 @@ func (s RemoveUserDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RemoveUserIdDataStatus: The status of the user id data removal from the
-// destination.
 type RemoveUserIdDataStatus struct {
-	// RecordCount: The total count of audience members sent in the removal
-	// request. Includes all audience members in the request, regardless of whether
-	// they were successfully removed or not.
 	RecordCount int64 `json:"recordCount,omitempty,string"`
-	// UserIdCount: The total count of user ids sent in the removal request.
-	// Includes all user ids in the request, regardless of whether they were
-	// successfully removed or not.
 	UserIdCount int64 `json:"userIdCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "RecordCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3361,44 +2486,21 @@ func (s RemoveUserIdDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RequestStatusPerDestination: A request status per destination.
 type RequestStatusPerDestination struct {
-	// AudienceMembersIngestionStatus: The status of the ingest audience members
-	// request.
-	AudienceMembersIngestionStatus *IngestAudienceMembersStatus `json:"audienceMembersIngestionStatus,omitempty"`
-	// AudienceMembersRemovalStatus: The status of the remove audience members
-	// request.
-	AudienceMembersRemovalStatus *RemoveAudienceMembersStatus `json:"audienceMembersRemovalStatus,omitempty"`
-	// Destination: A destination within a DM API request.
-	Destination *Destination `json:"destination,omitempty"`
-	// ErrorInfo: An error info error containing the error reason and error counts
-	// related to the upload. Only populated if the `request_status` is `FAILED` or
-	// `PARTIAL_SUCCESS`. This field isn't populated while the request has
-	// `request_status` of `PROCESSING`.
-	ErrorInfo *ErrorInfo `json:"errorInfo,omitempty"`
-	// EventsIngestionStatus: The status of the ingest events request.
-	EventsIngestionStatus *IngestEventsStatus `json:"eventsIngestionStatus,omitempty"`
-	// RemoveAllAudienceMembersStatus: The status of the remove all audience
-	// members request.
+	AudienceMembersIngestionStatus *IngestAudienceMembersStatus    `json:"audienceMembersIngestionStatus,omitempty"`
+	AudienceMembersRemovalStatus   *RemoveAudienceMembersStatus    `json:"audienceMembersRemovalStatus,omitempty"`
+	Destination                    *Destination                    `json:"destination,omitempty"`
+	ErrorInfo                      *ErrorInfo                      `json:"errorInfo,omitempty"`
+	EventsIngestionStatus          *IngestEventsStatus             `json:"eventsIngestionStatus,omitempty"`
 	RemoveAllAudienceMembersStatus *RemoveAllAudienceMembersStatus `json:"removeAllAudienceMembersStatus,omitempty"`
-	// RequestStatus: The request status of the destination.
-	//
 	// Possible values:
-	//   "REQUEST_STATUS_UNKNOWN" - The request status is unknown.
-	//   "SUCCESS" - Processing succeeded for all records without any errors.
-	// However, there may be warnings in the `warning_info` field.
-	//   "PROCESSING" - The request is processing.
-	//   "FAILED" - Processing failed for all records. Check the `error_info` field
-	// for error details, and check the `warning_info` field for warning details.
-	//   "PARTIAL_SUCCESS" - Processing completed successfully without errors for
-	// some records, but failed with errors for other records. Check the
-	// `error_info` field for error details, and check the `warning_info` field for
-	// warning details.
-	RequestStatus string `json:"requestStatus,omitempty"`
-	// WarningInfo: A warning info containing the warning reason and warning counts
-	// related to the upload. This field isn't populated while the request has
-	// `request_status` of `PROCESSING`.
-	WarningInfo *WarningInfo `json:"warningInfo,omitempty"`
+	//   "REQUEST_STATUS_UNKNOWN"
+	//   "SUCCESS"
+	//   "PROCESSING"
+	//   "FAILED"
+	//   "PARTIAL_SUCCESS"
+	RequestStatus string       `json:"requestStatus,omitempty"`
+	WarningInfo   *WarningInfo `json:"warningInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AudienceMembersIngestionStatus") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -3418,13 +2520,9 @@ func (s RequestStatusPerDestination) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RetrieveInsightsRequest: Request message for DM API
-// MarketingDataInsightsService.RetrieveInsights
 type RetrieveInsightsRequest struct {
-	// Baseline: Required. Baseline for the insights requested.
-	Baseline *Baseline `json:"baseline,omitempty"`
-	// UserListId: Required. The user list ID for which insights are requested.
-	UserListId string `json:"userListId,omitempty"`
+	Baseline   *Baseline `json:"baseline,omitempty"`
+	UserListId string    `json:"userListId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Baseline") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3443,10 +2541,7 @@ func (s RetrieveInsightsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RetrieveInsightsResponse: Response message for DM API
-// MarketingDataInsightsService.RetrieveInsights
 type RetrieveInsightsResponse struct {
-	// MarketingDataInsights: Contains the insights for the marketing data.
 	MarketingDataInsights []*MarketingDataInsight `json:"marketingDataInsights,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3469,12 +2564,7 @@ func (s RetrieveInsightsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RetrieveRequestStatusResponse: Response from the
-// RetrieveRequestStatusRequest.
 type RetrieveRequestStatusResponse struct {
-	// RequestStatusPerDestination: A list of request statuses per destination. The
-	// order of the statuses matches the order of the destinations in the original
-	// request.
 	RequestStatusPerDestination []*RequestStatusPerDestination `json:"requestStatusPerDestination,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3497,13 +2587,9 @@ func (s RetrieveRequestStatusResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchPartnerLinksResponse: Response from the SearchPartnerLinksRequest.
 type SearchPartnerLinksResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// PartnerLinks: The partner links for the given account.
-	PartnerLinks []*PartnerLink `json:"partnerLinks,omitempty"`
+	NextPageToken string         `json:"nextPageToken,omitempty"`
+	PartnerLinks  []*PartnerLink `json:"partnerLinks,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3525,22 +2611,11 @@ func (s SearchPartnerLinksResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SizeInfo: Estimated number of members in this user list in different target
-// networks.
 type SizeInfo struct {
-	// DisplayNetworkMembersCount: Output only. Estimated number of members in this
-	// user list, on the Google Display Network.
 	DisplayNetworkMembersCount int64 `json:"displayNetworkMembersCount,omitempty,string"`
-	// GmailMembersCount: Output only. Estimated number of members in this user
-	// list on Gmail.
-	GmailMembersCount int64 `json:"gmailMembersCount,omitempty,string"`
-	// SearchNetworkMembersCount: Output only. Estimated number of members in this
-	// user list in the google.com domain. These are the members available for
-	// targeting in Search campaigns.
-	SearchNetworkMembersCount int64 `json:"searchNetworkMembersCount,omitempty,string"`
-	// YoutubeMembersCount: Output only. Estimated number of members in this user
-	// list on YouTube.
-	YoutubeMembersCount int64 `json:"youtubeMembersCount,omitempty,string"`
+	GmailMembersCount          int64 `json:"gmailMembersCount,omitempty,string"`
+	SearchNetworkMembersCount  int64 `json:"searchNetworkMembersCount,omitempty,string"`
+	YoutubeMembersCount        int64 `json:"youtubeMembersCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "DisplayNetworkMembersCount")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3559,22 +2634,10 @@ func (s SizeInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is suitable for
-// different programming environments, including REST APIs and RPC APIs. It is
-// used by gRPC (https://github.com/grpc). Each `Status` message contains three
-// pieces of data: error code, error message, and error details. You can find
-// out more about this error model and how to work with it in the API Design
-// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of google.rpc.Code.
-	Code int64 `json:"code,omitempty"`
-	// Details: A list of messages that carry the error details. There is a common
-	// set of message types for APIs to use.
+	Code    int64                  `json:"code,omitempty"`
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-	// Message: A developer-facing error message, which should be in English. Any
-	// user-facing error message should be localized and sent in the
-	// google.rpc.Status.details field, or localized by the client.
-	Message string `json:"message,omitempty"`
+	Message string                 `json:"message,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3593,14 +2656,9 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TargetNetworkInfo: Eligibility information for different target networks.
 type TargetNetworkInfo struct {
-	// EligibleForDisplay: Output only. Indicates this user list is eligible for
-	// Google Display Network.
 	EligibleForDisplay bool `json:"eligibleForDisplay,omitempty"`
-	// EligibleForSearch: Optional. Indicates if this user list is eligible for
-	// Google Search Network.
-	EligibleForSearch bool `json:"eligibleForSearch,omitempty"`
+	EligibleForSearch  bool `json:"eligibleForSearch,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EligibleForDisplay") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3619,19 +2677,11 @@ func (s TargetNetworkInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TermsOfService: The terms of service that the user has accepted/rejected.
 type TermsOfService struct {
-	// CustomerMatchTermsOfServiceStatus: Optional. The Customer Match terms of
-	// service: https://support.google.com/adspolicy/answer/6299717. This must be
-	// accepted when ingesting UserData or MobileData. This field is not required
-	// for Partner Match User list.
-	//
 	// Possible values:
-	//   "TERMS_OF_SERVICE_STATUS_UNSPECIFIED" - Not specified.
-	//   "ACCEPTED" - Status indicating the caller has chosen to accept the terms
-	// of service.
-	//   "REJECTED" - Status indicating the caller has chosen to reject the terms
-	// of service.
+	//   "TERMS_OF_SERVICE_STATUS_UNSPECIFIED"
+	//   "ACCEPTED"
+	//   "REJECTED"
 	CustomerMatchTermsOfServiceStatus string `json:"customerMatchTermsOfServiceStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "CustomerMatchTermsOfServiceStatus") to unconditionally include in API
@@ -3653,14 +2703,7 @@ func (s TermsOfService) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserData: Data that identifies the user. At least one identifier is
-// required.
 type UserData struct {
-	// UserIdentifiers: Required. The identifiers for the user. It's possible to
-	// provide multiple instances of the same type of data (for example, multiple
-	// email addresses). To increase the likelihood of a match, provide as many
-	// identifiers as possible. At most 10 `userIdentifiers` can be provided in a
-	// single AudienceMember or Event.
 	UserIdentifiers []*UserIdentifier `json:"userIdentifiers,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "UserIdentifiers") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3680,10 +2723,7 @@ func (s UserData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserIdData: User id data holding the user id.
 type UserIdData struct {
-	// UserId: Required. A unique identifier for a user, as defined by the
-	// advertiser.
 	UserId string `json:"userId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "UserId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3703,20 +2743,13 @@ func (s UserIdData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserIdInfo: Additional information when `USER_ID` is one of the
-// `upload_key_types`.
 type UserIdInfo struct {
-	// DataSourceType: Optional. Immutable. Source of the upload data.
-	//
 	// Possible values:
-	//   "DATA_SOURCE_TYPE_UNSPECIFIED" - Not specified.
-	//   "DATA_SOURCE_TYPE_FIRST_PARTY" - The uploaded data is first-party data.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU" - The uploaded data is from a
-	// third-party credit bureau.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE" - The uploaded data is from a
-	// third-party voter file.
-	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA" - The uploaded data is third
-	// party partner data.
+	//   "DATA_SOURCE_TYPE_UNSPECIFIED"
+	//   "DATA_SOURCE_TYPE_FIRST_PARTY"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_CREDIT_BUREAU"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_VOTER_FILE"
+	//   "DATA_SOURCE_TYPE_THIRD_PARTY_PARTNER_DATA"
 	DataSourceType string `json:"dataSourceType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSourceType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3736,17 +2769,10 @@ func (s UserIdInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserIdentifier: A single identifier for the user.
 type UserIdentifier struct {
-	// Address: The known components of a user's address. Holds a grouping of
-	// identifiers that are matched all at once.
-	Address *AddressInfo `json:"address,omitempty"`
-	// EmailAddress: Hashed email address using SHA-256 hash function after
-	// normalization.
-	EmailAddress string `json:"emailAddress,omitempty"`
-	// PhoneNumber: Hashed phone number using SHA-256 hash function after
-	// normalization (E164 standard).
-	PhoneNumber string `json:"phoneNumber,omitempty"`
+	Address      *AddressInfo `json:"address,omitempty"`
+	EmailAddress string       `json:"emailAddress,omitempty"`
+	PhoneNumber  string       `json:"phoneNumber,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3765,73 +2791,38 @@ func (s UserIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserList: A user list resource.
 type UserList struct {
-	// AccessReason: Output only. The reason this account has been granted access
-	// to the list.
-	//
 	// Possible values:
-	//   "ACCESS_REASON_UNSPECIFIED" - Not specified.
-	//   "OWNED" - The resource is owned by the user.
-	//   "SHARED" - The resource is shared to the user.
-	//   "LICENSED" - The resource is licensed to the user.
-	//   "SUBSCRIBED" - The user subscribed to the resource.
-	//   "AFFILIATED" - The resource is accessible to the user.
+	//   "ACCESS_REASON_UNSPECIFIED"
+	//   "OWNED"
+	//   "SHARED"
+	//   "LICENSED"
+	//   "SUBSCRIBED"
+	//   "AFFILIATED"
 	AccessReason string `json:"accessReason,omitempty"`
-	// AccountAccessStatus: Optional. Indicates if this share is still enabled.
-	// When a user list is shared with the account this field is set to `ENABLED`.
-	// Later the user list owner can decide to revoke the share and make it
-	// `DISABLED`.
-	//
 	// Possible values:
-	//   "ACCESS_STATUS_UNSPECIFIED" - Not specified.
-	//   "ENABLED" - The access is enabled.
-	//   "DISABLED" - The access is disabled.
+	//   "ACCESS_STATUS_UNSPECIFIED"
+	//   "ENABLED"
+	//   "DISABLED"
 	AccountAccessStatus string `json:"accountAccessStatus,omitempty"`
-	// ClosingReason: Output only. The reason why this user list membership status
-	// is closed.
-	//
 	// Possible values:
-	//   "CLOSING_REASON_UNSPECIFIED" - Not specified.
-	//   "UNUSED" - The user list was closed because it has not been used in
-	// targeting recently. See https://support.google.com/google-ads/answer/2472738
-	// for details.
-	ClosingReason string `json:"closingReason,omitempty"`
-	// Description: Optional. A description of the user list.
-	Description string `json:"description,omitempty"`
-	// DisplayName: Required. The display name of the user list.
-	DisplayName string `json:"displayName,omitempty"`
-	// Id: Output only. The unique ID of the user list.
-	Id int64 `json:"id,omitempty,string"`
-	// IngestedUserListInfo: Optional. Represents a user list that is populated by
-	// user ingested data.
+	//   "CLOSING_REASON_UNSPECIFIED"
+	//   "UNUSED"
+	ClosingReason        string                `json:"closingReason,omitempty"`
+	Description          string                `json:"description,omitempty"`
+	DisplayName          string                `json:"displayName,omitempty"`
+	Id                   int64                 `json:"id,omitempty,string"`
 	IngestedUserListInfo *IngestedUserListInfo `json:"ingestedUserListInfo,omitempty"`
-	// IntegrationCode: Optional. An ID from external system. It is used by user
-	// list sellers to correlate IDs on their systems.
-	IntegrationCode string `json:"integrationCode,omitempty"`
-	// MembershipDuration: Optional. The duration a user remains in the user list.
-	// Valid durations are exact multiples of 24 hours (86400 seconds). Providing a
-	// value that is not an exact multiple of 24 hours will result in an
-	// INVALID_ARGUMENT error.
-	MembershipDuration string `json:"membershipDuration,omitempty"`
-	// MembershipStatus: Optional. Membership status of this user list.
-	//
+	IntegrationCode      string                `json:"integrationCode,omitempty"`
+	MembershipDuration   string                `json:"membershipDuration,omitempty"`
 	// Possible values:
-	//   "MEMBERSHIP_STATUS_UNSPECIFIED" - Not specified.
-	//   "OPEN" - Open status - User list is accruing members and can be targeted
-	// to.
-	//   "CLOSED" - Closed status - No new members being added.
-	MembershipStatus string `json:"membershipStatus,omitempty"`
-	// Name: Identifier. The resource name of the user list. Format:
-	// accountTypes/{account_type}/accounts/{account}/userLists/{user_list}
-	Name string `json:"name,omitempty"`
-	// ReadOnly: Output only. An option that indicates if a user may edit a list.
-	ReadOnly bool `json:"readOnly,omitempty"`
-	// SizeInfo: Output only. Estimated number of members in this user list in
-	// different target networks.
-	SizeInfo *SizeInfo `json:"sizeInfo,omitempty"`
-	// TargetNetworkInfo: Optional. Eligibility information for different target
-	// networks.
+	//   "MEMBERSHIP_STATUS_UNSPECIFIED"
+	//   "OPEN"
+	//   "CLOSED"
+	MembershipStatus  string             `json:"membershipStatus,omitempty"`
+	Name              string             `json:"name,omitempty"`
+	ReadOnly          bool               `json:"readOnly,omitempty"`
+	SizeInfo          *SizeInfo          `json:"sizeInfo,omitempty"`
 	TargetNetworkInfo *TargetNetworkInfo `json:"targetNetworkInfo,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3854,53 +2845,27 @@ func (s UserList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserListDirectLicense: A user list direct license. This feature is only
-// available to data partners.
 type UserListDirectLicense struct {
-	// ClientAccountDisplayName: Output only. Name of client customer which the
-	// user list is being licensed to. This field is read-only.
 	ClientAccountDisplayName string `json:"clientAccountDisplayName,omitempty"`
-	// ClientAccountId: Immutable. ID of client customer which the user list is
-	// being licensed to.
-	ClientAccountId int64 `json:"clientAccountId,omitempty,string"`
-	// ClientAccountType: Immutable. Account type of client customer which the user
-	// list is being licensed to.
-	//
+	ClientAccountId          int64  `json:"clientAccountId,omitempty,string"`
 	// Possible values:
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_UNKNOWN" - Unknown.
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_ADS" - Google Ads customer.
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_PARTNER" - Display &
-	// Video 360 partner.
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_ADVERTISER" - Display
-	// & Video 360 advertiser.
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_AD_MANAGER_AUDIENCE_LINK" -
-	// Google Ad Manager audience link.
-	ClientAccountType string `json:"clientAccountType,omitempty"`
-	// HistoricalPricings: Output only. Pricing history of this user list license.
-	// This field is read-only.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_UNKNOWN"
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_ADS"
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_PARTNER"
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_ADVERTISER"
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_AD_MANAGER_AUDIENCE_LINK"
+	ClientAccountType  string                    `json:"clientAccountType,omitempty"`
 	HistoricalPricings []*UserListLicensePricing `json:"historicalPricings,omitempty"`
-	// Metrics: Output only. Metrics related to this license This field is
-	// read-only and only populated if the start and end dates are set in the
-	// ListUserListDirectLicenses call
-	Metrics *UserListLicenseMetrics `json:"metrics,omitempty"`
-	// Name: Identifier. The resource name of the user list direct license.
-	Name string `json:"name,omitempty"`
-	// Pricing: Optional. UserListDirectLicense pricing.
-	Pricing *UserListLicensePricing `json:"pricing,omitempty"`
-	// Status: Optional. Status of UserListDirectLicense - ENABLED or DISABLED.
-	//
+	Metrics            *UserListLicenseMetrics   `json:"metrics,omitempty"`
+	Name               string                    `json:"name,omitempty"`
+	Pricing            *UserListLicensePricing   `json:"pricing,omitempty"`
 	// Possible values:
-	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED" - Unknown.
-	//   "USER_LIST_LICENSE_STATUS_ENABLED" - Active status - user list is still
-	// being licensed.
-	//   "USER_LIST_LICENSE_STATUS_DISABLED" - Inactive status - user list is no
-	// longer being licensed.
-	Status string `json:"status,omitempty"`
-	// UserListDisplayName: Output only. Name of the user list being licensed. This
-	// field is read-only.
+	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED"
+	//   "USER_LIST_LICENSE_STATUS_ENABLED"
+	//   "USER_LIST_LICENSE_STATUS_DISABLED"
+	Status              string `json:"status,omitempty"`
 	UserListDisplayName string `json:"userListDisplayName,omitempty"`
-	// UserListId: Immutable. ID of the user list being licensed.
-	UserListId int64 `json:"userListId,omitempty,string"`
+	UserListId          int64  `json:"userListId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3922,45 +2887,24 @@ func (s UserListDirectLicense) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserListGlobalLicense: A user list global license. This feature is only
-// available to data partners.
 type UserListGlobalLicense struct {
-	// HistoricalPricings: Output only. Pricing history of this user list license.
-	// This field is read-only.
 	HistoricalPricings []*UserListLicensePricing `json:"historicalPricings,omitempty"`
-	// LicenseType: Immutable. Product type of client customer which the user list
-	// is being licensed to.
-	//
 	// Possible values:
-	//   "USER_LIST_GLOBAL_LICENSE_TYPE_UNSPECIFIED" - UNSPECIFIED.
-	//   "USER_LIST_GLOBAL_LICENSE_TYPE_RESELLER" - Reseller license.
-	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_SELL_SIDE" - DataMart Sell Side
-	// license.
-	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_BUY_SIDE" - DataMart Buy Side
-	// license.
-	LicenseType string `json:"licenseType,omitempty"`
-	// Metrics: Output only. Metrics related to this license This field is
-	// read-only and only populated if the start and end dates are set in the
-	// ListUserListGlobalLicenses call
-	Metrics *UserListLicenseMetrics `json:"metrics,omitempty"`
-	// Name: Identifier. The resource name of the user list global license.
-	Name string `json:"name,omitempty"`
-	// Pricing: Optional. UserListGlobalLicense pricing.
-	Pricing *UserListLicensePricing `json:"pricing,omitempty"`
-	// Status: Optional. Status of UserListGlobalLicense - ENABLED or DISABLED.
-	//
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_UNSPECIFIED"
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_RESELLER"
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_SELL_SIDE"
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_BUY_SIDE"
+	LicenseType string                  `json:"licenseType,omitempty"`
+	Metrics     *UserListLicenseMetrics `json:"metrics,omitempty"`
+	Name        string                  `json:"name,omitempty"`
+	Pricing     *UserListLicensePricing `json:"pricing,omitempty"`
 	// Possible values:
-	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED" - Unknown.
-	//   "USER_LIST_LICENSE_STATUS_ENABLED" - Active status - user list is still
-	// being licensed.
-	//   "USER_LIST_LICENSE_STATUS_DISABLED" - Inactive status - user list is no
-	// longer being licensed.
-	Status string `json:"status,omitempty"`
-	// UserListDisplayName: Output only. Name of the user list being licensed. This
-	// field is read-only.
+	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED"
+	//   "USER_LIST_LICENSE_STATUS_ENABLED"
+	//   "USER_LIST_LICENSE_STATUS_DISABLED"
+	Status              string `json:"status,omitempty"`
 	UserListDisplayName string `json:"userListDisplayName,omitempty"`
-	// UserListId: Immutable. ID of the user list being licensed.
-	UserListId int64 `json:"userListId,omitempty,string"`
+	UserListId          int64  `json:"userListId,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3982,64 +2926,33 @@ func (s UserListGlobalLicense) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserListGlobalLicenseCustomerInfo: Information about a customer of a user
-// list global license. This will automatically be created by the system when a
-// customer purchases a global license.
 type UserListGlobalLicenseCustomerInfo struct {
-	// ClientAccountDisplayName: Output only. Name of client customer which the
-	// user list is being licensed to.
 	ClientAccountDisplayName string `json:"clientAccountDisplayName,omitempty"`
-	// ClientAccountId: Output only. ID of client customer which the user list is
-	// being licensed to.
-	ClientAccountId int64 `json:"clientAccountId,omitempty,string"`
-	// ClientAccountType: Output only. Product type of client customer which the
-	// user list is being licensed to.
-	//
+	ClientAccountId          int64  `json:"clientAccountId,omitempty,string"`
 	// Possible values:
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_UNKNOWN" - Unknown.
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_ADS" - Google Ads customer.
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_PARTNER" - Display &
-	// Video 360 partner.
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_ADVERTISER" - Display
-	// & Video 360 advertiser.
-	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_AD_MANAGER_AUDIENCE_LINK" -
-	// Google Ad Manager audience link.
-	ClientAccountType string `json:"clientAccountType,omitempty"`
-	// HistoricalPricings: Output only. Pricing history of this user list license.
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_UNKNOWN"
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_ADS"
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_PARTNER"
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_DISPLAY_VIDEO_ADVERTISER"
+	//   "USER_LIST_LICENSE_CLIENT_ACCOUNT_TYPE_GOOGLE_AD_MANAGER_AUDIENCE_LINK"
+	ClientAccountType  string                    `json:"clientAccountType,omitempty"`
 	HistoricalPricings []*UserListLicensePricing `json:"historicalPricings,omitempty"`
-	// LicenseType: Output only. Product type of client customer which the user
-	// list is being licensed to.
-	//
 	// Possible values:
-	//   "USER_LIST_GLOBAL_LICENSE_TYPE_UNSPECIFIED" - UNSPECIFIED.
-	//   "USER_LIST_GLOBAL_LICENSE_TYPE_RESELLER" - Reseller license.
-	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_SELL_SIDE" - DataMart Sell Side
-	// license.
-	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_BUY_SIDE" - DataMart Buy Side
-	// license.
-	LicenseType string `json:"licenseType,omitempty"`
-	// Metrics: Output only. Metrics related to this license This field is only
-	// populated if the start and end dates are set in the
-	// ListUserListGlobalLicenseCustomerInfos call.
-	Metrics *UserListLicenseMetrics `json:"metrics,omitempty"`
-	// Name: Identifier. The resource name of the user list global license
-	// customer.
-	Name string `json:"name,omitempty"`
-	// Pricing: Output only. UserListDirectLicense pricing.
-	Pricing *UserListLicensePricing `json:"pricing,omitempty"`
-	// Status: Output only. Status of UserListDirectLicense - ENABLED or DISABLED.
-	//
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_UNSPECIFIED"
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_RESELLER"
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_SELL_SIDE"
+	//   "USER_LIST_GLOBAL_LICENSE_TYPE_DATA_MART_BUY_SIDE"
+	LicenseType string                  `json:"licenseType,omitempty"`
+	Metrics     *UserListLicenseMetrics `json:"metrics,omitempty"`
+	Name        string                  `json:"name,omitempty"`
+	Pricing     *UserListLicensePricing `json:"pricing,omitempty"`
 	// Possible values:
-	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED" - Unknown.
-	//   "USER_LIST_LICENSE_STATUS_ENABLED" - Active status - user list is still
-	// being licensed.
-	//   "USER_LIST_LICENSE_STATUS_DISABLED" - Inactive status - user list is no
-	// longer being licensed.
-	Status string `json:"status,omitempty"`
-	// UserListDisplayName: Output only. Name of the user list being licensed.
+	//   "USER_LIST_LICENSE_STATUS_UNSPECIFIED"
+	//   "USER_LIST_LICENSE_STATUS_ENABLED"
+	//   "USER_LIST_LICENSE_STATUS_DISABLED"
+	Status              string `json:"status,omitempty"`
 	UserListDisplayName string `json:"userListDisplayName,omitempty"`
-	// UserListId: Output only. ID of the user list being licensed.
-	UserListId int64 `json:"userListId,omitempty,string"`
+	UserListId          int64  `json:"userListId,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ClientAccountDisplayName")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4058,28 +2971,12 @@ func (s UserListGlobalLicenseCustomerInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserListLicenseMetrics: Metrics related to a user list license.
 type UserListLicenseMetrics struct {
-	// ClickCount: Output only. The number of clicks for the user list license.
-	ClickCount int64 `json:"clickCount,omitempty,string"`
-	// EndDate: Output only. The end date (inclusive) of the metrics in the format
-	// YYYYMMDD. For example, 20260102 represents January 2, 2026. If `start_date`
-	// is used in the filter, `end_date` is also required. If neither `start_date`
-	// nor `end_date` are included in the filter, the UserListLicenseMetrics fields
-	// will not be populated in the response.
-	EndDate int64 `json:"endDate,omitempty,string"`
-	// ImpressionCount: Output only. The number of impressions for the user list
-	// license.
-	ImpressionCount int64 `json:"impressionCount,omitempty,string"`
-	// RevenueUsdMicros: Output only. The revenue for the user list license in USD
-	// micros.
+	ClickCount       int64 `json:"clickCount,omitempty,string"`
+	EndDate          int64 `json:"endDate,omitempty,string"`
+	ImpressionCount  int64 `json:"impressionCount,omitempty,string"`
 	RevenueUsdMicros int64 `json:"revenueUsdMicros,omitempty,string"`
-	// StartDate: Output only. The start date (inclusive) of the metrics in the
-	// format YYYYMMDD. For example, 20260102 represents January 2, 2026. If
-	// `end_date` is used in the filter, `start_date` is also required. If neither
-	// `start_date` nor `end_date` are included in the filter, the
-	// UserListLicenseMetrics fields will not be populated in the response.
-	StartDate int64 `json:"startDate,omitempty,string"`
+	StartDate        int64 `json:"startDate,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "ClickCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4098,52 +2995,26 @@ func (s UserListLicenseMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserListLicensePricing: A user list license pricing.
 type UserListLicensePricing struct {
-	// BuyerApprovalState: Output only. The buyer approval state of this pricing.
-	// This field is read-only.
-	//
 	// Possible values:
-	//   "USER_LIST_PRICING_BUYER_APPROVAL_STATE_UNSPECIFIED" - UNSPECIFIED.
-	//   "PENDING" - User list client has not yet accepted the pricing terms set by
-	// the user list owner.
-	//   "APPROVED" - User list client has accepted the pricing terms set by the
-	// user list owner.
-	//   "REJECTED" - User list client has rejected the pricing terms set by the
-	// user list owner.
+	//   "USER_LIST_PRICING_BUYER_APPROVAL_STATE_UNSPECIFIED"
+	//   "PENDING"
+	//   "APPROVED"
+	//   "REJECTED"
 	BuyerApprovalState string `json:"buyerApprovalState,omitempty"`
-	// CostMicros: Optional. The cost associated with the model, in micro units
-	// (10^-6), in the currency specified by the currency_code field. For example,
-	// 2000000 means $2 if `currency_code` is `USD`.
-	CostMicros int64 `json:"costMicros,omitempty,string"`
-	// CostType: Immutable. The cost type of this pricing. Can be set only in the
-	// `create` operation. Can't be updated for an existing license.
-	//
+	CostMicros         int64  `json:"costMicros,omitempty,string"`
 	// Possible values:
-	//   "USER_LIST_PRICING_COST_TYPE_UNSPECIFIED" - Unspecified.
-	//   "CPC" - Cost per click.
-	//   "CPM" - Cost per mille (thousand impressions).
-	//   "MEDIA_SHARE" - Media share.
-	CostType string `json:"costType,omitempty"`
-	// CurrencyCode: Optional. The currency in which cost and max_cost is
-	// specified. Must be a three-letter currency code defined in ISO 4217.
-	CurrencyCode string `json:"currencyCode,omitempty"`
-	// EndTime: Optional. End time of the pricing.
-	EndTime string `json:"endTime,omitempty"`
-	// MaxCostMicros: Optional. The maximum CPM a commerce audience can be charged
-	// when the MEDIA_SHARE cost type is used. The value is in micro units (10^-6)
-	// and in the currency specified by the currency_code field. For example,
-	// 2000000 means $2 if `currency_code` is `USD`. This is only relevant when
-	// cost_type is MEDIA_SHARE. When cost_type is not MEDIA_SHARE, and this field
-	// is set, a MAX_COST_NOT_ALLOWED error will be returned. If not set or set
-	// to`0`, there is no cap.
-	MaxCostMicros int64 `json:"maxCostMicros,omitempty,string"`
-	// PricingActive: Output only. Whether this pricing is active.
-	PricingActive bool `json:"pricingActive,omitempty"`
-	// PricingId: Output only. The ID of this pricing.
-	PricingId int64 `json:"pricingId,omitempty,string"`
-	// StartTime: Output only. Start time of the pricing.
-	StartTime string `json:"startTime,omitempty"`
+	//   "USER_LIST_PRICING_COST_TYPE_UNSPECIFIED"
+	//   "CPC"
+	//   "CPM"
+	//   "MEDIA_SHARE"
+	CostType      string `json:"costType,omitempty"`
+	CurrencyCode  string `json:"currencyCode,omitempty"`
+	EndTime       string `json:"endTime,omitempty"`
+	MaxCostMicros int64  `json:"maxCostMicros,omitempty,string"`
+	PricingActive bool   `json:"pricingActive,omitempty"`
+	PricingId     int64  `json:"pricingId,omitempty,string"`
+	StartTime     string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BuyerApprovalState") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4162,33 +3033,19 @@ func (s UserListLicensePricing) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserProperties: Advertiser-assessed information about the user at the time
-// that the event happened. See
-// https://support.google.com/google-ads/answer/14007601 for more details.
 type UserProperties struct {
-	// AdditionalUserProperties: Optional. A bucket of any additional user
-	// properties
-	// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties)
-	// for the user associated with this event.
 	AdditionalUserProperties []*UserProperty `json:"additionalUserProperties,omitempty"`
-	// CustomerType: Optional. Type of the customer associated with the event.
-	//
 	// Possible values:
-	//   "CUSTOMER_TYPE_UNSPECIFIED" - Unspecified CustomerType. Should never be
-	// used.
-	//   "NEW" - The customer is new to the advertiser.
-	//   "RETURNING" - The customer is returning to the advertiser.
-	//   "REENGAGED" - The customer has re-engaged with the advertiser.
+	//   "CUSTOMER_TYPE_UNSPECIFIED"
+	//   "NEW"
+	//   "RETURNING"
+	//   "REENGAGED"
 	CustomerType string `json:"customerType,omitempty"`
-	// CustomerValueBucket: Optional. The advertiser-assessed value of the
-	// customer.
-	//
 	// Possible values:
-	//   "CUSTOMER_VALUE_BUCKET_UNSPECIFIED" - Unspecified CustomerValueBucket.
-	// Should never be used.
-	//   "LOW" - The customer is low value.
-	//   "MEDIUM" - The customer is medium value.
-	//   "HIGH" - The customer is high value.
+	//   "CUSTOMER_VALUE_BUCKET_UNSPECIFIED"
+	//   "LOW"
+	//   "MEDIUM"
+	//   "HIGH"
 	CustomerValueBucket string `json:"customerValueBucket,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalUserProperties")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -4208,15 +3065,9 @@ func (s UserProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// UserProperty: A bucket of any additional user properties
-// (https://developers.google.com/analytics/devguides/collection/protocol/ga4/user-properties)
-// for the user associated with this event.
 type UserProperty struct {
-	// PropertyName: Required. The name of the user property to use.
 	PropertyName string `json:"propertyName,omitempty"`
-	// Value: Required. The string representation of the value of the user property
-	// to use.
-	Value string `json:"value,omitempty"`
+	Value        string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PropertyName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4235,41 +3086,26 @@ func (s UserProperty) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ViewabilityInfo: Details of the viewability of the ad served.
 type ViewabilityInfo struct {
-	// MediaDuration: Optional. The duration of the ad media.
 	MediaDuration string `json:"mediaDuration,omitempty"`
-	// MediaQuartile: Optional. The amount of the media that was played as discrete
-	// quartiles.
-	//
 	// Possible values:
-	//   "MEDIA_QUARTILE_UNSPECIFIED" - Unspecified media quartile.
-	//   "MEDIA_QUARTILE_START" - Start.
-	//   "MEDIA_QUARTILE_FIRST_QUARTILE" - First quartile.
-	//   "MEDIA_QUARTILE_MIDPOINT" - Midpoint.
-	//   "MEDIA_QUARTILE_THIRD_QUARTILE" - Third quartile.
-	//   "MEDIA_QUARTILE_COMPLETE" - Complete.
-	MediaQuartile string `json:"mediaQuartile,omitempty"`
-	// MediaSkippable: Optional. Whether the ad media was skippable or not.
-	MediaSkippable bool `json:"mediaSkippable,omitempty"`
-	// MediaVolumePercent: Optional. The numerical percent (0-100) of the volume of
-	// the media playback.
-	MediaVolumePercent int64 `json:"mediaVolumePercent,omitempty"`
-	// PlaybackDuration: Optional. The duration of playback of the ad media,
-	// regardless of whether it was viewable or not.
-	PlaybackDuration string `json:"playbackDuration,omitempty"`
-	// ViewType: Required. The type of the event.
-	//
+	//   "MEDIA_QUARTILE_UNSPECIFIED"
+	//   "MEDIA_QUARTILE_START"
+	//   "MEDIA_QUARTILE_FIRST_QUARTILE"
+	//   "MEDIA_QUARTILE_MIDPOINT"
+	//   "MEDIA_QUARTILE_THIRD_QUARTILE"
+	//   "MEDIA_QUARTILE_COMPLETE"
+	MediaQuartile      string `json:"mediaQuartile,omitempty"`
+	MediaSkippable     bool   `json:"mediaSkippable,omitempty"`
+	MediaVolumePercent int64  `json:"mediaVolumePercent,omitempty"`
+	PlaybackDuration   string `json:"playbackDuration,omitempty"`
 	// Possible values:
-	//   "VIEW_TYPE_UNSPECIFIED" - Unspecified view type.
-	//   "VIEW_TYPE_MRC_VIEWED" - MRC viewed.
-	//   "VIEW_TYPE_MRC_RENDERED" - MRC rendered.
-	ViewType string `json:"viewType,omitempty"`
-	// ViewableDuration: Optional. The amount of time the ad was viewable for.
+	//   "VIEW_TYPE_UNSPECIFIED"
+	//   "VIEW_TYPE_MRC_VIEWED"
+	//   "VIEW_TYPE_MRC_RENDERED"
+	ViewType         string `json:"viewType,omitempty"`
 	ViewableDuration string `json:"viewableDuration,omitempty"`
-	// ViewablePercent: Optional. The numerical percent (0-100) of the pixels that
-	// were viewable.
-	ViewablePercent int64 `json:"viewablePercent,omitempty"`
+	ViewablePercent  int64  `json:"viewablePercent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MediaDuration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4288,33 +3124,20 @@ func (s ViewabilityInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// WarningCount: The warning count for a given warning reason.
 type WarningCount struct {
-	// Reason: The warning reason.
-	//
 	// Possible values:
-	//   "PROCESSING_WARNING_REASON_UNSPECIFIED" - The processing warning reason is
-	// unknown.
-	//   "PROCESSING_WARNING_REASON_KEK_PERMISSION_DENIED" - The system did not
-	// have the permissions needed to access the KEK.
-	//   "PROCESSING_WARNING_REASON_DEK_DECRYPTION_ERROR" - The DEK failed to be
-	// decrypted.
-	//   "PROCESSING_WARNING_REASON_DECRYPTION_ERROR" - The event has a decryption
-	// error.
-	//   "PROCESSING_WARNING_REASON_WIP_AUTH_FAILED" - The WIP could not be used
-	// because it was rejected by its attestation condition.
-	//   "PROCESSING_WARNING_REASON_INVALID_WIP" - The WIP is formatted incorrectly
-	// or the WIP does not exist.
-	//   "PROCESSING_WARNING_REASON_INVALID_KEK" - The KEK cannot decrypt data
-	// because it is the wrong KEK, or it does not exist.
-	//   "PROCESSING_WARNING_REASON_USER_IDENTIFIER_DECRYPTION_ERROR" - Failed to
-	// decrypt the UserIdentifier data using the DEK.
-	//   "PROCESSING_WARNING_REASON_INTERNAL_ERROR" - Internal error.
-	//   "PROCESSING_WARNING_REASON_AWS_AUTH_FAILED" - The system failed to
-	// authenticate with AWS.
-	Reason string `json:"reason,omitempty"`
-	// RecordCount: The count of records that have a warning.
-	RecordCount int64 `json:"recordCount,omitempty,string"`
+	//   "PROCESSING_WARNING_REASON_UNSPECIFIED"
+	//   "PROCESSING_WARNING_REASON_KEK_PERMISSION_DENIED"
+	//   "PROCESSING_WARNING_REASON_DEK_DECRYPTION_ERROR"
+	//   "PROCESSING_WARNING_REASON_DECRYPTION_ERROR"
+	//   "PROCESSING_WARNING_REASON_WIP_AUTH_FAILED"
+	//   "PROCESSING_WARNING_REASON_INVALID_WIP"
+	//   "PROCESSING_WARNING_REASON_INVALID_KEK"
+	//   "PROCESSING_WARNING_REASON_USER_IDENTIFIER_DECRYPTION_ERROR"
+	//   "PROCESSING_WARNING_REASON_INTERNAL_ERROR"
+	//   "PROCESSING_WARNING_REASON_AWS_AUTH_FAILED"
+	Reason      string `json:"reason,omitempty"`
+	RecordCount int64  `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4333,9 +3156,7 @@ func (s WarningCount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// WarningInfo: Warning counts for each type of warning.
 type WarningInfo struct {
-	// WarningCounts: A list of warnings and counts per warning reason.
 	WarningCounts []*WarningCount `json:"warningCounts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "WarningCounts") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4364,19 +3185,9 @@ type AccountTypesAccountsInsightsRetrieveCall struct {
 	header_                 http.Header
 }
 
-// Retrieve: Retrieves marketing data insights for a given user list. This
-// feature is only available to data partners. Authorization Headers: This
-// method supports the following optional headers to define how the API
-// authorizes access for the request: * `login-account`: (Optional) The
-// resource name of the account where the Google Account of the credentials is
-// a user. If not set, defaults to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// Retrieve:
 //
-//   - parent: The parent account that owns the user list. Format:
-//     `accountTypes/{account_type}/accounts/{account}`.
+// - parent: .
 func (r *AccountTypesAccountsInsightsService) Retrieve(parent string, retrieveinsightsrequest *RetrieveInsightsRequest) *AccountTypesAccountsInsightsRetrieveCall {
 	c := &AccountTypesAccountsInsightsRetrieveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4478,15 +3289,9 @@ type AccountTypesAccountsPartnerLinksCreateCall struct {
 	header_     http.Header
 }
 
-// Create: Creates a partner link for the given account. Authorization Headers:
-// This method supports the following optional headers to define how the API
-// authorizes access for the request: * `login-account`: (Optional) The
-// resource name of the account where the Google Account of the credentials is
-// a user. If not set, defaults to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}`
+// Create:
 //
-//   - parent: The parent, which owns this collection of partner links. Format:
-//     accountTypes/{account_type}/accounts/{account}.
+// - parent: .
 func (r *AccountTypesAccountsPartnerLinksService) Create(parent string, partnerlink *PartnerLink) *AccountTypesAccountsPartnerLinksCreateCall {
 	c := &AccountTypesAccountsPartnerLinksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4586,15 +3391,9 @@ type AccountTypesAccountsPartnerLinksDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a partner link for the given account. Authorization Headers:
-// This method supports the following optional headers to define how the API
-// authorizes access for the request: * `login-account`: (Optional) The
-// resource name of the account where the Google Account of the credentials is
-// a user. If not set, defaults to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}`
+// Delete:
 //
-//   - name: The resource name of the partner link to delete. Format:
-//     accountTypes/{account_type}/accounts/{account}/partnerLinks/{partner_link}.
+// - name: .
 func (r *AccountTypesAccountsPartnerLinksService) Delete(name string) *AccountTypesAccountsPartnerLinksDeleteCall {
 	c := &AccountTypesAccountsPartnerLinksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4690,55 +3489,28 @@ type AccountTypesAccountsPartnerLinksSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Searches for all partner links to and from a given account.
-// Authorization Headers: This method supports the following optional headers
-// to define how the API authorizes access for the request: * `login-account`:
-// (Optional) The resource name of the account where the Google Account of the
-// credentials is a user. If not set, defaults to the account of the request.
-// Format: `accountTypes/{loginAccountType}/accounts/{loginAccountId}`
+// Search:
 //
-//   - parent: Account to search for partner links. If no `filter` is specified,
-//     all partner links where this account is either the `owning_account` or
-//     `partner_account` are returned. Format:
-//     `accountTypes/{account_type}/accounts/{account}`.
+// - parent: .
 func (r *AccountTypesAccountsPartnerLinksService) Search(parent string) *AccountTypesAccountsPartnerLinksSearchCall {
 	c := &AccountTypesAccountsPartnerLinksSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter string
-// (https://google.aip.dev/160). All fields need to be on the left hand side of
-// each condition (for example: `partner_link_id = 123456789`). Fields must be
-// specified using either all camel case
-// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
-// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
-// case and snake case. Supported operations: - `AND` - `=` - `!=` Supported
-// fields: - `partner_link_id` - `owning_account.account_type` -
-// `owning_account.account_id` - `partner_account.account_type` -
-// `partner_account.account_id` - `feature_set` For partner links with the
-// FEATURE_SET_AD_EVENT_MANAGEMENT feature set, the following fields are also
-// supported: - `partner_customer_account.account_id` Example:
-// `owning_account.account_type = "GOOGLE_ADS" AND partner_account.account_id =
-// 987654321`
+// Filter sets the optional parameter "filter":
 func (c *AccountTypesAccountsPartnerLinksSearchCall) Filter(filter string) *AccountTypesAccountsPartnerLinksSearchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// partner links to return. The service may return fewer than this value. If
-// unspecified, at most 50 partner links will be returned. The maximum value is
-// 100; values above 100 will be coerced to 100.
+// PageSize sets the optional parameter "pageSize":
 func (c *AccountTypesAccountsPartnerLinksSearchCall) PageSize(pageSize int64) *AccountTypesAccountsPartnerLinksSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `SearchPartnerLinks` call. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// `SearchPartnerLinks` must match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken":
 func (c *AccountTypesAccountsPartnerLinksSearchCall) PageToken(pageToken string) *AccountTypesAccountsPartnerLinksSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4866,11 +3638,9 @@ type AccountTypesAccountsUserListDirectLicensesCreateCall struct {
 	header_               http.Header
 }
 
-// Create: Creates a user list direct license. This feature is only available
-// to data partners.
+// Create:
 //
-//   - parent: The account that owns the user list being licensed. Should be in
-//     the format accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}.
+// - parent: .
 func (r *AccountTypesAccountsUserListDirectLicensesService) Create(parent string, userlistdirectlicense *UserListDirectLicense) *AccountTypesAccountsUserListDirectLicensesCreateCall {
 	c := &AccountTypesAccountsUserListDirectLicensesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4972,10 +3742,9 @@ type AccountTypesAccountsUserListDirectLicensesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a user list direct license. This feature is only available to
-// data partners.
+// Get:
 //
-// - name: The resource name of the user list direct license.
+// - name: .
 func (r *AccountTypesAccountsUserListDirectLicensesService) Get(name string) *AccountTypesAccountsUserListDirectLicensesGetCall {
 	c := &AccountTypesAccountsUserListDirectLicensesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5083,48 +3852,28 @@ type AccountTypesAccountsUserListDirectLicensesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all user list direct licenses owned by the parent account. This
-// feature is only available to data partners.
+// List:
 //
-//   - parent: The account whose licenses are being queried. Should be in the
-//     format accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}.
+// - parent: .
 func (r *AccountTypesAccountsUserListDirectLicensesService) List(parent string) *AccountTypesAccountsUserListDirectLicensesListCall {
 	c := &AccountTypesAccountsUserListDirectLicensesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter string
-// (https://google.aip.dev/160) to apply to the list request. All fields need
-// to be on the left hand side of each condition (for example: `user_list_id =
-// 123`). Fields must be specified using either all camel case
-// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
-// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
-// case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
-// `>=` - `<` - `<=` **Supported Functions:** - `IN(field, value1, value2,
-// ...)`: returns true if the field matches any of the values. Example:
-// `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get
-// method instead) - `historical_pricings` and all its subfields -
-// `pricing.start_time` - `pricing.end_time`
+// Filter sets the optional parameter "filter":
 func (c *AccountTypesAccountsUserListDirectLicensesListCall) Filter(filter string) *AccountTypesAccountsUserListDirectLicensesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// licenses to return per page. The service may return fewer than this value.
-// If unspecified, at most 50 licenses will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize":
 func (c *AccountTypesAccountsUserListDirectLicensesListCall) PageSize(pageSize int64) *AccountTypesAccountsUserListDirectLicensesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListUserListDirectLicense` call. Provide this to retrieve
-// the subsequent page. When paginating, all other parameters provided to
-// `ListUserListDirectLicense` must match the call that provided the page
-// token.
+// PageToken sets the optional parameter "pageToken":
 func (c *AccountTypesAccountsUserListDirectLicensesListCall) PageToken(pageToken string) *AccountTypesAccountsUserListDirectLicensesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5252,10 +4001,9 @@ type AccountTypesAccountsUserListDirectLicensesPatchCall struct {
 	header_               http.Header
 }
 
-// Patch: Updates a user list direct license. This feature is only available to
-// data partners.
+// Patch:
 //
-// - name: Identifier. The resource name of the user list direct license.
+// - name: .
 func (r *AccountTypesAccountsUserListDirectLicensesService) Patch(name string, userlistdirectlicense *UserListDirectLicense) *AccountTypesAccountsUserListDirectLicensesPatchCall {
 	c := &AccountTypesAccountsUserListDirectLicensesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5263,9 +4011,7 @@ func (r *AccountTypesAccountsUserListDirectLicensesService) Patch(name string, u
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update. The special character `*` is not supported and an
-// `INVALID_UPDATE_MASK` error will be thrown if used.
+// UpdateMask sets the optional parameter "updateMask":
 func (c *AccountTypesAccountsUserListDirectLicensesPatchCall) UpdateMask(updateMask string) *AccountTypesAccountsUserListDirectLicensesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5365,11 +4111,9 @@ type AccountTypesAccountsUserListGlobalLicensesCreateCall struct {
 	header_               http.Header
 }
 
-// Create: Creates a user list global license. This feature is only available
-// to data partners.
+// Create:
 //
-//   - parent: The account that owns the user list being licensed. Should be in
-//     the format accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}.
+// - parent: .
 func (r *AccountTypesAccountsUserListGlobalLicensesService) Create(parent string, userlistgloballicense *UserListGlobalLicense) *AccountTypesAccountsUserListGlobalLicensesCreateCall {
 	c := &AccountTypesAccountsUserListGlobalLicensesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5471,10 +4215,9 @@ type AccountTypesAccountsUserListGlobalLicensesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a user list global license. This feature is only available to
-// data partners.
+// Get:
 //
-// - name: The resource name of the user list global license.
+// - name: .
 func (r *AccountTypesAccountsUserListGlobalLicensesService) Get(name string) *AccountTypesAccountsUserListGlobalLicensesGetCall {
 	c := &AccountTypesAccountsUserListGlobalLicensesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5582,48 +4325,28 @@ type AccountTypesAccountsUserListGlobalLicensesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all user list global licenses owned by the parent account. This
-// feature is only available to data partners.
+// List:
 //
-//   - parent: The account whose licenses are being queried. Should be in the
-//     format accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}.
+// - parent: .
 func (r *AccountTypesAccountsUserListGlobalLicensesService) List(parent string) *AccountTypesAccountsUserListGlobalLicensesListCall {
 	c := &AccountTypesAccountsUserListGlobalLicensesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter string
-// (https://google.aip.dev/160) to apply to the list request. All fields need
-// to be on the left hand side of each condition (for example: `user_list_id =
-// 123`). Fields must be specified using either all camel case
-// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
-// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
-// case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
-// `>=` - `<` - `<=` **Supported Functions:** - `IN(field, value1, value2,
-// ...)`: returns true if the field matches any of the values. Example:
-// `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get
-// method instead) - `historical_pricings` and all its subfields -
-// `pricing.start_time` - `pricing.end_time`
+// Filter sets the optional parameter "filter":
 func (c *AccountTypesAccountsUserListGlobalLicensesListCall) Filter(filter string) *AccountTypesAccountsUserListGlobalLicensesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// licenses to return. The service may return fewer than this value. If
-// unspecified, at most 50 licenses will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize":
 func (c *AccountTypesAccountsUserListGlobalLicensesListCall) PageSize(pageSize int64) *AccountTypesAccountsUserListGlobalLicensesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListUserListGlobalLicense` call. Provide this to retrieve
-// the subsequent page. When paginating, all other parameters provided to
-// `ListUserListDirectLicense` must match the call that provided the page
-// token.
+// PageToken sets the optional parameter "pageToken":
 func (c *AccountTypesAccountsUserListGlobalLicensesListCall) PageToken(pageToken string) *AccountTypesAccountsUserListGlobalLicensesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -5751,10 +4474,9 @@ type AccountTypesAccountsUserListGlobalLicensesPatchCall struct {
 	header_               http.Header
 }
 
-// Patch: Updates a user list global license. This feature is only available to
-// data partners.
+// Patch:
 //
-// - name: Identifier. The resource name of the user list global license.
+// - name: .
 func (r *AccountTypesAccountsUserListGlobalLicensesService) Patch(name string, userlistgloballicense *UserListGlobalLicense) *AccountTypesAccountsUserListGlobalLicensesPatchCall {
 	c := &AccountTypesAccountsUserListGlobalLicensesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5762,9 +4484,7 @@ func (r *AccountTypesAccountsUserListGlobalLicensesService) Patch(name string, u
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update. The special character `*` is not supported and an
-// `INVALID_UPDATE_MASK` error will be thrown if used.
+// UpdateMask sets the optional parameter "updateMask":
 func (c *AccountTypesAccountsUserListGlobalLicensesPatchCall) UpdateMask(updateMask string) *AccountTypesAccountsUserListGlobalLicensesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5864,53 +4584,28 @@ type AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfo
 	header_      http.Header
 }
 
-// List: Lists all customer info for a user list global license. This feature
-// is only available to data partners.
+// List:
 //
-//   - parent: The global license whose customer info are being queried. Should
-//     be in the format
-//     `accountTypes/{ACCOUNT_TYPE}/accounts/{ACCOUNT_ID}/userListGlobalLicenses/{
-//     USER_LIST_GLOBAL_LICENSE_ID}`. To list all global license customer info
-//     under an account, replace the user list global license id with a '-' (for
-//     example,
-//     `accountTypes/DATA_PARTNER/accounts/123/userListGlobalLicenses/-`).
+// - parent: .
 func (r *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosService) List(parent string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
 	c := &AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter string
-// (https://google.aip.dev/160) to apply to the list request. All fields need
-// to be on the left hand side of each condition (for example: `user_list_id =
-// 123`). Fields must be specified using either all camel case
-// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
-// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
-// case and snake case. **Supported Operations:** - `AND` - `=` - `!=` - `>` -
-// `>=` - `<` - `<=` **Supported Functions:** - `IN(field, value1, value2,
-// ...)`: returns true if the field matches any of the values. Example:
-// `IN(user_list_id, 123, 456)` **Unsupported Fields:** - `name` (use get
-// method instead) - `historical_pricings` and all its subfields -
-// `pricing.start_time` - `pricing.end_time`
+// Filter sets the optional parameter "filter":
 func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) Filter(filter string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of
-// licenses to return. The service may return fewer than this value. If
-// unspecified, at most 50 licenses will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize":
 func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) PageSize(pageSize int64) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListUserListDirectLicense` call. Provide this to retrieve
-// the subsequent page. When paginating, all other parameters provided to
-// `ListUserListDirectLicense` must match the call that provided the page
-// token.
+// PageToken sets the optional parameter "pageToken":
 func (c *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall) PageToken(pageToken string) *AccountTypesAccountsUserListGlobalLicensesUserListGlobalLicenseCustomerInfosListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6038,18 +4733,9 @@ type AccountTypesAccountsUserListsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a UserList. Authorization Headers: This method supports the
-// following optional headers to define how the API authorizes access for the
-// request: * `login-account`: (Optional) The resource name of the account
-// where the Google Account of the credentials is a user. If not set, defaults
-// to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// Create:
 //
-//   - parent: The parent account where this user list will be created. Format:
-//     accountTypes/{account_type}/accounts/{account}.
+// - parent: .
 func (r *AccountTypesAccountsUserListsService) Create(parent string, userlist *UserList) *AccountTypesAccountsUserListsCreateCall {
 	c := &AccountTypesAccountsUserListsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6057,8 +4743,7 @@ func (r *AccountTypesAccountsUserListsService) Create(parent string, userlist *U
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": If true, the
-// request is validated but not executed.
+// ValidateOnly sets the optional parameter "validateOnly":
 func (c *AccountTypesAccountsUserListsCreateCall) ValidateOnly(validateOnly bool) *AccountTypesAccountsUserListsCreateCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6156,26 +4841,16 @@ type AccountTypesAccountsUserListsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a UserList. Authorization Headers: This method supports the
-// following optional headers to define how the API authorizes access for the
-// request: * `login-account`: (Optional) The resource name of the account
-// where the Google Account of the credentials is a user. If not set, defaults
-// to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// Delete:
 //
-//   - name: The name of the user list to delete. Format:
-//     accountTypes/{account_type}/accounts/{account}/userLists/{user_list}.
+// - name: .
 func (r *AccountTypesAccountsUserListsService) Delete(name string) *AccountTypesAccountsUserListsDeleteCall {
 	c := &AccountTypesAccountsUserListsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": If true, the
-// request is validated but not executed.
+// ValidateOnly sets the optional parameter "validateOnly":
 func (c *AccountTypesAccountsUserListsDeleteCall) ValidateOnly(validateOnly bool) *AccountTypesAccountsUserListsDeleteCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6270,18 +4945,9 @@ type AccountTypesAccountsUserListsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a UserList. Authorization Headers: This method supports the
-// following optional headers to define how the API authorizes access for the
-// request: * `login-account`: (Optional) The resource name of the account
-// where the Google Account of the credentials is a user. If not set, defaults
-// to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// Get:
 //
-//   - name: The resource name of the UserList to retrieve. Format:
-//     accountTypes/{account_type}/accounts/{account}/userLists/{user_list}.
+// - name: .
 func (r *AccountTypesAccountsUserListsService) Get(name string) *AccountTypesAccountsUserListsGetCall {
 	c := &AccountTypesAccountsUserListsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6388,54 +5054,28 @@ type AccountTypesAccountsUserListsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists UserLists. Authorization Headers: This method supports the
-// following optional headers to define how the API authorizes access for the
-// request: * `login-account`: (Optional) The resource name of the account
-// where the Google Account of the credentials is a user. If not set, defaults
-// to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// List:
 //
-//   - parent: The parent account which owns this collection of user lists.
-//     Format: accountTypes/{account_type}/accounts/{account}.
+// - parent: .
 func (r *AccountTypesAccountsUserListsService) List(parent string) *AccountTypesAccountsUserListsListCall {
 	c := &AccountTypesAccountsUserListsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter string
-// (https://google.aip.dev/160). All fields need to be on the left hand side of
-// each condition (for example: `display_name = "list 1"). Fields must be
-// specified using either all camel case
-// (https://en.wikipedia.org/wiki/Camel_case) or all snake case
-// (https://en.wikipedia.org/wiki/Snake_case). Don't use a combination of camel
-// case and snake case. Supported operations: - `AND` - `=` - `!=` - `>` - `>=`
-// - `<` - `<=` - `:` (has) **Supported Functions:** - `IN(field, value1,
-// value2, ...)`: returns true if the field matches any of the values. Example:
-// `IN(display_name, "name1", "name2")` Supported fields: - `id` -
-// `display_name` - `description` - `membership_status` - `integration_code` -
-// `access_reason` - `ingested_user_list_info.upload_key_types`
+// Filter sets the optional parameter "filter":
 func (c *AccountTypesAccountsUserListsListCall) Filter(filter string) *AccountTypesAccountsUserListsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number of user
-// lists to return. The service may return fewer than this value. If
-// unspecified, at most 50 user lists will be returned. The maximum value is
-// 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize":
 func (c *AccountTypesAccountsUserListsListCall) PageSize(pageSize int64) *AccountTypesAccountsUserListsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListUserLists` call. Provide this to retrieve the
-// subsequent page. When paginating, all other parameters provided to
-// `ListUserLists` must match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken":
 func (c *AccountTypesAccountsUserListsListCall) PageToken(pageToken string) *AccountTypesAccountsUserListsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6563,18 +5203,9 @@ type AccountTypesAccountsUserListsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a UserList. Authorization Headers: This method supports the
-// following optional headers to define how the API authorizes access for the
-// request: * `login-account`: (Optional) The resource name of the account
-// where the Google Account of the credentials is a user. If not set, defaults
-// to the account of the request. Format:
-// `accountTypes/{loginAccountType}/accounts/{loginAccountId}` *
-// `linked-account`: (Optional) The resource name of the account with an
-// established product link to the `login-account`. Format:
-// `accountTypes/{linkedAccountType}/accounts/{linkedAccountId}`
+// Patch:
 //
-//   - name: Identifier. The resource name of the user list. Format:
-//     accountTypes/{account_type}/accounts/{account}/userLists/{user_list}.
+// - name: .
 func (r *AccountTypesAccountsUserListsService) Patch(name string, userlist *UserList) *AccountTypesAccountsUserListsPatchCall {
 	c := &AccountTypesAccountsUserListsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6582,15 +5213,13 @@ func (r *AccountTypesAccountsUserListsService) Patch(name string, userlist *User
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The list of fields to
-// update.
+// UpdateMask sets the optional parameter "updateMask":
 func (c *AccountTypesAccountsUserListsPatchCall) UpdateMask(updateMask string) *AccountTypesAccountsUserListsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
-// ValidateOnly sets the optional parameter "validateOnly": If true, the
-// request is validated but not executed.
+// ValidateOnly sets the optional parameter "validateOnly":
 func (c *AccountTypesAccountsUserListsPatchCall) ValidateOnly(validateOnly bool) *AccountTypesAccountsUserListsPatchCall {
 	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
@@ -6688,8 +5317,7 @@ type AdEventsIngestCall struct {
 	header_               http.Header
 }
 
-// Ingest: Uploads a list of AdEvent resources to Google Analytics. This
-// feature is only available to accounts on an allowlist.
+// Ingest:
 func (r *AdEventsService) Ingest(ingestadeventsrequest *IngestAdEventsRequest) *AdEventsIngestCall {
 	c := &AdEventsIngestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ingestadeventsrequest = ingestadeventsrequest
@@ -6786,8 +5414,7 @@ type AudienceMembersIngestCall struct {
 	header_                      http.Header
 }
 
-// Ingest: Uploads a list of AudienceMember resources to the provided
-// Destination.
+// Ingest:
 func (r *AudienceMembersService) Ingest(ingestaudiencemembersrequest *IngestAudienceMembersRequest) *AudienceMembersIngestCall {
 	c := &AudienceMembersIngestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ingestaudiencemembersrequest = ingestaudiencemembersrequest
@@ -6884,8 +5511,7 @@ type AudienceMembersRemoveCall struct {
 	header_                      http.Header
 }
 
-// Remove: Removes a list of AudienceMember resources from the provided
-// Destination.
+// Remove:
 func (r *AudienceMembersService) Remove(removeaudiencemembersrequest *RemoveAudienceMembersRequest) *AudienceMembersRemoveCall {
 	c := &AudienceMembersRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.removeaudiencemembersrequest = removeaudiencemembersrequest
@@ -6982,7 +5608,7 @@ type AudienceMembersRemoveAllCall struct {
 	header_                         http.Header
 }
 
-// RemoveAll: Removes all audience members from the provided destinations.
+// RemoveAll:
 func (r *AudienceMembersService) RemoveAll(removeallaudiencemembersrequest *RemoveAllAudienceMembersRequest) *AudienceMembersRemoveAllCall {
 	c := &AudienceMembersRemoveAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.removeallaudiencemembersrequest = removeallaudiencemembersrequest
@@ -7079,7 +5705,7 @@ type EventsIngestCall struct {
 	header_             http.Header
 }
 
-// Ingest: Uploads a list of Event resources from the provided Destination.
+// Ingest:
 func (r *EventsService) Ingest(ingesteventsrequest *IngestEventsRequest) *EventsIngestCall {
 	c := &EventsIngestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.ingesteventsrequest = ingesteventsrequest
@@ -7176,14 +5802,13 @@ type RequestStatusRetrieveCall struct {
 	header_      http.Header
 }
 
-// Retrieve: Gets the status of a request given request id.
+// Retrieve:
 func (r *RequestStatusService) Retrieve() *RequestStatusRetrieveCall {
 	c := &RequestStatusRetrieveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": Required. Required. The
-// request ID of the Data Manager API request.
+// RequestId sets the optional parameter "requestId":
 func (c *RequestStatusRetrieveCall) RequestId(requestId string) *RequestStatusRetrieveCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c

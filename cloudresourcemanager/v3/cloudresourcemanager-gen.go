@@ -619,6 +619,17 @@ func (s CloudresourcemanagerGoogleCloudResourcemanagerV2beta1FolderOperation) Ma
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateBoundaryMetadata: A status object which is used as the `metadata`
+// field for the Operation returned by CreateBoundary. Currently empty.
+type CreateBoundaryMetadata struct {
+}
+
+// CreateCapabilityConfigMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by CreateCapabilityConfig.
+// Currently empty.
+type CreateCapabilityConfigMetadata struct {
+}
+
 // CreateFolderMetadata: Metadata pertaining to the Folder creation process.
 type CreateFolderMetadata struct {
 	// DisplayName: The display name of the folder.
@@ -686,6 +697,17 @@ type CreateTagKeyMetadata struct {
 // CreateTagValueMetadata: Runtime operation information for creating a
 // TagValue.
 type CreateTagValueMetadata struct {
+}
+
+// DeleteBoundaryMetadata: A status object which is used as the `metadata`
+// field for the Operation returned by DeleteBoundary. Currently empty.
+type DeleteBoundaryMetadata struct {
+}
+
+// DeleteCapabilityConfigMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by DeleteCapabilityConfig.
+// Currently empty.
+type DeleteCapabilityConfigMetadata struct {
 }
 
 // DeleteFolderMetadata: A status object which is used as the `metadata` field
@@ -1689,6 +1711,10 @@ type Project struct {
 	// value of the Project resource. This may be sent on update and delete
 	// requests to ensure the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
+	// IsManagementProject: Output only. If `true`, this project is a Management
+	// Project. A Management Project manages dedicated project groups for specific
+	// purposes (e.g., agent management or app management).
+	IsManagementProject bool `json:"isManagementProject,omitempty"`
 	// Labels: Optional. The labels associated with this project. Label keys must
 	// be between 1 and 63 characters long and must conform to the following
 	// regular expression: \a-z\ (\[-a-z0-9\]*\[a-z0-9\])?. Label values must be
@@ -2270,6 +2296,23 @@ type UndeleteProjectMetadata struct {
 
 // UndeleteProjectRequest: The request sent to the UndeleteProject method.
 type UndeleteProjectRequest struct {
+}
+
+// UpdateBoundaryConfigMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by UpdateBoundaryConfig.
+// Currently empty.
+type UpdateBoundaryConfigMetadata struct {
+}
+
+// UpdateBoundaryMetadata: A status object which is used as the `metadata`
+// field for the Operation returned by UpdateBoundary. Currently empty.
+type UpdateBoundaryMetadata struct {
+}
+
+// UpdateCapabilityConfigMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by UpdateCapabilityConfig.
+// Currently empty.
+type UpdateCapabilityConfigMetadata struct {
 }
 
 // UpdateFolderMetadata: A status object which is used as the `metadata` field

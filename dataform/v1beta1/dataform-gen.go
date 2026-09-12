@@ -464,6 +464,74 @@ func (s BigQueryAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BigQueryUnitTest: Represents a BigQuery unit test.
+type BigQueryUnitTest struct {
+	// DependencyTargets: A list of actions that this action depends on.
+	DependencyTargets []*Target `json:"dependencyTargets,omitempty"`
+	// Disabled: Whether this action is disabled (i.e. should not be run).
+	Disabled bool `json:"disabled,omitempty"`
+	// DisplayName: The name of the unit test.
+	DisplayName string `json:"displayName,omitempty"`
+	// ExpectedOutputQuery: Expected output query to compare against the test
+	// query.
+	ExpectedOutputQuery string `json:"expectedOutputQuery,omitempty"`
+	// Tags: Arbitrary, user-defined tags on this action.
+	Tags []string `json:"tags,omitempty"`
+	// TestQuery: Test query to execute.
+	TestQuery string `json:"testQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DependencyTargets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DependencyTargets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigQueryUnitTest) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryUnitTest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BigQueryUnitTestAction: Represents a workflow action that will run a
+// BigQuery unit test.
+type BigQueryUnitTestAction struct {
+	// ActualResultsJobId: Output only. Job ID for the actual results.
+	ActualResultsJobId string `json:"actualResultsJobId,omitempty"`
+	// ActualResultsSqlScript: Output only. SQL script for the actual results.
+	ActualResultsSqlScript string `json:"actualResultsSqlScript,omitempty"`
+	// ExpectedResultsJobId: Output only. Job ID for the expected results.
+	ExpectedResultsJobId string `json:"expectedResultsJobId,omitempty"`
+	// ExpectedResultsSqlScript: Output only. SQL script for the expected results.
+	ExpectedResultsSqlScript string `json:"expectedResultsSqlScript,omitempty"`
+	// TotalBilledBytes: Output only. Total bytes billed for this action. Combined
+	// total for actual and expected jobs.
+	TotalBilledBytes int64 `json:"totalBilledBytes,omitempty,string"`
+	// TotalProcessedBytes: Output only. Total bytes processed for this action.
+	// Combined total for actual and expected jobs.
+	TotalProcessedBytes int64 `json:"totalProcessedBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ActualResultsJobId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActualResultsJobId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigQueryUnitTestAction) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryUnitTestAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -980,6 +1048,8 @@ func (s CompilationResult) MarshalJSON() ([]byte, error) {
 type CompilationResultAction struct {
 	// Assertion: The assertion executed by this action.
 	Assertion *Assertion `json:"assertion,omitempty"`
+	// BigqueryUnitTest: The unit test executed by this action.
+	BigqueryUnitTest *BigQueryUnitTest `json:"bigqueryUnitTest,omitempty"`
 	// CanonicalTarget: The action's identifier if the project had been compiled
 	// without any overrides configured. Unique within the compilation result.
 	CanonicalTarget *Target `json:"canonicalTarget,omitempty"`
@@ -1377,6 +1447,56 @@ func (s DirectorySearchResult) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EndUserAuthConfig: Includes configuration options for repository end user
+// authentication.
+type EndUserAuthConfig struct {
+	// OauthConfig: Optional. OAuth configuration for repository end user
+	// authentication.
+	OauthConfig *OAuthConfig `json:"oauthConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OauthConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OauthConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfig: Includes configuration options for end user
+// authentication.
+type EndUserAuthenticationConfig struct {
+	// OauthConfig: Optional. OAuth configuration for end user authentication.
+	OauthConfig *OAuthConfig `json:"oauthConfig,omitempty"`
+	// UserEmail: Output only. Email address of the user to run workflow
+	// invocations under.
+	UserEmail string `json:"userEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OauthConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OauthConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorTable: Error table information, used to write error data into a
@@ -2052,6 +2172,19 @@ func (s Interval) MarshalJSON() ([]byte, error) {
 // invocation. If both `included_targets` and `included_tags` are unset, all
 // actions will be included.
 type InvocationConfig struct {
+	// EndUserAuthConfig: Optional. Configuration for end user authentication. Note
+	// that this should not be set when `service_account` is used.
+	EndUserAuthConfig *EndUserAuthenticationConfig `json:"endUserAuthConfig,omitempty"`
+	// ExecutionMode: Optional. Specifies the execution mode for the workflow
+	// invocation.
+	//
+	// Possible values:
+	//   "EXECUTION_MODE_UNSPECIFIED" - Default value.
+	//   "DEFAULT" - Default execution mode, which runs all actions except unit
+	// tests. Same as ALL_EXCEPT_UNIT_TESTS.
+	//   "ALL_EXCEPT_UNIT_TESTS" - Run all actions except unit tests.
+	//   "UNIT_TESTS_ONLY" - Run unit tests only.
+	ExecutionMode string `json:"executionMode,omitempty"`
 	// FullyRefreshIncrementalTablesEnabled: Optional. When set to true, any
 	// incremental tables will be fully refreshed.
 	FullyRefreshIncrementalTablesEnabled bool `json:"fullyRefreshIncrementalTablesEnabled,omitempty"`
@@ -2081,18 +2214,16 @@ type InvocationConfig struct {
 	// TransitiveDependentsIncluded: Optional. When set to true, transitive
 	// dependents of included actions will be executed.
 	TransitiveDependentsIncluded bool `json:"transitiveDependentsIncluded,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "FullyRefreshIncrementalTablesEnabled") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "EndUserAuthConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "FullyRefreshIncrementalTablesEnabled") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
-	// more details.
+	// NullFields is a list of field names (e.g. "EndUserAuthConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -2643,6 +2774,29 @@ type NotebookRuntimeOptions struct {
 
 func (s NotebookRuntimeOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod NotebookRuntimeOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OAuthConfig: OAuth configuration for end user authentication.
+type OAuthConfig struct {
+	// AdditionalOauthScopes: Optional. Additional OAuth scopes to use for BigQuery
+	// executions. Scopes always in use: `https://www.googleapis.com/auth/bigquery`
+	AdditionalOauthScopes []string `json:"additionalOauthScopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalOauthScopes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalOauthScopes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3504,6 +3658,9 @@ type Repository struct {
 	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
 	// DisplayName: Optional. The repository's user-friendly name.
 	DisplayName string `json:"displayName,omitempty"`
+	// EndUserAuthConfig: Optional. Includes configuration options for end user
+	// authentication.
+	EndUserAuthConfig *EndUserAuthConfig `json:"endUserAuthConfig,omitempty"`
 	// GitRemoteSettings: Optional. If set, configures this repository to be linked
 	// to a Git remote.
 	GitRemoteSettings *GitRemoteSettings `json:"gitRemoteSettings,omitempty"`
@@ -4303,6 +4460,9 @@ func (s WorkflowInvocation) MarshalJSON() ([]byte, error) {
 type WorkflowInvocationAction struct {
 	// BigqueryAction: Output only. The workflow action's bigquery action details.
 	BigqueryAction *BigQueryAction `json:"bigqueryAction,omitempty"`
+	// BigqueryUnitTestAction: Output only. The workflow action's unit test
+	// details.
+	BigqueryUnitTestAction *BigQueryUnitTestAction `json:"bigqueryUnitTestAction,omitempty"`
 	// CanonicalTarget: Output only. The action's identifier if the project had
 	// been compiled without any overrides configured. Unique within the
 	// compilation result.

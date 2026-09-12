@@ -707,20 +707,22 @@ func (s GoogleCloudCesV1mainEndSession) MarshalJSON() ([]byte, error) {
 // GoogleCloudCesV1mainImage: Represents an image input or output in the
 // conversation.
 type GoogleCloudCesV1mainImage struct {
+	// AltText: Optional. The alternative text for the image.
+	AltText string `json:"altText,omitempty"`
 	// Data: Required. Raw bytes of the image.
 	Data string `json:"data,omitempty"`
 	// MimeType: Required. The IANA standard MIME type of the source data.
 	// Supported image types includes: * image/png * image/jpeg * image/webp
 	MimeType string `json:"mimeType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Data") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AltText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -7988,6 +7990,9 @@ type GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig struct
 	//   "CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE" - A prebuilt classifier
 	// classfying the initiator of the conversation escalation. For example, if it
 	// was initiated by the customer or the agent.
+	//   "CONVERSATION_OUTCOME_AI_AVERSION" - Classifies whether the customer
+	// demonstrates AI aversion by instantly requesting escalation to a human agent
+	// without attempting to work with the AI agent.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -28732,6 +28737,9 @@ func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService)
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) View(view string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -28897,6 +28905,9 @@ func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) View(view string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -32629,6 +32640,9 @@ func (r *ProjectsLocationsConversationsService) Get(name string) *ProjectsLocati
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsConversationsGetCall) View(view string) *ProjectsLocationsConversationsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -32899,6 +32913,9 @@ func (c *ProjectsLocationsConversationsListCall) PageToken(pageToken string) *Pr
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsConversationsListCall) View(view string) *ProjectsLocationsConversationsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -38456,6 +38473,9 @@ func (r *ProjectsLocationsDatasetsConversationsService) Get(name string) *Projec
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsDatasetsConversationsGetCall) View(view string) *ProjectsLocationsDatasetsConversationsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -38726,6 +38746,9 @@ func (c *ProjectsLocationsDatasetsConversationsListCall) PageToken(pageToken str
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsDatasetsConversationsListCall) View(view string) *ProjectsLocationsDatasetsConversationsListCall {
 	c.urlParams_.Set("view", view)
 	return c

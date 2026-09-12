@@ -1146,8 +1146,8 @@ func (s HttpRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// HttpTarget: HTTP target. When specified as a Queue, all the tasks with
-// [HttpRequest] will be overridden according to the target.
+// HttpTarget: HTTP target. When specified at the Queue level, all tasks with
+// HttpRequest are overridden according to the target.
 type HttpTarget struct {
 	// HeaderOverrides: HTTP target headers. This map contains the header field
 	// names and values. Headers will be set when running the task is created

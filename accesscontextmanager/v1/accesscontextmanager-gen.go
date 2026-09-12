@@ -120,9 +120,11 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
 	s.AccessPolicies = NewAccessPoliciesService(s)
+	s.Folders = NewFoldersService(s)
 	s.Operations = NewOperationsService(s)
 	s.Organizations = NewOrganizationsService(s)
 	s.Permissions = NewPermissionsService(s)
+	s.Projects = NewProjectsService(s)
 	s.Services = NewServicesService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
@@ -150,11 +152,15 @@ type Service struct {
 
 	AccessPolicies *AccessPoliciesService
 
+	Folders *FoldersService
+
 	Operations *OperationsService
 
 	Organizations *OrganizationsService
 
 	Permissions *PermissionsService
+
+	Projects *ProjectsService
 
 	Services *ServicesService
 }
@@ -211,6 +217,15 @@ type AccessPoliciesServicePerimetersService struct {
 	s *Service
 }
 
+func NewFoldersService(s *Service) *FoldersService {
+	rs := &FoldersService{s: s}
+	return rs
+}
+
+type FoldersService struct {
+	s *Service
+}
+
 func NewOperationsService(s *Service) *OperationsService {
 	rs := &OperationsService{s: s}
 	return rs
@@ -247,6 +262,15 @@ func NewPermissionsService(s *Service) *PermissionsService {
 }
 
 type PermissionsService struct {
+	s *Service
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	return rs
+}
+
+type ProjectsService struct {
 	s *Service
 }
 
@@ -1273,14 +1297,8 @@ type GcpUserAccessBinding struct {
 	// Principal: Optional. Immutable. The principal that is subject to the access
 	// policies in this policy binding.
 	Principal *Principal `json:"principal,omitempty"`
-	// RestrictedClientApplications: Optional. Deprecated: Use
-	// `scoped_access_settings` instead. A list of applications that are subject to
-	// this binding's restrictions. If the list is empty, the binding restrictions
-	// will universally apply to all applications.
-	RestrictedClientApplications []*Application `json:"restrictedClientApplications,omitempty"`
 	// ScopedAccessSettings: Optional. A list of scoped access settings that set
-	// this binding's restrictions on a subset of applications. This field cannot
-	// be set if restricted_client_applications is set.
+	// this binding's restrictions on a subset of applications.
 	ScopedAccessSettings []*ScopedAccessSettings `json:"scopedAccessSettings,omitempty"`
 	// SessionSettings: Optional. The Google Cloud session length (GCSL) policy for
 	// the group key.
@@ -1758,6 +1776,45 @@ type ListSupportedServicesResponse struct {
 
 func (s ListSupportedServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSupportedServicesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LookupConfiguredServicePerimeterResponse: A configured service perimeter
+// returned by Access Context Manager.
+type LookupConfiguredServicePerimeterResponse struct {
+	// RestrictedResource: The resource (e.g. "projects/123", "folders/456") that
+	// directly owns/is restricted by the enforced perimeter.
+	RestrictedResource string `json:"restrictedResource,omitempty"`
+	// RestrictedResourceDryRun: The resource (e.g. "projects/123", "folders/456")
+	// that directly owns/is restricted by the dry-run perimeter.
+	RestrictedResourceDryRun string `json:"restrictedResourceDryRun,omitempty"`
+	// ServicePerimeter: Fully qualified name of the configured enforced perimeter.
+	// Format: `accessPolicies/{policy_id}/servicePerimeters/{perimeter_name}` This
+	// field is empty if no enforced perimeter applies.
+	ServicePerimeter string `json:"servicePerimeter,omitempty"`
+	// ServicePerimeterDryRun: Fully qualified name of the configured dry-run
+	// perimeter. Format:
+	// `accessPolicies/{policy_id}/servicePerimeters/{perimeter_name}` This field
+	// is empty if no dry-run perimeter configuration applies.
+	ServicePerimeterDryRun string `json:"servicePerimeterDryRun,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "RestrictedResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RestrictedResource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LookupConfiguredServicePerimeterResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LookupConfiguredServicePerimeterResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6063,6 +6120,118 @@ func (c *AccessPoliciesServicePerimetersTestIamPermissionsCall) Do(opts ...googl
 	return ret, nil
 }
 
+type FoldersLookupConfiguredServicePerimeterCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// LookupConfiguredServicePerimeter: Looks up the configured service perimeter
+// for a given resource Format: ['projects/{projectNumber}',
+// 'folders/{folderNumber}'].
+//
+// - resource: The Resource to resolve (e.g. "projects/123", "folders/456").
+func (r *FoldersService) LookupConfiguredServicePerimeter(resource string) *FoldersLookupConfiguredServicePerimeterCall {
+	c := &FoldersLookupConfiguredServicePerimeterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLookupConfiguredServicePerimeterCall) Fields(s ...googleapi.Field) *FoldersLookupConfiguredServicePerimeterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLookupConfiguredServicePerimeterCall) IfNoneMatch(entityTag string) *FoldersLookupConfiguredServicePerimeterCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLookupConfiguredServicePerimeterCall) Context(ctx context.Context) *FoldersLookupConfiguredServicePerimeterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLookupConfiguredServicePerimeterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLookupConfiguredServicePerimeterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:lookupConfiguredServicePerimeter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accesscontextmanager.folders.lookupConfiguredServicePerimeter", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accesscontextmanager.folders.lookupConfiguredServicePerimeter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LookupConfiguredServicePerimeterResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLookupConfiguredServicePerimeterCall) Do(opts ...googleapi.CallOption) (*LookupConfiguredServicePerimeterResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LookupConfiguredServicePerimeterResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accesscontextmanager.folders.lookupConfiguredServicePerimeter", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OperationsCancelCall struct {
 	s                      *Service
 	name                   string
@@ -7294,6 +7463,118 @@ func (c *PermissionsListCall) Pages(ctx context.Context, f func(*ListSupportedPe
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLookupConfiguredServicePerimeterCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// LookupConfiguredServicePerimeter: Looks up the configured service perimeter
+// for a given resource Format: ['projects/{projectNumber}',
+// 'folders/{folderNumber}'].
+//
+// - resource: The Resource to resolve (e.g. "projects/123", "folders/456").
+func (r *ProjectsService) LookupConfiguredServicePerimeter(resource string) *ProjectsLookupConfiguredServicePerimeterCall {
+	c := &ProjectsLookupConfiguredServicePerimeterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLookupConfiguredServicePerimeterCall) Fields(s ...googleapi.Field) *ProjectsLookupConfiguredServicePerimeterCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLookupConfiguredServicePerimeterCall) IfNoneMatch(entityTag string) *ProjectsLookupConfiguredServicePerimeterCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLookupConfiguredServicePerimeterCall) Context(ctx context.Context) *ProjectsLookupConfiguredServicePerimeterCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLookupConfiguredServicePerimeterCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLookupConfiguredServicePerimeterCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:lookupConfiguredServicePerimeter")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "accesscontextmanager.projects.lookupConfiguredServicePerimeter", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "accesscontextmanager.projects.lookupConfiguredServicePerimeter" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LookupConfiguredServicePerimeterResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLookupConfiguredServicePerimeterCall) Do(opts ...googleapi.CallOption) (*LookupConfiguredServicePerimeterResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LookupConfiguredServicePerimeterResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "accesscontextmanager.projects.lookupConfiguredServicePerimeter", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ServicesGetCall struct {

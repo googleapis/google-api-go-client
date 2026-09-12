@@ -3349,7 +3349,8 @@ func (s GoogleFirestoreAdminV1SearchConfig) MarshalJSON() ([]byte, error) {
 // geo search index for a field.
 type GoogleFirestoreAdminV1SearchGeoSpec struct {
 	// GeoJsonIndexingDisabled: Optional. Disables geoJSON indexing for the field.
-	// By default, geoJSON points are indexed.
+	// By default, geoJSON points are indexed. Firestore GeoPoints are indexed
+	// regardless of the value of this field.
 	GeoJsonIndexingDisabled bool `json:"geoJsonIndexingDisabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GeoJsonIndexingDisabled") to
 	// unconditionally include in API requests. By default, fields with empty or

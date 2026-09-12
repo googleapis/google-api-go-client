@@ -482,7 +482,9 @@ type Field struct {
 	//   "CLICKS" - Clicks.
 	//   "CPC" - CPC.
 	//   "CPM" - CPM.
-	//   "CURATION_PARTNER_FEE" - Curator fee.
+	//   "CURATION_PARTNER_FEE" - Curator fee. This will be redacted to 0.00 if the
+	// package's visibility is set to non-disclosed. Use the PACKAGE_FEE_VISIBILITY
+	// dimension to check if the package's fee is disclosed.
 	//   "DISCOUNT_AMOUNT" - Discount amount in media planner currency.
 	//   "EFFECTIVE_DISCOUNT_RATE" - Discount rate in media planner currency.
 	//   "ENGAGED_VIEWS" - Engaged views.
@@ -913,7 +915,9 @@ type ReportDefinition struct {
 	//   "CLICKS" - Clicks.
 	//   "CPC" - CPC.
 	//   "CPM" - CPM.
-	//   "CURATION_PARTNER_FEE" - Curator fee.
+	//   "CURATION_PARTNER_FEE" - Curator fee. This will be redacted to 0.00 if the
+	// package's visibility is set to non-disclosed. Use the PACKAGE_FEE_VISIBILITY
+	// dimension to check if the package's fee is disclosed.
 	//   "DISCOUNT_AMOUNT" - Discount amount in media planner currency.
 	//   "EFFECTIVE_DISCOUNT_RATE" - Discount rate in media planner currency.
 	//   "ENGAGED_VIEWS" - Engaged views.

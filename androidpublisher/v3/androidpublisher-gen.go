@@ -1376,13 +1376,14 @@ func (s AppRecoveryAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AppStoreAppActiveApkSet: An installable set of active APKs. A set of APKs
-// might only contain 1 APK if the app in question publishes using APKs. If the
-// app uses app bundles (or a similar technology), this set should contain all
-// APKs (even optional ones) that might be installed for this app. A set of
-// APKs should be installable together. If certain APKs are exclusive to one
-// another and cannot be installed together, then a separate
-// AppStoreAppActiveApkSet should be created.
+// AppStoreAppActiveApkSet: An installable set of active APKs. All APKs in this
+// set should belong to the same version of the app. A set of APKs might only
+// contain 1 APK if the app in question publishes using APKs. If the app uses
+// app bundles (or a similar technology), this set should contain all APKs
+// (even optional ones) that might be installed for this app. A set of APKs
+// should be installable together. If certain APKs are exclusive to one another
+// and cannot be installed together, then a separate AppStoreAppActiveApkSet
+// should be created.
 type AppStoreAppActiveApkSet struct {
 	// BaseApkId: Required. The ID for the main base application module. Example:
 	// base.apk or app.apk.
@@ -4670,6 +4671,46 @@ func (s ExternalAccountIds) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExternalContentLinkDetails: Reporting details unique to the external content
+// link program.
+type ExternalContentLinkDetails struct {
+	// ExternalAppCategory: Optional. The category of the downlaoded app. This must
+	// match the category provided in Play Console during the external app
+	// verification process. Only required for app installs.
+	//
+	// Possible values:
+	//   "EXTERNAL_CONTENT_APP_CATEGORY_UNSPECIFIED" - Unspecified, do not use.
+	//   "APP" - The app is classified under the app category.
+	//   "GAME" - The app is classified under the game category.
+	ExternalAppCategory string `json:"externalAppCategory,omitempty"`
+	// InstalledAppPackage: Optional. The package name of the app downloaded
+	// through this transaction. Only required for app installs.
+	InstalledAppPackage string `json:"installedAppPackage,omitempty"`
+	// LinkType: Required. The type content being reported by this transaction.
+	//
+	// Possible values:
+	//   "EXTERNAL_CONTENT_LINK_TYPE_UNSPECIFIED" - Unspecified, do not use.
+	//   "LINK_TO_DIGITAL_CONTENT_OFFER" - An offer to purchase digital content.
+	//   "LINK_TO_APP_DOWNLOAD" - An app install.
+	LinkType string `json:"linkType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExternalAppCategory") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExternalAppCategory") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalContentLinkDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalContentLinkDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExternalOfferDetails: Reporting details unique to the external offers
 // program.
 type ExternalOfferDetails struct {
@@ -4760,6 +4801,9 @@ type ExternalTransaction struct {
 	// current tax amount including any refunds that may have been applied to this
 	// transaction.
 	CurrentTaxAmount *Price `json:"currentTaxAmount,omitempty"`
+	// ExternalContentLinkDetails: Optional. Details necessary to accurately report
+	// external content link transactions.
+	ExternalContentLinkDetails *ExternalContentLinkDetails `json:"externalContentLinkDetails,omitempty"`
 	// ExternalOfferDetails: Optional. Details necessary to accurately report
 	// external offers transactions.
 	ExternalOfferDetails *ExternalOfferDetails `json:"externalOfferDetails,omitempty"`
@@ -7043,6 +7087,30 @@ func (s OneTimeProductDiscountedOffer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OneTimeProductGameRewardOffer: Configuration specific to game reward offers.
+type OneTimeProductGameRewardOffer struct {
+	// RedemptionLimit: Optional. The number of times this offer can be redeemed.
+	// If unset or set to 0, allows for unlimited offer redemptions. Otherwise must
+	// be a number between 1 and 50 inclusive.
+	RedemptionLimit int64 `json:"redemptionLimit,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "RedemptionLimit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RedemptionLimit") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OneTimeProductGameRewardOffer) MarshalJSON() ([]byte, error) {
+	type NoMethod OneTimeProductGameRewardOffer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OneTimeProductListing: Regional store listing for a one-time product.
 type OneTimeProductListing struct {
 	// Description: Required. The description of this product in the language of
@@ -7076,6 +7144,8 @@ func (s OneTimeProductListing) MarshalJSON() ([]byte, error) {
 type OneTimeProductOffer struct {
 	// DiscountedOffer: A discounted offer.
 	DiscountedOffer *OneTimeProductDiscountedOffer `json:"discountedOffer,omitempty"`
+	// GameRewardOffer: A game reward offer.
+	GameRewardOffer *OneTimeProductGameRewardOffer `json:"gameRewardOffer,omitempty"`
 	// OfferId: Required. Immutable. The ID of this product offer. Must be unique
 	// within the purchase option. It must start with a number or lower-case
 	// letter, and can only contain lower-case letters (a-z), numbers (0-9), and
@@ -12001,8 +12071,9 @@ type User struct {
 	//   "CAN_MANAGE_DRAFT_APPS_GLOBAL" - Create, edit, and delete draft apps.
 	//   "CAN_CREATE_MANAGED_PLAY_APPS_GLOBAL" - Create and publish private apps to
 	// your organization.
-	//   "CAN_CHANGE_MANAGED_PLAY_SETTING_GLOBAL" - Choose whether apps are public,
-	// or only available to your organization.
+	//   "CAN_CHANGE_MANAGED_PLAY_SETTING_GLOBAL" - Deprecated: This permission is
+	// no longer supported. Choose whether apps are public, or only available to
+	// your organization.
 	//   "CAN_MANAGE_ORDERS_GLOBAL" - Manage orders and subscriptions.
 	//   "CAN_MANAGE_APP_CONTENT_GLOBAL" - Manage policy related pages on all apps
 	// for the developer.

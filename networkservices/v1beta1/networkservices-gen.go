@@ -6826,6 +6826,14 @@ func (r *ProjectsLocationsAgentGatewaysService) List(parent string) *ProjectsLoc
 	return c
 }
 
+// Filter sets the optional parameter "filter": A filter expression to filter
+// the results listed in the response. The expression must follow the syntax
+// described in AIP-160 (https://google.aip.dev/160).
+func (c *ProjectsLocationsAgentGatewaysListCall) Filter(filter string) *ProjectsLocationsAgentGatewaysListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Maximum number of
 // AgentGateways to return per call.
 func (c *ProjectsLocationsAgentGatewaysListCall) PageSize(pageSize int64) *ProjectsLocationsAgentGatewaysListCall {

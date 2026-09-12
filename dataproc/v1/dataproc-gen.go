@@ -1095,14 +1095,14 @@ func (s ApplicationInfo) MarshalJSON() ([]byte, error) {
 type AttachedDiskConfig struct {
 	// DiskSizeGb: Optional. Disk size in GB.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
-	// DiskType: Optional. Disk type.
+	// DiskType: Optional. Deprecated: Use type instead.
 	//
 	// Possible values:
-	//   "DISK_TYPE_UNSPECIFIED" - Required unspecified disk type.
-	//   "HYPERDISK_BALANCED" - Hyperdisk Balanced disk type.
-	//   "HYPERDISK_EXTREME" - Hyperdisk Extreme disk type.
-	//   "HYPERDISK_ML" - Hyperdisk ML disk type.
-	//   "HYPERDISK_THROUGHPUT" - Hyperdisk Throughput disk type.
+	//   "DISK_TYPE_UNSPECIFIED" - Disk type is not specified.
+	//   "HYPERDISK_BALANCED" - Hyperdisk Balanced.
+	//   "HYPERDISK_EXTREME" - Hyperdisk Extreme.
+	//   "HYPERDISK_ML" - Hyperdisk ML.
+	//   "HYPERDISK_THROUGHPUT" - Hyperdisk Throughput.
 	DiskType string `json:"diskType,omitempty"`
 	// ProvisionedIops: Optional. Indicates how many IOPS to provision for the
 	// attached disk. This sets the number of I/O operations per second that the
@@ -1114,6 +1114,11 @@ type AttachedDiskConfig struct {
 	// the disk can handle. See
 	// https://cloud.google.com/compute/docs/disks/hyperdisks#hyperdisk-features
 	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
+	// Type: Optional. Attached disk type. Currently only supports Hyperdisks. See
+	// https://cloud.google.com/compute/docs/disks/hyperdisks. Note: Hyperdisk
+	// Balanced High Availability is not supported.Allowed values are:
+	// hyperdisk-balanced hyperdisk-extreme hyperdisk-ml hyperdisk-throughput
+	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

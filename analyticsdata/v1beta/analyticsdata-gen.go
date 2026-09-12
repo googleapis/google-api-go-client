@@ -783,6 +783,83 @@ func (s ConcatenateExpression) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataTruncationDateRange: Define the truncated date range from start_date to
+// end_date.
+type DataTruncationDateRange struct {
+	// EndDate: The end date in the format YYYY-MM-DD (inclusive).
+	EndDate string `json:"endDate,omitempty"`
+	// StartDate: The start date in the format YYYY-MM-DD (inclusive).
+	StartDate string `json:"startDate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataTruncationDateRange) MarshalJSON() ([]byte, error) {
+	type NoMethod DataTruncationDateRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DataTruncationReason: Describes a reason for data truncation in the report.
+type DataTruncationReason struct {
+	// DataTruncationDate: The data truncation date in the format YYYY-MM-DD.
+	// Indicates data before this date is truncated.
+	DataTruncationDate string `json:"dataTruncationDate,omitempty"`
+	// DataTruncationDateRanges: The truncated date ranges.
+	DataTruncationDateRanges []*DataTruncationDateRange `json:"dataTruncationDateRanges,omitempty"`
+	// DataTruncationMessage: A descriptive message explaining the data truncation.
+	DataTruncationMessage string `json:"dataTruncationMessage,omitempty"`
+	// DataTruncationType: The type of data truncation.
+	//
+	// Possible values:
+	//   "DATA_TRUNCATION_TYPE_UNSPECIFIED" - Unspecified type.
+	//   "DATA_TRUNCATION_TYPE_RULES_BASED_MODELS" - Data is truncated in
+	// attribution report for rules-based models golden date.
+	//   "DATA_TRUNCATION_TYPE_DATA_DRIVEN_ATTRIBUTION" - Data is truncated in
+	// attribution report for data driven attribution golden date.
+	//   "DATA_TRUNCATION_TYPE_DV360" - Data is truncated because DV360 policy does
+	// not permit data older than 2 years from being returned.
+	//   "DATA_TRUNCATION_TYPE_CM360" - Data is truncated because CM360 policy does
+	// not permit data older than 2 years from being returned.
+	//   "DATA_TRUNCATION_TYPE_ITEM_SCOPED_ECOMMERCE_METRICS" - New item-scoped
+	// ecommerce metrics only have data after a specific date.
+	//   "DATA_TRUNCATION_TYPE_EVENT_SCOPED_ECOMMERCE_METRICS" - New event-scoped
+	// ecommerce metrics only have data after a specific date.
+	//   "DATA_TRUNCATION_TYPE_DATE_RANGE" - Query date range may not be fully
+	// served.
+	//   "DATA_TRUNCATION_TYPE_PROPERTY" - Data truncated because the query
+	// attempts to read event data prior to its retention date.
+	//   "DATA_TRUNCATION_TYPE_CONVERSIONS" - Data is truncated in conversions
+	// report.
+	//   "DATA_TRUNCATION_TYPE_GOOGLE_ADS" - Data is truncated due to Google Ads 36
+	// month retention policy.
+	DataTruncationType string `json:"dataTruncationType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DataTruncationDate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataTruncationDate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataTruncationReason) MarshalJSON() ([]byte, error) {
+	type NoMethod DataTruncationReason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DateRange: A contiguous set of days: `startDate`, `startDate + 1`, ...,
 // `endDate`. Requests are allowed up to 4 date ranges.
 type DateRange struct {
@@ -1997,6 +2074,9 @@ type ResponseMetaData struct {
 	// About the (other) row and data sampling
 	// (https://support.google.com/analytics/answer/13208658#reports).
 	DataLossFromOtherRow bool `json:"dataLossFromOtherRow,omitempty"`
+	// DataTruncationReasons: If set, indicate there is data truncation in the
+	// report.
+	DataTruncationReasons []*DataTruncationReason `json:"dataTruncationReasons,omitempty"`
 	// EmptyReason: If empty reason is specified, the report is empty for this
 	// reason.
 	EmptyReason string `json:"emptyReason,omitempty"`

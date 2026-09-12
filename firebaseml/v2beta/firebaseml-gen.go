@@ -1887,6 +1887,8 @@ type GoogleCloudAiplatformV1beta1GenerationConfig struct {
 	// until the cumulative probability of the tokens to select from reaches 0.9.
 	// It's recommended to adjust either temperature or `top_p`, but not both.
 	TopP float64 `json:"topP,omitempty"`
+	// TranslationConfig: Optional. Config for translation.
+	TranslationConfig *GoogleCloudAiplatformV1beta1TranslationConfig `json:"translationConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AudioTimestamp") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2961,8 +2963,7 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	// with video mime). Non-video parts ignore this field.
 	//
 	// Possible values:
-	//   "MEDIA_PROCESSING_UNSPECIFIED" - Default. Uses model-specific processing
-	// (3.5 Pro+ -> `AGENTIC`, older models -> `STATIC`).
+	//   "MEDIA_PROCESSING_UNSPECIFIED" - Defaults to model-specific processing.
 	//   "STATIC" - Fixed-rate frame extraction. All frames placed in context.
 	//   "AGENTIC" - Model-driven dynamic navigation. Recommended for most use
 	// cases.
@@ -4255,6 +4256,34 @@ type GoogleCloudAiplatformV1beta1ToolParallelAiSearch struct {
 
 func (s GoogleCloudAiplatformV1beta1ToolParallelAiSearch) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1ToolParallelAiSearch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1TranslationConfig: Config for translation
+// features.
+type GoogleCloudAiplatformV1beta1TranslationConfig struct {
+	// EchoTargetLanguage: Optional. If `true`, the model will generate audio when
+	// the target language is spoken, essentially it will parrot the input. If
+	// `false`, we will not produce audio for the target language.
+	EchoTargetLanguage bool `json:"echoTargetLanguage,omitempty"`
+	// TargetLanguageCode: Required. The target language for translation. Supported
+	// values are BCP-47 language codes (e.g. "en", "es", "fr").
+	TargetLanguageCode string `json:"targetLanguageCode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EchoTargetLanguage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EchoTargetLanguage") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1TranslationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1TranslationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

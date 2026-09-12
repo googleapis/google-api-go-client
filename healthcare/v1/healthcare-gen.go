@@ -2717,6 +2717,8 @@ type ExportDicomDataRequest struct {
 	// the BigQuery location: `roles/bigquery.dataEditor` and
 	// `roles/bigquery.jobUser`.
 	BigqueryDestination *GoogleCloudHealthcareV1DicomBigQueryDestination `json:"bigqueryDestination,omitempty"`
+	// FilterConfig: Specifies the filter configuration.
+	FilterConfig *DicomFilterConfig `json:"filterConfig,omitempty"`
 	// GcsDestination: The Cloud Storage output destination. The Cloud Healthcare
 	// Service Agent requires the `roles/storage.objectAdmin` Cloud IAM roles on
 	// the Cloud Storage location.

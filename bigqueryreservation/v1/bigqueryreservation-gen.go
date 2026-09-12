@@ -293,18 +293,17 @@ type Assignment struct {
 	// assignments within the same assignee scope.
 	Precedence int64 `json:"precedence,omitempty,string"`
 	// Principal: Optional. Represents the principal for this assignment. If not
-	// empty, jobs run by this principal will utilize the associated reservation.
-	// Otherwise, jobs will fall back to using the reservation assigned to the
-	// project, folder, or organization (in that order). If no reservation is
-	// assigned at any of these levels, on-demand capacity will be used. The
-	// supported formats are: * `principal://goog/subject/USER_EMAIL_ADDRESS` for
-	// users, *
+	// empty, jobs run by this principal utilize the associated reservation.
+	// Otherwise, jobs fall back to using the reservation assigned to the project,
+	// folder, or organization, in that order. If no reservation is assigned at any
+	// of these levels, on-demand capacity is used. The supported formats are: *
+	// `principal://goog/subject/USER_EMAIL_ADDRESS` for users, *
 	// `principal://iam.googleapis.com/projects/-/serviceAccounts/SA_EMAIL_ADDRESS`
 	// for service accounts, *
 	// `principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/work
 	// loadIdentityPools/POOL_ID/subject/SUBJECT_ID` for workload identity pool
 	// identities. * The special value `unknown_or_deleted_user` represents
-	// principals which cannot be read from the user info service, for example
+	// principals which cannot be read from the user info service, for example,
 	// deleted users.
 	Principal string `json:"principal,omitempty"`
 	// SchedulingPolicy: Optional. The scheduling policy to use for jobs and

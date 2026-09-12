@@ -224,9 +224,8 @@ type Attributes struct {
 	CanonicalLink string `json:"canonicalLink,omitempty"`
 	// Certifications: Product Certifications, for example for energy efficiency
 	// labeling of products recorded in the EU EPREL
-	// (https://eprel.ec.europa.eu/screen/home) database. See the Help Center
-	// (https://support.google.com/merchants/answer/13528839) article for more
-	// information.
+	// (https://eprel.ec.europa.eu/screen/home) database. For more information, see
+	// Certification (https://support.google.com/merchants/answer/13528839).
 	Certifications []*Certification `json:"certifications,omitempty"`
 	// CloudExportAdditionalProperties: Extra fields to export to the Cloud Retail
 	// program.
@@ -573,6 +572,18 @@ type Certification struct {
 	// CertificationCode: The certification code. Maximum length is 2000
 	// characters.
 	CertificationCode string `json:"certificationCode,omitempty"`
+	// CertificationDocumentLink: Optional. URL to the certification document (eg.
+	// `https://www.example.com/document`), for example, the product data sheet or
+	// fiche required by UK's DESNZ or EU's EPREL. Maximum length is 2000
+	// characters. For more information, see Certification
+	// (https://support.google.com/merchants/answer/13528839).
+	CertificationDocumentLink string `json:"certificationDocumentLink,omitempty"`
+	// CertificationLabelLink: Optional. URL to the certification label (eg.
+	// `https://www.example.com/label`), for example, the energy efficiency label
+	// required by UK's DESNZ or EU's EPREL. Maximum length is 2000 characters. For
+	// more information, see Certification
+	// (https://support.google.com/merchants/answer/13528839).
+	CertificationLabelLink string `json:"certificationLabelLink,omitempty"`
 	// CertificationName: The name of the certification, for example "EPREL".
 	// Maximum length is 2000 characters.
 	CertificationName string `json:"certificationName,omitempty"`
@@ -750,6 +761,7 @@ type DestinationStatus struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -923,6 +935,7 @@ type ItemLevelIssue struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Resolution: Whether the issue can be resolved by the business.
 	Resolution string `json:"resolution,omitempty"`
@@ -1262,6 +1275,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or

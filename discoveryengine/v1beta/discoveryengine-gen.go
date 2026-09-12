@@ -2275,6 +2275,9 @@ func (s GoogleCloudDiscoveryengineV1Assistant) MarshalJSON() ([]byte, error) {
 type GoogleCloudDiscoveryengineV1AssistantCustomerPolicy struct {
 	// BannedPhrases: Optional. List of banned phrases.
 	BannedPhrases []*GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase `json:"bannedPhrases,omitempty"`
+	// DataProtectionPolicy: Optional. Data protection policy to be used for
+	// sanitizing file uploads.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1DataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// ModelArmorConfig: Optional. Model Armor configuration to be used for
 	// sanitizing user prompts and assistant responses.
 	ModelArmorConfig *GoogleCloudDiscoveryengineV1AssistantCustomerPolicyModelArmorConfig `json:"modelArmorConfig,omitempty"`
@@ -3464,6 +3467,9 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	CreateEuaSaas bool `json:"createEuaSaas,omitempty"`
 	// CreateTime: Output only. Timestamp the DataConnector was created at.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
+	// connector.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1DataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// DataSource: Required. The identifier for the data source. For the full,
 	// up-to-date list of supported connectors and their values, see Connect a
 	// third-party data source
@@ -3877,6 +3883,56 @@ func (s GoogleCloudDiscoveryengineV1DataConnectorSourceEntity) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1DataProtectionPolicy: Contains the data
+// protection policy config for a DataStore or a connector.
+type GoogleCloudDiscoveryengineV1DataProtectionPolicy struct {
+	// SensitiveDataProtectionPolicy: Optional. Specifies the sensitive data
+	// protection policy for the connector source.
+	SensitiveDataProtectionPolicy *GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy `json:"sensitiveDataProtectionPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "SensitiveDataProtectionPolicy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SensitiveDataProtectionPolicy")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy
+// : Specifies a Sensitive Data Protection
+// (https://cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview)
+// policy.
+type GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy struct {
+	// Policy: Optional. Specifies the resource name of the Sensitive Data
+	// Protection content policy.
+	Policy string `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1DataStore: DataStore captures global settings
 // and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1DataStore struct {
@@ -3921,6 +3977,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	ContentConfig string `json:"contentConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the DataStore was created at.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
+	// data store.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1DataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// DefaultSchemaId: Output only. The id of the default Schema associated to
 	// this data store.
 	DefaultSchemaId string `json:"defaultSchemaId,omitempty"`
@@ -4888,11 +4947,12 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `skills`
-	// * `skill-sharing` * `skill-sharing-without-admin-approval` *
-	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
-	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications`
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
+	// `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration` * `cross-product-intelligence` *
+	// `workflow-agents` * `in-app-notifications`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -4954,6 +5014,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1EngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
+	// SessionConfig: Optional. Non-empty default. Session config for the engine.
+	SessionConfig *GoogleCloudDiscoveryengineV1SessionConfig `json:"sessionConfig,omitempty"`
 	// SolutionType: Required. The solutions of the engine.
 	//
 	// Possible values:
@@ -7172,6 +7234,61 @@ func (s *GoogleCloudDiscoveryengineV1ServingConfigMediaConfig) UnmarshalJSON(dat
 	return nil
 }
 
+// GoogleCloudDiscoveryengineV1SessionConfig: Configuration for the session.
+type GoogleCloudDiscoveryengineV1SessionConfig struct {
+	// SessionManagementPolicy: Optional. Session management policy that defines
+	// who will manage the session.
+	//
+	// Possible values:
+	//   "SESSION_MANAGEMENT_POLICY_UNSPECIFIED" - Default value.
+	//   "NOT_MANAGED" - The session will be managed by the customer.
+	//   "VERTEX_AI_MANAGED" - Sessions multi-tenancy will be controlled by Google
+	// using 1P or 3P identity providers.
+	SessionManagementPolicy string `json:"sessionManagementPolicy,omitempty"`
+	// SessionTtl: Optional. The TTL for the session. If unset, the default value
+	// is 60 days.
+	SessionTtl *GoogleCloudDiscoveryengineV1SessionConfigSessionTtl `json:"sessionTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SessionConfigSessionTtl: Defines the TTL for
+// sessions.
+type GoogleCloudDiscoveryengineV1SessionConfigSessionTtl struct {
+	// Days: Defines the number of days for session TTL.
+	Days int64 `json:"days,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Days") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Days") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SessionConfigSessionTtl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SessionConfigSessionTtl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1SetUpDataConnectorMetadata: Metadata for
 // DataConnectorService.SetUpDataConnector method.
 type GoogleCloudDiscoveryengineV1SetUpDataConnectorMetadata struct {
@@ -8374,6 +8491,16 @@ type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSetti
 	// `gemini-3.1-pro-preview`). See `model_mixture` for the list of allowed
 	// models.
 	Name string `json:"name,omitempty"`
+	// ThinkingLevel: Optional. Sent as Vertex `ThinkingConfig.thinking_level`.
+	//
+	// Possible values:
+	//   "THINKING_LEVEL_UNSPECIFIED" - Unset. The model applies its own default,
+	// which is not the same level for every model.
+	//   "MINIMAL" - Least thinking. Not offered by every model.
+	//   "LOW" - Vertex `LOW`.
+	//   "MEDIUM" - Vertex `MEDIUM`.
+	//   "HIGH" - Vertex `HIGH`.
+	ThinkingLevel string `json:"thinkingLevel,omitempty"`
 	// Weight: Optional. Relative weight for this model in the mixture. Must be a
 	// finite, strictly positive value. Weights across all entries are normalized
 	// server-side, so they need not sum to 1.0. Defaults to 1.0 when unset, which
@@ -12866,11 +12993,12 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `skills`
-	// * `skill-sharing` * `skill-sharing-without-admin-approval` *
-	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
-	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications`
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
+	// `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration` * `cross-product-intelligence` *
+	// `workflow-agents` * `in-app-notifications`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -12936,6 +13064,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
+	// SessionConfig: Optional. Non-empty default. Session config for the engine.
+	SessionConfig *GoogleCloudDiscoveryengineV1alphaSessionConfig `json:"sessionConfig,omitempty"`
 	// SimilarDocumentsConfig: Additional config specs for a `similar-items`
 	// engine.
 	SimilarDocumentsConfig *GoogleCloudDiscoveryengineV1alphaEngineSimilarDocumentsEngineConfig `json:"similarDocumentsConfig,omitempty"`
@@ -17840,6 +17970,62 @@ func (s GoogleCloudDiscoveryengineV1alphaSession) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaSessionConfig: Configuration for the
+// session.
+type GoogleCloudDiscoveryengineV1alphaSessionConfig struct {
+	// SessionManagementPolicy: Optional. Session management policy that defines
+	// who will manage the session.
+	//
+	// Possible values:
+	//   "SESSION_MANAGEMENT_POLICY_UNSPECIFIED" - Default value.
+	//   "NOT_MANAGED" - The session will be managed by the customer.
+	//   "VERTEX_AI_MANAGED" - Sessions multi-tenancy will be controlled by Google
+	// using 1P or 3P identity providers.
+	SessionManagementPolicy string `json:"sessionManagementPolicy,omitempty"`
+	// SessionTtl: Optional. The TTL for the session. If unset, the default value
+	// is 60 days.
+	SessionTtl *GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl `json:"sessionTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl: Defines the TTL
+// for sessions.
+type GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl struct {
+	// Days: Defines the number of days for session TTL.
+	Days int64 `json:"days,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Days") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Days") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaSessionTurn: Represents a turn, including a
 // query from the user and a answer from service.
 type GoogleCloudDiscoveryengineV1alphaSessionTurn struct {
@@ -21439,6 +21625,9 @@ func (s GoogleCloudDiscoveryengineV1betaAssistantContentFile) MarshalJSON() ([]b
 type GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicy struct {
 	// BannedPhrases: Optional. List of banned phrases.
 	BannedPhrases []*GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicyBannedPhrase `json:"bannedPhrases,omitempty"`
+	// DataProtectionPolicy: Optional. Data protection policy to be used for
+	// sanitizing file uploads.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1betaDataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// ModelArmorConfig: Optional. Model Armor configuration to be used for
 	// sanitizing user prompts and assistant responses.
 	ModelArmorConfig *GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicyModelArmorConfig `json:"modelArmorConfig,omitempty"`
@@ -24025,6 +24214,56 @@ func (s GoogleCloudDiscoveryengineV1betaCustomTuningModel) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaDataProtectionPolicy: Contains the data
+// protection policy config for a DataStore or a connector.
+type GoogleCloudDiscoveryengineV1betaDataProtectionPolicy struct {
+	// SensitiveDataProtectionPolicy: Optional. Specifies the sensitive data
+	// protection policy for the connector source.
+	SensitiveDataProtectionPolicy *GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPolicy `json:"sensitiveDataProtectionPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "SensitiveDataProtectionPolicy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SensitiveDataProtectionPolicy")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPo
+// licy: Specifies a Sensitive Data Protection
+// (https://cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview)
+// policy.
+type GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPolicy struct {
+	// Policy: Optional. Specifies the resource name of the Sensitive Data
+	// Protection content policy.
+	Policy string `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaDataStore: DataStore captures global
 // settings and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1betaDataStore struct {
@@ -24069,6 +24308,9 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	ContentConfig string `json:"contentConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the DataStore was created at.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
+	// data store.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1betaDataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// DefaultSchemaId: Output only. The id of the default Schema associated to
 	// this data store.
 	DefaultSchemaId string `json:"defaultSchemaId,omitempty"`
@@ -25332,11 +25574,12 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
 	// `disable-video-generation` * `disable-onedrive-upload` *
 	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `skills`
-	// * `skill-sharing` * `skill-sharing-without-admin-approval` *
-	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
-	// `single-agent-orchestration` * `multi-agent-orchestration` *
-	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications`
+	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
+	// `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
+	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
+	// `multi-agent-orchestration` * `cross-product-intelligence` *
+	// `workflow-agents` * `in-app-notifications`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -25398,6 +25641,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
+	// SessionConfig: Optional. Non-empty default. Session config for the engine.
+	SessionConfig *GoogleCloudDiscoveryengineV1betaSessionConfig `json:"sessionConfig,omitempty"`
 	// SolutionType: Required. The solutions of the engine.
 	//
 	// Possible values:
@@ -33212,6 +33457,62 @@ func (s GoogleCloudDiscoveryengineV1betaSession) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaSessionConfig: Configuration for the
+// session.
+type GoogleCloudDiscoveryengineV1betaSessionConfig struct {
+	// SessionManagementPolicy: Optional. Session management policy that defines
+	// who will manage the session.
+	//
+	// Possible values:
+	//   "SESSION_MANAGEMENT_POLICY_UNSPECIFIED" - Default value.
+	//   "NOT_MANAGED" - The session will be managed by the customer.
+	//   "VERTEX_AI_MANAGED" - Sessions multi-tenancy will be controlled by Google
+	// using 1P or 3P identity providers.
+	SessionManagementPolicy string `json:"sessionManagementPolicy,omitempty"`
+	// SessionTtl: Optional. The TTL for the session. If unset, the default value
+	// is 60 days.
+	SessionTtl *GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl `json:"sessionTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl: Defines the TTL for
+// sessions.
+type GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl struct {
+	// Days: Defines the number of days for session TTL.
+	Days int64 `json:"days,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Days") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Days") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSessionTurn: Represents a turn, including a
 // query from the user and a answer from service.
 type GoogleCloudDiscoveryengineV1betaSessionTurn struct {
@@ -37938,6 +38239,138 @@ func (c *ProjectsLocationsCollectionsDataStoresGetCall) Do(opts ...googleapi.Cal
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsDataStoresGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the IAM access control policy for a DataStore. A
+// `NOT_FOUND` error is returned if the resource does not exist. An empty
+// policy is returned if the resource exists but does not have a policy set on
+// it.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsCollectionsDataStoresService) GetIamPolicy(resource string) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c := &ProjectsLocationsCollectionsDataStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall struct {
 	s            *Service
 	name         string
@@ -38329,6 +38762,119 @@ func (c *ProjectsLocationsCollectionsDataStoresPatchCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the IAM access control policy for a DataStore. A
+// `NOT_FOUND` error is returned if the resource does not exist. **Important:**
+// When setting a policy directly on a DataStore resource, the only recommended
+// roles in the bindings are: `roles/discoveryengine.admin`
+// `roles/discoveryengine.agentspaceAdmin` `roles/discoveryengine.viewer`
+// `roles/discoveryengine.agentspaceViewer` `roles/discoveryengine.user`
+// `roles/discoveryengine.agentspaceUser` Attempting to grant any other role
+// will result in a warning in logging.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsCollectionsDataStoresService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall {
+	c := &ProjectsLocationsCollectionsDataStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -54301,6 +54847,138 @@ func (c *ProjectsLocationsDataStoresGetCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 }
 
+type ProjectsLocationsDataStoresGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the IAM access control policy for a DataStore. A
+// `NOT_FOUND` error is returned if the resource does not exist. An empty
+// policy is returned if the resource exists but does not have a policy set on
+// it.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsDataStoresService) GetIamPolicy(resource string) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c := &ProjectsLocationsDataStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsDataStoresGetSiteSearchEngineCall struct {
 	s            *Service
 	name         string
@@ -54692,6 +55370,119 @@ func (c *ProjectsLocationsDataStoresPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the IAM access control policy for a DataStore. A
+// `NOT_FOUND` error is returned if the resource does not exist. **Important:**
+// When setting a policy directly on a DataStore resource, the only recommended
+// roles in the bindings are: `roles/discoveryengine.admin`
+// `roles/discoveryengine.agentspaceAdmin` `roles/discoveryengine.viewer`
+// `roles/discoveryengine.agentspaceViewer` `roles/discoveryengine.user`
+// `roles/discoveryengine.agentspaceUser` Attempting to grant any other role
+// will result in a warning in logging.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsDataStoresService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsDataStoresSetIamPolicyCall {
+	c := &ProjectsLocationsDataStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

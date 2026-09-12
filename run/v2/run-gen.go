@@ -734,7 +734,8 @@ type GoogleCloudRunV2Container struct {
 	// SandboxLauncher: Optional. Indicates that this container can act as a
 	// sandbox supervisor and launch sandboxes.
 	SandboxLauncher bool `json:"sandboxLauncher,omitempty"`
-	// SourceCode: Optional. Location of the source.
+	// SourceCode: Optional. Location of the source. This field is only supported
+	// in Cloud Run Service.
 	SourceCode *GoogleCloudRunV2SourceCode `json:"sourceCode,omitempty"`
 	// StartupProbe: Startup probe of application within the container. All other
 	// probes are disabled if a startup probe is provided, until it succeeds.
@@ -1633,6 +1634,8 @@ type GoogleCloudRunV2Instance struct {
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs   bool   `json:"satisfiesPzs,omitempty"`
 	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// SshEnabled: Optional. Enables SSH access to the Instance.
+	SshEnabled bool `json:"sshEnabled,omitempty"`
 	// TerminalCondition: Output only. The Condition of this Instance, containing
 	// its readiness status, and detailed error information in case it did not
 	// reach a serving state. See comments in `reconciling` for additional
@@ -1784,6 +1787,14 @@ type GoogleCloudRunV2Job struct {
 	// ExpireTime: Output only. For a deleted resource, the time after which it
 	// will be permamently deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// FunctionalType: Optional. The functional type of the Job.
+	//
+	// Possible values:
+	//   "FUNCTIONAL_TYPE_UNSPECIFIED" - Specifies that the functional type is
+	// unspecified.
+	//   "FUNCTIONAL_TYPE_AGENT" - Represents an AGENT functional type.
+	//   "FUNCTIONAL_TYPE_MCP_SERVER" - Represents an MCP_SERVER functional type.
+	FunctionalType string `json:"functionalType,omitempty"`
 	// Generation: Output only. A number that monotonically increases every time
 	// the user modifies the desired state.
 	Generation int64 `json:"generation,omitempty,string"`
@@ -2529,6 +2540,8 @@ type GoogleCloudRunV2Revision struct {
 	// VpcAccess: VPC Access configuration for this Revision. For more information,
 	// visit https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+	// WorkloadIdentityConfig: Optional. The Revision's workload identity settings.
+	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2720,6 +2733,8 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// more information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+	// WorkloadIdentityConfig: Optional. The Revision's workload identity settings.
+	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2890,16 +2905,20 @@ type GoogleCloudRunV2Service struct {
 	// Description: User-provided description of the Service. This field currently
 	// has a 512-character limit.
 	Description string `json:"description,omitempty"`
-	// DurableExecution: Optional. Immutable. Indicates whether the Service has
-	// durable execution enabled. This field is immutable once the Service is
-	// created.
-	DurableExecution bool `json:"durableExecution,omitempty"`
 	// Etag: Optional. A system-generated fingerprint for this version of the
 	// resource. May be used to detect modification conflict during updates.
 	Etag string `json:"etag,omitempty"`
 	// ExpireTime: Output only. For a deleted resource, the time after which it
 	// will be permanently deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// FunctionalType: Optional. The functional type of the Service.
+	//
+	// Possible values:
+	//   "FUNCTIONAL_TYPE_UNSPECIFIED" - Specifies that the functional type is
+	// unspecified.
+	//   "FUNCTIONAL_TYPE_AGENT" - Represents an AGENT functional type.
+	//   "FUNCTIONAL_TYPE_MCP_SERVER" - Represents an MCP_SERVER functional type.
+	FunctionalType string `json:"functionalType,omitempty"`
 	// Generation: Output only. A number that monotonically increases every time
 	// the user modifies the desired state. Please note that unlike v1, this is an
 	// int64 value. As with most Google APIs, its JSON representation will be a
@@ -3143,7 +3162,8 @@ type GoogleCloudRunV2SourceCode struct {
 	CloudStorageSource *GoogleCloudRunV2CloudStorageSource `json:"cloudStorageSource,omitempty"`
 	// InlinedSource: Optional. Input only. Source code inlined in the request.
 	// Cloud Run will store the inlined_source to Cloud Storage and replace the
-	// field with cloud_storage_source.
+	// field with cloud_storage_source. This field is only supported in Cloud Run
+	// Service.
 	InlinedSource *GoogleCloudRunV2InlinedSource `json:"inlinedSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudStorageSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3539,6 +3559,8 @@ type GoogleCloudRunV2Task struct {
 	// more information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+	// WorkloadIdentityConfig: Optional. The Task's workload identity settings.
+	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3634,6 +3656,8 @@ type GoogleCloudRunV2TaskTemplate struct {
 	// information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+	// WorkloadIdentityConfig: Optional. The Task's workload identity settings.
+	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4231,6 +4255,40 @@ type GoogleCloudRunV2WorkerPoolScaling struct {
 
 func (s GoogleCloudRunV2WorkerPoolScaling) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2WorkerPoolScaling
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2WorkloadIdentityConfig: Workload identity settings.
+type GoogleCloudRunV2WorkloadIdentityConfig struct {
+	// Identity: Optional. The Revision's SPIFFE workload identity. Enables
+	// provisioning of SPIFFE workload certificates.
+	Identity string `json:"identity,omitempty"`
+	// IdentityCertificateEnabled: Optional. Controls whether an instance receives
+	// a MWLID certificate. Corresponds to the intention of the original
+	// --[no-]identity-certificate flag.
+	IdentityCertificateEnabled bool `json:"identityCertificateEnabled,omitempty"`
+	// IdentityType: Optional. The type of identity to use.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - Unspecified
+	//   "IDENTITY_TYPE_SERVICE_ACCOUNT" - Service account identity.
+	//   "IDENTITY_TYPE_AGENT_IDENTITY" - Agent identity.
+	IdentityType string `json:"identityType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Identity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Identity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2WorkloadIdentityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2WorkloadIdentityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

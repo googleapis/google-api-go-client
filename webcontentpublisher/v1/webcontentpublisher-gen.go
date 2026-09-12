@@ -96,8 +96,20 @@ const basePath = "https://webcontentpublisher.googleapis.com/"
 const basePathTemplate = "https://webcontentpublisher.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://webcontentpublisher.mtls.googleapis.com/"
 
+// OAuth2 scopes used by this API.
+const (
+	// Private Service:
+	// https://www.googleapis.com/auth/webcontentpublisher.publications.manage.system
+	WebcontentpublisherPublicationsManageSystemScope = "https://www.googleapis.com/auth/webcontentpublisher.publications.manage.system"
+)
+
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/webcontentpublisher.publications.manage.system",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
 	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
@@ -312,8 +324,8 @@ func (s Cta) MarshalJSON() ([]byte, error) {
 // DomainProperty: Represents a domain property associated with a publication,
 // typically used to verify ownership and scope access.
 type DomainProperty struct {
-	// OwnershipVerified: Optional. Whether the domain ownership has been verified
-	// (e.g., via Google Search Console).
+	// OwnershipVerified: Output only. Whether the domain ownership has been
+	// verified (e.g., via Google Search Console).
 	OwnershipVerified bool `json:"ownershipVerified,omitempty"`
 	// Url: Required. The URL of the domain property (e.g., "https://example.com").
 	Url string `json:"url,omitempty"`

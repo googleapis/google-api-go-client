@@ -2676,9 +2676,6 @@ type GooglePrivacyDlpV2ContentPolicy struct {
 	InputTooLarge *GooglePrivacyDlpV2PolicyAction `json:"inputTooLarge,omitempty"`
 	// InspectConfig: Optional. InspectConfig to use to produce findings.
 	InspectConfig *GooglePrivacyDlpV2InspectConfig `json:"inspectConfig,omitempty"`
-	// InspectTemplate: Optional. InspectTemplate to use to produce findings.
-	// Deprecated: use inspect_config instead.
-	InspectTemplate *GooglePrivacyDlpV2InspectTemplate `json:"inspectTemplate,omitempty"`
 	// LoggingConfigs: Optional. Log the actions taken by the content policy to
 	// external systems.
 	LoggingConfigs []*GooglePrivacyDlpV2LoggingConfig `json:"loggingConfigs,omitempty"`
@@ -2768,8 +2765,13 @@ func (s GooglePrivacyDlpV2ConversationLocation) MarshalJSON() ([]byte, error) {
 
 // GooglePrivacyDlpV2ConversationMessage: Single message in a conversation.
 type GooglePrivacyDlpV2ConversationMessage struct {
-	// Content: The contents of this message.
+	// Content: Deprecated: Use `message_parts` instead. The contents of this
+	// message. Only one of `content` and `message_parts` can be set.
 	Content string `json:"content,omitempty"`
+	// MessageParts: Optional. The parts of the message. Restricted to being at
+	// most a single text item. Only one of `content` and `message_parts` can be
+	// set.
+	MessageParts []*GooglePrivacyDlpV2MessagePart `json:"messageParts,omitempty"`
 	// MessageType: The type of message.
 	//
 	// Possible values:
@@ -8982,6 +8984,28 @@ func (s GooglePrivacyDlpV2LoggingConfig) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2Manual struct {
 }
 
+// GooglePrivacyDlpV2MessagePart: A part of a conversation message.
+type GooglePrivacyDlpV2MessagePart struct {
+	// Text: String content for text-based messages.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GooglePrivacyDlpV2MessagePart) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2MessagePart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2MetadataKeyValueExpression: Configuration for a custom
 // infoType that detects key-value pairs in the metadata matching the specified
 // regular expressions.
@@ -9526,16 +9550,6 @@ type GooglePrivacyDlpV2PolicyRule struct {
 	// Conditions: Optional. Conditions that must match for this rule to apply. All
 	// conditions must match (`AND`). For `OR` conditions, use multiple rules.
 	Conditions []*GooglePrivacyDlpV2PolicyCondition `json:"conditions,omitempty"`
-	// ReturnVerdict: If set, the verdict will be returned to the user. Deprecated:
-	// Use `action` instead.
-	//
-	// Possible values:
-	//   "CONTENT_POLICY_VERDICT_UNSPECIFIED" - Not used.
-	//   "ALLOW" - The policy allows the provided content to be used.
-	//   "BLOCK" - The policy prevents the provided content from being used. This
-	// should result in a blocked file upload, exclusion from training dataset, or
-	// other similar block action. (specific action will depend on the caller).
-	ReturnVerdict string `json:"returnVerdict,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

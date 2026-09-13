@@ -5835,7 +5835,7 @@ func (s Role) MarshalJSON() ([]byte, error) {
 }
 
 // Rollout: Rollout contains the Rollout metadata and configuration. Next ID:
-// 31
+// 32
 type Rollout struct {
 	// CompleteTime: Output only. The timestamp at which the Rollout was completed.
 	CompleteTime string `json:"completeTime,omitempty"`

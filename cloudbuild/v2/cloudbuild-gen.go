@@ -1110,6 +1110,106 @@ func (s GoogleDevtoolsCloudbuildV2OperationMetadata) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsCloudbuildV2PipelineRun: Message describing PipelineRun object
+type GoogleDevtoolsCloudbuildV2PipelineRun struct {
+	// Annotations: User annotations. See https://google.aip.dev/128#annotations
+	Annotations map[string]string `json:"annotations,omitempty"`
+	// ChildReferences: Output only. List of TaskRun and Run names and PipelineTask
+	// names for children of this PipelineRun.
+	ChildReferences []*ChildStatusReference `json:"childReferences,omitempty"`
+	// CompletionTime: Output only. Time the pipeline completed.
+	CompletionTime string `json:"completionTime,omitempty"`
+	// Conditions: Output only. Kubernetes Conditions convention for PipelineRun
+	// status and error.
+	Conditions []*GoogleDevtoolsCloudbuildV2Condition `json:"conditions,omitempty"`
+	// CreateTime: Output only. Time at which the request to create the
+	// `PipelineRun` was received.
+	CreateTime string `json:"createTime,omitempty"`
+	// Etag: Needed for declarative-friendly resources.
+	Etag string `json:"etag,omitempty"`
+	// FinallyStartTime: Output only. FinallyStartTime is when all non-finally
+	// tasks have been completed and only finally tasks are being executed.
+	// +optional
+	FinallyStartTime string `json:"finallyStartTime,omitempty"`
+	// GcbParams: Output only. GCB default params.
+	GcbParams map[string]string `json:"gcbParams,omitempty"`
+	// Name: Output only. The `PipelineRun` name with format
+	// `projects/{project}/locations/{location}/pipelineRuns/{pipeline_run}`
+	Name string `json:"name,omitempty"`
+	// Params: Params is a list of parameter names and values.
+	Params []*Param `json:"params,omitempty"`
+	// PipelineRef: PipelineRef refer to a specific instance of a Pipeline.
+	PipelineRef *PipelineRef `json:"pipelineRef,omitempty"`
+	// PipelineRunStatus: Pipelinerun status the user can provide. Used for
+	// cancellation.
+	//
+	// Possible values:
+	//   "PIPELINE_RUN_STATUS_UNSPECIFIED" - Default enum type; should not be used.
+	//   "PIPELINE_RUN_CANCELLED" - Cancelled status.
+	PipelineRunStatus string `json:"pipelineRunStatus,omitempty"`
+	// PipelineSpec: PipelineSpec defines the desired state of Pipeline.
+	PipelineSpec *PipelineSpec `json:"pipelineSpec,omitempty"`
+	// PipelineSpecYaml: Output only. Inline pipelineSpec yaml string, used by
+	// workflow run requests.
+	PipelineSpecYaml string `json:"pipelineSpecYaml,omitempty"`
+	// Provenance: Optional. Provenance configuration.
+	Provenance *Provenance `json:"provenance,omitempty"`
+	// Record: Output only. The `Record` of this `PipelineRun`. Format:
+	// `projects/{project}/locations/{location}/results/{result_id}/records/{record_
+	// id}`
+	Record string `json:"record,omitempty"`
+	// ResolvedPipelineSpec: Output only. The exact PipelineSpec used to
+	// instantiate the run.
+	ResolvedPipelineSpec *PipelineSpec `json:"resolvedPipelineSpec,omitempty"`
+	// Results: Optional. Output only. List of results written out by the
+	// pipeline's containers
+	Results []*PipelineRunResult `json:"results,omitempty"`
+	// Security: Optional. Security configuration.
+	Security *Security `json:"security,omitempty"`
+	// ServiceAccount: Service account used in the Pipeline. Deprecated; please use
+	// security.service_account instead.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// SkippedTasks: Output only. List of tasks that were skipped due to when
+	// expressions evaluating to false.
+	SkippedTasks []*SkippedTask `json:"skippedTasks,omitempty"`
+	// StartTime: Output only. Time the pipeline is actually started.
+	StartTime string `json:"startTime,omitempty"`
+	// Timeouts: Time after which the Pipeline times out. Currently three keys are
+	// accepted in the map pipeline, tasks and finally with Timeouts.pipeline >=
+	// Timeouts.tasks + Timeouts.finally
+	Timeouts *TimeoutFields `json:"timeouts,omitempty"`
+	// Uid: Output only. A unique identifier for the `PipelineRun`.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. Time at which the request to update the
+	// `PipelineRun` was received.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// Worker: Optional. Worker configuration.
+	Worker *Worker `json:"worker,omitempty"`
+	// WorkerPool: Output only. The WorkerPool used to run this PipelineRun.
+	WorkerPool string `json:"workerPool,omitempty"`
+	// Workflow: Output only. The Workflow used to create this PipelineRun.
+	Workflow string `json:"workflow,omitempty"`
+	// Workspaces: Workspaces is a list of WorkspaceBindings from volumes to
+	// workspaces.
+	Workspaces []*WorkspaceBinding `json:"workspaces,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV2PipelineRun) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV2PipelineRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsCloudbuildV2ServiceDirectoryConfig: ServiceDirectoryConfig
 // represents Service Directory configuration for a connection.
 type GoogleDevtoolsCloudbuildV2ServiceDirectoryConfig struct {
@@ -1624,106 +1724,6 @@ type PipelineResult struct {
 
 func (s PipelineResult) MarshalJSON() ([]byte, error) {
 	type NoMethod PipelineResult
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// PipelineRun: Message describing PipelineRun object
-type PipelineRun struct {
-	// Annotations: User annotations. See https://google.aip.dev/128#annotations
-	Annotations map[string]string `json:"annotations,omitempty"`
-	// ChildReferences: Output only. List of TaskRun and Run names and PipelineTask
-	// names for children of this PipelineRun.
-	ChildReferences []*ChildStatusReference `json:"childReferences,omitempty"`
-	// CompletionTime: Output only. Time the pipeline completed.
-	CompletionTime string `json:"completionTime,omitempty"`
-	// Conditions: Output only. Kubernetes Conditions convention for PipelineRun
-	// status and error.
-	Conditions []*GoogleDevtoolsCloudbuildV2Condition `json:"conditions,omitempty"`
-	// CreateTime: Output only. Time at which the request to create the
-	// `PipelineRun` was received.
-	CreateTime string `json:"createTime,omitempty"`
-	// Etag: Needed for declarative-friendly resources.
-	Etag string `json:"etag,omitempty"`
-	// FinallyStartTime: Output only. FinallyStartTime is when all non-finally
-	// tasks have been completed and only finally tasks are being executed.
-	// +optional
-	FinallyStartTime string `json:"finallyStartTime,omitempty"`
-	// GcbParams: Output only. GCB default params.
-	GcbParams map[string]string `json:"gcbParams,omitempty"`
-	// Name: Output only. The `PipelineRun` name with format
-	// `projects/{project}/locations/{location}/pipelineRuns/{pipeline_run}`
-	Name string `json:"name,omitempty"`
-	// Params: Params is a list of parameter names and values.
-	Params []*Param `json:"params,omitempty"`
-	// PipelineRef: PipelineRef refer to a specific instance of a Pipeline.
-	PipelineRef *PipelineRef `json:"pipelineRef,omitempty"`
-	// PipelineRunStatus: Pipelinerun status the user can provide. Used for
-	// cancellation.
-	//
-	// Possible values:
-	//   "PIPELINE_RUN_STATUS_UNSPECIFIED" - Default enum type; should not be used.
-	//   "PIPELINE_RUN_CANCELLED" - Cancelled status.
-	PipelineRunStatus string `json:"pipelineRunStatus,omitempty"`
-	// PipelineSpec: PipelineSpec defines the desired state of Pipeline.
-	PipelineSpec *PipelineSpec `json:"pipelineSpec,omitempty"`
-	// PipelineSpecYaml: Output only. Inline pipelineSpec yaml string, used by
-	// workflow run requests.
-	PipelineSpecYaml string `json:"pipelineSpecYaml,omitempty"`
-	// Provenance: Optional. Provenance configuration.
-	Provenance *Provenance `json:"provenance,omitempty"`
-	// Record: Output only. The `Record` of this `PipelineRun`. Format:
-	// `projects/{project}/locations/{location}/results/{result_id}/records/{record_
-	// id}`
-	Record string `json:"record,omitempty"`
-	// ResolvedPipelineSpec: Output only. The exact PipelineSpec used to
-	// instantiate the run.
-	ResolvedPipelineSpec *PipelineSpec `json:"resolvedPipelineSpec,omitempty"`
-	// Results: Optional. Output only. List of results written out by the
-	// pipeline's containers
-	Results []*PipelineRunResult `json:"results,omitempty"`
-	// Security: Optional. Security configuration.
-	Security *Security `json:"security,omitempty"`
-	// ServiceAccount: Service account used in the Pipeline. Deprecated; please use
-	// security.service_account instead.
-	ServiceAccount string `json:"serviceAccount,omitempty"`
-	// SkippedTasks: Output only. List of tasks that were skipped due to when
-	// expressions evaluating to false.
-	SkippedTasks []*SkippedTask `json:"skippedTasks,omitempty"`
-	// StartTime: Output only. Time the pipeline is actually started.
-	StartTime string `json:"startTime,omitempty"`
-	// Timeouts: Time after which the Pipeline times out. Currently three keys are
-	// accepted in the map pipeline, tasks and finally with Timeouts.pipeline >=
-	// Timeouts.tasks + Timeouts.finally
-	Timeouts *TimeoutFields `json:"timeouts,omitempty"`
-	// Uid: Output only. A unique identifier for the `PipelineRun`.
-	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. Time at which the request to update the
-	// `PipelineRun` was received.
-	UpdateTime string `json:"updateTime,omitempty"`
-	// Worker: Optional. Worker configuration.
-	Worker *Worker `json:"worker,omitempty"`
-	// WorkerPool: Output only. The WorkerPool used to run this PipelineRun.
-	WorkerPool string `json:"workerPool,omitempty"`
-	// Workflow: Output only. The Workflow used to create this PipelineRun.
-	Workflow string `json:"workflow,omitempty"`
-	// Workspaces: Workspaces is a list of WorkspaceBindings from volumes to
-	// workspaces.
-	Workspaces []*WorkspaceBinding `json:"workspaces,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s PipelineRun) MarshalJSON() ([]byte, error) {
-	type NoMethod PipelineRun
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

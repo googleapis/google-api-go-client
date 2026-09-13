@@ -5085,6 +5085,11 @@ type Transport struct {
 	// AdvertisedRoutes: Optional. List of IP Prefixes that will be advertised to
 	// the remote provider. Both IPv4 and IPv6 addresses are supported.
 	AdvertisedRoutes []string `json:"advertisedRoutes,omitempty"`
+	// AutoAccept: Optional. Immutable. Controls whether resources proposed by the
+	// Transport are automatically accepted on behalf of the user. List of actions
+	// that can be automatically accepted are: 1. VPC Peering creation 2. Routing
+	// VPC Spoke creation 3. Hybrid Spoke creation
+	AutoAccept bool `json:"autoAccept,omitempty"`
 	// Bandwidth: Optional. Bandwidth of the Transport. This must be one of the
 	// supported bandwidths for the remote profile, and must be set when no
 	// activation key is being provided.
@@ -5115,6 +5120,10 @@ type Transport struct {
 	// PENDING_KEY state. Once the provider has accepted the key, the resource will
 	// move to the CONFIGURING state.
 	GeneratedActivationKey string `json:"generatedActivationKey,omitempty"`
+	// Hub: Optional. Immutable. The NCC Hub that the Transport should attach to.
+	// The hub must be in the same project as the Transport. Format: `{hub}` or
+	// `projects/{project}/locations/global/hubs/{hub}`
+	Hub string `json:"hub,omitempty"`
 	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MtuLimit: Output only. The maximum transmission unit (MTU) of a packet that
@@ -5135,6 +5144,11 @@ type Transport struct {
 	// profile supports an INPUT key flow and the resource is in the PENDING_KEY
 	// state.
 	ProvidedActivationKey string `json:"providedActivationKey,omitempty"`
+	// PscRoutingEnabled: Optional. Immutable. Controls whether a Routing VPC Spoke
+	// should be created and attached to the NCC Hub. This will provide Private
+	// Service Connect (PSC) connectivity through NCC. This can only be set when
+	// the Transport is first created.
+	PscRoutingEnabled bool `json:"pscRoutingEnabled,omitempty"`
 	// RemoteAccountId: Optional. Immutable. The user supplied account id for the
 	// CSP associated with the remote profile.
 	RemoteAccountId string `json:"remoteAccountId,omitempty"`

@@ -8,7 +8,7 @@
 set -ex
 
 # Only do the formatting and mod checking for the "latest" version
-if [[ $KOKORO_JOB_NAME != *"latest-version"* ]]; then
+if [[ $KOKORO_JOB_NAME == *"latest-version"* ]]; then
   # Fail if a dependency was added without the necessary go.mod/go.sum change
   # being part of the commit.
   go mod tidy
@@ -24,7 +24,7 @@ if [[ $KOKORO_JOB_NAME != *"latest-version"* ]]; then
 fi
 
 # Only do staticcheck on our "earliest" version.
-if [[ $KOKORO_JOB_NAME != *"earliest-version"* ]]; then
+if [[ $KOKORO_JOB_NAME == *"earliest-version"* ]]; then
   staticcheck ./... 2>&1 | (
     grep -v "SA1019" |
       grep -v "S1007" |

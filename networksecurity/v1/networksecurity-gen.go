@@ -1275,8 +1275,8 @@ func (s AuthzPolicyAuthzRuleToRequestOperationHeaderSet) MarshalJSON() ([]byte, 
 // attributes to match against for a given MCP request.
 type AuthzPolicyAuthzRuleToRequestOperationMCP struct {
 	// BaseProtocolMethodsOption: Optional. If specified, matches on the MCP
-	// protocol’s non-access specific methods namely: * initialize * completion/
-	// * logging/ * notifications/ * ping Defaults to SKIP_BASE_PROTOCOL_METHODS if
+	// protocol's non-access specific methods namely: * initialize * completion/ *
+	// logging/ * notifications/ * ping Defaults to SKIP_BASE_PROTOCOL_METHODS if
 	// not specified.
 	//
 	// Possible values:

@@ -5,7 +5,7 @@ go 1.26.0
 require (
 	github.com/go-git/go-git/v5 v5.19.2
 	github.com/google/go-github/v59 v59.0.0
-	golang.org/x/oauth2 v0.36.0
+	golang.org/x/oauth2 v0.37.0
 )
 
 require (

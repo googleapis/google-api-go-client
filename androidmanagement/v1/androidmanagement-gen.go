@@ -2014,12 +2014,16 @@ type Command struct {
 	// See also stop_lost_mode_params.
 	//   "ADD_ESIM" - Adds an eSIM profile to the device. This is supported on
 	// Android 15 and above. See also addEsimParams. To remove an eSIM profile, use
-	// the REMOVE_ESIM command. To determine what happens to the eSIM profile when
-	// a device is wiped, set wipeDataFlags in the policy. Note: To provision
-	// multiple eSIMs on a single device, it is recommended to introduce a delay of
-	// a few minutes between successive executions of the command.
+	// the REMOVE_ESIM command. Note that REMOVE_ESIM is not supported on
+	// company-owned devices with a work profile running Android 16 QPR2 or Android
+	// 16 QPR3. To determine what happens to the eSIM profile when a device is
+	// wiped, set wipeDataFlags in the policy. Note: To provision multiple eSIMs on
+	// a single device, it is recommended to introduce a delay of a few minutes
+	// between successive executions of the command.
 	//   "REMOVE_ESIM" - Removes an eSIM profile from the device. This is supported
-	// on Android 15 and above. See also removeEsimParams.
+	// on Android 15 and above. This command is not supported on company-owned
+	// devices with a work profile running Android 16 QPR2 or Android 16 QPR3. See
+	// also removeEsimParams.
 	//   "REQUEST_DEVICE_INFO" - Request information related to the device.
 	//   "WIPE" - Wipes the device, via a factory reset for a company owned device,
 	// or by deleting the work profile for a personally owned device with work

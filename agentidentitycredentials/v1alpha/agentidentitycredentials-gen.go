@@ -204,6 +204,82 @@ type ProjectsLocationsAuthProvidersCredentialsService struct {
 type GoogleCloudAgentidentitycredentialsV1alphaConsentRejected struct {
 }
 
+// GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsRequest:
+// Request message for `ExchangeCredentials`.
+type GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsRequest struct {
+	// Scopes: Optional. The desired downstream OAuth scopes to request for the
+	// exchanged token.
+	Scopes []string `json:"scopes,omitempty"`
+	// SourceCredential: Required. The incoming identity or assertion token to be
+	// exchanged.
+	SourceCredential string `json:"sourceCredential,omitempty"`
+	// TargetTokenType: Optional. The desired target token type to be returned from
+	// the exchange. If unspecified, defaults to the token type configured on the
+	// AuthProvider.
+	//
+	// Possible values:
+	//   "TARGET_TOKEN_TYPE_UNSPECIFIED" - Unspecified target token type. The
+	// service will apply default exchange semantics based on the target
+	// AuthProvider's configuration.
+	//   "TARGET_TOKEN_TYPE_ACCESS_TOKEN" - Request an OAuth access token.
+	//   "TARGET_TOKEN_TYPE_ID_JAG" - Request an Identity Assertion Authorization
+	// Grant (ID-JAG) token.
+	TargetTokenType string `json:"targetTokenType,omitempty"`
+	// TokenBinding: Optional. The token binding parameters to be applied to
+	// downstream tokens and embedded into the ID-JAG assertion.
+	TokenBinding *GoogleCloudAgentidentitycredentialsV1alphaTokenBinding `json:"tokenBinding,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Scopes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Scopes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsResponse:
+// Response message for `ExchangeCredentials` containing the resulting
+// credentials.
+type GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsResponse struct {
+	// AcquireTime: Optional. The time when the token was acquired.
+	AcquireTime string `json:"acquireTime,omitempty"`
+	// ExpireTime: Optional. The expiration time of the exchanged access token.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// Scopes: The scopes actually associated with the retrieved token.
+	Scopes []string `json:"scopes,omitempty"`
+	// Token: The user-consented workforce access token resulting from the
+	// exchange.
+	Token string `json:"token,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AcquireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcquireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAgentidentitycredentialsV1alphaFinalizeCredentialsRequest:
 // Request message for `FinalizeCredentials`.
 type GoogleCloudAgentidentitycredentialsV1alphaFinalizeCredentialsRequest struct {
@@ -359,6 +435,33 @@ func (s GoogleCloudAgentidentitycredentialsV1alphaSuccess) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAgentidentitycredentialsV1alphaTokenBinding: Configuration for
+// binding downstream credentials to client communication channel properties.
+type GoogleCloudAgentidentitycredentialsV1alphaTokenBinding struct {
+	// CertificateFingerprint: Optional. The base64url-encoded SHA-256 hash of the
+	// DER-encoded X.509 client certificate, as defined in RFC 8705 Section 3.1
+	// (corresponding to "x5t#S256"). Format requirements: - Base64url encoding
+	// (RFC 4648 Section 5) using URL-safe characters ('-' and '_') without padding
+	// ('='). - Exactly 43 characters long for a 256-bit SHA-256 digest.
+	CertificateFingerprint string `json:"certificateFingerprint,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateFingerprint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateFingerprint") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAgentidentitycredentialsV1alphaTokenBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAgentidentitycredentialsV1alphaTokenBinding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAgentidentitycredentialsV1alphaUriConsentRequired: Indicates that
 // the user must visit the provided URI to consent to delegate permission to
 // the agent to act on their behalf. The caller can either poll the
@@ -392,6 +495,112 @@ type GoogleCloudAgentidentitycredentialsV1alphaUriConsentRequired struct {
 func (s GoogleCloudAgentidentitycredentialsV1alphaUriConsentRequired) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAgentidentitycredentialsV1alphaUriConsentRequired
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsLocationsAuthProvidersCredentialsExchangeCall struct {
+	s                                                                    *Service
+	authProvider                                                         string
+	googlecloudagentidentitycredentialsv1alphaExchangecredentialsrequest *GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsRequest
+	urlParams_                                                           gensupport.URLParams
+	ctx_                                                                 context.Context
+	header_                                                              http.Header
+}
+
+// Exchange: Swaps an input credential for a target credential as per the rules
+// and provider defined in the given auth provider.
+//
+//   - authProvider: The resource name of the auth provider. Format:
+//     `projects/{project}/locations/{location}/authProviders/{auth_provider}`.
+func (r *ProjectsLocationsAuthProvidersCredentialsService) Exchange(authProvider string, googlecloudagentidentitycredentialsv1alphaExchangecredentialsrequest *GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsRequest) *ProjectsLocationsAuthProvidersCredentialsExchangeCall {
+	c := &ProjectsLocationsAuthProvidersCredentialsExchangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.authProvider = authProvider
+	c.googlecloudagentidentitycredentialsv1alphaExchangecredentialsrequest = googlecloudagentidentitycredentialsv1alphaExchangecredentialsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthProvidersCredentialsExchangeCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthProvidersCredentialsExchangeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthProvidersCredentialsExchangeCall) Context(ctx context.Context) *ProjectsLocationsAuthProvidersCredentialsExchangeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthProvidersCredentialsExchangeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthProvidersCredentialsExchangeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudagentidentitycredentialsv1alphaExchangecredentialsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+authProvider}/credentials:exchange")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"authProvider": c.authProvider,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentidentitycredentials.projects.locations.authProviders.credentials.exchange", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentidentitycredentials.projects.locations.authProviders.credentials.exchange" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsResponse.Server
+// Response.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthProvidersCredentialsExchangeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAgentidentitycredentialsV1alphaExchangeCredentialsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentidentitycredentials.projects.locations.authProviders.credentials.exchange", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsAuthProvidersCredentialsFinalizeCall struct {

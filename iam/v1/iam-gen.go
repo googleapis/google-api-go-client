@@ -2251,7 +2251,7 @@ func (s ListWorkloadIdentityPoolsResponse) MarshalJSON() ([]byte, error) {
 // resources on behalf of a Workforce Identity Federation user by using OAuth
 // 2.0 Protocol to obtain an access token from Google Cloud.
 type OauthClient struct {
-	// AllowedGrantTypes: Required. The list of OAuth grant types is allowed for
+	// AllowedGrantTypes: Optional. The list of OAuth grant types is allowed for
 	// the OauthClient.
 	//
 	// Possible values:

@@ -224,6 +224,8 @@ type CloudLocation struct {
 	// DisplayName: Optional. The human-readable name of the cloud location.
 	// Example: us-east-2, us-east1.
 	DisplayName string `json:"displayName,omitempty"`
+	// GcpAttributes: Optional. GCP-specific attributes.
+	GcpAttributes *GcpAttributes `json:"gcpAttributes,omitempty"`
 	// Name: Identifier. Name of the cloud location. Unique name of the cloud
 	// location including project and location using the form:
 	// `projects/{project_id}/locations/{location}/cloudLocations/{cloud_location}`
@@ -264,6 +266,33 @@ func (s *CloudLocation) UnmarshalJSON(data []byte) error {
 	}
 	s.CarbonFreeEnergyPercentage = float64(s1.CarbonFreeEnergyPercentage)
 	return nil
+}
+
+// GcpAttributes: GCP-specific attributes.
+type GcpAttributes struct {
+	// ZoneType: Optional. The type of the cloud zone.
+	//
+	// Possible values:
+	//   "GCP_ZONE_TYPE_UNSPECIFIED" - Default value. Unspecified zone type.
+	//   "GENERAL_PURPOSE" - General purpose zone type.
+	//   "AI_ZONE" - AI zone type.
+	ZoneType string `json:"zoneType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ZoneType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ZoneType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcpAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod GcpAttributes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCloudLocationsResponse: Message for response to listing cloud locations.

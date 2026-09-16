@@ -5729,6 +5729,8 @@ func (s EvaluationStep) MarshalJSON() ([]byte, error) {
 type Event struct {
 	// Event: Required. The name of the event.
 	Event string `json:"event,omitempty"`
+	// Variables: Optional. Additional variables associated with the event.
+	Variables googleapi.RawMessage `json:"variables,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Event") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -7036,6 +7038,8 @@ type Guardrail struct {
 	// Name: Identifier. The unique identifier of the guardrail. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/guardrails/{guardrail}`
 	Name string `json:"name,omitempty"`
+	// Supervisor: Optional. Guardrail that runs supervisor intervention.
+	Supervisor *GuardrailSupervisor `json:"supervisor,omitempty"`
 	// UpdateTime: Output only. Timestamp when the guardrail was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -7324,6 +7328,48 @@ type GuardrailModelSafetySafetySetting struct {
 
 func (s GuardrailModelSafetySafetySetting) MarshalJSON() ([]byte, error) {
 	type NoMethod GuardrailModelSafetySafetySetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GuardrailSupervisor: Guardrail that runs supervisor intervention.
+type GuardrailSupervisor struct {
+	// DetectionMode: Optional. The detection mode of the supervisor.
+	//
+	// Possible values:
+	//   "DETECTION_MODE_UNSPECIFIED" - Detection mode is unspecified. Default to
+	// NON_BLOCKING.
+	//   "NON_BLOCKING" - Non blocking detection mode. Response is not blocked when
+	// the supervisor detection is ongoing.
+	//   "BLOCKING" - Blocking detection mode. Response is blocked when the
+	// supervisor detection is ongoing.
+	DetectionMode string `json:"detectionMode,omitempty"`
+	// Type: Optional. The type of the supervisor.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "INVALID_TEXT" - Invalid text issue type.
+	//   "LANGUAGE_SHIFT" - Language shift issue type.
+	//   "SPEAKER_SHIFT" - Speaker shift issue type.
+	//   "AUDIO_MISMATCH" - Audio mismatch issue type.
+	//   "MISSING_TOOL_CALL" - Missing tool call issue type.
+	//   "CUSTOM" - Custom issue type.
+	//   "CHOPPY_AUDIO" - Choppy audio issue type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetectionMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetectionMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GuardrailSupervisor) MarshalJSON() ([]byte, error) {
+	type NoMethod GuardrailSupervisor
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10525,8 +10571,19 @@ type RemoteAgentTool struct {
 	ApiAuthentication *ApiAuthentication `json:"apiAuthentication,omitempty"`
 	// Description: Required. The description of the tool.
 	Description string `json:"description,omitempty"`
+	// InputVariableMapping: Optional. Mapping of input variable names of remote
+	// agent to GECX variable names.
+	InputVariableMapping map[string]string `json:"inputVariableMapping,omitempty"`
 	// Name: Required. The name of the tool.
 	Name string `json:"name,omitempty"`
+	// OutputVariableMapping: Optional. Mapping of output variable names of remote
+	// agent to GECX variable names.
+	OutputVariableMapping map[string]string `json:"outputVariableMapping,omitempty"`
+	// StatefulAgent: Optional. When enabled, the interaction between the CXAS app
+	// and the remote agent will share the same context. If the remote agent
+	// returns a context_id, it will be persisted for the entirety of the session
+	// for this remote agent tool.
+	StatefulAgent bool `json:"statefulAgent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentCard") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

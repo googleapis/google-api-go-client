@@ -303,6 +303,31 @@ func (s AdTechnologyProviders) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AddDealsRequest: A request to add deals to a creative resource.
+type AddDealsRequest struct {
+	// DealIds: Required. The IDs of the deals to associate with the creative. This
+	// can include Programmatic Guaranteed, Private Auction, Preferred Deal, and
+	// Marketplace Package deal IDs. You can associate no more than 100 deal IDs
+	// per request.
+	DealIds []string `json:"dealIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DealIds") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DealIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddDealsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddDealsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AddTargetedAppsRequest: A request to start targeting the provided app IDs in
 // a specific pretargeting configuration. The pretargeting configuration itself
 // specifies how these apps are targeted. in
@@ -5806,6 +5831,110 @@ func (c *BuyersListCall) Pages(ctx context.Context, f func(*ListBuyersResponse) 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type BuyersCreativesAddDealsCall struct {
+	s               *Service
+	name            string
+	adddealsrequest *AddDealsRequest
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// AddDeals: Adds a list of deals to a creative, which submits the creative for
+// publisher review. Returns the updated creative.
+//
+// - name: Name of the creative to add the deals to. See creative.name.
+func (r *BuyersCreativesService) AddDeals(name string, adddealsrequest *AddDealsRequest) *BuyersCreativesAddDealsCall {
+	c := &BuyersCreativesAddDealsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.adddealsrequest = adddealsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *BuyersCreativesAddDealsCall) Fields(s ...googleapi.Field) *BuyersCreativesAddDealsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *BuyersCreativesAddDealsCall) Context(ctx context.Context) *BuyersCreativesAddDealsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *BuyersCreativesAddDealsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersCreativesAddDealsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adddealsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:addDeals")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "realtimebidding.buyers.creatives.addDeals", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "realtimebidding.buyers.creatives.addDeals" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Creative.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *BuyersCreativesAddDealsCall) Do(opts ...googleapi.CallOption) (*Creative, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Creative{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "realtimebidding.buyers.creatives.addDeals", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type BuyersCreativesCreateCall struct {

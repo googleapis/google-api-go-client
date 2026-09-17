@@ -437,6 +437,13 @@ type AbortInfo struct {
 	// which don't have assigned IP addresses yet.
 	//   "RESPONSE_TOO_LARGE" - Aborted because the response size exceeds the
 	// limit.
+	//   "DESTINATION_CLOUD_RUN_SERVICE_REVISION_UNSUPPORTED" - Aborted because
+	// revisions of Cloud Run Services are not supported as destinations.
+	//   "DESTINATION_CLOUD_RUN_VPC_CONNECTOR_UNSUPPORTED" - Aborted because
+	// serverless endpoints having Cloud Run VPC connectors configured are not
+	// supported as destinations.
+	//   "CLOUD_RUN_RESOURCE_NOT_CONNECTED_TO_VPC" - Aborted because Cloud Run
+	// destination resource is not connected to the VPC network.
 	Cause string `json:"cause,omitempty"`
 	// IpAddress: IP address that caused the abort.
 	IpAddress string `json:"ipAddress,omitempty"`
@@ -1087,6 +1094,40 @@ type DirectVpcEgressConnectionInfo struct {
 
 func (s DirectVpcEgressConnectionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectVpcEgressConnectionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DirectVpcIngressConnectionInfo: For display only. Metadata associated with a
+// serverless direct VPC ingress connection.
+type DirectVpcIngressConnectionInfo struct {
+	// NetworkUri: URI of the VPC network for direct ingress. Format:
+	// `projects/{project_id}/global/networks/{network_id}`
+	NetworkUri string `json:"networkUri,omitempty"`
+	// Region: Region in which the Direct VPC ingress is deployed.
+	Region string `json:"region,omitempty"`
+	// SelectedIpAddress: Selected destination IP address, from the selected IP
+	// range.
+	SelectedIpAddress string `json:"selectedIpAddress,omitempty"`
+	// SelectedIpRange: Selected IP range.
+	SelectedIpRange string `json:"selectedIpRange,omitempty"`
+	// SubnetworkUri: URI of the subnetwork for direct ingress. Format:
+	// `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`
+	SubnetworkUri string `json:"subnetworkUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DirectVpcIngressConnectionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DirectVpcIngressConnectionInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4374,6 +4415,9 @@ type Step struct {
 	// DirectVpcEgressConnection: Display information of a serverless direct VPC
 	// egress connection.
 	DirectVpcEgressConnection *DirectVpcEgressConnectionInfo `json:"directVpcEgressConnection,omitempty"`
+	// DirectVpcIngressConnection: Display information of a serverless direct VPC
+	// ingress connection for Cloud Run.
+	DirectVpcIngressConnection *DirectVpcIngressConnectionInfo `json:"directVpcIngressConnection,omitempty"`
 	// DmsPrivateConnection: Display information of a DMS Private Connection.
 	DmsPrivateConnection *PrivateConnectionInfo `json:"dmsPrivateConnection,omitempty"`
 	// Drop: Display information of the final state "drop" and reason.
@@ -4520,6 +4564,8 @@ type Step struct {
 	//   "ARRIVE_AT_GKE_POD" - Forwarding state: arriving at a GKE Pod.
 	//   "DIRECT_VPC_EGRESS_CONNECTION" - Forwarding state: for packets originating
 	// from a serverless endpoint forwarded through Direct VPC egress.
+	//   "ARRIVE_AT_DIRECT_VPC_INGRESS_CONNECTION" - Forwarding state: arriving at
+	// a direct VPC ingress connection.
 	//   "SERVERLESS_EXTERNAL_CONNECTION" - Forwarding state: for packets
 	// originating from a serverless endpoint forwarded through public (external)
 	// connectivity.

@@ -49,7 +49,7 @@ func IDTokenSource(ctx context.Context, config IDTokenConfig, opts ...option.Cli
 	}
 
 	ud := universeDomain(opts)
-	clientOpts := append(defaultClientOptions(), opts...)
+	clientOpts := append(defaultClientOptions(ud), opts...)
 	client, _, err := htransport.NewClient(ctx, clientOpts...)
 	if err != nil {
 		return nil, err

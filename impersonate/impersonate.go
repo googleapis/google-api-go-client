@@ -77,9 +77,9 @@ func universeDomain(opts []option.ClientOption) string {
 
 // defaultClientOptions ensures the base credentials will work with the IAM
 // Credentials API if no scope or audience is set by the user.
-func defaultClientOptions() []option.ClientOption {
+func defaultClientOptions(ud string) []option.ClientOption {
 	return []option.ClientOption{
-		internaloption.WithDefaultAudience("https://iamcredentials.googleapis.com/"),
+		internaloption.WithDefaultAudience(iamCredentialsEndpoint(ud) + "/"),
 		internaloption.WithDefaultScopes("https://www.googleapis.com/auth/cloud-platform"),
 	}
 }
@@ -109,7 +109,7 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 	}
 
 	ud := universeDomain(opts)
-	clientOpts := append(defaultClientOptions(), opts...)
+	clientOpts := append(defaultClientOptions(ud), opts...)
 	client, _, err := htransport.NewClient(ctx, clientOpts...)
 	if err != nil {
 		return nil, err

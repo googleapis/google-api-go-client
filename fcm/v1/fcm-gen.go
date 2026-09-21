@@ -167,6 +167,7 @@ func (s *Service) userAgent() string {
 func NewProjectsService(s *Service) *ProjectsService {
 	rs := &ProjectsService{s: s}
 	rs.Messages = NewProjectsMessagesService(s)
+	rs.Registrations = NewProjectsRegistrationsService(s)
 	return rs
 }
 
@@ -174,6 +175,8 @@ type ProjectsService struct {
 	s *Service
 
 	Messages *ProjectsMessagesService
+
+	Registrations *ProjectsRegistrationsService
 }
 
 func NewProjectsMessagesService(s *Service) *ProjectsMessagesService {
@@ -182,6 +185,27 @@ func NewProjectsMessagesService(s *Service) *ProjectsMessagesService {
 }
 
 type ProjectsMessagesService struct {
+	s *Service
+}
+
+func NewProjectsRegistrationsService(s *Service) *ProjectsRegistrationsService {
+	rs := &ProjectsRegistrationsService{s: s}
+	rs.TopicSubscriptions = NewProjectsRegistrationsTopicSubscriptionsService(s)
+	return rs
+}
+
+type ProjectsRegistrationsService struct {
+	s *Service
+
+	TopicSubscriptions *ProjectsRegistrationsTopicSubscriptionsService
+}
+
+func NewProjectsRegistrationsTopicSubscriptionsService(s *Service) *ProjectsRegistrationsTopicSubscriptionsService {
+	rs := &ProjectsRegistrationsTopicSubscriptionsService{s: s}
+	return rs
+}
+
+type ProjectsRegistrationsTopicSubscriptionsService struct {
 	s *Service
 }
 
@@ -666,6 +690,15 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Empty: A generic empty message that you can re-use to avoid defining
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
+type Empty struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // FcmOptions: Platform independent options for features provided by the FCM
 // SDKs.
 type FcmOptions struct {
@@ -720,6 +753,34 @@ func (s LightSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListTopicSubscriptionsResponse: Response message for ListTopicSubscriptions.
+type ListTopicSubscriptionsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// TopicSubscriptions: The topic subscriptions for the instance.
+	TopicSubscriptions []*TopicSubscription `json:"topicSubscriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListTopicSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListTopicSubscriptionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Message: Message to send by Firebase Cloud Messaging Service.
 type Message struct {
 	// Android: Input only. Android specific options for messages sent through FCM
@@ -741,7 +802,9 @@ type Message struct {
 	// FcmOptions: Input only. Template for FCM SDK feature options to use across
 	// all platforms.
 	FcmOptions *FcmOptions `json:"fcmOptions,omitempty"`
-	// Fid: Firebase Installation ID to send a message to.
+	// Fid: Firebase Installation ID (FID)
+	// (/docs/cloud-messaging/android/get-started#access-firebase-installation-id)
+	// to send a message to.
 	Fid string `json:"fid,omitempty"`
 	// Name: Output Only. The identifier of the message sent, in the format of
 	// `projects/*/messages/{message_id}`.
@@ -749,9 +812,9 @@ type Message struct {
 	// Notification: Input only. Basic notification template to use across all
 	// platforms.
 	Notification *Notification `json:"notification,omitempty"`
-	// Token: Deprecated: Use `fid` instead. Registration token to send a message
-	// to. During the transition period, this field also accepts a Firebase
-	// Installation ID (FID).
+	// Token: Deprecated: Use `fid` instead. During the transition period, this
+	// field also accepts a Firebase Installation ID (FID). Registration token to
+	// send a message to.
 	Token string `json:"token,omitempty"`
 	// Topic: Topic name to send a message to, e.g. "weather". Note: "/topics/"
 	// prefix should not be provided.
@@ -836,6 +899,40 @@ func (s SendMessageRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TopicSubscription: Represents a subscription of a single app instance to a
+// single FCM topic.
+type TopicSubscription struct {
+	// CreateTime: Output only. Time when the subscription was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: Identifier. The resource name of the subscription. Format:
+	// projects/{project}/registrations/{registration}/topicSubscriptions/{topicSubs
+	// cription} The {registration} part contains the registration ID (e.g., FID).
+	Name string `json:"name,omitempty"`
+	// TopicName: Output only. The ID of the TopicSubscription, which is the topic
+	// name. This corresponds to the {topicSubscription} segment in the resource
+	// name. Topic names match the pattern of "[a-zA-Z0-9-_.~%]{1,900}".
+	TopicName string `json:"topicName,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TopicSubscription) MarshalJSON() ([]byte, error) {
+	type NoMethod TopicSubscription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // WebpushConfig: Webpush protocol (https://tools.ietf.org/html/rfc8030)
 // options.
 type WebpushConfig struct {
@@ -907,8 +1004,9 @@ type ProjectsMessagesSendCall struct {
 	header_            http.Header
 }
 
-// Send: Send a message to specified target (a registration token, topic or
-// condition).
+// Send: Send a message to specified target (a Firebase Installation ID (FID)
+// (/docs/cloud-messaging/android/get-started#access-firebase-installation-id),
+// registration token, topic, or condition).
 //
 //   - parent: It contains the Firebase project id (i.e. the unique identifier
 //     for your Firebase project), in the format of `projects/{project_id}`. The
@@ -1002,5 +1100,609 @@ func (c *ProjectsMessagesSendCall) Do(opts ...googleapi.CallOption) (*Message, e
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "fcm.projects.messages.send", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsRegistrationsTopicSubscriptionsCreateCall struct {
+	s                 *Service
+	parent            string
+	topicsubscription *TopicSubscription
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates a TopicSubscription. Subscribes an app installation instance
+// (by registration_id, either FID or FCM Token) to a topicSubscription.
+// Returns a TopicSubscription if it is created successfully. If the
+// subscription already exists, returns error of ALREADY_EXISTS.
+//
+//   - parent: The parent resource where this subscription will be created.
+//     Format: projects/{project}/registrations/{registration} The {registration}
+//     part can be an FID or an FCM Token.
+func (r *ProjectsRegistrationsTopicSubscriptionsService) Create(parent string, topicsubscription *TopicSubscription) *ProjectsRegistrationsTopicSubscriptionsCreateCall {
+	c := &ProjectsRegistrationsTopicSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.topicsubscription = topicsubscription
+	return c
+}
+
+// TopicName sets the optional parameter "topicName": Required. The ID to use
+// for the subscription, which is the topic name. This will become the last
+// segment of the TopicSubscription's resource name. Topic names match the
+// pattern of "[a-zA-Z0-9-_.~%]{1,900}".
+func (c *ProjectsRegistrationsTopicSubscriptionsCreateCall) TopicName(topicName string) *ProjectsRegistrationsTopicSubscriptionsCreateCall {
+	c.urlParams_.Set("topicName", topicName)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsRegistrationsTopicSubscriptionsCreateCall) Fields(s ...googleapi.Field) *ProjectsRegistrationsTopicSubscriptionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsRegistrationsTopicSubscriptionsCreateCall) Context(ctx context.Context) *ProjectsRegistrationsTopicSubscriptionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsRegistrationsTopicSubscriptionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRegistrationsTopicSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.topicsubscription)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/topicSubscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "fcm.projects.registrations.topicSubscriptions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TopicSubscription.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsRegistrationsTopicSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*TopicSubscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TopicSubscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsRegistrationsTopicSubscriptionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a TopicSubscription.
+//
+//   - name: The name of the topic subscription to delete. Format:
+//     projects/{project}/registrations/{registration}/topicSubscriptions/{topicSu
+//     bscription}.
+func (r *ProjectsRegistrationsTopicSubscriptionsService) Delete(name string) *ProjectsRegistrationsTopicSubscriptionsDeleteCall {
+	c := &ProjectsRegistrationsTopicSubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true, and
+// the topic subscription is not found, the request will succeed but no action
+// will be taken on the server.
+func (c *ProjectsRegistrationsTopicSubscriptionsDeleteCall) AllowMissing(allowMissing bool) *ProjectsRegistrationsTopicSubscriptionsDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsRegistrationsTopicSubscriptionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsRegistrationsTopicSubscriptionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsRegistrationsTopicSubscriptionsDeleteCall) Context(ctx context.Context) *ProjectsRegistrationsTopicSubscriptionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsRegistrationsTopicSubscriptionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRegistrationsTopicSubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "fcm.projects.registrations.topicSubscriptions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsRegistrationsTopicSubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsRegistrationsTopicSubscriptionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a TopicSubscription.
+//
+//   - name: The name of the topic subscription to retrieve. Format:
+//     projects/{project}/registrations/{registration}/topicSubscriptions/{topicSu
+//     bscription}.
+func (r *ProjectsRegistrationsTopicSubscriptionsService) Get(name string) *ProjectsRegistrationsTopicSubscriptionsGetCall {
+	c := &ProjectsRegistrationsTopicSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsRegistrationsTopicSubscriptionsGetCall) Fields(s ...googleapi.Field) *ProjectsRegistrationsTopicSubscriptionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsRegistrationsTopicSubscriptionsGetCall) IfNoneMatch(entityTag string) *ProjectsRegistrationsTopicSubscriptionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsRegistrationsTopicSubscriptionsGetCall) Context(ctx context.Context) *ProjectsRegistrationsTopicSubscriptionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsRegistrationsTopicSubscriptionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRegistrationsTopicSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "fcm.projects.registrations.topicSubscriptions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TopicSubscription.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsRegistrationsTopicSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*TopicSubscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TopicSubscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsRegistrationsTopicSubscriptionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists TopicSubscriptions for a given app instance.
+//
+//   - parent: The parent resource, which owns this collection of subscriptions.
+//     Format: projects/{project}/registrations/{registration} The {registration}
+//     part can be an FID or an FCM Token.
+func (r *ProjectsRegistrationsTopicSubscriptionsService) List(parent string) *ProjectsRegistrationsTopicSubscriptionsListCall {
+	c := &ProjectsRegistrationsTopicSubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// subscriptions to return. The service may return fewer than this value. If
+// unspecified, at most 1000 subscriptions will be returned. The maximum value
+// is 2000; values above 2000 will be coerced to 2000.
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) PageSize(pageSize int64) *ProjectsRegistrationsTopicSubscriptionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListTopicSubscriptions` call. Provide this to retrieve the
+// subsequent page.
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) PageToken(pageToken string) *ProjectsRegistrationsTopicSubscriptionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) Fields(s ...googleapi.Field) *ProjectsRegistrationsTopicSubscriptionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) IfNoneMatch(entityTag string) *ProjectsRegistrationsTopicSubscriptionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) Context(ctx context.Context) *ProjectsRegistrationsTopicSubscriptionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/topicSubscriptions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "fcm.projects.registrations.topicSubscriptions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTopicSubscriptionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListTopicSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListTopicSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsRegistrationsTopicSubscriptionsListCall) Pages(ctx context.Context, f func(*ListTopicSubscriptionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsRegistrationsTopicSubscriptionsPatchCall struct {
+	s                 *Service
+	name              string
+	topicsubscription *TopicSubscription
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Patch: Updates a TopicSubscription. Subscribes an app installation instance
+// by registration_id, either FID or FCM Token, to a topicSubscription. Returns
+// an existing TopicSubscription or creates a new one if it does not exist.
+//
+//   - name: Identifier. The resource name of the subscription. Format:
+//     projects/{project}/registrations/{registration}/topicSubscriptions/{topicSu
+//     bscription} The {registration} part contains the registration ID (e.g.,
+//     FID).
+func (r *ProjectsRegistrationsTopicSubscriptionsService) Patch(name string, topicsubscription *TopicSubscription) *ProjectsRegistrationsTopicSubscriptionsPatchCall {
+	c := &ProjectsRegistrationsTopicSubscriptionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.topicsubscription = topicsubscription
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to true, and
+// the topic subscription is not found, a new topic subscription will be
+// created.
+func (c *ProjectsRegistrationsTopicSubscriptionsPatchCall) AllowMissing(allowMissing bool) *ProjectsRegistrationsTopicSubscriptionsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsRegistrationsTopicSubscriptionsPatchCall) Fields(s ...googleapi.Field) *ProjectsRegistrationsTopicSubscriptionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsRegistrationsTopicSubscriptionsPatchCall) Context(ctx context.Context) *ProjectsRegistrationsTopicSubscriptionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsRegistrationsTopicSubscriptionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsRegistrationsTopicSubscriptionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.topicsubscription)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "fcm.projects.registrations.topicSubscriptions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TopicSubscription.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsRegistrationsTopicSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*TopicSubscription, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TopicSubscription{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "fcm.projects.registrations.topicSubscriptions.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

@@ -16331,7 +16331,7 @@ type VideoPerformanceAd struct {
 	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
 	// DisplayUrlBreadcrumb2: The second piece after the domain in the display URL.
 	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
-	// Domain: The domain of the display URL.
+	// Domain: Output only. The domain of the display URL.
 	Domain string `json:"domain,omitempty"`
 	// FinalUrl: The URL address of the webpage that people reach after they click
 	// the ad.

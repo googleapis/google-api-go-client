@@ -40,6 +40,7 @@ func TestDialPoolNewAuthDialOptions(t *testing.T) {
 	oldDialContextNewAuth := dialContextNewAuth
 	var wantNumOpts int
 	var universeDomain string
+	var wantInterconnect bool
 	// Replace package var in order to assert DialContext args.
 	dialContextNewAuth = func(ctx context.Context, secure bool, opts *grpctransport.Options) (grpctransport.GRPCClientConnPool, error) {
 		if len(opts.GRPCDialOpts) != wantNumOpts {
@@ -47,6 +48,9 @@ func TestDialPoolNewAuthDialOptions(t *testing.T) {
 		}
 		if opts.UniverseDomain != universeDomain {
 			t.Fatalf("got: %q, want: %q", opts.UniverseDomain, universeDomain)
+		}
+		if opts.InternalOptions == nil || opts.InternalOptions.EnableDirectPathXdsOverInterconnect != wantInterconnect {
+			t.Fatalf("got EnableDirectPathXdsOverInterconnect: %v, want: %v", opts.InternalOptions.EnableDirectPathXdsOverInterconnect, wantInterconnect)
 		}
 		return nil, nil
 	}
@@ -78,10 +82,18 @@ func TestDialPoolNewAuthDialOptions(t *testing.T) {
 			},
 			wantNumOpts: 0,
 		},
+		{
+			name: "enable direct path xds over interconnect",
+			ds: &internal.DialSettings{
+				EnableDirectPathXdsOverInterconnect: true,
+			},
+			wantNumOpts: 0,
+		},
 	} {
 		t.Run(testcase.name, func(t *testing.T) {
 			wantNumOpts = testcase.wantNumOpts
 			universeDomain = testcase.ds.GetUniverseDomain()
+			wantInterconnect = testcase.ds.EnableDirectPathXdsOverInterconnect
 			dialPoolNewAuth(context.Background(), false, 1, testcase.ds)
 		})
 	}

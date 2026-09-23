@@ -75,13 +75,14 @@ var (
 
 // skipAPIGeneration is a set of APIs to not generate when generating all clients.
 var skipAPIGeneration = map[string]bool{
-	"integrations:v1alpha":    true,
-	"integrations:v1":         true,
-	"sql:v1beta4":             true,
-	"datalineage:v1":          true,
-	"aiplatform:v1beta1":      true,
-	"discoveryengine:v1alpha": true,
-	"discoveryengine:v1":      true,
+	"integrations:v1alpha":                true,
+	"integrations:v1":                     true,
+	"sql:v1beta4":                         true,
+	"datalineage:v1":                      true,
+	"aiplatform:v1beta1":                  true,
+	"discoveryengine:v1alpha":             true,
+	"discoveryengine:v1":                  true,
+	"readerrevenuesubscriptionlinking:v1": true,
 }
 
 var apisToSplit = map[string]bool{

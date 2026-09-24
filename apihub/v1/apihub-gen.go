@@ -9061,7 +9061,9 @@ type ProjectsLocationsApisVersionsOperationsDeleteCall struct {
 
 // Delete: Delete an operation in an API version and we can delete only the
 // operations created via create API. If the operation was created by parsing
-// the spec, then it can be deleted by editing or deleting the spec.
+// the spec, then it can be deleted by editing or deleting the spec. Deleting
+// an operation will also remove any links between the operation and
+// deployments.
 //
 //   - name: The name of the operation resource to delete. Format:
 //     `projects/{project}/locations/{location}/apis/{api}/versions/{version}/oper
@@ -9745,7 +9747,8 @@ type ProjectsLocationsApisVersionsSpecsDeleteCall struct {
 }
 
 // Delete: Delete a spec. Deleting a spec will also delete the associated
-// operations from the version.
+// operations from the version and remove any links between the spec and
+// deployments.
 //
 //   - name: The name of the spec to delete. Format:
 //     `projects/{project}/locations/{location}/apis/{api}/versions/{version}/spec
@@ -12640,7 +12643,9 @@ type ProjectsLocationsDeploymentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a deployment resource in the API hub.
+// Delete: Deletes a deployment resource in the API hub. A deployment can only
+// be deleted after its links to any versions, specs, and API operations have
+// been removed.
 //
 //   - name: The name of the deployment resource to delete. Format:
 //     `projects/{project}/locations/{location}/deployments/{deployment}`.

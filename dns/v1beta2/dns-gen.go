@@ -332,7 +332,7 @@ func (s Change) MarshalJSON() ([]byte, error) {
 type ChangesListResponse struct {
 	// Changes: The requested changes.
 	Changes []*Change `json:"changes,omitempty"`
-	// Kind: Type of resource.
+	// Kind: Output only. Type of resource.
 	Kind string `json:"kind,omitempty"`
 	// NextPageToken: This field indicates that more results are available beyond
 	// the last page displayed. To fetch the results, make another list request and
@@ -514,7 +514,7 @@ func (s DnsKeySpec) MarshalJSON() ([]byte, error) {
 type DnsKeysListResponse struct {
 	// DnsKeys: The requested resources.
 	DnsKeys []*DnsKey `json:"dnsKeys,omitempty"`
-	// Kind: Type of resource.
+	// Kind: Output only. Type of resource.
 	Kind string `json:"kind,omitempty"`
 	// NextPageToken: This field indicates that more results are available beyond
 	// the last page displayed. To fetch the results, make another list request and
@@ -1254,7 +1254,7 @@ func (s ManagedZoneForwardingConfigNameServerTarget) MarshalJSON() ([]byte, erro
 }
 
 type ManagedZoneOperationsListResponse struct {
-	// Kind: Type of resource.
+	// Kind: Output only. Type of resource.
 	Kind string `json:"kind,omitempty"`
 	// NextPageToken: This field indicates that more results are available beyond
 	// the last page displayed. To fetch the results, make another list request and
@@ -1492,7 +1492,7 @@ func (s ManagedZoneServiceDirectoryConfigNamespace) MarshalJSON() ([]byte, error
 }
 
 type ManagedZonesListResponse struct {
-	// Kind: Type of resource.
+	// Kind: Output only. Type of resource.
 	Kind string `json:"kind,omitempty"`
 	// ManagedZones: The managed zone resources.
 	ManagedZones []*ManagedZone `json:"managedZones,omitempty"`
@@ -1631,7 +1631,7 @@ func (s OperationManagedZoneContext) MarshalJSON() ([]byte, error) {
 }
 
 type PoliciesListResponse struct {
-	// Kind: Type of resource.
+	// Kind: Output only. Type of resource.
 	Kind string `json:"kind,omitempty"`
 	// NextPageToken: This field indicates that more results are available beyond
 	// the last page displayed. To fetch the results, make another list request and
@@ -2341,8 +2341,7 @@ type ResourceRecordSet struct {
 	RoutingPolicy *RRSetRoutingPolicy `json:"routingPolicy,omitempty"`
 	// Rrdatas: As defined in RFC 1035 (section 5) and RFC 1034 (section 3.6.1) --
 	// see examples.
-	Rrdatas []string `json:"rrdatas,omitempty"`
-	// SignatureRrdatas: As defined in RFC 4034 (section 3.2).
+	Rrdatas          []string `json:"rrdatas,omitempty"`
 	SignatureRrdatas []string `json:"signatureRrdatas,omitempty"`
 	// Ttl: Number of seconds that this `ResourceRecordSet` can be cached by
 	// resolvers.
@@ -2372,7 +2371,7 @@ func (s ResourceRecordSet) MarshalJSON() ([]byte, error) {
 }
 
 type ResourceRecordSetsListResponse struct {
-	// Kind: Type of resource.
+	// Kind: Output only. Type of resource.
 	Kind string `json:"kind,omitempty"`
 	// NextPageToken: This field indicates that more results are available beyond
 	// the last page displayed. To fetch the results, make another list request and
@@ -5512,14 +5511,6 @@ type ProjectsGetCall struct {
 func (r *ProjectsService) Get(project string) *ProjectsGetCall {
 	c := &ProjectsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
-	return c
-}
-
-// ClientOperationId sets the optional parameter "clientOperationId": For
-// mutating operation requests only. An optional identifier specified by the
-// client. Must be unique for operation resources in the Operations collection.
-func (c *ProjectsGetCall) ClientOperationId(clientOperationId string) *ProjectsGetCall {
-	c.urlParams_.Set("clientOperationId", clientOperationId)
 	return c
 }
 

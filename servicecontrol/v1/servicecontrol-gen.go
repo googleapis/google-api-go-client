@@ -1718,9 +1718,6 @@ type PolicyViolationInfo struct {
 	// OrgPolicyViolationInfo: Indicates the orgpolicy violations for this
 	// resource.
 	OrgPolicyViolationInfo *OrgPolicyViolationInfo `json:"orgPolicyViolationInfo,omitempty"`
-	// RabPolicyViolationInfo: Indicates the regional access boundary policy
-	// violations for this resource.
-	RabPolicyViolationInfo *RabPolicyViolationInfo `json:"rabPolicyViolationInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "OrgPolicyViolationInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1986,35 +1983,6 @@ type QuotaProperties struct {
 
 func (s QuotaProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod QuotaProperties
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// RabPolicyViolationInfo: Represents Regional Access Boundary (RAB) Policy
-// Violation information.
-type RabPolicyViolationInfo struct {
-	// ErrorMessage: Optional. Error message detailing what triggered the
-	// violation. The error message content originates from the authz library e.g.,
-	// google3/cloud/security/iam/cap/deny_explanation/internal/make_error_msg.cc.
-	// This will be the same (canonical) error message provided by the http error
-	// code.
-	ErrorMessage string `json:"errorMessage,omitempty"`
-	// ResourceLocations: Optional. The list of target locations of the resource.
-	ResourceLocations []string `json:"resourceLocations,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s RabPolicyViolationInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod RabPolicyViolationInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

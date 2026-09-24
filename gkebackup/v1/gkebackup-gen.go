@@ -445,10 +445,13 @@ func (s BDRBackupPlanJobLog) MarshalJSON() ([]byte, error) {
 }
 
 // BDRBackupRestoreJobLog: Log entry for Backup and Restore Job for resources
-// using BackupPlan based protection. Next Id: 27
+// using BackupPlan based protection. Next Id: 28
 type BDRBackupRestoreJobLog struct {
 	// AutoProtectionPolicy: The auto-protection policy that created the backup.
 	AutoProtectionPolicy string `json:"autoProtectionPolicy,omitempty"`
+	// AutoProtectionPolicyBinding: The auto-protection policy binding that created
+	// the backup.
+	AutoProtectionPolicyBinding string `json:"autoProtectionPolicyBinding,omitempty"`
 	// BackupConsistencyTime: Backup consistency time.
 	BackupConsistencyTime string `json:"backupConsistencyTime,omitempty"`
 	// BackupName: Full resource name of the backup created in backup jobs and used

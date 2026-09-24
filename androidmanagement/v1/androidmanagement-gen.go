@@ -6414,6 +6414,19 @@ type Policy struct {
 	//   "AUTOFILL_DISABLED" - Autofill is disabled and the user is not allowed to
 	// change this setting. This is supported only on Android 8 and above.
 	AutofillPolicy string `json:"autofillPolicy,omitempty"`
+	// BackupService: Optional. Controls whether the backup service is disabled.
+	// Supported only on fully managed devices running Android 8 and above.
+	//
+	// Possible values:
+	//   "BACKUP_SERVICE_UNSPECIFIED" - Unspecified. Defaults to
+	// BACKUP_SERVICE_DISABLED.
+	//   "BACKUP_SERVICE_DISABLED" - Backup service is disabled. The user is not
+	// allowed to change this setting. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 8 on a fully managed device.
+	//   "BACKUP_SERVICE_USER_CHOICE" - The user can enable or disable the backup
+	// service. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 8 on a fully managed device.
+	BackupService string `json:"backupService,omitempty"`
 	// BlockApplicationsEnabled: This field has no effect.
 	BlockApplicationsEnabled bool `json:"blockApplicationsEnabled,omitempty"`
 	// BluetoothConfigDisabled: Whether configuring bluetooth is disabled.

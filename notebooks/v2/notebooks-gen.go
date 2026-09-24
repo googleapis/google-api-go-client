@@ -958,6 +958,10 @@ type GceSetup struct {
 	// supported Shielded VM features
 	// (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
 	ShieldedInstanceConfig *ShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
+	// SystemMetadata: Output only. Represents system-managed metadata for this
+	// instance: the subset of `metadata` whose keys are recognized Workbench
+	// system keys.
+	SystemMetadata map[string]string `json:"systemMetadata,omitempty"`
 	// Tags: Optional. The Compute Engine network tags to add to runtime (see Add
 	// network tags (https://cloud.google.com/vpc/docs/add-remove-network-tags)).
 	Tags []string `json:"tags,omitempty"`

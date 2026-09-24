@@ -1385,6 +1385,10 @@ func (s AppRecoveryAction) MarshalJSON() ([]byte, error) {
 // and cannot be installed together, then a separate AppStoreAppActiveApkSet
 // should be created.
 type AppStoreAppActiveApkSet struct {
+	// AlreadyPublishedOnPlay: Optional. Whether all APKs referenced in this active
+	// APK set are published on Play Store (or derived from an app bundle published
+	// on Play Store). When this is set, version_code must be provided.
+	AlreadyPublishedOnPlay bool `json:"alreadyPublishedOnPlay,omitempty"`
 	// BaseApkId: Required. The ID for the main base application module. Example:
 	// base.apk or app.apk.
 	BaseApkId string `json:"baseApkId,omitempty"`
@@ -1392,15 +1396,17 @@ type AppStoreAppActiveApkSet struct {
 	// combination with the base APK. Can be empty if app bundles (or a similar
 	// technology) are not used. Example: config.en.apk.
 	SplitApkId []string `json:"splitApkId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BaseApkId") to
+	// VersionCode: Optional. Version code for the version this APK set represents.
+	VersionCode int64 `json:"versionCode,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "AlreadyPublishedOnPlay") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BaseApkId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AlreadyPublishedOnPlay") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11589,8 +11595,30 @@ func (s UpdateAppStoreHostedAppRequest) MarshalJSON() ([]byte, error) {
 // UpdateAppStoreHostedAppResponse: Response for updating an app record for an
 // app store hosted app.
 type UpdateAppStoreHostedAppResponse struct {
+	// UpdateId: Unique identifier for the specific version of the hosted app
+	// submitted in this update. This identifier can be used to correlate
+	// publishing signals (such as those returned by
+	// ListHostedAppsPublishingSignals) with this specific app update.
+	UpdateId string `json:"updateId,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "UpdateId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UpdateId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateAppStoreHostedAppResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateAppStoreHostedAppResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // UpdateBasePlanStateRequest: Request message to update the state of a

@@ -12525,8 +12525,7 @@ type GoogleCloudApigeeV1TargetServer struct {
 	// TargetServers are used in load balancing configurations, and one or more
 	// TargetServers need to taken out of rotation periodically. Defaults to true.
 	IsEnabled bool `json:"isEnabled,omitempty"`
-	// Name: Required. The resource id of this target server. Values must match the
-	// regular expression
+	// Name: Required. The resource id of this target server.
 	Name string `json:"name,omitempty"`
 	// Port: Required. The port number this target connects to on the given host.
 	// Value must be between 1 and 65535, inclusive.
@@ -12540,8 +12539,7 @@ type GoogleCloudApigeeV1TargetServer struct {
 	//   "HTTP2" - The TargetSever uses HTTP2.
 	//   "GRPC_TARGET" - The TargetServer uses GRPC.
 	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy. Prefer to
-	// use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate once EXTERNAL
-	// _CALLOUT generally available.
+	// use EXTERNAL_CALLOUT instead.
 	//   "EXTERNAL_CALLOUT" - The TargetServer is to be used in the ExternalCallout
 	// Policy
 	Protocol string `json:"protocol,omitempty"`
@@ -12592,8 +12590,7 @@ type GoogleCloudApigeeV1TargetServerConfig struct {
 	//   "HTTP2" - The TargetSever uses HTTP2.
 	//   "GRPC_TARGET" - The TargetServer uses GRPC.
 	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy. Prefer to
-	// use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate once EXTERNAL
-	// _CALLOUT generally available.
+	// use EXTERNAL_CALLOUT instead.
 	//   "EXTERNAL_CALLOUT" - The TargetServer is to be used in the ExternalCallout
 	// Policy
 	Protocol string `json:"protocol,omitempty"`

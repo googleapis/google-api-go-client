@@ -3466,9 +3466,60 @@ type V1Service struct {
 	s *Service
 }
 
+// CloudAiLargeModelsVisionExperimentsResponse: Experimental response metadata
+// for video generation.
+type CloudAiLargeModelsVisionExperimentsResponse struct {
+	// ProEditResult: Result metadata from a Pro Edit operation, populated for edit
+	// requests.
+	ProEditResult *CloudAiLargeModelsVisionExperimentsResponseProEditResult `json:"proEditResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProEditResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProEditResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionExperimentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionExperimentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiLargeModelsVisionExperimentsResponseProEditResult: Result metadata
+// from a Pro Edit operation.
+type CloudAiLargeModelsVisionExperimentsResponseProEditResult struct {
+	// StructuredPrompt: The output structured prompt produced by this edit.
+	StructuredPrompt googleapi.RawMessage `json:"structuredPrompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StructuredPrompt") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StructuredPrompt") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionExperimentsResponseProEditResult) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionExperimentsResponseProEditResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudAiLargeModelsVisionGenerateVideoExperiments: Experimental parameters
 // for video generation.
 type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
+	// AllowMeteredBilling: If false, when a non-subscription customer tries to
+	// call an experimental feature, the request will be rejected. This field has
+	// no effect for subscription customers.
+	AllowMeteredBilling bool `json:"allowMeteredBilling,omitempty"`
 	// AnchorLastFrame: Optional. If true, anchors the last frame in video
 	// generation by generating a custom border mask.
 	AnchorLastFrame bool `json:"anchorLastFrame,omitempty"`
@@ -3514,6 +3565,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	OriginalRequestJson string `json:"originalRequestJson,omitempty"`
 	// OutpaintConfig: Config for Outpainting task.
 	OutpaintConfig *CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig `json:"outpaintConfig,omitempty"`
+	// ProEdit: Configuration for Pro Edit.
+	ProEdit *CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig `json:"proEdit,omitempty"`
 	// PromptInputs: Prompt chunks for "ProModel" prompting. If set, the prompt
 	// will not be rewritten, and top-level prompt ignored.
 	PromptInputs *CloudAiLargeModelsVisionPromptInputs `json:"promptInputs,omitempty"`
@@ -3543,15 +3596,15 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	// VideoTransformStrength: SDEdit: Scalar noise level (0.0 to 1.0) Maps to
 	// sdedit_tmax
 	VideoTransformStrength float64 `json:"videoTransformStrength,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AnchorLastFrame") to
+	// ForceSendFields is a list of field names (e.g. "AllowMeteredBilling") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AnchorLastFrame") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowMeteredBilling") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3758,6 +3811,37 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource s
 
 func (s CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig: Configuration
+// for Pro Edit.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig struct {
+	// EditInstructionPrompt: A text string containing the user's edit instruction.
+	// Will be applied to the original URF.
+	EditInstructionPrompt string `json:"editInstructionPrompt,omitempty"`
+	// FromOperationId: Required. The operation_id from a previous omni-cine
+	// generation whose OF and URF should be retrieved for editing.
+	FromOperationId string `json:"fromOperationId,omitempty"`
+	// StructuredPrompt: A JSON object containing the user's modified URF. The URF
+	// Editing Preamble will diff this against the original URF to determine what
+	// changed.
+	StructuredPrompt googleapi.RawMessage `json:"structuredPrompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EditInstructionPrompt") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EditInstructionPrompt") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3972,6 +4056,8 @@ type CloudAiLargeModelsVisionGenerateVideoResponseVideo struct {
 	// ExperimentsMetadata: Optional metadata returned from experimental requests.
 	// Likely only includes the rewritten prompt chunks.
 	ExperimentsMetadata *CloudAiLargeModelsVisionGenerateVideoExperiments `json:"experimentsMetadata,omitempty"`
+	// ExperimentsResponse: Optional response returned from experimental requests.
+	ExperimentsResponse *CloudAiLargeModelsVisionExperimentsResponse `json:"experimentsResponse,omitempty"`
 	// GcsUri: Cloud Storage URI where the generated video is written.
 	GcsUri string `json:"gcsUri,omitempty"`
 	// MimeType: The MIME type of the content of the video. - video/mp4
@@ -4785,6 +4871,9 @@ type GoogleCloudAiplatformV1Agent struct {
 	// Object: Output only. The object type of the resource. For agents, the value
 	// is `agent`.
 	Object string `json:"object,omitempty"`
+	// ObservabilityConfig: Optional. Observability settings for this agent's
+	// sessions.
+	ObservabilityConfig *GoogleCloudAiplatformV1ObservabilityConfig `json:"observabilityConfig,omitempty"`
 	// SystemInstruction: Optional. The instructions for the agent to follow. These
 	// instructions are passed to the LLM as a system instruction.
 	SystemInstruction string `json:"system_instruction,omitempty"`
@@ -30726,6 +30815,39 @@ type GoogleCloudAiplatformV1NotebookSoftwareConfig struct {
 
 func (s GoogleCloudAiplatformV1NotebookSoftwareConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NotebookSoftwareConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ObservabilityConfig: Observability settings for one
+// agent's sessions.
+type GoogleCloudAiplatformV1ObservabilityConfig struct {
+	// ObservabilityEnabled: Optional. Enables observability for this agent's
+	// sessions: OpenTelemetry span emission covering tool names, model names,
+	// token counts, latencies and status. If `false`, the other fields here are
+	// ignored.
+	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
+	// SensitiveLoggingEnabled: Optional. Enables sensitive logging. Sensitive
+	// logging includes customer core content (prompts, model completions, tool
+	// argument payloads and tool responses). If `false`, those are sanitized and
+	// only structural attributes are recorded. No effect unless
+	// `observability_enabled` is true. Not yet enforced: `CreateAgent` and
+	// `UpdateAgent` currently reject setting this to `true`.
+	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObservabilityEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ObservabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ObservabilityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -81422,11 +81544,11 @@ func (c *ProjectsLocationsAgentsPatchCall) doRequest(alt string) (*http.Response
 
 // Do executes the "aiplatform.projects.locations.agents.patch" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudAiplatformV1Agent.ServerResponse.Header or (if a response was
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsAgentsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1Agent, error) {
+func (c *ProjectsLocationsAgentsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -81445,7 +81567,7 @@ func (c *ProjectsLocationsAgentsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudAiplatformV1Agent{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,

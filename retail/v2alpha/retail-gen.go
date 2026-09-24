@@ -2725,6 +2725,9 @@ type GoogleCloudRetailV2alphaCompletionConfig struct {
 	// DenylistInputConfig: Output only. The source data for the latest import of
 	// the autocomplete denylist phrases.
 	DenylistInputConfig *GoogleCloudRetailV2alphaCompletionDataInputConfig `json:"denylistInputConfig,omitempty"`
+	// EnableAgentPrompts: Optional. If set to true, the conversational shopping
+	// agent prompts will be served. Default value is false.
+	EnableAgentPrompts bool `json:"enableAgentPrompts,omitempty"`
 	// LastAllowlistImportOperation: Output only. Name of the LRO corresponding to
 	// the latest allowlist import. Can use GetOperation API to retrieve the latest
 	// state of the Long Running Operation.

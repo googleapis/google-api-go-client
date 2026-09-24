@@ -1788,7 +1788,7 @@ func (s FileOperation) MarshalJSON() ([]byte, error) {
 // FileSearchResult: Client-facing representation of a file entry in search
 // results.
 type FileSearchResult struct {
-	// Path: File system path relative to the workspace root.
+	// Path: File system path relative to the file tree root.
 	Path string `json:"path,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

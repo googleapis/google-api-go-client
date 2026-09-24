@@ -6295,6 +6295,9 @@ func (s GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatusAgentSearchT
 type GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfig struct {
 	// NotebooklmConfig: Optional. Configuration for NotebookLM settings.
 	NotebooklmConfig *GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ResourceAccessControlConfig: Optional. Resource-level access control config
+	// for Gemini Enterprise users.
+	ResourceAccessControlConfig *GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessControlConfig `json:"resourceAccessControlConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NotebooklmConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6424,6 +6427,31 @@ type GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigNotebooklmConfigMo
 
 func (s GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessContro
+// lConfig: Controls resource-level access control for Gemini Enterprise users.
+type GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessControlConfig struct {
+	// DataStoreAccessControlEnabled: Optional. If `true`, the data stores and data
+	// connectors shown to Gemini Enterprise users are filtered to those the user
+	// has the required resource-level `.get` IAM permission on.
+	DataStoreAccessControlEnabled bool `json:"dataStoreAccessControlEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DataStoreAccessControlEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStoreAccessControlEnabled")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessControlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessControlConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14641,6 +14669,10 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	// AutoRenew: Optional. Whether the license config should be auto renewed when
 	// it reaches the end date.
 	AutoRenew bool `json:"autoRenew,omitempty"`
+	// BillingAccountLicenseConfig: Output only. The name of the
+	// BillingAccountLicenseConfig from which this LicenseConfig is assigned, if
+	// this field is set.
+	BillingAccountLicenseConfig string `json:"billingAccountLicenseConfig,omitempty"`
 	// EarlyTerminated: Output only. Indication of whether the subscription is
 	// terminated earlier than the expiration date. This is usually terminated by
 	// pipeline once the subscription gets terminated from subsv3.
@@ -15171,6 +15203,9 @@ func (s GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatusAgentSe
 type GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfig struct {
 	// NotebooklmConfig: Optional. Configuration for NotebookLM settings.
 	NotebooklmConfig *GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ResourceAccessControlConfig: Optional. Resource-level access control config
+	// for Gemini Enterprise users.
+	ResourceAccessControlConfig *GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessControlConfig `json:"resourceAccessControlConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NotebooklmConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15300,6 +15335,32 @@ type GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigNotebooklmCon
 
 func (s GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessC
+// ontrolConfig: Controls resource-level access control for Gemini Enterprise
+// users.
+type GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessControlConfig struct {
+	// DataStoreAccessControlEnabled: Optional. If `true`, the data stores and data
+	// connectors shown to Gemini Enterprise users are filtered to those the user
+	// has the required resource-level `.get` IAM permission on.
+	DataStoreAccessControlEnabled bool `json:"dataStoreAccessControlEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DataStoreAccessControlEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStoreAccessControlEnabled")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessControlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessControlConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -15733,6 +15794,10 @@ type GoogleCloudDiscoveryengineV1alphaQueryPart struct {
 	// UiJsonPayload: This field is expected to be a ui message in JSON format. As
 	// of Q1 2026, ui_json_payload is only supported for A2UI messages.
 	UiJsonPayload string `json:"uiJsonPayload,omitempty"`
+	// UserSuppliedSobiArtifactReference: Reference to a user-supplied file
+	// attached to a long-running-agent (Sobi) task. See
+	// `UserSuppliedSobiArtifactReference` above.
+	UserSuppliedSobiArtifactReference *GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference `json:"userSuppliedSobiArtifactReference,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocumentReference") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15857,6 +15922,50 @@ type GoogleCloudDiscoveryengineV1alphaQueryPartPersonReference struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaQueryPartPersonReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaQueryPartPersonReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference:
+// Reference to a user-supplied file attached to a long-running-agent (Sobi)
+// task. Rendered by the client as an attachment chip on the user turn's
+// bubble. The file itself is stored on the task's `AgentArtifact` list; the
+// client resolves full metadata (source URI, size, ...) for download or
+// preview by calling `GetTask` on the Sobi Task API and matching
+// `AgentArtifact.name` against `file_name`. Only `file_name` and `mime_type`
+// appear on this wire deliberately: the backing `gs://` or Drive URI is not
+// exposed to conversation-history readers. Same variant is used for both
+// byte-uploaded and Drive-picked files -- "user attached a file" is one
+// concept regardless of source.
+type GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference struct {
+	// FileName: Required. Client-supplied filename. Unique per task within the
+	// user-supplied artifact set (UI dedupes before upload). Doubles as the
+	// artifact identifier used to look up the artifact on `Task.artifacts`. The
+	// `_name` suffix is deliberate and the AIP-122 lint is suppressed: this field
+	// is not a resource name (which is what AIP-122 reserves the bare `name` for).
+	// It is the literal filename, and it serves as the join key against
+	// `AgentArtifact.name` on the backing Sobi task -- a structural role that
+	// `title` or `display_name` would not communicate to a client picking what to
+	// send. The internal mirror
+	// (`cloud/ml/discoveryengine/schema/assistant.proto`) uses the same field name
+	// so the round-trip converter stays name-for-name.
+	FileName string `json:"fileName,omitempty"`
+	// MimeType: Optional. IANA MIME type. Used for icon/preview rendering.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17827,6 +17936,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec struct {
 	//   "AUTO" - Automatic switching between search-as-you-type and standard
 	// search modes, ideal for single-API implementations (e.g., debouncing).
 	Condition string `json:"condition,omitempty"`
+	// Fields: Optional. The list of fields to be used for Search As You Type
+	// scoring.
+	Fields []*GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField `json:"fields,omitempty"`
+	// ScoreThreshold: Optional. Search As You Type score threshold for filtering
+	// purpose. We keep the result if `score` >= `score_threshold`.
+	ScoreThreshold float64 `json:"scoreThreshold,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -17843,6 +17958,62 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec struct {
 func (s GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec
+	var s1 struct {
+		ScoreThreshold gensupport.JSONFloat64 `json:"scoreThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScoreThreshold = float64(s1.ScoreThreshold)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField: A
+// schema field to be used for Search As You Type scoring on this request.
+// Overrides any data-store-level Search As You Type field configuration for
+// the duration of the request.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField struct {
+	// Key: Required. A field key that has been indexed for Search As You Type.
+	Key string `json:"key,omitempty"`
+	// Weight: Optional. Weight for scores from this field. Defaults to 1.0 if not
+	// specified.
+	Weight float64 `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1alphaSearchRequestSessionSpec: Session
@@ -23222,7 +23393,7 @@ type GoogleCloudDiscoveryengineV1betaCompletionInfo struct {
 	// SelectedPosition: End user selected
 	// CompleteQueryResponse.QuerySuggestion.suggestion position, starting from 0.
 	SelectedPosition int64 `json:"selectedPosition,omitempty"`
-	// SelectedSuggestion: End user selected
+	// SelectedSuggestion: Optional. End user selected
 	// CompleteQueryResponse.QuerySuggestion.suggestion.
 	SelectedSuggestion string `json:"selectedSuggestion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SelectedPosition") to
@@ -28890,6 +29061,9 @@ func (s GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatusAgentSea
 type GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfig struct {
 	// NotebooklmConfig: Optional. Configuration for NotebookLM settings.
 	NotebooklmConfig *GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ResourceAccessControlConfig: Optional. Resource-level access control config
+	// for Gemini Enterprise users.
+	ResourceAccessControlConfig *GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessControlConfig `json:"resourceAccessControlConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NotebooklmConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -29019,6 +29193,32 @@ type GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigNotebooklmConf
 
 func (s GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigNotebooklmConfigModelArmorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessCo
+// ntrolConfig: Controls resource-level access control for Gemini Enterprise
+// users.
+type GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessControlConfig struct {
+	// DataStoreAccessControlEnabled: Optional. If `true`, the data stores and data
+	// connectors shown to Gemini Enterprise users are filtered to those the user
+	// has the required resource-level `.get` IAM permission on.
+	DataStoreAccessControlEnabled bool `json:"dataStoreAccessControlEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DataStoreAccessControlEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStoreAccessControlEnabled")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessControlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessControlConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -30399,7 +30599,7 @@ type GoogleCloudDiscoveryengineV1betaSearchInfo struct {
 	// events. Other event types should not set this field. Otherwise, an
 	// `INVALID_ARGUMENT` error is returned.
 	OrderBy string `json:"orderBy,omitempty"`
-	// SearchQuery: The user's search query. See SearchRequest.query for
+	// SearchQuery: Optional. The user's search query. See SearchRequest.query for
 	// definition. The value must be a UTF-8 encoded string with a length limit of
 	// 5,000 characters. Otherwise, an `INVALID_ARGUMENT` error is returned. At
 	// least one of search_query or PageInfo.page_category is required for `search`
@@ -31969,6 +32169,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec struct {
 	//   "AUTO" - Automatic switching between search-as-you-type and standard
 	// search modes, ideal for single-API implementations (e.g., debouncing).
 	Condition string `json:"condition,omitempty"`
+	// Fields: Optional. The list of fields to be used for Search As You Type
+	// scoring.
+	Fields []*GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField `json:"fields,omitempty"`
+	// ScoreThreshold: Optional. Search As You Type score threshold for filtering
+	// purpose. We keep the result if `score` >= `score_threshold`.
+	ScoreThreshold float64 `json:"scoreThreshold,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -31985,6 +32191,62 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec struct {
 func (s GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec
+	var s1 struct {
+		ScoreThreshold gensupport.JSONFloat64 `json:"scoreThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScoreThreshold = float64(s1.ScoreThreshold)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField: A
+// schema field to be used for Search As You Type scoring on this request.
+// Overrides any data-store-level Search As You Type field configuration for
+// the duration of the request.
+type GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField struct {
+	// Key: Required. A field key that has been indexed for Search As You Type.
+	Key string `json:"key,omitempty"`
+	// Weight: Optional. Weight for scores from this field. Defaults to 1.0 if not
+	// specified.
+	Weight float64 `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaSearchRequestSessionSpec: Session
@@ -34628,15 +34890,15 @@ func (s GoogleCloudDiscoveryengineV1betaUpdateTargetSiteMetadata) MarshalJSON() 
 // information Discovery Engine API needs to know about how end users interact
 // with your website.
 type GoogleCloudDiscoveryengineV1betaUserEvent struct {
-	// Attributes: Extra user event features to include in the recommendation
-	// model. These attributes must NOT contain data that needs to be parsed or
-	// processed further, e.g. JSON or other encodings. If you provide custom
-	// attributes for ingested user events, also include them in the user events
-	// that you associate with prediction requests. Custom attribute formatting
-	// must be consistent between imported events and events provided with
-	// prediction requests. This lets the Discovery Engine API use those custom
-	// attributes when training models and serving predictions, which helps improve
-	// recommendation quality. This field needs to pass all below criteria,
+	// Attributes: Optional. Extra user event features to include in the
+	// recommendation model. These attributes must NOT contain data that needs to
+	// be parsed or processed further, e.g. JSON or other encodings. If you provide
+	// custom attributes for ingested user events, also include them in the user
+	// events that you associate with prediction requests. Custom attribute
+	// formatting must be consistent between imported events and events provided
+	// with prediction requests. This lets the Discovery Engine API use those
+	// custom attributes when training models and serving predictions, which helps
+	// improve recommendation quality. This field needs to pass all below criteria,
 	// otherwise an `INVALID_ARGUMENT` error is returned: * The key must be a UTF-8
 	// encoded string with a length limit of 5,000 characters. * For text
 	// attributes, at most 400 values are allowed. Empty values are not allowed.

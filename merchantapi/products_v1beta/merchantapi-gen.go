@@ -1039,7 +1039,9 @@ func (s *LoyaltyPoints) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// LoyaltyProgram: A message that represents loyalty program.
+// LoyaltyProgram: A message that represents loyalty program. For more
+// information on loyalty programs, see Overview of loyalty programs
+// (/merchant/api/guides/loyalty/loyalty-programs).
 type LoyaltyProgram struct {
 	// CashbackForFutureUse: The cashback that can be used for future purchases.
 	CashbackForFutureUse *Price `json:"cashbackForFutureUse,omitempty"`

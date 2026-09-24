@@ -354,7 +354,7 @@ type Endpoint struct {
 	// is equivalent to the `annotations` field in the v1 API. They have the same
 	// syntax and read/write to the same location in Service Directory.
 	Metadata map[string]string `json:"metadata,omitempty"`
-	// Name: Immutable. The resource name for the endpoint in the format
+	// Name: Identifier. The resource name for the endpoint in the format
 	// `projects/*/locations/*/namespaces/*/services/*/endpoints/*`.
 	Name string `json:"name,omitempty"`
 	// Network: Immutable. The Google Compute Engine network (VPC) of the endpoint
@@ -656,7 +656,7 @@ type Namespace struct {
 	// than 64 user labels can be associated with a given resource. Label keys and
 	// values can be no longer than 63 characters.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. The resource name for the namespace in the format
+	// Name: Identifier. The resource name for the namespace in the format
 	// `projects/*/locations/*/namespaces/*`.
 	Name string `json:"name,omitempty"`
 	// Uid: Output only. A globally unique identifier (in UUID4 format) for this
@@ -872,7 +872,7 @@ type Service struct {
 	// is equivalent to the `annotations` field in the v1 API. They have the same
 	// syntax and read/write to the same location in Service Directory.
 	Metadata map[string]string `json:"metadata,omitempty"`
-	// Name: Immutable. The resource name for the service in the format
+	// Name: Identifier. The resource name for the service in the format
 	// `projects/*/locations/*/namespaces/*/services/*`.
 	Name string `json:"name,omitempty"`
 	// Uid: Output only. A globally unique identifier (in UUID4 format) for this
@@ -1880,7 +1880,7 @@ type ProjectsLocationsNamespacesPatchCall struct {
 
 // Patch: Updates a namespace.
 //
-//   - name: Immutable. The resource name for the namespace in the format
+//   - name: Identifier. The resource name for the namespace in the format
 //     `projects/*/locations/*/namespaces/*`.
 func (r *ProjectsLocationsNamespacesService) Patch(name string, namespace *Namespace) *ProjectsLocationsNamespacesPatchCall {
 	c := &ProjectsLocationsNamespacesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2809,7 +2809,7 @@ type ProjectsLocationsNamespacesServicesPatchCall struct {
 
 // Patch: Updates a service.
 //
-//   - name: Immutable. The resource name for the service in the format
+//   - name: Identifier. The resource name for the service in the format
 //     `projects/*/locations/*/namespaces/*/services/*`.
 func (r *ProjectsLocationsNamespacesServicesService) Patch(name string, service *Service) *ProjectsLocationsNamespacesServicesPatchCall {
 	c := &ProjectsLocationsNamespacesServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3741,7 +3741,7 @@ type ProjectsLocationsNamespacesServicesEndpointsPatchCall struct {
 
 // Patch: Updates an endpoint.
 //
-//   - name: Immutable. The resource name for the endpoint in the format
+//   - name: Identifier. The resource name for the endpoint in the format
 //     `projects/*/locations/*/namespaces/*/services/*/endpoints/*`.
 func (r *ProjectsLocationsNamespacesServicesEndpointsService) Patch(name string, endpoint *Endpoint) *ProjectsLocationsNamespacesServicesEndpointsPatchCall {
 	c := &ProjectsLocationsNamespacesServicesEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

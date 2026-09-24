@@ -1062,7 +1062,9 @@ func (s *LoyaltyPoints) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// LoyaltyProgram: A message that represents loyalty program.
+// LoyaltyProgram: A message that represents loyalty program. For more
+// information on loyalty programs, see Overview of loyalty programs
+// (/merchant/api/guides/loyalty/loyalty-programs).
 type LoyaltyProgram struct {
 	// CashbackForFutureUse: The cashback that can be used for future purchases.
 	CashbackForFutureUse *Price `json:"cashbackForFutureUse,omitempty"`
@@ -2123,7 +2125,7 @@ type ProductAttributes struct {
 	// information.
 	VirtualModelLink string `json:"virtualModelLink,omitempty"`
 	// Warranty: The warranty
-	// (https://support.google.com/google-ads/answer/15957626) of the vehicle.
+	// (https://support.google.com/merchants/answer/15957626) of the product.
 	Warranty *Warranty `json:"warranty,omitempty"`
 	// Year: The Year (https://support.google.com/google-ads/answer/14152816) of
 	// the vehicle model.
@@ -3424,9 +3426,19 @@ func (s VariantOption) MarshalJSON() ([]byte, error) {
 
 // Warranty: The warranty of the vehicle.
 type Warranty struct {
-	// Duration: The warranty duration in months.
+	// Duration: The warranty duration in units. Default is in months, can be
+	// overridden by the `duration_unit` field.
 	Duration int64 `json:"duration,omitempty,string"`
-	// Mileage: The warranty mileage.
+	// DurationUnit: The unit for the warranty duration. Assumed to be `MONTH` if
+	// equal to `WARRANTY_DURATION_UNIT_UNSPECIFIED`.
+	//
+	// Possible values:
+	//   "WARRANTY_DURATION_UNIT_UNSPECIFIED" - Indicates that the warranty
+	// duration unit is unspecified.
+	//   "MONTH" - Indicates that the warranty duration unit is month.
+	//   "YEAR" - Indicates that the warranty duration unit is year.
+	DurationUnit string `json:"durationUnit,omitempty"`
+	// Mileage: The warranty mileage (only applies to vehicles).
 	Mileage *Mileage `json:"mileage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with empty or

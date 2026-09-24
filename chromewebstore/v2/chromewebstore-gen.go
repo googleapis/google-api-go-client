@@ -197,6 +197,28 @@ type PublishersItemsService struct {
 	s *Service
 }
 
+// AuthorInfo: Info on the author of the review.
+type AuthorInfo struct {
+	// DisplayName: Display name for the author.
+	DisplayName string `json:"displayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthorInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelSubmissionRequest: Request message for CancelSubmission.
 type CancelSubmissionRequest struct {
 }
@@ -254,6 +276,34 @@ type DistributionChannel struct {
 
 func (s DistributionChannel) MarshalJSON() ([]byte, error) {
 	type NoMethod DistributionChannel
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchItemReviewsResponse: Response message for FetchItemReviews.
+type FetchItemReviewsResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Reviews: The list of reviews.
+	Reviews []*Review `json:"reviews,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchItemReviewsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchItemReviewsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -428,6 +478,39 @@ type PublishItemResponse struct {
 
 func (s PublishItemResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishItemResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Review: A review written by a user to rate an item in the Chrome Web Store.
+type Review struct {
+	// AuthorInfo: Info on the author of the review.
+	AuthorInfo *AuthorInfo `json:"authorInfo,omitempty"`
+	// Comment: Content of the review.
+	Comment string `json:"comment,omitempty"`
+	// CreateTime: Output only. When the review was posted.
+	CreateTime string `json:"createTime,omitempty"`
+	// Item: Output only. The item that this review evaluates. Format:
+	// publishers/{publisher}/items/{item}
+	Item string `json:"item,omitempty"`
+	// Name: Identifier. Review resource name. Format: reviews/{reviewId}
+	Name string `json:"name,omitempty"`
+	// Rating: Rating of the item, between 1 and 5.
+	Rating int64 `json:"rating,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Review) MarshalJSON() ([]byte, error) {
+	type NoMethod Review
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -831,6 +914,172 @@ func (c *PublishersItemsCancelSubmissionCall) Do(opts ...googleapi.CallOption) (
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromewebstore.publishers.items.cancelSubmission", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type PublishersItemsFetchReviewsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchReviews: Fetch user reviews for an item.
+//
+//   - name: The item resource name whose reviews are being fetched. Format:
+//     publishers/{publisher_id}/items/{item_id}.
+func (r *PublishersItemsService) FetchReviews(name string) *PublishersItemsFetchReviewsCall {
+	c := &PublishersItemsFetchReviewsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter to apply to the
+// reviews. Only equality comparison on rating is supported, e.g. `rating = 5`.
+func (c *PublishersItemsFetchReviewsCall) Filter(filter string) *PublishersItemsFetchReviewsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An optional comma-separated
+// list of fields by which to sort the results. Supported fields are `rating`
+// and `create_time`. Supported orders are `asc` (default) and `desc`. Example:
+// "rating desc, create_time".
+func (c *PublishersItemsFetchReviewsCall) OrderBy(orderBy string) *PublishersItemsFetchReviewsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// reviews to return. The service may return fewer than this value. If
+// unspecified, at most 50 reviews will be returned. The maximum value is 200;
+// values above 200 will be coerced to 200.
+func (c *PublishersItemsFetchReviewsCall) PageSize(pageSize int64) *PublishersItemsFetchReviewsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `FetchItemReviews` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `FetchItemReviews` must match the call that provided the page token.
+func (c *PublishersItemsFetchReviewsCall) PageToken(pageToken string) *PublishersItemsFetchReviewsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PublishersItemsFetchReviewsCall) Fields(s ...googleapi.Field) *PublishersItemsFetchReviewsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *PublishersItemsFetchReviewsCall) IfNoneMatch(entityTag string) *PublishersItemsFetchReviewsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PublishersItemsFetchReviewsCall) Context(ctx context.Context) *PublishersItemsFetchReviewsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PublishersItemsFetchReviewsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PublishersItemsFetchReviewsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:fetchReviews")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromewebstore.publishers.items.fetchReviews", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromewebstore.publishers.items.fetchReviews" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchItemReviewsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PublishersItemsFetchReviewsCall) Do(opts ...googleapi.CallOption) (*FetchItemReviewsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchItemReviewsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromewebstore.publishers.items.fetchReviews", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PublishersItemsFetchReviewsCall) Pages(ctx context.Context, f func(*FetchItemReviewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type PublishersItemsFetchStatusCall struct {

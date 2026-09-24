@@ -771,6 +771,12 @@ type GoogleCloudAssuredworkloadsV1CloudControlAssessmentDetails struct {
 	EvaluationState string `json:"evaluationState,omitempty"`
 	// FindingsCount: The number of findings for the cloud control.
 	FindingsCount int64 `json:"findingsCount,omitempty"`
+	// OrgPolicyFindingCount: Output only. Number of organization policy findings
+	// for the cloud control.
+	OrgPolicyFindingCount int64 `json:"orgPolicyFindingCount,omitempty,string"`
+	// ResourceFindingCount: Output only. Number of resource findings for the cloud
+	// control.
+	ResourceFindingCount int64 `json:"resourceFindingCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "EvaluationState") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1101,6 +1107,9 @@ type GoogleCloudAssuredworkloadsV1DbControlComplianceSummary struct {
 	IsFakeControl bool `json:"isFakeControl,omitempty"`
 	// Name: Identifier. The name of the control compliance summary.
 	Name string `json:"name,omitempty"`
+	// OrgPolicyFindingCount: Output only. Number of organization policy findings
+	// for this control.
+	OrgPolicyFindingCount int64 `json:"orgPolicyFindingCount,omitempty,string"`
 	// OverallEvaluationState: Output only. The overall evaluation status of the
 	// control.
 	//
@@ -1110,6 +1119,9 @@ type GoogleCloudAssuredworkloadsV1DbControlComplianceSummary struct {
 	//   "EVALUATION_STATE_FAILED" - The control is failing.
 	//   "EVALUATION_STATE_NOT_ASSESSED" - The control is not assessed.
 	OverallEvaluationState string `json:"overallEvaluationState,omitempty"`
+	// ResourceFindingCount: Output only. Number of resource findings for this
+	// control.
+	ResourceFindingCount int64 `json:"resourceFindingCount,omitempty,string"`
 	// SimilarControls: The list of similar controls.
 	SimilarControls []*GoogleCloudAssuredworkloadsV1SimilarControls `json:"similarControls,omitempty"`
 	// TotalFindingsCount: The total number of findings for the control.

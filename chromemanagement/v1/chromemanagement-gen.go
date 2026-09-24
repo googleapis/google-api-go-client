@@ -5031,8 +5031,8 @@ type GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand struct {
 	//   "EXECUTED_BY_CLIENT" - Represents a command that has been executed by the
 	// client.
 	CommandState string `json:"commandState,omitempty"`
-	// CommandType: Required. Type of the remote command. The only supported
-	// command_type is "clearBrowsingData".
+	// CommandType: Required. Type of the remote command. Supported commands:
+	// "clearBrowsingData" and "extensionUpdateCheck".
 	CommandType string `json:"commandType,omitempty"`
 	// IssueTime: Output only. Timestamp of the issurance of the remote command.
 	IssueTime string `json:"issueTime,omitempty"`
@@ -5041,7 +5041,8 @@ type GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand struct {
 	Name string `json:"name,omitempty"`
 	// Payload: Required. Payload of the remote command. The payload for
 	// "clearBrowsingData" command supports: - fields "clearCache" and
-	// "clearCookies" - values of boolean type.
+	// "clearCookies" - values of boolean type. The payload for
+	// "extensionUpdateCheck" should be empty.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 	// ValidDuration: Output only. Valid duration of the remote command.
 	ValidDuration string `json:"validDuration,omitempty"`
@@ -5214,6 +5215,7 @@ type GoogleChromeManagementVersionsV1ConnectorConfig struct {
 	// supported in the API.
 	//   "ROOT_STORE" - Root certificate connector.
 	//   "CONTENT_ANALYSIS" - Content analysis connector.
+	//   "ENTERPRISE_PROXY" - Enterprise proxy connector.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5258,6 +5260,8 @@ type GoogleChromeManagementVersionsV1ConnectorConfigDetails struct {
 	PubSubConfig *GoogleChromeManagementVersionsV1PubSubConfig `json:"pubSubConfig,omitempty"`
 	// PubSubXdrConfig: Pub/Sub XDR connector config.
 	PubSubXdrConfig *GoogleChromeManagementVersionsV1PubSubXdrConfig `json:"pubSubXdrConfig,omitempty"`
+	// SecureGatewayConfig: Secure gateway connector config.
+	SecureGatewayConfig *GoogleChromeManagementVersionsV1SecureGatewayConfig `json:"secureGatewayConfig,omitempty"`
 	// SplunkConfig: Splunk connector config.
 	SplunkConfig *GoogleChromeManagementVersionsV1SplunkConfig `json:"splunkConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CrowdStrikeConfig") to
@@ -6441,6 +6445,38 @@ type GoogleChromeManagementVersionsV1ScepProfile struct {
 
 func (s GoogleChromeManagementVersionsV1ScepProfile) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1ScepProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1SecureGatewayConfig: Secure gateway
+// connector config.
+type GoogleChromeManagementVersionsV1SecureGatewayConfig struct {
+	// EnabledPlatforms: Optional. The enabled platforms for the secure gateway
+	// connector config.
+	//
+	// Possible values:
+	//   "PLATFORM_UNSPECIFIED" - Default value. This value is unused.
+	//   "ANDROID" - Android platform.
+	//   "IOS" - iOS platform.
+	EnabledPlatforms []string `json:"enabledPlatforms,omitempty"`
+	// ResourceId: Required. The resource ID of the secure gateway connector
+	// config.
+	ResourceId string `json:"resourceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnabledPlatforms") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnabledPlatforms") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1SecureGatewayConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1SecureGatewayConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

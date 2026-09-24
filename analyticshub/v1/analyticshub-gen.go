@@ -281,7 +281,7 @@ type AIInference struct {
 	// requests against endpoints. The resource creator or updater that specifies
 	// this field must have `iam.serviceAccounts.actAs` permission on the service
 	// account. If not specified, the Pub/Sub service agent
-	// ({$universe.dns_names.final_documentation_domain}/iam/docs/service-agents),
+	// (https://cloud.google.com/iam/docs/service-agents),
 	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 	// UnstructuredInference: Optional. Requests and responses can be any arbitrary
@@ -522,7 +522,7 @@ type BigtableConfig struct {
 	// Bigtable. The subscription creator or updater that specifies this field must
 	// have `iam.serviceAccounts.actAs` permission on the service account. If not
 	// specified, the Pub/Sub service agent
-	// ({$universe.dns_names.final_documentation_domain}/iam/docs/service-agents),
+	// (https://cloud.google.com/iam/docs/service-agents),
 	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 	// Table: Optional. The unique name of the table to write messages to. Values
@@ -1024,6 +1024,30 @@ func (s DestinationPubSubSubscription) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionConfig: Encryption configuration for the query template.
+type EncryptionConfig struct {
+	// KmsKeyName: Optional. The KMS key used to encrypt the query template.
+	// Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}`
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExpirationPolicy: A policy that specifies the conditions for resource
@@ -2152,6 +2176,10 @@ type QueryTemplate struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Documentation: Optional. Documentation describing the QueryTemplate.
 	Documentation string `json:"documentation,omitempty"`
+	// EncryptionConfiguration: Optional. Encryption configuration for the query
+	// template. If set, the customer-managed KMS key is used to encrypt the query
+	// template definition body.
+	EncryptionConfiguration *EncryptionConfig `json:"encryptionConfiguration,omitempty"`
 	// Name: Output only. The resource name of the QueryTemplate. e.g.
 	// `projects/myproject/locations/us/dataExchanges/123/queryTemplates/456`
 	Name string `json:"name,omitempty"`

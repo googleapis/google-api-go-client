@@ -760,7 +760,7 @@ type CustomDomain struct {
 	Issues []*Status `json:"issues,omitempty"`
 	// Labels: Labels used for extra metadata and/or filtering.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. The fully-qualified name of the `CustomDomain`.
+	// Name: Identifier. The fully-qualified name of the `CustomDomain`.
 	Name string `json:"name,omitempty"`
 	// OwnershipState: Output only. The `OwnershipState` of the domain name this
 	// `CustomDomain` refers to.
@@ -4605,7 +4605,7 @@ type ProjectsSitesCustomDomainsPatchCall struct {
 
 // Patch: Updates the specified `CustomDomain`.
 //
-// - name: Output only. The fully-qualified name of the `CustomDomain`.
+// - name: Identifier. The fully-qualified name of the `CustomDomain`.
 func (r *ProjectsSitesCustomDomainsService) Patch(name string, customdomain *CustomDomain) *ProjectsSitesCustomDomainsPatchCall {
 	c := &ProjectsSitesCustomDomainsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

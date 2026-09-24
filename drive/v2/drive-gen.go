@@ -10043,8 +10043,9 @@ type PermissionsDeleteCall struct {
 }
 
 // Delete: Deletes a permission from a file or shared drive. **Warning:**
-// Concurrent permissions operations on the same file are not supported; only
-// the last update is applied.
+// Concurrent permission modifications (such as update or delete) on the same
+// file, folder, or shared drive aren't supported across any users or clients;
+// only the last update is applied.
 //
 // - fileId: The ID for the file or shared drive.
 // - permissionId: The ID for the permission.
@@ -10399,8 +10400,9 @@ type PermissionsInsertCall struct {
 }
 
 // Insert: Inserts a permission for a file or shared drive. **Warning:**
-// Concurrent permissions operations on the same file are not supported; only
-// the last update is applied.
+// Concurrent permission modifications (such as update or delete) on the same
+// file, folder, or shared drive aren't supported across any users or clients;
+// only the last update is applied.
 //
 // - fileId: The ID for the file or shared drive.
 func (r *PermissionsService) Insert(fileId string, permission *Permission) *PermissionsInsertCall {
@@ -10747,8 +10749,9 @@ type PermissionsPatchCall struct {
 }
 
 // Patch: Updates a permission using patch semantics. **Warning:** Concurrent
-// permissions operations on the same file are not supported; only the last
-// update is applied.
+// permission modifications (such as update or delete) on the same file,
+// folder, or shared drive aren't supported across any users or clients; only
+// the last update is applied.
 //
 // - fileId: The ID for the file or shared drive.
 // - permissionId: The ID for the permission.
@@ -10901,8 +10904,10 @@ type PermissionsUpdateCall struct {
 	header_      http.Header
 }
 
-// Update: Updates a permission. **Warning:** Concurrent permissions operations
-// on the same file are not supported; only the last update is applied.
+// Update: Updates a permission. **Warning:** Concurrent permission
+// modifications (such as update or delete) on the same file, folder, or shared
+// drive aren't supported across any users or clients; only the last update is
+// applied.
 //
 // - fileId: The ID for the file or shared drive.
 // - permissionId: The ID for the permission.

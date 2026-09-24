@@ -1872,6 +1872,7 @@ type BackupPlanAssociation struct {
 	//   "DELETING" - The resource is being deleted.
 	//   "INACTIVE" - The resource has been created but is not usable.
 	//   "UPDATING" - The resource is being updated.
+	//   "PAUSED" - The resource has been created but backups are paused.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The time when the instance was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -4902,6 +4903,7 @@ type LocationMetadata struct {
 	//   "ALLOY_DB"
 	//   "FILESTORE"
 	//   "BV_AF"
+	//   "GOOGLE_CLOUD_NETAPP_VOLUME"
 	//   "CEP_MONITORING_COMPUTE_INSTANCE"
 	//   "CEP_MONITORING_DISK"
 	//   "BV_CUSTOM_PROBERS" - Remove once parity achieved between BV_AF and

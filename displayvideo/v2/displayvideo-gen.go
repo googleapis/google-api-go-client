@@ -3143,7 +3143,7 @@ func (s BulkUpdateLineItemsResponse) MarshalJSON() ([]byte, error) {
 
 // BumperAd: Details for a bumper ad.
 type BumperAd struct {
-	// CommonInStreamAttribute: Common ad attributes.
+	// CommonInStreamAttribute: Required. Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonInStreamAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3920,20 +3920,21 @@ func (s CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 // CommonInStreamAttribute: Common attributes for in-stream, non-skippable and
 // bumper ads.
 type CommonInStreamAttribute struct {
-	// ActionButtonLabel: The text on the call-to-action button.
+	// ActionButtonLabel: Optional. The text on the call-to-action button.
 	ActionButtonLabel string `json:"actionButtonLabel,omitempty"`
-	// ActionHeadline: The headline of the call-to-action banner.
+	// ActionHeadline: Optional. The headline of the call-to-action banner.
 	ActionHeadline string `json:"actionHeadline,omitempty"`
-	// CompanionBanner: The image which shows next to the video ad.
+	// CompanionBanner: Optional. The image which shows next to the video ad.
 	CompanionBanner *ImageAsset `json:"companionBanner,omitempty"`
-	// DisplayUrl: The webpage address that appears with the ad.
+	// DisplayUrl: Required. The webpage address that appears with the ad.
 	DisplayUrl string `json:"displayUrl,omitempty"`
-	// FinalUrl: The URL address of the webpage that people reach after they click
-	// the ad.
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
-	// TrackingUrl: The URL address loaded in the background for tracking purposes.
+	// TrackingUrl: Output only. The URL address loaded in the background for
+	// tracking purposes.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
-	// Video: The YouTube video of the ad.
+	// Video: Required. The YouTube video of the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionButtonLabel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5793,13 +5794,13 @@ type DeviceTypeAssignedTargetingOptionDetails struct {
 	//   "DEVICE_TYPE_TABLET" - Tablet.
 	//   "DEVICE_TYPE_CONNECTED_DEVICE" - Connected device.
 	DeviceType string `json:"deviceType,omitempty"`
-	// YoutubeAndPartnersBidMultiplier: Output only. Bid multiplier allows you to
-	// show your ads more or less frequently based on the device type. It will
-	// apply a multiplier on the original bid price. When this field is 0, it
-	// indicates this field is not applicable instead of multiplying 0 on the
-	// original bid price. For example, if the bid price without multiplier is
-	// $10.0 and the multiplier is 1.5 for Tablet, the resulting bid price for
-	// Tablet will be $15.0. Only applicable to YouTube and Partners line items.
+	// YoutubeAndPartnersBidMultiplier: Optional. Bid multiplier allows you to show
+	// your ads more or less frequently based on the device type. It will apply a
+	// multiplier on the original bid price. When this field is 0, it indicates
+	// this field is not applicable instead of multiplying 0 on the original bid
+	// price. For example, if the bid price without multiplier is $10.0 and the
+	// multiplier is 1.5 for Tablet, the resulting bid price for Tablet will be
+	// $15.0. Only applicable to YouTube and Partners line items.
 	YoutubeAndPartnersBidMultiplier float64 `json:"youtubeAndPartnersBidMultiplier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeviceType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8106,10 +8107,10 @@ func (s ImageAsset) MarshalJSON() ([]byte, error) {
 
 // InStreamAd: Details for an in-stream ad.
 type InStreamAd struct {
-	// CommonInStreamAttribute: Common ad attributes.
+	// CommonInStreamAttribute: Required. Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
-	// CustomParameters: The custom parameters and accompanying values to add to
-	// the tracking URL.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonInStreamAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10601,10 +10602,10 @@ func (s NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byte
 
 // NonSkippableAd: Details for a non-skippable ad.
 type NonSkippableAd struct {
-	// CommonInStreamAttribute: Common ad attributes.
+	// CommonInStreamAttribute: Required. Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
-	// CustomParameters: The custom parameters and accompanying values to add to
-	// the tracking URL.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonInStreamAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -13707,33 +13708,38 @@ func (s VideoDiscoveryAd) MarshalJSON() ([]byte, error) {
 
 // VideoPerformanceAd: Details for a video performance ad.
 type VideoPerformanceAd struct {
-	// ActionButtonLabels: The list of text assets shown on the call-to-action
-	// button.
+	// ActionButtonLabels: Optional. The list of text assets shown on the
+	// call-to-action button.
 	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
-	// CompanionBanners: The list of companion banners used by this ad.
+	// CompanionBanners: Optional. The list of companion banners used by this ad.
 	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
-	// CustomParameters: The custom parameters and accompanying values to add to
-	// the tracking URL.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
-	// Descriptions: The list of descriptions shown on the call-to-action banner.
+	// Descriptions: Optional. The list of descriptions shown on the call-to-action
+	// banner.
 	Descriptions []string `json:"descriptions,omitempty"`
-	// DisplayUrlBreadcrumb1: The first piece after the domain in the display URL.
+	// DisplayUrlBreadcrumb1: Optional. The first piece after the domain in the
+	// display URL.
 	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
-	// DisplayUrlBreadcrumb2: The second piece after the domain in the display URL.
+	// DisplayUrlBreadcrumb2: Optional. The second piece after the domain in the
+	// display URL.
 	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
 	// Domain: Output only. The domain of the display URL.
 	Domain string `json:"domain,omitempty"`
-	// FinalUrl: The URL address of the webpage that people reach after they click
-	// the ad.
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
-	// Headlines: The list of headlines shown on the call-to-action banner.
-	Headlines []string `json:"headlines,omitempty"`
-	// LongHeadlines: The list of long headlines shown on the call-to-action
+	// Headlines: Optional. The list of headlines shown on the call-to-action
 	// banner.
+	Headlines []string `json:"headlines,omitempty"`
+	// LongHeadlines: Optional. The list of long headlines shown on the
+	// call-to-action banner.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
-	// TrackingUrl: The URL address loaded in the background for tracking purposes.
+	// TrackingUrl: Output only. The URL address loaded in the background for
+	// tracking purposes.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
-	// Videos: The list of YouTube video assets used by this ad.
+	// Videos: Required. The list of YouTube video assets used by this ad.
 	Videos []*YoutubeVideoDetails `json:"videos,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionButtonLabels") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -14447,7 +14453,8 @@ type YoutubeVideoDetails struct {
 	// Id: Output only. The YouTube video ID which can be searched on YouTube
 	// webpage.
 	Id string `json:"id,omitempty"`
-	// UnavailableReason: The reason why the video data is not available.
+	// UnavailableReason: Output only. The reason why the video data is not
+	// available.
 	//
 	// Possible values:
 	//   "VIDEO_UNAVAILABLE_REASON_UNSPECIFIED" - Unknown or unspecified.

@@ -1533,14 +1533,14 @@ type InlineCertificateIssuanceConfig struct {
 	// initiated. Must be between 50 and 80. If no value is specified, rotation
 	// window percentage is defaulted to 50.
 	RotationWindowPercentage int64 `json:"rotationWindowPercentage,omitempty"`
-	// UseDefaultSharedCa: Optional. If set to true, the trust domain will utilize
-	// the GCP-provisioned default CA. A default CA in the same region as the
-	// workload will be selected to issue the certificate. Enabling this will clear
-	// any existing `ca_pools` configuration to provision the certificates. NOTE:
-	// This field is mutually exclusive with `ca_pools`. If this flag is enabled,
-	// certificates will be automatically provisioned from the default shared CAs.
-	// This flag should not be set if you want to use your own CA pools to
-	// provision the certificates.
+	// UseDefaultSharedCa: Optional. Determines whether the trust domain utilizes
+	// the Google Cloud-provisioned default CA. A default CA in the same region as
+	// the workload will be selected to issue the certificate. Enabling this will
+	// clear any existing `ca_pools` configuration to provision the certificates.
+	// NOTE: This field is mutually exclusive with `ca_pools`. If this flag is
+	// enabled, certificates will be automatically provisioned from the default
+	// shared CAs. This flag should not be set if you want to use your own CA pools
+	// to provision the certificates.
 	UseDefaultSharedCa bool `json:"useDefaultSharedCa,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaPools") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3556,8 +3556,8 @@ type TrustStore struct {
 	// validation against a given TrustStore. The incoming end entity's certificate
 	// must be in the trust chain of one of the trust anchors here.
 	TrustAnchors []*TrustAnchor `json:"trustAnchors,omitempty"`
-	// TrustDefaultSharedCa: Optional. If set to True, the trust bundle will
-	// include the private ca managed identity regional root public certificates.
+	// TrustDefaultSharedCa: Optional. Determines whether the trust bundle includes
+	// the private CA managed identity regional root public certificates.
 	// Important: `trust_default_shared_ca` is only supported for managed identity
 	// trust domain resource.
 	TrustDefaultSharedCa bool `json:"trustDefaultSharedCa,omitempty"`
@@ -4295,11 +4295,13 @@ type WorkloadIdentityPoolProvider struct {
 	// authentication credential issued by the provider. * `google`: The Google
 	// attributes mapped from the assertion in the `attribute_mappings`. *
 	// `attribute`: The custom attributes mapped from the assertion in the
-	// `attribute_mappings`. The maximum length of the attribute condition
-	// expression is 4096 characters. If unspecified, all valid authentication
-	// credential are accepted. The following example shows how to only allow
-	// credentials with a mapped `google.groups` value of `admins`: ``` "'admins'
-	// in google.groups" ```
+	// `attribute_mappings`. The maximum length of the `attribute_condition`
+	// expression is 4,096 characters. Providing a condition longer than this will
+	// result in an error. If unspecified, all valid authentication credentials are
+	// accepted. However, multi-tenant identity providers (such as GitHub or
+	// Terraform Cloud) require an `attribute_condition` to prevent token spoofing.
+	// The following example shows how to only allow credentials with a mapped
+	// `google.groups` value of `admins`: ``` "'admins' in google.groups" ```
 	AttributeCondition string `json:"attributeCondition,omitempty"`
 	// AttributeMapping: Optional. Maps attributes from authentication credentials
 	// issued by an external identity provider to Google Cloud attributes, such as

@@ -644,7 +644,7 @@ func (s GoogleIdentityStsV1ExchangeTokenResponse) MarshalJSON() ([]byte, error) 
 
 // GoogleIdentityStsV1Jwk: A JSON web key set (JWK) See also
 // https://datatracker.ietf.org/doc/html/rfc7517 and
-// https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md#6-representation-in-the-spiffe-bundle
+// https://github.com/spiffe/spiffe/blob/main/standards/JWT-SVID.md#6-representation-in-the-spiffe-bundle.
 type GoogleIdentityStsV1Jwk struct {
 	// Alg: Algorithm intended for use with the key. Currently "RS256".
 	Alg string `json:"alg,omitempty"`
@@ -678,7 +678,7 @@ func (s GoogleIdentityStsV1Jwk) MarshalJSON() ([]byte, error) {
 
 // GoogleIdentityStsV1Jwks: Response message for GetJwks.
 type GoogleIdentityStsV1Jwks struct {
-	// Keys: The JWKS for this OP.
+	// Keys: The JWKs for this OP.
 	Keys []*GoogleIdentityStsV1Jwk `json:"keys,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -703,27 +703,25 @@ func (s GoogleIdentityStsV1Jwks) MarshalJSON() ([]byte, error) {
 
 // GoogleIdentityStsV1OpenIdProviderConfig: Response message for
 // GetOpenIdProviderConfig. Message fields are defined in
-// https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse
+// https://openid.net/specs/openid-connect-discovery-1_0.html#ProviderConfigurationResponse.
 type GoogleIdentityStsV1OpenIdProviderConfig struct {
 	// AuthorizationEndpoint: URL pointing to an authorization endpoint under this
 	// issuer. Note: Currently this endpoint returns a 404.
 	AuthorizationEndpoint string `json:"authorization_endpoint,omitempty"`
-	// IdTokenSigningAlgValuesSupported: JSON array containing a list of the JWS
+	// IdTokenSigningAlgValuesSupported: JSON array that contains a list of the JWS
 	// signing algorithms (alg values) supported by the OP for the ID token to
-	// encode the claims in a JWT [JWT]. Note: Currently always "["RS256"]".
+	// encode the claims in a JWT. Supported value: `RS256`.
 	IdTokenSigningAlgValuesSupported []string `json:"id_token_signing_alg_values_supported,omitempty"`
 	// Issuer: URL using the https scheme with no query or fragment components that
 	// the OP asserts as its issuer identifier.
 	Issuer string `json:"issuer,omitempty"`
-	// JwksUri: URL of the OP's JWK Set [JWK] document, which MUST use the https
-	// scheme.
+	// JwksUri: URL of the OP's JWK Set document, which MUST use the https scheme.
 	JwksUri string `json:"jwks_uri,omitempty"`
-	// ResponseTypesSupported: JSON array containing a list of the OAuth 2.0
-	// response_type values that this OP supports. Note: Currently always
-	// "["id_token"]".
+	// ResponseTypesSupported: JSON array that contains a list of the OAuth 2.0
+	// response_type values that this OP supports. Supported value: `id_token`.
 	ResponseTypesSupported []string `json:"response_types_supported,omitempty"`
-	// SubjectTypesSupported: JSON array containing a list of the subject
-	// identifier types that this OP supports. Note: Currently always "["public"]".
+	// SubjectTypesSupported: JSON array that contains a list of the subject
+	// identifier types that this OP supports. Supported value: `public`.
 	SubjectTypesSupported []string `json:"subject_types_supported,omitempty"`
 	// TokenEndpoint: URL pointing to a token endpoint under this issuer. Note:
 	// Currently this endpoint returns a 404.
@@ -759,7 +757,7 @@ type GoogleIdentityStsV1Options struct {
 	// AccessBoundary. The access boundary can include up to 10 rules. The size of
 	// the parameter value should not exceed 2048 characters.
 	AccessBoundary *GoogleIdentityStsV1AccessBoundary `json:"accessBoundary,omitempty"`
-	// BindCertFingerprint: The unpadded, url-escaped, base64-encoded SHA-256 hash
+	// BindCertFingerprint: The unpadded, URL-escaped, base64-encoded SHA-256 hash
 	// of the certificate's DER encoding. It must be 43 characters long. The
 	// resulting token will be bound to this value.
 	BindCertFingerprint string `json:"bindCertFingerprint,omitempty"`
@@ -953,7 +951,7 @@ type OrganizationsLocationsWorkloadIdentityPoolsOpenidGetJwksCall struct {
 }
 
 // GetJwks: Fetches the signing keys for an agentic or managed workload
-// identity pool and returns them in JWKs format, defined in RFC 7517
+// identity pool and returns them in JWK Set format, defined in RFC 7517
 // (https://tools.ietf.org/html/rfc7517). For now, only agentic system pools
 // are supported. **Preview** This feature is subject to the "Pre-GA Offerings
 // Terms" in the General Service Terms section of the Service Specific Terms
@@ -962,7 +960,7 @@ type OrganizationsLocationsWorkloadIdentityPoolsOpenidGetJwksCall struct {
 // the launch stage descriptions
 // (https://cloud.google.com/products#product-launch-stages).
 //
-//   - name: The name of the pool whose JWKS needs to be retrieved. Format:
+//   - name: The name of the pool whose JWKs need to be retrieved. Format:
 //     'organizations/{ORGANIZATION_NUMBER}/locations/global/workloadIdentityPools
 //     /{POOL_ID}'
 //     'projects/{PROJECT_NUMBER}/locations/global/workloadIdentityPools/{POOL_ID}
@@ -1208,7 +1206,7 @@ type ProjectsLocationsWorkloadIdentityPoolsOpenidGetJwksCall struct {
 }
 
 // GetJwks: Fetches the signing keys for an agentic or managed workload
-// identity pool and returns them in JWKs format, defined in RFC 7517
+// identity pool and returns them in JWK Set format, defined in RFC 7517
 // (https://tools.ietf.org/html/rfc7517). For now, only agentic system pools
 // are supported. **Preview** This feature is subject to the "Pre-GA Offerings
 // Terms" in the General Service Terms section of the Service Specific Terms
@@ -1217,7 +1215,7 @@ type ProjectsLocationsWorkloadIdentityPoolsOpenidGetJwksCall struct {
 // the launch stage descriptions
 // (https://cloud.google.com/products#product-launch-stages).
 //
-//   - name: The name of the pool whose JWKS needs to be retrieved. Format:
+//   - name: The name of the pool whose JWKs need to be retrieved. Format:
 //     'organizations/{ORGANIZATION_NUMBER}/locations/global/workloadIdentityPools
 //     /{POOL_ID}'
 //     'projects/{PROJECT_NUMBER}/locations/global/workloadIdentityPools/{POOL_ID}

@@ -962,7 +962,7 @@ type Location struct {
 	// MoreHours: Optional. More hours for a business's different departments or
 	// specific customers.
 	MoreHours []*MoreHours `json:"moreHours,omitempty"`
-	// Name: Google identifier for this location in the form:
+	// Name: Identifier. Google identifier for this location in the form:
 	// `locations/{location_id}`.
 	Name string `json:"name,omitempty"`
 	// OpenInfo: Optional. A flag that indicates whether the location is currently
@@ -1057,9 +1057,8 @@ type Metadata struct {
 	// CanOperateHealthData: Output only. Indicates whether the location can
 	// operate on Health data.
 	CanOperateHealthData bool `json:"canOperateHealthData,omitempty"`
-	// CanOperateLocalPost: Output only. Indicates if the listing can manage local
-	// posts. Deprecated: This field is no longer populated and will be removed in
-	// a future version.
+	// CanOperateLocalPost: Output only. Deprecated: This field is no longer
+	// populated and will be removed in a future version.
 	CanOperateLocalPost bool `json:"canOperateLocalPost,omitempty"`
 	// CanOperateLodgingData: Output only. Indicates whether the location can
 	// operate on Lodging data.
@@ -1080,7 +1079,11 @@ type Metadata struct {
 	// locations.getVoiceOfMerchantState API to get details as to why they do not
 	// have Voice of Merchant.
 	HasVoiceOfMerchant bool `json:"hasVoiceOfMerchant,omitempty"`
-	// IsParticularlyPersonalPlace: Output only.
+	// IsParticularlyPersonalPlace: Output only. Indicates whether the location is
+	// classified as a particularly personal place. This means there are
+	// restrictions on Location History features. If you believe this was a
+	// mistake, see the help center article
+	// (https://support.google.com/business/answer/3480441).
 	IsParticularlyPersonalPlace bool `json:"isParticularlyPersonalPlace,omitempty"`
 	// MapsUri: Output only. A link to the location on Maps.
 	MapsUri string `json:"mapsUri,omitempty"`
@@ -1298,8 +1301,8 @@ func (s PlaceInfo) MarshalJSON() ([]byte, error) {
 
 // Places: Defines the union of areas represented by a set of places.
 type Places struct {
-	// PlaceInfos: The areas represented by place IDs. Limited to a maximum of 20
-	// places.
+	// PlaceInfos: Optional. The areas represented by place IDs. Limited to a
+	// maximum of 20 places.
 	PlaceInfos []*PlaceInfo `json:"placeInfos,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlaceInfos") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1445,13 +1448,14 @@ func (s Profile) MarshalJSON() ([]byte, error) {
 // RelationshipData: Information of all parent and children locations related
 // to this one.
 type RelationshipData struct {
-	// ChildrenLocations: The list of children locations that this location has
-	// relations with.
+	// ChildrenLocations: Optional. The list of children locations that this
+	// location has relations with.
 	ChildrenLocations []*RelevantLocation `json:"childrenLocations,omitempty"`
-	// ParentChain: The resource name of the Chain that this location is member of.
-	// How to find Chain ID
+	// ParentChain: Optional. The resource name of the Chain that this location is
+	// member of. How to find Chain ID
 	ParentChain string `json:"parentChain,omitempty"`
-	// ParentLocation: The parent location that this location has relations with.
+	// ParentLocation: Optional. The parent location that this location has
+	// relations with.
 	ParentLocation *RelevantLocation `json:"parentLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChildrenLocations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1638,7 +1642,8 @@ type ServiceAreaBusiness struct {
 	//   "CUSTOMER_AND_BUSINESS_LOCATION" - Offers service at the business address
 	// and the surrounding area.
 	BusinessType string `json:"businessType,omitempty"`
-	// Places: The area that this business serves defined through a set of places.
+	// Places: Optional. The area that this business serves defined through a set
+	// of places.
 	Places *Places `json:"places,omitempty"`
 	// RegionCode: Immutable. CLDR region code of the country/region that this
 	// service area business is based in. See http://cldr.unicode.org/ and
@@ -3548,7 +3553,7 @@ type LocationsPatchCall struct {
 
 // Patch: Updates the specified location.
 //
-//   - name: Google identifier for this location in the form:
+//   - name: Identifier. Google identifier for this location in the form:
 //     `locations/{location_id}`.
 func (r *LocationsService) Patch(nameid string, location *Location) *LocationsPatchCall {
 	c := &LocationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

@@ -1900,22 +1900,11 @@ func (s EnableFailure) MarshalJSON() ([]byte, error) {
 }
 
 // EnableRule: The consumer policy rule that defines enabled services and
-// groups.
+// catalogs.
 type EnableRule struct {
-	// EnableType: Deprecated: EnableType is not supported.
-	//
-	// Possible values:
-	//   "ENABLE_TYPE_UNSPECIFIED" - Unspecified enable type, which means enabled
-	// as both client and resource project.
-	//   "CLIENT" - Enable all clients under the CRM node specified by
-	// `ConsumerPolicy.name` to use the listed services. A client can be an API
-	// key, an OAuth client, or a service account.
-	//   "RESOURCE" - Enable resources in the list services to be created and used
-	// under the CRM node specified by the `ConsumerPolicy.name`.
-	//   "V1_COMPATIBLE" - Activation made by Service Usage v1 API. This will be
-	// how consumers differentiate between policy changes made by v1 and v2 clients
-	// and understand what is actually possible based on those different policies.
-	EnableType string `json:"enableType,omitempty"`
+	// Catalogs: The names of the catalogs that are enabled. Example:
+	// `catalogs/default-cloud-services`.
+	Catalogs []string `json:"catalogs,omitempty"`
 	// Services: The names of the services that are enabled. Example:
 	// `services/storage.googleapis.com`.
 	Services []string `json:"services,omitempty"`
@@ -1924,13 +1913,13 @@ type EnableRule struct {
 	// `services/storage.googleapis.com`, `groups/googleServices`,
 	// `groups/allServices`.
 	Values []string `json:"values,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableType") to
+	// ForceSendFields is a list of field names (e.g. "Catalogs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableType") to include in API
+	// NullFields is a list of field names (e.g. "Catalogs") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2962,16 +2951,19 @@ func (s GoogleApiServiceusageV2betaConsumerPolicy) MarshalJSON() ([]byte, error)
 // GoogleApiServiceusageV2betaEnableRule: The consumer policy rule that defines
 // enabled services, groups, and categories.
 type GoogleApiServiceusageV2betaEnableRule struct {
+	// Catalogs: The names of the catalogs that are enabled. Example:
+	// `catalogs/default-cloud-services`.
+	Catalogs []string `json:"catalogs,omitempty"`
 	// Services: The names of the services that are enabled. Example:
 	// `services/storage.googleapis.com`.
 	Services []string `json:"services,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Services") to
+	// ForceSendFields is a list of field names (e.g. "Catalogs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Services") to include in API
+	// NullFields is a list of field names (e.g. "Catalogs") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

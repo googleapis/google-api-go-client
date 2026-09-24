@@ -1494,6 +1494,39 @@ func (s KerberosConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LakehouseProxyConfig: Configuration for Dataproc Metastore to Lakehouse
+// proxy routing.In a phased migration, namespaces are migrated from Dataproc
+// Metastore to a Lakehouse Iceberg REST Catalog in batches. Between and after
+// migration phases, the metastore service operates in PROXY state where
+// requests for migrated namespaces are forwarded to the Lakehouse catalog
+// while unmigrated namespaces continue to be served locally by DPMS.
+type LakehouseProxyConfig struct {
+	// Catalog: Output only. The Lakehouse Iceberg REST Catalog where requests are
+	// being proxied to. Format:
+	// projects/{project_id_or_number}/catalogs/{catalog_id}.
+	Catalog string `json:"catalog,omitempty"`
+	// Namespaces: Output only. The list of namespaces currently proxied to the
+	// Lakehouse catalog. As each migration batch completes, newly migrated
+	// namespaces are added to this list.
+	Namespaces []string `json:"namespaces,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Catalog") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Catalog") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LakehouseProxyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LakehouseProxyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LatestBackup: The details of the latest scheduled backup.
 type LatestBackup struct {
 	// BackupId: Output only. The ID of an in-progress scheduled backup. Empty if
@@ -2149,10 +2182,13 @@ type MigrationSummary struct {
 	// CatalogSummaries: Output only. Summary of results for each catalog involved
 	// in the migration.
 	CatalogSummaries []*CatalogSummary `json:"catalogSummaries,omitempty"`
-	// CreateTime: Output only. The UTC time when this report was finalized.
+	// CreateTime: Output only. The UTC time when the source metadata read was
+	// initiated.
 	CreateTime string `json:"createTime,omitempty"`
 	// DryRun: Output only. Whether the migration was a dry run.
 	DryRun bool `json:"dryRun,omitempty"`
+	// EndTime: Output only. The UTC time when the report was written.
+	EndTime string `json:"endTime,omitempty"`
 	// Service: Output only. The Dataproc Metastore service name (format:
 	// projects/*/locations/*/services/*) on which the migration was executed.
 	Service string `json:"service,omitempty"`
@@ -2763,6 +2799,9 @@ type Service struct {
 	HiveMetastoreConfig *HiveMetastoreConfig `json:"hiveMetastoreConfig,omitempty"`
 	// Labels: User-defined labels for the metastore service.
 	Labels map[string]string `json:"labels,omitempty"`
+	// LakehouseProxyConfig: Output only. The Lakehouse proxy routing configuration
+	// for the metastore service.
+	LakehouseProxyConfig *LakehouseProxyConfig `json:"lakehouseProxyConfig,omitempty"`
 	// MaintenanceWindow: Optional. The one hour maintenance window of the
 	// metastore service. This specifies when the service can be restarted for
 	// maintenance purposes in UTC time. Maintenance window is not needed for

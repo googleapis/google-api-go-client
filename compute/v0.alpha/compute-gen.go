@@ -12709,6 +12709,10 @@ type CapacityAdviceRequestInstanceFlexibilityPolicyInstanceSelection struct {
 	GuestAccelerators []*AcceleratorConfig `json:"guestAccelerators,omitempty"`
 	// MachineTypes: Full machine-type names, e.g. "n1-standard-16".
 	MachineTypes []string `json:"machineTypes,omitempty"`
+	// Rank: Optional. Rank when prioritizing the shape flexibilities.
+	// The instance selections are considered in the ascending order of the
+	// rank. If not set, defaults to 0.
+	Rank int64 `json:"rank,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Disks") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -13007,17 +13011,21 @@ func (s CapacityHistoryRequest) MarshalJSON() ([]byte, error) {
 // CapacityHistoryRequestInstanceProperties: Instance properties for this
 // request.
 type CapacityHistoryRequestInstanceProperties struct {
+	// Disks: Local SSDs.
+	Disks []*CapacityHistoryRequestInstancePropertiesAttachedDisk `json:"disks,omitempty"`
+	// GuestAccelerators: Accelerators configuration.
+	GuestAccelerators []*AcceleratorConfig `json:"guestAccelerators,omitempty"`
 	// MachineType: The machine type for the VM, such as `n2-standard-4`.
 	MachineType string `json:"machineType,omitempty"`
 	// Scheduling: Specifies the scheduling options.
 	Scheduling *CapacityHistoryRequestInstancePropertiesScheduling `json:"scheduling,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MachineType") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Disks") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MachineType") to include in API
+	// NullFields is a list of field names (e.g. "Disks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -13026,6 +13034,33 @@ type CapacityHistoryRequestInstanceProperties struct {
 
 func (s CapacityHistoryRequestInstanceProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod CapacityHistoryRequestInstanceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CapacityHistoryRequestInstancePropertiesAttachedDisk: AttachedDisk modeled
+// after Instance's AttachedDisk.
+type CapacityHistoryRequestInstancePropertiesAttachedDisk struct {
+	// Type: Specifies the type of the disk.
+	//
+	// Possible values:
+	//   "DISK_TYPE_UNSPECIFIED" - Default value, unused.
+	//   "SCRATCH" - Scratch disk (Local SSD).
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityHistoryRequestInstancePropertiesAttachedDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityHistoryRequestInstancePropertiesAttachedDisk
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18751,20 +18786,28 @@ func (s DistributionPolicy) MarshalJSON() ([]byte, error) {
 }
 
 type DistributionPolicyZoneConfiguration struct {
+	// MaxSize: Optional. The maximum size of the group in this zone. This value
+	// can be either a
+	// fixed number or, a percentage. If you set a percentage, the number
+	// of
+	// instances is rounded up if necessary. If unset, it is interpreted
+	// as
+	// unbounded.
+	MaxSize *FixedOrPercent `json:"maxSize,omitempty"`
 	// Zone: The URL of thezone.
 	// The zone must exist in the region where the managed instance group
 	// is
 	// located.
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Zone") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "MaxSize") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Zone") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "MaxSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -24867,9 +24910,9 @@ type GlobalFrontendSettings struct {
 	// BundleType: Customer-settable bundle type.
 	//
 	// Possible values:
-	//   "BUNDLE_TYPE_UNSPECIFIED" - Bundling is not active
-	//   "GLOBAL_FRONT_END" - Standard Global Frontend bundle
-	//   "INDIVIDUAL" - Ala Carte mode
+	//   "BUNDLE_TYPE_UNSPECIFIED" - Bundling is not active.
+	//   "GLOBAL_FRONT_END" - Standard Global Frontend bundle.
+	//   "INDIVIDUAL" - Ala Carte mode.
 	BundleType string `json:"bundleType,omitempty"`
 	// CreationTimestamp: Output only. [Output Only] Creation timestamp in RFC3339
 	// text format.
@@ -24877,7 +24920,7 @@ type GlobalFrontendSettings struct {
 	// Description: Output only. [Output Only] An optional description of this
 	// resource.
 	Description string `json:"description,omitempty"`
-	// Etag: Output only. For optimistic locking
+	// Etag: Output only. For optimistic locking.
 	Etag string `json:"etag,omitempty"`
 	// Id: Output only. [Output Only] The unique identifier for the resource. This
 	// identifier is
@@ -24919,6 +24962,7 @@ func (s GlobalFrontendSettings) MarshalJSON() ([]byte, error) {
 // GlobalFrontendSettingsPatchResponse: Response to an
 // UpdateGlobalFrontendSettingsRequest.
 type GlobalFrontendSettingsPatchResponse struct {
+	// Operation: The Operation resource for this long-running operation.
 	Operation *Operation `json:"operation,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -33327,6 +33371,7 @@ func (s ImageParams) MarshalJSON() ([]byte, error) {
 
 // ImageView: Represents a read-only view of a global Image resource.
 type ImageView struct {
+	// Image: The Image resource.
 	Image *Image `json:"image,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -33351,6 +33396,7 @@ func (s ImageView) MarshalJSON() ([]byte, error) {
 
 // ImageViewsListResponse: Response message for ImageViewsService.List
 type ImageViewsListResponse struct {
+	// Etag: Etag of the resource.
 	Etag string `json:"etag,omitempty"`
 	// Id: [Output Only] Unique identifier for the resource; defined by the server.
 	Id string `json:"id,omitempty"`
@@ -35371,6 +35417,9 @@ func (s InstanceGroupManagerAutoHealingPolicyAutoHealingTriggers) MarshalJSON() 
 }
 
 type InstanceGroupManagerInstanceFlexibilityPolicy struct {
+	// Constraints: Constraints applied to instance flexibility spreading and
+	// selection.
+	Constraints *InstanceGroupManagerInstanceFlexibilityPolicyConstraints `json:"constraints,omitempty"`
 	// InstanceSelectionLists: Named instance selections configuring properties
 	// that the group will use
 	// when creating new VMs.
@@ -35383,21 +35432,48 @@ type InstanceGroupManagerInstanceFlexibilityPolicy struct {
 	// instance group to
 	// create instances.
 	ProvisioningModelMix *InstanceGroupManagerInstanceFlexibilityPolicyProvisioningModelMix `json:"provisioningModelMix,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InstanceSelectionLists") to
+	// ForceSendFields is a list of field names (e.g. "Constraints") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InstanceSelectionLists") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Constraints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s InstanceGroupManagerInstanceFlexibilityPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceGroupManagerInstanceFlexibilityPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceGroupManagerInstanceFlexibilityPolicyConstraints: Constraints
+// applied to instance flexibility spreading and selection.
+type InstanceGroupManagerInstanceFlexibilityPolicyConstraints struct {
+	// SingleMachineType: When set to true, all instances in the group will be
+	// provisioned with
+	// the exact same machine type, ensuring cluster homogeneity across
+	// zones.
+	// Defaults to false.
+	SingleMachineType bool `json:"singleMachineType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SingleMachineType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SingleMachineType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceGroupManagerInstanceFlexibilityPolicyConstraints) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceGroupManagerInstanceFlexibilityPolicyConstraints
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -51382,7 +51458,8 @@ func (s ManagedRuleset) MarshalJSON() ([]byte, error) {
 }
 
 type ManagedRulesetList struct {
-	Id            string                     `json:"id,omitempty"`
+	Id string `json:"id,omitempty"`
+	// Items: The list of managed rulesets.
 	Items         []*ManagedRuleset          `json:"items,omitempty"`
 	NextPageToken string                     `json:"nextPageToken,omitempty"`
 	Warning       *ManagedRulesetListWarning `json:"warning,omitempty"`

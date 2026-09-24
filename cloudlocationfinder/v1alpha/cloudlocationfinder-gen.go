@@ -205,6 +205,7 @@ type CloudLocation struct {
 	//   "CLOUD_LOCATION_TYPE_ZONE" - CloudLocation type for zone.
 	//   "CLOUD_LOCATION_TYPE_GDCC_ZONE" - CloudLocation type for Google
 	// Distributed Cloud Connected Zone.
+	//   "CLOUD_LOCATION_TYPE_GLOBAL" - CloudLocation type for global.
 	CloudLocationType string `json:"cloudLocationType,omitempty"`
 	// CloudProvider: Optional. The provider of the cloud location. Values can be
 	// Google Cloud or third-party providers, including AWS, Azure, or Oracle Cloud

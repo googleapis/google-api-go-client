@@ -5245,6 +5245,9 @@ type GoogleCloudDataplexV1DataScanEvent struct {
 	CatalogPublishingStatus *GoogleCloudDataplexV1DataScanCatalogPublishingStatus `json:"catalogPublishingStatus,omitempty"`
 	// CreateTime: The time when the data scan job was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataDocumentation: Data documentation result for data documentation
+	// (insights) scan.
+	DataDocumentation *GoogleCloudDataplexV1DataScanEventDataDocumentationResult `json:"dataDocumentation,omitempty"`
 	// DataProfile: Data profile result for data profile type data scan.
 	DataProfile *GoogleCloudDataplexV1DataScanEventDataProfileResult `json:"dataProfile,omitempty"`
 	// DataProfileConfigs: Applied configs for data profile type data scan.
@@ -5319,6 +5322,70 @@ func (s GoogleCloudDataplexV1DataScanEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataScanEventDataDocumentationResult: Data
+// documentation result for data scan job.
+type GoogleCloudDataplexV1DataScanEventDataDocumentationResult struct {
+	// BillableTokenUsage: Breakdown of token consumption for the data
+	// documentation scan.
+	BillableTokenUsage *GoogleCloudDataplexV1DataScanEventDataDocumentationResultTokenUsage `json:"billableTokenUsage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BillableTokenUsage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BillableTokenUsage") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataScanEventDataDocumentationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanEventDataDocumentationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataScanEventDataDocumentationResultTokenUsage:
+// Captures structured token usage breakdown for LLM-powered scans.
+type GoogleCloudDataplexV1DataScanEventDataDocumentationResultTokenUsage struct {
+	// CachedContentTokenCount: Billable cached content tokens (billed at
+	// discounted prompt caching SKU).
+	CachedContentTokenCount int64 `json:"cachedContentTokenCount,omitempty,string"`
+	// CandidatesTokenCount: Generated candidate response tokens.
+	CandidatesTokenCount int64 `json:"candidatesTokenCount,omitempty,string"`
+	// InputTokenCount: Billable non-cached input tokens.
+	InputTokenCount int64 `json:"inputTokenCount,omitempty,string"`
+	// OutputTokenCount: Billable output tokens (candidates + thoughts).
+	OutputTokenCount int64 `json:"outputTokenCount,omitempty,string"`
+	// PromptTokenCount: Base prompt and system instructions tokens.
+	PromptTokenCount int64 `json:"promptTokenCount,omitempty,string"`
+	// ThoughtsTokenCount: Reasoning / Chain-of-Thought tokens.
+	ThoughtsTokenCount int64 `json:"thoughtsTokenCount,omitempty,string"`
+	// ToolUsePromptTokenCount: Tool use context tokens (schema, profile, query
+	// history).
+	ToolUsePromptTokenCount int64 `json:"toolUsePromptTokenCount,omitempty,string"`
+	// TotalTokenCount: Total billable tokens (billable_input + billable_cached +
+	// billable_output). Evaluates to 0 for failed or cancelled jobs.
+	TotalTokenCount int64 `json:"totalTokenCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CachedContentTokenCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CachedContentTokenCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataScanEventDataDocumentationResultTokenUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataScanEventDataDocumentationResultTokenUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs: Applied configs
 // for data profile type data scan job.
 type GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs struct {
@@ -5367,15 +5434,17 @@ func (s *GoogleCloudDataplexV1DataScanEventDataProfileAppliedConfigs) UnmarshalJ
 // GoogleCloudDataplexV1DataScanEventDataProfileResult: Data profile result for
 // data scan job.
 type GoogleCloudDataplexV1DataScanEventDataProfileResult struct {
+	// DcuConsumed: Dataplex Compute Units (DCUs) used in the data scan job.
+	DcuConsumed float64 `json:"dcuConsumed,omitempty"`
 	// RowCount: The count of rows processed in the data scan job.
 	RowCount int64 `json:"rowCount,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "RowCount") to
+	// ForceSendFields is a list of field names (e.g. "DcuConsumed") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RowCount") to include in API
+	// NullFields is a list of field names (e.g. "DcuConsumed") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5385,6 +5454,20 @@ type GoogleCloudDataplexV1DataScanEventDataProfileResult struct {
 func (s GoogleCloudDataplexV1DataScanEventDataProfileResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataScanEventDataProfileResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataScanEventDataProfileResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataScanEventDataProfileResult
+	var s1 struct {
+		DcuConsumed gensupport.JSONFloat64 `json:"dcuConsumed"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DcuConsumed = float64(s1.DcuConsumed)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataScanEventDataQualityAppliedConfigs: Applied configs
@@ -36680,7 +36763,7 @@ type ProjectsLocationsMetadataFeedsDeleteCall struct {
 // Delete: Deletes a MetadataFeed.
 //
 //   - name: The resource name of the metadata feed, in the format
-//     projects/{project_id_or_number}/locations/{location_id}/MetadataFeeds/{meta
+//     projects/{project_id_or_number}/locations/{location_id}/metadataFeeds/{meta
 //     data_feed_id}.
 func (r *ProjectsLocationsMetadataFeedsService) Delete(name string) *ProjectsLocationsMetadataFeedsDeleteCall {
 	c := &ProjectsLocationsMetadataFeedsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -36781,7 +36864,7 @@ type ProjectsLocationsMetadataFeedsGetCall struct {
 // Get: Gets a MetadataFeed.
 //
 //   - name: The resource name of the metadata feed, in the format
-//     projects/{project_id_or_number}/locations/{location_id}/MetadataFeeds/{meta
+//     projects/{project_id_or_number}/locations/{location_id}/metadataFeeds/{meta
 //     data_feed_id}.
 func (r *ProjectsLocationsMetadataFeedsService) Get(name string) *ProjectsLocationsMetadataFeedsGetCall {
 	c := &ProjectsLocationsMetadataFeedsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}

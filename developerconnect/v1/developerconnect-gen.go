@@ -1381,7 +1381,9 @@ func (s GitLabEnterpriseConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GitProxyConfig: The git proxy configuration.
+// GitProxyConfig: Configuration for proxies. For legacy reasons, this message
+// is named `GitProxyConfig`, but it includes settings for both Git and HTTP
+// proxy.
 type GitProxyConfig struct {
 	// Enabled: Optional. Setting this to true allows the git proxy to be used for
 	// performing git operations on the repositories linked in the connection.

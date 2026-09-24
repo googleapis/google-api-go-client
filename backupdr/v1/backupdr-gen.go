@@ -4414,6 +4414,7 @@ type LocationMetadata struct {
 	//   "ALLOY_DB"
 	//   "FILESTORE"
 	//   "BV_AF"
+	//   "GOOGLE_CLOUD_NETAPP_VOLUME"
 	//   "CEP_MONITORING_COMPUTE_INSTANCE"
 	//   "CEP_MONITORING_DISK"
 	//   "BV_CUSTOM_PROBERS" - Remove once parity achieved between BV_AF and

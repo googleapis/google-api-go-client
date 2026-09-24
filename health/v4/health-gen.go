@@ -366,6 +366,7 @@ type ActiveEnergyBurned struct {
 	// Interval: Required. Observed interval
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
 	// Kcal: Required. Energy burned during an activity, measured in kilocalories.
+	// Must be in the range `[0, 1000000]`.
 	Kcal float64 `json:"kcal,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Interval") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -752,7 +753,7 @@ func (s AlertWindow) MarshalJSON() ([]byte, error) {
 // for a user in millimeters.
 type Altitude struct {
 	// GainMillimeters: Required. Altitude gain in millimeters over the observed
-	// interval.
+	// interval. Must be in the range `[-1000000000, 1000000000]`.
 	GainMillimeters int64 `json:"gainMillimeters,omitempty,string"`
 	// Interval: Required. Observed interval.
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
@@ -904,7 +905,7 @@ func (s BatchDeleteDataPointsRequest) MarshalJSON() ([]byte, error) {
 // LEGACY_NAMES
 type BloodGlucose struct {
 	// BloodGlucoseMilligramsPerDeciliter: Required. Blood glucose level
-	// concentration in mg/dL.
+	// concentration in mg/dL. Must be in the range `[0, 900]`.
 	BloodGlucoseMilligramsPerDeciliter float64 `json:"bloodGlucoseMilligramsPerDeciliter,omitempty"`
 	// MealType: Optional. Meal type of the measurement.
 	//
@@ -1026,7 +1027,7 @@ func (s *BloodGlucoseRollupValue) UnmarshalJSON(data []byte) error {
 
 // BodyFat: Body fat measurement.
 type BodyFat struct {
-	// Percentage: Required. Body fat percentage, in range [0, 100].
+	// Percentage: Required. Body fat percentage. Must be in the range `[0, 100]`.
 	Percentage float64 `json:"percentage,omitempty"`
 	// SampleTime: Required. The time at which body fat was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -1252,7 +1253,8 @@ type CoreBodyTemperature struct {
 	MeasurementLocation string `json:"measurementLocation,omitempty"`
 	// SampleTime: Required. The time at which core body temperature was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
-	// TemperatureCelsius: Required. The core body temperature in Celsius.
+	// TemperatureCelsius: Required. The core body temperature in Celsius. Must be
+	// in the range `[0, 100]`.
 	TemperatureCelsius float64 `json:"temperatureCelsius,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1481,19 +1483,19 @@ func (s DailyHeartRateZones) MarshalJSON() ([]byte, error) {
 // sleep.
 type DailyOxygenSaturation struct {
 	// AveragePercentage: Required. The average value of the oxygen saturation
-	// samples during the sleep.
+	// samples during the sleep. Must be in the range `[0, 100]`.
 	AveragePercentage float64 `json:"averagePercentage,omitempty"`
 	// Date: Required. Date (in user's timezone) of the daily oxygen saturation
 	// record.
 	Date *Date `json:"date,omitempty"`
 	// LowerBoundPercentage: Required. The lower bound of the confidence interval
-	// of oxygen saturation samples during sleep.
+	// of oxygen saturation samples during sleep. Must be in the range `[0, 100]`.
 	LowerBoundPercentage float64 `json:"lowerBoundPercentage,omitempty"`
 	// StandardDeviationPercentage: Optional. Standard deviation of the daily
 	// oxygen saturation averages from the past 7-30 days.
 	StandardDeviationPercentage float64 `json:"standardDeviationPercentage,omitempty"`
 	// UpperBoundPercentage: Required. The upper bound of the confidence interval
-	// of oxygen saturation samples during sleep.
+	// of oxygen saturation samples during sleep. Must be in the range `[0, 100]`.
 	UpperBoundPercentage float64 `json:"upperBoundPercentage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AveragePercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1643,7 +1645,15 @@ type DailyRollUpDataPointsRequest struct {
 	// Excludes manually logged data. -
 	// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
 	// data, such as data from tracker devices, manually logged data, and Health
-	// Connect.
+	// Connect. - `users/me/dataSourceFamilies/self-sources` - Includes only the
+	// data the calling client wrote through this API, that is, data points whose
+	// data source was registered through this API with the same OAuth client ID as
+	// the caller. Callers that were only granted write scopes for the requested
+	// data type may only read the data they wrote themselves: their requests are
+	// implicitly restricted to `self-sources`, and requesting any other data
+	// source family fails with `PERMISSION_DENIED`. If no data point matches the
+	// requested data source family, the response is an empty list rather than an
+	// error.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
 	// unspecified, at most 1440 data points will be returned. The maximum page
@@ -1902,7 +1912,7 @@ type DailyVO2Max struct {
 	// confidence has decreased sufficiently to consider the value an estimation.
 	Estimated bool `json:"estimated,omitempty"`
 	// Vo2Max: Required. Daily VO2 max value measured as in ml consumed oxygen / kg
-	// of body weight / min.
+	// of body weight / min. Must be in the range `[0, 100]`.
 	Vo2Max float64 `json:"vo2Max,omitempty"`
 	// Vo2MaxCovariance: Optional. The covariance of the VO2 max value.
 	Vo2MaxCovariance float64 `json:"vo2MaxCovariance,omitempty"`
@@ -2300,6 +2310,7 @@ type Distance struct {
 	// Interval: Required. Observed interval.
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
 	// Millimeters: Required. Distance in millimeters over the observed interval.
+	// Must be in the range `[0, 1000000000]`.
 	Millimeters int64 `json:"millimeters,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Interval") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2458,7 +2469,8 @@ func (s EndpointAuthorization) MarshalJSON() ([]byte, error) {
 
 // EnergyQuantity: Represents the energy quantity.
 type EnergyQuantity struct {
-	// Kcal: Required. The energy value in kilocalories.
+	// Kcal: Required. The energy value in kilocalories. Must be in the range `[0,
+	// 100000]`.
 	Kcal float64 `json:"kcal,omitempty"`
 	// UserProvidedUnit: Optional. Value representing the user provided unit.
 	//
@@ -2881,7 +2893,8 @@ func (s ExportExerciseTcxResponse) MarshalJSON() ([]byte, error) {
 
 // Floors: Gained elevation measured in floors over the time interval
 type Floors struct {
-	// Count: Required. Number of floors in the recorded interval
+	// Count: Required. Number of floors in the recorded interval. Must be in the
+	// range `[0, 1000000]`.
 	Count int64 `json:"count,omitempty,string"`
 	// Interval: Required. Observed interval
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
@@ -3269,7 +3282,8 @@ func (s HeartBeat) MarshalJSON() ([]byte, error) {
 
 // HeartRate: A heart rate measurement.
 type HeartRate struct {
-	// BeatsPerMinute: Required. The heart rate value in beats per minute.
+	// BeatsPerMinute: Required. The heart rate value in beats per minute. Must be
+	// in the range `[1, 300]`.
 	BeatsPerMinute int64 `json:"beatsPerMinute,omitempty,string"`
 	// Metadata: Optional. Metadata about the heart rate sample.
 	Metadata *HeartRateMetadata `json:"metadata,omitempty"`
@@ -3389,7 +3403,8 @@ type HeartRateVariability struct {
 	Metadata *HeartRateVariabilityMetadata `json:"metadata,omitempty"`
 	// RootMeanSquareOfSuccessiveDifferencesMilliseconds: Optional. The root mean
 	// square of successive differences between normal heartbeats. This is a
-	// measure of heart rate variability used by Google Health.
+	// measure of heart rate variability used by Google Health. Must be in the
+	// range `[1, 200]`.
 	RootMeanSquareOfSuccessiveDifferencesMilliseconds float64 `json:"rootMeanSquareOfSuccessiveDifferencesMilliseconds,omitempty"`
 	// SampleTime: Required. The time of the heart rate variability measurement.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -3554,7 +3569,8 @@ func (s HeartRateZone) MarshalJSON() ([]byte, error) {
 
 // Height: Body height measurement.
 type Height struct {
-	// HeightMillimeters: Required. Height of the user in millimeters.
+	// HeightMillimeters: Required. Height of the user in millimeters. Must be in
+	// the range `[0, 3000]`.
 	HeightMillimeters int64 `json:"heightMillimeters,omitempty,string"`
 	// SampleTime: Required. The time at which the height was recorded.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -4268,6 +4284,18 @@ type Moods struct {
 	//   "ACCOMPLISHED" - Accomplished.
 	//   "LOVING" - Loving.
 	//   "COMPASSIONATE" - Compassionate.
+	//   "DEPRESSED" - Depressed.
+	//   "GOOD" - Good.
+	//   "LOW_ENERGY" - Low energy.
+	//   "OBSESSIVE_THOUGHTS" - Obsessive thoughts.
+	//   "PANIC" - Panic.
+	//   "PLAYFUL" - Playful.
+	//   "PLEASED" - Pleased.
+	//   "SENSITIVE" - Sensitive.
+	//   "SLEEPY" - Sleepy.
+	//   "SWINGS" - Mood swings.
+	//   "UNHAPPY" - Unhappy.
+	//   "VERY_SELF_CRITICAL" - Very self-critical.
 	Moods []string `json:"moods,omitempty"`
 	// SampleTime: Required. The time at which moods were measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -4706,8 +4734,8 @@ func (s OvulationTest) MarshalJSON() ([]byte, error) {
 // OxygenSaturation: Captures the user's instantaneous oxygen saturation
 // percentage (SpO2).
 type OxygenSaturation struct {
-	// Percentage: Required. The oxygen saturation percentage. Valid values are
-	// from 0 to 100.
+	// Percentage: Required. The oxygen saturation percentage. Must be in the range
+	// `[0, 100]`.
 	Percentage float64 `json:"percentage,omitempty"`
 	// SampleTime: Required. The time at which oxygen saturation was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -4866,7 +4894,7 @@ type Profile struct {
 	// `users/me/profile` The {user} ID is a system-generated Google Health API
 	// user ID, a string of 1-63 characters consisting of lowercase and uppercase
 	// letters, numbers, and hyphens. The literal `me` can also be used to refer to
-	// the authenticated user.
+	// the authenticated user. This field is read-only.
 	Name string `json:"name,omitempty"`
 	// UserConfiguredRunningStrideLengthMm: Optional. The user's user configured
 	// running stride length, in millimeters. The user must consent to the
@@ -5182,7 +5210,15 @@ type RollUpDataPointsRequest struct {
 	// Excludes manually logged data. -
 	// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
 	// data, such as data from tracker devices, manually logged data, and Health
-	// Connect.
+	// Connect. - `users/me/dataSourceFamilies/self-sources` - Includes only the
+	// data the calling client wrote through this API, that is, data points whose
+	// data source was registered through this API with the same OAuth client ID as
+	// the caller. Callers that were only granted write scopes for the requested
+	// data type may only read the data they wrote themselves: their requests are
+	// implicitly restricted to `self-sources`, and requesting any other data
+	// source family fails with `PERMISSION_DENIED`. If no data point matches the
+	// requested data source family, the response is an empty list rather than an
+	// error.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
 	// unspecified, at most 1440 data points will be returned. The maximum page
@@ -5361,7 +5397,8 @@ func (s RollupDataPoint) MarshalJSON() ([]byte, error) {
 // RunVO2Max: VO2 max value calculated based on the user's running activity.
 // Value stored in ml/kg/min.
 type RunVO2Max struct {
-	// RunVo2Max: Required. Run VO2 max value in ml/kg/min.
+	// RunVo2Max: Required. Run VO2 max value in ml/kg/min. Must be in the range
+	// `[0, 100]`.
 	RunVo2Max float64 `json:"runVo2Max,omitempty"`
 	// SampleTime: Required. The time at which the metric was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -5611,7 +5648,7 @@ type Settings struct {
 	// `users/me/settings` The {user} ID is a system-generated Google Health API
 	// user ID, a string of 1-63 characters consisting of lowercase and uppercase
 	// letters, numbers, and hyphens. The literal `me` can also be used to refer to
-	// the authenticated user.
+	// the authenticated user. This field is read-only.
 	Name string `json:"name,omitempty"`
 	// StrideLengthRunningType: Optional. The stride length type defined in the
 	// user's account settings for running. Updates to this field are currently not
@@ -6014,7 +6051,8 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // Steps: Step count over the time interval.
 type Steps struct {
-	// Count: Required. Number of steps in the recorded interval.
+	// Count: Required. Number of steps in the recorded interval. Must be in the
+	// range `[0, 1000000]`.
 	Count int64 `json:"count,omitempty,string"`
 	// Interval: Required. Observed interval.
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
@@ -6599,7 +6637,7 @@ type VO2Max struct {
 	// SampleTime: Required. The time at which VO2 max was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
 	// Vo2Max: Required. VO2 max value measured as in ml consumed oxygen / kg of
-	// body weight / min.
+	// body weight / min. Must be in the range `[0, 100]`.
 	Vo2Max float64 `json:"vo2Max,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MeasurementMethod") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6635,7 +6673,8 @@ func (s *VO2Max) UnmarshalJSON(data []byte) error {
 
 // VolumeQuantity: Represents the volume quantity.
 type VolumeQuantity struct {
-	// Milliliters: Required. Value representing the volume in milliliters.
+	// Milliliters: Required. Value representing the volume in milliliters. Must be
+	// in the range `[0, 100000]`.
 	Milliliters float64 `json:"milliliters,omitempty"`
 	// UserProvidedUnit: Optional. Value representing the user provided unit, used
 	// only for user-facing input and display purposes. In the API format, all
@@ -6739,7 +6778,8 @@ type Weight struct {
 	Notes string `json:"notes,omitempty"`
 	// SampleTime: Required. The time at which the weight was measured
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
-	// WeightGrams: Required. Weight of a user in grams.
+	// WeightGrams: Required. Weight of a user in grams. Must be in the range `[0,
+	// 1000000]`.
 	WeightGrams float64 `json:"weightGrams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Notes") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6775,7 +6815,8 @@ func (s *Weight) UnmarshalJSON(data []byte) error {
 
 // WeightQuantity: Represents the weight quantity.
 type WeightQuantity struct {
-	// Grams: Required. The weight value in grams.
+	// Grams: Required. The weight value in grams. Must be in the range `[0,
+	// 100000]`.
 	Grams float64 `json:"grams,omitempty"`
 	// UserProvidedUnit: Optional. Value representing the user provided unit.
 	//
@@ -8615,7 +8656,7 @@ type UsersUpdateProfileCall struct {
 //     `users/me/profile` The {user} ID is a system-generated Google Health API
 //     user ID, a string of 1-63 characters consisting of lowercase and uppercase
 //     letters, numbers, and hyphens. The literal `me` can also be used to refer
-//     to the authenticated user.
+//     to the authenticated user. This field is read-only.
 func (r *UsersService) UpdateProfile(name string, profile *Profile) *UsersUpdateProfileCall {
 	c := &UsersUpdateProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8730,7 +8771,7 @@ type UsersUpdateSettingsCall struct {
 //     `users/me/settings` The {user} ID is a system-generated Google Health API
 //     user ID, a string of 1-63 characters consisting of lowercase and uppercase
 //     letters, numbers, and hyphens. The literal `me` can also be used to refer
-//     to the authenticated user.
+//     to the authenticated user. This field is read-only.
 func (r *UsersService) UpdateSettings(name string, settings *Settings) *UsersUpdateSettingsCall {
 	c := &UsersUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9771,7 +9812,15 @@ func (r *UsersDataTypesDataPointsService) Reconcile(parent string) *UsersDataTyp
 // Excludes manually logged data. -
 // `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
 // data, such as data from tracker devices, manually logged data, and Health
-// Connect.
+// Connect. - `users/me/dataSourceFamilies/self-sources` - Includes only the
+// data the calling client wrote through this API, that is, data points whose
+// data source was registered through this API with the same OAuth client ID as
+// the caller. Callers that were only granted write scopes for the requested
+// data type may only read the data they wrote themselves: their requests are
+// implicitly restricted to `self-sources`, and requesting any other data
+// source family fails with `PERMISSION_DENIED`. If no data point matches the
+// requested data source family, the response is an empty list rather than an
+// error.
 func (c *UsersDataTypesDataPointsReconcileCall) DataSourceFamily(dataSourceFamily string) *UsersDataTypesDataPointsReconcileCall {
 	c.urlParams_.Set("dataSourceFamily", dataSourceFamily)
 	return c

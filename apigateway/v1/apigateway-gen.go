@@ -666,8 +666,8 @@ type ApigatewayGateway struct {
 	ApiConfig string `json:"apiConfig,omitempty"`
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
-	// DefaultHostname: Output only. The default API Gateway host name of the form
-	// `{gateway_id}-{hash}.{region_code}.gateway.dev`.
+	// DefaultHostname: Output only. The default hostname that serves traffic for
+	// this Gateway.
 	DefaultHostname string `json:"defaultHostname,omitempty"`
 	// DisplayName: Optional. Display name.
 	DisplayName string `json:"displayName,omitempty"`

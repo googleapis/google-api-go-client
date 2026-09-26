@@ -703,8 +703,8 @@ type GoogleCloudApihubV1AllowedValue struct {
 	// another allowed value in the same attribute resource. * If not provided, a
 	// system generated id derived from the display name will be used. In this
 	// case, the service will handle conflict resolution by adding a system
-	// generated suffix in case of duplicates. This value should be 4-63
-	// characters, and valid characters are /a-z-/.
+	// generated suffix in case of duplicates. This value should be 3-500
+	// characters, and valid characters are /a-z[0-9]-_/.
 	Id string `json:"id,omitempty"`
 	// Immutable: Optional. When set to true, the allowed value cannot be updated
 	// or deleted by the user. It can only be true for System defined attributes.
@@ -804,6 +804,12 @@ type GoogleCloudApihubV1Api struct {
 	// version of the API. Format is
 	// `projects/{project}/locations/{location}/apis/{api}/versions/{version}`
 	SelectedVersion string `json:"selectedVersion,omitempty"`
+	// ServiceType: Optional. The type of the service. This maps to the following
+	// system defined attribute:
+	// `projects/{project}/locations/{location}/attributes/system-service-type`
+	// attribute. The cardinality of this attribute is 1. All values should be from
+	// the list of allowed values defined for the attribute.
+	ServiceType *GoogleCloudApihubV1AttributeValues `json:"serviceType,omitempty"`
 	// SourceMetadata: Output only. The list of sources and metadata from the
 	// sources of the API resource.
 	SourceMetadata []*GoogleCloudApihubV1SourceMetadata `json:"sourceMetadata,omitempty"`
@@ -2541,10 +2547,10 @@ type GoogleCloudApihubV1ExternalApi struct {
 	Attributes map[string]GoogleCloudApihubV1AttributeValues `json:"attributes,omitempty"`
 	// CreateTime: Output only. Creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. Description of the external API. Max length is 2000
+	// Description: Optional. Description of the external API. Max length is 500000
 	// characters (Unicode Code Points).
 	Description string `json:"description,omitempty"`
-	// DisplayName: Required. Display name of the external API. Max length is 63
+	// DisplayName: Required. Display name of the external API. Max length is 500
 	// characters (Unicode Code Points).
 	DisplayName string `json:"displayName,omitempty"`
 	// Documentation: Optional. Documentation of the external API.
@@ -4219,10 +4225,10 @@ type GoogleCloudApihubV1Plugin struct {
 	ConfigTemplate *GoogleCloudApihubV1ConfigTemplate `json:"configTemplate,omitempty"`
 	// CreateTime: Output only. Timestamp indicating when the plugin was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. The plugin description. Max length is 2000 characters
-	// (Unicode code points).
+	// Description: Optional. The plugin description. Max length is 500000
+	// characters (Unicode code points).
 	Description string `json:"description,omitempty"`
-	// DisplayName: Required. The display name of the plugin. Max length is 50
+	// DisplayName: Required. The display name of the plugin. Max length is 500
 	// characters (Unicode code points).
 	DisplayName string `json:"displayName,omitempty"`
 	// Documentation: Optional. The documentation of the plugin, that explains how
@@ -4387,7 +4393,7 @@ type GoogleCloudApihubV1PluginInstance struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DisplayName: Required. The display name for this plugin instance. Max length
-	// is 255 characters.
+	// is 500 characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// ErrorMessage: Output only. Error message describing the failure, if any,
 	// during Create, Delete or ApplyConfig operation corresponding to the plugin
@@ -8959,7 +8965,7 @@ func (r *ProjectsLocationsApisVersionsOperationsService) Create(parent string, g
 // system generated id will be used. This value should be 4-500 characters,
 // overall resource name which will be of format
 // `projects/{project}/locations/{location}/apis/{api}/versions/{version}/operat
-// ions/{operation}`, its length is limited to 700 characters, and valid
+// ions/{operation}`, its length is limited to 1000 characters, and valid
 // characters are /a-z[0-9]-_/.
 func (c *ProjectsLocationsApisVersionsOperationsCreateCall) ApiOperationId(apiOperationId string) *ProjectsLocationsApisVersionsOperationsCreateCall {
 	c.urlParams_.Set("apiOperationId", apiOperationId)

@@ -204,6 +204,54 @@ type PresentationsPagesService struct {
 	s *Service
 }
 
+// AddCommentReplyRequest: Inserts a reply Post into a CommentThread. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type AddCommentReplyRequest struct {
+	// CommentId: The ID of the CommentThread to add the reply to.
+	CommentId string `json:"commentId,omitempty"`
+	// Post: The Post representing the reply.
+	Post *Post `json:"post,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddCommentReplyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddCommentReplyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddCommentReplyResponse: The result of creating a reply. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type AddCommentReplyResponse struct {
+	// Post: The newly-inserted reply Post.
+	Post *Post `json:"post,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Post") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Post") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddCommentReplyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AddCommentReplyResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AffineTransform: AffineTransform uses a 3x3 matrix with an implied last row
 // of [ 0 0 1 ] to transform source coordinates (x,y) into destination
 // coordinates (x', y') according to: x' x = shear_y scale_y translate_y 1 [ 1
@@ -394,6 +442,19 @@ func (s BatchUpdatePresentationRequest) MarshalJSON() ([]byte, error) {
 
 // BatchUpdatePresentationResponse: Response message from a batch update.
 type BatchUpdatePresentationResponse struct {
+	// CommentUpdateState: Whether comment updates were applied in the batch
+	// request. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	//
+	// Possible values:
+	//   "COMMENT_UPDATE_STATE_UNSPECIFIED" - The status of comment updates is
+	// unspecified.
+	//   "NO_UPDATES_REQUESTED" - No comment updates were requested in the batch
+	// request.
+	//   "ALL_SAVED" - All requested comment updates were applied in the batch
+	// request.
+	//   "ALL_FAILED_UNKNOWN_REASON" - All requested comment updates failed.
+	CommentUpdateState string `json:"commentUpdateState,omitempty"`
 	// PresentationId: The presentation the updates were applied to.
 	PresentationId string `json:"presentationId,omitempty"`
 	// Replies: The reply of the updates. This maps 1:1 with the updates, although
@@ -404,15 +465,15 @@ type BatchUpdatePresentationResponse struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "PresentationId") to
+	// ForceSendFields is a list of field names (e.g. "CommentUpdateState") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "PresentationId") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CommentUpdateState") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -514,6 +575,74 @@ func (s *ColorStop) UnmarshalJSON(data []byte) error {
 	s.Alpha = float64(s1.Alpha)
 	s.Position = float64(s1.Position)
 	return nil
+}
+
+// CommentAnchor: Contains a list of all locations in a `Page` that are
+// anchored to a CommentThread via the same anchorId. Multiple separate anchors
+// may refer to the same location, either within a `Page` or across different
+// pages, Developer Preview (https://developers.google.com/workspace/preview).
+type CommentAnchor struct {
+	// AnchorId: Output only. The unique ID of the comment anchor.
+	AnchorId string `json:"anchorId,omitempty"`
+	// ObjectAnchors: Output only. All object ID-based locations within a page that
+	// refer to the anchor ID.
+	ObjectAnchors []*ObjectAnchor `json:"objectAnchors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnchorId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnchorId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommentAnchor) MarshalJSON() ([]byte, error) {
+	type NoMethod CommentAnchor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CommentThread: Represents a single comment thread inside a presentation.
+// Developer Preview (https://developers.google.com/workspace/preview).
+type CommentThread struct {
+	// AnchorId: The ID of the CommentAnchor in the presentation that this thread
+	// is tied to.
+	AnchorId string `json:"anchorId,omitempty"`
+	// CommentId: The unique ID of the comment thread.
+	CommentId string `json:"commentId,omitempty"`
+	// HeadPost: The first post in the thread.
+	HeadPost *Post `json:"headPost,omitempty"`
+	// PlainTextQuote: The quoted text from the page element when the comment was
+	// created, formatted as plain-text.
+	PlainTextQuote string `json:"plainTextQuote,omitempty"`
+	// Replies: Replies to the head post.
+	Replies []*Post `json:"replies,omitempty"`
+	// Status: Whether the thread is open or resolved.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Default value. This value is unused.
+	//   "OPEN" - The comment thread is open.
+	//   "RESOLVED" - The comment thread is resolved.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnchorId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnchorId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommentThread) MarshalJSON() ([]byte, error) {
+	type NoMethod CommentThread
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateImageRequest: Creates an image.
@@ -1399,6 +1528,58 @@ func (s *CropProperties) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// DeleteCommentReplyRequest: Deletes a reply Post from a CommentThread.
+// Returns a 400 bad request error if: - The requesting user is not the author
+// of the post. - The reply post contains a comment action. - The reply post
+// contains an assignee. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type DeleteCommentReplyRequest struct {
+	// CommentId: The ID of the CommentThread which the post belongs to.
+	CommentId string `json:"commentId,omitempty"`
+	// PostId: The ID of the reply Post being deleted.
+	PostId string `json:"postId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteCommentReplyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteCommentReplyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteCommentRequest: Deletes a CommentThread. Returns a 400 bad request
+// error if the requesting user is not the author of the headPost. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type DeleteCommentRequest struct {
+	// CommentId: The ID of the CommentThread that is being deleted.
+	CommentId string `json:"commentId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteCommentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteCommentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeleteObjectRequest: Deletes an object, either pages or page elements, from
 // the presentation.
 type DeleteObjectRequest struct {
@@ -1829,6 +2010,72 @@ func (s *ImageProperties) UnmarshalJSON(data []byte) error {
 	s.Contrast = float64(s1.Contrast)
 	s.Transparency = float64(s1.Transparency)
 	return nil
+}
+
+// InsertCommentRequest: Inserts a CommentThread into the presentation.
+// Developer Preview (https://developers.google.com/workspace/preview).
+type InsertCommentRequest struct {
+	// AssigneeEmailAddress: Optional. The email address of the assignee of the
+	// comment. Leave empty for a non-assigned comment. May not exceed 2048 UTF-8
+	// code units.
+	AssigneeEmailAddress string `json:"assigneeEmailAddress,omitempty"`
+	// Content: The text of the comment, as plain text. This text content will be
+	// handled similarly to comments created in the Slides editor. It will have
+	// similar behaviors for formatting, notifications, etc. This field cannot be
+	// empty, and must not exceed 2048 UTF-8 code units.
+	Content string `json:"content,omitempty"`
+	// ObjectId: The object ID of the Page or PageElement that is tied to this
+	// comment. If the specified object_id is a Group, the comment will be anchored
+	// to at most 100 of the group's non-group descendants.
+	ObjectId string `json:"objectId,omitempty"`
+	// ShapeTextAnchor: Anchors a comment to a specific range of text within a
+	// Shape.
+	ShapeTextAnchor *ShapeTextAnchor `json:"shapeTextAnchor,omitempty"`
+	// TableAnchor: Anchors a comment to a specific range of cells within a Table.
+	// Returns a 400 bad request error if no cells within the range contain text.
+	TableAnchor *TableAnchor `json:"tableAnchor,omitempty"`
+	// TableCellTextAnchor: Anchors a comment to a specific range of text within a
+	// single cell in a Table.
+	TableCellTextAnchor *TableCellTextAnchor `json:"tableCellTextAnchor,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssigneeEmailAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssigneeEmailAddress") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertCommentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertCommentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InsertCommentResponse: The result of creating a comment. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type InsertCommentResponse struct {
+	// CommentThread: The newly-inserted comment thread.
+	CommentThread *CommentThread `json:"commentThread,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentThread") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentThread") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertCommentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertCommentResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InsertTableColumnsRequest: Inserts columns into a table. Other columns in
@@ -2418,6 +2665,37 @@ func (s NotesProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ObjectAnchor: Represents comment anchor data tied to a Slides object, for
+// example a `Page` or PageElement. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type ObjectAnchor struct {
+	// ObjectId: Output only. The page or page element that the comment thread is
+	// anchored to.
+	ObjectId string `json:"objectId,omitempty"`
+	// ShapeTextAnchors: Populated for Shapes that have comments anchored to ranges
+	// of text in the shape's text.
+	ShapeTextAnchors *ShapeTextAnchors `json:"shapeTextAnchors,omitempty"`
+	// TableCellAnchors: Populated for Tables that have comments anchored to ranges
+	// of text in one or more of the table's cells.
+	TableCellAnchors *TableCellAnchors `json:"tableCellAnchors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObjectAnchor) MarshalJSON() ([]byte, error) {
+	type NoMethod ObjectAnchor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OpaqueColor: A themeable solid color value.
 type OpaqueColor struct {
 	// RgbColor: An opaque RGB color.
@@ -2575,6 +2853,33 @@ func (s OutlineFill) MarshalJSON() ([]byte, error) {
 
 // Page: A page in a presentation.
 type Page struct {
+	// CommentAnchors: Output only. The comment anchors present on the page.
+	// Developer Preview (https://developers.google.com/workspace/preview).
+	CommentAnchors []*CommentAnchor `json:"commentAnchors,omitempty"`
+	// Comments: Output only. The comment threads associated with the page. Only
+	// populated if the page was fetched via a GetPageRequest with a populated
+	// comments_view_mode. Otherwise, comments are returned in the Presentation via
+	// the GetPresentationRequest. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	Comments []*CommentThread `json:"comments,omitempty"`
+	// CommentsViewMode: Output only. The comments view mode applied to the page.
+	// Only populated if the page was fetched via a GetPageRequest with a populated
+	// comments_view_mode. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	//
+	// Possible values:
+	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
+	// COMMENTS_VIEW_MODE_OMITTED is applied.
+	//   "COMMENTS_VIEW_MODE_DEFAULT_FOR_CURRENT_ACCESS" - The CommentsViewMode
+	// applied to the returned presentation depends on the user's current access
+	// level. If the user only has view access, COMMENTS_VIEW_MODE_OMITTED is
+	// applied. Otherwise, COMMENTS_VIEW_MODE_INCLUDED is applied.
+	//   "COMMENTS_VIEW_MODE_OMITTED" - The returned presentation has comments
+	// omitted.
+	//   "COMMENTS_VIEW_MODE_INCLUDED" - The returned presentation has comments
+	// included. Requests to retrieve a presentation using this mode will return a
+	// 403 error if the user does not have permission to view comments.
+	CommentsViewMode string `json:"commentsViewMode,omitempty"`
 	// LayoutProperties: Layout specific properties. Only set if page_type =
 	// LAYOUT.
 	LayoutProperties *LayoutProperties `json:"layoutProperties,omitempty"`
@@ -2616,13 +2921,13 @@ type Page struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "LayoutProperties") to
+	// ForceSendFields is a list of field names (e.g. "CommentAnchors") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "LayoutProperties") to include in
+	// NullFields is a list of field names (e.g. "CommentAnchors") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2970,8 +3275,121 @@ func (s Placeholder) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Post: Represents a single post in a comment thread. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type Post struct {
+	// AssigneeEmail: Optional. The email of the user who is being newly assigned
+	// to the thread as part of this post. Returns a 400 bad request error if: -
+	// The parent thread is a CommentThread whose headPost does not have an
+	// assignee. - commentAction is specified as `RESOLVE` or `REOPEN`. -
+	// `assignee_email` exceeds 2048 UTF-8 code units.
+	AssigneeEmail string `json:"assigneeEmail,omitempty"`
+	// Author: Output only. The user who created the post.
+	Author *PostAuthor `json:"author,omitempty"`
+	// CommentAction: Action taken as part of creating the post.
+	//
+	// Possible values:
+	//   "COMMENT_ACTION_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "NO_COMMENT_ACTION_CHANGE" - No action change in this post.
+	//   "RESOLVE" - This post resolves the thread.
+	//   "REOPEN" - This post reopens the thread.
+	CommentAction string `json:"commentAction,omitempty"`
+	// Content: The content of the post. Required to be non-empty if comment_action
+	// is not `RESOLVE` or `REOPEN`. This text content will be handled similarly to
+	// comments created in the Slides editor. It will have similar behaviors for
+	// formatting, notifications, etc. May not exceed 2048 UTF-8 code units.
+	Content string `json:"content,omitempty"`
+	// ContentHtml: Output only. The content of the post as HTML.
+	ContentHtml string `json:"contentHtml,omitempty"`
+	// CreateTime: Output only. The time the post was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Deleted: Output only. Whether the post is deleted. If `true`, content and
+	// author fields will be empty.
+	Deleted bool `json:"deleted,omitempty"`
+	// FromCopiedPresentation: Output only. Whether the post is from a copied
+	// presentation. This field cannot be set directly by callers.
+	FromCopiedPresentation bool `json:"fromCopiedPresentation,omitempty"`
+	// FromImportedPresentation: Output only. Whether the post is from an imported
+	// presentation. This field cannot be set directly by callers.
+	FromImportedPresentation bool `json:"fromImportedPresentation,omitempty"`
+	// PostId: Output only. The unique ID of the post.
+	PostId string `json:"postId,omitempty"`
+	// UpdateTime: Output only. The time the post was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssigneeEmail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssigneeEmail") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Post) MarshalJSON() ([]byte, error) {
+	type NoMethod Post
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostAuthor: Represents a user who authored a comment post. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type PostAuthor struct {
+	// Anonymous: Whether the user is anonymous.
+	Anonymous bool `json:"anonymous,omitempty"`
+	// DisplayName: The display name of the user. May be absent if the author is
+	// anonymous.
+	DisplayName string `json:"displayName,omitempty"`
+	// Me: Whether the user is the authenticated user making the request.
+	Me bool `json:"me,omitempty"`
+	// User: The resource name of the post author user, which can also be used to
+	// identify the user in the Google People API
+	// (https://developers.google.com/people/api/rest/v1/people). Format:
+	// `users/{user}`. Will not be populated if the anonymous field is `true` or if
+	// the post is from an imported presentation.
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Anonymous") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Anonymous") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostAuthor) MarshalJSON() ([]byte, error) {
+	type NoMethod PostAuthor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Presentation: A Google Slides presentation.
 type Presentation struct {
+	// Comments: Output only. The comment threads associated with the presentation.
+	// Developer Preview (https://developers.google.com/workspace/preview).
+	Comments []*CommentThread `json:"comments,omitempty"`
+	// CommentsViewMode: Output only. The comments view mode applied to the
+	// presentation. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	//
+	// Possible values:
+	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
+	// COMMENTS_VIEW_MODE_OMITTED is applied.
+	//   "COMMENTS_VIEW_MODE_DEFAULT_FOR_CURRENT_ACCESS" - The CommentsViewMode
+	// applied to the returned presentation depends on the user's current access
+	// level. If the user only has view access, COMMENTS_VIEW_MODE_OMITTED is
+	// applied. Otherwise, COMMENTS_VIEW_MODE_INCLUDED is applied.
+	//   "COMMENTS_VIEW_MODE_OMITTED" - The returned presentation has comments
+	// omitted.
+	//   "COMMENTS_VIEW_MODE_INCLUDED" - The returned presentation has comments
+	// included. Requests to retrieve a presentation using this mode will return a
+	// 403 error if the user does not have permission to view comments.
+	CommentsViewMode string `json:"commentsViewMode,omitempty"`
 	// Layouts: The layouts in the presentation. A layout is a template that
 	// determines how content is arranged and styled on the slides that inherit
 	// from that layout.
@@ -3019,13 +3437,13 @@ type Presentation struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Layouts") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Comments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Layouts") to include in API
+	// NullFields is a list of field names (e.g. "Comments") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3439,6 +3857,9 @@ func (s ReplaceImageRequest) MarshalJSON() ([]byte, error) {
 
 // Request: A single kind of update to apply to a presentation.
 type Request struct {
+	// AddCommentReply: Adds a reply to a CommentThread. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	AddCommentReply *AddCommentReplyRequest `json:"addCommentReply,omitempty"`
 	// CreateImage: Creates an image.
 	CreateImage *CreateImageRequest `json:"createImage,omitempty"`
 	// CreateLine: Creates a line.
@@ -3455,6 +3876,12 @@ type Request struct {
 	CreateTable *CreateTableRequest `json:"createTable,omitempty"`
 	// CreateVideo: Creates a video.
 	CreateVideo *CreateVideoRequest `json:"createVideo,omitempty"`
+	// DeleteComment: Deletes a CommentThread. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	DeleteComment *DeleteCommentRequest `json:"deleteComment,omitempty"`
+	// DeleteCommentReply: Deletes a reply Post from a CommentThread. Developer
+	// Preview (https://developers.google.com/workspace/preview).
+	DeleteCommentReply *DeleteCommentReplyRequest `json:"deleteCommentReply,omitempty"`
 	// DeleteObject: Deletes a page or page element from the presentation.
 	DeleteObject *DeleteObjectRequest `json:"deleteObject,omitempty"`
 	// DeleteParagraphBullets: Deletes bullets from paragraphs.
@@ -3469,6 +3896,9 @@ type Request struct {
 	DuplicateObject *DuplicateObjectRequest `json:"duplicateObject,omitempty"`
 	// GroupObjects: Groups objects, such as page elements.
 	GroupObjects *GroupObjectsRequest `json:"groupObjects,omitempty"`
+	// InsertComment: Inserts a CommentThread into the presentation. Developer
+	// Preview (https://developers.google.com/workspace/preview).
+	InsertComment *InsertCommentRequest `json:"insertComment,omitempty"`
 	// InsertTableColumns: Inserts columns into a table.
 	InsertTableColumns *InsertTableColumnsRequest `json:"insertTableColumns,omitempty"`
 	// InsertTableRows: Inserts rows into a table.
@@ -3496,6 +3926,10 @@ type Request struct {
 	UngroupObjects *UngroupObjectsRequest `json:"ungroupObjects,omitempty"`
 	// UnmergeTableCells: Unmerges cells in a Table.
 	UnmergeTableCells *UnmergeTableCellsRequest `json:"unmergeTableCells,omitempty"`
+	// UpdateCommentPost: Updates an existing post (head post or reply) of a
+	// CommentThread. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	UpdateCommentPost *UpdateCommentPostRequest `json:"updateCommentPost,omitempty"`
 	// UpdateImageProperties: Updates the properties of an Image.
 	UpdateImageProperties *UpdateImagePropertiesRequest `json:"updateImageProperties,omitempty"`
 	// UpdateLineCategory: Updates the category of a line.
@@ -3534,15 +3968,15 @@ type Request struct {
 	UpdateTextStyle *UpdateTextStyleRequest `json:"updateTextStyle,omitempty"`
 	// UpdateVideoProperties: Updates the properties of a Video.
 	UpdateVideoProperties *UpdateVideoPropertiesRequest `json:"updateVideoProperties,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateImage") to
+	// ForceSendFields is a list of field names (e.g. "AddCommentReply") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateImage") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AddCommentReply") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3579,6 +4013,9 @@ func (s RerouteLineRequest) MarshalJSON() ([]byte, error) {
 
 // Response: A single response from an update.
 type Response struct {
+	// AddCommentReply: The result of creating a reply. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	AddCommentReply *AddCommentReplyResponse `json:"addCommentReply,omitempty"`
 	// CreateImage: The result of creating an image.
 	CreateImage *CreateImageResponse `json:"createImage,omitempty"`
 	// CreateLine: The result of creating a line.
@@ -3597,6 +4034,9 @@ type Response struct {
 	DuplicateObject *DuplicateObjectResponse `json:"duplicateObject,omitempty"`
 	// GroupObjects: The result of grouping objects.
 	GroupObjects *GroupObjectsResponse `json:"groupObjects,omitempty"`
+	// InsertComment: The result of creating a comment. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	InsertComment *InsertCommentResponse `json:"insertComment,omitempty"`
 	// ReplaceAllShapesWithImage: The result of replacing all shapes matching some
 	// criteria with an image.
 	ReplaceAllShapesWithImage *ReplaceAllShapesWithImageResponse `json:"replaceAllShapesWithImage,omitempty"`
@@ -3605,15 +4045,15 @@ type Response struct {
 	ReplaceAllShapesWithSheetsChart *ReplaceAllShapesWithSheetsChartResponse `json:"replaceAllShapesWithSheetsChart,omitempty"`
 	// ReplaceAllText: The result of replacing text.
 	ReplaceAllText *ReplaceAllTextResponse `json:"replaceAllText,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CreateImage") to
+	// ForceSendFields is a list of field names (e.g. "AddCommentReply") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateImage") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AddCommentReply") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4156,6 +4596,56 @@ func (s ShapeProperties) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ShapeTextAnchor: An anchor to a specific range of text within a Shape's
+// text. Developer Preview (https://developers.google.com/workspace/preview).
+// To insert comments in speaker notes, use the ShapeTextAnchor with the
+// speaker notes object ID.
+type ShapeTextAnchor struct {
+	// ObjectId: The object ID of the page element containing the text.
+	ObjectId string `json:"objectId,omitempty"`
+	// TextRange: The text range for the anchor.
+	TextRange *Range `json:"textRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShapeTextAnchor) MarshalJSON() ([]byte, error) {
+	type NoMethod ShapeTextAnchor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ShapeTextAnchors: Represents text ranges within a shape covered by a comment
+// anchor. Developer Preview (https://developers.google.com/workspace/preview).
+type ShapeTextAnchors struct {
+	// Ranges: A list of text ranges covered by the comment anchor.
+	Ranges []*TextRange `json:"ranges,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Ranges") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ranges") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ShapeTextAnchors) MarshalJSON() ([]byte, error) {
+	type NoMethod ShapeTextAnchors
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SheetsChart: A PageElement kind representing a linked chart embedded from
 // Google Sheets.
 type SheetsChart struct {
@@ -4473,6 +4963,33 @@ func (s Table) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TableAnchor: An anchor to a specific range of cells within a Table. Used to
+// anchor a comment to all of the text in each cell in a range within a table.
+// Developer Preview (https://developers.google.com/workspace/preview).
+type TableAnchor struct {
+	// ObjectId: The object ID of the table.
+	ObjectId string `json:"objectId,omitempty"`
+	// TableRange: The range of cells in the table to apply the anchor to. If
+	// omitted, all cells in the table will be used for the anchor.
+	TableRange *TableRange `json:"tableRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObjectId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObjectId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableAnchor) MarshalJSON() ([]byte, error) {
+	type NoMethod TableAnchor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TableBorderCell: The properties of each border cell.
 type TableBorderCell struct {
 	// Location: The location of the border within the border table.
@@ -4613,6 +5130,31 @@ func (s TableCell) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TableCellAnchors: Represents table cell ranges within a table covered by a
+// comment anchor. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type TableCellAnchors struct {
+	// CellRanges: A list of all table cells in a table that have text covered by
+	// the anchor in the table.
+	CellRanges []*TableCellTextRanges `json:"cellRanges,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CellRanges") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CellRanges") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableCellAnchors) MarshalJSON() ([]byte, error) {
+	type NoMethod TableCellAnchors
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TableCellBackgroundFill: The table cell background fill.
 type TableCellBackgroundFill struct {
 	// PropertyState: The background fill property state. Updating the fill on a
@@ -4716,6 +5258,60 @@ type TableCellProperties struct {
 
 func (s TableCellProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod TableCellProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TableCellTextAnchor: An anchor to a specific range of text within a
+// TableCell's TextElement. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type TableCellTextAnchor struct {
+	// CellLocation: The location of the cell in the table.
+	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
+	// ObjectId: The object ID of the table containing the cell.
+	ObjectId string `json:"objectId,omitempty"`
+	// TextRange: The text range for the anchor.
+	TextRange *Range `json:"textRange,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CellLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CellLocation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableCellTextAnchor) MarshalJSON() ([]byte, error) {
+	type NoMethod TableCellTextAnchor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TableCellTextRanges: Represents text ranges within a table cell covered by a
+// comment anchor. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type TableCellTextRanges struct {
+	// CellLocation: The location of the table cell.
+	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
+	// Ranges: A list of all text ranges covered by the anchor in this cell.
+	Ranges []*TextRange `json:"ranges,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CellLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CellLocation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TableCellTextRanges) MarshalJSON() ([]byte, error) {
+	type NoMethod TableCellTextRanges
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4890,6 +5486,34 @@ type TextElement struct {
 
 func (s TextElement) MarshalJSON() ([]byte, error) {
 	type NoMethod TextElement
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TextRange: Specifies a contiguous range of text within a shape or table
+// cell's text. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type TextRange struct {
+	// EndIndex: The zero-based index of the end of the range. This field is an
+	// Int32Value in order to accommodate future use cases with open-ended ranges.
+	EndIndex int64 `json:"endIndex,omitempty"`
+	// StartIndex: The zero-based index of the beginning range. This field is an
+	// Int32Value in order to accommodate future use cases with open-ended ranges.
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TextRange) MarshalJSON() ([]byte, error) {
+	type NoMethod TextRange
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5157,6 +5781,37 @@ type UnmergeTableCellsRequest struct {
 
 func (s UnmergeTableCellsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UnmergeTableCellsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateCommentPostRequest: Updates a Post in a CommentThread. Returns a 400
+// bad request error if: - The requesting user is not the author of the post.
+// Developer Preview (https://developers.google.com/workspace/preview).
+type UpdateCommentPostRequest struct {
+	// CommentId: The ID of the CommentThread which the post belongs to.
+	CommentId string `json:"commentId,omitempty"`
+	// Content: The new text of the comment, as plain text. This text content will
+	// be handled similarly to comments created in the Slides editor. It will have
+	// similar behaviors for formatting, notifications, etc. This field cannot be
+	// empty, and must not exceed 2048 UTF-8 code units.
+	Content string `json:"content,omitempty"`
+	// PostId: The ID of the post being updated.
+	PostId string `json:"postId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateCommentPostRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateCommentPostRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6151,6 +6806,37 @@ func (r *PresentationsService) Get(presentationId string) *PresentationsGetCall 
 	return c
 }
 
+// CommentsViewMode sets the optional parameter "commentsViewMode": The
+// comments view mode to apply to the presentation. This allows viewing the
+// presentation with comments omitted or included. If one is not specified,
+// COMMENTS_VIEW_MODE_OMITTED is used. Developer Preview
+// (https://developers.google.com/workspace/preview).
+//
+// Possible values:
+//
+//	"COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
+//
+// COMMENTS_VIEW_MODE_OMITTED is applied.
+//
+//	"COMMENTS_VIEW_MODE_DEFAULT_FOR_CURRENT_ACCESS" - The CommentsViewMode
+//
+// applied to the returned presentation depends on the user's current access
+// level. If the user only has view access, COMMENTS_VIEW_MODE_OMITTED is
+// applied. Otherwise, COMMENTS_VIEW_MODE_INCLUDED is applied.
+//
+//	"COMMENTS_VIEW_MODE_OMITTED" - The returned presentation has comments
+//
+// omitted.
+//
+//	"COMMENTS_VIEW_MODE_INCLUDED" - The returned presentation has comments
+//
+// included. Requests to retrieve a presentation using this mode will return a
+// 403 error if the user does not have permission to view comments.
+func (c *PresentationsGetCall) CommentsViewMode(commentsViewMode string) *PresentationsGetCall {
+	c.urlParams_.Set("commentsViewMode", commentsViewMode)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6260,6 +6946,37 @@ func (r *PresentationsPagesService) Get(presentationId string, pageObjectId stri
 	c := &PresentationsPagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.presentationId = presentationId
 	c.pageObjectId = pageObjectId
+	return c
+}
+
+// CommentsViewMode sets the optional parameter "commentsViewMode": The
+// comments view mode to apply to the page. This allows viewing the page with
+// comments omitted or included. If one is not specified,
+// COMMENTS_VIEW_MODE_OMITTED is used. Developer Preview
+// (https://developers.google.com/workspace/preview).
+//
+// Possible values:
+//
+//	"COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
+//
+// COMMENTS_VIEW_MODE_OMITTED is applied.
+//
+//	"COMMENTS_VIEW_MODE_DEFAULT_FOR_CURRENT_ACCESS" - The CommentsViewMode
+//
+// applied to the returned presentation depends on the user's current access
+// level. If the user only has view access, COMMENTS_VIEW_MODE_OMITTED is
+// applied. Otherwise, COMMENTS_VIEW_MODE_INCLUDED is applied.
+//
+//	"COMMENTS_VIEW_MODE_OMITTED" - The returned presentation has comments
+//
+// omitted.
+//
+//	"COMMENTS_VIEW_MODE_INCLUDED" - The returned presentation has comments
+//
+// included. Requests to retrieve a presentation using this mode will return a
+// 403 error if the user does not have permission to view comments.
+func (c *PresentationsPagesGetCall) CommentsViewMode(commentsViewMode string) *PresentationsPagesGetCall {
+	c.urlParams_.Set("commentsViewMode", commentsViewMode)
 	return c
 }
 

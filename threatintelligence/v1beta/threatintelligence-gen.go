@@ -528,6 +528,40 @@ func (s CertificateDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CommunicationContext: Detailed communication context metadata for documents
+// originating from deep and dark web communication channels.
+type CommunicationContext struct {
+	// ChannelDescription: Optional. Description of the communication channel.
+	ChannelDescription string `json:"channelDescription,omitempty"`
+	// ChannelName: Optional. Name of the communication channel.
+	ChannelName string `json:"channelName,omitempty"`
+	// ChannelPath: Optional. Channel path (e.g. forum path or sub-channel).
+	ChannelPath string `json:"channelPath,omitempty"`
+	// ChannelUrl: Optional. URL of the communication channel.
+	ChannelUrl string `json:"channelUrl,omitempty"`
+	// ServiceName: Optional. Service from the collection event origin (e.g. forum
+	// or chat service name).
+	ServiceName string `json:"serviceName,omitempty"`
+	// ThreadId: Optional. Conversation thread identifier.
+	ThreadId string `json:"threadId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChannelDescription") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChannelDescription") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommunicationContext) MarshalJSON() ([]byte, error) {
+	type NoMethod CommunicationContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Configuration: A configuration represents a behavior an engine should follow
 // when producing new findings.
 type Configuration struct {
@@ -796,6 +830,8 @@ type CustomerProfileConfig struct {
 	SecurityConsiderations *CustomerProfileSecurityConsiderations `json:"securityConsiderations,omitempty"`
 	// Summary: Optional. A summarized version of the customer profile.
 	Summary *CustomerProfileSummary `json:"summary,omitempty"`
+	// Technologies: Optional. Technologies associated with the organization.
+	Technologies []*CustomerProfileTechnology `json:"technologies,omitempty"`
 	// TechnologyPresence: Optional. Technology presence of the organization.
 	TechnologyPresence string `json:"technologyPresence,omitempty"`
 	// WebPresences: Optional. Web presence of the organization.
@@ -1026,6 +1062,30 @@ func (s CustomerProfileSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomerProfileTechnology: Technology information for the customer profile.
+type CustomerProfileTechnology struct {
+	// CitationIds: Optional. The citation ids for the technology.
+	CitationIds []string `json:"citationIds,omitempty"`
+	// Technology: Required. The name of the technology.
+	Technology string `json:"technology,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CitationIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CitationIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomerProfileTechnology) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerProfileTechnology
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomerProfileWebPresence: Web presence information for the customer
 // profile.
 type CustomerProfileWebPresence struct {
@@ -1053,9 +1113,11 @@ func (s CustomerProfileWebPresence) MarshalJSON() ([]byte, error) {
 
 // DataLeakAlertDetail: Captures the specific details of Data Leak alert.
 type DataLeakAlertDetail struct {
-	// DiscoveryDocumentIds: Required. Array of ids to accommodate multiple
-	// discovery documents
+	// DiscoveryDocumentIds: Optional. Deprecated: Use `discovery_documents`
+	// instead. Array of ids to accommodate multiple discovery documents.
 	DiscoveryDocumentIds []string `json:"discoveryDocumentIds,omitempty"`
+	// DiscoveryDocuments: Output only. New structured metadata payload.
+	DiscoveryDocuments []*DiscoveryDocument `json:"discoveryDocuments,omitempty"`
 	// Severity: Required. The severity of the Data Leak alert. Allowed values are:
 	// * `LOW` * `MEDIUM` * `HIGH` * `CRITICAL`
 	Severity string `json:"severity,omitempty"`
@@ -1079,9 +1141,12 @@ func (s DataLeakAlertDetail) MarshalJSON() ([]byte, error) {
 
 // DataLeakFindingDetail: A detail object for a Data Leak finding.
 type DataLeakFindingDetail struct {
-	// DocumentId: Required. The unique identifier of the document that triggered
-	// the Data Leak finding. This ID can be used to retrieve the content of the
-	// document for further analysis.
+	// DiscoveryDocument: Optional. The discovery document associated with the Data
+	// Leak finding.
+	DiscoveryDocument *DiscoveryDocument `json:"discoveryDocument,omitempty"`
+	// DocumentId: Optional. Deprecated: Use `discovery_document` instead. The
+	// unique identifier of the document that triggered the Data Leak finding. This
+	// ID can be used to retrieve the content of the document for further analysis.
 	DocumentId string `json:"documentId,omitempty"`
 	// MatchScore: Required. Reference to the match score of the Data Leak finding.
 	// This is a float value greater than 0 and less than or equal to 1 calculated
@@ -1098,15 +1163,15 @@ type DataLeakFindingDetail struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "DiscoveryDocument") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DiscoveryDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1132,20 +1197,23 @@ func (s *DataLeakFindingDetail) UnmarshalJSON(data []byte) error {
 
 // DiscoveryDocument: Replaces the raw string ID to hold associated metadata.
 type DiscoveryDocument struct {
+	// CommunicationContext: Optional. Detailed communication context metadata for
+	// documents originating from deep and dark web communication channels.
+	CommunicationContext *CommunicationContext `json:"communicationContext,omitempty"`
 	// DocumentId: Output only. The identifier of the discovery document.
 	DocumentId string `json:"documentId,omitempty"`
 	// DocumentType: Output only. The classification/type of the document (e.g.
 	// `COMMUNICATION`, `DDW_COMMUNICATION`, `message`).
 	DocumentType string `json:"documentType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "CommunicationContext") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CommunicationContext") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1941,9 +2009,12 @@ func (s InitialAccessBrokerAlertDetail) MarshalJSON() ([]byte, error) {
 // InitialAccessBrokerFindingDetail: A detail object for an Initial Access
 // Broker (IAB) finding.
 type InitialAccessBrokerFindingDetail struct {
-	// DocumentId: Required. The unique identifier of the document that triggered
-	// the IAB finding. This ID can be used to retrieve the content of the document
-	// for further analysis.
+	// DiscoveryDocument: Optional. The discovery document associated with the IAB
+	// finding.
+	DiscoveryDocument *DiscoveryDocument `json:"discoveryDocument,omitempty"`
+	// DocumentId: Optional. Deprecated: Use `discovery_document` instead. The
+	// unique identifier of the document that triggered the IAB finding. This ID
+	// can be used to retrieve the content of the document for further analysis.
 	DocumentId string `json:"documentId,omitempty"`
 	// MatchScore: Required. Reference to the match score of the IAB finding. This
 	// is a float value between 0 and 1 calculated by the matching engine based on
@@ -1959,15 +2030,15 @@ type InitialAccessBrokerFindingDetail struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "DiscoveryDocument") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DiscoveryDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1994,9 +2065,11 @@ func (s *InitialAccessBrokerFindingDetail) UnmarshalJSON(data []byte) error {
 // InsiderThreatAlertDetail: Captures the specific details of InsiderThreat
 // alert.
 type InsiderThreatAlertDetail struct {
-	// DiscoveryDocumentIds: Required. Array of ids to accommodate multiple
-	// discovery documents
+	// DiscoveryDocumentIds: Optional. Deprecated: Use `discovery_documents`
+	// instead. Array of ids to accommodate multiple discovery documents.
 	DiscoveryDocumentIds []string `json:"discoveryDocumentIds,omitempty"`
+	// DiscoveryDocuments: Output only. New structured metadata payload.
+	DiscoveryDocuments []*DiscoveryDocument `json:"discoveryDocuments,omitempty"`
 	// Severity: Required. The severity of the Insider Threat alert. Allowed values
 	// are: * `LOW` * `MEDIUM` * `HIGH` * `CRITICAL`
 	Severity string `json:"severity,omitempty"`
@@ -2020,9 +2093,13 @@ func (s InsiderThreatAlertDetail) MarshalJSON() ([]byte, error) {
 
 // InsiderThreatFindingDetail: A detail object for a InsiderThreat finding.
 type InsiderThreatFindingDetail struct {
-	// DocumentId: Required. The unique identifier of the document that triggered
-	// the InsiderThreat finding. This ID can be used to retrieve the content of
-	// the document for further analysis.
+	// DiscoveryDocument: Optional. The discovery document associated with the
+	// Insider Threat finding.
+	DiscoveryDocument *DiscoveryDocument `json:"discoveryDocument,omitempty"`
+	// DocumentId: Optional. Deprecated: Use `discovery_document` instead. The
+	// unique identifier of the document that triggered the InsiderThreat finding.
+	// This ID can be used to retrieve the content of the document for further
+	// analysis.
 	DocumentId string `json:"documentId,omitempty"`
 	// MatchScore: Required. Reference to the match score of the InsiderThreat
 	// finding. This is a float value greater than 0 and less than or equal to 1
@@ -2039,15 +2116,15 @@ type InsiderThreatFindingDetail struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "DiscoveryDocument") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DiscoveryDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

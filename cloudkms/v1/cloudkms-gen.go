@@ -3744,7 +3744,7 @@ type PublicKey struct {
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
 	// Name: The name of the CryptoKeyVersion public key. Provided here for
-	// verification. NOTE: This field is in Beta.
+	// verification.
 	Name string `json:"name,omitempty"`
 	// Pem: The public key, encoded in PEM format. For more information, see the
 	// RFC 7468 (https://tools.ietf.org/html/rfc7468) sections for General
@@ -3761,7 +3761,6 @@ type PublicKey struct {
 	// defined as int64 for reasons of compatibility across different languages.
 	// However, it is a non-negative integer, which will never exceed `2^32-1`, and
 	// can be safely downconverted to uint32 in languages that support this type.
-	// NOTE: This field is in Beta.
 	PemCrc32c int64 `json:"pemCrc32c,omitempty,string"`
 	// ProtectionLevel: The ProtectionLevel of the CryptoKeyVersion public key.
 	//

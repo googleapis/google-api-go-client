@@ -2530,8 +2530,6 @@ type CommentSnippet struct {
 	ModerationStatus string `json:"moderationStatus,omitempty"`
 	// ParentId: The unique id of the top-level comment, only set for replies.
 	ParentId string `json:"parentId,omitempty"`
-	// PostId: The ID of the post the comment refers to, if any.
-	PostId string `json:"postId,omitempty"`
 	// PublishedAt: The date and time when the comment was originally published.
 	PublishedAt string `json:"publishedAt,omitempty"`
 	// TextDisplay: The comment's text. The format is either plain text or HTML
@@ -2711,8 +2709,6 @@ type CommentThreadSnippet struct {
 	// IsPublic: Whether the thread (and therefore all its comments) is visible to
 	// all YouTube users.
 	IsPublic bool `json:"isPublic,omitempty"`
-	// PostId: The ID of the post the comments refer to, if any.
-	PostId string `json:"postId,omitempty"`
 	// TopLevelComment: The top level comment of this thread.
 	TopLevelComment *Comment `json:"topLevelComment,omitempty"`
 	// TotalReplyCount: The total number of replies (not including the top level
@@ -11331,13 +11327,6 @@ func (c *CommentThreadsListCall) Order(order string) *CommentThreadsListCall {
 // pages that could be retrieved.
 func (c *CommentThreadsListCall) PageToken(pageToken string) *CommentThreadsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// PostId sets the optional parameter "postId": Returns the comment threads of
-// the specified post.
-func (c *CommentThreadsListCall) PostId(postId string) *CommentThreadsListCall {
-	c.urlParams_.Set("postId", postId)
 	return c
 }
 

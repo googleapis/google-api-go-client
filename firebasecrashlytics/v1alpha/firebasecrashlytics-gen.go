@@ -723,25 +723,39 @@ func (s Frame) MarshalJSON() ([]byte, error) {
 
 // IntervalMetrics: A set of computed metric values for a time interval
 type IntervalMetrics struct {
+	// CrashFreeSessionsPercentage: Mobile only. Percentage of crash-free sessions.
+	// (total_sessions_count - impacted_sessions_count) / total_sessions_count *
+	// 100.
+	CrashFreeSessionsPercentage float64 `json:"crashFreeSessionsPercentage,omitempty"`
+	// CrashFreeUsersPercentage: Mobile only. Percentage of crash-free users.
+	// (total_users_count - impacted_users_count) / total_users_count * 100
+	CrashFreeUsersPercentage float64 `json:"crashFreeUsersPercentage,omitempty"`
 	// EndTime: The end of the interval covered by the computation.
 	EndTime string `json:"endTime,omitempty"`
 	// EventsCount: The total count of events in the interval.
 	EventsCount int64 `json:"eventsCount,omitempty,string"`
+	// ImpactedSessionsCount: The number of distinct sessions in the set of events.
+	ImpactedSessionsCount int64 `json:"impactedSessionsCount,omitempty,string"`
 	// ImpactedUsersCount: The number of distinct users in the set of events.
 	ImpactedUsersCount int64 `json:"impactedUsersCount,omitempty,string"`
-	// SessionsCount: The number of distinct sessions in the set of events.
+	// SessionsCount: Deprecated: Prefer `impacted_sessions_count`. The number of
+	// distinct sessions in the set of events.
 	SessionsCount int64 `json:"sessionsCount,omitempty,string"`
 	// StartTime: The start of the interval covered by the computation.
 	StartTime string `json:"startTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// TotalSessionsCount: The number of distinct sessions.
+	TotalSessionsCount int64 `json:"totalSessionsCount,omitempty,string"`
+	// TotalUsersCount: The number of distinct users.
+	TotalUsersCount int64 `json:"totalUsersCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CrashFreeSessionsPercentage") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CrashFreeSessionsPercentage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -749,6 +763,22 @@ type IntervalMetrics struct {
 func (s IntervalMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod IntervalMetrics
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *IntervalMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod IntervalMetrics
+	var s1 struct {
+		CrashFreeSessionsPercentage gensupport.JSONFloat64 `json:"crashFreeSessionsPercentage"`
+		CrashFreeUsersPercentage    gensupport.JSONFloat64 `json:"crashFreeUsersPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CrashFreeSessionsPercentage = float64(s1.CrashFreeSessionsPercentage)
+	s.CrashFreeUsersPercentage = float64(s1.CrashFreeUsersPercentage)
+	return nil
 }
 
 // Issue: An issue describes a set of similar events that have been analyzed by
@@ -1754,6 +1784,27 @@ func (c *ProjectsAppsEventsListCall) FilterOperatingSystemDisplayNames(filterOpe
 // (build_version)" e.g. "1.2.3 (456)".
 func (c *ProjectsAppsEventsListCall) FilterVersionDisplayNames(filterVersionDisplayNames ...string) *ProjectsAppsEventsListCall {
 	c.urlParams_.SetMulti("filter.version.displayNames", append([]string{}, filterVersionDisplayNames...))
+	return c
+}
+
+// FilterExpression sets the optional parameter "filterExpression": Filters
+// events by custom keys
+// (https://firebase.google.com/docs/crashlytics/customize-crash-reports#add-keys).
+// Supported forms: * Equality: `custom_keys.level = "vip" or
+// `custom_keys.level:"vip" * Presence: `custom_keys.level:*` * OR across
+// values of one key: `custom_keys.level = "vip" OR custom_keys.level =
+// "enterprise" * AND across different keys: `custom_keys.level = "vip" AND
+// custom_keys.region = "us" Keys are case-sensitive. Keys and values
+// containing spaces must be double-quoted, for example `custom_keys."app
+// state" = "background". OR across different keys, repeating a key within an
+// AND, NOT, and comparators other than `=` and `:` are rejected with
+// INVALID_ARGUMENT. Wildcards are not supported in values; use
+// `custom_keys.:*` to match events that set a key to any value. Only supported
+// for Android and iOS. This filter expression applies in addition to the
+// `filter` field above. The syntax is a subset of AIP-160
+// (https://google.aip.dev/160).
+func (c *ProjectsAppsEventsListCall) FilterExpression(filterExpression string) *ProjectsAppsEventsListCall {
+	c.urlParams_.Set("filterExpression", filterExpression)
 	return c
 }
 

@@ -1372,6 +1372,7 @@ type Device struct {
 	//   "MAC_OS" - Device is a MacOS device.
 	//   "LINUX" - Device is a Linux device.
 	//   "CHROME_OS" - Device is a ChromeOS device.
+	//   "GOOGLEBOOK" - Device is a Googlebook device.
 	DeviceType string `json:"deviceType,omitempty"`
 	// EnabledDeveloperOptions: Output only. Whether developer options is enabled
 	// on device.
@@ -2386,6 +2387,7 @@ type GoogleAppsCloudidentityDevicesV1Device struct {
 	//   "MAC_OS" - Device is a MacOS device.
 	//   "LINUX" - Device is a Linux device.
 	//   "CHROME_OS" - Device is a ChromeOS device.
+	//   "GOOGLEBOOK" - Device is a Googlebook device.
 	DeviceType string `json:"deviceType,omitempty"`
 	// EnabledDeveloperOptions: Output only. Whether developer options is enabled
 	// on device.

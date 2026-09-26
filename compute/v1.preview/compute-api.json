@@ -14862,6 +14862,64 @@
             "https://www.googleapis.com/auth/compute.readonly"
           ]
         },
+        "troubleshoot": {
+          "apiVersion": "2026-10-01-preview",
+          "description": "Initiates diagnostic troubleshooting on the specified instance.\nThis operation cannot be cancelled.",
+          "flatPath": "projects/{project}/zones/{zone}/instances/{instance}/troubleshoot",
+          "httpMethod": "POST",
+          "id": "compute.instances.troubleshoot",
+          "parameterOrder": [
+            "project",
+            "zone",
+            "instance"
+          ],
+          "parameters": {
+            "instance": {
+              "description": "Name of the instance scoping this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?|[1-9][0-9]{0,19}",
+              "required": true,
+              "type": "string"
+            },
+            "params.endTime": {
+              "description": "Input only. Timestamp representing the end of the troubleshooting window\nin RFC3339\ntext format. If omitted, defaults to 'now'.",
+              "location": "query",
+              "type": "string"
+            },
+            "params.startTime": {
+              "description": "Input only. Timestamp representing the beginning of the troubleshooting window\nin RFC3339\ntext format. If omitted, defaults to the last 12 hours.",
+              "location": "query",
+              "type": "string"
+            },
+            "project": {
+              "description": "Project ID for this request.",
+              "location": "path",
+              "pattern": "(?:(?:[-a-z0-9]{1,63}\\.)*(?:[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?):)?(?:[0-9]{1,19}|(?:[a-z0-9](?:[-a-z0-9]{0,61}[a-z0-9])?))",
+              "required": true,
+              "type": "string"
+            },
+            "requestId": {
+              "description": "An optional request ID to identify requests. Specify a unique request ID so\nthat if you must retry your request, the server will know to ignore the\nrequest if it has already been completed.\n\nFor example, consider a situation where you make an initial request and\nthe request times out. If you make the request again with the same\nrequest ID, the server can check if original operation with the same\nrequest ID was received, and if so, will ignore the second request. This\nprevents clients from accidentally creating duplicate commitments.\n\nThe request ID must be\na valid UUID with the exception that zero UUID is not supported\n(00000000-0000-0000-0000-000000000000).",
+              "location": "query",
+              "type": "string"
+            },
+            "zone": {
+              "description": "The name of the zone for this request.",
+              "location": "path",
+              "pattern": "[a-z](?:[-a-z0-9]{0,61}[a-z0-9])?",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "projects/{project}/zones/{zone}/instances/{instance}/troubleshoot",
+          "response": {
+            "$ref": "Operation"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/compute"
+          ]
+        },
         "update": {
           "apiVersion": "2026-10-01-preview",
           "description": "Updates an instance only if the necessary resources are available. This\nmethod can update only a specific set of instance properties. See\nUpdating a running instance for a list of updatable instance\nproperties.",
@@ -49584,7 +49642,7 @@
       }
     }
   },
-  "revision": "20260910",
+  "revision": "20260916",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AWSV4Signature": {
@@ -55529,11 +55587,13 @@
         "cacheMode": {
           "description": "Specifies the cache setting for all responses from this route. If not\nspecified, Cloud CDN uses `CACHE_ALL_STATIC` mode.",
           "enum": [
+            "BYPASS_CACHE",
             "CACHE_ALL_STATIC",
             "FORCE_CACHE_ALL",
             "USE_ORIGIN_HEADERS"
           ],
           "enumDescriptions": [
+            "Bypasses the cache for this route. All requests are forwarded to the\norigin, and responses are not cached.",
             "Automatically cache static content, including common image formats,\nmedia (video and audio), and web assets (JavaScript and CSS).\nRequests and responses that are marked as uncacheable, as well as\ndynamic content (including HTML), will not be cached.",
             "Cache all content, ignoring any \"private\", \"no-store\" or \"no-cache\"\ndirectives in Cache-Control response headers.\nWarning: this may result in Cloud CDN caching private,\nper-user (user identifiable) content.",
             "Requires the origin to set valid caching headers to cache content.\nResponses without these headers will not be cached at the edge, and will\nrequire a full trip to the origin on every request, potentially impacting\nperformance and increasing load on the origin server."
@@ -81303,6 +81363,12 @@
           },
           "readOnly": true,
           "type": "object"
+        },
+        "timestamp": {
+          "description": "Output only. Show timestamp only if there is an error. The field value\nshould match corresponding timestamp in listErrors.RFC3339\ntext format.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -94711,6 +94777,11 @@
       "description": "Represents a reservation block resource.",
       "id": "ReservationBlock",
       "properties": {
+        "blockStatus": {
+          "$ref": "ReservationBlockBlockStatus",
+          "description": "Output only. [Output Only] Resource status for the reservation block.",
+          "readOnly": true
+        },
         "count": {
           "description": "Output only. [Output Only] The number of resources that are allocated in this\nreservation block.",
           "format": "int32",
@@ -94809,6 +94880,49 @@
           "description": "Output only. [Output Only] Zone in which the reservation block resides.",
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationBlockBlockDetailedHealthInfo": {
+      "description": "Detailed health information for the reservation block.",
+      "id": "ReservationBlockBlockDetailedHealthInfo",
+      "properties": {
+        "criticalSubBlockCount": {
+          "description": "Output only. The number of subBlocks that are critical. Critical subBlocks are\ncompletely unhealthy and cannot be used.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "degradedSubBlockCount": {
+          "description": "Output only. The number of subBlocks that are degraded. Degraded subBlocks are within\nSLO and can be used with some performance degradation.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "healthySubBlockCount": {
+          "description": "Output only. The number of subBlocks that are healthy. Healthy subBlocks are within\nSLO and can be used without performance degradation.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "unhealthySubBlockCount": {
+          "description": "Output only. The number of subBlocks that are unhealthy. Unhealthy subBlocks cannot be\nused in full.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationBlockBlockStatus": {
+      "description": "[Output Only] Status for the reservation block.",
+      "id": "ReservationBlockBlockStatus",
+      "properties": {
+        "blockDetailedHealthInfo": {
+          "$ref": "ReservationBlockBlockDetailedHealthInfo",
+          "description": "Output only. Detailed health information for the reservation block.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -95642,6 +95756,11 @@
           "readOnly": true,
           "type": "string"
         },
+        "subBlockStatus": {
+          "$ref": "ReservationSubBlockSubBlockStatus",
+          "description": "Output only. [Output Only] Resource status for the reservation subBlock.",
+          "readOnly": true
+        },
         "zone": {
           "description": "Output only. [Output Only] Zone in which the reservation subBlock resides.",
           "readOnly": true,
@@ -95705,6 +95824,56 @@
         "subBlock": {
           "description": "The hash of the capacity sub-block within the capacity block.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationSubBlockSubBlockDetailedHealthInfo": {
+      "description": "Detailed health information for the reservation subBlock.",
+      "id": "ReservationSubBlockSubBlockDetailedHealthInfo",
+      "properties": {
+        "detailedHealthStatus": {
+          "description": "Output only. The detailed health status of the reservation subBlock.",
+          "enum": [
+            "DETAILED_HEALTH_STATUS_CRITICAL",
+            "DETAILED_HEALTH_STATUS_DEGRADED",
+            "DETAILED_HEALTH_STATUS_HEALTHY",
+            "DETAILED_HEALTH_STATUS_UNHEALTHY",
+            "DETAILED_HEALTH_STATUS_UNSPECIFIED"
+          ],
+          "enumDescriptions": [
+            "The reservation subBlock is completely unhealthy and cannot be used.",
+            "The reservation subBlock is within SLO and can be used with some\nperformance degradation.",
+            "The reservation subBlock is healthy.",
+            "The reservation subBlock is unhealthy. This can be caused by host\nfailures, or network infrastructure failures.",
+            "The health status of the reservation subBlock is unspecified."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "healthyHostCount": {
+          "description": "Output only. The number of healthy hosts in the reservation subBlock.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "unhealthyHostCount": {
+          "description": "Output only. The number of unhealthy hosts in the reservation subBlock. Unhealthy\nhosts cannot be used in full.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ReservationSubBlockSubBlockStatus": {
+      "description": "[Output Only] Status for the reservation subBlock.",
+      "id": "ReservationSubBlockSubBlockStatus",
+      "properties": {
+        "subBlockDetailedHealthInfo": {
+          "$ref": "ReservationSubBlockSubBlockDetailedHealthInfo",
+          "description": "Output only. Detailed health information for the reservation subBlock.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -99841,7 +100010,7 @@
           "type": "string"
         },
         "match": {
-          "description": "CEL expression that specifies the match condition that egress traffic\nfrom a VM is evaluated against. If it evaluates to true, the\ncorresponding `action` is enforced.\n\nThe following examples are valid match expressions for public NAT:\n\n`inIpRange(destination.ip, '1.1.0.0/16') || inIpRange(destination.ip,\n     '2.2.0.0/16')`\n\n`destination.ip == '1.1.0.1' || destination.ip == '8.8.8.8'`\n\nThe following example is a valid match expression for private NAT:\n\n`nexthop.hub ==\n'//networkconnectivity.googleapis.com/projects/my-project/locations/global/hubs/hub-1'`",
+          "description": "CEL expression that specifies the match condition that egress traffic\nfrom a VM is evaluated against. If it evaluates to true, the\ncorresponding `action` is enforced.\n\nThe following examples are valid match expressions for public NAT:\n\n`inIpRange(destination.ip, '1.1.0.0/16') || inIpRange(destination.ip,\n     '2.2.0.0/16')`\n\n`destination.ip == '1.1.0.1' || destination.ip == '8.8.8.8'`\n\nThe following examples are valid match expressions for private NAT:\n\n(NAT 44)\n`nexthop.hub ==\n'//networkconnectivity.googleapis.com/projects/my-project/locations/global/hubs/hub-1'`\n\n`nexthop.is_hybrid`\n\n(NAT 64)\n`isIPv6(source.ip)`",
           "type": "string"
         },
         "ruleNumber": {
@@ -116228,6 +116397,20 @@
           "enumDescriptions": [
             "Set the port line protocol down when inline probes detect a fault. This\nsetting is only permitted on port mode pseudowires.",
             "Default."
+          ],
+          "type": "string"
+        },
+        "flowManagement": {
+          "description": "The flow management configuration for the wire.",
+          "enum": [
+            "DYNAMIC_PATH",
+            "FIXED_PATH",
+            "FLOW_MANAGEMENT_UNSPECIFIED"
+          ],
+          "enumDescriptions": [
+            "The wire uses dynamic paths.",
+            "The wire uses fixed paths.",
+            ""
           ],
           "type": "string"
         }

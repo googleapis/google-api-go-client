@@ -1,5 +1,5 @@
-cloud.google.com/go/auth v0.23.3 h1:UMK+oBtuNGMCR/6i6mmySUItqjOazpJrbmZyhGbGBWo=
-cloud.google.com/go/auth v0.23.3/go.mod h1:fClbry28fo7XkxhSeT6AQtAVAp6Jy0fW9N99PoPNPFM=
+cloud.google.com/go/auth v0.23.4-0.20260922060409-6c19dd8b7152 h1:cd3usB1AVnTxP2v8WSsGqXlT7o/xr/WcDKKOdYgWvF8=
+cloud.google.com/go/auth v0.23.4-0.20260922060409-6c19dd8b7152/go.mod h1:IFG/AMA1VWfuTrdbieEsB2GcpJyJV/phGAvogkOoPR4=
 cloud.google.com/go/auth/oauth2adapt v0.2.8 h1:keo8NaayQZ6wimpNSmW5OPc283g65QNIiLpZnkHRbnc=
 cloud.google.com/go/auth/oauth2adapt v0.2.8/go.mod h1:XQ9y31RkqZCcwJWNSx2Xvric3RrU88hAYYbjDWYDL+c=
 cloud.google.com/go/compute/metadata v0.9.1 h1:CTE1OWBQ0vnF5uHwdFAQJvMQ0Fi/KRcqqKTo9V0F8Ik=

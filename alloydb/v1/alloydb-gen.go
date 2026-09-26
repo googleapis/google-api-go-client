@@ -5537,6 +5537,11 @@ type User struct {
 	// password-based authentication.
 	//   "ALLOYDB_IAM_USER" - Database user that can authenticate via IAM-Based
 	// authentication.
+	//   "ALLOYDB_IAM_GROUP" - Database user that represents an IAM group whose
+	// members can authenticate via IAM group-based authentication.
+	//   "ALLOYDB_IAM_GROUP_USER" - Represents a user that belongs to an IAM group.
+	//   "ALLOYDB_IAM_GROUP_SERVICE_ACCOUNT" - Represents a service account that
+	// belongs to an IAM group.
 	UserType string `json:"userType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

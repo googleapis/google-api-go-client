@@ -10797,6 +10797,9 @@ type CachePolicy struct {
 	// specified, Cloud CDN uses `CACHE_ALL_STATIC` mode.
 	//
 	// Possible values:
+	//   "BYPASS_CACHE" - Bypasses the cache for this route. All requests are
+	// forwarded to the
+	// origin, and responses are not cached.
 	//   "CACHE_ALL_STATIC" - Automatically cache static content, including common
 	// image formats,
 	// media (video and audio), and web assets (JavaScript and CSS).
@@ -44760,6 +44763,11 @@ type ManagedInstanceLastAttempt struct {
 	// attempt to create or
 	// delete the instance.
 	Errors *ManagedInstanceLastAttemptErrors `json:"errors,omitempty"`
+	// Timestamp: Output only. Show timestamp only if there is an error. The field
+	// value
+	// should match corresponding timestamp in listErrors.RFC3339
+	// text format.
+	Timestamp string `json:"timestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -61170,6 +61178,9 @@ func (s ReservationAggregatedListWarningData) MarshalJSON() ([]byte, error) {
 
 // ReservationBlock: Represents a reservation block resource.
 type ReservationBlock struct {
+	// BlockStatus: Output only. [Output Only] Resource status for the reservation
+	// block.
+	BlockStatus *ReservationBlockBlockStatus `json:"blockStatus,omitempty"`
 	// Count: Output only. [Output Only] The number of resources that are allocated
 	// in this
 	// reservation block.
@@ -61234,13 +61245,13 @@ type ReservationBlock struct {
 	// Zone: Output only. [Output Only] Zone in which the reservation block
 	// resides.
 	Zone string `json:"zone,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "BlockStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Count") to include in API
+	// NullFields is a list of field names (e.g. "BlockStatus") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -61249,6 +61260,66 @@ type ReservationBlock struct {
 
 func (s ReservationBlock) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservationBlock
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservationBlockBlockDetailedHealthInfo: Detailed health information for the
+// reservation block.
+type ReservationBlockBlockDetailedHealthInfo struct {
+	// CriticalSubBlockCount: Output only. The number of subBlocks that are
+	// critical. Critical subBlocks are
+	// completely unhealthy and cannot be used.
+	CriticalSubBlockCount int64 `json:"criticalSubBlockCount,omitempty"`
+	// DegradedSubBlockCount: Output only. The number of subBlocks that are
+	// degraded. Degraded subBlocks are within
+	// SLO and can be used with some performance degradation.
+	DegradedSubBlockCount int64 `json:"degradedSubBlockCount,omitempty"`
+	// HealthySubBlockCount: Output only. The number of subBlocks that are healthy.
+	// Healthy subBlocks are within
+	// SLO and can be used without performance degradation.
+	HealthySubBlockCount int64 `json:"healthySubBlockCount,omitempty"`
+	// UnhealthySubBlockCount: Output only. The number of subBlocks that are
+	// unhealthy. Unhealthy subBlocks cannot be
+	// used in full.
+	UnhealthySubBlockCount int64 `json:"unhealthySubBlockCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CriticalSubBlockCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CriticalSubBlockCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationBlockBlockDetailedHealthInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationBlockBlockDetailedHealthInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservationBlockBlockStatus: [Output Only] Status for the reservation block.
+type ReservationBlockBlockStatus struct {
+	// BlockDetailedHealthInfo: Output only. Detailed health information for the
+	// reservation block.
+	BlockDetailedHealthInfo *ReservationBlockBlockDetailedHealthInfo `json:"blockDetailedHealthInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlockDetailedHealthInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlockDetailedHealthInfo") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationBlockBlockStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationBlockBlockStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -62186,6 +62257,9 @@ type ReservationSubBlock struct {
 	//   "INVALID"
 	//   "READY" - Reservation subBlock has allocated all its resources.
 	Status string `json:"status,omitempty"`
+	// SubBlockStatus: Output only. [Output Only] Resource status for the
+	// reservation subBlock.
+	SubBlockStatus *ReservationSubBlockSubBlockStatus `json:"subBlockStatus,omitempty"`
 	// Zone: Output only. [Output Only] Zone in which the reservation subBlock
 	// resides.
 	Zone string `json:"zone,omitempty"`
@@ -62270,6 +62344,74 @@ type ReservationSubBlockPhysicalTopology struct {
 
 func (s ReservationSubBlockPhysicalTopology) MarshalJSON() ([]byte, error) {
 	type NoMethod ReservationSubBlockPhysicalTopology
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservationSubBlockSubBlockDetailedHealthInfo: Detailed health information
+// for the reservation subBlock.
+type ReservationSubBlockSubBlockDetailedHealthInfo struct {
+	// DetailedHealthStatus: Output only. The detailed health status of the
+	// reservation subBlock.
+	//
+	// Possible values:
+	//   "DETAILED_HEALTH_STATUS_CRITICAL" - The reservation subBlock is completely
+	// unhealthy and cannot be used.
+	//   "DETAILED_HEALTH_STATUS_DEGRADED" - The reservation subBlock is within SLO
+	// and can be used with some
+	// performance degradation.
+	//   "DETAILED_HEALTH_STATUS_HEALTHY" - The reservation subBlock is healthy.
+	//   "DETAILED_HEALTH_STATUS_UNHEALTHY" - The reservation subBlock is
+	// unhealthy. This can be caused by host
+	// failures, or network infrastructure failures.
+	//   "DETAILED_HEALTH_STATUS_UNSPECIFIED" - The health status of the
+	// reservation subBlock is unspecified.
+	DetailedHealthStatus string `json:"detailedHealthStatus,omitempty"`
+	// HealthyHostCount: Output only. The number of healthy hosts in the
+	// reservation subBlock.
+	HealthyHostCount int64 `json:"healthyHostCount,omitempty"`
+	// UnhealthyHostCount: Output only. The number of unhealthy hosts in the
+	// reservation subBlock. Unhealthy
+	// hosts cannot be used in full.
+	UnhealthyHostCount int64 `json:"unhealthyHostCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetailedHealthStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetailedHealthStatus") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSubBlockSubBlockDetailedHealthInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSubBlockSubBlockDetailedHealthInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReservationSubBlockSubBlockStatus: [Output Only] Status for the reservation
+// subBlock.
+type ReservationSubBlockSubBlockStatus struct {
+	// SubBlockDetailedHealthInfo: Output only. Detailed health information for the
+	// reservation subBlock.
+	SubBlockDetailedHealthInfo *ReservationSubBlockSubBlockDetailedHealthInfo `json:"subBlockDetailedHealthInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SubBlockDetailedHealthInfo")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SubBlockDetailedHealthInfo") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReservationSubBlockSubBlockStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod ReservationSubBlockSubBlockStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -67363,13 +67505,18 @@ type RouterNatRule struct {
 	//
 	// `destination.ip == '1.1.0.1' || destination.ip == '8.8.8.8'`
 	//
-	// The following example is a valid match expression for private
-	// NAT:
+	// The following examples are valid match expressions for private NAT:
 	//
+	// (NAT 44)
 	// `nexthop.hub
 	// ==
 	// '//networkconnectivity.googleapis.com/projects/my-project/locations/global/hu
 	// bs/hub-1'`
+	//
+	// `nexthop.is_hybrid`
+	//
+	// (NAT 64)
+	// `isIPv6(source.ip)`
 	Match string `json:"match,omitempty"`
 	// RuleNumber: An integer uniquely identifying a rule in the list. The rule
 	// number
@@ -88081,6 +88228,13 @@ type WireProperties struct {
 	// setting is only permitted on port mode pseudowires.
 	//   "NONE" - Default.
 	FaultResponse string `json:"faultResponse,omitempty"`
+	// FlowManagement: The flow management configuration for the wire.
+	//
+	// Possible values:
+	//   "DYNAMIC_PATH" - The wire uses dynamic paths.
+	//   "FIXED_PATH" - The wire uses fixed paths.
+	//   "FLOW_MANAGEMENT_UNSPECIFIED"
+	FlowManagement string `json:"flowManagement,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BandwidthAllocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

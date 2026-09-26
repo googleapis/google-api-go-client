@@ -426,6 +426,65 @@ func (s Attempt) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BatchCreateTasksRequest: Request message for [BatchCreateTasks].
+type BatchCreateTasksRequest struct {
+	// RequestId: Optional. This field will be used to identify the long running
+	// operation, avoiding duplication when user retries. If not provided, then a
+	// UUID will be generated at server side.
+	RequestId string `json:"requestId,omitempty"`
+	// Requests: Required. The list of requests to create tasks. The queue
+	// specified in parent field of each CreateTaskRequest will be the same. This
+	// validation happens on the client side as well as in the handler.
+	// BatchCreateTasksRequest.parent will also be the same value as the individual
+	// CreateTaskRequest.parent . The maximum number of requests is 100.
+	Requests []*CreateTaskRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchCreateTasksRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchCreateTasksRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BatchDeleteTasksRequest: Request message for deleting a batch of tasks using
+// BatchDeleteTasks.
+type BatchDeleteTasksRequest struct {
+	// Names: Required. The names of the tasks to delete. A maximum of 1000 tasks
+	// can be deleted in a batch. For example: Format:
+	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`
+	Names []string `json:"names,omitempty"`
+	// RequestId: Optional. This field will be used to identify the long running
+	// operation, avoiding duplication when user retries. If not provided, then a
+	// UUID will be generated at server side.
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Names") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Names") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BatchDeleteTasksRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchDeleteTasksRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -608,6 +667,10 @@ func (s CmekConfig) MarshalJSON() ([]byte, error) {
 
 // CreateTaskRequest: Request message for CreateTask.
 type CreateTaskRequest struct {
+	// Parent: Required. The queue name. For example:
+	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must
+	// already exist.
+	Parent string `json:"parent,omitempty"`
 	// ResponseView: The response_view specifies which subset of the Task will be
 	// returned. By default response_view is BASIC; not all information is
 	// retrieved by default because some data, such as payloads, might be desirable
@@ -646,13 +709,13 @@ type CreateTaskRequest struct {
 	// commands. The infrastructure relies on an approximately uniform distribution
 	// of task ids to store and serve tasks efficiently.
 	Task *Task `json:"task,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResponseView") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResponseView") to include in API
+	// NullFields is a list of field names (e.g. "Parent") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1879,6 +1942,9 @@ type Task struct {
 	// ResponseCount: Output only. The number of attempts which have received a
 	// response.
 	ResponseCount int64 `json:"responseCount,omitempty"`
+	// RetryConfig: Optional. Specifies the task-level RetryConfig. If present,
+	// this overrides the Queue.retry_config for this task.
+	RetryConfig *RetryConfig `json:"retryConfig,omitempty"`
 	// ScheduleTime: The time when the task is scheduled to be attempted or
 	// retried. `schedule_time` will be truncated to the nearest microsecond.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
@@ -3925,6 +3991,220 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudtasks.projects.locations.queues.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsQueuesTasksBatchCreateCall struct {
+	s                       *Service
+	parent                  string
+	batchcreatetasksrequest *BatchCreateTasksRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// BatchCreate: Creates a batch of tasks and adds them to a queue. All tasks
+// must be for the same queue. A maximum of 100 tasks can be created in a
+// single batch.
+//
+//   - parent: The queue name. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must
+//     already exist.
+func (r *ProjectsLocationsQueuesTasksService) BatchCreate(parent string, batchcreatetasksrequest *BatchCreateTasksRequest) *ProjectsLocationsQueuesTasksBatchCreateCall {
+	c := &ProjectsLocationsQueuesTasksBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchcreatetasksrequest = batchcreatetasksrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsQueuesTasksBatchCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksBatchCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsQueuesTasksBatchCreateCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksBatchCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsQueuesTasksBatchCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuesTasksBatchCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchcreatetasksrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/tasks:batchCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudtasks.projects.locations.queues.tasks.batchCreate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudtasks.projects.locations.queues.tasks.batchCreate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuesTasksBatchCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudtasks.projects.locations.queues.tasks.batchCreate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsQueuesTasksBatchDeleteCall struct {
+	s                       *Service
+	parent                  string
+	batchdeletetasksrequest *BatchDeleteTasksRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// BatchDelete: Deletes a batch of tasks. This is a non-atomic operation: if
+// deletion fails for some tasks, it can still succeed for others. The metadata
+// field of google.longrunning.Operation contains details of failed deletions.
+// A maximum of 1000 tasks can be deleted in a batch.
+//
+//   - parent: The queue name. For example: Format:
+//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
+func (r *ProjectsLocationsQueuesTasksService) BatchDelete(parent string, batchdeletetasksrequest *BatchDeleteTasksRequest) *ProjectsLocationsQueuesTasksBatchDeleteCall {
+	c := &ProjectsLocationsQueuesTasksBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.batchdeletetasksrequest = batchdeletetasksrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsQueuesTasksBatchDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsQueuesTasksBatchDeleteCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsQueuesTasksBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsQueuesTasksBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.batchdeletetasksrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/tasks:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudtasks.projects.locations.queues.tasks.batchDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudtasks.projects.locations.queues.tasks.batchDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsQueuesTasksBatchDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudtasks.projects.locations.queues.tasks.batchDelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

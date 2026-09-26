@@ -135,6 +135,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.AudienceMembers = NewAudienceMembersService(s)
 	s.Events = NewEventsService(s)
 	s.RequestStatus = NewRequestStatusService(s)
+	s.Users = NewUsersService(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -168,6 +169,8 @@ type Service struct {
 	Events *EventsService
 
 	RequestStatus *RequestStatusService
+
+	Users *UsersService
 }
 
 func (s *Service) userAgent() string {
@@ -303,6 +306,15 @@ func NewRequestStatusService(s *Service) *RequestStatusService {
 }
 
 type RequestStatusService struct {
+	s *Service
+}
+
+func NewUsersService(s *Service) *UsersService {
+	rs := &UsersService{s: s}
+	return rs
+}
+
+type UsersService struct {
 	s *Service
 }
 
@@ -1553,6 +1565,57 @@ func (s IngestUserIdDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type IngestUsersRequest struct {
+	Destinations []*Destination `json:"destinations,omitempty"`
+	// Possible values:
+	//   "ENCODING_UNSPECIFIED"
+	//   "HEX"
+	//   "BASE64"
+	Encoding       string          `json:"encoding,omitempty"`
+	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
+	Users          []*User         `json:"users,omitempty"`
+	ValidateOnly   bool            `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destinations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destinations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestUsersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestUsersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type IngestUsersResponse struct {
+	RequestId string `json:"requestId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IngestUsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod IngestUsersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type IngestedUserListInfo struct {
 	ContactIdInfo       *ContactIdInfo       `json:"contactIdInfo,omitempty"`
 	MobileIdInfo        *MobileIdInfo        `json:"mobileIdInfo,omitempty"`
@@ -2486,6 +2549,57 @@ func (s RemoveUserIdDataStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type RemoveUsersRequest struct {
+	Destinations []*Destination `json:"destinations,omitempty"`
+	// Possible values:
+	//   "ENCODING_UNSPECIFIED"
+	//   "HEX"
+	//   "BASE64"
+	Encoding       string          `json:"encoding,omitempty"`
+	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
+	UserData       []*UserData     `json:"userData,omitempty"`
+	ValidateOnly   bool            `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destinations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destinations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveUsersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveUsersRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type RemoveUsersResponse struct {
+	RequestId string `json:"requestId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoveUsersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoveUsersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type RequestStatusPerDestination struct {
 	AudienceMembersIngestionStatus *IngestAudienceMembersStatus    `json:"audienceMembersIngestionStatus,omitempty"`
 	AudienceMembersRemovalStatus   *RemoveAudienceMembersStatus    `json:"audienceMembersRemovalStatus,omitempty"`
@@ -2700,6 +2814,27 @@ type TermsOfService struct {
 
 func (s TermsOfService) MarshalJSON() ([]byte, error) {
 	type NoMethod TermsOfService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type User struct {
+	MobileData *MobileData `json:"mobileData,omitempty"`
+	UserData   *UserData   `json:"userData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MobileData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MobileData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s User) MarshalJSON() ([]byte, error) {
+	type NoMethod User
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5900,5 +6035,199 @@ func (c *RequestStatusRetrieveCall) Do(opts ...googleapi.CallOption) (*RetrieveR
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.requestStatus.retrieve", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type UsersIngestCall struct {
+	s                  *Service
+	ingestusersrequest *IngestUsersRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Ingest:
+func (r *UsersService) Ingest(ingestusersrequest *IngestUsersRequest) *UsersIngestCall {
+	c := &UsersIngestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ingestusersrequest = ingestusersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *UsersIngestCall) Fields(s ...googleapi.Field) *UsersIngestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *UsersIngestCall) Context(ctx context.Context) *UsersIngestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *UsersIngestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersIngestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.ingestusersrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users:ingest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.users.ingest", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.users.ingest" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *IngestUsersResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersIngestCall) Do(opts ...googleapi.CallOption) (*IngestUsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &IngestUsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.users.ingest", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type UsersRemoveCall struct {
+	s                  *Service
+	removeusersrequest *RemoveUsersRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Remove:
+func (r *UsersService) Remove(removeusersrequest *RemoveUsersRequest) *UsersRemoveCall {
+	c := &UsersRemoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.removeusersrequest = removeusersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *UsersRemoveCall) Fields(s ...googleapi.Field) *UsersRemoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *UsersRemoveCall) Context(ctx context.Context) *UsersRemoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *UsersRemoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *UsersRemoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.removeusersrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/users:remove")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamanager.users.remove", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamanager.users.remove" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RemoveUsersResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *UsersRemoveCall) Do(opts ...googleapi.CallOption) (*RemoveUsersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RemoveUsersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamanager.users.remove", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

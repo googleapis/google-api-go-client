@@ -537,6 +537,8 @@ type Account struct {
 	AccountName string `json:"accountName,omitempty"`
 	// AdultContent: Optional. Whether this account contains adult content.
 	AdultContent bool `json:"adultContent,omitempty"`
+	// HomePageUri: Output only. URI (typically a URL) of the store's homepage.
+	HomePageUri string `json:"homePageUri,omitempty"`
 	// LanguageCode: Required. The account's BCP-47 language code
 	// (https://tools.ietf.org/html/bcp47), such as `en-US` or `sr-Latn`.
 	LanguageCode string `json:"languageCode,omitempty"`

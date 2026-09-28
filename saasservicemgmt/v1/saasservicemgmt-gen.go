@@ -1237,7 +1237,7 @@ type RolloutKind struct {
 	// eligible unit population. This filter can only reduce, but not expand the
 	// scope of the rollout.
 	UnitFilter string `json:"unitFilter,omitempty"`
-	// UnitKind: Required. Immutable. UnitKind that this rollout kind corresponds
+	// UnitKind: Optional. Immutable. UnitKind that this rollout kind corresponds
 	// to. Rollouts stemming from this rollout kind will target the units of this
 	// unit kind. In other words, this defines the population of target units to be
 	// upgraded by rollouts.

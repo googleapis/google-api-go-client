@@ -2797,7 +2797,8 @@ type ObservabilityInstanceConfig struct {
 	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
 	// TrackActiveQueryPlan: Indicates whether to track active query plans for an
 	// instance. If not set, the default value is "off". Can only be enabled if
-	// track_active_queries is enabled.
+	// track_active_queries is enabled. Deprecated: Use track_active_queries
+	// instead.
 	TrackActiveQueryPlan bool `json:"trackActiveQueryPlan,omitempty"`
 	// TrackClientAddress: Track client address for an instance. If not set,
 	// default value is "off".

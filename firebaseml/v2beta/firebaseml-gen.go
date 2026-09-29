@@ -2984,6 +2984,10 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	// MediaResolution: per part media resolution. Media resolution for the input
 	// media.
 	MediaResolution *GoogleCloudAiplatformV1beta1PartMediaResolution `json:"mediaResolution,omitempty"`
+	// SpeechMetadata: Optional. Turn-level metadata for speech generation (e.g.
+	// Daikon speaker/style). May be set alongside `text` to attach speaker and
+	// style information to a text part.
+	SpeechMetadata *GoogleCloudAiplatformV1beta1SpeechMetadata `json:"speechMetadata,omitempty"`
 	// Text: Optional. The text content of the part. When sent from the VSCode
 	// Gemini Code Assist extension, references to @mentioned items will be
 	// converted to markdown boldface text. For example `@my-repo` will be
@@ -3948,6 +3952,32 @@ func (s GoogleCloudAiplatformV1beta1SpeechConfig) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1beta1SpeechMetadata: Structured Metadata Sub-Message
+// for Part
+type GoogleCloudAiplatformV1beta1SpeechMetadata struct {
+	// Speaker: Optional. Identifies which speaker is speaking this turn.
+	Speaker string `json:"speaker,omitempty"`
+	// Style: Optional. Natural language description of the vocal style (e.g.,
+	// "cheerful").
+	Style string `json:"style,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Speaker") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Speaker") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1SpeechMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1SpeechMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1beta1TextResponseFormat: Configuration for
 // text-specific output formatting.
 type GoogleCloudAiplatformV1beta1TextResponseFormat struct {
@@ -4054,6 +4084,19 @@ type GoogleCloudAiplatformV1beta1ToolCodeExecution struct {
 
 // GoogleCloudAiplatformV1beta1ToolComputerUse: Tool to support computer use.
 type GoogleCloudAiplatformV1beta1ToolComputerUse struct {
+	// DisabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+	//
+	// Possible values:
+	//   "SAFETY_POLICY_UNSPECIFIED" - Unspecified safety policy. This value should
+	// not be used.
+	//   "FINANCIAL_TRANSACTIONS" - Financial transactions safety policy.
+	//   "SENSITIVE_DATA_MODIFICATION" - Sensitive data modification safety policy.
+	//   "COMMUNICATION_TOOL" - Communication tool safety policy.
+	//   "ACCOUNT_CREATION" - Account creation safety policy.
+	//   "DATA_MODIFICATION" - Data modification safety policy.
+	//   "USER_CONSENT_MANAGEMENT" - User consent management safety policy.
+	//   "LEGAL_TERMS_AND_AGREEMENTS" - Legal terms and agreements safety policy.
+	DisabledSafetyPolicies []string `json:"disabledSafetyPolicies,omitempty"`
 	// EnablePromptInjectionDetection: Optional. Enables the prompt injection
 	// detection check on computer-use request.
 	EnablePromptInjectionDetection bool `json:"enablePromptInjectionDetection,omitempty"`
@@ -4072,15 +4115,14 @@ type GoogleCloudAiplatformV1beta1ToolComputerUse struct {
 	// Using a more restricted / different action space. 2. Improving the
 	// definitions / instructions of predefined functions.
 	ExcludedPredefinedFunctions []string `json:"excludedPredefinedFunctions,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "EnablePromptInjectionDetection") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "DisabledSafetyPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnablePromptInjectionDetection")
-	// to include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "DisabledSafetyPolicies") to
+	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
@@ -4608,6 +4650,11 @@ type GoogleCloudAiplatformV1beta1VoiceConfig struct {
 	// ReplicatedVoiceConfig: Optional. The configuration for a replicated voice.
 	// This enables users to replicate a voice from an audio sample.
 	ReplicatedVoiceConfig *GoogleCloudAiplatformV1beta1ReplicatedVoiceConfig `json:"replicatedVoiceConfig,omitempty"`
+	// Voice: Optional. The speaker identifier for synthesis. Supported formats: *
+	// Speaker name for prebuilt voices (for example, `Orus` or `Kore`). * Voice ID
+	// for stored voices (for example, `voice_xxx`). * Voice replication key (for
+	// example, `voicekey_xxx`).
+	Voice string `json:"voice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PrebuiltVoiceConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

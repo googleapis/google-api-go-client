@@ -146,6 +146,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		return nil, err
 	}
 	s := &Service{client: client, BasePath: basePath, logger: internaloption.GetLogger(opts)}
+	s.AcceleratorInterconnectMemberInstances = NewAcceleratorInterconnectMemberInstancesService(s)
+	s.AcceleratorInterconnects = NewAcceleratorInterconnectsService(s)
 	s.AcceleratorTypes = NewAcceleratorTypesService(s)
 	s.Addresses = NewAddressesService(s)
 	s.Advice = NewAdviceService(s)
@@ -301,6 +303,10 @@ type Service struct {
 	logger    *slog.Logger
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
+
+	AcceleratorInterconnectMemberInstances *AcceleratorInterconnectMemberInstancesService
+
+	AcceleratorInterconnects *AcceleratorInterconnectsService
 
 	AcceleratorTypes *AcceleratorTypesService
 
@@ -572,6 +578,24 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewAcceleratorInterconnectMemberInstancesService(s *Service) *AcceleratorInterconnectMemberInstancesService {
+	rs := &AcceleratorInterconnectMemberInstancesService{s: s}
+	return rs
+}
+
+type AcceleratorInterconnectMemberInstancesService struct {
+	s *Service
+}
+
+func NewAcceleratorInterconnectsService(s *Service) *AcceleratorInterconnectsService {
+	rs := &AcceleratorInterconnectsService{s: s}
+	return rs
+}
+
+type AcceleratorInterconnectsService struct {
+	s *Service
 }
 
 func NewAcceleratorTypesService(s *Service) *AcceleratorTypesService {
@@ -1843,6 +1867,365 @@ type AcceleratorConfig struct {
 
 func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AcceleratorConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnect: Represents an Accelerator Interconnect resource.
+type AcceleratorInterconnect struct {
+	// AcceleratorTopology: The target topology shape (e.g. "4x4x8").
+	AcceleratorTopology string `json:"acceleratorTopology,omitempty"`
+	// Annotations: The annotations for the accelerator interconnect.
+	Annotations map[string]string `json:"annotations,omitempty"`
+	// CreationTimestamp: Output only. [Output Only] The creation time of this
+	// resource inRFC3339
+	// text format.
+	CreationTimestamp string `json:"creationTimestamp,omitempty"`
+	// Description: An optional description of this resource.
+	Description string `json:"description,omitempty"`
+	// Id: Output only. [Output Only] A unique identifier for this resource type.
+	Id uint64 `json:"id,omitempty,string"`
+	// Labels: The labels for the accelerator interconnect.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: The name of the resource. The name must be 1-63 characters
+	// long, and comply withRFC1035.
+	Name string `json:"name,omitempty"`
+	// Params: Input only. [Input Only] Additional params passed with the creation
+	// request, but not
+	// persisted as part of resource payload.
+	Params *AcceleratorInterconnectParams `json:"params,omitempty"`
+	// ReactivationMode: The reactivation mode for the accelerator interconnect.
+	//
+	// Possible values:
+	//   "MANUAL" - Manual reactivation mode.
+	//   "REACTIVATION_MODE_UNSPECIFIED" - Unspecified value.
+	ReactivationMode string `json:"reactivationMode,omitempty"`
+	// SelfLink: Output only. [Output Only] The fully-qualified URL of this
+	// resource.
+	SelfLink string `json:"selfLink,omitempty"`
+	// SelfLinkWithId: Output only. [Output Only] The fully-qualified URL of this
+	// resource containing its
+	// unique identifier.
+	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// Status: Output only. [Output Only] The status of the interconnect.
+	Status *AcceleratorInterconnectAcceleratorInterconnectStatus `json:"status,omitempty"`
+	// Zone: Output only. [Output Only] The URL of azone
+	// where the interconnect resides. You must specify this field as part of
+	// the HTTP request URL. It is not settable as a field in the request body.
+	Zone string `json:"zone,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AcceleratorTopology") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceleratorTopology") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnect) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnect
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectAcceleratorInterconnectStatus: Detailed status
+// information for the interconnect resource.
+type AcceleratorInterconnectAcceleratorInterconnectStatus struct {
+	// AcceleratorType: Output only. [Output Only] The accelerator type (e.g.,
+	// "TPU7X").
+	AcceleratorType string `json:"acceleratorType,omitempty"`
+	// State: Output only. [Output Only] The current state of the interconnect.
+	//
+	// Possible values:
+	//   "ACTIVATING" - The interconnect is being activated.
+	//   "ACTIVE" - The interconnect is active and fully configured.
+	//   "ACTIVE_DEGRADED" - The interconnect is active but operating in degraded
+	// mode.
+	//   "DEACTIVATING" - The interconnect is being deactivated.
+	//   "FAILED" - The interconnect is failed and no longer active.
+	//   "STATE_UNSPECIFIED" - The interconnect is in an unspecified state.
+	State string `json:"state,omitempty"`
+	// StateDetails: Output only. [Output Only] The result of the latest
+	// accelerator topology state check.
+	StateDetails *AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetails `json:"stateDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceleratorType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceleratorType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectAcceleratorInterconnectStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectAcceleratorInterconnectStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectSt
+// ateDetails: Holds the details of the current accelerator interconnect state.
+type AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetails struct {
+	// Error: Output only. Encountered errors.
+	Error *AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsError `json:"error,omitempty"`
+	// Timestamp: Output only. Timestamp is shown only if there is an error.
+	Timestamp string `json:"timestamp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectSt
+// ateDetailsError: Output only. Encountered errors.
+type AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsError struct {
+	// Errors: [Output Only] The array of errors encountered while processing
+	// this
+	// operation.
+	Errors []*AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsErrorErrors `json:"errors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsError) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectSt
+// ateDetailsErrorErrors: Represents a single error encountered during the
+// processing of an
+// operation.
+type AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsErrorErrors struct {
+	// Code: [Output Only] The error type identifier for this error.
+	Code string `json:"code,omitempty"`
+	// ErrorDetails: [Output Only] An optional list of messages that contain the
+	// error
+	// details. There is a set of defined message types to use for
+	// providing
+	// details.The syntax depends on the error code. For example,
+	// QuotaExceededInfo will have details when the error code is
+	// QUOTA_EXCEEDED.
+	ErrorDetails []*AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsErrorErrorsErrorDetails `json:"errorDetails,omitempty"`
+	// Location: [Output Only] Indicates the field in the request that caused the
+	// error.
+	// This property is optional.
+	Location string `json:"location,omitempty"`
+	// Message: [Output Only] An optional, human-readable error message.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsErrorErrors) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsErrorErrors
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectSt
+// ateDetailsErrorErrorsErrorDetails: Container for structured error details
+// providing additional context
+// specific to the encountered error code.
+type AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsErrorErrorsErrorDetails struct {
+	// ErrorInfo: Error information containing structured domain, reason, and
+	// metadata.
+	ErrorInfo *ErrorInfo `json:"errorInfo,omitempty"`
+	// Help: Links and information to help the user resolve the error.
+	Help *Help `json:"help,omitempty"`
+	// LocalizedMessage: A localized human-readable error message intended for end
+	// users.
+	LocalizedMessage *LocalizedMessage `json:"localizedMessage,omitempty"`
+	// QuotaInfo: Details about quota limits and metrics when a quota is exceeded.
+	QuotaInfo *QuotaExceededInfo `json:"quotaInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsErrorErrorsErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectAcceleratorInterconnectStatusAcceleratorInterconnectStateDetailsErrorErrorsErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectMemberInstance: Represents an Accelerator
+// Interconnect Member Instance.
+type AcceleratorInterconnectMemberInstance struct {
+	// Instance: Output only. [Output Only] The VM instance resource URL
+	// (e.g.,
+	// https://.../instances/my-vm).
+	Instance string `json:"instance,omitempty"`
+	// InstanceId: Output only. [Output Only] The unique server-defined ID of the
+	// VM instance.
+	InstanceId uint64 `json:"instanceId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Instance") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Instance") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectMemberInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectMemberInstance
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectMemberInstancesListResponse: Response message for
+// AcceleratorInterconnectMemberInstances.List.
+type AcceleratorInterconnectMemberInstancesListResponse struct {
+	// Items: The list of AcceleratorInterconnectMemberInstances.
+	Items []*AcceleratorInterconnectMemberInstance `json:"items,omitempty"`
+	// NextPageToken: Token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectMemberInstancesListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectMemberInstancesListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectParams: Additional accelerator interconnect creation
+// params.
+type AcceleratorInterconnectParams struct {
+	// CapacityPool: The capacity pool to use for the accelerator interconnect.
+	CapacityPool *CapacityPool `json:"capacityPool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CapacityPool") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CapacityPool") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectParams) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectsInsertRequest: Insert an Accelerator Interconnect
+// resource.
+type AcceleratorInterconnectsInsertRequest struct {
+	// Resource: Required. The accelerator interconnect resource to insert.
+	Resource *AcceleratorInterconnect `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Resource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectsInsertRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectsInsertRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AcceleratorInterconnectsList: Response message for
+// AcceleratorInterconnects.List.
+type AcceleratorInterconnectsList struct {
+	// Items: A list of AcceleratorInterconnect resources.
+	Items []*AcceleratorInterconnect `json:"items,omitempty"`
+	// NextPageToken: This token allows you to get the next page of results
+	// for
+	// list requests. If the number of results is larger thanmaxResults, use the
+	// nextPageToken as a value for
+	// the query parameter pageToken in the next list request.
+	// Subsequent list requests will have their own nextPageToken to
+	// continue paging through the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceleratorInterconnectsList) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceleratorInterconnectsList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3654,6 +4037,9 @@ func (s AllocationReservationSharingPolicy) MarshalJSON() ([]byte, error) {
 type AllocationResourceStatus struct {
 	// HealthInfo: [Output only] Health information for the reservation.
 	HealthInfo *AllocationResourceStatusHealthInfo `json:"healthInfo,omitempty"`
+	// MachineCount: The number of machines in the reservation. Only populated
+	// for families where machine to host ratio is not 1:1 such as TPU8i.
+	MachineCount int64 `json:"machineCount,omitempty"`
 	// ReservationBlockCount: The number of reservation blocks associated with this
 	// reservation.
 	ReservationBlockCount int64 `json:"reservationBlockCount,omitempty"`
@@ -5350,6 +5736,18 @@ type AutoscalingPolicyCpuUtilization struct {
 	// monitoring daily and
 	// weekly load patterns and scaling out ahead of anticipated demand.
 	PredictiveMethod string `json:"predictiveMethod,omitempty"`
+	// UtilizationMax: The upper bound of the utilization range. Must be a float
+	// value in the
+	// range ('utilization_min', 1]. A value of 0.0 is equivalent to leaving
+	// the
+	// field unset.
+	UtilizationMax float64 `json:"utilizationMax,omitempty"`
+	// UtilizationMin: The lower bound of the utilization range. Must be a float
+	// value in the
+	// range (0, 'utilization_max']. A value of 0.0 is equivalent to leaving
+	// the
+	// field unset.
+	UtilizationMin float64 `json:"utilizationMin,omitempty"`
 	// UtilizationTarget: The target CPU utilization that the autoscaler maintains.
 	// Must be
 	// a float value in the range (0, 1]. If not specified, the default is0.6.
@@ -5385,6 +5783,8 @@ func (s AutoscalingPolicyCpuUtilization) MarshalJSON() ([]byte, error) {
 func (s *AutoscalingPolicyCpuUtilization) UnmarshalJSON(data []byte) error {
 	type NoMethod AutoscalingPolicyCpuUtilization
 	var s1 struct {
+		UtilizationMax    gensupport.JSONFloat64 `json:"utilizationMax"`
+		UtilizationMin    gensupport.JSONFloat64 `json:"utilizationMin"`
 		UtilizationTarget gensupport.JSONFloat64 `json:"utilizationTarget"`
 		*NoMethod
 	}
@@ -5392,6 +5792,8 @@ func (s *AutoscalingPolicyCpuUtilization) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.UtilizationMax = float64(s1.UtilizationMax)
+	s.UtilizationMin = float64(s1.UtilizationMin)
 	s.UtilizationTarget = float64(s1.UtilizationTarget)
 	return nil
 }
@@ -11804,6 +12206,32 @@ func (s CapacityHistoryResponsePriceRecord) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CapacityPool: Structured representation of the capacity pool.
+type CapacityPool struct {
+	// PartitionIds: The list of physical topology block identifiers.
+	PartitionIds []string `json:"partitionIds,omitempty"`
+	// Resources: A list of fully qualified resource names that form the logical
+	// bounds.
+	// Both full and relative URIs are supported.
+	Resources []string `json:"resources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PartitionIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PartitionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityPool) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityPool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CircuitBreakers: Settings controlling the volume of requests, connections
 // and retries to this
 // backend service.
@@ -12037,7 +12465,8 @@ type Commitment struct {
 	// GRAPHICS_OPTIMIZED_G4,GRAPHICS_OPTIMIZED_G4_VGPU,MEMORY_OPTIMIZED,
 	// MEMORY_OPTIMIZED_M3,MEMORY_OPTIMIZED_X4,
 	// STORAGE_OPTIMIZED_Z3,STORAGE_OPTIMIZED_Z4DS,
-	// STORAGE_OPTIMIZED_Z4DH,STORAGE_OPTIMIZED_Z4D4T. For
+	// STORAGE_OPTIMIZED_Z4DH,STORAGE_OPTIMIZED_Z4D4T,STORAGE_OPTIMIZED_Z4M.
+	// For
 	// example, type MEMORY_OPTIMIZED specifies a commitment that
 	// applies only to eligible resources of memory optimized M1 and M2
 	// machine
@@ -12056,6 +12485,8 @@ type Commitment struct {
 	//   "COMPUTE_OPTIMIZED_C3D"
 	//   "COMPUTE_OPTIMIZED_H3"
 	//   "COMPUTE_OPTIMIZED_H4D"
+	//   "COMPUTE_OPTIMIZED_H4D_3TB" - CUD bucket for COMPUTE_OPTIMIZED_H4D_3TB
+	// machines.
 	//   "GENERAL_PURPOSE"
 	//   "GENERAL_PURPOSE_C4"
 	//   "GENERAL_PURPOSE_C4A"
@@ -12097,6 +12528,7 @@ type Commitment struct {
 	//   "STORAGE_OPTIMIZED_Z4D4T" - CUD bucket for Z4D-4T machines.
 	//   "STORAGE_OPTIMIZED_Z4DH" - CUD bucket for Z4DH machines.
 	//   "STORAGE_OPTIMIZED_Z4DS" - CUD bucket for Z4DS machines.
+	//   "STORAGE_OPTIMIZED_Z4M" - CUD bucket for Z4M (bare metal) machines.
 	//   "TYPE_UNSPECIFIED" - Note for internal users: When adding a new enum Type
 	// for v1, make sure
 	// to also add it in the comment for the `optional Type type` definition.
@@ -36718,6 +37150,30 @@ func (s InstancesStartWithEncryptionKeyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstancesTroubleshootOperationMetadata: [Output Only] Operation metadata for
+// instances.troubleshoot.
+type InstancesTroubleshootOperationMetadata struct {
+	// TroubleshootOutput: Output only. [Output Only] Serialized output of the
+	// troubleshooting diagnostic run.
+	TroubleshootOutput string `json:"troubleshootOutput,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TroubleshootOutput") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TroubleshootOutput") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstancesTroubleshootOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancesTroubleshootOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InstantSnapshot: Represents a InstantSnapshot resource.
 //
 // You can use instant snapshots to create disk rollback points quickly..
@@ -42593,6 +43049,32 @@ func (s InterconnectsGetMacsecConfigResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InterconnectsSetNameRequest: Request to rename an interconnect.
+type InterconnectsSetNameRequest struct {
+	// CurrentName: The current name of the interconnect.
+	// The name must be 1-63 characters long, and comply with RFC1035.
+	CurrentName string `json:"currentName,omitempty"`
+	// Name: The new name of the interconnect.
+	// The name must be 1-63 characters long, and comply with RFC1035.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CurrentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrentName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InterconnectsSetNameRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InterconnectsSetNameRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Interval: Represents a time interval, encoded as a Timestamp start
 // (inclusive) and a
 // Timestamp end (exclusive).
@@ -46454,6 +46936,10 @@ type NetworkEdgeSecurityService struct {
 	// which
 	// cannot be a dash.
 	Name string `json:"name,omitempty"`
+	// Params: Input only. [Input Only] Additional params passed with the request,
+	// but not persisted
+	// as part of resource payload.
+	Params *NetworkEdgeSecurityServiceParams `json:"params,omitempty"`
 	// Region: Output only. [Output Only] URL of the region where the resource
 	// resides. You must
 	// specify this field as part of the HTTP request URL. It is not settable as
@@ -46672,6 +47158,42 @@ type NetworkEdgeSecurityServiceAggregatedListWarningData struct {
 
 func (s NetworkEdgeSecurityServiceAggregatedListWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkEdgeSecurityServiceAggregatedListWarningData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetworkEdgeSecurityServiceParams: Additional network edge security service
+// parameters.
+type NetworkEdgeSecurityServiceParams struct {
+	// ResourceManagerTags: Tag keys/values directly bound to this resource.
+	// Tag keys and values have the same definition as resource
+	// manager tags. The field is allowed for INSERT
+	// only. The keys/values to set on the resource should be specified in
+	// either ID { : } or Namespaced format
+	// { : }.
+	// For example the following are valid inputs:
+	// * {"tagKeys/333" : "tagValues/444", "tagKeys/123" : "tagValues/456"}
+	// * {"123/environment" : "production", "345/abc" : "xyz"}
+	// Note:
+	// * Invalid combinations of ID & namespaced format is not supported. For
+	//   instance: {"123/environment" : "tagValues/444"} is invalid.
+	// * Inconsistent format is not supported. For instance:
+	//   {"tagKeys/333" : "tagValues/444", "123/env" : "prod"} is invalid.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetworkEdgeSecurityServiceParams) MarshalJSON() ([]byte, error) {
+	type NoMethod NetworkEdgeSecurityServiceParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -52966,6 +53488,9 @@ type Operation struct {
 	// text format.
 	InsertTime                           string                                `json:"insertTime,omitempty"`
 	InstancesBulkInsertOperationMetadata *InstancesBulkInsertOperationMetadata `json:"instancesBulkInsertOperationMetadata,omitempty"`
+	// InstancesTroubleshootOperationMetadata: Output only. [Output Only] Operation
+	// metadata for instances.troubleshoot.
+	InstancesTroubleshootOperationMetadata *InstancesTroubleshootOperationMetadata `json:"instancesTroubleshootOperationMetadata,omitempty"`
 	// Kind: Output only. [Output Only] Type of the resource. Always
 	// `compute#operation` for
 	// Operation resources.
@@ -54848,6 +55373,207 @@ func (s PacketMirroringsScopedListWarningData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PartitionFormability: Formability of a partition.
+type PartitionFormability struct {
+	// AcceleratorTopology: Topological shape (e.g., "4x4x4").
+	AcceleratorTopology string `json:"acceleratorTopology,omitempty"`
+	// Parent: Partition ID of a partition that is a direct parent in the tree
+	// hierarchy.
+	// In case the partition represents a full cube, it doesn't have a
+	// parent
+	// field.
+	Parent string `json:"parent,omitempty"`
+	// PartitionId: Identifier for this topological block.
+	PartitionId string `json:"partitionId,omitempty"`
+	// Status: Output only. Defines the status of the partition.
+	Status *PartitionFormabilityStatus `json:"status,omitempty"`
+	// Subblock: The URL of the capacity subblock.
+	Subblock string `json:"subblock,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceleratorTopology") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceleratorTopology") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartitionFormability) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionFormability
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartitionFormabilityStatus: Status of a partition formability.
+type PartitionFormabilityStatus struct {
+	// AcceleratorInterconnect: URL of the AcceleratorInterconnect utilizing this
+	// partition.
+	AcceleratorInterconnect string `json:"acceleratorInterconnect,omitempty"`
+	// Error: Detailed error status if the subblock has wrong or no
+	// provisioning.
+	// When set, only subblock and error are populated.
+	Error *PartitionFormabilityStatusError `json:"error,omitempty"`
+	// InfrastructureHealth: Physical health of the underlying infrastructure.
+	//
+	// Possible values:
+	//   "DEGRADED" - The underlying infrastructure has issues that degrade
+	// performance but
+	// allow placement.
+	//   "HEALTHY" - The underlying infrastructure is healthy.
+	//   "INFRASTRUCTURE_HEALTH_UNSPECIFIED" - Unspecified infrastructure health.
+	//   "UNHEALTHY" - The underlying infrastructure has issues that prevent
+	// placement.
+	InfrastructureHealth string `json:"infrastructureHealth,omitempty"`
+	// Instance: URL of an instance provisioned in a single-host partitionID at the
+	// lowest
+	// level of the partition tree. Empty if the instance is missing.
+	Instance string `json:"instance,omitempty"`
+	// InstanceState: State of the instances within this partition.
+	//
+	// Possible values:
+	//   "INSTANCE_STATE_UNSPECIFIED" - Unspecified instance state.
+	//   "NOT_READY" - Instances are missing or not in the required status.
+	//   "RUNNING" - A sufficient number of instances are provisioned and they are
+	// in the
+	// required status.
+	InstanceState string `json:"instanceState,omitempty"`
+	// State: Current formability state.
+	//
+	// Possible values:
+	//   "NOT_READY" - An AcceleratorInterconnect resource cannot be deployed
+	// immediately.
+	//   "READY" - An AcceleratorInterconnect resource can be deployed immediately
+	// and
+	// will achieve full performance.
+	//   "READY_DEGRADED" - An AcceleratorInterconnect resource can be deployed
+	// immediately but
+	// will achieve degraded performance.
+	//   "STATE_UNSPECIFIED" - Unspecified partition formability state.
+	State string `json:"state,omitempty"`
+	// UsageState: Usage state indicating if the partition is occupied.
+	//
+	// Possible values:
+	//   "FREE" - Capacity is unallocated and available for interconnect formation.
+	//   "IN_USE" - Capacity is currently part of an AcceleratorInterconnect.
+	//   "USAGE_STATE_UNSPECIFIED" - Unspecified usage state.
+	UsageState string `json:"usageState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceleratorInterconnect") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceleratorInterconnect") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartitionFormabilityStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionFormabilityStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartitionFormabilityStatusError: Detailed error status if the subblock has
+// wrong or no provisioning.
+// When set, only subblock and error are populated.
+type PartitionFormabilityStatusError struct {
+	// Errors: [Output Only] The array of errors encountered while processing
+	// this
+	// operation.
+	Errors []*PartitionFormabilityStatusErrorErrors `json:"errors,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Errors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartitionFormabilityStatusError) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionFormabilityStatusError
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartitionFormabilityStatusErrorErrors: Represents a single error encountered
+// during the processing of an
+// operation.
+type PartitionFormabilityStatusErrorErrors struct {
+	// Code: [Output Only] The error type identifier for this error.
+	Code string `json:"code,omitempty"`
+	// ErrorDetails: [Output Only] An optional list of messages that contain the
+	// error
+	// details. There is a set of defined message types to use for
+	// providing
+	// details.The syntax depends on the error code. For example,
+	// QuotaExceededInfo will have details when the error code is
+	// QUOTA_EXCEEDED.
+	ErrorDetails []*PartitionFormabilityStatusErrorErrorsErrorDetails `json:"errorDetails,omitempty"`
+	// Location: [Output Only] Indicates the field in the request that caused the
+	// error.
+	// This property is optional.
+	Location string `json:"location,omitempty"`
+	// Message: [Output Only] An optional, human-readable error message.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartitionFormabilityStatusErrorErrors) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionFormabilityStatusErrorErrors
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartitionFormabilityStatusErrorErrorsErrorDetails: Container for structured
+// error details providing additional context
+// specific to the encountered error code.
+type PartitionFormabilityStatusErrorErrorsErrorDetails struct {
+	// ErrorInfo: Error information containing structured domain, reason, and
+	// metadata.
+	ErrorInfo *ErrorInfo `json:"errorInfo,omitempty"`
+	// Help: Links and information to help the user resolve the error.
+	Help *Help `json:"help,omitempty"`
+	// LocalizedMessage: A localized human-readable error message intended for end
+	// users.
+	LocalizedMessage *LocalizedMessage `json:"localizedMessage,omitempty"`
+	// QuotaInfo: Details about quota limits and metrics when a quota is exceeded.
+	QuotaInfo *QuotaExceededInfo `json:"quotaInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PartitionFormabilityStatusErrorErrorsErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionFormabilityStatusErrorErrorsErrorDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PathMatcher: A matcher for the path portion of the URL. The
 // BackendService
 // from the longest-matched rule will serve the URL. If no rule was matched,
@@ -55994,8 +56720,6 @@ type Project struct {
 	// Name: The project ID. For example: my-example-project. Use the
 	// project ID to make requests to Compute Engine.
 	Name string `json:"name,omitempty"`
-	// Quotas: [Output Only] Quotas assigned to this project.
-	Quotas []*Quota `json:"quotas,omitempty"`
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 	// UsageExportLocation: An optional naming prefix for daily usage reports and
@@ -57419,216 +58143,65 @@ func (s PublicDelegatedPrefixesScopedListWarningData) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Quota: A quotas entry.
-type Quota struct {
-	// Limit: [Output Only] Quota limit for this metric.
-	Limit float64 `json:"limit,omitempty"`
-	// Metric: [Output Only] Name of the quota metric.
-	//
-	// Possible values:
-	//   "A2_CPUS"
-	//   "AFFINITY_GROUPS"
-	//   "AUTOSCALERS"
-	//   "BACKEND_BUCKETS"
-	//   "BACKEND_SERVICES"
-	//   "C2D_CPUS"
-	//   "C2_CPUS"
-	//   "C3_CPUS"
-	//   "COMMITMENTS"
-	//   "COMMITTED_A2_CPUS"
-	//   "COMMITTED_C2D_CPUS"
-	//   "COMMITTED_C2_CPUS"
-	//   "COMMITTED_C3_CPUS"
-	//   "COMMITTED_CPUS"
-	//   "COMMITTED_E2_CPUS"
-	//   "COMMITTED_LICENSES"
-	//   "COMMITTED_LOCAL_SSD_TOTAL_GB"
-	//   "COMMITTED_M3_CPUS"
-	//   "COMMITTED_MEMORY_OPTIMIZED_CPUS"
-	//   "COMMITTED_N2A_CPUS"
-	//   "COMMITTED_N2D_CPUS"
-	//   "COMMITTED_N2_CPUS"
-	//   "COMMITTED_NVIDIA_A100_80GB_GPUS"
-	//   "COMMITTED_NVIDIA_A100_GPUS"
-	//   "COMMITTED_NVIDIA_H100_GPUS"
-	//   "COMMITTED_NVIDIA_K80_GPUS"
-	//   "COMMITTED_NVIDIA_L4_GPUS"
-	//   "COMMITTED_NVIDIA_P100_GPUS"
-	//   "COMMITTED_NVIDIA_P4_GPUS"
-	//   "COMMITTED_NVIDIA_T4_GPUS"
-	//   "COMMITTED_NVIDIA_V100_GPUS"
-	//   "COMMITTED_T2A_CPUS"
-	//   "COMMITTED_T2D_CPUS"
-	//   "COMMITTED_Z3_CPUS"
-	//   "CPUS" - Guest CPUs
-	//   "CPUS_ALL_REGIONS"
-	//   "DISKS_TOTAL_GB"
-	//   "E2_CPUS"
-	//   "EXTERNAL_MANAGED_FORWARDING_RULES"
-	//   "EXTERNAL_NETWORK_LB_FORWARDING_RULES"
-	//   "EXTERNAL_PROTOCOL_FORWARDING_RULES"
-	//   "EXTERNAL_VPN_GATEWAYS"
-	//   "FIREWALLS"
-	//   "FORWARDING_RULES"
-	//   "GLOBAL_EXTERNAL_MANAGED_BACKEND_SERVICES"
-	//   "GLOBAL_EXTERNAL_MANAGED_FORWARDING_RULES"
-	//   "GLOBAL_EXTERNAL_PROXY_LB_BACKEND_SERVICES"
-	//   "GLOBAL_INTERNAL_ADDRESSES"
-	//   "GLOBAL_INTERNAL_MANAGED_BACKEND_SERVICES"
-	//   "GLOBAL_INTERNAL_TRAFFIC_DIRECTOR_BACKEND_SERVICES"
-	//   "GPUS_ALL_REGIONS"
-	//   "HDB_TOTAL_GB"
-	//   "HDB_TOTAL_IOPS"
-	//   "HDB_TOTAL_THROUGHPUT"
-	//   "HEALTH_CHECKS"
-	//   "IMAGES"
-	//   "INSTANCES"
-	//   "INSTANCE_GROUPS"
-	//   "INSTANCE_GROUP_MANAGERS"
-	//   "INSTANCE_TEMPLATES"
-	//   "INTERCONNECTS"
-	//   "INTERCONNECT_ATTACHMENTS_PER_REGION"
-	//   "INTERCONNECT_ATTACHMENTS_TOTAL_MBPS"
-	//   "INTERCONNECT_TOTAL_GBPS"
-	//   "INTERNAL_ADDRESSES"
-	//   "INTERNAL_TRAFFIC_DIRECTOR_FORWARDING_RULES"
-	//   "IN_PLACE_SNAPSHOTS"
-	//   "IN_USE_ADDRESSES"
-	//   "IN_USE_BACKUP_SCHEDULES"
-	//   "IN_USE_SNAPSHOT_SCHEDULES"
-	//   "LOCAL_SSD_TOTAL_GB"
-	//   "M1_CPUS"
-	//   "M2_CPUS"
-	//   "M3_CPUS"
-	//   "MACHINE_IMAGES"
-	//   "N2A_CPUS"
-	//   "N2D_CPUS"
-	//   "N2_CPUS"
-	//   "NETWORKS"
-	//   "NETWORK_ATTACHMENTS"
-	//   "NETWORK_ENDPOINT_GROUPS"
-	//   "NETWORK_FIREWALL_POLICIES"
-	//   "NET_LB_SECURITY_POLICIES_PER_REGION"
-	//   "NET_LB_SECURITY_POLICY_RULES_PER_REGION"
-	//   "NET_LB_SECURITY_POLICY_RULE_ATTRIBUTES_PER_REGION"
-	//   "NODE_GROUPS"
-	//   "NODE_TEMPLATES"
-	//   "NVIDIA_A100_80GB_GPUS"
-	//   "NVIDIA_A100_GPUS"
-	//   "NVIDIA_K80_GPUS"
-	//   "NVIDIA_L4_GPUS"
-	//   "NVIDIA_P100_GPUS"
-	//   "NVIDIA_P100_VWS_GPUS"
-	//   "NVIDIA_P4_GPUS"
-	//   "NVIDIA_P4_VWS_GPUS"
-	//   "NVIDIA_T4_GPUS"
-	//   "NVIDIA_T4_VWS_GPUS"
-	//   "NVIDIA_V100_GPUS"
-	//   "PACKET_MIRRORINGS"
-	//   "PD_EXTREME_TOTAL_PROVISIONED_IOPS"
-	//   "PREEMPTIBLE_CPUS"
-	//   "PREEMPTIBLE_LOCAL_SSD_GB"
-	//   "PREEMPTIBLE_NVIDIA_A100_80GB_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_A100_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_H100_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_K80_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_L4_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_P100_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_P100_VWS_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_P4_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_P4_VWS_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_T4_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_T4_VWS_GPUS"
-	//   "PREEMPTIBLE_NVIDIA_V100_GPUS"
-	//   "PREEMPTIBLE_TPU_LITE_DEVICE_V5"
-	//   "PREEMPTIBLE_TPU_LITE_PODSLICE_V5"
-	//   "PREEMPTIBLE_TPU_PODSLICE_V4"
-	//   "PSC_ILB_CONSUMER_FORWARDING_RULES_PER_PRODUCER_NETWORK"
-	//   "PSC_INTERNAL_LB_FORWARDING_RULES"
-	//   "PUBLIC_ADVERTISED_PREFIXES"
-	//   "PUBLIC_DELEGATED_PREFIXES"
-	//   "REGIONAL_AUTOSCALERS"
-	//   "REGIONAL_EXTERNAL_MANAGED_BACKEND_SERVICES"
-	//   "REGIONAL_EXTERNAL_NETWORK_LB_BACKEND_SERVICES"
-	//   "REGIONAL_INSTANCE_GROUP_MANAGERS"
-	//   "REGIONAL_INTERNAL_LB_BACKEND_SERVICES"
-	//   "REGIONAL_INTERNAL_MANAGED_BACKEND_SERVICES"
-	//   "REGIONAL_INTERNAL_TRAFFIC_DIRECTOR_BACKEND_SERVICES"
-	//   "RESERVATIONS"
-	//   "RESOURCE_POLICIES"
-	//   "ROUTERS"
-	//   "ROUTES"
-	//   "SECURITY_POLICIES"
-	//   "SECURITY_POLICIES_PER_REGION"
-	//   "SECURITY_POLICY_ADVANCED_RULES_PER_REGION"
-	//   "SECURITY_POLICY_CEVAL_RULES"
-	//   "SECURITY_POLICY_RULES"
-	//   "SECURITY_POLICY_RULES_PER_REGION"
-	//   "SERVICE_ATTACHMENTS"
-	//   "SNAPSHOTS" - The total number of snapshots allowed for a single project.
-	//   "SSD_TOTAL_GB"
-	//   "SSL_CERTIFICATES"
-	//   "SSL_POLICIES"
-	//   "STATIC_ADDRESSES"
-	//   "STATIC_BYOIP_ADDRESSES"
-	//   "STATIC_EXTERNAL_IPV6_ADDRESS_RANGES"
-	//   "SUBNETWORKS"
-	//   "T2A_CPUS"
-	//   "T2D_CPUS"
-	//   "TARGET_HTTPS_PROXIES"
-	//   "TARGET_HTTP_PROXIES"
-	//   "TARGET_INSTANCES"
-	//   "TARGET_POOLS"
-	//   "TARGET_SSL_PROXIES"
-	//   "TARGET_TCP_PROXIES"
-	//   "TARGET_VPN_GATEWAYS"
-	//   "TPU_LITE_DEVICE_V5"
-	//   "TPU_LITE_PODSLICE_V5"
-	//   "TPU_PODSLICE_V4"
-	//   "URL_MAPS"
-	//   "VARIABLE_IPV6_PUBLIC_DELEGATED_PREFIXES"
-	//   "VPN_GATEWAYS"
-	//   "VPN_TUNNELS"
-	//   "XPN_SERVICE_PROJECTS"
-	Metric string `json:"metric,omitempty"`
-	// Owner: [Output Only] Owning resource. This is the resource on which this
-	// quota
-	// is applied.
-	Owner string `json:"owner,omitempty"`
-	// Usage: [Output Only] Current usage of this metric.
-	Usage float64 `json:"usage,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Limit") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+// QueryFormabilityRequest: Query formability of a given set of reservation
+// subblocks.
+type QueryFormabilityRequest struct {
+	// Subblocks: Explicit list of fully qualified reservation subblock resource
+	// URLs. Both
+	// full and relative URIs are supported.
+	Subblocks []string `json:"subblocks,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Subblocks") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Limit") to include in API
+	// NullFields is a list of field names (e.g. "Subblocks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
-func (s Quota) MarshalJSON() ([]byte, error) {
-	type NoMethod Quota
+func (s QueryFormabilityRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryFormabilityRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-func (s *Quota) UnmarshalJSON(data []byte) error {
-	type NoMethod Quota
-	var s1 struct {
-		Limit gensupport.JSONFloat64 `json:"limit"`
-		Usage gensupport.JSONFloat64 `json:"usage"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Limit = float64(s1.Limit)
-	s.Usage = float64(s1.Usage)
-	return nil
+// QueryFormabilityResponse: Response message for
+// AcceleratorInterconnects.QueryFormability.
+type QueryFormabilityResponse struct {
+	// Items: Flattened collection of hierarchical partitions and their
+	// formability
+	// across all requested subblocks.
+	Items []*PartitionFormability `json:"items,omitempty"`
+	// NextPageToken: This token allows you to get the next page of results
+	// for
+	// list requests. If the number of results is larger thanmaxResults, use the
+	// nextPageToken as a value for
+	// the query parameter pageToken in the next list request.
+	// Subsequent list requests will have their own nextPageToken to
+	// continue paging through the results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryFormabilityResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryFormabilityResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // QuotaExceededInfo: Additional details for quota exceeded error for resource
@@ -57806,8 +58379,6 @@ type Region struct {
 	// `quotas` field for this region. This
 	// field is populated only if fetching of the `quotas` field fails.
 	QuotaStatusWarning *RegionQuotaStatusWarning `json:"quotaStatusWarning,omitempty"`
-	// Quotas: [Output Only] Quotas assigned to this region.
-	Quotas []*Quota `json:"quotas,omitempty"`
 	// SelfLink: [Output Only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
 	// Status: [Output Only] Status of the region, either UP orDOWN.
@@ -61206,6 +61777,11 @@ type ReservationBlock struct {
 	// Kind: Output only. [Output Only] Type of the resource.
 	// Alwayscompute#reservationBlock for reservation blocks.
 	Kind string `json:"kind,omitempty"`
+	// MachineCount: Output only. [Output Only] The number of machines in the
+	// reservation block. Only
+	// populated for families where machine to host ratio is not 1:1 such as
+	// TPU8i.
+	MachineCount int64 `json:"machineCount,omitempty"`
 	// Name: Output only. [Output Only] The name of this reservation block
 	// generated by Google
 	// Compute Engine. The name must be 1-63 characters long, and comply
@@ -61413,6 +61989,10 @@ func (s ReservationBlockPhysicalTopologyInstance) MarshalJSON() ([]byte, error) 
 type ReservationBlockPhysicalTopologyInstancePhysicalHostTopology struct {
 	// Host: Host hash for a given instance
 	Host string `json:"host,omitempty"`
+	// Machine: Machine hash for a given instance. Only populated for families
+	// where
+	// machine-to-host ratio is not 1:1 such as TPU8i.
+	Machine string `json:"machine,omitempty"`
 	// SubBlock: Sub block hash for a given instance
 	SubBlock string `json:"subBlock,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
@@ -62231,6 +62811,11 @@ type ReservationSubBlock struct {
 	// Kind: Output only. [Output Only] Type of the resource.
 	// Alwayscompute#reservationSubBlock for reservation subBlocks.
 	Kind string `json:"kind,omitempty"`
+	// MachineCount: Output only. [Output Only] The number of machines in the
+	// reservation subBlock. Only
+	// populated for families where machine to host ratio is not 1:1 such as
+	// TPU8i.
+	MachineCount int64 `json:"machineCount,omitempty"`
 	// Name: Output only. [Output Only] The name of this reservation subBlock
 	// generated by Google
 	// Compute Engine. The name must be 1-63 characters long, and comply
@@ -67737,6 +68322,9 @@ type RouterStatusBgpPeerStatus struct {
 	// AdvertisedRoutes: Routes that were advertised to the remote BGP peer
 	AdvertisedRoutes []*Route   `json:"advertisedRoutes,omitempty"`
 	BfdStatus        *BfdStatus `json:"bfdStatus,omitempty"`
+	// Depreferenced: Output only. [Output Only] Indicates whether the BGP peer is
+	// in a depreferenced state.
+	Depreferenced bool `json:"depreferenced,omitempty"`
 	// EnableIpv4: Output only. Enable IPv4 traffic over BGP Peer.
 	// It is enabled by default if the peerIpAddress is version 4.
 	EnableIpv4 bool `json:"enableIpv4,omitempty"`
@@ -69741,6 +70329,10 @@ type SecurityPolicy struct {
 	// which
 	// cannot be a dash.
 	Name string `json:"name,omitempty"`
+	// Params: Input only. [Input Only] Additional params passed with the request,
+	// but not persisted
+	// as part of resource payload.
+	Params *SecurityPolicyParams `json:"params,omitempty"`
 	// Parent: Output only. [Output Only] The parent of the security policy.
 	Parent                 string                                `json:"parent,omitempty"`
 	RecaptchaOptionsConfig *SecurityPolicyRecaptchaOptionsConfig `json:"recaptchaOptionsConfig,omitempty"`
@@ -70366,6 +70958,41 @@ type SecurityPolicyListWarningData struct {
 
 func (s SecurityPolicyListWarningData) MarshalJSON() ([]byte, error) {
 	type NoMethod SecurityPolicyListWarningData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SecurityPolicyParams: Additional security policy parameters.
+type SecurityPolicyParams struct {
+	// ResourceManagerTags: Tag keys/values directly bound to this resource.
+	// Tag keys and values have the same definition as resource
+	// manager tags. The field is allowed for INSERT
+	// only. The keys/values to set on the resource should be specified in
+	// either ID { : } or Namespaced format
+	// { : }.
+	// For example the following are valid inputs:
+	// * {"tagKeys/333" : "tagValues/444", "tagKeys/123" : "tagValues/456"}
+	// * {"123/environment" : "production", "345/abc" : "xyz"}
+	// Note:
+	// * Invalid combinations of ID & namespaced format is not supported. For
+	//   instance: {"123/environment" : "tagValues/444"} is invalid.
+	// * Inconsistent format is not supported. For instance:
+	//   {"tagKeys/333" : "tagValues/444", "123/env" : "prod"} is invalid.
+	ResourceManagerTags map[string]string `json:"resourceManagerTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResourceManagerTags") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResourceManagerTags") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecurityPolicyParams) MarshalJSON() ([]byte, error) {
+	type NoMethod SecurityPolicyParams
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -73906,6 +74533,15 @@ type SslCertificateSelfManagedSslCertificate struct {
 	// PEM format. The certificate chain must be no greater than 5 certs
 	// long. The chain must include at least one intermediate cert.
 	Certificate string `json:"certificate,omitempty"`
+	// EncryptedPemPrivateKey: A value read into memory from a write-only private
+	// key file whose
+	// contents have been encrypted using the appropriate HPKE key distributed
+	// by Google. The underlying plaintext MUST be a PEM format private key.
+	// For
+	// security, only insert requests include this field. Exactly
+	// one of privateKey or encryptedPemPrivateKey
+	// MUST be specified when creating a self-managed certificate.
+	EncryptedPemPrivateKey string `json:"encryptedPemPrivateKey,omitempty"`
 	// PrivateKey: A write-only private key in PEM format. Only insert
 	// requests will include this field.
 	PrivateKey string `json:"privateKey,omitempty"`

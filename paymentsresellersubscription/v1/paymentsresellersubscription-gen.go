@@ -3473,6 +3473,13 @@ func (r *PartnersSubscriptionsLineItemsService) Patch(name string, subscriptionl
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": An idempotency ID for the
+// request. A random UUID is recommended. Restricted to 36 ASCII characters.
+func (c *PartnersSubscriptionsLineItemsPatchCall) RequestId(requestId string) *PartnersSubscriptionsLineItemsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // UpdateMask sets the optional parameter "updateMask": Required. The list of
 // fields to update. Only a limited set of fields can be updated. The allowed
 // fields are the following: -

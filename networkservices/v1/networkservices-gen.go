@@ -1112,8 +1112,10 @@ type CancelOperationRequest struct {
 
 // DnsPeeringConfig: DNS Peering configuration.
 type DnsPeeringConfig struct {
-	// Domain: Optional. The domain to peer.
+	// Domain: Optional. Deprecated: Use `domains` instead. The domain to peer.
 	Domain string `json:"domain,omitempty"`
+	// Domains: Optional. The domains to peer.
+	Domains []string `json:"domains,omitempty"`
 	// TargetNetwork: Optional. The target network resource name for DNS peering.
 	// Format: projects/{project}/global/networks/{network_id}
 	TargetNetwork string `json:"targetNetwork,omitempty"`
@@ -1135,6 +1137,7 @@ func (s DnsPeeringConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EgressNetworkConfig: Egress network config
 type EgressNetworkConfig struct {
 	// DnsPeeringConfig: Optional. DNS Peering configuration.
 	DnsPeeringConfig *DnsPeeringConfig `json:"dnsPeeringConfig,omitempty"`
@@ -1142,6 +1145,8 @@ type EgressNetworkConfig struct {
 	// projects/{project}/regions/{region}/networkAttachments/{network_attachment_id
 	// }
 	NetworkAttachment string `json:"networkAttachment,omitempty"`
+	// TlsConfig: Optional. The TLS configuration for the egress traffic.
+	TlsConfig *EgressNetworkConfigTlsConfig `json:"tlsConfig,omitempty"`
 	// TrustConfig: Optional. Deprecated: Use tls_config instead. The trust config
 	// resource name. Format:
 	// projects/{project}/locations/{location}/trustConfigs/{trust_config}
@@ -1169,6 +1174,38 @@ type EgressNetworkConfig struct {
 
 func (s EgressNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EgressNetworkConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EgressNetworkConfigTlsConfig: Configuration for TLS connections.
+type EgressNetworkConfigTlsConfig struct {
+	// AdditionalRoots: Optional. The additional roots to trust.
+	//
+	// Possible values:
+	//   "ADDITIONAL_ROOTS_UNSPECIFIED" - Unspecified additional roots.
+	//   "NO_ADDITIONAL_ROOTS" - Trust only the certificates provided in
+	// `trust_config`.
+	//   "PUBLICLY_TRUSTED_ROOTS" - Trust certificates provided in `trust_config`
+	// and publicly trusted roots.
+	AdditionalRoots string `json:"additionalRoots,omitempty"`
+	// TrustConfig: Optional. The trust config resource name. Format:
+	// projects/{project}/locations/{location}/trustConfigs/{trust_config}
+	TrustConfig string `json:"trustConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalRoots") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalRoots") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EgressNetworkConfigTlsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EgressNetworkConfigTlsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1720,8 +1757,8 @@ type ExtensionChain struct {
 	// Extensions: Required. A set of extensions to execute for the matching
 	// request. At least one extension is required. Up to 3 extensions can be
 	// defined for each extension chain for `LbTrafficExtension` resource.
-	// `LbRouteExtension` and `LbEdgeExtension` chains are limited to 1 extension
-	// per extension chain.
+	// `LbRouteExtension`, `LbEdgeExtension`, and `LbTcpExtension` chains are
+	// limited to 1 extension per extension chain.
 	Extensions []*ExtensionChainExtension `json:"extensions,omitempty"`
 	// MatchCondition: Required. Conditions under which this chain is invoked for a
 	// request.
@@ -1885,7 +1922,10 @@ type ExtensionChainExtension struct {
 	// supported. For the `LbEdgeExtension` resource, this field is required and
 	// must only contain `REQUEST_HEADERS` event. For the `AuthzExtension`
 	// resource, this field is optional. `REQUEST_HEADERS` is the only supported
-	// event. If unspecified, `REQUEST_HEADERS` event is assumed as supported.
+	// event. If unspecified, `REQUEST_HEADERS` event is assumed as supported. For
+	// the `CdnEdgeExtension` resource, this field is optional. Eligible values are
+	// `REQUEST_HEADERS` and `RESPONSE_HEADERS`. If unspecified, both are assumed
+	// as supported.
 	//
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified value. Do not use.
@@ -4550,7 +4590,7 @@ type MulticastConsumerAssociation struct {
 	// Description: Optional. An optional text description of the multicast
 	// consumer association.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key-value pairs
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MulticastDomainActivation: Optional. The resource name of the multicast
 	// domain activation that is in the same zone as this multicast consumer
@@ -4585,9 +4625,9 @@ type MulticastConsumerAssociation struct {
 	State *MulticastResourceState `json:"state,omitempty"`
 	// UniqueId: Output only. [Output only] The Google-generated UUID for the
 	// resource. This value is unique across all multicast consumer association
-	// resources. If a consumer association is deleted and another with the same
-	// name is created, the new consumer association is assigned a different
-	// unique_id.
+	// resources. If a multicast consumer association is deleted and another with
+	// the same name is created, the new multicast consumer association is assigned
+	// a different unique_id.
 	UniqueId string `json:"uniqueId,omitempty"`
 	// UpdateTime: Output only. [Output only] The timestamp when the Multicast
 	// Consumer Association was most recently updated.
@@ -4622,7 +4662,7 @@ type MulticastGroupConsumerActivation struct {
 	// Description: Optional. An optional text description of the multicast group
 	// consumer activation.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key-value pairs
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LogConfig: Optional. Specifies the logging options for the activities
 	// performed related to the multicast group consumer activation. Defaults to
@@ -4635,12 +4675,12 @@ type MulticastGroupConsumerActivation struct {
 	MulticastConsumerAssociation string `json:"multicastConsumerAssociation,omitempty"`
 	// MulticastGroup: Optional. The resource name of the multicast group created
 	// by the admin in the same zone as this multicast group consumer activation.
-	// Use the following format: // `projects/*/locations/*/multicastGroups/*`.
-	// This field is deprecated. Use multicast_group_range_activation instead.
+	// Use the following format: `projects/*/locations/*/multicastGroups/*`. This
+	// field is deprecated. Use multicast_group_range_activation instead.
 	MulticastGroup string `json:"multicastGroup,omitempty"`
 	// MulticastGroupRangeActivation: Required. The resource name of the multicast
 	// group range activation created by the admin in the same zone as this
-	// multicast group consumer activation. Use the following format: //
+	// multicast group consumer activation. Use the following format:
 	// `projects/*/locations/*/multicastGroupRangeActivations/*`.
 	MulticastGroupRangeActivation string `json:"multicastGroupRangeActivation,omitempty"`
 	// Name: Identifier. The resource name of the multicast group consumer
@@ -4661,9 +4701,9 @@ type MulticastGroupConsumerActivation struct {
 	State *MulticastResourceState `json:"state,omitempty"`
 	// UniqueId: Output only. [Output only] The Google-generated UUID for the
 	// resource. This value is unique across all multicast group consumer
-	// activation resources. If a group consumer activation is deleted and another
-	// with the same name is created, the new group consumer activation is assigned
-	// a different unique_id.
+	// activation resources. If a multicast group consumer activation is deleted
+	// and another with the same name is created, the new multicast group consumer
+	// activation is assigned a different unique_id.
 	UniqueId string `json:"uniqueId,omitempty"`
 	// UpdateTime: Output only. [Output only] The timestamp when the multicast
 	// group consumer activation was most recently updated.
@@ -8098,11 +8138,11 @@ func (c *ProjectsLocationsAuthzExtensionsPatchCall) RequestId(requestId string) 
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Used to
-// specify the fields to be overwritten in the `AuthzExtension` resource by the
-// update. The fields specified in the `update_mask` are relative to the
-// resource, not the full request. A field is overwritten if it is in the mask.
-// If the user does not specify a mask, then all fields are overwritten.
+// UpdateMask sets the optional parameter "updateMask": Used to specify the
+// fields to be overwritten in the `AuthzExtension` resource by the update. The
+// fields specified in the `update_mask` are relative to the resource, not the
+// full request. A field is overwritten if it is in the mask. If the user does
+// not specify a mask, then all fields are overwritten.
 func (c *ProjectsLocationsAuthzExtensionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAuthzExtensionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -17553,6 +17593,21 @@ func (r *ProjectsLocationsServiceBindingsService) Create(parent string, serviceb
 	return c
 }
 
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees this for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request. This prevents clients
+// from accidentally creating duplicate commitments. The request ID must be a
+// valid UUID version 4 with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsServiceBindingsCreateCall) RequestId(requestId string) *ProjectsLocationsServiceBindingsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
 // ServiceBindingId sets the optional parameter "serviceBindingId": Required.
 // Short name of the ServiceBinding resource to be created.
 func (c *ProjectsLocationsServiceBindingsCreateCall) ServiceBindingId(serviceBindingId string) *ProjectsLocationsServiceBindingsCreateCall {
@@ -17659,6 +17714,21 @@ type ProjectsLocationsServiceBindingsDeleteCall struct {
 func (r *ProjectsLocationsServiceBindingsService) Delete(name string) *ProjectsLocationsServiceBindingsDeleteCall {
 	c := &ProjectsLocationsServiceBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees this for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request. This prevents clients
+// from accidentally creating duplicate commitments. The request ID must be a
+// valid UUID version 4 with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsServiceBindingsDeleteCall) RequestId(requestId string) *ProjectsLocationsServiceBindingsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -18017,6 +18087,21 @@ func (r *ProjectsLocationsServiceBindingsService) Patch(name string, servicebind
 	c := &ProjectsLocationsServiceBindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.servicebinding = servicebinding
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees this for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request. This prevents clients
+// from accidentally creating duplicate commitments. The request ID must be a
+// valid UUID version 4 with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsServiceBindingsPatchCall) RequestId(requestId string) *ProjectsLocationsServiceBindingsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 

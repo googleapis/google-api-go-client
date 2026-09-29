@@ -6233,6 +6233,18 @@ type AutoscalingPolicyCpuUtilization struct {
 	// the `time_aggregation.time_window_sec`, reducing them to exactly one
 	// value per instance if samples are available.
 	TimeAggregation *AutoscalingPolicyTimeAggregation `json:"timeAggregation,omitempty"`
+	// UtilizationMax: The upper bound of the utilization range. Must be a float
+	// value in the
+	// range ('utilization_min', 1]. A value of 0.0 is equivalent to leaving
+	// the
+	// field unset.
+	UtilizationMax float64 `json:"utilizationMax,omitempty"`
+	// UtilizationMin: The lower bound of the utilization range. Must be a float
+	// value in the
+	// range (0, 'utilization_max']. A value of 0.0 is equivalent to leaving
+	// the
+	// field unset.
+	UtilizationMin float64 `json:"utilizationMin,omitempty"`
 	// UtilizationRange: Defines a target range for CPU utilization. The values
 	// of
 	// `min_utilization` and `max_utilization` must be in
@@ -6293,6 +6305,8 @@ func (s AutoscalingPolicyCpuUtilization) MarshalJSON() ([]byte, error) {
 func (s *AutoscalingPolicyCpuUtilization) UnmarshalJSON(data []byte) error {
 	type NoMethod AutoscalingPolicyCpuUtilization
 	var s1 struct {
+		UtilizationMax    gensupport.JSONFloat64 `json:"utilizationMax"`
+		UtilizationMin    gensupport.JSONFloat64 `json:"utilizationMin"`
 		UtilizationTarget gensupport.JSONFloat64 `json:"utilizationTarget"`
 		*NoMethod
 	}
@@ -6300,6 +6314,8 @@ func (s *AutoscalingPolicyCpuUtilization) UnmarshalJSON(data []byte) error {
 	if err := json.Unmarshal(data, &s1); err != nil {
 		return err
 	}
+	s.UtilizationMax = float64(s1.UtilizationMax)
+	s.UtilizationMin = float64(s1.UtilizationMin)
 	s.UtilizationTarget = float64(s1.UtilizationTarget)
 	return nil
 }
@@ -13579,7 +13595,8 @@ type Commitment struct {
 	// GRAPHICS_OPTIMIZED_G4,GRAPHICS_OPTIMIZED_G4_VGPU,MEMORY_OPTIMIZED,
 	// MEMORY_OPTIMIZED_M3,MEMORY_OPTIMIZED_X4,
 	// STORAGE_OPTIMIZED_Z3,STORAGE_OPTIMIZED_Z4DS,
-	// STORAGE_OPTIMIZED_Z4DH,STORAGE_OPTIMIZED_Z4D4T. For
+	// STORAGE_OPTIMIZED_Z4DH,STORAGE_OPTIMIZED_Z4D4T,STORAGE_OPTIMIZED_Z4M.
+	// For
 	// example, type MEMORY_OPTIMIZED specifies a commitment that
 	// applies only to eligible resources of memory optimized M1 and M2
 	// machine
@@ -20481,8 +20498,12 @@ type FirewallPolicy struct {
 	// users.
 	//
 	// Possible values:
-	//   "SYSTEM"
-	//   "USER_DEFINED"
+	//   "SYSTEM" - A system-level policy managed by an internal service like GKE.
+	// This value
+	// is reserved for internal services and cannot be set by users during
+	// policy creation. Policies with a SYSTEM source cannot be modified or
+	// deleted by users.
+	//   "USER_DEFINED" - A regular firewall policy.
 	PolicySource string `json:"policySource,omitempty"`
 	// PolicyType: The type of the firewall policy. This field can be one
 	// of

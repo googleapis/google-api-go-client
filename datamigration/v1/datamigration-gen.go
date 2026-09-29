@@ -1240,11 +1240,17 @@ type ConversionWorkspace struct {
 	// HasUncommittedChanges: Output only. Whether the workspace has uncommitted
 	// changes (changes which were made after the workspace was committed).
 	HasUncommittedChanges bool `json:"hasUncommittedChanges,omitempty"`
+	// LatestApplyTime: Optional. Output only. The timestamp when the workspace was
+	// last applied.
+	LatestApplyTime string `json:"latestApplyTime,omitempty"`
 	// LatestCommitId: Output only. The latest commit ID.
 	LatestCommitId string `json:"latestCommitId,omitempty"`
 	// LatestCommitTime: Output only. The timestamp when the workspace was
 	// committed.
 	LatestCommitTime string `json:"latestCommitTime,omitempty"`
+	// LatestConvertTime: Optional. Output only. The timestamp when the workspace
+	// was last converted.
+	LatestConvertTime string `json:"latestConvertTime,omitempty"`
 	// Name: Full name of the workspace resource, in the form of:
 	// projects/{project}/locations/{location}/conversionWorkspaces/{conversion_work
 	// space}.
@@ -1887,6 +1893,70 @@ func (s EntityDdl) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EntityId: An entity identifier.
+type EntityId struct {
+	// ParentName: The parent entity full name.
+	ParentName string `json:"parentName,omitempty"`
+	// ParentType: The type of the database entity (schema, table, view, ...).
+	//
+	// Possible values:
+	//   "DATABASE_ENTITY_TYPE_UNSPECIFIED" - Unspecified database entity type.
+	//   "DATABASE_ENTITY_TYPE_SCHEMA" - Schema.
+	//   "DATABASE_ENTITY_TYPE_TABLE" - Table.
+	//   "DATABASE_ENTITY_TYPE_COLUMN" - Column.
+	//   "DATABASE_ENTITY_TYPE_CONSTRAINT" - Constraint.
+	//   "DATABASE_ENTITY_TYPE_INDEX" - Index.
+	//   "DATABASE_ENTITY_TYPE_TRIGGER" - Trigger.
+	//   "DATABASE_ENTITY_TYPE_VIEW" - View.
+	//   "DATABASE_ENTITY_TYPE_SEQUENCE" - Sequence.
+	//   "DATABASE_ENTITY_TYPE_STORED_PROCEDURE" - Stored Procedure.
+	//   "DATABASE_ENTITY_TYPE_FUNCTION" - Function.
+	//   "DATABASE_ENTITY_TYPE_SYNONYM" - Synonym.
+	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
+	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
+	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
+	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
+	ParentType string `json:"parentType,omitempty"`
+	// ShortName: The short name (e.g. table name) of the entity.
+	ShortName string `json:"shortName,omitempty"`
+	// Type: The type of the database entity (schema, table, view, index, ...).
+	//
+	// Possible values:
+	//   "DATABASE_ENTITY_TYPE_UNSPECIFIED" - Unspecified database entity type.
+	//   "DATABASE_ENTITY_TYPE_SCHEMA" - Schema.
+	//   "DATABASE_ENTITY_TYPE_TABLE" - Table.
+	//   "DATABASE_ENTITY_TYPE_COLUMN" - Column.
+	//   "DATABASE_ENTITY_TYPE_CONSTRAINT" - Constraint.
+	//   "DATABASE_ENTITY_TYPE_INDEX" - Index.
+	//   "DATABASE_ENTITY_TYPE_TRIGGER" - Trigger.
+	//   "DATABASE_ENTITY_TYPE_VIEW" - View.
+	//   "DATABASE_ENTITY_TYPE_SEQUENCE" - Sequence.
+	//   "DATABASE_ENTITY_TYPE_STORED_PROCEDURE" - Stored Procedure.
+	//   "DATABASE_ENTITY_TYPE_FUNCTION" - Function.
+	//   "DATABASE_ENTITY_TYPE_SYNONYM" - Synonym.
+	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
+	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
+	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
+	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ParentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ParentName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EntityId) MarshalJSON() ([]byte, error) {
+	type NoMethod EntityId
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // EntityIssue: Issue related to the entity.
 type EntityIssue struct {
 	// Code: Error/Warning code
@@ -2080,6 +2150,69 @@ func (s EntityMove) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// EntityStatusView: A single entity for the UI view.
+type EntityStatusView struct {
+	// Dependencies: Optional. The set of entities that this entity directly
+	// depends on, i.e., it does not include transitive dependencies. Provided only
+	// for FULL_WITH_DEPENDENCIES view. Dependencies are provided according to the
+	// request tree type.
+	Dependencies []*EntityId `json:"dependencies,omitempty"`
+	// DraftDdlKind: The DDL Kind selected for apply. If UNSPECIFIED, the entity
+	// wasn't converted yet. For SUMMARY view, this rolls up from descendants with
+	// the logic of UNSPECIFIED < DETERMINISTIC < AI. USER_EDIT is not propagated.
+	//
+	// Possible values:
+	//   "DDL_KIND_UNSPECIFIED" - The kind of the DDL is unknown.
+	//   "SOURCE" - DDL of the source entity
+	//   "DETERMINISTIC" - Deterministic converted DDL
+	//   "AI" - Gemini AI converted DDL
+	//   "USER_EDIT" - User edited DDL
+	DraftDdlKind string `json:"draftDdlKind,omitempty"`
+	// DraftEntity: The entity short name and type from the DRAFT tree.
+	DraftEntity *EntityId `json:"draftEntity,omitempty"`
+	// EditedDdlKind: If ddl_kind is USER_EDIT, this holds the DDL kind of the
+	// original content - DETERMINISTIC or AI. Otherwise, this is
+	// DDL_KIND_UNSPECIFIED. Relevant only for FULL view.
+	//
+	// Possible values:
+	//   "DDL_KIND_UNSPECIFIED" - The kind of the DDL is unknown.
+	//   "SOURCE" - DDL of the source entity
+	//   "DETERMINISTIC" - Deterministic converted DDL
+	//   "AI" - Gemini AI converted DDL
+	//   "USER_EDIT" - User edited DDL
+	EditedDdlKind string `json:"editedDdlKind,omitempty"`
+	// Issues: Unresolved issues information according to the current Draft
+	// DdlKind.
+	Issues *IssueAggregateData `json:"issues,omitempty"`
+	// ResolvedIssues: Resolved issues information according to the current Draft
+	// DdlKind.
+	ResolvedIssues *IssueAggregateData `json:"resolvedIssues,omitempty"`
+	// SourceEntity: The entity short name and type from the SOURCE tree.
+	SourceEntity *EntityId `json:"sourceEntity,omitempty"`
+	// TestedEntity: Optional. Whether the entity has successfully generated and
+	// executed validation tests.
+	TestedEntity bool `json:"testedEntity,omitempty"`
+	// WasApplied: Was the entity applied on the destination. Relevant only for
+	// FULL view.
+	WasApplied bool `json:"wasApplied,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dependencies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dependencies") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EntityStatusView) MarshalJSON() ([]byte, error) {
+	type NoMethod EntityStatusView
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ErrorInfo: Describes the cause of the error with structured details. Example
 // of an error when contacting the "pubsub.googleapis.com" API when it is not
 // enabled: { "reason": "API_DISABLED" "domain": "googleapis.com" "metadata": {
@@ -2174,6 +2307,94 @@ type Expr struct {
 
 func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchEntitiesStatusViewResponse: Response message for
+// DataMigrationService.FetchEntitiesStatusView.
+type FetchEntitiesStatusViewResponse struct {
+	// Entities: A list of the entities matching the request, sorted by their full
+	// name (source name if requested the SOURCE tree, draft name if requested the
+	// DRAFT tree). Sub-entities (such as indexes) always appear immediately after
+	// their parent element.
+	Entities []*EntityStatusView `json:"entities,omitempty"`
+	// NextPageToken: A token which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Entities") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Entities") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchEntitiesStatusViewResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchEntitiesStatusViewResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchIssuesResponse: Response for fetching issues of a conversion workspace.
+type FetchIssuesResponse struct {
+	// Issues: The list of issues for the conversion workspace.
+	Issues []*Issue `json:"issues,omitempty"`
+	// NextPageToken: A token which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Issues") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Issues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchIssuesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchIssuesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchIssuesResponseIssuePosition: Issue position.
+type FetchIssuesResponseIssuePosition struct {
+	// Column: Issue column number.
+	Column int64 `json:"column,omitempty"`
+	// Length: Issue length.
+	Length int64 `json:"length,omitempty"`
+	// Line: Issue line number.
+	Line int64 `json:"line,omitempty"`
+	// Offset: Issue offset.
+	Offset int64 `json:"offset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchIssuesResponseIssuePosition) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchIssuesResponseIssuePosition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2655,6 +2876,235 @@ type IntComparisonFilter struct {
 
 func (s IntComparisonFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod IntComparisonFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Issue: Issue related to the entity.
+type Issue struct {
+	// CategoryId: The category ID.
+	//
+	// Possible values:
+	//   "ISSUE_CATEGORY_ID_UNSPECIFIED" - Unspecified issue category ID.
+	//   "ISSUE_CATEGORY_ID_CW00" - General conversion issues.
+	//   "ISSUE_CATEGORY_ID_CW01" - Input issues.
+	//   "ISSUE_CATEGORY_ID_CW02" - Source functionality not supported.
+	//   "ISSUE_CATEGORY_ID_CW03" - Source feature not supported.
+	//   "ISSUE_CATEGORY_ID_CW04" - Unsupported syntax.
+	//   "ISSUE_CATEGORY_ID_CW05" - Data types and conversion.
+	//   "ISSUE_CATEGORY_ID_CW06" - Potential functional nuances.
+	//   "ISSUE_CATEGORY_ID_CW07" - Functional review recommended.
+	//   "ISSUE_CATEGORY_ID_CW08" - Refactoring required.
+	//   "ISSUE_CATEGORY_ID_CW99" - Gemini review recommendations.
+	//   "ISSUE_CATEGORY_ID_QA00" - Quality assessment findings.
+	//   "ISSUE_CATEGORY_ID_AP00" - General apply issues.
+	CategoryId string `json:"categoryId,omitempty"`
+	// EntityFullName: Entity full name.
+	EntityFullName string `json:"entityFullName,omitempty"`
+	// EntityType: The entity type (if the DDL is for a sub entity).
+	//
+	// Possible values:
+	//   "DATABASE_ENTITY_TYPE_UNSPECIFIED" - Unspecified database entity type.
+	//   "DATABASE_ENTITY_TYPE_SCHEMA" - Schema.
+	//   "DATABASE_ENTITY_TYPE_TABLE" - Table.
+	//   "DATABASE_ENTITY_TYPE_COLUMN" - Column.
+	//   "DATABASE_ENTITY_TYPE_CONSTRAINT" - Constraint.
+	//   "DATABASE_ENTITY_TYPE_INDEX" - Index.
+	//   "DATABASE_ENTITY_TYPE_TRIGGER" - Trigger.
+	//   "DATABASE_ENTITY_TYPE_VIEW" - View.
+	//   "DATABASE_ENTITY_TYPE_SEQUENCE" - Sequence.
+	//   "DATABASE_ENTITY_TYPE_STORED_PROCEDURE" - Stored Procedure.
+	//   "DATABASE_ENTITY_TYPE_FUNCTION" - Function.
+	//   "DATABASE_ENTITY_TYPE_SYNONYM" - Synonym.
+	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
+	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
+	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
+	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
+	EntityType string `json:"entityType,omitempty"`
+	// GroupId: The group ID.
+	//
+	// Possible values:
+	//   "ISSUE_GROUP_ID_UNSPECIFIED" - Unspecified issue group ID.
+	//   "ISSUE_GROUP_ID_CW_OP0000" - General conversion issues.
+	//   "ISSUE_GROUP_ID_CW_OP0001" - Metadata conversion issues.
+	//   "ISSUE_GROUP_ID_CW_OP0002" - Contact your support team.
+	//   "ISSUE_GROUP_ID_CW_OP0101" - Invalid source code.
+	//   "ISSUE_GROUP_ID_CW_OP0102" - Missing referenced objects.
+	//   "ISSUE_GROUP_ID_CW_OP0103" - Missing primary key.
+	//   "ISSUE_GROUP_ID_CW_OP0200" - Source functionality not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0201" - SQLCODE not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0202" - Oracle data dictionary object not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0203" - Oracle SQL function not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0204" - Oracle PL/SQL package not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0205" - Data type not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0206" - Naming conflict.
+	//   "ISSUE_GROUP_ID_CW_OP0300" - Source feature not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0301" - Schema objects or attributes not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0315" - Synonyms not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0303" - Bulk binding not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0304" - Collections not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0305" - Pipelined functions not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0306" - Dynamic SQL not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0307" - CONNECT BY option not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0308" - Locking and transactions issues.
+	//   "ISSUE_GROUP_ID_CW_OP0309" - JSON not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0310" - XML not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0311" - MERGE not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0312" - PIVOT not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0313" - ALTER statement option not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0314" - SQL feature not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0302" - PL/SQL feature not supported.
+	//   "ISSUE_GROUP_ID_CW_OP0400" - Unsupported syntax.
+	//   "ISSUE_GROUP_ID_CW_OP0401" - Unsupported SQL syntax.
+	//   "ISSUE_GROUP_ID_CW_OP0402" - Unsupported PL/SQL syntax.
+	//   "ISSUE_GROUP_ID_CW_OP0403" - Unsupported date and timestamp syntax.
+	//   "ISSUE_GROUP_ID_CW_OP0404" - Unsupported exceptions syntax.
+	//   "ISSUE_GROUP_ID_CW_OP0500" - Data types and conversion issues.
+	//   "ISSUE_GROUP_ID_CW_OP0501" - Date format model issues.
+	//   "ISSUE_GROUP_ID_CW_OP0502" - Numeric format model issues.
+	//   "ISSUE_GROUP_ID_CW_OP0503" - Casting issues.
+	//   "ISSUE_GROUP_ID_CW_OP0504" - Comparison issues.
+	//   "ISSUE_GROUP_ID_CW_OP0601" - Review date format model.
+	//   "ISSUE_GROUP_ID_CW_OP0602" - Review numeric format model.
+	//   "ISSUE_GROUP_ID_CW_OP0603" - Review exception code.
+	//   "ISSUE_GROUP_ID_CW_OP0604" - Review exception message.
+	//   "ISSUE_GROUP_ID_CW_OP0605" - Review Oracle built-in function emulation.
+	//   "ISSUE_GROUP_ID_CW_OP0606" - Review foreign key column data type.
+	//   "ISSUE_GROUP_ID_CW_OP0701" - Functional review recommended.
+	//   "ISSUE_GROUP_ID_CW_OP0702" - Review Oracle built-in function emulation.
+	//   "ISSUE_GROUP_ID_CW_OP0801" - Autonomous transactions refactoring required.
+	//   "ISSUE_GROUP_ID_CW_OP0802" - Database links refactoring required.
+	//   "ISSUE_GROUP_ID_CW_OP0803" - Advanced queuing refactoring required.
+	//   "ISSUE_GROUP_ID_CW_OP0804" - Database email refactoring required.
+	//   "ISSUE_GROUP_ID_CW_OP0805" - Jobs and scheduling refactoring required.
+	//   "ISSUE_GROUP_ID_CW_OP0806" - File I/O refactoring required.
+	//   "ISSUE_GROUP_ID_CW_OP0807" - Synonyms refactoring required.
+	//   "ISSUE_GROUP_ID_CW_OP0808" - Global temporary tables refactoring required.
+	//   "ISSUE_GROUP_ID_QA_OP0000" - Functional equivalence assessment findings.
+	//   "ISSUE_GROUP_ID_CW_SP0000" - General conversion issues.
+	//   "ISSUE_GROUP_ID_CW_SP0001" - Metadata conversion issues.
+	//   "ISSUE_GROUP_ID_CW_SP0002" - Contact your support team.
+	//   "ISSUE_GROUP_ID_CW_SP0101" - Invalid source code.
+	//   "ISSUE_GROUP_ID_CW_SP0102" - Missing referenced objects.
+	//   "ISSUE_GROUP_ID_CW_SP0103" - Missing primary key.
+	//   "ISSUE_GROUP_ID_CW_SP0200" - Source functionality not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0201" - SQL Server system view not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0202" - SQL Server SQL function not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0203" - SQL Server T-SQL object not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0204" - Missing SQL Server system View
+	//   "ISSUE_GROUP_ID_CW_SP0205" - Naming conflict.
+	//   "ISSUE_GROUP_ID_CW_SP0300" - Source feature not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0302" - T-SQL feature not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0306" - Dynamic SQL not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0308" - JSON not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0309" - Locking and transactions issues.
+	//   "ISSUE_GROUP_ID_CW_SP0310" - XML not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0311" - MERGE not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0312" - PIVOT not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0313" - ALTER statement option not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0314" - SQL feature not supported.
+	//   "ISSUE_GROUP_ID_CW_SP0400" - Unsupported syntax.
+	//   "ISSUE_GROUP_ID_CW_SP0401" - Unsupported SQL syntax.
+	//   "ISSUE_GROUP_ID_CW_SP0402" - Unsupported T-SQL syntax.
+	//   "ISSUE_GROUP_ID_CW_SP0403" - Unsupported date and timestamp syntax.
+	//   "ISSUE_GROUP_ID_CW_SP0404" - Unsupported exceptions syntax.
+	//   "ISSUE_GROUP_ID_CW_SP0500" - Data types and conversion issues.
+	//   "ISSUE_GROUP_ID_CW_SP0501" - Date format model issues.
+	//   "ISSUE_GROUP_ID_CW_SP0502" - Numeric format model issues.
+	//   "ISSUE_GROUP_ID_CW_SP0503" - Casting issues.
+	//   "ISSUE_GROUP_ID_CW_SP0504" - Comparison issues.
+	//   "ISSUE_GROUP_ID_CW_SP0601" - Review date format model.
+	//   "ISSUE_GROUP_ID_CW_SP0602" - Review numeric format model.
+	//   "ISSUE_GROUP_ID_CW_SP0604" - Review exception message.
+	//   "ISSUE_GROUP_ID_CW_SP0701" - Functional review recommended.
+	//   "ISSUE_GROUP_ID_CW_SP0802" - Database links refactoring required.
+	//   "ISSUE_GROUP_ID_CW_SP0807" - Synonyms refactoring required.
+	//   "ISSUE_GROUP_ID_QA_SP0000" - Functional equivalence assessment findings.
+	//   "ISSUE_GROUP_ID_CW_AI9900" - Review Gemini suggestions.
+	//   "ISSUE_GROUP_ID_CW_AI9901" - Review AI-augmented code.
+	//   "ISSUE_GROUP_ID_CW_AI9902" - Citations for AI-augmented code.
+	//   "ISSUE_GROUP_ID_CW_AP0000" - General apply issues.
+	GroupId string `json:"groupId,omitempty"`
+	// Id: Unique Issue ID. Use this ID when referencing a specific issue in other
+	// API calls, such as DataMigrationService.SetIssuesState.
+	Id string `json:"id,omitempty"`
+	// IssueOrigin: The source of the issue (deterministic, gemini, etc).
+	//
+	// Possible values:
+	//   "ISSUE_ORIGIN_UNSPECIFIED" - Unspecified issue origin.
+	//   "ISSUE_ORIGIN_DETERMINISTIC" - Issue originated from the deterministic
+	// conversion engine.
+	//   "ISSUE_ORIGIN_AI" - Issue originated from the AI conversion engine.
+	//   "ISSUE_ORIGIN_AI_FROM_DETERMINISTIC" - CODE_CONVERSION/CST issues that
+	// were carried over to the Gemini conversion,
+	IssueOrigin string `json:"issueOrigin,omitempty"`
+	// IssueState: Output only. The state of the issue (open, resolved, etc).
+	//
+	// Possible values:
+	//   "ISSUE_STATE_UNSPECIFIED" - Unspecified issue state.
+	//   "ISSUE_STATE_OPEN" - Issue is open.
+	//   "ISSUE_STATE_RESOLVED" - Issue is resolved.
+	IssueState string `json:"issueState,omitempty"`
+	// Message: Issue detailed message.
+	Message string `json:"message,omitempty"`
+	// Position: The position of the issue found, if relevant.
+	Position *FetchIssuesResponseIssuePosition `json:"position,omitempty"`
+	// Severity: Severity of the issue.
+	//
+	// Possible values:
+	//   "ISSUE_SEVERITY_UNSPECIFIED" - Unspecified issue severity.
+	//   "ISSUE_SEVERITY_INFO" - Info.
+	//   "ISSUE_SEVERITY_WARNING" - Warning.
+	//   "ISSUE_SEVERITY_ERROR" - Error.
+	Severity string `json:"severity,omitempty"`
+	// Type: The type of the issue.
+	//
+	// Possible values:
+	//   "ISSUE_TYPE_UNSPECIFIED" - Unspecified issue type.
+	//   "ISSUE_TYPE_CONVERSION" - Issue originated from the conversion process.
+	//   "ISSUE_TYPE_PULL_SCHEMA" - Issue originated from the pull schema process.
+	//   "ISSUE_TYPE_APPLY" - Issue originated from the apply process.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CategoryId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CategoryId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Issue) MarshalJSON() ([]byte, error) {
+	type NoMethod Issue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// IssueAggregateData: Aggregate issue information.
+type IssueAggregateData struct {
+	// ErrorCount: Number of error issues.
+	ErrorCount int64 `json:"errorCount,omitempty"`
+	// InfoCount: Number of info issues.
+	InfoCount int64 `json:"infoCount,omitempty"`
+	// WarningCount: Number of warning issues.
+	WarningCount int64 `json:"warningCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IssueAggregateData) MarshalJSON() ([]byte, error) {
+	type NoMethod IssueAggregateData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3330,6 +3780,9 @@ type MigrationJob struct {
 	//   "PREPARING_THE_DUMP" - Only RDS flow - the sources writes stopped, waiting
 	// for dump to begin
 	//   "READY_FOR_PROMOTE" - The migration job is ready to be promoted.
+	//   "PHASE_FAILBACK" - The migration job is in the failback phase. This phase
+	// is currently used only for SQL Server Distributed Availability Group (DAG)
+	// migrations.
 	Phase string `json:"phase,omitempty"`
 	// PostgresHomogeneousConfig: Optional. Configuration for PostgreSQL
 	// homogeneous migration.
@@ -5086,6 +5539,82 @@ type SequenceEntity struct {
 func (s SequenceEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod SequenceEntity
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetDraftEntityDdlRequest: Request message for
+// DataMigrationService.SetDraftEntityDdl.
+type SetDraftEntityDdlRequest struct {
+	// BasedOnDdlKind: Optional. Which DDL (Deterministic/AI) the updated DDL is
+	// based on. Defaults to DETERMINISTIC if not specified.
+	//
+	// Possible values:
+	//   "DDL_KIND_UNSPECIFIED" - The kind of the DDL is unknown.
+	//   "SOURCE" - DDL of the source entity
+	//   "DETERMINISTIC" - Deterministic converted DDL
+	//   "AI" - Gemini AI converted DDL
+	//   "USER_EDIT" - User edited DDL
+	BasedOnDdlKind string `json:"basedOnDdlKind,omitempty"`
+	// Ddl: Required. The DDL to set.
+	Ddl string `json:"ddl,omitempty"`
+	// DdlKind: Optional. The updated DDL Kind. Can be either USER_EDIT (default)
+	// or AI.
+	//
+	// Possible values:
+	//   "DDL_KIND_UNSPECIFIED" - The kind of the DDL is unknown.
+	//   "SOURCE" - DDL of the source entity
+	//   "DETERMINISTIC" - Deterministic converted DDL
+	//   "AI" - Gemini AI converted DDL
+	//   "USER_EDIT" - User edited DDL
+	DdlKind string `json:"ddlKind,omitempty"`
+	// EntityName: Required. The draft entity full name from the tree. .
+	EntityName string `json:"entityName,omitempty"`
+	// EntityType: Required. The type of the database entity (table, view, index,
+	// ...).
+	//
+	// Possible values:
+	//   "DATABASE_ENTITY_TYPE_UNSPECIFIED" - Unspecified database entity type.
+	//   "DATABASE_ENTITY_TYPE_SCHEMA" - Schema.
+	//   "DATABASE_ENTITY_TYPE_TABLE" - Table.
+	//   "DATABASE_ENTITY_TYPE_COLUMN" - Column.
+	//   "DATABASE_ENTITY_TYPE_CONSTRAINT" - Constraint.
+	//   "DATABASE_ENTITY_TYPE_INDEX" - Index.
+	//   "DATABASE_ENTITY_TYPE_TRIGGER" - Trigger.
+	//   "DATABASE_ENTITY_TYPE_VIEW" - View.
+	//   "DATABASE_ENTITY_TYPE_SEQUENCE" - Sequence.
+	//   "DATABASE_ENTITY_TYPE_STORED_PROCEDURE" - Stored Procedure.
+	//   "DATABASE_ENTITY_TYPE_FUNCTION" - Function.
+	//   "DATABASE_ENTITY_TYPE_SYNONYM" - Synonym.
+	//   "DATABASE_ENTITY_TYPE_DATABASE_PACKAGE" - Package.
+	//   "DATABASE_ENTITY_TYPE_UDT" - UDT.
+	//   "DATABASE_ENTITY_TYPE_MATERIALIZED_VIEW" - Materialized View.
+	//   "DATABASE_ENTITY_TYPE_DATABASE" - Database.
+	EntityType string `json:"entityType,omitempty"`
+	// Explanation: Optional. An optional explanation of the generated DDL if
+	// ddl_kind is AI.
+	Explanation string `json:"explanation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BasedOnDdlKind") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BasedOnDdlKind") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SetDraftEntityDdlRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SetDraftEntityDdlRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SetDraftEntityDdlResponse: Response message for
+// DataMigrationService.SetDraftEntityDdl.
+type SetDraftEntityDdlResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -8809,6 +9338,389 @@ func (c *ProjectsLocationsConversionWorkspacesDescribeDatabaseEntitiesCall) Page
 	}
 }
 
+type ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall struct {
+	s                   *Service
+	conversionWorkspace string
+	urlParams_          gensupport.URLParams
+	ifNoneMatch_        string
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// FetchEntitiesStatusView: An internal, RPC only method that returns a list of
+// the (filtered) entities with minimal information required for the entities
+// tree view.
+//
+//   - conversionWorkspace: Name of the conversion workspace resource whose
+//     database entities are described. Must be in the form of:
+//     projects/{project}/locations/{location}/conversionWorkspaces/{conversion_wo
+//     rkspace}.
+func (r *ProjectsLocationsConversionWorkspacesService) FetchEntitiesStatusView(conversionWorkspace string) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c := &ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversionWorkspace = conversionWorkspace
+	return c
+}
+
+// FetchView sets the optional parameter "fetchView": The view to fetch. If not
+// specified, FULL is used.
+//
+// Possible values:
+//
+//	"FETCH_VIEW_UNSPECIFIED" - Unspecified view. Defaults to FULL.
+//	"FULL" - Get all entities matching the filter.
+//	"SUMMARY" - Each schema will have one entity per (non sub) type with a
+//
+// dummy name that will contain the aggregated information for all entities of
+// that type. Counters like number of statements and issues will be aggregated
+// accordingly.
+//
+//	"FULL_WITH_DEPENDENCIES" - Same as FULL plus dependency information.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) FetchView(fetchView string) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c.urlParams_.Set("fetchView", fetchView)
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter the returned entities
+// based on AIP-160 standard.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) Filter(filter string) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// entities to return. The service may return fewer entities than the value
+// specifies. Default is 100000.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) PageSize(pageSize int64) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The nextPageToken value
+// received in the previous call to
+// conversionWorkspace.FetchEntitiesStatusView, used in the subsequent request
+// to retrieve the next page of results. On first call this should be left
+// blank. When paginating, all other parameters provided to
+// conversionWorkspace.FetchEntitiesStatusView must match the call that
+// provided the page token, except for the page_size parameter.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) PageToken(pageToken string) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Tree sets the optional parameter "tree": Required. The tree to fetch.
+//
+// Possible values:
+//
+//	"DB_TREE_TYPE_UNSPECIFIED" - Unspecified tree type.
+//	"SOURCE_TREE" - The source database tree.
+//	"DRAFT_TREE" - The draft database tree.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) Tree(tree string) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c.urlParams_.Set("tree", tree)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) Context(ctx context.Context) *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+conversionWorkspace}:fetchEntitiesStatusView")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversionWorkspace": c.conversionWorkspace,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.fetchEntitiesStatusView", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.conversionWorkspaces.fetchEntitiesStatusView" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchEntitiesStatusViewResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) Do(opts ...googleapi.CallOption) (*FetchEntitiesStatusViewResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchEntitiesStatusViewResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.fetchEntitiesStatusView", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConversionWorkspacesFetchEntitiesStatusViewCall) Pages(ctx context.Context, f func(*FetchEntitiesStatusViewResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsConversionWorkspacesFetchIssuesCall struct {
+	s                   *Service
+	conversionWorkspace string
+	urlParams_          gensupport.URLParams
+	ifNoneMatch_        string
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// FetchIssues: List issues of conversion workspace operations e.g. conversion.
+//
+//   - conversionWorkspace: Conversion workspace with issues to fetch. Must be in
+//     the form of:
+//     projects/{project}/locations/{location}/conversionWorkspaces/{conversion_wo
+//     rkspace}.
+func (r *ProjectsLocationsConversionWorkspacesService) FetchIssues(conversionWorkspace string) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c := &ProjectsLocationsConversionWorkspacesFetchIssuesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversionWorkspace = conversionWorkspace
+	return c
+}
+
+// AllIssues sets the optional parameter "allIssues": If 'true', gets all
+// issues matching the filter. Otherwise, for each entity only the issues
+// matching the DdlKind chosen for application on the destination are returned.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) AllIssues(allIssues bool) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c.urlParams_.Set("allIssues", fmt.Sprint(allIssues))
+	return c
+}
+
+// Filter sets the optional parameter "filter": AIP-160 standard filter.
+// Supporting both entity and issue fields. Supported fields: - `name` /
+// `fullname`: The entity full name. - `type`: The entity type (e.g. `TABLE`,
+// `VIEW`, `INDEX`, `TRIGGER`). - `ddlkind`: The kind of DDL (e.g.
+// `DDL_KIND_SOURCE`, `DDL_KIND_AI`, `DDL_KIND_DETERMINISTIC`). -
+// `issue.severity`: The severity of the issue (e.g. `INFO`, `WARNING`,
+// `ERROR`). - `issue.state`: The state of the issue (e.g. `OPEN`, `RESOLVED`).
+// - `issue.origin`: The origin of the issue (e.g. `DETERMINISTIC`, `AI`). -
+// `issue.category_id`: The category ID of the issue. - `issue.group_id`: The
+// group ID of the issue.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) Filter(filter string) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// issues to return. The service may return fewer issues than the value
+// specifies.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) PageSize(pageSize int64) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// FetchIssuesResponse.next_page_token value received in the previous call to
+// FetchIssues, used in the subsequent request to retrieve the next page of
+// results. On first call this should be left blank. When paginating, all other
+// parameters provided to FetchIssues must match the call that provided the
+// page token, except for the page_size parameter.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) PageToken(pageToken string) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Tree sets the optional parameter "tree": The tree to fetch issues from. If
+// not specified, source tree is assumed.
+//
+// Possible values:
+//
+//	"DB_TREE_TYPE_UNSPECIFIED" - Unspecified tree type.
+//	"SOURCE" - Returns seed and conversion issues
+//	"DRAFT" - Returns apply issues.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) Tree(tree string) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c.urlParams_.Set("tree", tree)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) IfNoneMatch(entityTag string) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) Context(ctx context.Context) *ProjectsLocationsConversionWorkspacesFetchIssuesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+conversionWorkspace}:fetchIssues")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversionWorkspace": c.conversionWorkspace,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.fetchIssues", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.conversionWorkspaces.fetchIssues" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchIssuesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) Do(opts ...googleapi.CallOption) (*FetchIssuesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchIssuesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.fetchIssues", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConversionWorkspacesFetchIssuesCall) Pages(ctx context.Context, f func(*FetchIssuesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsConversionWorkspacesGetCall struct {
 	s            *Service
 	name         string
@@ -9682,6 +10594,113 @@ func (c *ProjectsLocationsConversionWorkspacesSeedCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.seed", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall struct {
+	s                        *Service
+	conversionWorkspace      string
+	setdraftentityddlrequest *SetDraftEntityDdlRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// SetDraftEntityDdl: Updates the draft DDL of an entity.
+//
+//   - conversionWorkspace: Name of the conversion workspace resource in the form
+//     of:
+//     projects/{project}/locations/{location}/conversionWorkspaces/{conversion_wo
+//     rkspace}.
+func (r *ProjectsLocationsConversionWorkspacesService) SetDraftEntityDdl(conversionWorkspace string, setdraftentityddlrequest *SetDraftEntityDdlRequest) *ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall {
+	c := &ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.conversionWorkspace = conversionWorkspace
+	c.setdraftentityddlrequest = setdraftentityddlrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall) Fields(s ...googleapi.Field) *ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall) Context(ctx context.Context) *ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setdraftentityddlrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+conversionWorkspace}:setDraftEntityDdl")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"conversionWorkspace": c.conversionWorkspace,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.setDraftEntityDdl", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "datamigration.projects.locations.conversionWorkspaces.setDraftEntityDdl" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SetDraftEntityDdlResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConversionWorkspacesSetDraftEntityDdlCall) Do(opts ...googleapi.CallOption) (*SetDraftEntityDdlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SetDraftEntityDdlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "datamigration.projects.locations.conversionWorkspaces.setDraftEntityDdl", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

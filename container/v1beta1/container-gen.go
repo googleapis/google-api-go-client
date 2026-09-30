@@ -1569,7 +1569,7 @@ type Cluster struct {
 	// ControlPlaneEndpointsConfig: Configuration for all cluster's control plane
 	// endpoints.
 	ControlPlaneEndpointsConfig *ControlPlaneEndpointsConfig `json:"controlPlaneEndpointsConfig,omitempty"`
-	// CostManagementConfig: Configuration for the fine-grained cost management
+	// CostManagementConfig: Configuration for the fine-grained cost allocation
 	// feature.
 	CostManagementConfig *CostManagementConfig `json:"costManagementConfig,omitempty"`
 	// CreateTime: Output only. The time the cluster was created, in RFC3339
@@ -2101,7 +2101,7 @@ type ClusterUpdate struct {
 	// DesiredControlPlaneEndpointsConfig: Control plane endpoints configuration.
 	DesiredControlPlaneEndpointsConfig *ControlPlaneEndpointsConfig `json:"desiredControlPlaneEndpointsConfig,omitempty"`
 	// DesiredCostManagementConfig: The desired configuration for the fine-grained
-	// cost management feature.
+	// cost allocation feature.
 	DesiredCostManagementConfig *CostManagementConfig `json:"desiredCostManagementConfig,omitempty"`
 	// DesiredDatabaseEncryption: Configuration of etcd encryption.
 	DesiredDatabaseEncryption *DatabaseEncryption `json:"desiredDatabaseEncryption,omitempty"`
@@ -2802,7 +2802,7 @@ func (s ControlPlaneEndpointsConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CostManagementConfig: Configuration for fine-grained cost management
+// CostManagementConfig: Configuration for fine-grained cost allocation
 // feature.
 type CostManagementConfig struct {
 	// Enabled: Whether the feature is enabled or not.
@@ -8889,6 +8889,7 @@ type SandboxConfig struct {
 	// Possible values:
 	//   "UNSPECIFIED" - Default value. This should not be used.
 	//   "GVISOR" - Run sandbox using gvisor.
+	//   "MICROVM" - Run sandbox using MicroVM.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SandboxType") to
 	// unconditionally include in API requests. By default, fields with empty or

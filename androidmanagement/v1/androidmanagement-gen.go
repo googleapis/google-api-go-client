@@ -2272,6 +2272,22 @@ type CrossDevicePolicies struct {
 	// user is allowed to choose whether to stream notifications to other nearby
 	// devices which are signed in with the same authenticated managed account.
 	NearbyNotificationStreaming string `json:"nearbyNotificationStreaming,omitempty"`
+	// TaskContinuityHandoff: Optional. Controls the task continuity handoff
+	// (https://developer.android.com/partners/android-17/features#handoff)
+	// feature. This policy applies to the entire device for fully managed devices,
+	// and to the work profile for devices with a work profile. Requires Android 17
+	// QPR1 or higher.
+	//
+	// Possible values:
+	//   "TASK_CONTINUITY_HANDOFF_UNSPECIFIED" - Defaults to
+	// TASK_CONTINUITY_HANDOFF_ALLOWED.
+	//   "TASK_CONTINUITY_HANDOFF_ALLOWED" - Allows the user to enable or disable
+	// the task continuity handoff feature in settings. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is lower than Android 17 QPR1.
+	//   "TASK_CONTINUITY_HANDOFF_DISALLOWED" - The task continuity handoff feature
+	// is disallowed. A NonComplianceDetail with API_LEVEL is reported if the
+	// Android version is lower than Android 17 QPR1.
+	TaskContinuityHandoff string `json:"taskContinuityHandoff,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NearbyAppStreaming") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2310,8 +2326,8 @@ type CrossProfilePolicies struct {
 	// appFunctions must not be set to APP_FUNCTIONS_DISALLOWED, otherwise the
 	// policy will be rejected.
 	CrossProfileAppFunctions string `json:"crossProfileAppFunctions,omitempty"`
-	// CrossProfileCopyPaste: Whether text copied from one profile (personal or
-	// work) can be pasted in the other profile.
+	// CrossProfileCopyPaste: Optional. Whether text copied from one profile
+	// (personal or work) can be pasted in the other profile.
 	//
 	// Possible values:
 	//   "CROSS_PROFILE_COPY_PASTE_UNSPECIFIED" - Unspecified. Defaults to
@@ -2323,11 +2339,11 @@ type CrossProfilePolicies struct {
 	//   "CROSS_PROFILE_COPY_PASTE_ALLOWED" - Text copied in either profile can be
 	// pasted in the other profile.
 	CrossProfileCopyPaste string `json:"crossProfileCopyPaste,omitempty"`
-	// CrossProfileDataSharing: Whether data from one profile (personal or work)
-	// can be shared with apps in the other profile. Specifically controls simple
-	// data sharing via intents. Management of other cross-profile communication
-	// channels, such as contact search, copy/paste, or connected work & personal
-	// apps, are configured separately.
+	// CrossProfileDataSharing: Optional. Whether data from one profile (personal
+	// or work) can be shared with apps in the other profile. Specifically controls
+	// simple data sharing via intents. Management of other cross-profile
+	// communication channels, such as contact search, copy/paste, or connected
+	// work & personal apps, are configured separately.
 	//
 	// Possible values:
 	//   "CROSS_PROFILE_DATA_SHARING_UNSPECIFIED" - Unspecified. Defaults to
@@ -2341,11 +2357,11 @@ type CrossProfilePolicies struct {
 	//   "CROSS_PROFILE_DATA_SHARING_ALLOWED" - Data from either profile can be
 	// shared with the other profile.
 	CrossProfileDataSharing string `json:"crossProfileDataSharing,omitempty"`
-	// ExemptionsToShowWorkContactsInPersonalProfile: List of apps which are
-	// excluded from the ShowWorkContactsInPersonalProfile setting. For this to be
-	// set, ShowWorkContactsInPersonalProfile must be set to one of the following
-	// values: SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED. In this case, these
-	// exemptions act as a blocklist.
+	// ExemptionsToShowWorkContactsInPersonalProfile: Optional. List of apps which
+	// are excluded from the ShowWorkContactsInPersonalProfile setting. For this to
+	// be set, ShowWorkContactsInPersonalProfile must be set to one of the
+	// following values: SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED. In this
+	// case, these exemptions act as a blocklist.
 	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED. In this case, these
 	// exemptions act as an allowlist.
 	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED_EXCEPT_SYSTEM. In this
@@ -2354,8 +2370,8 @@ type CrossProfilePolicies struct {
 	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 14.
 	ExemptionsToShowWorkContactsInPersonalProfile *PackageNameList `json:"exemptionsToShowWorkContactsInPersonalProfile,omitempty"`
-	// ShowWorkContactsInPersonalProfile: Whether personal apps can access contacts
-	// stored in the work profile.See also
+	// ShowWorkContactsInPersonalProfile: Optional. Whether personal apps can
+	// access contacts stored in the work profile.See also
 	// exemptions_to_show_work_contacts_in_personal_profile.
 	//
 	// Possible values:
@@ -2388,9 +2404,10 @@ type CrossProfilePolicies struct {
 	// to SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED and a
 	// NonComplianceDetail with API_LEVEL is reported.
 	ShowWorkContactsInPersonalProfile string `json:"showWorkContactsInPersonalProfile,omitempty"`
-	// WorkProfileWidgetsDefault: Specifies the default behaviour for work profile
-	// widgets. If the policy does not specify work_profile_widgets for a specific
-	// application, it will behave according to the value specified here.
+	// WorkProfileWidgetsDefault: Optional. Specifies the default behaviour for
+	// work profile widgets. If the policy does not specify work_profile_widgets
+	// for a specific application, it will behave according to the value specified
+	// here.
 	//
 	// Possible values:
 	//   "WORK_PROFILE_WIDGETS_DEFAULT_UNSPECIFIED" - Unspecified. Defaults to
@@ -4736,7 +4753,8 @@ type KeyguardSecuredEvent struct {
 // mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true or
 // specify an app in the policy with installType KIOSK.
 type KioskCustomization struct {
-	// DeviceSettings: Specifies whether the Settings app is allowed in kiosk mode.
+	// DeviceSettings: Optional. Specifies whether the Settings app is allowed in
+	// kiosk mode.
 	//
 	// Possible values:
 	//   "DEVICE_SETTINGS_UNSPECIFIED" - Unspecified, defaults to
@@ -4746,8 +4764,8 @@ type KioskCustomization struct {
 	//   "SETTINGS_ACCESS_BLOCKED" - Access to the Settings app is not allowed in
 	// kiosk mode.
 	DeviceSettings string `json:"deviceSettings,omitempty"`
-	// PowerButtonActions: Sets the behavior of a device in kiosk mode when a user
-	// presses and holds (long-presses) the Power button.
+	// PowerButtonActions: Optional. Sets the behavior of a device in kiosk mode
+	// when a user presses and holds (long-presses) the Power button.
 	//
 	// Possible values:
 	//   "POWER_BUTTON_ACTIONS_UNSPECIFIED" - Unspecified, defaults to
@@ -4758,8 +4776,8 @@ type KioskCustomization struct {
 	// shown when a user long-presses the Power button of a device in kiosk mode.
 	// Note: this may prevent users from turning off the device.
 	PowerButtonActions string `json:"powerButtonActions,omitempty"`
-	// StatusBar: Specifies whether system info and notifications are disabled in
-	// kiosk mode.
+	// StatusBar: Optional. Specifies whether system info and notifications are
+	// disabled in kiosk mode.
 	//
 	// Possible values:
 	//   "STATUS_BAR_UNSPECIFIED" - Unspecified, defaults to
@@ -4772,9 +4790,10 @@ type KioskCustomization struct {
 	// are disabled in kiosk mode.
 	//   "SYSTEM_INFO_ONLY" - Only system info is shown on the status bar.
 	StatusBar string `json:"statusBar,omitempty"`
-	// SystemErrorWarnings: Specifies whether system error dialogs for crashed or
-	// unresponsive apps are blocked in kiosk mode. When blocked, the system will
-	// force-stop the app as if the user chooses the "close app" option on the UI.
+	// SystemErrorWarnings: Optional. Specifies whether system error dialogs for
+	// crashed or unresponsive apps are blocked in kiosk mode. When blocked, the
+	// system will force-stop the app as if the user chooses the "close app" option
+	// on the UI.
 	//
 	// Possible values:
 	//   "SYSTEM_ERROR_WARNINGS_UNSPECIFIED" - Unspecified, defaults to
@@ -4785,8 +4804,8 @@ type KioskCustomization struct {
 	// app not responding (ANR) are blocked. When blocked, the system force-stops
 	// the app as if the user closes the app from the UI.
 	SystemErrorWarnings string `json:"systemErrorWarnings,omitempty"`
-	// SystemNavigation: Specifies which navigation features are enabled (e.g.
-	// Home, Overview buttons) in kiosk mode.
+	// SystemNavigation: Optional. Specifies which navigation features are enabled
+	// (e.g. Home, Overview buttons) in kiosk mode.
 	//
 	// Possible values:
 	//   "SYSTEM_NAVIGATION_UNSPECIFIED" - Unspecified, defaults to
@@ -5933,40 +5952,42 @@ func (s PasswordPoliciesContext) MarshalJSON() ([]byte, error) {
 
 // PasswordRequirements: Requirements for the password used to unlock a device.
 type PasswordRequirements struct {
-	// MaximumFailedPasswordsForWipe: Number of incorrect device-unlock passwords
-	// that can be entered before a device is wiped. A value of 0 means there is no
-	// restriction.
+	// MaximumFailedPasswordsForWipe: Optional. Number of incorrect device-unlock
+	// passwords that can be entered before a device is wiped. A value of 0 means
+	// there is no restriction.
 	MaximumFailedPasswordsForWipe int64 `json:"maximumFailedPasswordsForWipe,omitempty"`
-	// PasswordExpirationTimeout: Password expiration timeout.
+	// PasswordExpirationTimeout: Optional. Password expiration timeout.
 	PasswordExpirationTimeout string `json:"passwordExpirationTimeout,omitempty"`
-	// PasswordHistoryLength: The length of the password history. After setting
-	// this field, the user won't be able to enter a new password that is the same
-	// as any password in the history. A value of 0 means there is no restriction.
+	// PasswordHistoryLength: Optional. The length of the password history. After
+	// setting this field, the user won't be able to enter a new password that is
+	// the same as any password in the history. A value of 0 means there is no
+	// restriction.
 	PasswordHistoryLength int64 `json:"passwordHistoryLength,omitempty"`
-	// PasswordMinimumLength: The minimum allowed password length. A value of 0
-	// means there is no restriction. Only enforced when password_quality is
-	// NUMERIC, NUMERIC_COMPLEX, ALPHABETIC, ALPHANUMERIC, or COMPLEX.
+	// PasswordMinimumLength: Optional. The minimum allowed password length. A
+	// value of 0 means there is no restriction. Only enforced when
+	// password_quality is NUMERIC, NUMERIC_COMPLEX, ALPHABETIC, ALPHANUMERIC, or
+	// COMPLEX.
 	PasswordMinimumLength int64 `json:"passwordMinimumLength,omitempty"`
-	// PasswordMinimumLetters: Minimum number of letters required in the password.
-	// Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumLetters: Optional. Minimum number of letters required in the
+	// password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumLetters int64 `json:"passwordMinimumLetters,omitempty"`
-	// PasswordMinimumLowerCase: Minimum number of lower case letters required in
-	// the password. Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumLowerCase: Optional. Minimum number of lower case letters
+	// required in the password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumLowerCase int64 `json:"passwordMinimumLowerCase,omitempty"`
-	// PasswordMinimumNonLetter: Minimum number of non-letter characters (numerical
-	// digits or symbols) required in the password. Only enforced when
+	// PasswordMinimumNonLetter: Optional. Minimum number of non-letter characters
+	// (numerical digits or symbols) required in the password. Only enforced when
 	// password_quality is COMPLEX.
 	PasswordMinimumNonLetter int64 `json:"passwordMinimumNonLetter,omitempty"`
-	// PasswordMinimumNumeric: Minimum number of numerical digits required in the
-	// password. Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumNumeric: Optional. Minimum number of numerical digits
+	// required in the password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumNumeric int64 `json:"passwordMinimumNumeric,omitempty"`
-	// PasswordMinimumSymbols: Minimum number of symbols required in the password.
-	// Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumSymbols: Optional. Minimum number of symbols required in the
+	// password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumSymbols int64 `json:"passwordMinimumSymbols,omitempty"`
-	// PasswordMinimumUpperCase: Minimum number of upper case letters required in
-	// the password. Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumUpperCase: Optional. Minimum number of upper case letters
+	// required in the password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumUpperCase int64 `json:"passwordMinimumUpperCase,omitempty"`
-	// PasswordQuality: The required password quality.
+	// PasswordQuality: Optional. The required password quality.
 	//
 	// Possible values:
 	//   "PASSWORD_QUALITY_UNSPECIFIED" - There are no password requirements.
@@ -6024,7 +6045,7 @@ type PasswordRequirements struct {
 	// must meet.Enforcement varies among different Android versions, management
 	// modes and password scopes. See PasswordQuality for details.
 	PasswordQuality string `json:"passwordQuality,omitempty"`
-	// PasswordScope: The scope that the password requirement applies to.
+	// PasswordScope: Optional. The scope that the password requirement applies to.
 	//
 	// Possible values:
 	//   "SCOPE_UNSPECIFIED" - The scope is unspecified. The password requirements
@@ -6034,11 +6055,12 @@ type PasswordRequirements struct {
 	//   "SCOPE_PROFILE" - The password requirements are only applied to the work
 	// profile.
 	PasswordScope string `json:"passwordScope,omitempty"`
-	// RequirePasswordUnlock: The length of time after a device or work profile is
-	// unlocked using a strong form of authentication (password, PIN, pattern) that
-	// it can be unlocked using any other authentication method (e.g. fingerprint,
-	// trust agents, face). After the specified time period elapses, only strong
-	// forms of authentication can be used to unlock the device or work profile.
+	// RequirePasswordUnlock: Optional. The length of time after a device or work
+	// profile is unlocked using a strong form of authentication (password, PIN,
+	// pattern) that it can be unlocked using any other authentication method (e.g.
+	// fingerprint, trust agents, face). After the specified time period elapses,
+	// only strong forms of authentication can be used to unlock the device or work
+	// profile.
 	//
 	// Possible values:
 	//   "REQUIRE_PASSWORD_UNLOCK_UNSPECIFIED" - Unspecified. Defaults to
@@ -6047,9 +6069,9 @@ type PasswordRequirements struct {
 	// default.
 	//   "REQUIRE_EVERY_DAY" - The timeout period is set to 24 hours.
 	RequirePasswordUnlock string `json:"requirePasswordUnlock,omitempty"`
-	// UnifiedLockSettings: Controls whether a unified lock is allowed for the
-	// device and the work profile, on devices running Android 9 and above with a
-	// work profile. This can be set only if password_scope is set to
+	// UnifiedLockSettings: Optional. Controls whether a unified lock is allowed
+	// for the device and the work profile, on devices running Android 9 and above
+	// with a work profile. This can be set only if password_scope is set to
 	// SCOPE_PROFILE, the policy will be rejected otherwise. If user has not set a
 	// separate work lock and this field is set to REQUIRE_SEPARATE_WORK_LOCK, a
 	// NonComplianceDetail is reported with nonComplianceReason set to USER_ACTION.
@@ -6233,6 +6255,44 @@ func (s PersonalApplicationPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PersonalCrossDevicePolicies: Policies controlling cross-device communication
+// in the personal profile.
+type PersonalCrossDevicePolicies struct {
+	// TaskContinuityHandoff: Optional. Controls the task continuity handoff
+	// (https://developer.android.com/partners/android-17/features#handoff) feature
+	// for the personal profile on company-owned devices with a work profile. To
+	// disable Handoff device-wide on a company-owned device, both
+	// crossDevicePolicies.taskContinuityHandoff and this policy should be set to
+	// TASK_CONTINUITY_HANDOFF_DISALLOWED. Requires Android 17 QPR1 or higher.
+	//
+	// Possible values:
+	//   "TASK_CONTINUITY_HANDOFF_UNSPECIFIED" - Defaults to
+	// TASK_CONTINUITY_HANDOFF_ALLOWED.
+	//   "TASK_CONTINUITY_HANDOFF_ALLOWED" - Allows the user to enable or disable
+	// the task continuity handoff feature in settings. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is lower than Android 17 QPR1.
+	//   "TASK_CONTINUITY_HANDOFF_DISALLOWED" - The task continuity handoff feature
+	// is disallowed. A NonComplianceDetail with API_LEVEL is reported if the
+	// Android version is lower than Android 17 QPR1.
+	TaskContinuityHandoff string `json:"taskContinuityHandoff,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TaskContinuityHandoff") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TaskContinuityHandoff") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PersonalCrossDevicePolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod PersonalCrossDevicePolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PersonalUsagePolicies: Policies controlling personal usage on a
 // company-owned device with a work profile.
 type PersonalUsagePolicies struct {
@@ -6255,6 +6315,9 @@ type PersonalUsagePolicies struct {
 	BluetoothSharing string `json:"bluetoothSharing,omitempty"`
 	// CameraDisabled: If true, the camera is disabled on the personal profile.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
+	// CrossDevicePolicies: Optional. Policies controlling cross-device
+	// communication in the personal profile.
+	CrossDevicePolicies *PersonalCrossDevicePolicies `json:"crossDevicePolicies,omitempty"`
 	// MaxDaysWithWorkOff: Controls how long the work profile can stay off. The
 	// minimum duration must be at least 3 days. Other details are as follows: - If
 	// the duration is set to 0, the feature is turned off. - If the duration is
@@ -6510,7 +6573,8 @@ type Policy struct {
 	// CrossDevicePolicies: Optional. Policies controlling cross-device
 	// communication.
 	CrossDevicePolicies *CrossDevicePolicies `json:"crossDevicePolicies,omitempty"`
-	// CrossProfilePolicies: Cross-profile policies applied on the device.
+	// CrossProfilePolicies: Optional. Cross-profile policies applied on the
+	// device.
 	CrossProfilePolicies *CrossProfilePolicies `json:"crossProfilePolicies,omitempty"`
 	// DataRoamingDisabled: Whether roaming data services are disabled.
 	DataRoamingDisabled bool `json:"dataRoamingDisabled,omitempty"`
@@ -6644,9 +6708,9 @@ type Policy struct {
 	// page in alphabetical order. Use kioskCustomization to further configure the
 	// kiosk device behavior.
 	KioskCustomLauncherEnabled bool `json:"kioskCustomLauncherEnabled,omitempty"`
-	// KioskCustomization: Settings controlling the behavior of a device in kiosk
-	// mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true or
-	// specify an app in the policy with installType KIOSK.
+	// KioskCustomization: Optional. Settings controlling the behavior of a device
+	// in kiosk mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true
+	// or specify an app in the policy with installType KIOSK.
 	KioskCustomization *KioskCustomization `json:"kioskCustomization,omitempty"`
 	// LocationMode: The degree of location detection enabled.
 	//
@@ -6744,9 +6808,9 @@ type Policy struct {
 	OutgoingBeamDisabled bool `json:"outgoingBeamDisabled,omitempty"`
 	// OutgoingCallsDisabled: Whether outgoing calls are disabled.
 	OutgoingCallsDisabled bool `json:"outgoingCallsDisabled,omitempty"`
-	// PasswordPolicies: Password requirement policies. Different policies can be
-	// set for work profile or fully managed devices by setting the password_scope
-	// field in the policy.
+	// PasswordPolicies: Optional. Password requirement policies. Different
+	// policies can be set for work profile or fully managed devices by setting the
+	// password_scope field in the policy.
 	PasswordPolicies []*PasswordRequirements `json:"passwordPolicies,omitempty"`
 	// PasswordRequirements: Password requirements. The field
 	// password_requirements.require_password_unlock must not be set. DEPRECATED -

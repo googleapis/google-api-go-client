@@ -778,6 +778,10 @@ func (s CloudRunRevisionEndpoint) MarshalJSON() ([]byte, error) {
 type CloudRunRevisionInfo struct {
 	// DisplayName: Name of a Cloud Run revision.
 	DisplayName string `json:"displayName,omitempty"`
+	// IpAddress: IP address of a Cloud Run revision. If the Cloud Run revision is
+	// in dual-stack subnetwork, this is the IP address relevant to the trace.
+	// Populated for `ARRIVE_AT_CLOUD_RUN_REVISION` steps.
+	IpAddress string `json:"ipAddress,omitempty"`
 	// Location: Location in which this revision is deployed.
 	Location string `json:"location,omitempty"`
 	// ServiceUri: URI of Cloud Run service this revision belongs to. Format:
@@ -789,7 +793,7 @@ type CloudRunRevisionInfo struct {
 	Uri string `json:"uri,omitempty"`
 	// WorkerPoolUri: URI of Cloud Run worker pool this revision belongs to.
 	// Format:
-	// `projects/{project_id}/locations/{location}/workerPools/{worker_pool_id}`.
+	// `projects/{project_id}/locations/{location}/workerPools/{worker_pool_id}`
 	// Mutually exclusive with `service_uri`.
 	WorkerPoolUri string `json:"workerPoolUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -1044,40 +1048,6 @@ type DirectVpcEgressConnectionInfo struct {
 
 func (s DirectVpcEgressConnectionInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod DirectVpcEgressConnectionInfo
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// DirectVpcIngressConnectionInfo: For display only. Metadata associated with a
-// serverless direct VPC ingress connection.
-type DirectVpcIngressConnectionInfo struct {
-	// NetworkUri: URI of the VPC network for direct ingress. Format:
-	// `projects/{project_id}/global/networks/{network_id}`
-	NetworkUri string `json:"networkUri,omitempty"`
-	// Region: Region in which the Direct VPC ingress is deployed.
-	Region string `json:"region,omitempty"`
-	// SelectedIpAddress: Selected destination IP address, from the selected IP
-	// range.
-	SelectedIpAddress string `json:"selectedIpAddress,omitempty"`
-	// SelectedIpRange: Selected IP range.
-	SelectedIpRange string `json:"selectedIpRange,omitempty"`
-	// SubnetworkUri: URI of the subnetwork for direct ingress. Format:
-	// `projects/{project_id}/regions/{region}/subnetworks/{subnetwork_id}`
-	SubnetworkUri string `json:"subnetworkUri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "NetworkUri") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NetworkUri") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s DirectVpcIngressConnectionInfo) MarshalJSON() ([]byte, error) {
-	type NoMethod DirectVpcIngressConnectionInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3783,9 +3753,6 @@ type Step struct {
 	// DirectVpcEgressConnection: Display information of a serverless direct VPC
 	// egress connection.
 	DirectVpcEgressConnection *DirectVpcEgressConnectionInfo `json:"directVpcEgressConnection,omitempty"`
-	// DirectVpcIngressConnection: Display information of a serverless direct VPC
-	// ingress connection.
-	DirectVpcIngressConnection *DirectVpcIngressConnectionInfo `json:"directVpcIngressConnection,omitempty"`
 	// DmsPrivateConnection: Display information of a DMS Private Connection.
 	DmsPrivateConnection *PrivateConnectionInfo `json:"dmsPrivateConnection,omitempty"`
 	// Drop: Display information of the final state "drop" and reason.
@@ -3932,8 +3899,6 @@ type Step struct {
 	// interconnect attachment.
 	//   "ARRIVE_AT_VPC_CONNECTOR" - Forwarding state: arriving at a VPC connector.
 	//   "ARRIVE_AT_GKE_POD" - Forwarding state: arriving at a GKE Pod.
-	//   "ARRIVE_AT_DIRECT_VPC_INGRESS_CONNECTION" - Forwarding state: arriving at
-	// a direct VPC ingress connection.
 	//   "DIRECT_VPC_EGRESS_CONNECTION" - Forwarding state: for packets originating
 	// from a serverless endpoint forwarded through Direct VPC egress.
 	//   "SERVERLESS_EXTERNAL_CONNECTION" - Forwarding state: for packets

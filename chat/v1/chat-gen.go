@@ -191,11 +191,11 @@ const (
 	// View members in Google Chat conversations.
 	ChatMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.memberships.readonly"
 
-	// See, compose, send, update, and delete messages as well as their message
-	// content; add, see, and delete reactions to messages.
+	// See, compose, send, update, and delete messages, their content, and attached
+	// cards; add, see, and delete reactions to messages.
 	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
 
-	// Compose and send messages in Google Chat
+	// Compose and send messages and attach cards
 	ChatMessagesCreateScope = "https://www.googleapis.com/auth/chat.messages.create"
 
 	// See, add, and delete reactions as well as their reaction content to messages
@@ -7276,7 +7276,7 @@ func (s SpaceDataSource) MarshalJSON() ([]byte, error) {
 type SpaceDetails struct {
 	// Description: Optional. A description of the space. For example, describe the
 	// space's discussion topic, functional purpose, or participants. Supports up
-	// to 150 characters.
+	// to 4,096 characters.
 	Description string `json:"description,omitempty"`
 	// Guidelines: Optional. The space's rules, expectations, and etiquette.
 	// Supports up to 5,000 characters.

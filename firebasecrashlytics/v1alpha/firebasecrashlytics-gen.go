@@ -1799,10 +1799,9 @@ func (c *ProjectsAppsEventsListCall) FilterVersionDisplayNames(filterVersionDisp
 // state" = "background". OR across different keys, repeating a key within an
 // AND, NOT, and comparators other than `=` and `:` are rejected with
 // INVALID_ARGUMENT. Wildcards are not supported in values; use
-// `custom_keys.:*` to match events that set a key to any value. Only supported
-// for Android and iOS. This filter expression applies in addition to the
-// `filter` field above. The syntax is a subset of AIP-160
-// (https://google.aip.dev/160).
+// `custom_keys.:*` to match events that set a key to any value. This filter
+// expression applies in addition to the `filter` field above. The syntax is a
+// subset of AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsAppsEventsListCall) FilterExpression(filterExpression string) *ProjectsAppsEventsListCall {
 	c.urlParams_.Set("filterExpression", filterExpression)
 	return c

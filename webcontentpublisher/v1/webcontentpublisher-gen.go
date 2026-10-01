@@ -890,7 +890,8 @@ type OrganizationsPublicationsListCall struct {
 
 // List: Lists publications.
 //
-//   - parent: The parent organization whose publications to list. Format:
+//   - parent: The parent organization whose publications to list, or
+//     "organizations/-" for all organizations a user has access to. Format:
 //     `organizations/{organization}`.
 func (r *OrganizationsPublicationsService) List(parent string) *OrganizationsPublicationsListCall {
 	c := &OrganizationsPublicationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}

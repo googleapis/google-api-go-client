@@ -20593,7 +20593,7 @@ type FolderGlobalVmExtensionPoliciesGetVmExtensionCall struct {
 
 // GetVmExtension: Retrieves details of a specific VM extension.
 //
-// - extensionName: .
+// - extensionName: Name of the VM extension for this request.
 // - folder: Folder ID for this request.
 func (r *FolderGlobalVmExtensionPoliciesService) GetVmExtension(folder string, extensionName string) *FolderGlobalVmExtensionPoliciesGetVmExtensionCall {
 	c := &FolderGlobalVmExtensionPoliciesGetVmExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -21728,7 +21728,7 @@ type FolderZoneVmExtensionPoliciesGetVmExtensionCall struct {
 // GetVmExtension: Retrieves details of a specific VM extension within a
 // folder.
 //
-// - extensionName: .
+// - extensionName: Name of the VM extension for this request.
 // - folder: Folder ID for this request.
 // - zone: Name of the zone for this request.
 func (r *FolderZoneVmExtensionPoliciesService) GetVmExtension(folder string, zone string, extensionName string) *FolderZoneVmExtensionPoliciesGetVmExtensionCall {
@@ -27899,7 +27899,7 @@ type GlobalFrontendSettingsGetCall struct {
 
 // Get: Gets the Global Frontend Billing Bundle Settings for a project.
 //
-// - project: .
+// - project: Project ID for this request.
 func (r *GlobalFrontendSettingsService) Get(project string) *GlobalFrontendSettingsGetCall {
 	c := &GlobalFrontendSettingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -28009,7 +28009,7 @@ type GlobalFrontendSettingsPatchCall struct {
 
 // Patch: Updates the Global Frontend Billing Bundle Settings for a project.
 //
-// - project: .
+// - project: Project ID for this request.
 func (r *GlobalFrontendSettingsService) Patch(project string, globalfrontendsettings *GlobalFrontendSettings) *GlobalFrontendSettingsPatchCall {
 	c := &GlobalFrontendSettingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
@@ -28017,13 +28017,15 @@ func (r *GlobalFrontendSettingsService) Patch(project string, globalfrontendsett
 	return c
 }
 
-// RequestId sets the optional parameter "requestId":
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests.
 func (c *GlobalFrontendSettingsPatchCall) RequestId(requestId string) *GlobalFrontendSettingsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": e.g., "type"
+// UpdateMask sets the optional parameter "updateMask": Field mask to support
+// patch. E.g., "type".
 func (c *GlobalFrontendSettingsPatchCall) UpdateMask(updateMask string) *GlobalFrontendSettingsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -31927,7 +31929,7 @@ type GlobalVmExtensionPoliciesGetVmExtensionCall struct {
 
 // GetVmExtension: Retrieves details of a specific VM extension.
 //
-// - extensionName: .
+// - extensionName: Name of the VM extension for this request.
 // - project: Project ID for this request.
 func (r *GlobalVmExtensionPoliciesService) GetVmExtension(project string, extensionName string) *GlobalVmExtensionPoliciesGetVmExtensionCall {
 	c := &GlobalVmExtensionPoliciesGetVmExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -84891,7 +84893,7 @@ type OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall struct {
 
 // GetVmExtension: Retrieves details of a specific VM extension.
 //
-// - extensionName: .
+// - extensionName: Name of the VM extension for this request.
 // - organization: Organization ID for this request.
 func (r *OrganizationGlobalVmExtensionPoliciesService) GetVmExtension(organization string, extensionName string) *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall {
 	c := &OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -90129,7 +90131,7 @@ type OrganizationZoneVmExtensionPoliciesGetVmExtensionCall struct {
 // GetVmExtension: Retrieves details of a specific VM extension within an
 // organization.
 //
-// - extensionName: .
+// - extensionName: Name of the VM extension for this request.
 // - organization: Organization ID for this request.
 // - zone: Name of the zone for this request.
 func (r *OrganizationZoneVmExtensionPoliciesService) GetVmExtension(organization string, zone string, extensionName string) *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall {

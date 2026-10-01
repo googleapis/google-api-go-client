@@ -237,6 +237,60 @@ func (s AdminSettings) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// ComponentMetrics: ComponentMetrics contains sizing, timing, retries, and
+// metrics for an exported component.
+type ComponentMetrics struct {
+	// ComponentType: Type of the exported component.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified component type.
+	//   "BQ_ESA" - BigQuery Elite System Activity component.
+	//   "DB" - Database component.
+	//   "FS" - File system component.
+	//   "ALL" - Overall Export Job.
+	ComponentType string `json:"componentType,omitempty"`
+	// Duration: Duration of the component export.
+	Duration string `json:"duration,omitempty"`
+	// EndTime: End timestamp of the component export.
+	EndTime string `json:"endTime,omitempty"`
+	// RetryCount: Number of retries during the component export.
+	RetryCount int64 `json:"retryCount,omitempty"`
+	// SizeGb: Size of the exported component in gigabytes.
+	SizeGb float64 `json:"sizeGb,omitempty"`
+	// StartTime: Start timestamp of the component export.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComponentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComponentMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod ComponentMetrics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ComponentMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod ComponentMetrics
+	var s1 struct {
+		SizeGb gensupport.JSONFloat64 `json:"sizeGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SizeGb = float64(s1.SizeGb)
+	return nil
+}
+
 // ControlledEgressConfig: Controlled egress configuration.
 type ControlledEgressConfig struct {
 	// EgressFqdns: Optional. List of fully qualified domain names to be added to
@@ -465,6 +519,8 @@ type ExportMetadata struct {
 	// ExportEncryptionKey: Encryption key that was used to encrypt the export
 	// artifacts.
 	ExportEncryptionKey *ExportMetadataEncryptionKey `json:"exportEncryptionKey,omitempty"`
+	// ExportMetrics: Overall export metrics, timing, and component telemetry.
+	ExportMetrics *ExportMetrics `json:"exportMetrics,omitempty"`
 	// FilePaths: List of files created as part of export artifact (excluding the
 	// metadata). The paths are relative to the folder containing the metadata.
 	FilePaths []string `json:"filePaths,omitempty"`
@@ -485,6 +541,7 @@ type ExportMetadata struct {
 	//   "SOURCE_UNSPECIFIED" - Source not specified
 	//   "LOOKER_CORE" - Source of export is Looker Core
 	//   "LOOKER_ORIGINAL" - Source of export is Looker Original
+	//   "LOOKER_SELF_HOSTED" - Source of export is Self-Hosted Looker
 	Source string `json:"source,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EsaSourceDatasetId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -526,6 +583,31 @@ type ExportMetadataEncryptionKey struct {
 
 func (s ExportMetadataEncryptionKey) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportMetadataEncryptionKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportMetrics: ExportMetrics contains overall export execution metrics,
+// timing, and component telemetry.
+type ExportMetrics struct {
+	// ComponentMetrics: Metrics and telemetry for each exported component.
+	ComponentMetrics []*ComponentMetrics `json:"componentMetrics,omitempty"`
+	// InstanceInternalName: Internal name of the instance being exported.
+	InstanceInternalName string `json:"instanceInternalName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComponentMetrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentMetrics") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportMetrics
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

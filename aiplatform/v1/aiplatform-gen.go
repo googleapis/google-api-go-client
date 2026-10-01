@@ -3466,9 +3466,60 @@ type V1Service struct {
 	s *Service
 }
 
+// CloudAiLargeModelsVisionExperimentsResponse: Experimental response metadata
+// for video generation.
+type CloudAiLargeModelsVisionExperimentsResponse struct {
+	// ProEditResult: Result metadata from a Pro Edit operation, populated for edit
+	// requests.
+	ProEditResult *CloudAiLargeModelsVisionExperimentsResponseProEditResult `json:"proEditResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ProEditResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProEditResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionExperimentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionExperimentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiLargeModelsVisionExperimentsResponseProEditResult: Result metadata
+// from a Pro Edit operation.
+type CloudAiLargeModelsVisionExperimentsResponseProEditResult struct {
+	// StructuredPrompt: The output structured prompt produced by this edit.
+	StructuredPrompt googleapi.RawMessage `json:"structuredPrompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StructuredPrompt") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StructuredPrompt") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionExperimentsResponseProEditResult) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionExperimentsResponseProEditResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudAiLargeModelsVisionGenerateVideoExperiments: Experimental parameters
 // for video generation.
 type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
+	// AllowMeteredBilling: If false, when a non-subscription customer tries to
+	// call an experimental feature, the request will be rejected. This field has
+	// no effect for subscription customers.
+	AllowMeteredBilling bool `json:"allowMeteredBilling,omitempty"`
 	// AnchorLastFrame: Optional. If true, anchors the last frame in video
 	// generation by generating a custom border mask.
 	AnchorLastFrame bool `json:"anchorLastFrame,omitempty"`
@@ -3514,6 +3565,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	OriginalRequestJson string `json:"originalRequestJson,omitempty"`
 	// OutpaintConfig: Config for Outpainting task.
 	OutpaintConfig *CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig `json:"outpaintConfig,omitempty"`
+	// ProEdit: Configuration for Pro Edit.
+	ProEdit *CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig `json:"proEdit,omitempty"`
 	// PromptInputs: Prompt chunks for "ProModel" prompting. If set, the prompt
 	// will not be rewritten, and top-level prompt ignored.
 	PromptInputs *CloudAiLargeModelsVisionPromptInputs `json:"promptInputs,omitempty"`
@@ -3543,15 +3596,15 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	// VideoTransformStrength: SDEdit: Scalar noise level (0.0 to 1.0) Maps to
 	// sdedit_tmax
 	VideoTransformStrength float64 `json:"videoTransformStrength,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AnchorLastFrame") to
+	// ForceSendFields is a list of field names (e.g. "AllowMeteredBilling") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AnchorLastFrame") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowMeteredBilling") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3710,6 +3763,9 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig struct {
 	// frames.
 	//   "OUTPUT_SPEC_960X544x432" - Low spec: 960x544 resolution, 432 total
 	// frames.
+	//   "OUTPUT_SPEC_1280X720x144" - Medium spec at 1280x720, 144 total frames.
+	// Shorter than OUTPUT_SPEC_1280X720x192 and higher quality at the same
+	// resolution.
 	OutputSpec string `json:"outputSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "InputFrames") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3735,13 +3791,13 @@ func (s CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig) MarshalJ
 // of frames.
 type CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource struct {
 	GlobPattern string `json:"globPattern,omitempty"`
-	// HorizontalOffset: Horizontal offset in pixels to shift the input frame from
-	// center. Positive values shift right, negative values shift left. Optional.
-	// Default is 0 (centered).
+	// HorizontalOffset: Horizontal offset in pixels of the frame's left edge from
+	// the canvas's left edge. Values outside the canvas crop the frame. Optional.
+	// Default is 0 (frame flush with the canvas's left edge).
 	HorizontalOffset int64 `json:"horizontalOffset,omitempty"`
-	// VerticalOffset: Vertical offset in pixels to shift the input frame from
-	// center. Positive values shift down, negative values shift up. Optional.
-	// Default is 0 (centered).
+	// VerticalOffset: Vertical offset in pixels of the frame's top edge from the
+	// canvas's top edge. Values outside the canvas crop the frame. Optional.
+	// Default is 0 (frame flush with the canvas's top edge).
 	VerticalOffset int64 `json:"verticalOffset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GlobPattern") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3758,6 +3814,37 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource s
 
 func (s CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig: Configuration
+// for Pro Edit.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig struct {
+	// EditInstructionPrompt: A text string containing the user's edit instruction.
+	// Will be applied to the original URF.
+	EditInstructionPrompt string `json:"editInstructionPrompt,omitempty"`
+	// FromOperationId: Required. The operation_id from a previous omni-cine
+	// generation whose OF and URF should be retrieved for editing.
+	FromOperationId string `json:"fromOperationId,omitempty"`
+	// StructuredPrompt: A JSON object containing the user's modified URF. The URF
+	// Editing Preamble will diff this against the original URF to determine what
+	// changed.
+	StructuredPrompt googleapi.RawMessage `json:"structuredPrompt,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EditInstructionPrompt") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EditInstructionPrompt") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3972,6 +4059,8 @@ type CloudAiLargeModelsVisionGenerateVideoResponseVideo struct {
 	// ExperimentsMetadata: Optional metadata returned from experimental requests.
 	// Likely only includes the rewritten prompt chunks.
 	ExperimentsMetadata *CloudAiLargeModelsVisionGenerateVideoExperiments `json:"experimentsMetadata,omitempty"`
+	// ExperimentsResponse: Optional response returned from experimental requests.
+	ExperimentsResponse *CloudAiLargeModelsVisionExperimentsResponse `json:"experimentsResponse,omitempty"`
 	// GcsUri: Cloud Storage URI where the generated video is written.
 	GcsUri string `json:"gcsUri,omitempty"`
 	// MimeType: The MIME type of the content of the video. - video/mp4
@@ -4785,6 +4874,9 @@ type GoogleCloudAiplatformV1Agent struct {
 	// Object: Output only. The object type of the resource. For agents, the value
 	// is `agent`.
 	Object string `json:"object,omitempty"`
+	// ObservabilityConfig: Optional. Observability settings for this agent's
+	// sessions.
+	ObservabilityConfig *GoogleCloudAiplatformV1ObservabilityConfig `json:"observabilityConfig,omitempty"`
 	// SystemInstruction: Optional. The instructions for the agent to follow. These
 	// instructions are passed to the LLM as a system instruction.
 	SystemInstruction string `json:"system_instruction,omitempty"`
@@ -5641,6 +5733,19 @@ type GoogleCloudAiplatformV1AudioTranscriptionConfig struct {
 	// LanguageHints: Optional. Deprecated: Use top-level `language_codes` instead.
 	// Specifies one or more languages in the audio.
 	LanguageHints *GoogleCloudAiplatformV1AudioTranscriptionConfigLanguageHints `json:"languageHints,omitempty"`
+	// Mode: Optional. Configures transcription mode. Supported values: `VERBATIM`,
+	// `SMART`. If unspecified, defaults to `VERBATIM` transcription. In `SMART`
+	// mode, the model performs disfluency removal (eliminating filler words,
+	// repetitions, and false starts), light grammatical cleanup, automatic
+	// formatting (paragraphs, bullet points, numbered lists), and minor user edits
+	// (inline self-corrections). Timestamps and diarization are incompatible with
+	// mode `SMART`.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified transcription mode.
+	//   "VERBATIM" - Verbatim transcription mode.
+	//   "SMART" - Smart transcription mode.
+	Mode string `json:"mode,omitempty"`
 	// WordTimestamp: Optional. Configures word-level timestamp generation.
 	WordTimestamp bool `json:"wordTimestamp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdaptationPhrases") to
@@ -22029,6 +22134,21 @@ func (s GoogleCloudAiplatformV1ImportEvaluationSetRequestAgentEngineSource) Mars
 // GoogleCloudAiplatformV1ImportEvaluationSetRequestCloudTraceSource: Source
 // for loading traces directly from Cloud Trace.
 type GoogleCloudAiplatformV1ImportEvaluationSetRequestCloudTraceSource struct {
+	// AgentResource: Optional. Restricts the imported spans to a single agent.
+	// Accepts either of two forms, matching `OnlineEvaluator.agent_resource`: * a
+	// project-scoped resource name, matched against the `cloud.resource_id`
+	// resource attribute that Vertex AI Agent Engine agents are stamped with; * an
+	// Agent Registry agent URN, matched against the `gen_ai.main_agent.id`
+	// resource attribute that agents on GKE, and any other runtime that stamps it,
+	// are identified by. Scopes `session_ids` selection only. Traces named
+	// explicitly in `trace_ids` are imported as given and are NOT filtered by this
+	// field, because the caller has already identified them. Setting this field
+	// with only `trace_ids` therefore has no effect. When unset, spans are
+	// selected by session or trace ID alone. That is the pre-existing behavior and
+	// it remains the correct one for a session whose agents run in several
+	// deployments, because each deployment stamps its own `gen_ai.main_agent.id`
+	// and filtering on one of them would silently truncate the trajectory.
+	AgentResource string `json:"agentResource,omitempty"`
 	// ProjectId: Required. Project ID for the Cloud Trace.
 	ProjectId string `json:"projectId,omitempty"`
 	// SessionIds: Optional. Session IDs to import traces for. If both trace_ids
@@ -22036,13 +22156,13 @@ type GoogleCloudAiplatformV1ImportEvaluationSetRequestCloudTraceSource struct {
 	SessionIds []string `json:"sessionIds,omitempty"`
 	// TraceIds: Optional. Trace IDs to import.
 	TraceIds []string `json:"traceIds,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// ForceSendFields is a list of field names (e.g. "AgentResource") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ProjectId") to include in API
+	// NullFields is a list of field names (e.g. "AgentResource") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -25105,6 +25225,34 @@ type GoogleCloudAiplatformV1ListSemanticGovernancePoliciesResponse struct {
 
 func (s GoogleCloudAiplatformV1ListSemanticGovernancePoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListSemanticGovernancePoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ListServingProfilesResponse: Response message for
+// ServingProfileService.ListServingProfiles.
+type GoogleCloudAiplatformV1ListServingProfilesResponse struct {
+	// NextPageToken: Output only. A token to retrieve the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ServingProfiles: Output only. A list of ServingProfiles.
+	ServingProfiles []*GoogleCloudAiplatformV1ServingProfile `json:"servingProfiles,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ListServingProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ListServingProfilesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -30726,6 +30874,42 @@ type GoogleCloudAiplatformV1NotebookSoftwareConfig struct {
 
 func (s GoogleCloudAiplatformV1NotebookSoftwareConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1NotebookSoftwareConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ObservabilityConfig: Observability settings for one
+// agent's sessions.
+type GoogleCloudAiplatformV1ObservabilityConfig struct {
+	// ObservabilityEnabled: Optional. Enables observability for this agent's
+	// sessions: OpenTelemetry span emission covering tool names, model names,
+	// token counts, latencies and status. If `false`, the other fields here are
+	// ignored.
+	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
+	// SensitiveLoggingEnabled: Optional. Enables sensitive logging. Sensitive
+	// logging includes customer core content (prompts, model completions, tool
+	// argument payloads and tool responses). If `false`, those are sanitized and
+	// only structural attributes are recorded. No effect unless
+	// `observability_enabled` is true. Settable and returned, but NOT YET
+	// ENFORCED. Nothing reads it at runtime, so `true` does not currently cause
+	// content to be captured, and `false` is not what keeps content from being
+	// captured. Treat it as a recorded intention that takes effect when
+	// enforcement lands.
+	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObservabilityEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ObservabilityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ObservabilityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -47047,6 +47231,76 @@ type GoogleCloudAiplatformV1ServiceAccountSpec struct {
 
 func (s GoogleCloudAiplatformV1ServiceAccountSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ServiceAccountSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ServingProfile: Configures the serving behavior for a
+// resource-less GenAI serving.
+type GoogleCloudAiplatformV1ServingProfile struct {
+	// CmekConfig: CMEK configuration for the ServingProfile.
+	CmekConfig *GoogleCloudAiplatformV1ServingProfileCmekConfig `json:"cmekConfig,omitempty"`
+	// CreateTime: Output only. Timestamp when the ServingProfile was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. The description of the ServingProfile.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Required. The display name of the ServingProfile. The name can
+	// be up to 128 characters long and can consist of any UTF-8 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// Name: Identifier. The resource name of the ServingProfile.
+	Name string `json:"name,omitempty"`
+	// Scope: Required. The specific API this ServingProfile applies to.
+	//
+	// Possible values:
+	//   "SERVING_PROFILE_SCOPE_UNSPECIFIED" - Default value. This value is unused.
+	// When users create a ServingProfile, they must choose a scope.
+	//   "GEMINI_LIVE" - The scope for Gemini Live.
+	//   "INTERACTIONS_API" - The scope for Interactions API.
+	//   "RESPONSE_API" - The scope for Response API.
+	Scope string `json:"scope,omitempty"`
+	// UpdateTime: Output only. Timestamp when the ServingProfile was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CmekConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CmekConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ServingProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ServingProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ServingProfileCmekConfig: Configuration for
+// Customer-Managed Encryption Keys (CMEK).
+type GoogleCloudAiplatformV1ServingProfileCmekConfig struct {
+	// EncryptionSpec: Required. The customer-managed encryption key spec for the
+	// Serving Profile.
+	EncryptionSpec *GoogleCloudAiplatformV1EncryptionSpec `json:"encryptionSpec,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EncryptionSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ServingProfileCmekConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ServingProfileCmekConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -81422,11 +81676,11 @@ func (c *ProjectsLocationsAgentsPatchCall) doRequest(alt string) (*http.Response
 
 // Do executes the "aiplatform.projects.locations.agents.patch" call.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudAiplatformV1Agent.ServerResponse.Header or (if a response was
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
 // googleapi.IsNotModified to check whether the returned error was because
 // http.StatusNotModified was returned.
-func (c *ProjectsLocationsAgentsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1Agent, error) {
+func (c *ProjectsLocationsAgentsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
 	if res != nil && res.StatusCode == http.StatusNotModified {
@@ -81445,7 +81699,7 @@ func (c *ProjectsLocationsAgentsPatchCall) Do(opts ...googleapi.CallOption) (*Go
 	if err := googleapi.CheckResponse(res); err != nil {
 		return nil, gensupport.WrapError(err)
 	}
-	ret := &GoogleCloudAiplatformV1Agent{
+	ret := &GoogleLongrunningOperation{
 		ServerResponse: googleapi.ServerResponse{
 			Header:         res.Header,
 			HTTPStatusCode: res.StatusCode,
@@ -156220,6 +156474,592 @@ func (c *ProjectsLocationsSemanticGovernancePolicyEngineDeprovisionCall) Do(opts
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.semanticGovernancePolicyEngine.deprovision", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServingProfilesCreateCall struct {
+	s                                     *Service
+	parent                                string
+	googlecloudaiplatformv1servingprofile *GoogleCloudAiplatformV1ServingProfile
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: Creates a ServingProfile.
+//
+//   - parent: The resource name of the Location to create the ServingProfile in.
+//     Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsServingProfilesService) Create(parent string, googlecloudaiplatformv1servingprofile *GoogleCloudAiplatformV1ServingProfile) *ProjectsLocationsServingProfilesCreateCall {
+	c := &ProjectsLocationsServingProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudaiplatformv1servingprofile = googlecloudaiplatformv1servingprofile
+	return c
+}
+
+// ServingProfileId sets the optional parameter "servingProfileId": Required.
+// The ID to use for the ServingProfile, which will become the final component
+// of the ServingProfile's resource name. This value should be 1-63 characters,
+// and valid characters are `^a-z ([a-z0-9-]{0,61}[a-z0-9])?$`.
+func (c *ProjectsLocationsServingProfilesCreateCall) ServingProfileId(servingProfileId string) *ProjectsLocationsServingProfilesCreateCall {
+	c.urlParams_.Set("servingProfileId", servingProfileId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServingProfilesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsServingProfilesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServingProfilesCreateCall) Context(ctx context.Context) *ProjectsLocationsServingProfilesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServingProfilesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServingProfilesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1servingprofile)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/servingProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.servingProfiles.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServingProfilesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServingProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a ServingProfile.
+//
+//   - name: The name of the ServingProfile resource to be deleted. Format:
+//     `projects/{project}/locations/{location}/servingProfiles/{serving_profile}`.
+func (r *ProjectsLocationsServingProfilesService) Delete(name string) *ProjectsLocationsServingProfilesDeleteCall {
+	c := &ProjectsLocationsServingProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServingProfilesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsServingProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServingProfilesDeleteCall) Context(ctx context.Context) *ProjectsLocationsServingProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServingProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServingProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.servingProfiles.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsServingProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServingProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a ServingProfile.
+//
+//   - name: The name of the ServingProfile resource. Format:
+//     `projects/{project}/locations/{location}/servingProfiles/{serving_profile}`.
+func (r *ProjectsLocationsServingProfilesService) Get(name string) *ProjectsLocationsServingProfilesGetCall {
+	c := &ProjectsLocationsServingProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServingProfilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsServingProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsServingProfilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsServingProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServingProfilesGetCall) Context(ctx context.Context) *ProjectsLocationsServingProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServingProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServingProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.servingProfiles.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1ServingProfile.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServingProfilesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ServingProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ServingProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServingProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ServingProfiles in a Location.
+//
+//   - parent: The resource name of the Location to list the ServingProfiles
+//     from. Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsServingProfilesService) List(parent string) *ProjectsLocationsServingProfilesListCall {
+	c := &ProjectsLocationsServingProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size. If unspecified, at most 100 ServingProfiles will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsServingProfilesListCall) PageSize(pageSize int64) *ProjectsLocationsServingProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
+func (c *ProjectsLocationsServingProfilesListCall) PageToken(pageToken string) *ProjectsLocationsServingProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServingProfilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsServingProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsServingProfilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsServingProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServingProfilesListCall) Context(ctx context.Context) *ProjectsLocationsServingProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServingProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServingProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/servingProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.servingProfiles.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1ListServingProfilesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServingProfilesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ListServingProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ListServingProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsServingProfilesListCall) Pages(ctx context.Context, f func(*GoogleCloudAiplatformV1ListServingProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsServingProfilesPatchCall struct {
+	s                                     *Service
+	name                                  string
+	googlecloudaiplatformv1servingprofile *GoogleCloudAiplatformV1ServingProfile
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Patch: Updates a ServingProfile.
+//
+// - name: Identifier. The resource name of the ServingProfile.
+func (r *ProjectsLocationsServingProfilesService) Patch(name string, googlecloudaiplatformv1servingprofile *GoogleCloudAiplatformV1ServingProfile) *ProjectsLocationsServingProfilesPatchCall {
+	c := &ProjectsLocationsServingProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudaiplatformv1servingprofile = googlecloudaiplatformv1servingprofile
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update; see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask.
+// If omitted, all populated (non-empty) mutable fields are updated; if set to
+// `["*"]`, all mutable fields are fully replaced (unpopulated values are
+// cleared).
+func (c *ProjectsLocationsServingProfilesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsServingProfilesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServingProfilesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsServingProfilesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServingProfilesPatchCall) Context(ctx context.Context) *ProjectsLocationsServingProfilesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServingProfilesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServingProfilesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1servingprofile)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.servingProfiles.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1ServingProfile.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServingProfilesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ServingProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ServingProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.servingProfiles.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

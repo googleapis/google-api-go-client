@@ -281,7 +281,7 @@ type AIInference struct {
 	// requests against endpoints. The resource creator or updater that specifies
 	// this field must have `iam.serviceAccounts.actAs` permission on the service
 	// account. If not specified, the Pub/Sub service agent
-	// ({$universe.dns_names.final_documentation_domain}/iam/docs/service-agents),
+	// (https://cloud.google.com/iam/docs/service-agents),
 	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 	// UnstructuredInference: Optional. Requests and responses can be any arbitrary
@@ -507,22 +507,24 @@ func (s BigQueryDatasetSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BigtableConfig: Configuration for a Bigtable subscription. The Pub/Sub
-// message will be written to a Bigtable row as follows: - row key:
-// subscription name, message ID hash, and message ID delimited by `#`. -
-// columns: message bytes written to a single column family `data` with an
-// empty-string column qualifier. - cell timestamp: the message publish
-// timestamp.
+// BigtableConfig: Configuration for a Bigtable subscription, which will write
+// a Pub/Sub message to a Bigtable row. See the ColumnFamilyMapping
+// documentation below for details on how the row keys and columns will be
+// written.
 type BigtableConfig struct {
 	// AppProfileId: Optional. The app profile to use for the Bigtable writes. If
 	// not specified, the "default" application profile will be used. The app
 	// profile must use single-cluster routing.
 	AppProfileId string `json:"appProfileId,omitempty"`
+	// ColumnFamilyMapping: Optional. Configuration that allows writing row keys
+	// and/or columns based on fields in the input message. The input message
+	// format must be JSON if this field is set.
+	ColumnFamilyMapping *ColumnFamilyMapping `json:"columnFamilyMapping,omitempty"`
 	// ServiceAccountEmail: Optional. The service account to use to write to
 	// Bigtable. The subscription creator or updater that specifies this field must
 	// have `iam.serviceAccounts.actAs` permission on the service account. If not
 	// specified, the Pub/Sub service agent
-	// ({$universe.dns_names.final_documentation_domain}/iam/docs/service-agents),
+	// (https://cloud.google.com/iam/docs/service-agents),
 	// service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 	// Table: Optional. The unique name of the table to write messages to. Values
@@ -714,6 +716,49 @@ type CloudStorageConfig struct {
 
 func (s CloudStorageConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudStorageConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ColumnFamilyMapping: Configuration for writing a Pub/Sub message to a
+// Bigtable row with a user-defined key and writing to column families. If this
+// field is set: - The subscription messages must be formatted as JSON. - The
+// row key mapping is configured in the `key_definition` section. - The
+// top-level fields will be written either: - By default, they will be written
+// to the `data` column family with the field name as the column qualifier. -
+// But if the field name matches an existing column family (except for the
+// default `data` column), then that field will be written to that column
+// family, either as a scalar or its next level nested fields if it's a JSON
+// object. - The cell timestamp will be the message publish timestamp. If the
+// field is not set, the default behavior is to write: - row key: subscription
+// name, message ID hash, and message ID delimited by `#`. - columns: message
+// bytes written to a single column family `data` with an empty-string column
+// qualifier. - cell timestamp: the message publish timestamp.
+type ColumnFamilyMapping struct {
+	// DelimitedKey: Optional. If set, the row key is constructed from the given
+	// key fields and delimiter. All key fields must be present in the message;
+	// otherwise, the message remains in the subscription backlog.
+	DelimitedKey *DelimitedKey `json:"delimitedKey,omitempty"`
+	// RowKeySchema: Optional. If set, the row key is constructed from the field
+	// names of the table's structured row key
+	// (https://docs.cloud.google.com/bigtable/docs/manage-row-key-schemas). Note
+	// that if the field is nullable in the structured row key, then it need not be
+	// present in the message; null will be used instead.
+	RowKeySchema *RowKeySchema `json:"rowKeySchema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DelimitedKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DelimitedKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ColumnFamilyMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod ColumnFamilyMapping
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -929,6 +974,34 @@ func (s DeadLetterPolicy) MarshalJSON() ([]byte, error) {
 type DefaultExchangeConfig struct {
 }
 
+// DelimitedKey: Row key definition based on fields from the message.
+type DelimitedKey struct {
+	// Delimiter: Optional. Byte sequence used to delimit concatenated fields. Must
+	// be specified if multiple key fields are used. The delimiter must contain at
+	// least 1 character and at most 50 characters.
+	Delimiter string `json:"delimiter,omitempty"`
+	// KeyFields: Optional. The key fields to construct from the row key. The
+	// fields must be present in the message as a top-level field, i.e. JSON path
+	// expressions will not traverse into nested objects.
+	KeyFields []string `json:"keyFields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Delimiter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Delimiter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DelimitedKey) MarshalJSON() ([]byte, error) {
+	type NoMethod DelimitedKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DestinationDataset: Defines the destination bigquery dataset.
 type DestinationDataset struct {
 	// DatasetReference: Required. A reference that identifies the destination
@@ -1024,6 +1097,30 @@ func (s DestinationPubSubSubscription) MarshalJSON() ([]byte, error) {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EncryptionConfig: Encryption configuration for the query template.
+type EncryptionConfig struct {
+	// KmsKeyName: Optional. The KMS key used to encrypt the query template.
+	// Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyring}/cryptoKeys/{key}`
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KmsKeyName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EncryptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EncryptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ExpirationPolicy: A policy that specifies the conditions for resource
@@ -2152,6 +2249,10 @@ type QueryTemplate struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Documentation: Optional. Documentation describing the QueryTemplate.
 	Documentation string `json:"documentation,omitempty"`
+	// EncryptionConfiguration: Optional. Encryption configuration for the query
+	// template. If set, the customer-managed KMS key is used to encrypt the query
+	// template definition body.
+	EncryptionConfiguration *EncryptionConfig `json:"encryptionConfiguration,omitempty"`
 	// Name: Output only. The resource name of the QueryTemplate. e.g.
 	// `projects/myproject/locations/us/dataExchanges/123/queryTemplates/456`
 	Name string `json:"name,omitempty"`
@@ -2415,6 +2516,14 @@ type Routine struct {
 func (s Routine) MarshalJSON() ([]byte, error) {
 	type NoMethod Routine
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RowKeySchema: Row key definition that reads the input message fields based
+// on the field names of the table's structured row key
+// (https://docs.cloud.google.com/bigtable/docs/manage-row-key-schemas). Note
+// that if the field is nullable in the structured row key, then it need not be
+// present in the message; null will be used instead.
+type RowKeySchema struct {
 }
 
 // SelectedResource: Resource in this dataset that is selectively shared.

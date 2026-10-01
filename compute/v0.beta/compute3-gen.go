@@ -49133,6 +49133,18 @@ func (r *RoutersService) Delete(project string, region string, router string) *R
 	return c
 }
 
+// Etag sets the optional parameter "etag": ETag for optimistic concurrency
+// control as described by AIP 154. Used to
+// prevent conflicting updates. If provided, the request will succeed only
+// if
+// the etag matches the current etag of the router; otherwise, the
+// request
+// fails with an ABORTED error.
+func (c *RoutersDeleteCall) Etag(etag string) *RoutersDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so
 // that if you must retry your request, the server will know to ignore

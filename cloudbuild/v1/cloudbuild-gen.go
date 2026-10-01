@@ -1165,6 +1165,9 @@ type BuildOptions struct {
 	//   "NOT_VERIFIED" - Not a verifiable build (the default).
 	//   "VERIFIED" - Build must be verified.
 	RequestedVerifyOption string `json:"requestedVerifyOption,omitempty"`
+	// ResolvedWorkerRelease: Output only. Worker release resolved from the release
+	// channel.
+	ResolvedWorkerRelease string `json:"resolvedWorkerRelease,omitempty"`
 	// SecretEnv: A list of global environment variables, which are encrypted using
 	// a Cloud Key Management Service crypto key. These values must be specified in
 	// the build's `Secret`. These variables will be available to all build steps
@@ -1199,6 +1202,9 @@ type BuildOptions struct {
 	Volumes []*Volume `json:"volumes,omitempty"`
 	// WorkerPool: This field deprecated; please use `pool.name` instead.
 	WorkerPool string `json:"workerPool,omitempty"`
+	// WorkerRelease: Optional. Option to specify which release or release channel
+	// (rapid|regular|stable) to use to run this build.
+	WorkerRelease string `json:"workerRelease,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutomapSubstitutions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3010,6 +3016,14 @@ type PoolOption struct {
 	// `cloudbuild.workerpools.use` on the project hosting the WorkerPool. Format
 	// projects/{project}/locations/{location}/workerPools/{workerPoolId}
 	Name string `json:"name,omitempty"`
+	// ResolvedWorkerRelease: Output only. OUTPUT_ONLY. Worker release resolved
+	// from the release channel.
+	ResolvedWorkerRelease string `json:"resolvedWorkerRelease,omitempty"`
+	// WorkerRelease: Output only. OUTPUT_ONLY. The release or release channel used
+	// to run the Build. This is set to the same value as
+	// `PrivatePoolV1Config.WorkerConfig.worker_release` for the UI to easily
+	// access.
+	WorkerRelease string `json:"workerRelease,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4183,6 +4197,9 @@ type WorkerConfig struct {
 	// (https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema).
 	// If left blank, Cloud Build will use a sensible default.
 	MachineType string `json:"machineType,omitempty"`
+	// WorkerRelease: Optional. Option to specify which release or release channel
+	// (rapid|regular|stable) to use to run this build.
+	WorkerRelease string `json:"workerRelease,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

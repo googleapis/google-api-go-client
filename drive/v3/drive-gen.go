@@ -7391,7 +7391,7 @@ func (r *FilesService) Copy(fileId string, file *File) *FilesCopyCall {
 }
 
 // CopyComments sets the optional parameter "copyComments": Whether to copy the
-// comments associated with the file.
+// open (unresolved) comments associated with the file.
 func (c *FilesCopyCall) CopyComments(copyComments bool) *FilesCopyCall {
 	c.urlParams_.Set("copyComments", fmt.Sprint(copyComments))
 	return c
@@ -9680,8 +9680,9 @@ type PermissionsCreateCall struct {
 // Create: Creates a permission for a file or shared drive. For more
 // information, see Share files, folders, and drives
 // (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
-// **Warning:** Concurrent permissions operations on the same file aren't
-// supported; only the last update is applied.
+// **Warning:** Concurrent permission modifications (such as update or delete)
+// on the same file, folder, or shared drive aren't supported across any users
+// or clients; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) Create(fileId string, permission *Permission) *PermissionsCreateCall {
@@ -9863,8 +9864,9 @@ type PermissionsDeleteCall struct {
 // Delete: Deletes a permission. For more information, see Share files,
 // folders, and drives
 // (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
-// **Warning:** Concurrent permissions operations on the same file aren't
-// supported; only the last update is applied.
+// **Warning:** Concurrent permission modifications (such as update or delete)
+// on the same file, folder, or shared drive aren't supported across any users
+// or clients; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 // - permissionId: The ID of the permission.
@@ -10303,8 +10305,9 @@ type PermissionsUpdateCall struct {
 // Update: Updates a permission with patch semantics. For more information, see
 // Share files, folders, and drives
 // (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
-// **Warning:** Concurrent permissions operations on the same file aren't
-// supported; only the last update is applied.
+// **Warning:** Concurrent permission modifications (such as update or delete)
+// on the same file, folder, or shared drive aren't supported across any users
+// or clients; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 // - permissionId: The ID of the permission.

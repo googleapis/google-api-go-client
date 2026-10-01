@@ -1533,14 +1533,14 @@ type InlineCertificateIssuanceConfig struct {
 	// initiated. Must be between 50 and 80. If no value is specified, rotation
 	// window percentage is defaulted to 50.
 	RotationWindowPercentage int64 `json:"rotationWindowPercentage,omitempty"`
-	// UseDefaultSharedCa: Optional. If set to true, the trust domain will utilize
-	// the GCP-provisioned default CA. A default CA in the same region as the
-	// workload will be selected to issue the certificate. Enabling this will clear
-	// any existing `ca_pools` configuration to provision the certificates. NOTE:
-	// This field is mutually exclusive with `ca_pools`. If this flag is enabled,
-	// certificates will be automatically provisioned from the default shared CAs.
-	// This flag should not be set if you want to use your own CA pools to
-	// provision the certificates.
+	// UseDefaultSharedCa: Optional. Determines whether the trust domain utilizes
+	// the Google Cloud-provisioned default CA. A default CA in the same region as
+	// the workload will be selected to issue the certificate. Enabling this will
+	// clear any existing `ca_pools` configuration to provision the certificates.
+	// NOTE: This field is mutually exclusive with `ca_pools`. If this flag is
+	// enabled, certificates will be automatically provisioned from the default
+	// shared CAs. This flag should not be set if you want to use your own CA pools
+	// to provision the certificates.
 	UseDefaultSharedCa bool `json:"useDefaultSharedCa,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CaPools") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2966,6 +2966,11 @@ func (s RemoveAttestationRuleRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RevokeWorkforcePoolSubjectSessionsRequest: Request message for
+// RevokeWorkforcePoolSubjectSessions.
+type RevokeWorkforcePoolSubjectSessionsRequest struct {
+}
+
 // Role: A role in the Identity and Access Management API.
 type Role struct {
 	// Deleted: The current deleted state of the role. This field is read only. It
@@ -3556,8 +3561,8 @@ type TrustStore struct {
 	// validation against a given TrustStore. The incoming end entity's certificate
 	// must be in the trust chain of one of the trust anchors here.
 	TrustAnchors []*TrustAnchor `json:"trustAnchors,omitempty"`
-	// TrustDefaultSharedCa: Optional. If set to True, the trust bundle will
-	// include the private ca managed identity regional root public certificates.
+	// TrustDefaultSharedCa: Optional. Determines whether the trust bundle includes
+	// the private CA managed identity regional root public certificates.
 	// Important: `trust_default_shared_ca` is only supported for managed identity
 	// trust domain resource.
 	TrustDefaultSharedCa bool `json:"trustDefaultSharedCa,omitempty"`
@@ -4295,11 +4300,13 @@ type WorkloadIdentityPoolProvider struct {
 	// authentication credential issued by the provider. * `google`: The Google
 	// attributes mapped from the assertion in the `attribute_mappings`. *
 	// `attribute`: The custom attributes mapped from the assertion in the
-	// `attribute_mappings`. The maximum length of the attribute condition
-	// expression is 4096 characters. If unspecified, all valid authentication
-	// credential are accepted. The following example shows how to only allow
-	// credentials with a mapped `google.groups` value of `admins`: ``` "'admins'
-	// in google.groups" ```
+	// `attribute_mappings`. The maximum length of the `attribute_condition`
+	// expression is 4,096 characters. Providing a condition longer than this will
+	// result in an error. If unspecified, all valid authentication credentials are
+	// accepted. However, multi-tenant identity providers (such as GitHub or
+	// Terraform Cloud) require an `attribute_condition` to prevent token spoofing.
+	// The following example shows how to only allow credentials with a mapped
+	// `google.groups` value of `admins`: ``` "'admins' in google.groups" ```
 	AttributeCondition string `json:"attributeCondition,omitempty"`
 	// AttributeMapping: Optional. Maps attributes from authentication credentials
 	// issued by an external identity provider to Google Cloud attributes, such as
@@ -9083,6 +9090,114 @@ func (c *LocationsWorkforcePoolsSubjectsDeleteCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "iam.locations.workforcePools.subjects.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type LocationsWorkforcePoolsSubjectsRevokeSessionsCall struct {
+	s                                         *Service
+	name                                      string
+	revokeworkforcepoolsubjectsessionsrequest *RevokeWorkforcePoolSubjectSessionsRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// RevokeSessions: Revokes all sessions for a given WorkforcePoolSubject.
+//
+//   - name: The resource name of the WorkforcePoolSubject. Special characters,
+//     like `/` and `:`, must be escaped, because all URLs need to conform to the
+//     "When to Escape and Unescape" section of RFC3986
+//     (https://www.ietf.org/rfc/rfc2396.txt). Format:
+//     `locations/{location}/workforcePools/{workforce_pool_id}/subjects/{subject_
+//     id}`.
+func (r *LocationsWorkforcePoolsSubjectsService) RevokeSessions(name string, revokeworkforcepoolsubjectsessionsrequest *RevokeWorkforcePoolSubjectSessionsRequest) *LocationsWorkforcePoolsSubjectsRevokeSessionsCall {
+	c := &LocationsWorkforcePoolsSubjectsRevokeSessionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.revokeworkforcepoolsubjectsessionsrequest = revokeworkforcepoolsubjectsessionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *LocationsWorkforcePoolsSubjectsRevokeSessionsCall) Fields(s ...googleapi.Field) *LocationsWorkforcePoolsSubjectsRevokeSessionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *LocationsWorkforcePoolsSubjectsRevokeSessionsCall) Context(ctx context.Context) *LocationsWorkforcePoolsSubjectsRevokeSessionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *LocationsWorkforcePoolsSubjectsRevokeSessionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *LocationsWorkforcePoolsSubjectsRevokeSessionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.revokeworkforcepoolsubjectsessionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:revokeSessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "iam.locations.workforcePools.subjects.revokeSessions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "iam.locations.workforcePools.subjects.revokeSessions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *LocationsWorkforcePoolsSubjectsRevokeSessionsCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "iam.locations.workforcePools.subjects.revokeSessions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

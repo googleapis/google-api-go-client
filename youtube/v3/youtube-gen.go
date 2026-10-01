@@ -728,15 +728,6 @@ type ActivityContentDetails struct {
 	// received a comment. This property is only present if the `snippet.type` is
 	// `comment`.
 	Comment *ActivityContentDetailsComment `json:"comment,omitempty"`
-	// Favorite: The `favorite` object contains information about a video that was
-	// marked as a favorite video. This property is only present if the
-	// `snippet.type` is `favorite`. Deprecated: This property is no longer
-	// returned.
-	Favorite *ActivityContentDetailsFavorite `json:"favorite,omitempty"`
-	// Like: The `like` object contains information about a resource that received
-	// a positive (like) rating. This property is only present if the
-	// `snippet.type` is `like`. Deprecated: This property is no longer returned.
-	Like *ActivityContentDetailsLike `json:"like,omitempty"`
 	// PlaylistItem: The `playlistItem` object contains information about a new
 	// playlist item. This property is only present if the `snippet.type` is
 	// `playlistItem`.
@@ -754,8 +745,7 @@ type ActivityContentDetails struct {
 	Social *ActivityContentDetailsSocial `json:"social,omitempty"`
 	// Subscription: The `subscription` object contains information about a channel
 	// that a user subscribed to. This property is only present if the
-	// `snippet.type` is `subscription`. Deprecated: This property is no longer
-	// returned.
+	// `snippet.type` is `subscription`.
 	Subscription *ActivityContentDetailsSubscription `json:"subscription,omitempty"`
 	// Upload: The `upload` object contains information about the uploaded video.
 	// This property is only present if the `snippet.type` is `upload`.
@@ -849,54 +839,6 @@ func (s ActivityContentDetailsComment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ActivityContentDetailsFavorite: Information about a video that was marked as
-// a favorite video. Deprecated: This resource is no longer returned.
-type ActivityContentDetailsFavorite struct {
-	// ResourceId: The `resourceId` object contains information that identifies the
-	// resource that was marked as a favorite.
-	ResourceId *ResourceId `json:"resourceId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResourceId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResourceId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ActivityContentDetailsFavorite) MarshalJSON() ([]byte, error) {
-	type NoMethod ActivityContentDetailsFavorite
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ActivityContentDetailsLike: Information about a resource that received a
-// positive (like) rating. Deprecated: This resource is no longer returned.
-type ActivityContentDetailsLike struct {
-	// ResourceId: The `resourceId` object contains information that identifies the
-	// rated resource.
-	ResourceId *ResourceId `json:"resourceId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ResourceId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ResourceId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ActivityContentDetailsLike) MarshalJSON() ([]byte, error) {
-	type NoMethod ActivityContentDetailsLike
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ActivityContentDetailsPlaylistItem: Information about a new playlist item.
 type ActivityContentDetailsPlaylistItem struct {
 	// PlaylistId: The value that YouTube uses to uniquely identify the playlist.
@@ -984,8 +926,6 @@ type ActivityContentDetailsRecommendation struct {
 	//
 	// Possible values:
 	//   "reasonUnspecified"
-	//   "videoFavorited" - Deprecated: This reason is no longer used.
-	//   "videoLiked" - Deprecated: This reason is no longer used.
 	//   "videoWatched"
 	Reason string `json:"reason,omitempty"`
 	// ResourceId: The `resourceId` object contains information that identifies the
@@ -1050,7 +990,7 @@ func (s ActivityContentDetailsSocial) MarshalJSON() ([]byte, error) {
 }
 
 // ActivityContentDetailsSubscription: Information about a channel that a user
-// subscribed to. Deprecated: This resource is no longer returned.
+// subscribed to.
 type ActivityContentDetailsSubscription struct {
 	// ResourceId: The `resourceId` object contains information that identifies the
 	// resource that the user subscribed to.
@@ -1168,10 +1108,8 @@ type ActivitySnippet struct {
 	// Possible values:
 	//   "typeUnspecified"
 	//   "upload"
-	//   "like" - Deprecated: This type is no longer supported.
-	//   "favorite" - Deprecated: This type is no longer supported.
 	//   "comment"
-	//   "subscription" - Deprecated: This type is no longer supported.
+	//   "subscription"
 	//   "playlistItem"
 	//   "recommendation"
 	//   "bulletin"
@@ -2592,8 +2530,6 @@ type CommentSnippet struct {
 	ModerationStatus string `json:"moderationStatus,omitempty"`
 	// ParentId: The unique id of the top-level comment, only set for replies.
 	ParentId string `json:"parentId,omitempty"`
-	// PostId: The ID of the post the comment refers to, if any.
-	PostId string `json:"postId,omitempty"`
 	// PublishedAt: The date and time when the comment was originally published.
 	PublishedAt string `json:"publishedAt,omitempty"`
 	// TextDisplay: The comment's text. The format is either plain text or HTML
@@ -2614,7 +2550,7 @@ type CommentSnippet struct {
 	// RATE_TYPE_NONE. This may change in the future.
 	//
 	// Possible values:
-	//   "none"
+	//   "none" - The entity has not been rated.
 	//   "like" - The entity is liked.
 	//   "dislike" - The entity is disliked.
 	ViewerRating string `json:"viewerRating,omitempty"`
@@ -2773,8 +2709,6 @@ type CommentThreadSnippet struct {
 	// IsPublic: Whether the thread (and therefore all its comments) is visible to
 	// all YouTube users.
 	IsPublic bool `json:"isPublic,omitempty"`
-	// PostId: The ID of the post the comments refer to, if any.
-	PostId string `json:"postId,omitempty"`
 	// TopLevelComment: The top level comment of this thread.
 	TopLevelComment *Comment `json:"topLevelComment,omitempty"`
 	// TotalReplyCount: The total number of replies (not including the top level
@@ -6950,7 +6884,7 @@ type SearchResultSnippet struct {
 	// upcoming/active live broadcasts.
 	//
 	// Possible values:
-	//   "none"
+	//   "none" - The resource does not have live broadcast content.
 	//   "upcoming" - The live broadcast is upcoming.
 	//   "live" - The live broadcast is active.
 	//   "completed" - The live broadcast has been completed.
@@ -8543,7 +8477,7 @@ type VideoRating struct {
 	// Rating: Rating of a video.
 	//
 	// Possible values:
-	//   "none"
+	//   "none" - The entity has not been rated.
 	//   "like" - The entity is liked.
 	//   "dislike" - The entity is disliked.
 	Rating string `json:"rating,omitempty"`
@@ -8617,7 +8551,7 @@ type VideoSnippet struct {
 	// broadcast.
 	//
 	// Possible values:
-	//   "none"
+	//   "none" - The resource does not have live broadcast content.
 	//   "upcoming" - The live broadcast is upcoming.
 	//   "live" - The live broadcast is active.
 	//   "completed" - The live broadcast has been completed.
@@ -8808,7 +8742,7 @@ func (s VideoStatsStatistics) MarshalJSON() ([]byte, error) {
 }
 
 // VideoStatus: Basic details about a video category, such as its localized
-// title. Next Id: 19
+// title. Next Id: 20
 type VideoStatus struct {
 	// ContainsSyntheticMedia: Indicates if the video contains altered or synthetic
 	// media.
@@ -8832,8 +8766,8 @@ type VideoStatus struct {
 	// youtube.videos.update
 	//
 	// Possible values:
-	//   "youtube"
-	//   "creativeCommon"
+	//   "youtube" - Standard YouTube license.
+	//   "creativeCommon" - Creative Commons license.
 	License     string `json:"license,omitempty"`
 	MadeForKids bool   `json:"madeForKids,omitempty"`
 	// PrivacyStatus: The video's privacy status.
@@ -11119,7 +11053,10 @@ func (r *ChannelsService) Update(part []string, channel *Channel) *ChannelsUpdat
 // once and get access to all their video and channel data, without having to
 // provide authentication credentials for each individual channel. The actual
 // CMS account that the user authenticates with needs to be linked to the
-// specified YouTube content owner.
+// specified YouTube content owner. This parameter must be provided if the
+// request is authenticated with credentials for a CMS content owner user
+// acting on a managed channel. If omitted, the request executes under the
+// authenticated user's direct context and returns an HTTP 403 Forbidden error.
 func (c *ChannelsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *ChannelsUpdateCall {
 	c.urlParams_.Set("onBehalfOfContentOwner", onBehalfOfContentOwner)
 	return c
@@ -11390,13 +11327,6 @@ func (c *CommentThreadsListCall) Order(order string) *CommentThreadsListCall {
 // pages that could be retrieved.
 func (c *CommentThreadsListCall) PageToken(pageToken string) *CommentThreadsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// PostId sets the optional parameter "postId": Returns the comment threads of
-// the specified post.
-func (c *CommentThreadsListCall) PostId(postId string) *CommentThreadsListCall {
-	c.urlParams_.Set("postId", postId)
 	return c
 }
 
@@ -17028,7 +16958,7 @@ func (c *SearchListCall) ChannelType(channelType string) *SearchListCall {
 //
 // Possible values:
 //
-//	"none"
+//	"none" - The resource does not have live broadcast content.
 //	"upcoming" - The live broadcast is upcoming.
 //	"live" - The live broadcast is active.
 //	"completed" - The live broadcast has been completed.
@@ -19767,7 +19697,7 @@ func (c *VideosListCall) MaxWidth(maxWidth int64) *VideosListCall {
 //
 // Possible values:
 //
-//	"none"
+//	"none" - The entity has not been rated.
 //	"like" - The entity is liked.
 //	"dislike" - The entity is disliked.
 func (c *VideosListCall) MyRating(myRating string) *VideosListCall {

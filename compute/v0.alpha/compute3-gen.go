@@ -87804,7 +87804,7 @@ type ZoneVmExtensionPoliciesGetVmExtensionCall struct {
 // GetVmExtension: Retrieves details of a specific VM extension within a
 // project.
 //
-// - extensionName: .
+// - extensionName: Name of the VM extension for this request.
 // - project: Project ID for this request.
 // - zone: Name of the zone for this request.
 func (r *ZoneVmExtensionPoliciesService) GetVmExtension(project string, zone string, extensionName string) *ZoneVmExtensionPoliciesGetVmExtensionCall {

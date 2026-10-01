@@ -1470,7 +1470,9 @@ type ConferenceRecordsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a conference record by conference ID.
+// Get: Gets a conference record by conference ID. For more information, see
+// Work with conferences
+// (https://developers.google.com/workspace/meet/api/guides/conferences).
 //
 // - name: Resource name of the conference.
 func (r *ConferenceRecordsService) Get(name string) *ConferenceRecordsGetCall {
@@ -1580,7 +1582,8 @@ type ConferenceRecordsListCall struct {
 }
 
 // List: Lists the conference records. By default, ordered by start time and in
-// descending order.
+// descending order. For more information, see Work with conferences
+// (https://developers.google.com/workspace/meet/api/guides/conferences).
 func (r *ConferenceRecordsService) List() *ConferenceRecordsListCall {
 	c := &ConferenceRecordsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -1735,7 +1738,9 @@ type ConferenceRecordsParticipantsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a participant by participant ID.
+// Get: Gets a participant by participant ID. For more information, see Work
+// with participants
+// (https://developers.google.com/workspace/meet/api/guides/participants).
 //
 // - name: Resource name of the participant.
 func (r *ConferenceRecordsParticipantsService) Get(name string) *ConferenceRecordsParticipantsGetCall {
@@ -1848,7 +1853,8 @@ type ConferenceRecordsParticipantsListCall struct {
 // join time and in descending order. This API supports `fields` as standard
 // parameters like every other API. However, when the `fields` request
 // parameter is omitted, this API defaults to `'participants/*,
-// next_page_token'`.
+// next_page_token'`. For more information, see Work with participants
+// (https://developers.google.com/workspace/meet/api/guides/participants).
 //
 // - parent: Format: `conferenceRecords/{conference_record}`.
 func (r *ConferenceRecordsParticipantsService) List(parent string) *ConferenceRecordsParticipantsListCall {
@@ -2007,7 +2013,9 @@ type ConferenceRecordsParticipantsParticipantSessionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a participant session by participant session ID.
+// Get: Gets a participant session by participant session ID. For more
+// information, see Work with participants
+// (https://developers.google.com/workspace/meet/api/guides/participants).
 //
 // - name: Resource name of the participant.
 func (r *ConferenceRecordsParticipantsParticipantSessionsService) Get(name string) *ConferenceRecordsParticipantsParticipantSessionsGetCall {
@@ -2121,7 +2129,9 @@ type ConferenceRecordsParticipantsParticipantSessionsListCall struct {
 // record. By default, ordered by join time and in descending order. This API
 // supports `fields` as standard parameters like every other API. However, when
 // the `fields` request parameter is omitted this API defaults to
-// `'participantsessions/*, next_page_token'`.
+// `'participantsessions/*, next_page_token'`. For more information, see Work
+// with participants
+// (https://developers.google.com/workspace/meet/api/guides/participants).
 //
 //   - parent: Format:
 //     `conferenceRecords/{conference_record}/participants/{participant}`.
@@ -2281,7 +2291,9 @@ type ConferenceRecordsRecordingsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a recording by recording ID.
+// Get: Gets a recording by recording ID. For more information, see Work with
+// artifacts
+// (https://developers.google.com/workspace/meet/api/guides/artifacts).
 //
 // - name: Resource name of the recording.
 func (r *ConferenceRecordsRecordingsService) Get(name string) *ConferenceRecordsRecordingsGetCall {
@@ -2391,7 +2403,9 @@ type ConferenceRecordsRecordingsListCall struct {
 }
 
 // List: Lists the recording resources from the conference record. By default,
-// ordered by start time and in ascending order.
+// ordered by start time and in ascending order. For more information, see Work
+// with artifacts
+// (https://developers.google.com/workspace/meet/api/guides/artifacts).
 //
 // - parent: Format: `conferenceRecords/{conference_record}`.
 func (r *ConferenceRecordsRecordingsService) List(parent string) *ConferenceRecordsRecordingsListCall {
@@ -2538,7 +2552,9 @@ type ConferenceRecordsSmartNotesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets smart notes by smart note ID.
+// Get: Gets smart notes by smart note ID. For more information, see Work with
+// artifacts
+// (https://developers.google.com/workspace/meet/api/guides/artifacts).
 //
 //   - name: Resource name of the smart note. Format:
 //     conferenceRecords/{conference_record}/smartNotes/{smart_note}.
@@ -2649,7 +2665,9 @@ type ConferenceRecordsSmartNotesListCall struct {
 }
 
 // List: Lists the set of smart notes from the conference record. By default,
-// ordered by start time and in ascending order.
+// ordered by start time and in ascending order. For more information, see Work
+// with artifacts
+// (https://developers.google.com/workspace/meet/api/guides/artifacts).
 //
 // - parent: Format: `conferenceRecords/{conference_record}`.
 func (r *ConferenceRecordsSmartNotesService) List(parent string) *ConferenceRecordsSmartNotesListCall {
@@ -2796,7 +2814,9 @@ type ConferenceRecordsTranscriptsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a transcript by transcript ID.
+// Get: Gets a transcript by transcript ID. For more information, see Work with
+// artifacts
+// (https://developers.google.com/workspace/meet/api/guides/artifacts).
 //
 // - name: Resource name of the transcript.
 func (r *ConferenceRecordsTranscriptsService) Get(name string) *ConferenceRecordsTranscriptsGetCall {
@@ -2906,7 +2926,9 @@ type ConferenceRecordsTranscriptsListCall struct {
 }
 
 // List: Lists the set of transcripts from the conference record. By default,
-// ordered by start time and in ascending order.
+// ordered by start time and in ascending order. For more information, see Work
+// with artifacts
+// (https://developers.google.com/workspace/meet/api/guides/artifacts).
 //
 // - parent: Format: `conferenceRecords/{conference_record}`.
 func (r *ConferenceRecordsTranscriptsService) List(parent string) *ConferenceRecordsTranscriptsListCall {
@@ -3053,11 +3075,13 @@ type ConferenceRecordsTranscriptsEntriesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a `TranscriptEntry` resource by entry ID. Note: The transcript
-// entries returned by the Google Meet API might not match the transcription
-// found in the Google Docs transcript file. This can occur when 1) we have
-// interleaved speakers within milliseconds, or 2) the Google Docs transcript
-// file is modified after generation.
+// Get: Gets a `TranscriptEntry` resource by entry ID. For more information,
+// see Work with artifacts
+// (https://developers.google.com/workspace/meet/api/guides/artifacts). Note:
+// The transcript entries returned by the Google Meet API might not match the
+// transcription found in the Google Docs transcript file. This can occur when
+// 1) we have interleaved speakers within milliseconds, or 2) the Google Docs
+// transcript file is modified after generation.
 //
 // - name: Resource name of the `TranscriptEntry`.
 func (r *ConferenceRecordsTranscriptsEntriesService) Get(name string) *ConferenceRecordsTranscriptsEntriesGetCall {
@@ -3168,11 +3192,13 @@ type ConferenceRecordsTranscriptsEntriesListCall struct {
 }
 
 // List: Lists the structured transcript entries per transcript. By default,
-// ordered by start time and in ascending order. Note: The transcript entries
-// returned by the Google Meet API might not match the transcription found in
-// the Google Docs transcript file. This can occur when 1) we have interleaved
-// speakers within milliseconds, or 2) the Google Docs transcript file is
-// modified after generation.
+// ordered by start time and in ascending order. For more information, see Work
+// with artifacts
+// (https://developers.google.com/workspace/meet/api/guides/artifacts). Note:
+// The transcript entries returned by the Google Meet API might not match the
+// transcription found in the Google Docs transcript file. This can occur when
+// 1) we have interleaved speakers within milliseconds, or 2) the Google Docs
+// transcript file is modified after generation.
 //
 //   - parent: Format:
 //     `conferenceRecords/{conference_record}/transcripts/{transcript}`.
@@ -3319,7 +3345,8 @@ type SpacesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a space.
+// Create: Creates a space. For more information, see Manage meeting spaces
+// (https://developers.google.com/workspace/meet/api/guides/manage-meeting-spaces).
 func (r *SpacesService) Create(space *Space) *SpacesCreateCall {
 	c := &SpacesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.space = space
@@ -3416,9 +3443,9 @@ type SpacesEndActiveConferenceCall struct {
 	header_                    http.Header
 }
 
-// EndActiveConference: Ends an active conference (if there's one). For an
-// example, see End active conference
-// (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#end-active-conference).
+// EndActiveConference: Ends an active conference (if there's one). For more
+// information, see Manage meeting spaces
+// (https://developers.google.com/workspace/meet/api/guides/manage-meeting-spaces).
 //
 //   - name: Resource name of the space. Format: `spaces/{space}`. `{space}` is
 //     the resource identifier for the space. It's a unique, server-generated ID
@@ -3525,8 +3552,10 @@ type SpacesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details about a meeting space. For an example, see Get a meeting
-// space
+// Get: Gets details about a meeting space. For more information, see Manage
+// meeting spaces
+// (https://developers.google.com/workspace/meet/api/guides/manage-meeting-spaces).
+// For an example, see Get a meeting space
 // (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#get-meeting-space).
 //
 //   - name: Resource name of the space. Format: `spaces/{space}` or
@@ -3648,9 +3677,9 @@ type SpacesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates details about a meeting space. For an example, see Update a
-// meeting space
-// (https://developers.google.com/workspace/meet/api/guides/meeting-spaces#update-meeting-space).
+// Patch: Updates details about a meeting space. For more information, see
+// Manage meeting spaces
+// (https://developers.google.com/workspace/meet/api/guides/manage-meeting-spaces).
 //
 //   - name: Immutable. Resource name of the space. Format: `spaces/{space}`.
 //     `{space}` is the resource identifier for the space. It's a unique,
@@ -3768,7 +3797,9 @@ type SpacesMembersBatchUpdateCall struct {
 	header_                   http.Header
 }
 
-// BatchUpdate: Updates members of one space within a batch.
+// BatchUpdate: Updates members of one space within a batch. For more
+// information, see Manage meeting space members
+// (https://developers.google.com/workspace/meet/api/guides/meeting-space-members).
 //
 //   - parent: The parent resource shared by all Members being updated. Format:
 //     spaces/{space}.
@@ -3873,8 +3904,10 @@ type SpacesMembersCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a member. This API supports the `fields` parameter in
-// SystemParameterContext
+// Create: Creates a member. For more information, see Manage meeting space
+// members
+// (https://developers.google.com/workspace/meet/api/guides/meeting-space-members).
+// This API supports the `fields` parameter in SystemParameterContext
 // (https://cloud.google.com/apis/docs/system-parameters). When the `fields`
 // parameter is omitted, this API response will default to
 // "name,email,role,user".
@@ -3980,6 +4013,8 @@ type SpacesMembersDeleteCall struct {
 }
 
 // Delete: Deletes the member who was previously assigned roles in the space.
+// For more information, see Manage meeting space members
+// (https://developers.google.com/workspace/meet/api/guides/meeting-space-members).
 //
 // - name: Format: “spaces/{space}/members/{member}”.
 func (r *SpacesMembersService) Delete(name string) *SpacesMembersDeleteCall {
@@ -4077,8 +4112,9 @@ type SpacesMembersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a member. This API supports the `fields` parameter in
-// SystemParameterContext
+// Get: Gets a member. For more information, see Manage meeting space members
+// (https://developers.google.com/workspace/meet/api/guides/meeting-space-members).
+// This API supports the `fields` parameter in SystemParameterContext
 // (https://cloud.google.com/apis/docs/system-parameters). When the `fields`
 // parameter is omitted, this API response will default to
 // "name,email,role,user".
@@ -4190,8 +4226,9 @@ type SpacesMembersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists members. This API supports the `fields` parameter in
-// SystemParameterContext
+// List: Lists members. For more information, see Manage meeting space members
+// (https://developers.google.com/workspace/meet/api/guides/meeting-space-members).
+// This API supports the `fields` parameter in SystemParameterContext
 // (https://cloud.google.com/apis/docs/system-parameters). When the `fields`
 // parameter is omitted this API response will default to
 // "name,email,role,user".
@@ -4341,7 +4378,9 @@ type SpacesMembersPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a member.
+// Patch: Updates a member. For more information, see Manage meeting space
+// members
+// (https://developers.google.com/workspace/meet/api/guides/meeting-space-members).
 //
 //   - name: Identifier. Resource name of the member. Format:
 //     spaces/{space}/members/{member}.

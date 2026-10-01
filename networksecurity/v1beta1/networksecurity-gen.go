@@ -282,6 +282,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.MirroringEndpointGroupAssociations = NewProjectsLocationsMirroringEndpointGroupAssociationsService(s)
 	rs.MirroringEndpointGroups = NewProjectsLocationsMirroringEndpointGroupsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.RateLimitPolicies = NewProjectsLocationsRateLimitPoliciesService(s)
 	rs.SacAttachments = NewProjectsLocationsSacAttachmentsService(s)
 	rs.SacRealms = NewProjectsLocationsSacRealmsService(s)
 	rs.SecurityProfileGroups = NewProjectsLocationsSecurityProfileGroupsService(s)
@@ -330,6 +331,8 @@ type ProjectsLocationsService struct {
 	MirroringEndpointGroups *ProjectsLocationsMirroringEndpointGroupsService
 
 	Operations *ProjectsLocationsOperationsService
+
+	RateLimitPolicies *ProjectsLocationsRateLimitPoliciesService
 
 	SacAttachments *ProjectsLocationsSacAttachmentsService
 
@@ -529,6 +532,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRateLimitPoliciesService(s *Service) *ProjectsLocationsRateLimitPoliciesService {
+	rs := &ProjectsLocationsRateLimitPoliciesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRateLimitPoliciesService struct {
 	s *Service
 }
 
@@ -3931,6 +3943,37 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListRateLimitPoliciesResponse: Contains a response to listing
+// `RateLimitPolicy` resources.
+type ListRateLimitPoliciesResponse struct {
+	// NextPageToken: Identifies a token for a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// RateLimitPolicies: Contains a list of `RateLimitPolicy` resources.
+	RateLimitPolicies []*RateLimitPolicy `json:"rateLimitPolicies,omitempty"`
+	// Unreachable: Unordered list. Lists locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListRateLimitPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRateLimitPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListSACAttachmentsResponse: Response for `ListSACAttachments` method.
 type ListSACAttachmentsResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
@@ -4883,6 +4926,736 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicy: Describes a `RateLimitPolicy` object.
+type RateLimitPolicy struct {
+	// CreateTime: Output only. Represents the create timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. Provides a human-readable description of the
+	// resource.
+	Description string `json:"description,omitempty"`
+	// HttpRules: Optional. Specifies a list of rate limit HTTP rules to match
+	// against the incoming request.
+	HttpRules []*RateLimitPolicyRateLimitRule `json:"httpRules,omitempty"`
+	// Labels: Optional. Stores labels as key value pairs.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. Specifies the name of the `RateLimitPolicy` resource.
+	Name string `json:"name,omitempty"`
+	// RateLimitBuckets: Optional. Specifies a list of rate limit buckets to be
+	// used for rate limiting. Rate limit buckets will be referenced by the rate
+	// limit actions by name.
+	RateLimitBuckets []*RateLimitPolicyRateLimitBucket `json:"rateLimitBuckets,omitempty"`
+	// Targets: Required. Specifies a list of targets to which this policy applies.
+	Targets []*RateLimitPolicyTarget `json:"targets,omitempty"`
+	// UpdateTime: Output only. Represents the update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitBucket: Describes properties of a rate limit bucket.
+type RateLimitPolicyRateLimitBucket struct {
+	// DefaultLimit: Required. Specifies the default limit to apply for this rate
+	// limit bucket.
+	DefaultLimit *RateLimitPolicyRateLimitBucketLimit `json:"defaultLimit,omitempty"`
+	// DryRun: Optional. Specifies whether the rate limit bucket is in dry-run
+	// mode.
+	DryRun bool `json:"dryRun,omitempty"`
+	// Keys: Required. Specifies the keys to use for rate limiting. At least one
+	// key is required. If multiple keys are specified, the keys will be combined
+	// and used as a single key.
+	Keys []*RateLimitPolicyRateLimitBucketKey `json:"keys,omitempty"`
+	// Name: Required. Specifies the name of the rate limit bucket. Name will be
+	// used to reference the bucket in the RateLimitAction.
+	Name string `json:"name,omitempty"`
+	// UserOverrides: Optional. Specifies a list of user overrides to apply to the
+	// rate limit bucket.
+	UserOverrides []*RateLimitPolicyRateLimitBucketUserOverride `json:"userOverrides,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultLimit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultLimit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitBucket) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitBucket
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitBucketCountLimit: Describes the count limit for
+// enforcement.
+type RateLimitPolicyRateLimitBucketCountLimit struct {
+	// Count: Required. Specifies the maximum number of costs allowed in the
+	// specified interval. Must be non-negative.
+	Count int64 `json:"count,omitempty,string"`
+	// Interval: Required. Specifies the interval in units for which the count
+	// limit is enforced. Must be positive.
+	Interval int64 `json:"interval,omitempty,string"`
+	// IntervalUnit: Required. Specifies the unit of the interval. Defaults to
+	// MINUTES.
+	//
+	// Possible values:
+	//   "INTERVAL_UNIT_UNSPECIFIED" - Represents an unspecified interval unit.
+	// Defaults to MINUTES.
+	//   "SECONDS" - Indicates the interval is in seconds.
+	//   "MINUTES" - Indicates the interval is in minutes.
+	//   "HOURS" - Indicates the interval is in hours.
+	//   "DAYS" - Indicates the interval is in days.
+	IntervalUnit string `json:"intervalUnit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitBucketCountLimit) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitBucketCountLimit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitBucketKey: Describes properties of a key to use for
+// rate limiting.
+type RateLimitPolicyRateLimitBucketKey struct {
+	// Header: Optional. Specifies the header name if key_type is HTTP_HEADER.
+	Header string `json:"header,omitempty"`
+	// KeyType: Required. Specifies the type of key to use for rate limiting.
+	//
+	// Possible values:
+	//   "KEY_TYPE_UNSPECIFIED" - Represents an unspecified key type. Defaults to
+	// ALL.
+	//   "ALL" - Represents the default key type. Uses a single key for all
+	// requests. Used for tracking all requests for a single service.
+	//   "SOURCE_IP" - Uses the client source IP address of the request as the key.
+	//   "HTTP_HEADER" - Uses an HTTP header as the key. The header name must be
+	// specified below.
+	//   "HTTP_PATH" - Uses the HTTP path of the request as the key.
+	//   "PRINCIPAL" - Uses the principal of the request as the key. The principal
+	// type must be specified below.
+	//   "MCP_TOOL" - Uses MCP tool as the key.
+	KeyType string `json:"keyType,omitempty"`
+	// PrincipalType: Optional. Specifies the principal type if key_type is
+	// PRINCIPAL.
+	//
+	// Possible values:
+	//   "PRINCIPAL_TYPE_UNSPECIFIED" - Represents an unspecified principal type.
+	// Defaults to CLIENT_CERT_COMMON_NAME.
+	//   "CLIENT_CERT_COMMON_NAME" - Uses the common name in the client's
+	// certificate. Using common name as key while multiple common names are
+	// present in the client certificate is not supported.
+	PrincipalType string `json:"principalType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Header") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Header") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitBucketKey) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitBucketKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitBucketLimit: Describes a limit for enforcement.
+type RateLimitPolicyRateLimitBucketLimit struct {
+	// CountLimit: Required. Defines the count limit to enforce.
+	CountLimit *RateLimitPolicyRateLimitBucketCountLimit `json:"countLimit,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CountLimit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CountLimit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitBucketLimit) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitBucketLimit
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitBucketUserOverride: Describes properties of a user
+// override for the rate limit bucket.
+type RateLimitPolicyRateLimitBucketUserOverride struct {
+	// Limit: Required. Specifies the limit to apply for this specific key.
+	Limit *RateLimitPolicyRateLimitBucketLimit `json:"limit,omitempty"`
+	// OverrideKey: Required. Specifies the key to override.
+	OverrideKey *RateLimitPolicyRateLimitBucketUserOverrideOverrideKey `json:"overrideKey,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Limit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Limit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitBucketUserOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitBucketUserOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitBucketUserOverrideOverrideKey: Specifies the key to
+// override. Key fields must match the key types specified in the rate limit
+// bucket. Key type ALL does not support overrides.
+type RateLimitPolicyRateLimitBucketUserOverrideOverrideKey struct {
+	// HttpHeaders: Optional. Specifies the HTTP headers if the rate limit bucket
+	// keys contain keys of type HTTP_HEADER. Number of headers and header names
+	// must match the rate limit bucket key.
+	HttpHeaders []*RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyHttpHeader `json:"httpHeaders,omitempty"`
+	// HttpPath: Optional. Specifies the HTTP path if the rate limit bucket keys
+	// contain a key of type HTTP_PATH.
+	HttpPath string `json:"httpPath,omitempty"`
+	// McpTool: Optional. Specifies the MCP tool if the rate limit bucket keys
+	// contain a key of type MCP_TOOL.
+	McpTool string `json:"mcpTool,omitempty"`
+	// Principals: Optional. Specifies the principals if the rate limit bucket keys
+	// contain keys of PRINCIPAL. Number of principals and principal types must
+	// match the rate limit bucket key.
+	Principals []*RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyPrincipal `json:"principals,omitempty"`
+	// SourceIp: Optional. Specifies the source IP if the rate limit bucket keys
+	// contain a key of type SOURCE_IP.
+	SourceIp string `json:"sourceIp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HttpHeaders") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HttpHeaders") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitBucketUserOverrideOverrideKey) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitBucketUserOverrideOverrideKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyHttpHeader: Specifies
+// the key in the type HTTP header to override.
+type RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyHttpHeader struct {
+	// Header: Required. Specifies the header name of the key.
+	Header string `json:"header,omitempty"`
+	// Value: Required. Specifies the header value of the key.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Header") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Header") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyHttpHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyHttpHeader
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyPrincipal: Specifies
+// the key in the type PRINCIPAL to override.
+type RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyPrincipal struct {
+	// Principal: Required. Specifies the principal value of the key.
+	Principal string `json:"principal,omitempty"`
+	// PrincipalType: Required. Specifies the principal type of the key.
+	//
+	// Possible values:
+	//   "PRINCIPAL_TYPE_UNSPECIFIED" - Represents an unspecified principal type.
+	// Defaults to CLIENT_CERT_COMMON_NAME.
+	//   "CLIENT_CERT_COMMON_NAME" - Uses the common name in the client's
+	// certificate. Using common name as key while multiple common names are
+	// present in the client certificate is not supported.
+	PrincipalType string `json:"principalType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principal") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyPrincipal) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitBucketUserOverrideOverrideKeyPrincipal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRule: Specifies conditions to match against the
+// incoming request.
+type RateLimitPolicyRateLimitRule struct {
+	// From: Optional. Describes properties of a source of a request.
+	From *RateLimitPolicyRateLimitRuleFrom `json:"from,omitempty"`
+	// RateLimitActions: Optional. Specifies the actions to take when this rule is
+	// matched.
+	RateLimitActions []*RateLimitPolicyRateLimitRuleRateLimitAction `json:"rateLimitActions,omitempty"`
+	// To: Optional. Describes properties of a target of a request.
+	To *RateLimitPolicyRateLimitRuleTo `json:"to,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "From") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "From") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRule) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleFrom: Describes properties of the sources of a
+// request.
+type RateLimitPolicyRateLimitRuleFrom struct {
+	// NotSource: Optional. Describes the negated properties of request source.
+	// Matches requests from source that does not match the criteria specified in
+	// this field. At least one of source or not_source must be specified.
+	NotSource *RateLimitPolicyRateLimitRuleFromSource `json:"notSource,omitempty"`
+	// Source: Optional. Describes the properties of a request's source. At least
+	// one of source or not_source must be specified. A match occurs when ANY
+	// fields in either source or not_source matches the request. Within a single
+	// source, the match follows OR semantics across fields and AND semantics
+	// within a single field.
+	Source *RateLimitPolicyRateLimitRuleFromSource `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NotSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NotSource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleFrom) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleFrom
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleFromSource: Describes the properties of a
+// request source.
+type RateLimitPolicyRateLimitRuleFromSource struct {
+	// Principals: Required. Contains a list of identities derived from the
+	// client's certificate. This field does not match on a request unless frontend
+	// mutual TLS is enabled for the Gateway and the client certificate is
+	// successfully validated by mTLS. Each identity is a string whose value is
+	// matched against a list of URI SANs, DNS Name SANs, or the common name in the
+	// client's certificate. A match happens when any principal matches with the
+	// rule.
+	Principals []*RateLimitPolicyRateLimitRulePrincipal `json:"principals,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principals") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principals") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleFromSource) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleFromSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleHeaderMatch: Determines how an HTTP header is
+// matched.
+type RateLimitPolicyRateLimitRuleHeaderMatch struct {
+	// Name: Optional. Specifies the name of the header in the request.
+	Name string `json:"name,omitempty"`
+	// Value: Optional. Specifies how the header match is performed.
+	Value *RateLimitPolicyRateLimitRuleStringMatch `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleHeaderMatch) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleHeaderMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRulePrincipal: Describes the properties of a
+// principal for matching.
+type RateLimitPolicyRateLimitRulePrincipal struct {
+	// Principal: Required. Matches a non-empty string against the principal value
+	// based on the principal_selector.
+	Principal *RateLimitPolicyRateLimitRuleStringMatch `json:"principal,omitempty"`
+	// PrincipalSelector: Optional. Decides what principal value the principal rule
+	// will match against. If not specified, defaults to CLIENT_CERT_URI_SAN.
+	//
+	// Possible values:
+	//   "PRINCIPAL_SELECTOR_UNSPECIFIED" - Represents an unspecified principal
+	// selector. Defaults to CLIENT_CERT_URI_SAN by default.
+	//   "CLIENT_CERT_URI_SAN" - Matches the principal rule against a list of URI
+	// SANs in the validated client's certificate. A match happens when there is
+	// any exact URI SAN value match. This is the default principal selector.
+	//   "CLIENT_CERT_DNS_NAME_SAN" - Matches the principal rule against a list of
+	// DNS Name SANs in the validated client's certificate. A match happens when
+	// there is any exact DNS Name SAN value match.
+	//   "CLIENT_CERT_COMMON_NAME" - Matches the principal rule against the common
+	// name in the client's certificate. A match happens when there is an exact
+	// common name value match.
+	PrincipalSelector string `json:"principalSelector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Principal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Principal") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRulePrincipal) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRulePrincipal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleRateLimitAction: Describes the action to take
+// when the rate limit rule is matched.
+type RateLimitPolicyRateLimitRuleRateLimitAction struct {
+	// RateLimitBucket: Required. Specifies the name of the rate limit bucket to
+	// apply when this rule is matched.
+	RateLimitBucket string `json:"rateLimitBucket,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RateLimitBucket") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RateLimitBucket") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleRateLimitAction) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleRateLimitAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleStringMatch: Determines how a string value is
+// matched.
+type RateLimitPolicyRateLimitRuleStringMatch struct {
+	// Contains: Checks if the input string contains the substring specified here.
+	// Note: empty contains match is not allowed, please use regex instead.
+	// Examples: * ``abc`` matches the value ``xyz.abc.def``
+	Contains string `json:"contains,omitempty"`
+	// Exact: Matches the input string exactly to the string specified here.
+	// Examples: * ``abc`` only matches the value ``abc``.
+	Exact string `json:"exact,omitempty"`
+	// IgnoreCase: Optional. Indicates if the exact/prefix/suffix/contains matching
+	// should be case insensitive. For example, when true, the matcher ``data``
+	// matches both input strings ``Data`` and ``data``.
+	IgnoreCase bool `json:"ignoreCase,omitempty"`
+	// Prefix: Checks if the input string has the prefix specified here. Note:
+	// empty prefix is not allowed, please use regex instead. Examples: * ``abc``
+	// matches the value ``abc.xyz``
+	Prefix string `json:"prefix,omitempty"`
+	// Suffix: Checks if the input string has the suffix specified here. Note:
+	// empty suffix is not allowed, please use regex instead. Examples: * ``abc``
+	// matches the value ``xyz.abc``
+	Suffix string `json:"suffix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Contains") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contains") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleStringMatch) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleStringMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleTo: Describes properties of the targets of a
+// request.
+type RateLimitPolicyRateLimitRuleTo struct {
+	// Destination: Optional. Describes properties of a request's destination. At
+	// least one of destination or not_destination must be specified. A match
+	// occurs when ANY fields in either destination or not_destination matches the
+	// request. Within a destination, the match follows OR semantics across fields
+	// and AND semantics within a single field.
+	Destination *RateLimitPolicyRateLimitRuleToDestination `json:"destination,omitempty"`
+	// NotDestination: Optional. Describes the negated properties of a request's
+	// destination. Matches requests for destination that does not match the
+	// criteria specified in this field. At least one of destination or
+	// not_destination must be specified.
+	NotDestination *RateLimitPolicyRateLimitRuleToDestination `json:"notDestination,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destination") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleTo) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleTo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleToDestination: Describes properties of a request
+// target.
+type RateLimitPolicyRateLimitRuleToDestination struct {
+	// HeaderSet: Optional. Specifies a list of headers to match against in http
+	// header.
+	HeaderSet *RateLimitPolicyRateLimitRuleToDestinationHeaderSet `json:"headerSet,omitempty"`
+	// Hosts: Optional. Specifies a list of HTTP Hosts to match against. The match
+	// can be one of exact, prefix, suffix, or contains (substring match). Matches
+	// are always case sensitive unless the ignoreCase is set. The match follows OR
+	// semantics which means that if any of the hosts match, the operation is
+	// considered to be matched.
+	Hosts []*RateLimitPolicyRateLimitRuleStringMatch `json:"hosts,omitempty"`
+	// Mcp: Optional. Specifies the MCP protocol attributes to match against. This
+	// field is only valid if the targeted Gateway or Forwarding Rule has an Agent
+	// Gateway attached to it.
+	Mcp *RateLimitPolicyRateLimitRuleToDestinationMCP `json:"mcp,omitempty"`
+	// Methods: Optional. Specifies a list of HTTP methods to match against. Each
+	// entry must be a valid HTTP method name (GET, PUT, POST, HEAD, PATCH, DELETE,
+	// OPTIONS). It only allows exact match and is always case sensitive. The match
+	// follows OR semantics which means that if any of the methods match, the
+	// operation is considered to be matched.
+	Methods []string `json:"methods,omitempty"`
+	// Paths: Optional. Specifies a list of paths to match against. The match can
+	// be one of exact, prefix, suffix, or contains (substring match). Matches are
+	// always case sensitive unless the ignoreCase is set. The match follows OR
+	// semantics which means that if any of the paths match, the operation is
+	// considered to be matched. Note that this path match includes the query
+	// parameters. For gRPC services, this should be a fully-qualified name of the
+	// form /package.service/method.
+	Paths []*RateLimitPolicyRateLimitRuleStringMatch `json:"paths,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HeaderSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HeaderSet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleToDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleToDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleToDestinationHeaderSet: Describes a set of HTTP
+// headers to match against.
+type RateLimitPolicyRateLimitRuleToDestinationHeaderSet struct {
+	// Headers: Required. Contains a list of headers to match against in http
+	// header. The match can be one of exact, prefix, suffix, or contains
+	// (substring match). The match follows AND semantics which means all the
+	// headers must match. Matches are always case sensitive unless the ignoreCase
+	// is set.
+	Headers []*RateLimitPolicyRateLimitRuleHeaderMatch `json:"headers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleToDestinationHeaderSet) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleToDestinationHeaderSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleToDestinationMCP: Describes a set of MCP
+// protocol attributes to match against for a given MCP request. This field is
+// only valid if the targeted Gateway or Forwarding Rule has an Agent Gateway
+// attached to it.
+type RateLimitPolicyRateLimitRuleToDestinationMCP struct {
+	// BaseProtocolMethodsOption: Optional. If specified, matches on the MCP
+	// protocol’s non-access specific methods namely: * initialize * completion/
+	// * logging/ * notifications/ * ping Defaults to SKIP_BASE_PROTOCOL_METHODS if
+	// not specified.
+	//
+	// Possible values:
+	//   "BASE_PROTOCOL_METHODS_OPTION_UNSPECIFIED" - Unspecified option. Defaults
+	// to SKIP_BASE_PROTOCOL_METHODS.
+	//   "SKIP_BASE_PROTOCOL_METHODS" - Skip matching on the base MCP protocol
+	// methods.
+	//   "MATCH_BASE_PROTOCOL_METHODS" - Match on the base MCP protocol methods.
+	BaseProtocolMethodsOption string `json:"baseProtocolMethodsOption,omitempty"`
+	// Methods: Optional. A list of MCP methods and associated parameter names to
+	// match on. It is recommended to use this field to match on tools, prompts and
+	// resource accesses while setting the baseProtocolMethodsOption to
+	// MATCH_BASE_PROTOCOL_METHODS to match on all the other MCP protocol methods.
+	// Limited to 10 MCP methods per Rate Limit Policy.
+	Methods []*RateLimitPolicyRateLimitRuleToDestinationMCPMethod `json:"methods,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseProtocolMethodsOption")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseProtocolMethodsOption") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleToDestinationMCP) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleToDestinationMCP
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyRateLimitRuleToDestinationMCPMethod: Describes a set of MCP
+// methods to match against. This field is only valid if the targeted Gateway
+// or Forwarding Rule has an Agent Gateway attached to it.
+type RateLimitPolicyRateLimitRuleToDestinationMCPMethod struct {
+	// Name: Required. Specifies the MCP method to match against. Allowed values
+	// are as follows: 1. `tools`, `prompts`, `resources` - these will match
+	// against all sub methods under the respective methods. 2. `prompts/list`,
+	// `tools/list`, `resources/list`, `resources/templates/list` 3. `prompts/get`,
+	// `tools/call`, `resources/subscribe`, `resources/unsubscribe`,
+	// `resources/read` Params cannot be specified for categories 1 and 2.
+	Name string `json:"name,omitempty"`
+	// Params: Optional. Specifies a list of MCP method parameter names to match
+	// against. The match can be one of exact, prefix, suffix, or contains
+	// (substring match). Matches are always case sensitive unless the ignoreCase
+	// is set.
+	Params []*RateLimitPolicyRateLimitRuleStringMatch `json:"params,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyRateLimitRuleToDestinationMCPMethod) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyRateLimitRuleToDestinationMCPMethod
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RateLimitPolicyTarget: Specifies the target to which this policy applies.
+type RateLimitPolicyTarget struct {
+	// Resource: Required. Reference to a Gateway or Forwarding Rule resource on
+	// which this policy will be applied.
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Resource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RateLimitPolicyTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod RateLimitPolicyTarget
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -24682,6 +25455,646 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsRateLimitPoliciesCreateCall struct {
+	s               *Service
+	parent          string
+	ratelimitpolicy *RateLimitPolicy
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new `RateLimitPolicy` in a given project and location.
+//
+// - parent: Specifies the value for parent.
+func (r *ProjectsLocationsRateLimitPoliciesService) Create(parent string, ratelimitpolicy *RateLimitPolicy) *ProjectsLocationsRateLimitPoliciesCreateCall {
+	c := &ProjectsLocationsRateLimitPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.ratelimitpolicy = ratelimitpolicy
+	return c
+}
+
+// RateLimitPolicyId sets the optional parameter "rateLimitPolicyId": Required.
+// Specifies the ID of the requesting object. If auto-generating Id
+// server-side, remove this field and rate_limit_policy_id from the
+// method_signature of Create RPC
+func (c *ProjectsLocationsRateLimitPoliciesCreateCall) RateLimitPolicyId(rateLimitPolicyId string) *ProjectsLocationsRateLimitPoliciesCreateCall {
+	c.urlParams_.Set("rateLimitPolicyId", rateLimitPolicyId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Specifies an optional
+// request ID to identify requests. Specify a unique request ID so that if you
+// must retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at least 60
+// minutes since the first request. For example, consider a situation where you
+// make an initial request and the request times out. If you make the request
+// again with the same request ID, the server can check if original operation
+// with the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception that
+// zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsRateLimitPoliciesCreateCall) RequestId(requestId string) *ProjectsLocationsRateLimitPoliciesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRateLimitPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsRateLimitPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRateLimitPoliciesCreateCall) Context(ctx context.Context) *ProjectsLocationsRateLimitPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRateLimitPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRateLimitPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.ratelimitpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/rateLimitPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.rateLimitPolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRateLimitPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRateLimitPoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single `RateLimitPolicy`.
+//
+// - name: Specifies the name of the resource.
+func (r *ProjectsLocationsRateLimitPoliciesService) Delete(name string) *ProjectsLocationsRateLimitPoliciesDeleteCall {
+	c := &ProjectsLocationsRateLimitPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Specifies an optional
+// request ID to identify requests. Specify a unique request ID so that if you
+// must retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at least 60
+// minutes after the first request. For example, consider a situation where you
+// make an initial request and the request times out. If you make the request
+// again with the same request ID, the server can check if original operation
+// with the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception that
+// zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsRateLimitPoliciesDeleteCall) RequestId(requestId string) *ProjectsLocationsRateLimitPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRateLimitPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsRateLimitPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRateLimitPoliciesDeleteCall) Context(ctx context.Context) *ProjectsLocationsRateLimitPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRateLimitPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRateLimitPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.rateLimitPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRateLimitPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRateLimitPoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single `RateLimitPolicy`.
+//
+// - name: Specifies the name of the resource.
+func (r *ProjectsLocationsRateLimitPoliciesService) Get(name string) *ProjectsLocationsRateLimitPoliciesGetCall {
+	c := &ProjectsLocationsRateLimitPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRateLimitPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsRateLimitPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRateLimitPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsRateLimitPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRateLimitPoliciesGetCall) Context(ctx context.Context) *ProjectsLocationsRateLimitPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRateLimitPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRateLimitPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.rateLimitPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RateLimitPolicy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsRateLimitPoliciesGetCall) Do(opts ...googleapi.CallOption) (*RateLimitPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RateLimitPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRateLimitPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `RateLimitPolicy` resources in a given project and location.
+//
+// - parent: Specifies the parent value for `ListRateLimitPoliciesRequest`.
+func (r *ProjectsLocationsRateLimitPoliciesService) List(parent string) *ProjectsLocationsRateLimitPoliciesListCall {
+	c := &ProjectsLocationsRateLimitPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filters results.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) Filter(filter string) *ProjectsLocationsRateLimitPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Provides a hint for how to
+// order the results.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) OrderBy(orderBy string) *ProjectsLocationsRateLimitPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Specifies the requested
+// page size. Server may return fewer items than requested. If unspecified,
+// server will pick an appropriate default.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsRateLimitPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Identifies a token for a
+// page of results the server should return.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsRateLimitPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRateLimitPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRateLimitPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) Context(ctx context.Context) *ProjectsLocationsRateLimitPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRateLimitPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/rateLimitPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.rateLimitPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRateLimitPoliciesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListRateLimitPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRateLimitPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRateLimitPoliciesListCall) Pages(ctx context.Context, f func(*ListRateLimitPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsRateLimitPoliciesPatchCall struct {
+	s               *Service
+	name            string
+	ratelimitpolicy *RateLimitPolicy
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates the parameters of a single `RateLimitPolicy`.
+//
+// - name: Identifier. Specifies the name of the `RateLimitPolicy` resource.
+func (r *ProjectsLocationsRateLimitPoliciesService) Patch(name string, ratelimitpolicy *RateLimitPolicy) *ProjectsLocationsRateLimitPoliciesPatchCall {
+	c := &ProjectsLocationsRateLimitPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.ratelimitpolicy = ratelimitpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": Specifies an optional
+// request ID to identify requests. Specify a unique request ID so that if you
+// must retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at least 60
+// minutes since the first request. For example, consider a situation where you
+// make an initial request and the request times out. If you make the request
+// again with the same request ID, the server can check if original operation
+// with the same request ID was received, and if so, will ignore the second
+// request. This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception that
+// zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsRateLimitPoliciesPatchCall) RequestId(requestId string) *ProjectsLocationsRateLimitPoliciesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Specifies the fields to
+// be overwritten in the `RateLimitPolicy` resource by the update. The fields
+// specified in the update_mask are relative to the resource, not the full
+// request. A field will be overwritten if it is in the mask. If the user does
+// not provide a mask then all fields present in the request will be
+// overwritten.
+func (c *ProjectsLocationsRateLimitPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRateLimitPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRateLimitPoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRateLimitPoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRateLimitPoliciesPatchCall) Context(ctx context.Context) *ProjectsLocationsRateLimitPoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRateLimitPoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRateLimitPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.ratelimitpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.rateLimitPolicies.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRateLimitPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.rateLimitPolicies.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsSacAttachmentsCreateCall struct {

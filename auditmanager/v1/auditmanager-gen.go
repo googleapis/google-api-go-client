@@ -185,6 +185,7 @@ type FoldersService struct {
 func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 	rs := &FoldersLocationsService{s: s}
 	rs.AuditReports = NewFoldersLocationsAuditReportsService(s)
+	rs.AuditSchedules = NewFoldersLocationsAuditSchedulesService(s)
 	rs.AuditScopeReports = NewFoldersLocationsAuditScopeReportsService(s)
 	rs.OperationDetails = NewFoldersLocationsOperationDetailsService(s)
 	rs.OperationIds = NewFoldersLocationsOperationIdsService(s)
@@ -197,6 +198,8 @@ type FoldersLocationsService struct {
 	s *Service
 
 	AuditReports *FoldersLocationsAuditReportsService
+
+	AuditSchedules *FoldersLocationsAuditSchedulesService
 
 	AuditScopeReports *FoldersLocationsAuditScopeReportsService
 
@@ -215,6 +218,15 @@ func NewFoldersLocationsAuditReportsService(s *Service) *FoldersLocationsAuditRe
 }
 
 type FoldersLocationsAuditReportsService struct {
+	s *Service
+}
+
+func NewFoldersLocationsAuditSchedulesService(s *Service) *FoldersLocationsAuditSchedulesService {
+	rs := &FoldersLocationsAuditSchedulesService{s: s}
+	return rs
+}
+
+type FoldersLocationsAuditSchedulesService struct {
 	s *Service
 }
 
@@ -290,6 +302,7 @@ type OrganizationsService struct {
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
 	rs.AuditReports = NewOrganizationsLocationsAuditReportsService(s)
+	rs.AuditSchedules = NewOrganizationsLocationsAuditSchedulesService(s)
 	rs.AuditScopeReports = NewOrganizationsLocationsAuditScopeReportsService(s)
 	rs.OperationDetails = NewOrganizationsLocationsOperationDetailsService(s)
 	rs.OperationIds = NewOrganizationsLocationsOperationIdsService(s)
@@ -303,6 +316,8 @@ type OrganizationsLocationsService struct {
 	s *Service
 
 	AuditReports *OrganizationsLocationsAuditReportsService
+
+	AuditSchedules *OrganizationsLocationsAuditSchedulesService
 
 	AuditScopeReports *OrganizationsLocationsAuditScopeReportsService
 
@@ -323,6 +338,15 @@ func NewOrganizationsLocationsAuditReportsService(s *Service) *OrganizationsLoca
 }
 
 type OrganizationsLocationsAuditReportsService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsAuditSchedulesService(s *Service) *OrganizationsLocationsAuditSchedulesService {
+	rs := &OrganizationsLocationsAuditSchedulesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsAuditSchedulesService struct {
 	s *Service
 }
 
@@ -407,6 +431,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.AuditReports = NewProjectsLocationsAuditReportsService(s)
+	rs.AuditSchedules = NewProjectsLocationsAuditSchedulesService(s)
 	rs.AuditScopeReports = NewProjectsLocationsAuditScopeReportsService(s)
 	rs.OperationDetails = NewProjectsLocationsOperationDetailsService(s)
 	rs.OperationIds = NewProjectsLocationsOperationIdsService(s)
@@ -420,6 +445,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	AuditReports *ProjectsLocationsAuditReportsService
+
+	AuditSchedules *ProjectsLocationsAuditSchedulesService
 
 	AuditScopeReports *ProjectsLocationsAuditScopeReportsService
 
@@ -440,6 +467,15 @@ func NewProjectsLocationsAuditReportsService(s *Service) *ProjectsLocationsAudit
 }
 
 type ProjectsLocationsAuditReportsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAuditSchedulesService(s *Service) *ProjectsLocationsAuditSchedulesService {
+	rs := &ProjectsLocationsAuditSchedulesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAuditSchedulesService struct {
 	s *Service
 }
 
@@ -576,6 +612,82 @@ type AuditReport struct {
 
 func (s AuditReport) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditReport
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuditSchedule: An audit schedule, in one of the following formats: *
+// `projects/{project}/locations/{location}/auditSchedules/{audit_schedule}` *
+// `folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}`
+type AuditSchedule struct {
+	// ComplianceFramework: Required. Framework (set of controls) that the audit
+	// scope report is generated against. For example, `NIST_800_53`.
+	ComplianceFramework string `json:"complianceFramework,omitempty"`
+	// CreateTime: Output only. Timestamp when the schedule was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. Display name for the audit schedule.
+	DisplayName string `json:"displayName,omitempty"`
+	// ErrorMessage: Output only. Describes the error if the schedule is in an
+	// error state.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// GcsUri: Required. Cloud Storage bucket where Audit Manager can upload the
+	// audit report and evidence. The format is `gs://{bucket_name}`.
+	GcsUri string `json:"gcsUri,omitempty"`
+	// LastTriggerTime: Output only. Timestamp when the audit run was last
+	// triggered.
+	LastTriggerTime string `json:"lastTriggerTime,omitempty"`
+	// Name: Identifier. Unique identifier for the audit schedule. Format:
+	// projects/{project}/locations/{location}/auditSchedules/{audit_schedule}
+	// folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}
+	// organizations/{organization}/locations/{location}/auditSchedules/{audit_sched
+	// ule}
+	Name string `json:"name,omitempty"`
+	// NextRunTime: Output only. Calculated timestamp for the next scheduled run.
+	NextRunTime string `json:"nextRunTime,omitempty"`
+	// ReportFormat: Required. Format for the audit report.
+	//
+	// Possible values:
+	//   "AUDIT_REPORT_FORMAT_UNSPECIFIED" - Default value. This value is unused.
+	//   "AUDIT_REPORT_FORMAT_ODF" - Open Document Format (ODF).
+	ReportFormat string `json:"reportFormat,omitempty"`
+	// ScheduleConfig: Required. Configuration that defines when and how often
+	// audit runs are automatically triggered for this schedule.
+	ScheduleConfig *ScheduleConfig `json:"scheduleConfig,omitempty"`
+	// State: Optional. State of the audit schedule. While most states are managed
+	// by the system, you can use UpdateAuditSchedule to start, pause, or delete
+	// the schedule.
+	//
+	// Possible values:
+	//   "SCHEDULE_STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "SCHEDULE_STATE_ACTIVE" - Schedule is active and will trigger runs.
+	//   "SCHEDULE_STATE_PAUSED" - Schedule is paused and will not trigger runs.
+	//   "SCHEDULE_STATE_COMPLETED" - Schedule end time has passed.
+	//   "SCHEDULE_STATE_FAILED_SETUP" - Schedule setup failed during creation or
+	// update.
+	//   "SCHEDULE_STATE_ERROR" - Schedule is in an error state due to persistent
+	// failure to trigger an audit. Manual intervention is required.
+	//   "SCHEDULE_STATE_DELETED" - Schedule has been marked for deletion by the
+	// user.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. Timestamp when the schedule was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ComplianceFramework") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComplianceFramework") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuditSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod AuditSchedule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -997,6 +1109,37 @@ func (s ListAuditReportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAuditSchedulesResponse: Response message for ListAuditSchedules.
+type ListAuditSchedulesResponse struct {
+	// AuditSchedules: List of audit schedules.
+	AuditSchedules []*AuditSchedule `json:"auditSchedules,omitempty"`
+	// NextPageToken: A token that you can send as the `page_token` in a subsequent
+	// request to retrieve the next page of results. If this field is empty, there
+	// are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that can't be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AuditSchedules") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuditSchedules") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAuditSchedulesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAuditSchedulesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListControlsResponse: Response message for ListControls.
 type ListControlsResponse struct {
 	// Controls: Output only. Controls for a given regulatory standard.
@@ -1398,6 +1541,51 @@ type ResourceEnrollmentStatus struct {
 
 func (s ResourceEnrollmentStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod ResourceEnrollmentStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ScheduleConfig: Timing and frequency parameters for recurring audit runs.
+type ScheduleConfig struct {
+	// EndTime: Optional. Date that the schedule stops. If not specified, the
+	// schedule runs indefinitely.
+	EndTime string `json:"endTime,omitempty"`
+	// Frequency: Required. Frequency of audit runs.
+	//
+	// Possible values:
+	//   "FREQUENCY_UNSPECIFIED" - Default value. This value is unused.
+	//   "DAILY" - The audit runs every day.
+	//   "WEEKLY" - The audit runs weekly on the same day of the week as
+	// `start_time`.
+	//   "MONTHLY" - The audit runs monthly on the same day of the month as
+	// `start_time`.
+	//   "QUARTERLY" - The audit runs quarterly (every 3 months) on the same day of
+	// the month as `start_time`.
+	//   "ANNUALLY" - The audit runs annually on the same month and day as
+	// `start_time`.
+	Frequency string `json:"frequency,omitempty"`
+	// StartTime: Required. Date and time when the first audit run is triggered.
+	// Subsequent runs are based on this time and the chosen frequency.
+	StartTime string `json:"startTime,omitempty"`
+	// TimeZone: Optional. Time zone for the audit schedule in IANA format (for
+	// example, `America/New_York`). The time zone is used to interpret the
+	// `start_time` and the `end_time`, and to calculate subsequent run dates. If
+	// not specified, the time zone default is UTC.
+	TimeZone string `json:"timeZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScheduleConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduleConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1915,6 +2103,528 @@ func (c *FoldersLocationsAuditReportsListCall) Pages(ctx context.Context, f func
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type FoldersLocationsAuditSchedulesCreateCall struct {
+	s             *Service
+	parent        string
+	auditschedule *AuditSchedule
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates a new audit schedule in a given project and location.
+//
+//   - parent: Project or folder that this audit schedule is for, in one of the
+//     following formats: * `projects/{project}/locations/{location}` *
+//     `folders/{folder}/locations/{location}`.
+func (r *FoldersLocationsAuditSchedulesService) Create(parent string, auditschedule *AuditSchedule) *FoldersLocationsAuditSchedulesCreateCall {
+	c := &FoldersLocationsAuditSchedulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.auditschedule = auditschedule
+	return c
+}
+
+// AuditScheduleId sets the optional parameter "auditScheduleId": Required. ID
+// to use for the audit schedule, which becomes the final component of the
+// audit schedule's resource name.
+func (c *FoldersLocationsAuditSchedulesCreateCall) AuditScheduleId(auditScheduleId string) *FoldersLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("auditScheduleId", auditScheduleId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If `true`, only
+// validates the request and does not create the audit schedule. This executes
+// standard request validation (such as schema, framework existence, scope, and
+// IAM checks) and skips the apply phase. Use this field for the following
+// purposes: * **Infrastructure as Code (IaC)**: Allow tools like Terraform to
+// run dry-run mutations (e.g., `terraform plan`) without creating real
+// resources or incurring costs. * **User Interface Validation**: Enable
+// real-time form and permission validation in custom UIs before submitting
+// requests. * **CI/CD & Automation**: Test your scripts, permissions, and
+// parameters safely without consuming resource quotas.
+func (c *FoldersLocationsAuditSchedulesCreateCall) ValidateOnly(validateOnly bool) *FoldersLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsAuditSchedulesCreateCall) Fields(s ...googleapi.Field) *FoldersLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsAuditSchedulesCreateCall) Context(ctx context.Context) *FoldersLocationsAuditSchedulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsAuditSchedulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsAuditSchedulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.auditschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/auditSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.folders.locations.auditSchedules.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.folders.locations.auditSchedules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsAuditSchedulesCreateCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.folders.locations.auditSchedules.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsAuditSchedulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single audit schedule.
+//
+//   - name: Name of the audit schedule to retrieve, in one of the following
+//     formats: *
+//     `projects/{project}/locations/{location}/auditSchedules/{audit_schedule}`
+//   - `folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}`
+//     *
+//     `organizations/{organization}/locations/{location}/auditSchedules/{audit_sc
+//     hedule}`.
+func (r *FoldersLocationsAuditSchedulesService) Get(name string) *FoldersLocationsAuditSchedulesGetCall {
+	c := &FoldersLocationsAuditSchedulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsAuditSchedulesGetCall) Fields(s ...googleapi.Field) *FoldersLocationsAuditSchedulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsAuditSchedulesGetCall) IfNoneMatch(entityTag string) *FoldersLocationsAuditSchedulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsAuditSchedulesGetCall) Context(ctx context.Context) *FoldersLocationsAuditSchedulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsAuditSchedulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsAuditSchedulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.folders.locations.auditSchedules.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.folders.locations.auditSchedules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsAuditSchedulesGetCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.folders.locations.auditSchedules.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersLocationsAuditSchedulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists audit schedules in a given project and location.
+//
+//   - parent: Parent for the audit schedule, in one of the following formats: *
+//     `projects/{project}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `organizations/{organization}/locations/{location}`.
+func (r *FoldersLocationsAuditSchedulesService) List(parent string) *FoldersLocationsAuditSchedulesListCall {
+	c := &FoldersLocationsAuditSchedulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return in a single page. The service might return fewer items than this
+// value. If unspecified, the service picks an appropriate default. The maximum
+// value is 100; values above 100 are reduced to 100.
+func (c *FoldersLocationsAuditSchedulesListCall) PageSize(pageSize int64) *FoldersLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous call, to retrieve the next page of results.
+func (c *FoldersLocationsAuditSchedulesListCall) PageToken(pageToken string) *FoldersLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsAuditSchedulesListCall) Fields(s ...googleapi.Field) *FoldersLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersLocationsAuditSchedulesListCall) IfNoneMatch(entityTag string) *FoldersLocationsAuditSchedulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsAuditSchedulesListCall) Context(ctx context.Context) *FoldersLocationsAuditSchedulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsAuditSchedulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsAuditSchedulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/auditSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.folders.locations.auditSchedules.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.folders.locations.auditSchedules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAuditSchedulesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsAuditSchedulesListCall) Do(opts ...googleapi.CallOption) (*ListAuditSchedulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAuditSchedulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.folders.locations.auditSchedules.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsAuditSchedulesListCall) Pages(ctx context.Context, f func(*ListAuditSchedulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FoldersLocationsAuditSchedulesPatchCall struct {
+	s             *Service
+	nameid        string
+	auditschedule *AuditSchedule
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates an existing audit schedule.
+//
+//   - name: Identifier. Unique identifier for the audit schedule. Format:
+//     projects/{project}/locations/{location}/auditSchedules/{audit_schedule}
+//     folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}
+//     organizations/{organization}/locations/{location}/auditSchedules/{audit_sch
+//     edule}.
+func (r *FoldersLocationsAuditSchedulesService) Patch(nameid string, auditschedule *AuditSchedule) *FoldersLocationsAuditSchedulesPatchCall {
+	c := &FoldersLocationsAuditSchedulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.auditschedule = auditschedule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": List of fields to
+// update.
+func (c *FoldersLocationsAuditSchedulesPatchCall) UpdateMask(updateMask string) *FoldersLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If `true`, only
+// validates the request and does not update the audit schedule. This executes
+// standard request validation (such as schema, framework existence, scope, and
+// IAM checks) and skips the apply phase. Use this field for the following
+// purposes: * **Infrastructure as Code (IaC)**: Allow tools like Terraform to
+// run dry-run mutations (e.g., `terraform plan`) without creating real
+// resources or incurring costs. * **User Interface Validation**: Enable
+// real-time form and permission validation in custom UIs before submitting
+// requests. * **CI/CD & Automation**: Test your scripts, permissions, and
+// parameters safely without consuming resource quotas.
+func (c *FoldersLocationsAuditSchedulesPatchCall) ValidateOnly(validateOnly bool) *FoldersLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersLocationsAuditSchedulesPatchCall) Fields(s ...googleapi.Field) *FoldersLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersLocationsAuditSchedulesPatchCall) Context(ctx context.Context) *FoldersLocationsAuditSchedulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersLocationsAuditSchedulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsAuditSchedulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.auditschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.folders.locations.auditSchedules.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.folders.locations.auditSchedules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersLocationsAuditSchedulesPatchCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.folders.locations.auditSchedules.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type FoldersLocationsAuditScopeReportsGenerateCall struct {
@@ -3146,6 +3856,528 @@ func (c *OrganizationsLocationsAuditReportsListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type OrganizationsLocationsAuditSchedulesCreateCall struct {
+	s             *Service
+	parent        string
+	auditschedule *AuditSchedule
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates a new audit schedule in a given project and location.
+//
+//   - parent: Project or folder that this audit schedule is for, in one of the
+//     following formats: * `projects/{project}/locations/{location}` *
+//     `folders/{folder}/locations/{location}`.
+func (r *OrganizationsLocationsAuditSchedulesService) Create(parent string, auditschedule *AuditSchedule) *OrganizationsLocationsAuditSchedulesCreateCall {
+	c := &OrganizationsLocationsAuditSchedulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.auditschedule = auditschedule
+	return c
+}
+
+// AuditScheduleId sets the optional parameter "auditScheduleId": Required. ID
+// to use for the audit schedule, which becomes the final component of the
+// audit schedule's resource name.
+func (c *OrganizationsLocationsAuditSchedulesCreateCall) AuditScheduleId(auditScheduleId string) *OrganizationsLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("auditScheduleId", auditScheduleId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If `true`, only
+// validates the request and does not create the audit schedule. This executes
+// standard request validation (such as schema, framework existence, scope, and
+// IAM checks) and skips the apply phase. Use this field for the following
+// purposes: * **Infrastructure as Code (IaC)**: Allow tools like Terraform to
+// run dry-run mutations (e.g., `terraform plan`) without creating real
+// resources or incurring costs. * **User Interface Validation**: Enable
+// real-time form and permission validation in custom UIs before submitting
+// requests. * **CI/CD & Automation**: Test your scripts, permissions, and
+// parameters safely without consuming resource quotas.
+func (c *OrganizationsLocationsAuditSchedulesCreateCall) ValidateOnly(validateOnly bool) *OrganizationsLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsAuditSchedulesCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsAuditSchedulesCreateCall) Context(ctx context.Context) *OrganizationsLocationsAuditSchedulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsAuditSchedulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsAuditSchedulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.auditschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/auditSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.organizations.locations.auditSchedules.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.organizations.locations.auditSchedules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsAuditSchedulesCreateCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.organizations.locations.auditSchedules.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsAuditSchedulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single audit schedule.
+//
+//   - name: Name of the audit schedule to retrieve, in one of the following
+//     formats: *
+//     `projects/{project}/locations/{location}/auditSchedules/{audit_schedule}`
+//   - `folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}`
+//     *
+//     `organizations/{organization}/locations/{location}/auditSchedules/{audit_sc
+//     hedule}`.
+func (r *OrganizationsLocationsAuditSchedulesService) Get(name string) *OrganizationsLocationsAuditSchedulesGetCall {
+	c := &OrganizationsLocationsAuditSchedulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsAuditSchedulesGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsAuditSchedulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsAuditSchedulesGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsAuditSchedulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsAuditSchedulesGetCall) Context(ctx context.Context) *OrganizationsLocationsAuditSchedulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsAuditSchedulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsAuditSchedulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.organizations.locations.auditSchedules.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.organizations.locations.auditSchedules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsAuditSchedulesGetCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.organizations.locations.auditSchedules.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsAuditSchedulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists audit schedules in a given project and location.
+//
+//   - parent: Parent for the audit schedule, in one of the following formats: *
+//     `projects/{project}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `organizations/{organization}/locations/{location}`.
+func (r *OrganizationsLocationsAuditSchedulesService) List(parent string) *OrganizationsLocationsAuditSchedulesListCall {
+	c := &OrganizationsLocationsAuditSchedulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return in a single page. The service might return fewer items than this
+// value. If unspecified, the service picks an appropriate default. The maximum
+// value is 100; values above 100 are reduced to 100.
+func (c *OrganizationsLocationsAuditSchedulesListCall) PageSize(pageSize int64) *OrganizationsLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous call, to retrieve the next page of results.
+func (c *OrganizationsLocationsAuditSchedulesListCall) PageToken(pageToken string) *OrganizationsLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsAuditSchedulesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsAuditSchedulesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsAuditSchedulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsAuditSchedulesListCall) Context(ctx context.Context) *OrganizationsLocationsAuditSchedulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsAuditSchedulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsAuditSchedulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/auditSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.organizations.locations.auditSchedules.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.organizations.locations.auditSchedules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAuditSchedulesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsAuditSchedulesListCall) Do(opts ...googleapi.CallOption) (*ListAuditSchedulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAuditSchedulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.organizations.locations.auditSchedules.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsAuditSchedulesListCall) Pages(ctx context.Context, f func(*ListAuditSchedulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsLocationsAuditSchedulesPatchCall struct {
+	s             *Service
+	nameid        string
+	auditschedule *AuditSchedule
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates an existing audit schedule.
+//
+//   - name: Identifier. Unique identifier for the audit schedule. Format:
+//     projects/{project}/locations/{location}/auditSchedules/{audit_schedule}
+//     folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}
+//     organizations/{organization}/locations/{location}/auditSchedules/{audit_sch
+//     edule}.
+func (r *OrganizationsLocationsAuditSchedulesService) Patch(nameid string, auditschedule *AuditSchedule) *OrganizationsLocationsAuditSchedulesPatchCall {
+	c := &OrganizationsLocationsAuditSchedulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.auditschedule = auditschedule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": List of fields to
+// update.
+func (c *OrganizationsLocationsAuditSchedulesPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If `true`, only
+// validates the request and does not update the audit schedule. This executes
+// standard request validation (such as schema, framework existence, scope, and
+// IAM checks) and skips the apply phase. Use this field for the following
+// purposes: * **Infrastructure as Code (IaC)**: Allow tools like Terraform to
+// run dry-run mutations (e.g., `terraform plan`) without creating real
+// resources or incurring costs. * **User Interface Validation**: Enable
+// real-time form and permission validation in custom UIs before submitting
+// requests. * **CI/CD & Automation**: Test your scripts, permissions, and
+// parameters safely without consuming resource quotas.
+func (c *OrganizationsLocationsAuditSchedulesPatchCall) ValidateOnly(validateOnly bool) *OrganizationsLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsAuditSchedulesPatchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsAuditSchedulesPatchCall) Context(ctx context.Context) *OrganizationsLocationsAuditSchedulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsAuditSchedulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsAuditSchedulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.auditschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.organizations.locations.auditSchedules.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.organizations.locations.auditSchedules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsAuditSchedulesPatchCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.organizations.locations.auditSchedules.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type OrganizationsLocationsAuditScopeReportsGenerateCall struct {
@@ -5146,6 +6378,528 @@ func (c *ProjectsLocationsAuditReportsListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsAuditSchedulesCreateCall struct {
+	s             *Service
+	parent        string
+	auditschedule *AuditSchedule
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Create: Creates a new audit schedule in a given project and location.
+//
+//   - parent: Project or folder that this audit schedule is for, in one of the
+//     following formats: * `projects/{project}/locations/{location}` *
+//     `folders/{folder}/locations/{location}`.
+func (r *ProjectsLocationsAuditSchedulesService) Create(parent string, auditschedule *AuditSchedule) *ProjectsLocationsAuditSchedulesCreateCall {
+	c := &ProjectsLocationsAuditSchedulesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.auditschedule = auditschedule
+	return c
+}
+
+// AuditScheduleId sets the optional parameter "auditScheduleId": Required. ID
+// to use for the audit schedule, which becomes the final component of the
+// audit schedule's resource name.
+func (c *ProjectsLocationsAuditSchedulesCreateCall) AuditScheduleId(auditScheduleId string) *ProjectsLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("auditScheduleId", auditScheduleId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If `true`, only
+// validates the request and does not create the audit schedule. This executes
+// standard request validation (such as schema, framework existence, scope, and
+// IAM checks) and skips the apply phase. Use this field for the following
+// purposes: * **Infrastructure as Code (IaC)**: Allow tools like Terraform to
+// run dry-run mutations (e.g., `terraform plan`) without creating real
+// resources or incurring costs. * **User Interface Validation**: Enable
+// real-time form and permission validation in custom UIs before submitting
+// requests. * **CI/CD & Automation**: Test your scripts, permissions, and
+// parameters safely without consuming resource quotas.
+func (c *ProjectsLocationsAuditSchedulesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuditSchedulesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuditSchedulesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuditSchedulesCreateCall) Context(ctx context.Context) *ProjectsLocationsAuditSchedulesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuditSchedulesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuditSchedulesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.auditschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/auditSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.projects.locations.auditSchedules.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.projects.locations.auditSchedules.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuditSchedulesCreateCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.projects.locations.auditSchedules.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuditSchedulesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single audit schedule.
+//
+//   - name: Name of the audit schedule to retrieve, in one of the following
+//     formats: *
+//     `projects/{project}/locations/{location}/auditSchedules/{audit_schedule}`
+//   - `folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}`
+//     *
+//     `organizations/{organization}/locations/{location}/auditSchedules/{audit_sc
+//     hedule}`.
+func (r *ProjectsLocationsAuditSchedulesService) Get(name string) *ProjectsLocationsAuditSchedulesGetCall {
+	c := &ProjectsLocationsAuditSchedulesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuditSchedulesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuditSchedulesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuditSchedulesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuditSchedulesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuditSchedulesGetCall) Context(ctx context.Context) *ProjectsLocationsAuditSchedulesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuditSchedulesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuditSchedulesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.projects.locations.auditSchedules.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.projects.locations.auditSchedules.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuditSchedulesGetCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.projects.locations.auditSchedules.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuditSchedulesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists audit schedules in a given project and location.
+//
+//   - parent: Parent for the audit schedule, in one of the following formats: *
+//     `projects/{project}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `organizations/{organization}/locations/{location}`.
+func (r *ProjectsLocationsAuditSchedulesService) List(parent string) *ProjectsLocationsAuditSchedulesListCall {
+	c := &ProjectsLocationsAuditSchedulesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of items to
+// return in a single page. The service might return fewer items than this
+// value. If unspecified, the service picks an appropriate default. The maximum
+// value is 100; values above 100 are reduced to 100.
+func (c *ProjectsLocationsAuditSchedulesListCall) PageSize(pageSize int64) *ProjectsLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous call, to retrieve the next page of results.
+func (c *ProjectsLocationsAuditSchedulesListCall) PageToken(pageToken string) *ProjectsLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuditSchedulesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuditSchedulesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuditSchedulesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuditSchedulesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuditSchedulesListCall) Context(ctx context.Context) *ProjectsLocationsAuditSchedulesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuditSchedulesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuditSchedulesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/auditSchedules")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.projects.locations.auditSchedules.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.projects.locations.auditSchedules.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAuditSchedulesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuditSchedulesListCall) Do(opts ...googleapi.CallOption) (*ListAuditSchedulesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAuditSchedulesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.projects.locations.auditSchedules.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAuditSchedulesListCall) Pages(ctx context.Context, f func(*ListAuditSchedulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAuditSchedulesPatchCall struct {
+	s             *Service
+	nameid        string
+	auditschedule *AuditSchedule
+	urlParams_    gensupport.URLParams
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// Patch: Updates an existing audit schedule.
+//
+//   - name: Identifier. Unique identifier for the audit schedule. Format:
+//     projects/{project}/locations/{location}/auditSchedules/{audit_schedule}
+//     folders/{folder}/locations/{location}/auditSchedules/{audit_schedule}
+//     organizations/{organization}/locations/{location}/auditSchedules/{audit_sch
+//     edule}.
+func (r *ProjectsLocationsAuditSchedulesService) Patch(nameid string, auditschedule *AuditSchedule) *ProjectsLocationsAuditSchedulesPatchCall {
+	c := &ProjectsLocationsAuditSchedulesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.auditschedule = auditschedule
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": List of fields to
+// update.
+func (c *ProjectsLocationsAuditSchedulesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If `true`, only
+// validates the request and does not update the audit schedule. This executes
+// standard request validation (such as schema, framework existence, scope, and
+// IAM checks) and skips the apply phase. Use this field for the following
+// purposes: * **Infrastructure as Code (IaC)**: Allow tools like Terraform to
+// run dry-run mutations (e.g., `terraform plan`) without creating real
+// resources or incurring costs. * **User Interface Validation**: Enable
+// real-time form and permission validation in custom UIs before submitting
+// requests. * **CI/CD & Automation**: Test your scripts, permissions, and
+// parameters safely without consuming resource quotas.
+func (c *ProjectsLocationsAuditSchedulesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuditSchedulesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuditSchedulesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuditSchedulesPatchCall) Context(ctx context.Context) *ProjectsLocationsAuditSchedulesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuditSchedulesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuditSchedulesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.auditschedule)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "auditmanager.projects.locations.auditSchedules.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "auditmanager.projects.locations.auditSchedules.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AuditSchedule.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuditSchedulesPatchCall) Do(opts ...googleapi.CallOption) (*AuditSchedule, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuditSchedule{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "auditmanager.projects.locations.auditSchedules.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsAuditScopeReportsGenerateCall struct {

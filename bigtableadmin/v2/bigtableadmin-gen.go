@@ -645,6 +645,31 @@ func (s AutoscalingTargets) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AvroSchema: Represents a collection of Avro schemas.
+type AvroSchema struct {
+	// JsonSchemas: Required. The Avro schemas in JSON format. Each element must be
+	// the content of a valid, self-contained Avro schema file (.avsc), as
+	// described in https://avro.apache.org/docs/1.8.1/spec.html. Use repeated
+	// elements to include multiple Avro schema files in a single bundle.
+	JsonSchemas []string `json:"jsonSchemas,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JsonSchemas") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JsonSchemas") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AvroSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod AvroSchema
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Backup: A backup of a Cloud Bigtable table.
 type Backup struct {
 	// BackupType: Indicates the backup type of the backup.
@@ -4121,6 +4146,8 @@ type RowAffinity struct {
 
 // SchemaBundle: A named collection of related schemas.
 type SchemaBundle struct {
+	// AvroSchema: Optional. Schema for Avros.
+	AvroSchema *AvroSchema `json:"avroSchema,omitempty"`
 	// Etag: Optional. The etag for this schema bundle. This may be sent on update
 	// and delete requests to ensure the client has an up-to-date value before
 	// proceeding. The server returns an ABORTED error on a mismatched etag.
@@ -4135,15 +4162,15 @@ type SchemaBundle struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AvroSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Etag") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AvroSchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

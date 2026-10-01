@@ -5031,8 +5031,8 @@ type GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand struct {
 	//   "EXECUTED_BY_CLIENT" - Represents a command that has been executed by the
 	// client.
 	CommandState string `json:"commandState,omitempty"`
-	// CommandType: Required. Type of the remote command. The only supported
-	// command_type is "clearBrowsingData".
+	// CommandType: Required. Type of the remote command. Supported commands:
+	// "clearBrowsingData" and "extensionUpdateCheck".
 	CommandType string `json:"commandType,omitempty"`
 	// IssueTime: Output only. Timestamp of the issurance of the remote command.
 	IssueTime string `json:"issueTime,omitempty"`
@@ -5041,7 +5041,8 @@ type GoogleChromeManagementVersionsV1ChromeBrowserProfileCommand struct {
 	Name string `json:"name,omitempty"`
 	// Payload: Required. Payload of the remote command. The payload for
 	// "clearBrowsingData" command supports: - fields "clearCache" and
-	// "clearCookies" - values of boolean type.
+	// "clearCookies" - values of boolean type. The payload for
+	// "extensionUpdateCheck" should be empty.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
 	// ValidDuration: Output only. Valid duration of the remote command.
 	ValidDuration string `json:"validDuration,omitempty"`
@@ -5195,7 +5196,8 @@ type GoogleChromeManagementVersionsV1ClaimCertificateProvisioningProcessResponse
 type GoogleChromeManagementVersionsV1ConnectorConfig struct {
 	// Details: Required. The details of the connector config.
 	Details *GoogleChromeManagementVersionsV1ConnectorConfigDetails `json:"details,omitempty"`
-	// DisplayName: Required. The display name of the config.
+	// DisplayName: Required. The display name of the config. Must be at most 100
+	// characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. Format:
 	// customers/{customer}/connectorConfigs/{connector_config}
@@ -5214,6 +5216,7 @@ type GoogleChromeManagementVersionsV1ConnectorConfig struct {
 	// supported in the API.
 	//   "ROOT_STORE" - Root certificate connector.
 	//   "CONTENT_ANALYSIS" - Content analysis connector.
+	//   "ENTERPRISE_PROXY" - Enterprise proxy connector.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5258,6 +5261,8 @@ type GoogleChromeManagementVersionsV1ConnectorConfigDetails struct {
 	PubSubConfig *GoogleChromeManagementVersionsV1PubSubConfig `json:"pubSubConfig,omitempty"`
 	// PubSubXdrConfig: Pub/Sub XDR connector config.
 	PubSubXdrConfig *GoogleChromeManagementVersionsV1PubSubXdrConfig `json:"pubSubXdrConfig,omitempty"`
+	// SecureGatewayConfig: Secure gateway connector config.
+	SecureGatewayConfig *GoogleChromeManagementVersionsV1SecureGatewayConfig `json:"secureGatewayConfig,omitempty"`
 	// SplunkConfig: Splunk connector config.
 	SplunkConfig *GoogleChromeManagementVersionsV1SplunkConfig `json:"splunkConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CrowdStrikeConfig") to
@@ -5397,10 +5402,11 @@ func (s GoogleChromeManagementVersionsV1ContentTransfersSummary) MarshalJSON() (
 // GoogleChromeManagementVersionsV1CrowdStrikeConfig: CrowdStrike connector
 // config.
 type GoogleChromeManagementVersionsV1CrowdStrikeConfig struct {
-	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	// ApiKey: Required. Input only. API key to use on the ingestion API. Must be
+	// at most 50 characters.
 	ApiKey string `json:"apiKey,omitempty"`
 	// Host: Required. Host to identify the customer specific server to receive the
-	// events.
+	// events. Must be at most 256 characters.
 	Host string `json:"host,omitempty"`
 	// ReportingSettings: Required. The reporting settings for the CrowdStrike
 	// config.
@@ -5426,10 +5432,11 @@ func (s GoogleChromeManagementVersionsV1CrowdStrikeConfig) MarshalJSON() ([]byte
 // GoogleChromeManagementVersionsV1CrowdStrikeFalconNextGenConfig: CrowdStrike
 // Falcon Next Gen connector config.
 type GoogleChromeManagementVersionsV1CrowdStrikeFalconNextGenConfig struct {
-	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	// ApiKey: Required. Input only. API key to use on the ingestion API. Must be
+	// at most 50 characters.
 	ApiKey string `json:"apiKey,omitempty"`
 	// Host: Required. Host to identify the customer specific server to receive the
-	// events.
+	// events. Must be at most 256 characters.
 	Host string `json:"host,omitempty"`
 	// ReportingSettings: Required. The reporting settings for the CrowdStrike
 	// Falcon Next Gen config.
@@ -5455,10 +5462,11 @@ func (s GoogleChromeManagementVersionsV1CrowdStrikeFalconNextGenConfig) MarshalJ
 // GoogleChromeManagementVersionsV1CrowdStrikeXdrConfig: CrowdStrike XDR
 // connector config.
 type GoogleChromeManagementVersionsV1CrowdStrikeXdrConfig struct {
-	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	// ApiKey: Required. Input only. API key to use on the ingestion API. Must be
+	// at most 256 characters.
 	ApiKey string `json:"apiKey,omitempty"`
 	// Host: Required. Host to identify the customer specific server to receive the
-	// events.
+	// events. Must be at most 256 characters.
 	Host string `json:"host,omitempty"`
 	// XdrSettings: Required. The XDR settings for the CrowdStrike XDR config.
 	XdrSettings *GoogleChromeManagementVersionsV1XdrSettings `json:"xdrSettings,omitempty"`
@@ -5724,11 +5732,12 @@ func (s GoogleChromeManagementVersionsV1GenericProfile) MarshalJSON() ([]byte, e
 // GoogleChromeManagementVersionsV1GoogleSecOpsConfig: Google SecOps connector
 // config.
 type GoogleChromeManagementVersionsV1GoogleSecOpsConfig struct {
-	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	// ApiKey: Required. Input only. API key to use on the ingestion API. Must be
+	// 39 characters.
 	ApiKey string `json:"apiKey,omitempty"`
 	// Host: Required. Host of ingestion API endpoint. Allows customer to upload
 	// events to servers in specific geographical regions. Existing configs that
-	// don't have this setting default to US.
+	// don't have this setting default to US. Must be at most 256 characters.
 	Host string `json:"host,omitempty"`
 	// ReportingSettings: Required. The reporting settings for the Google SecOps
 	// config.
@@ -5920,10 +5929,11 @@ func (s GoogleChromeManagementVersionsV1MoveThirdPartyProfileUserResponse) Marsh
 // GoogleChromeManagementVersionsV1PaloAltoNetworksConfig: Palo Alto Networks
 // connector config.
 type GoogleChromeManagementVersionsV1PaloAltoNetworksConfig struct {
-	// ApiKey: Required. Input only. API key to use on the ingestion API.
+	// ApiKey: Required. Input only. API key to use on the ingestion API. Must be
+	// at most 256 characters.
 	ApiKey string `json:"apiKey,omitempty"`
 	// Host: Required. Host to identify the customer specific server to receive the
-	// events.
+	// events. Must be at most 256 characters.
 	Host string `json:"host,omitempty"`
 	// ReportingSettings: Required. The reporting settings for the Palo Alto
 	// Networks config.
@@ -5951,6 +5961,7 @@ type GoogleChromeManagementVersionsV1PubSubConfig struct {
 	// ReportingSettings: Required. The reporting settings for the Pub/Sub config.
 	ReportingSettings *GoogleChromeManagementVersionsV1ReportingSettings `json:"reportingSettings,omitempty"`
 	// TopicFullPath: Required. The full path to the topic to send the event to.
+	// Must be at most 1000 characters.
 	TopicFullPath string `json:"topicFullPath,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ReportingSettings") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5974,6 +5985,7 @@ func (s GoogleChromeManagementVersionsV1PubSubConfig) MarshalJSON() ([]byte, err
 // config.
 type GoogleChromeManagementVersionsV1PubSubXdrConfig struct {
 	// TopicFullPath: Required. The full path to the topic to send the event to.
+	// Must be at most 1000 characters.
 	TopicFullPath string `json:"topicFullPath,omitempty"`
 	// XdrSettings: Required. The XDR settings for the Pub/Sub XDR config.
 	XdrSettings *GoogleChromeManagementVersionsV1XdrSettings `json:"xdrSettings,omitempty"`
@@ -6444,6 +6456,38 @@ func (s GoogleChromeManagementVersionsV1ScepProfile) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1SecureGatewayConfig: Secure gateway
+// connector config.
+type GoogleChromeManagementVersionsV1SecureGatewayConfig struct {
+	// EnabledPlatforms: Optional. The enabled platforms for the secure gateway
+	// connector config.
+	//
+	// Possible values:
+	//   "PLATFORM_UNSPECIFIED" - Default value. This value is unused.
+	//   "ANDROID" - Android platform.
+	//   "IOS" - iOS platform.
+	EnabledPlatforms []string `json:"enabledPlatforms,omitempty"`
+	// ResourceId: Required. The resource ID of the secure gateway connector
+	// config. Must be at most 256 characters.
+	ResourceId string `json:"resourceId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnabledPlatforms") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnabledPlatforms") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1SecureGatewayConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1SecureGatewayConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1SetFailureRequest: Request message for
 // marking a certificate provisioning process as failed.
 type GoogleChromeManagementVersionsV1SetFailureRequest struct {
@@ -6565,10 +6609,10 @@ func (s GoogleChromeManagementVersionsV1SignDataResponse) MarshalJSON() ([]byte,
 // GoogleChromeManagementVersionsV1SplunkConfig: Splunk connector config.
 type GoogleChromeManagementVersionsV1SplunkConfig struct {
 	// HecToken: Required. Input only. The data input's HTTP Event Collector token
-	// to use as an Authorization header.
+	// to use as an Authorization header. Must be at most 50 characters.
 	HecToken string `json:"hecToken,omitempty"`
 	// Host: Required. Host to identify the customer specific server to receive the
-	// events.
+	// events. Must be at most 256 characters.
 	Host string `json:"host,omitempty"`
 	// PortNumber: Optional. The port number to use. If not set, the default Splunk
 	// port is used.
@@ -6576,7 +6620,7 @@ type GoogleChromeManagementVersionsV1SplunkConfig struct {
 	// ReportingSettings: Required. The reporting settings for the Splunk config.
 	ReportingSettings *GoogleChromeManagementVersionsV1ReportingSettings `json:"reportingSettings,omitempty"`
 	// Source: Optional. Optional source name to override the default one set in
-	// the Splunk admin console.
+	// the Splunk admin console. Must be at most 100 characters.
 	Source string `json:"source,omitempty"`
 	// UnsecureScheme: Optional. Whether to use an unsecure HTTP scheme. Defaults
 	// to false (HTTPS).

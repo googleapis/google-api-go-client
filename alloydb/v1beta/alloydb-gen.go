@@ -387,6 +387,7 @@ type Backup struct {
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
 	//   "POSTGRES_18" - The database version is Postgres 18.
+	//   "POSTGRES_19" - The database version is Postgres 19.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DeleteTime: Output only. Delete time stamp
 	DeleteTime string `json:"deleteTime,omitempty"`
@@ -394,6 +395,15 @@ type Backup struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: User-settable and human-readable display name for the Backup.
 	DisplayName string `json:"displayName,omitempty"`
+	// Edition: Output only. The edition of the cluster this backup was created
+	// from. Any restored cluster created from this backup will have the same
+	// edition.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - An unknown Edition type.
+	//   "EDITION_ALLOYDB" - Standard AlloyDB cluster.
+	//   "EDITION_ALLOYDB_DEVELOPER" - Developer edition cluster.
+	Edition string `json:"edition,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the backup with a customer-managed encryption key (CMEK). When this
 	// field is not specified, the backup will then use default encryption scheme
@@ -783,6 +793,7 @@ type Cluster struct {
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
 	//   "POSTGRES_18" - The database version is Postgres 18.
+	//   "POSTGRES_19" - The database version is Postgres 19.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// DataplexConfig: Optional. Configuration for Dataplex integration.
 	DataplexConfig *DataplexConfig `json:"dataplexConfig,omitempty"`
@@ -790,6 +801,14 @@ type Cluster struct {
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// DisplayName: User-settable and human-readable display name for the Cluster.
 	DisplayName string `json:"displayName,omitempty"`
+	// Edition: Optional. Edition of the cluster. If left unspecified, the cluster
+	// behaves as `EDITION_ALLOYDB`.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - An unknown Edition type.
+	//   "EDITION_ALLOYDB" - Standard AlloyDB cluster.
+	//   "EDITION_ALLOYDB_DEVELOPER" - Developer edition cluster.
+	Edition string `json:"edition,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the data disks and other persistent data resources of a cluster with
 	// a customer-managed encryption key (CMEK). When this field is not specified,
@@ -956,6 +975,7 @@ type ClusterUpgradeDetails struct {
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
 	//   "POSTGRES_18" - The database version is Postgres 18.
+	//   "POSTGRES_19" - The database version is Postgres 19.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// InstanceUpgradeDetails: Upgrade details of the instances directly associated
 	// with this cluster.
@@ -2767,7 +2787,8 @@ type ObservabilityInstanceConfig struct {
 	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
 	// TrackActiveQueryPlan: Indicates whether to track active query plans for an
 	// instance. If not set, the default value is "off". Can only be enabled if
-	// track_active_queries is enabled.
+	// track_active_queries is enabled. Deprecated: Use track_active_queries
+	// instead.
 	TrackActiveQueryPlan bool `json:"trackActiveQueryPlan,omitempty"`
 	// TrackClientAddress: Track client address for an instance. If not set,
 	// default value is "off".
@@ -5627,6 +5648,7 @@ type SupportedDatabaseFlag struct {
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
 	//   "POSTGRES_18" - The database version is Postgres 18.
+	//   "POSTGRES_19" - The database version is Postgres 19.
 	SupportedDbVersions []string `json:"supportedDbVersions,omitempty"`
 	// Possible values:
 	//   "VALUE_TYPE_UNSPECIFIED" - This is an unknown flag type.
@@ -5801,6 +5823,7 @@ type UpgradeClusterRequest struct {
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
 	//   "POSTGRES_18" - The database version is Postgres 18.
+	//   "POSTGRES_19" - The database version is Postgres 19.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5874,6 +5897,7 @@ type UpgradeClusterStatus struct {
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
 	//   "POSTGRES_18" - The database version is Postgres 18.
+	//   "POSTGRES_19" - The database version is Postgres 19.
 	SourceVersion string `json:"sourceVersion,omitempty"`
 	// Stages: Status of all upgrade stages.
 	Stages []*StageStatus `json:"stages,omitempty"`
@@ -5899,6 +5923,7 @@ type UpgradeClusterStatus struct {
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
 	//   "POSTGRES_18" - The database version is Postgres 18.
+	//   "POSTGRES_19" - The database version is Postgres 19.
 	TargetVersion string `json:"targetVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cancellable") to
 	// unconditionally include in API requests. By default, fields with empty or

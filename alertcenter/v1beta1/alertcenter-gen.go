@@ -1444,6 +1444,8 @@ type KeyServiceError struct {
 	//   "UNSUPPORTED_ALGORITHM" - SMIME only: the algorithm name in the response
 	// is not supported by the client.
 	//   "FETCH_REQUEST_ERROR" - Fetch request on the client has failed.
+	//   "SERVER_SIDE_FETCH_REQUEST_ERROR" - Fetch request from the Google server
+	// to the key service has failed.
 	ErrorInfo string `json:"errorInfo,omitempty"`
 	// HttpResponseCode: HTTP response status code from the key service.
 	HttpResponseCode int64 `json:"httpResponseCode,omitempty,string"`

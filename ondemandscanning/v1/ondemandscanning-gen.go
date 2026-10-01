@@ -2675,7 +2675,9 @@ type PackageData struct {
 	// package. This can be a Docker image, an SBOM attachment, or both, for
 	// example.
 	IngestionSources []*IngestionSource `json:"ingestionSources,omitempty"`
-	LayerDetails     *LayerDetails      `json:"layerDetails,omitempty"`
+	// LayerDetails: Deprecated: Layer details are captured per file location in
+	// FileLocation.layer_details. Top-level layer details is not persisted.
+	LayerDetails *LayerDetails `json:"layerDetails,omitempty"`
 	// Licenses: The list of licenses found that are related to a given package.
 	// Note that licenses may also be stored on the BinarySourceInfo. If there is
 	// no BinarySourceInfo (because there's no concept of source vs binary), then

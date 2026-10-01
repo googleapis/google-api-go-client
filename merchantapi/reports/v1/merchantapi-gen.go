@@ -514,7 +514,7 @@ type CompetitiveVisibilityCompetitorView struct {
 	// Date: Date of this row. A condition on `date` is required in the `WHERE`
 	// clause.
 	Date *Date `json:"date,omitempty"`
-	// Domain: Domain of your competitor or your domain, if 'is_your_domain' is
+	// Domain: Domain of your competitor or your domain, if `is_your_domain` is
 	// true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE'
 	// clause.
 	Domain string `json:"domain,omitempty"`
@@ -616,7 +616,7 @@ type CompetitiveVisibilityTopMerchantView struct {
 	// Date: Date of this row. Cannot be selected in the `SELECT` clause. A
 	// condition on `date` is required in the `WHERE` clause.
 	Date *Date `json:"date,omitempty"`
-	// Domain: Domain of your competitor or your domain, if 'is_your_domain' is
+	// Domain: Domain of your competitor or your domain, if `is_your_domain` is
 	// true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE'
 	// clause.
 	Domain string `json:"domain,omitempty"`

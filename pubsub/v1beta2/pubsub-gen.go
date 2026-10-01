@@ -656,6 +656,36 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PublishOperation: Telemetry about a `Publish` operation which may or may not
+// be common across individual RPCs.
+type PublishOperation struct {
+	// HedgedAttemptCount: Optional. If the publisher client is using publish
+	// hedging, provides the attempt count for the hedge (starting at 1). A value
+	// of 0 indicates that the request was not hedged.
+	HedgedAttemptCount int64 `json:"hedgedAttemptCount,omitempty"`
+	// PublishStartTime: Optional. Time at which the `publish()` call was initiated
+	// in the client library, meaning across all RPC retry attempts, see grpc
+	// retries (https://grpc.io/docs/guides/retry/). Provides a sense of the
+	// end-to-end publish duration from the client perspective, across retries.
+	PublishStartTime string `json:"publishStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HedgedAttemptCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HedgedAttemptCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublishOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod PublishOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PublishRequest: Request for the Publish method.
 type PublishRequest struct {
 	// Messages: The messages to publish.
@@ -702,6 +732,31 @@ type PublishResponse struct {
 
 func (s PublishResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PubsubClientTelemetry: Client-side telemetry about Pub/Sub requests, useful
+// for debugging purposes. If the client opts to provide this information, it
+// will be passed as a serialized proto in the `x-goog-pubsub-client-telemetry`
+// header.
+type PubsubClientTelemetry struct {
+	// PublishOperation: Optional. Telemetry about a `Publish` operation.
+	PublishOperation *PublishOperation `json:"publishOperation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PublishOperation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PublishOperation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PubsubClientTelemetry) MarshalJSON() ([]byte, error) {
+	type NoMethod PubsubClientTelemetry
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

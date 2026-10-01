@@ -184,6 +184,81 @@ type DocumentsService struct {
 	s *Service
 }
 
+// AcceptSuggestionRequest: Accepts a suggestion. Returns a 403 forbidden error
+// if the requesting user does not have edit access to the document. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type AcceptSuggestionRequest struct {
+	// SuggestionId: The ID of the suggestion.
+	SuggestionId string `json:"suggestionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SuggestionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SuggestionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AcceptSuggestionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AcceptSuggestionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddCommentReplyRequest: Inserts a reply Post into a CommentThread or
+// SuggestionThread. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type AddCommentReplyRequest struct {
+	// CommentId: The ID of the CommentThread to add the reply to.
+	CommentId string `json:"commentId,omitempty"`
+	// Post: The Post representing the reply.
+	Post *Post `json:"post,omitempty"`
+	// SuggestionId: The ID of the SuggestionThread to add the reply to.
+	SuggestionId string `json:"suggestionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddCommentReplyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddCommentReplyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddCommentReplyResponse: Response message for adding a reply. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type AddCommentReplyResponse struct {
+	// Post: The newly-inserted reply Post.
+	Post *Post `json:"post,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Post") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Post") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddCommentReplyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AddCommentReplyResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AddDocumentTabRequest: Adds a document tab. When a tab is added at a given
 // index, all subsequent tabs' indexes are incremented.
 type AddDocumentTabRequest struct {
@@ -347,25 +422,42 @@ func (s BatchUpdateDocumentRequest) MarshalJSON() ([]byte, error) {
 // BatchUpdateDocumentResponse: Response message from a BatchUpdateDocument
 // request.
 type BatchUpdateDocumentResponse struct {
+	// CommentUpdateState: Whether comment updates were applied in the batch
+	// request. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	//
+	// Possible values:
+	//   "COMMENT_UPDATE_STATE_UNSPECIFIED" - The status of comment updates is
+	// unspecified.
+	//   "NO_UPDATES_REQUESTED" - No comment updates were requested in the batch
+	// request.
+	//   "ALL_SAVED" - All requested comment updates were applied in the batch
+	// request.
+	//   "ALL_FAILED_UNKNOWN_REASON" - All requested comment updates failed.
+	CommentUpdateState string `json:"commentUpdateState,omitempty"`
 	// DocumentId: The ID of the document to which the updates were applied to.
 	DocumentId string `json:"documentId,omitempty"`
 	// Replies: The reply of the updates. This maps 1:1 with the updates, although
 	// replies to some requests may be empty.
 	Replies []*Response `json:"replies,omitempty"`
+	// SuggestionResponses: The suggestions which were affected by each update.
+	// This maps 1:1 with the updates. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	SuggestionResponses []*SuggestionResponse `json:"suggestionResponses,omitempty"`
 	// WriteControl: The updated write control after applying the request.
 	WriteControl *WriteControl `json:"writeControl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "CommentUpdateState") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CommentUpdateState") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -533,6 +625,74 @@ type ColumnBreak struct {
 
 func (s ColumnBreak) MarshalJSON() ([]byte, error) {
 	type NoMethod ColumnBreak
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CommentAnchor: One or more locations in the document that are tied to
+// CommentThreads with the same anchorId. Note: Multiple anchors may refer to
+// the same location. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type CommentAnchor struct {
+	// AnchorId: The ID of the comment anchor.
+	AnchorId string `json:"anchorId,omitempty"`
+	// Ranges: A collection of Ranges in the document which are tied to this
+	// anchor.
+	Ranges []*Range `json:"ranges,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnchorId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnchorId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommentAnchor) MarshalJSON() ([]byte, error) {
+	type NoMethod CommentAnchor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CommentThread: Represents a single comment thread. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type CommentThread struct {
+	// AnchorId: The ID of the CommentAnchor in the document that this thread is
+	// tied to. Multiple comment threads may be anchored to the same CommentAnchor.
+	AnchorId string `json:"anchorId,omitempty"`
+	// CommentId: The unique ID of the comment thread.
+	CommentId string `json:"commentId,omitempty"`
+	// HeadPost: The first post in the thread.
+	HeadPost *Post `json:"headPost,omitempty"`
+	// PlainTextQuote: The quoted text from the document when the comment was
+	// created, formatted as plain-text.
+	PlainTextQuote string `json:"plainTextQuote,omitempty"`
+	// Replies: Replies to the head post.
+	Replies []*Post `json:"replies,omitempty"`
+	// Status: Whether the thread is open or resolved.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Default value. This value is unused.
+	//   "OPEN" - The comment thread is open.
+	//   "RESOLVED" - The comment thread is resolved.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnchorId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnchorId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommentThread) MarshalJSON() ([]byte, error) {
+	type NoMethod CommentThread
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1082,6 +1242,60 @@ func (s DateElementPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeleteCommentReplyRequest: Deletes a reply Post from a CommentThread or
+// SuggestionThread. Returns a 400 bad request error if: - The requesting user
+// is not the author of the post. - The reply post contains an action. - The
+// reply post contains an assignee. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type DeleteCommentReplyRequest struct {
+	// CommentId: The ID of the CommentThread which the post belongs to.
+	CommentId string `json:"commentId,omitempty"`
+	// PostId: The ID of the reply Post being deleted.
+	PostId string `json:"postId,omitempty"`
+	// SuggestionId: The ID of the SuggestionThread which the post belongs to.
+	SuggestionId string `json:"suggestionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteCommentReplyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteCommentReplyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteCommentRequest: Deletes a CommentThread. Returns a 400 bad request
+// error if the requesting user is not the author of the headPost. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type DeleteCommentRequest struct {
+	// CommentId: The ID of the CommentThread that is being deleted.
+	CommentId string `json:"commentId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteCommentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteCommentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeleteContentRangeRequest: Deletes content from the document.
 type DeleteContentRangeRequest struct {
 	// Range: The range of content to delete. Deleting text that crosses a
@@ -1268,6 +1482,30 @@ func (s DeletePositionedObjectRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeleteSuggestionRequest: Deletes a suggestion. Returns a 403 forbidden error
+// if the requesting user is not the author of the suggestion. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type DeleteSuggestionRequest struct {
+	// SuggestionId: The ID of the suggestion.
+	SuggestionId string `json:"suggestionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SuggestionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SuggestionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteSuggestionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteSuggestionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeleteTabRequest: Deletes a tab. If the tab has child tabs, they are deleted
 // as well.
 type DeleteTabRequest struct {
@@ -1393,6 +1631,29 @@ type Document struct {
 	// `false` or unset, this field contains information about the first tab in the
 	// document.
 	Body *Body `json:"body,omitempty"`
+	// Comments: Output only. The comments associated with the document. Only
+	// populated if the commentsViewMode parameter is set to require comments (such
+	// as `COMMENTS_VIEW_MODE_INCLUDED`). Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	Comments []*CommentThread `json:"comments,omitempty"`
+	// CommentsViewMode: Output only. The comments view mode applied to the
+	// document. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	//
+	// Possible values:
+	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified.
+	// COMMENTS_VIEW_MODE_OMITTED is applied.
+	//   "COMMENTS_VIEW_MODE_DEFAULT_FOR_CURRENT_ACCESS" - The CommentsViewMode
+	// applied to the returned document depends on the user's current access level.
+	// If the user only has view access, COMMENTS_VIEW_MODE_OMITTED is applied.
+	// Otherwise, COMMENTS_VIEW_MODE_INCLUDED is applied.
+	//   "COMMENTS_VIEW_MODE_OMITTED" - The returned document has comments omitted.
+	//   "COMMENTS_VIEW_MODE_INCLUDED" - The returned document has comments
+	// included. Requests to retrieve a document using this mode will return a 403
+	// error if the user does not have permission to view comments. When set,
+	// suggestions_view_mode must also be set to SUGGESTIONS_INLINE. Returns a 400
+	// bad request error otherwise.
+	CommentsViewMode string `json:"commentsViewMode,omitempty"`
 	// DocumentId: Output only. The ID of the document.
 	DocumentId string `json:"documentId,omitempty"`
 	// DocumentStyle: Output only. The style of the document. Legacy field:
@@ -1477,6 +1738,11 @@ type Document struct {
 	// is set to `true`. If `false` or unset, this field contains information about
 	// the first tab in the document.
 	SuggestedNamedStylesChanges map[string]SuggestedNamedStyles `json:"suggestedNamedStylesChanges,omitempty"`
+	// Suggestions: Output only. The suggestions associated with the document. Only
+	// populated if the commentsViewMode parameter is set to require comments (such
+	// as `COMMENTS_VIEW_MODE_INCLUDED`). Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	Suggestions []*SuggestionThread `json:"suggestions,omitempty"`
 	// SuggestionsViewMode: Output only. The suggestions view mode applied to the
 	// document. Note: When editing a document, changes must be based on a document
 	// with SUGGESTIONS_INLINE.
@@ -1744,6 +2010,11 @@ func (s DocumentStyleSuggestionState) MarshalJSON() ([]byte, error) {
 type DocumentTab struct {
 	// Body: The main body of the document tab.
 	Body *Body `json:"body,omitempty"`
+	// CommentAnchors: The comment anchors in a document tab, keyed by anchor ID.
+	// Only populated if the commentsViewMode parameter is set to require comments
+	// (such as `COMMENTS_VIEW_MODE_INCLUDED`). Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	CommentAnchors map[string]CommentAnchor `json:"commentAnchors,omitempty"`
 	// DocumentStyle: The style of the document tab.
 	DocumentStyle *DocumentStyle `json:"documentStyle,omitempty"`
 	// Footers: The footers in the document tab, keyed by footer ID.
@@ -2423,6 +2694,61 @@ type InlineObjectPropertiesSuggestionState struct {
 
 func (s InlineObjectPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 	type NoMethod InlineObjectPropertiesSuggestionState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InsertCommentRequest: Inserts a CommentThread into the document. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type InsertCommentRequest struct {
+	// AssigneeEmailAddress: Optional. The email address of the assignee of the
+	// comment. Leave empty for a non-assigned comment. May not exceed 2048 UTF-8
+	// code units.
+	AssigneeEmailAddress string `json:"assigneeEmailAddress,omitempty"`
+	// Content: The text of the comment, as plain text. This text content will be
+	// handled similarly to comments created in the Docs editor. It will have
+	// similar behaviors for formatting, notifications, etc. This field cannot be
+	// empty, and must not exceed 2048 UTF-8 code units.
+	Content string `json:"content,omitempty"`
+	// Range: The Range in the document that is tied to this comment.
+	Range *Range `json:"range,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssigneeEmailAddress") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssigneeEmailAddress") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertCommentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertCommentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InsertCommentResponse: Response message for inserting a comment. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type InsertCommentResponse struct {
+	// CommentThread: The newly-inserted comment thread.
+	CommentThread *CommentThread `json:"commentThread,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentThread") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentThread") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertCommentResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertCommentResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4102,6 +4428,112 @@ func (s PositionedObjectPropertiesSuggestionState) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Post: Represents a single post in a comment or suggestion thread. Developer
+// Preview (https://developers.google.com/workspace/preview).
+type Post struct {
+	// AssigneeEmail: Optional. The email of the user who is being newly assigned
+	// to the thread as part of this post. Returns a 400 bad request error if: -
+	// The parent thread is a CommentThread whose headPost does not have an
+	// assignee. - The parent thread is a SuggestionThread. - commentAction is
+	// specified as `RESOLVE` or `REOPEN`. - `assigneeEmail` exceeds 2048 UTF-8
+	// code units.
+	AssigneeEmail string `json:"assigneeEmail,omitempty"`
+	// Author: Output only. The user who created the post.
+	Author *PostAuthor `json:"author,omitempty"`
+	// CommentAction: Optional. The action type for comment posts.
+	//
+	// Possible values:
+	//   "COMMENT_ACTION_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "NO_COMMENT_ACTION_CHANGE" - No action change in this post.
+	//   "RESOLVE" - This post resolves the thread.
+	//   "REOPEN" - This post reopens the thread.
+	CommentAction string `json:"commentAction,omitempty"`
+	// Content: The content of the post. Required to be non-empty if commentAction
+	// is not `RESOLVE` or `REOPEN`. This text content will be handled similarly to
+	// comments created in the Docs editor. It will have similar behaviors for
+	// formatting, notifications, etc. May not exceed 2048 UTF-8 code units.
+	Content string `json:"content,omitempty"`
+	// ContentHtml: Output only. The content of the post as HTML.
+	ContentHtml string `json:"contentHtml,omitempty"`
+	// CreateTime: Output only. The time the post was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Deleted: Output only. Whether the post is deleted. If `true`, content and
+	// author fields will be empty.
+	Deleted bool `json:"deleted,omitempty"`
+	// FromCopiedDocument: Output only. Whether the post is from a copied document.
+	// This field cannot be set directly by callers.
+	FromCopiedDocument bool `json:"fromCopiedDocument,omitempty"`
+	// FromDocumentComparison: Output only. Whether the post is from a document
+	// comparison. This field cannot be set directly by callers.
+	FromDocumentComparison bool `json:"fromDocumentComparison,omitempty"`
+	// FromImportedDocument: Output only. Whether the post is from an imported
+	// document. This field cannot be set directly by callers.
+	FromImportedDocument bool `json:"fromImportedDocument,omitempty"`
+	// PostId: Output only. The unique ID of the post.
+	PostId string `json:"postId,omitempty"`
+	// SuggestionAction: Output only. The action type for suggestion posts.
+	//
+	// Possible values:
+	//   "SUGGESTION_ACTION_TYPE_UNSPECIFIED" - Default value. This value is
+	// unused.
+	//   "NO_SUGGESTION_ACTION_CHANGE" - No action change in this post.
+	//   "ACCEPT" - This post accepts the suggestion.
+	//   "REJECT" - This post rejects the suggestion.
+	SuggestionAction string `json:"suggestionAction,omitempty"`
+	// UpdateTime: Output only. The time the post was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssigneeEmail") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssigneeEmail") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Post) MarshalJSON() ([]byte, error) {
+	type NoMethod Post
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PostAuthor: Represents a user who authored a comment or suggestion post.
+// Developer Preview (https://developers.google.com/workspace/preview).
+type PostAuthor struct {
+	// Anonymous: Whether the user is anonymous.
+	Anonymous bool `json:"anonymous,omitempty"`
+	// DisplayName: The display name of the user. May be absent if the author is
+	// anonymous.
+	DisplayName string `json:"displayName,omitempty"`
+	// Me: Whether the user is the authenticated user making the request.
+	Me bool `json:"me,omitempty"`
+	// User: The resource name of the post author user, which can also be used to
+	// identify the user in the Google People API
+	// (https://developers.google.com/people/api/rest/v1/people). Format:
+	// `users/{user}`. Will not be populated if the anonymous field is `true` or if
+	// the post is from an imported document.
+	User string `json:"user,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Anonymous") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Anonymous") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PostAuthor) MarshalJSON() ([]byte, error) {
+	type NoMethod PostAuthor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Range: Specifies a contiguous range of text.
 type Range struct {
 	// EndIndex: The zero-based end index of this range, exclusive, in UTF-16 code
@@ -4137,6 +4569,31 @@ type Range struct {
 
 func (s Range) MarshalJSON() ([]byte, error) {
 	type NoMethod Range
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RejectSuggestionRequest: Rejects a suggestion. Returns a 403 forbidden error
+// if the requesting user does not have edit access to the document and is not
+// the author of the suggestion. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type RejectSuggestionRequest struct {
+	// SuggestionId: The ID of the suggestion.
+	SuggestionId string `json:"suggestionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SuggestionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SuggestionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RejectSuggestionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RejectSuggestionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4289,6 +4746,12 @@ func (s ReplaceNamedRangeContentRequest) MarshalJSON() ([]byte, error) {
 
 // Request: A single update to apply to a document.
 type Request struct {
+	// AcceptSuggestion: Accepts a suggestion. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	AcceptSuggestion *AcceptSuggestionRequest `json:"acceptSuggestion,omitempty"`
+	// AddCommentReply: Adds a reply to a CommentThread or SuggestionThread.
+	// Developer Preview (https://developers.google.com/workspace/preview).
+	AddCommentReply *AddCommentReplyRequest `json:"addCommentReply,omitempty"`
 	// AddDocumentTab: Adds a document tab.
 	AddDocumentTab *AddDocumentTabRequest `json:"addDocumentTab,omitempty"`
 	// CreateFooter: Creates a footer.
@@ -4301,6 +4764,13 @@ type Request struct {
 	CreateNamedRange *CreateNamedRangeRequest `json:"createNamedRange,omitempty"`
 	// CreateParagraphBullets: Creates bullets for paragraphs.
 	CreateParagraphBullets *CreateParagraphBulletsRequest `json:"createParagraphBullets,omitempty"`
+	// DeleteComment: Deletes a CommentThread. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	DeleteComment *DeleteCommentRequest `json:"deleteComment,omitempty"`
+	// DeleteCommentReply: Deletes a reply Post from a CommentThread or
+	// SuggestionThread. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	DeleteCommentReply *DeleteCommentReplyRequest `json:"deleteCommentReply,omitempty"`
 	// DeleteContentRange: Deletes content from the document.
 	DeleteContentRange *DeleteContentRangeRequest `json:"deleteContentRange,omitempty"`
 	// DeleteFooter: Deletes a footer from the document.
@@ -4313,12 +4783,18 @@ type Request struct {
 	DeleteParagraphBullets *DeleteParagraphBulletsRequest `json:"deleteParagraphBullets,omitempty"`
 	// DeletePositionedObject: Deletes a positioned object from the document.
 	DeletePositionedObject *DeletePositionedObjectRequest `json:"deletePositionedObject,omitempty"`
+	// DeleteSuggestion: Deletes a suggestion. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	DeleteSuggestion *DeleteSuggestionRequest `json:"deleteSuggestion,omitempty"`
 	// DeleteTab: Deletes a document tab.
 	DeleteTab *DeleteTabRequest `json:"deleteTab,omitempty"`
 	// DeleteTableColumn: Deletes a column from a table.
 	DeleteTableColumn *DeleteTableColumnRequest `json:"deleteTableColumn,omitempty"`
 	// DeleteTableRow: Deletes a row from a table.
 	DeleteTableRow *DeleteTableRowRequest `json:"deleteTableRow,omitempty"`
+	// InsertComment: Inserts a CommentThread into the document. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	InsertComment *InsertCommentRequest `json:"insertComment,omitempty"`
 	// InsertDate: Inserts a date.
 	InsertDate *InsertDateRequest `json:"insertDate,omitempty"`
 	// InsertInlineImage: Inserts an inline image at the specified location.
@@ -4343,6 +4819,9 @@ type Request struct {
 	MergeTableCells *MergeTableCellsRequest `json:"mergeTableCells,omitempty"`
 	// PinTableHeaderRows: Updates the number of pinned header rows in a table.
 	PinTableHeaderRows *PinTableHeaderRowsRequest `json:"pinTableHeaderRows,omitempty"`
+	// RejectSuggestion: Rejects a suggestion. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	RejectSuggestion *RejectSuggestionRequest `json:"rejectSuggestion,omitempty"`
 	// ReplaceAllText: Replaces all instances of the specified text.
 	ReplaceAllText *ReplaceAllTextRequest `json:"replaceAllText,omitempty"`
 	// ReplaceImage: Replaces an image in the document.
@@ -4351,6 +4830,10 @@ type Request struct {
 	ReplaceNamedRangeContent *ReplaceNamedRangeContentRequest `json:"replaceNamedRangeContent,omitempty"`
 	// UnmergeTableCells: Unmerges cells in a table.
 	UnmergeTableCells *UnmergeTableCellsRequest `json:"unmergeTableCells,omitempty"`
+	// UpdateCommentPost: Updates an existing post (head post or reply) of a
+	// CommentThread or SuggestionThread. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	UpdateCommentPost *UpdateCommentPostRequest `json:"updateCommentPost,omitempty"`
 	// UpdateDocumentStyle: Updates the style of the document.
 	UpdateDocumentStyle *UpdateDocumentStyleRequest `json:"updateDocumentStyle,omitempty"`
 	// UpdateDocumentTabProperties: Updates the properties of a document tab.
@@ -4369,13 +4852,13 @@ type Request struct {
 	UpdateTableRowStyle *UpdateTableRowStyleRequest `json:"updateTableRowStyle,omitempty"`
 	// UpdateTextStyle: Updates the text style at the specified range.
 	UpdateTextStyle *UpdateTextStyleRequest `json:"updateTextStyle,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AddDocumentTab") to
+	// ForceSendFields is a list of field names (e.g. "AcceptSuggestion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AddDocumentTab") to include in
+	// NullFields is a list of field names (e.g. "AcceptSuggestion") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4389,6 +4872,9 @@ func (s Request) MarshalJSON() ([]byte, error) {
 
 // Response: A single response from an update.
 type Response struct {
+	// AddCommentReply: The result of adding a reply to a comment or suggestion.
+	// Developer Preview (https://developers.google.com/workspace/preview).
+	AddCommentReply *AddCommentReplyResponse `json:"addCommentReply,omitempty"`
 	// AddDocumentTab: The result of adding a document tab.
 	AddDocumentTab *AddDocumentTabResponse `json:"addDocumentTab,omitempty"`
 	// CreateFooter: The result of creating a footer.
@@ -4399,6 +4885,9 @@ type Response struct {
 	CreateHeader *CreateHeaderResponse `json:"createHeader,omitempty"`
 	// CreateNamedRange: The result of creating a named range.
 	CreateNamedRange *CreateNamedRangeResponse `json:"createNamedRange,omitempty"`
+	// InsertComment: The result of inserting a comment. Developer Preview
+	// (https://developers.google.com/workspace/preview).
+	InsertComment *InsertCommentResponse `json:"insertComment,omitempty"`
 	// InsertInlineImage: The result of inserting an inline image.
 	InsertInlineImage *InsertInlineImageResponse `json:"insertInlineImage,omitempty"`
 	// InsertInlineSheetsChart: The result of inserting an inline Google Sheets
@@ -4406,13 +4895,13 @@ type Response struct {
 	InsertInlineSheetsChart *InsertInlineSheetsChartResponse `json:"insertInlineSheetsChart,omitempty"`
 	// ReplaceAllText: The result of replacing text.
 	ReplaceAllText *ReplaceAllTextResponse `json:"replaceAllText,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AddDocumentTab") to
+	// ForceSendFields is a list of field names (e.g. "AddCommentReply") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AddDocumentTab") to include in
+	// NullFields is a list of field names (e.g. "AddCommentReply") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5293,6 +5782,85 @@ func (s SuggestedTextStyle) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SuggestionResponse: The suggestions which were affected by a given update.
+// Developer Preview (https://developers.google.com/workspace/preview).
+type SuggestionResponse struct {
+	// AcceptedSuggestionIds: The IDs of suggestions which were accepted during the
+	// update.
+	AcceptedSuggestionIds []string `json:"acceptedSuggestionIds,omitempty"`
+	// CreatedSuggestionIds: The IDs of suggestions which were created during the
+	// update.
+	CreatedSuggestionIds []string `json:"createdSuggestionIds,omitempty"`
+	// DeletedSuggestionIds: The IDs of suggestions which were deleted during the
+	// update.
+	DeletedSuggestionIds []string `json:"deletedSuggestionIds,omitempty"`
+	// RejectedSuggestionIds: The IDs of suggestions which were rejected during the
+	// update.
+	RejectedSuggestionIds []string `json:"rejectedSuggestionIds,omitempty"`
+	// UpdatedSummarySuggestionIds: The IDs of suggestions whose summaries were
+	// updated during the update.
+	UpdatedSummarySuggestionIds []string `json:"updatedSummarySuggestionIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceptedSuggestionIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceptedSuggestionIds") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuggestionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SuggestionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SuggestionThread: Represents a single suggestion thread. Suggestion threads
+// are created as a byproduct of saving changes to the document while in
+// suggestion mode, and cannot be created directly. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type SuggestionThread struct {
+	// HeadPost: The first post in the thread.
+	HeadPost *Post `json:"headPost,omitempty"`
+	// Replies: Replies to the head post.
+	Replies []*Post `json:"replies,omitempty"`
+	// Status: Whether the thread is open, accepted, or rejected.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Default value. This value is unused.
+	//   "OPEN" - The suggestion thread is open.
+	//   "ACCEPTED" - The suggestion thread is accepted.
+	//   "REJECTED" - The suggestion thread is rejected.
+	Status string `json:"status,omitempty"`
+	// SuggestionId: The unique ID of the suggestion.
+	SuggestionId string `json:"suggestionId,omitempty"`
+	// SummaryHtml: Summary of the suggested differences in the document, in HTML.
+	// May be empty.
+	SummaryHtml string `json:"summaryHtml,omitempty"`
+	// SummaryText: Summary of the suggested differences in the document, in plain
+	// text. May be empty.
+	SummaryText string `json:"summaryText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HeadPost") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HeadPost") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuggestionThread) MarshalJSON() ([]byte, error) {
+	type NoMethod SuggestionThread
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Tab: A tab in a document.
 type Tab struct {
 	// ChildTabs: The child tabs nested within this tab.
@@ -6075,6 +6643,41 @@ func (s UnmergeTableCellsRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UpdateCommentPostRequest: Updates a Post in a CommentThread or
+// SuggestionThread. Returns a 400 bad request error if: - The post is the
+// headPost of a SuggestionThread. - The requesting user is not the author of
+// the post. Developer Preview
+// (https://developers.google.com/workspace/preview).
+type UpdateCommentPostRequest struct {
+	// CommentId: The ID of the CommentThread which the post belongs to.
+	CommentId string `json:"commentId,omitempty"`
+	// Content: The new text of the comment, as plain text. This text content will
+	// be handled similarly to comments created in the Docs editor. It will have
+	// similar behaviors for formatting, notifications, etc. This field cannot be
+	// empty, and must not exceed 2048 UTF-8 code units.
+	Content string `json:"content,omitempty"`
+	// PostId: The ID of the post being updated.
+	PostId string `json:"postId,omitempty"`
+	// SuggestionId: The ID of the SuggestionThread which the post belongs to.
+	SuggestionId string `json:"suggestionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommentId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateCommentPostRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateCommentPostRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpdateDocumentStyleRequest: Updates the DocumentStyle.
 type UpdateDocumentStyleRequest struct {
 	// DocumentStyle: The styles to set on the document. Certain document style
@@ -6448,6 +7051,17 @@ type WriteControl struct {
 	// as a target revision for several minutes after it's read, but for frequently
 	// edited documents this window might be shorter.
 	TargetRevisionId string `json:"targetRevisionId,omitempty"`
+	// WriteMode: How the request updates should be applied to the document. If
+	// unspecified, the request updates will be applied as normal edits. Developer
+	// Preview (https://developers.google.com/workspace/preview).
+	//
+	// Possible values:
+	//   "WRITE_MODE_UNSPECIFIED" - The write mode is unspecified. Defaults to EDIT
+	// behavior.
+	//   "EDIT" - Apply all updates as normal edits.
+	//   "SUGGEST" - Apply all updates as suggestions. [Developer
+	// Preview](https://developers.google.com/workspace/preview).
+	WriteMode string `json:"writeMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequiredRevisionId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6695,6 +7309,44 @@ type DocumentsGetCall struct {
 func (r *DocumentsService) Get(documentId string) *DocumentsGetCall {
 	c := &DocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.documentId = documentId
+	return c
+}
+
+// CommentsViewMode sets the optional parameter "commentsViewMode": The
+// comments view mode to apply to the document. This allows viewing the
+// document with comments omitted or included. If one is not specified,
+// COMMENTS_VIEW_MODE_OMITTED is used. If you set comments_view_mode to any
+// value, you must also set include_tabs_content to `true` or use a field mask
+// that references the Document.tabs field (or any subfield). If you set
+// comments_view_mode to COMMENTS_VIEW_MODE_INCLUDED, you must also explicitly
+// set suggestions_view_mode to SUGGESTIONS_INLINE. If you set
+// comments_view_mode to COMMENTS_VIEW_MODE_INCLUDED or
+// COMMENTS_VIEW_MODE_DEFAULT_FOR_CURRENT_ACCESS, you may not set
+// suggestions_view_mode to PREVIEW_WITHOUT_SUGGESTIONS or
+// PREVIEW_SUGGESTIONS_ACCEPTED. Developer Preview
+// (https://developers.google.com/workspace/preview).
+//
+// Possible values:
+//
+//	"COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified.
+//
+// COMMENTS_VIEW_MODE_OMITTED is applied.
+//
+//	"COMMENTS_VIEW_MODE_DEFAULT_FOR_CURRENT_ACCESS" - The CommentsViewMode
+//
+// applied to the returned document depends on the user's current access level.
+// If the user only has view access, COMMENTS_VIEW_MODE_OMITTED is applied.
+// Otherwise, COMMENTS_VIEW_MODE_INCLUDED is applied.
+//
+//	"COMMENTS_VIEW_MODE_OMITTED" - The returned document has comments omitted.
+//	"COMMENTS_VIEW_MODE_INCLUDED" - The returned document has comments
+//
+// included. Requests to retrieve a document using this mode will return a 403
+// error if the user does not have permission to view comments. When set,
+// suggestions_view_mode must also be set to SUGGESTIONS_INLINE. Returns a 400
+// bad request error otherwise.
+func (c *DocumentsGetCall) CommentsViewMode(commentsViewMode string) *DocumentsGetCall {
+	c.urlParams_.Set("commentsViewMode", commentsViewMode)
 	return c
 }
 

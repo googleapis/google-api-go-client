@@ -77,6 +77,7 @@ var (
 var skipAPIGeneration = map[string]bool{
 	"integrations:v1alpha":                true,
 	"integrations:v1":                     true,
+	"integrations:v2":                     true,
 	"sql:v1beta4":                         true,
 	"datalineage:v1":                      true,
 	"aiplatform:v1beta1":                  true,

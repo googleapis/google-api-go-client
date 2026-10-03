@@ -90,6 +90,9 @@ func shouldRetry(status int, err error) bool {
 type RetryConfig struct {
 	Backoff     *gax.Backoff
 	ShouldRetry func(err error) bool
+	// RequestTimeout is a per-attempt/request timeout. If a request attempt takes
+	// longer than this duration, it is cancelled and retried if retryable.
+	RequestTimeout time.Duration
 }
 
 // Get a new backoff object based on the configured values.

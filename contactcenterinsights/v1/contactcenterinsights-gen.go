@@ -1719,8 +1719,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata struct {
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -1760,8 +1761,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest struct {
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10920,8 +10922,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata st
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -10961,8 +10964,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest str
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16919,8 +16923,9 @@ type GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsMetadata stru
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -16960,8 +16965,9 @@ type GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsRequest struc
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or

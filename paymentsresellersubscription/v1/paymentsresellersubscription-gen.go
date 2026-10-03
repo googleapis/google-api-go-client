@@ -1570,6 +1570,16 @@ type SubscriptionLineItem struct {
 	// OneTimeRecurrenceDetails: Output only. Details only set for a ONE_TIME
 	// recurrence line item.
 	OneTimeRecurrenceDetails *SubscriptionLineItemOneTimeRecurrenceDetails `json:"oneTimeRecurrenceDetails,omitempty"`
+	// PlanType: Optional. Output only. The plan type of the line item.
+	//
+	// Possible values:
+	//   "LINE_ITEM_PLAN_TYPE_UNSPECIFIED" - The line item plan type is
+	// unspecified.
+	//   "LINE_ITEM_PLAN_TYPE_BASE" - The line item is the base plan in the
+	// subscription.
+	//   "LINE_ITEM_PLAN_TYPE_ADDON" - The line item is an add-on to the
+	// subscription.
+	PlanType string `json:"planType,omitempty"`
 	// Product: Required. Product resource name that identifies the product
 	// associated with this line item. The format is
 	// 'partners/{partner_id}/products/{product_id}'.

@@ -6248,7 +6248,7 @@
       }
     }
   },
-  "revision": "20260928",
+  "revision": "20260930",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudCesV1mainAgentTransfer": {
@@ -7309,7 +7309,8 @@
           "type": "array"
         },
         "relabel": {
-          "description": "Output only. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Output only. Deprecated: Use `request.annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -7347,7 +7348,8 @@
           "type": "string"
         },
         "relabel": {
-          "description": "Optional. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use `annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "type": "boolean"
         }
       },
@@ -14500,7 +14502,8 @@
           "type": "array"
         },
         "relabel": {
-          "description": "Output only. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Output only. Deprecated: Use `request.annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -14538,7 +14541,8 @@
           "type": "string"
         },
         "relabel": {
-          "description": "Optional. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use `annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "type": "boolean"
         }
       },
@@ -19291,7 +19295,8 @@
           "type": "array"
         },
         "relabel": {
-          "description": "Output only. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Output only. Deprecated: Use `request.annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -19329,7 +19334,8 @@
           "type": "string"
         },
         "relabel": {
-          "description": "Optional. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use `annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "type": "boolean"
         }
       },

@@ -52,7 +52,7 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*http.Client, 
 		}
 		return client, endpoint, nil
 	}
-	trans, err := newTransport(ctx, defaultBaseTransport(ctx, clientCertSource, dialTLSContext), settings)
+	trans, err := newTransport(ctx, defaultBaseTransport(ctx, clientCertSource, dialTLSContext, settings), settings)
 	if err != nil {
 		return nil, "", err
 	}
@@ -250,7 +250,7 @@ func (t *parameterTransport) RoundTrip(req *http.Request) (*http.Response, error
 // defaultBaseTransport returns the base HTTP transport. It uses a default
 // transport, taking most defaults from http.DefaultTransport.
 // If TLSCertificate is available, set TLSClientConfig as well.
-func defaultBaseTransport(ctx context.Context, clientCertSource cert.Source, dialTLSContext func(context.Context, string, string) (net.Conn, error)) http.RoundTripper {
+func defaultBaseTransport(ctx context.Context, clientCertSource cert.Source, dialTLSContext func(context.Context, string, string) (net.Conn, error), settings *internal.DialSettings) http.RoundTripper {
 	// Copy http.DefaultTransport except for MaxIdleConnsPerHost setting,
 	// which is increased due to reported performance issues under load in the
 	// GCS client. Transport.Clone is only available in Go 1.13 and up.
@@ -270,20 +270,42 @@ func defaultBaseTransport(ctx context.Context, clientCertSource cert.Source, dia
 		trans.DialTLSContext = dialTLSContext
 	}
 
-	configureHTTP2(trans)
+	configureHTTP2(trans, settings)
 
 	return trans
 }
 
+// defaultHTTP2ReadIdleTimeout is the ReadIdleTimeout applied to the HTTP/2
+// transport when the caller does not override it. It allows broken idle
+// connections to be pruned more quickly, preventing the client from attempting
+// to re-use connections that will no longer work.
+const defaultHTTP2ReadIdleTimeout = 31 * time.Second
+
 // configureHTTP2 configures the ReadIdleTimeout HTTP/2 option for the
 // transport. This allows broken idle connections to be pruned more quickly,
 // preventing the client from attempting to re-use connections that will no
-// longer work.
-func configureHTTP2(trans *http.Transport) {
+// longer work. The timeout may be overridden via
+// option.WithHTTP2ReadIdleTimeout.
+//
+// It returns the configured *http2.Transport, or nil if the transport could
+// not be configured for HTTP/2.
+func configureHTTP2(trans *http.Transport, settings *internal.DialSettings) *http2.Transport {
 	http2Trans, err := http2.ConfigureTransports(trans)
-	if err == nil {
-		http2Trans.ReadIdleTimeout = time.Second * 31
+	if err != nil {
+		return nil
 	}
+	http2Trans.ReadIdleTimeout = http2ReadIdleTimeout(settings)
+	return http2Trans
+}
+
+// http2ReadIdleTimeout resolves the HTTP/2 ReadIdleTimeout to use, honoring a
+// caller-provided override from option.WithHTTP2ReadIdleTimeout and otherwise
+// falling back to the default.
+func http2ReadIdleTimeout(settings *internal.DialSettings) time.Duration {
+	if settings != nil && settings.HTTP2ReadIdleTimeout > 0 {
+		return settings.HTTP2ReadIdleTimeout
+	}
+	return defaultHTTP2ReadIdleTimeout
 }
 
 // fallbackBaseTransport is used in <go1.13 as well as in the rare case if

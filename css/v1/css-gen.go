@@ -406,10 +406,10 @@ type Attributes struct {
 	// Material: The material of which the item is made.
 	Material string `json:"material,omitempty"`
 	// MaxRating: Maximum rating score of the product. Required if `rating` is
-	// provided. This field is for an upcoming feature and is not yet used.
+	// provided.
 	MaxRating int64 `json:"maxRating,omitempty,string"`
 	// MinRating: Minimum rating score of the product. Required if `rating` is
-	// provided. This field is for an upcoming feature and is not yet used.
+	// provided.
 	MinRating int64 `json:"minRating,omitempty,string"`
 	// Mpn: Manufacturer Part Number (MPN
 	// (https://support.google.com/merchants/answer/188494#mpn)) of the item.
@@ -446,11 +446,10 @@ type Attributes struct {
 	// range of [`min_rating`, `max_rating`], inclusive. When displayed on the
 	// product page, this rating is normalized to a scale of [1, 5] with one
 	// decimal place. If provided, `review_count`, `min_rating`, and `max_rating`
-	// are also required. This field is for an upcoming feature and is not yet
-	// used.
+	// are also required.
 	Rating float64 `json:"rating,omitempty"`
 	// ReviewCount: Number of reviews of the product. Required if `rating` is
-	// provided. This field is for an upcoming feature and is not yet used.
+	// provided.
 	ReviewCount int64 `json:"reviewCount,omitempty,string"`
 	// Size: Size of the item. Only one value is allowed. For variants with
 	// different sizes, insert a separate product for each size with the same

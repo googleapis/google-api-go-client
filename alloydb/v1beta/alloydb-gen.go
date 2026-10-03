@@ -819,6 +819,9 @@ type Cluster struct {
 	EncryptionInfo *EncryptionInfo `json:"encryptionInfo,omitempty"`
 	// Etag: For Resource freshness validation (https://google.aip.dev/154)
 	Etag string `json:"etag,omitempty"`
+	// ExpressConfig: Optional. Configuration that allows the customer to create an
+	// AlloyDB Express cluster.
+	ExpressConfig *ExpressConfig `json:"expressConfig,omitempty"`
 	// GeminiConfig: Optional. Deprecated and unused. This field will be removed in
 	// the near future.
 	GeminiConfig *GeminiClusterConfig `json:"geminiConfig,omitempty"`
@@ -1650,6 +1653,29 @@ func (s ExportClusterRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExpressConfig: Configuration that allows the user to create an AlloyDB
+// Express cluster.
+type ExpressConfig struct {
+	// Enabled: Optional. Whether Express configuration is enabled for the cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExpressConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExpressConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FailoverInstanceRequest: Message for triggering failover on an Instance
 type FailoverInstanceRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
@@ -2134,6 +2160,11 @@ type Instance struct {
 	Nodes []*Node `json:"nodes,omitempty"`
 	// ObservabilityConfig: Configuration for observability.
 	ObservabilityConfig *ObservabilityInstanceConfig `json:"observabilityConfig,omitempty"`
+	// ObservabilityInstanceInfo: Output only. Instance level observability
+	// information, contains the effective values of observability settings for
+	// this instance, by merging customer's provided `ObservabilityInstanceConfig`
+	// with the Observability defaults.
+	ObservabilityInstanceInfo *ObservabilityInstanceInfo `json:"observabilityInstanceInfo,omitempty"`
 	// OutboundPublicIpAddresses: Output only. All outbound public IP addresses
 	// configured for the instance.
 	OutboundPublicIpAddresses []string `json:"outboundPublicIpAddresses,omitempty"`
@@ -2149,6 +2180,11 @@ type Instance struct {
 	PublicIpAddress string `json:"publicIpAddress,omitempty"`
 	// QueryInsightsConfig: Configuration for query insights.
 	QueryInsightsConfig *QueryInsightsInstanceConfig `json:"queryInsightsConfig,omitempty"`
+	// QueryInsightsInfo: Output only. Instance level Query Insights information,
+	// which is read-only and available in the output only. Contains the effective
+	// query insights settings for this instance, by merging customer's provided
+	// `QueryInsightsInstanceConfig` with the Query Insights defaults.
+	QueryInsightsInfo *QueryInsightsInstanceInfo `json:"queryInsightsInfo,omitempty"`
 	// ReadPoolConfig: Read pool instance configuration. This is required if the
 	// value of instanceType is READ_POOL.
 	ReadPoolConfig *ReadPoolConfig `json:"readPoolConfig,omitempty"`
@@ -2820,6 +2856,55 @@ func (s ObservabilityInstanceConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type ObservabilityInstanceInfo struct {
+	// AssistiveExperiencesEnabled: Output only. Whether assistive experiences are
+	// enabled for this AlloyDB instance.
+	AssistiveExperiencesEnabled bool `json:"assistiveExperiencesEnabled,omitempty"`
+	// Enabled: Output only. Observability feature status for an instance.
+	Enabled bool `json:"enabled,omitempty"`
+	// MaxQueryStringLength: Output only. Query string length. The default value is
+	// 10k.
+	MaxQueryStringLength int64 `json:"maxQueryStringLength,omitempty"`
+	// PreserveComments: Output only. Preserve comments in query string for an
+	// instance.
+	PreserveComments bool `json:"preserveComments,omitempty"`
+	// QueryPlansPerMinute: Output only. Number of query execution plans captured
+	// by Insights per minute for all queries combined.
+	QueryPlansPerMinute int64 `json:"queryPlansPerMinute,omitempty"`
+	// RecordApplicationTags: Output only. Record application tags for an instance.
+	RecordApplicationTags bool `json:"recordApplicationTags,omitempty"`
+	// TrackActiveQueries: Output only. Track actively running queries on the
+	// instance.
+	TrackActiveQueries bool `json:"trackActiveQueries,omitempty"`
+	// TrackActiveQueryPlan: Output only. Indicates whether to track active query
+	// plans for an instance. Deprecated: Use track_active_queries instead.
+	TrackActiveQueryPlan bool `json:"trackActiveQueryPlan,omitempty"`
+	// TrackClientAddress: Output only. Track client address for an instance.
+	TrackClientAddress bool `json:"trackClientAddress,omitempty"`
+	// TrackWaitEventTypes: Output only. Track wait event types during query
+	// execution for an instance.
+	TrackWaitEventTypes bool `json:"trackWaitEventTypes,omitempty"`
+	// TrackWaitEvents: Output only. Track wait events during query execution for
+	// an instance.
+	TrackWaitEvents bool `json:"trackWaitEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AssistiveExperiencesEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssistiveExperiencesEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ObservabilityInstanceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ObservabilityInstanceInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -3312,6 +3397,38 @@ type QueryInsightsInstanceConfig struct {
 
 func (s QueryInsightsInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryInsightsInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QueryInsightsInstanceInfo: Instance level Query Insights information, which
+// is read-only and available in the output only.
+type QueryInsightsInstanceInfo struct {
+	// Enabled: Output only. Whether Query Insights is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// QueryPlansPerMinute: Output only. Number of query execution plans captured
+	// per minute.
+	QueryPlansPerMinute int64 `json:"queryPlansPerMinute,omitempty"`
+	// QueryStringLength: Output only. Maximum query string length.
+	QueryStringLength int64 `json:"queryStringLength,omitempty"`
+	// RecordApplicationTags: Output only. Whether to record application tags.
+	RecordApplicationTags bool `json:"recordApplicationTags,omitempty"`
+	// RecordClientAddress: Output only. Whether to record client address.
+	RecordClientAddress bool `json:"recordClientAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QueryInsightsInstanceInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryInsightsInstanceInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

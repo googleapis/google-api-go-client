@@ -154,6 +154,9 @@ const (
 	// See and download any calendar you can access using your Google Calendar
 	CalendarReadonlyScope = "https://www.googleapis.com/auth/calendar.readonly"
 
+	// View and edit your Calendar settings
+	CalendarSettingsScope = "https://www.googleapis.com/auth/calendar.settings"
+
 	// View your Calendar settings
 	CalendarSettingsReadonlyScope = "https://www.googleapis.com/auth/calendar.settings.readonly"
 )
@@ -177,6 +180,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/calendar.events.readonly",
 		"https://www.googleapis.com/auth/calendar.freebusy",
 		"https://www.googleapis.com/auth/calendar.readonly",
+		"https://www.googleapis.com/auth/calendar.settings",
 		"https://www.googleapis.com/auth/calendar.settings.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.

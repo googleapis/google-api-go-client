@@ -1292,6 +1292,95 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MigrateSchemaRequest: Request message for `MigrateSchema`. Next tag: 7
+type MigrateSchemaRequest struct {
+	// ExecutionMode: Optional. Execution mode controlling DDL execution and ledger
+	// recording. Defaults to EXECUTE_AND_RECORD.
+	//
+	// Possible values:
+	//   "EXECUTION_MODE_UNSPECIFIED" - Default behavior. Evaluates to
+	// EXECUTE_AND_RECORD.
+	//   "EXECUTE_AND_RECORD" - Standard execution: executes DDL statements against
+	// the database catalog and records completed steps in
+	// `firebasesql.schema_migrations`.
+	//   "EXECUTE_ONLY" - Applies DDL statements against the database catalog
+	// without writing to the ledger. Used for maintenance scripts, temporary
+	// schema objects, and the internal declarative flow.
+	//   "RECORD_ONLY" - Records steps into `firebasesql.schema_migrations` without
+	// executing their DDL statements. Used for baselining pre-existing schemas or
+	// manual out-of-band changes (e.g. ledger-only).
+	ExecutionMode string `json:"executionMode,omitempty"`
+	// MigrationSteps: Required. Ordered migration steps from `./sql/migrations/`
+	// (or a single ad-hoc step). Backend compares submitted versions against
+	// `firebasesql.schema_migrations`: already-applied steps are verified for SQL
+	// immutability and skipped, while unapplied steps (`version >
+	// MAX(applied_version)`) are executed. All unapplied transactional steps in a
+	// single request execute atomically within one database transaction (BEGIN ...
+	// COMMIT): either every unapplied step commits and is recorded in the ledger,
+	// or the entire request rolls back. An unapplied step containing CREATE INDEX
+	// CONCURRENTLY or DROP INDEX CONCURRENTLY cannot be mixed with other unapplied
+	// steps and must be the sole unapplied step executed in the request.
+	MigrationSteps []*MigrationStep `json:"migrationSteps,omitempty"`
+	// ValidateOnly: Optional. When true, runs preflight validation (syntax,
+	// applied-step immutability, sequence ordering, CONCURRENTLY isolation, and
+	// SAVEPOINT catalog checks) without committing mutations to the database.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MigrateSchemaRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrateSchemaRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MigrationStep: An individual unit of migration work. Next tag: 4
+type MigrationStep struct {
+	// Name: Optional. Descriptive migration label (e.g. "create_accounts_table").
+	// If omitted, defaults to "adhoc".
+	Name string `json:"name,omitempty"`
+	// Sql: Required. Raw multi-statement SQL script. The backend splits it into
+	// individual statements before execution; callers do not pre-split. Required
+	// whenever the request executes or records DDL, which is every publicly
+	// available execution mode; omitting it returns INVALID_ARGUMENT.
+	Sql string `json:"sql,omitempty"`
+	// Version: Optional. Monotonic 14-digit UTC timestamp (YYYYMMDDHHMMSS),
+	// matching the timestamp prefix of the developer's migration filename.
+	// Constrained to `^[0-9]{14}$`. - When specified (file migrations): If
+	// `version` is already recorded in `firebasesql.schema_migrations`, the
+	// backend verifies that `sql` matches the recorded statements and skips
+	// execution. If `version` is unapplied, the backend validates `version >
+	// MAX(applied_version)` and records the value unchanged, so the ledger row and
+	// the on-disk filename stay identical. - When omitted (Console/ad-hoc):
+	// Backend auto-generates a 14-digit UTC timestamp.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MigrationStep) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrationStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is the
 // result of a network API call.
 type Operation struct {
@@ -5421,6 +5510,115 @@ func (c *ProjectsLocationsServicesSchemasListCall) Pages(ctx context.Context, f 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsServicesSchemasMigrateCall struct {
+	s                    *APIService
+	name                 string
+	migrateschemarequest *MigrateSchemaRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Migrate: Executes SQL migration steps against the active database schema.
+// This operation compares submitted migration steps against the schema
+// migration ledger (`firebasesql.schema_migrations`), executes unapplied DDL,
+// and records applied steps. It does NOT persist the GraphQL schema to the
+// control plane.
+//
+//   - name: Resource name of the target schema:
+//     projects/{project}/locations/{location}/services/{service}/schemas/{schema}
+//     Note: Only `schemas/main` is supported (singleton schema per service).
+func (r *ProjectsLocationsServicesSchemasService) Migrate(name string, migrateschemarequest *MigrateSchemaRequest) *ProjectsLocationsServicesSchemasMigrateCall {
+	c := &ProjectsLocationsServicesSchemasMigrateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.migrateschemarequest = migrateschemarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesSchemasMigrateCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesSchemasMigrateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesSchemasMigrateCall) Context(ctx context.Context) *ProjectsLocationsServicesSchemasMigrateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesSchemasMigrateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesSchemasMigrateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.migrateschemarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:migrate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.migrate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.schemas.migrate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesSchemasMigrateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.schemas.migrate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsServicesSchemasPatchCall struct {

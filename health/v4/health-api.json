@@ -789,8 +789,10 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
@@ -860,8 +862,10 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
@@ -919,8 +923,10 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
@@ -1012,8 +1018,10 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
@@ -1053,8 +1061,10 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
                     "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
@@ -1139,7 +1149,7 @@
       }
     }
   },
-  "revision": "20260928",
+  "revision": "20260929",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {

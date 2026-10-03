@@ -305,6 +305,9 @@ type AwsProperties struct {
 	// AccessRole: Authentication using Google owned service account to assume into
 	// customer's AWS IAM Role.
 	AccessRole *AwsAccessRole `json:"accessRole,omitempty"`
+	// CrossCloudCacheOptions: Optional. Configuration options for cross-cloud
+	// caching of data and metadata files.
+	CrossCloudCacheOptions *CrossCloudCacheOptions `json:"crossCloudCacheOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessRole") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -331,6 +334,9 @@ type AzureProperties struct {
 	// ClientId: Output only. The client id of the Azure Active Directory
 	// Application.
 	ClientId string `json:"clientId,omitempty"`
+	// CrossCloudCacheOptions: Optional. Configuration options for cross-cloud
+	// caching of data and metadata files.
+	CrossCloudCacheOptions *CrossCloudCacheOptions `json:"crossCloudCacheOptions,omitempty"`
 	// CustomerTenantId: The id of customer's directory that host the data.
 	CustomerTenantId string `json:"customerTenantId,omitempty"`
 	// FederatedApplicationClientId: The client ID of the user's Azure Active
@@ -1003,6 +1009,33 @@ func (s ConnectorConfigurationUsernamePassword) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CrossCloudCacheOptions: Options for caching cross-cloud data and metadata
+// files.
+type CrossCloudCacheOptions struct {
+	// Enabled: Optional. Whether cross-cloud caching is enabled. This only affects
+	// queries through BigQuery. If this value is `true`, read data and metadata
+	// are stored in a cache, which can increase performance and decrease network
+	// egress costs for cross-cloud queries. If this value is `false`, cross-cloud
+	// caching is disabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrossCloudCacheOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossCloudCacheOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1261,6 +1294,9 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 // SalesforceDataCloudProperties: Connection properties specific to Salesforce
 // DataCloud. This is intended for use only by Salesforce partner projects.
 type SalesforceDataCloudProperties struct {
+	// CrossCloudCacheOptions: Optional. Configuration options for cross-cloud
+	// caching of data and metadata files.
+	CrossCloudCacheOptions *CrossCloudCacheOptions `json:"crossCloudCacheOptions,omitempty"`
 	// Identity: Output only. A unique Google-owned and Google-generated service
 	// account identity for the connection.
 	Identity string `json:"identity,omitempty"`
@@ -1268,15 +1304,15 @@ type SalesforceDataCloudProperties struct {
 	InstanceUri string `json:"instanceUri,omitempty"`
 	// TenantId: The ID of the user's Salesforce tenant.
 	TenantId string `json:"tenantId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Identity") to
+	// ForceSendFields is a list of field names (e.g. "CrossCloudCacheOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Identity") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CrossCloudCacheOptions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

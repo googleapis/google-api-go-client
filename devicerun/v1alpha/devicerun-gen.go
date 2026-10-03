@@ -552,15 +552,13 @@ type AndroidNativeBinary struct {
 	// AndroidNativeBinary: Required. The file path of the Android native binary.
 	AndroidNativeBinary *InputFile `json:"androidNativeBinary,omitempty"`
 	// Args: Optional. Arguments for running the binary file. The flags will be
-	// appended to the command line that invokes the binary. The number of options
-	// is limited to 100.
+	// appended to the command line that invokes the binary. Limits: - Maximum
+	// number of entries: 64 - Maximum entry size: 1024 bytes (UTF-8)
 	Args []string `json:"args,omitempty"`
 	// EnvVars: Optional. A map of environment variables to set for the binary
 	// process. The keys are the variable names and the values are the variable
-	// values. The maximum number of entries is 100. Each key is limited to 128
-	// characters and must conform to POSIX standards. Each value is limited to
-	// 2048 characters. The total size of all environment variables must not exceed
-	// 16 KiB.
+	// values. Limits: - Maximum number of entries: 32 - Maximum key size: 64 bytes
+	// (UTF-8) - Key regex: `a-zA-Z_*` - Maximum value size: 1024 bytes (UTF-8)
 	EnvVars map[string]string `json:"envVars,omitempty"`
 	// ExecutionTimeout: Optional. The timeout of the execution. Default value: 5
 	// min. Range: [1 min, 3 hours].

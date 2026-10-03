@@ -4331,6 +4331,24 @@ func (s SpecificStartPosition) MarshalJSON() ([]byte, error) {
 
 // SqlServerChangeTables: Configuration to use Change Tables CDC read method.
 type SqlServerChangeTables struct {
+	// DdlConfig: Optional. DDL configuration for change tables.
+	DdlConfig *SqlServerDdlConfig `json:"ddlConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DdlConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DdlConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerChangeTables) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerChangeTables
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SqlServerColumn: SQLServer Column.
@@ -4366,6 +4384,39 @@ type SqlServerColumn struct {
 
 func (s SqlServerColumn) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlServerColumn
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerDdlConfig: DDL configuration for change tables.
+type SqlServerDdlConfig struct {
+	// AutoCreateNewCaptureInstanceOnDdl: Optional. If set to true, Datastream will
+	// automatically create a new capture instance when DDL is detected on a
+	// table.The customer will be responsible for deleting it so that the next set
+	// of DDLs can be handled. The default is false and it means that DDL's will
+	// not be handled .
+	AutoCreateNewCaptureInstanceOnDdl bool `json:"autoCreateNewCaptureInstanceOnDdl,omitempty"`
+	// AutoDeleteOldCaptureInstance: Optional. If set to true, Datastream will
+	// automatically delete the old capture instance after creating a new one to
+	// support a DDL change. The default is false and means that the customer has
+	// to delete the old capture instance manually.
+	AutoDeleteOldCaptureInstance bool `json:"autoDeleteOldCaptureInstance,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AutoCreateNewCaptureInstanceOnDdl") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AutoCreateNewCaptureInstanceOnDdl") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlServerDdlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerDdlConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

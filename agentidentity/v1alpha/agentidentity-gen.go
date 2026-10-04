@@ -228,6 +228,10 @@ type AccessSummary struct {
 	//   "AUTH_PROVIDER_TYPE_API_KEY" - API key auth provider type.
 	//   "AUTH_PROVIDER_TYPE_GEMINI_ENTERPRISE" - Gemini Enterprise auth provider
 	// type.
+	//   "AUTH_PROVIDER_TYPE_CROSS_APP_ACCESS" - Cross-App Access auth provider
+	// type.
+	//   "AUTH_PROVIDER_TYPE_CONNECTOR_REFERENCE" - Connector Reference auth
+	// provider type.
 	AuthProviderType string `json:"authProviderType,omitempty"`
 	// FirstAccessTime: Output only. The first time this user interacted with this
 	// workload, rounded to the previous hour.
@@ -274,6 +278,11 @@ type AccessSummary struct {
 func (s AccessSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessSummary
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentIdentityPool: Marker message to indicate the managed Agent Identity
+// Pool is used.
+type AgentIdentityPool struct {
 }
 
 // ApiKeyParams: Configuration for API key authentication.
@@ -445,12 +454,17 @@ func (s AuthProvider) MarshalJSON() ([]byte, error) {
 type AuthProviderTypeParams struct {
 	// ApiKey: Parameters for API key authentication.
 	ApiKey *ApiKeyParams `json:"apiKey,omitempty"`
+	// ConnectorReferenceAuthProvider: Parameters for Connector Reference
+	// authentication.
+	ConnectorReferenceAuthProvider *ConnectorReferenceAuthProvider `json:"connectorReferenceAuthProvider,omitempty"`
 	// GeAuthProvider: Parameters for Gemini Enterprise authentication.
 	GeAuthProvider *GeminiEnterpriseAuthProviderParams `json:"geAuthProvider,omitempty"`
 	// ThreeLeggedOauth: Parameters for 3-legged OAuth (3LO) authentication.
 	ThreeLeggedOauth *ThreeLeggedOAuth `json:"threeLeggedOauth,omitempty"`
 	// TwoLeggedOauth: Parameters for 2-legged OAuth (2LO) authentication.
 	TwoLeggedOauth *TwoLeggedOAuth `json:"twoLeggedOauth,omitempty"`
+	// XaaAuthProvider: Parameters for Cross-App Access authentication.
+	XaaAuthProvider *CrossAppAccessAuthProvider `json:"xaaAuthProvider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -610,6 +624,154 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ClientAssertionJwtAuth: Configuration for client ID and client assertion JWT
+// authentication.
+type ClientAssertionJwtAuth struct {
+	// ClientId: Required. The client identifier.
+	ClientId string `json:"clientId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientAssertionJwtAuth) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientAssertionJwtAuth
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClientSecretAuth: Configuration for client ID and client secret
+// authentication.
+type ClientSecretAuth struct {
+	// ClientId: Required. The client identifier.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Required. Input only. The client secret.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientSecretAuth) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientSecretAuth
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorReferenceAuthProvider: Configuration parameters for the Connector
+// Reference auth provider.
+type ConnectorReferenceAuthProvider struct {
+	// AuthorizationDetails: Optional. Rich Authorization Requests (RFC 9396)
+	// detailing targeted OAuth resources/scopes, formatted as a JSON array of JSON
+	// objects.
+	AuthorizationDetails []googleapi.RawMessage `json:"authorizationDetails,omitempty"`
+	// Connector: Required. The name of the referenced connector.
+	Connector string `json:"connector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectorReferenceAuthProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorReferenceAuthProvider
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CrossAppAccessAuthProvider: Configuration parameters for the Cross-App
+// Access auth provider.
+type CrossAppAccessAuthProvider struct {
+	// AdditionalParameters: Optional. Additional parameters to be passed to the
+	// token endpoint.
+	AdditionalParameters map[string]string `json:"additionalParameters,omitempty"`
+	// ClientAssertionJwtAuth: Option 2: Authenticate using a standard `client_id`
+	// and a Client Assertion JWT.
+	ClientAssertionJwtAuth *ClientAssertionJwtAuth `json:"clientAssertionJwtAuth,omitempty"`
+	// ClientSecretAuth: Option 1: Authenticate using a standard `client_id` and
+	// `client_secret`.
+	ClientSecretAuth *ClientSecretAuth `json:"clientSecretAuth,omitempty"`
+	// CustomIssuer: Configuration when using a custom or third-party authorization
+	// server as the issuer.
+	CustomIssuer *CustomIssuer `json:"customIssuer,omitempty"`
+	// GoogleAccount: Configuration when using Google Accounts as the issuer.
+	GoogleAccount *GoogleAccount `json:"googleAccount,omitempty"`
+	// IdJagInput: Configuration for when the input is already an ID-JAG.
+	IdJagInput *DirectIdJagInput `json:"idJagInput,omitempty"`
+	// IdTokenInput: Configuration for when the input is an ID token.
+	IdTokenInput *IdTokenProcessingConfig `json:"idTokenInput,omitempty"`
+	// WorkforceIdentityFederation: Configuration when using Workforce Identity
+	// Federation as the issuer.
+	WorkforceIdentityFederation *WorkforceIdentityFederation `json:"workforceIdentityFederation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalParameters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalParameters") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrossAppAccessAuthProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossAppAccessAuthProvider
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomIssuer: Configuration for a custom or third-party authorization server
+// issuer.
+type CustomIssuer struct {
+	// Issuer: Optional. The issuer identifier of the target Authorization Server.
+	Issuer string `json:"issuer,omitempty"`
+	// TokenUrl: Required. The token endpoint of the target OAuth authorization
+	// server to retrieve resource tokens.
+	TokenUrl string `json:"tokenUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Issuer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Issuer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomIssuer) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomIssuer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DirectIdJagInput: Marker message indicating the input is already an ID-JAG,
+// so no fetching is required.
+type DirectIdJagInput struct {
+}
+
 // DisableAuthProviderRequest: Request message for `DisableAuthProvider`.
 type DisableAuthProviderRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
@@ -724,6 +886,40 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 // GeminiEnterpriseAuthProviderParams: Configuration for Gemini Enterprise
 // authentication.
 type GeminiEnterpriseAuthProviderParams struct {
+}
+
+// GoogleAccount: Configuration for Google Account usage as the issuer.
+type GoogleAccount struct {
+}
+
+// IdTokenProcessingConfig: Defines how to process an input ID token to obtain
+// an ID-JAG.
+type IdTokenProcessingConfig struct {
+	// AgentIdentityPool: Indicates the managed Agent Identity pool should be used
+	// to fetch the ID-JAG.
+	AgentIdentityPool *AgentIdentityPool `json:"agentIdentityPool,omitempty"`
+	// IdJagAdditionalClaims: Optional. Optional additional claims to include when
+	// fetching an ID-JAG.
+	IdJagAdditionalClaims googleapi.RawMessage `json:"idJagAdditionalClaims,omitempty"`
+	// IdJagAuthProvider: The resource name of the ID-JAG auth provider. Format:
+	// "projects/{project}/locations/{location}/authProviders/{auth_provider}"
+	IdJagAuthProvider string `json:"idJagAuthProvider,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentIdentityPool") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentIdentityPool") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdTokenProcessingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdTokenProcessingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccessSummariesResponse: Response message for `ListAccessSummaries`.
@@ -1031,6 +1227,56 @@ func (s QueryWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResolveAuthorizationRequest: Request message for `ResolveAuthorization`.
+type ResolveAuthorizationRequest struct {
+	// ClientUserId: Required. The user ID of the client for whom the authorization
+	// is resolved.
+	ClientUserId string `json:"clientUserId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientUserId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResolveAuthorizationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResolveAuthorizationRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResolveAuthorizationResponse: Response message for `ResolveAuthorization`.
+type ResolveAuthorizationResponse struct {
+	// Authorization: The resource name of the resolved authorization. Format:
+	// projects/{project}/locations/{location}/authProviders/{auth_provider}/authori
+	// zations/{authorization}
+	Authorization string `json:"authorization,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Authorization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Authorization") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResolveAuthorizationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ResolveAuthorizationResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RevokeAuthorizationRequest: Request message for `RevokeAuthorization`.
 type RevokeAuthorizationRequest struct {
 	// UserId: Required. The identity of the user to revoke authorization for.
@@ -1232,6 +1478,11 @@ type UndeleteAuthProviderRequest struct {
 func (s UndeleteAuthProviderRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteAuthProviderRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkforceIdentityFederation: Configuration for Workforce Identity Federation
+// usage as the issuer.
+type WorkforceIdentityFederation struct {
 }
 
 type ProjectsLocationsGetCall struct {
@@ -3088,6 +3339,112 @@ func (c *ProjectsLocationsAuthProvidersQueryWorkloadsCall) Pages(ctx context.Con
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsAuthProvidersResolveAuthorizationCall struct {
+	s                           *Service
+	name                        string
+	resolveauthorizationrequest *ResolveAuthorizationRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// ResolveAuthorization: Resolves an authorization for a user on an auth
+// provider, creating one if it does not exist or returning an existing one.
+//
+//   - name: The name of the auth provider to resolve authorization for. Format:
+//     projects/{project}/locations/{location}/authProviders/{auth_provider}.
+func (r *ProjectsLocationsAuthProvidersService) ResolveAuthorization(name string, resolveauthorizationrequest *ResolveAuthorizationRequest) *ProjectsLocationsAuthProvidersResolveAuthorizationCall {
+	c := &ProjectsLocationsAuthProvidersResolveAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resolveauthorizationrequest = resolveauthorizationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthProvidersResolveAuthorizationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) Context(ctx context.Context) *ProjectsLocationsAuthProvidersResolveAuthorizationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resolveauthorizationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:resolveAuthorization")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.resolveAuthorization", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentidentity.projects.locations.authProviders.resolveAuthorization" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResolveAuthorizationResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) Do(opts ...googleapi.CallOption) (*ResolveAuthorizationResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResolveAuthorizationResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.resolveAuthorization", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsAuthProvidersRevokeAuthorizationCall struct {

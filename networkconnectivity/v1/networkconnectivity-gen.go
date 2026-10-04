@@ -2078,6 +2078,32 @@ type InternalRange struct {
 	// is set as well, and both fields must match. In other words, with IPv6 this
 	// field only works as a redundant parameter.
 	PrefixLength int64 `json:"prefixLength,omitempty"`
+	// Purpose: Optional. The purpose of this internal range. Defines the intended
+	// use of the range and any restrictions associated with it. If not specified,
+	// it defaults to VPC_SUBNET.
+	//
+	// Possible values:
+	//   "PURPOSE_UNSPECIFIED" - If purpose is left unspecified in
+	// CreateInternalRange or UpdateInternalRange, it will be defaulted to
+	// VPC_SUBNET.
+	//   "VPC_SUBNET" - The internal range is used for VPC subnetworks.
+	//   "INTERNAL_ADDRESS" - The internal range is used exclusively for allocating
+	// individual IP addresses (e.g., for global PSC endpoints). Child ranges or
+	// subnetworks cannot be created from a range with this purpose.
+	Purpose string `json:"purpose,omitempty"`
+	// RangeStatus: Output only. Status of the Internal Range.
+	//
+	// Possible values:
+	//   "RANGE_STATUS_UNSPECIFIED" - Unspecified status is the default value for
+	// an Internal Range.
+	//   "ACTIVE" - Ranges with ACTIVE status will reserve the CIDR block from the
+	// given VPC.
+	//   "OBSOLETE" - A range becomes OBSOLETE if its VPC network is deleted. An
+	// OBSOLETE range is inactive, doesn't reserve any CIDR blocks, and can only be
+	// deleted or have its labels and description updated.
+	//   "CREATING" - The resource is being created.
+	//   "DELETING" - The resource is being deleted.
+	RangeStatus string `json:"rangeStatus,omitempty"`
 	// TargetCidrRange: Optional. Can be set to narrow down or pick a different
 	// address space while searching for a free range. If not set, defaults to the
 	// ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"] address space (for
@@ -4691,7 +4717,7 @@ type Spoke struct {
 	// of other fields, and may be sent on update and delete requests to ensure the
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// FieldPathsPendingUpdate: Optional. The list of fields waiting for hub
+	// FieldPathsPendingUpdate: Output only. The list of fields waiting for hub
 	// administrator's approval.
 	FieldPathsPendingUpdate []string `json:"fieldPathsPendingUpdate,omitempty"`
 	// Gateway: Optional. This is a gateway that can apply specialized processing

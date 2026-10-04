@@ -3493,8 +3493,9 @@ func (s CloudAiLargeModelsVisionExperimentsResponse) MarshalJSON() ([]byte, erro
 // CloudAiLargeModelsVisionExperimentsResponseProEditResult: Result metadata
 // from a Pro Edit operation.
 type CloudAiLargeModelsVisionExperimentsResponseProEditResult struct {
-	// StructuredPrompt: The output structured prompt produced by this edit.
-	StructuredPrompt googleapi.RawMessage `json:"structuredPrompt,omitempty"`
+	// StructuredPrompt: The output structured prompt (JSON string) produced by
+	// this edit.
+	StructuredPrompt string `json:"structuredPrompt,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StructuredPrompt") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3826,10 +3827,10 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig struct {
 	// FromOperationId: Required. The operation_id from a previous omni-cine
 	// generation whose OF and URF should be retrieved for editing.
 	FromOperationId string `json:"fromOperationId,omitempty"`
-	// StructuredPrompt: A JSON object containing the user's modified URF. The URF
+	// StructuredPrompt: A JSON string containing the user's modified URF. The URF
 	// Editing Preamble will diff this against the original URF to determine what
 	// changed.
-	StructuredPrompt googleapi.RawMessage `json:"structuredPrompt,omitempty"`
+	StructuredPrompt string `json:"structuredPrompt,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EditInstructionPrompt") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5039,7 +5040,10 @@ func (s GoogleCloudAiplatformV1AgentResponseCustomization) MarshalJSON() ([]byte
 }
 
 // GoogleCloudAiplatformV1AgentTool: A tool provides a list of actions
-// available to the Agent during the process of executing a task.
+// available to the Agent during the process of executing a task. Example JSON
+// for an MCP server tool: { "type": "mcp_server", "name": "my-mcp-server",
+// "url": "https://api.example.com/mcp", "headers": { "Authorization": "Bearer
+// token123" } }
 type GoogleCloudAiplatformV1AgentTool struct {
 	// Headers: Optional. The headers for the MCP server, such as for
 	// authentication. Only applicable when `type` is `mcp_server`.
@@ -5053,12 +5057,11 @@ type GoogleCloudAiplatformV1AgentTool struct {
 	// Type: Required. The type of the tool. Supported types: * `code_execution` *
 	// `endpoint` * `filesystem` * `google_search` * `mcp_server` * `url_context`
 	Type string `json:"type,omitempty"`
-	// Url: Optional. Temporary: the tool's runtime reference, consumed by
-	// CreateAgent to create the downstream AI App. Applicable when `type` is
-	// `mcp_server` or `endpoint`. It is duplicated here (the resource name is
-	// already in `name`) only because the Agent service is not yet connected to
-	// Agent Registry to derive it from `name`; the Task Service instead resolves
-	// it from Agent Registry (GetMcpServer / GetEndpoint) at task creation.
+	// Url: Optional. Fallback for the tool's runtime reference, consumed by
+	// `CreateAgent` to create the downstream AI App. Applicable when `type` is
+	// `mcp_server` or `endpoint`, and optional: the Agent service derives the
+	// runtime reference from `name` via Agent Registry (`GetMcpServer` /
+	// `GetEndpoint`), and reads this only when that lookup yields none.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7625,6 +7628,13 @@ type GoogleCloudAiplatformV1CacheConfig struct {
 	// Name: Identifier. Name of the cache config. Format: -
 	// `projects/{project}/cacheConfig`.
 	Name string `json:"name,omitempty"`
+	// RetentionConfig: Optional. Project-level retention type for implicit
+	// caching. On `GetCacheConfig` this is populated with the retention the
+	// project gets: a project that has stated no preference reports `DURABLE`. On
+	// `UpdateCacheConfig`, leaving it unset means the project states no
+	// preference. Whether that clears an existing preference depends on
+	// `update_mask`; see that field.
+	RetentionConfig *GoogleCloudAiplatformV1CacheConfigRetentionConfig `json:"retentionConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -7643,6 +7653,37 @@ type GoogleCloudAiplatformV1CacheConfig struct {
 
 func (s GoogleCloudAiplatformV1CacheConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1CacheConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1CacheConfigRetentionConfig: Configures the retention
+// behavior of GenAI implicit (automatic) context caching for this project.
+type GoogleCloudAiplatformV1CacheConfigRetentionConfig struct {
+	// RetentionType: Optional. Retention type applied to implicit cache traffic
+	// for this project.
+	//
+	// Possible values:
+	//   "RETENTION_TYPE_UNSPECIFIED" - Unspecified. Treated the same as `DURABLE`.
+	//   "EPHEMERAL" - Restricts implicit caching to ephemeral,
+	// volatile-memory-backed retention only.
+	//   "DURABLE" - Allows implicit caching to use long-lived,
+	// durable-storage-backed retention.
+	RetentionType string `json:"retentionType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetentionType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetentionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1CacheConfigRetentionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1CacheConfigRetentionConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -20331,6 +20372,11 @@ type GoogleCloudAiplatformV1GenerateMemoriesRequest struct {
 	// provided, it will override the scope defined in the source content. Scope
 	// values cannot contain the wildcard character '*'.
 	Scope map[string]string `json:"scope,omitempty"`
+	// TimeZone: Optional. The time zone of the conversation or caller, used as the
+	// baseline for resolving relative time expressions (e.g., "yesterday") and
+	// formatting timestamps. If not set, "UTC" is used. Must be a valid IANA Time
+	// Zone Database name, e.g. "America/New_York".
+	TimeZone string `json:"timeZone,omitempty"`
 	// VertexSessionSource: Defines a Vertex Session as the source content from
 	// which to generate memories.
 	VertexSessionSource *GoogleCloudAiplatformV1GenerateMemoriesRequestVertexSessionSource `json:"vertexSessionSource,omitempty"`
@@ -31859,6 +31905,10 @@ type GoogleCloudAiplatformV1Part struct {
 	// MediaResolution: per part media resolution. Media resolution for the input
 	// media.
 	MediaResolution *GoogleCloudAiplatformV1PartMediaResolution `json:"mediaResolution,omitempty"`
+	// SpeechMetadata: Optional. Turn-level metadata for speech generation (e.g.
+	// Daikon speaker/style). May be set alongside `text` to attach speaker and
+	// style information to a text part.
+	SpeechMetadata *GoogleCloudAiplatformV1SpeechMetadata `json:"speechMetadata,omitempty"`
 	// Text: Optional. The text content of the part. When sent from the VSCode
 	// Gemini Code Assist extension, references to @mentioned items will be
 	// converted to markdown boldface text. For example `@my-repo` will be
@@ -47071,6 +47121,14 @@ type GoogleCloudAiplatformV1SemanticGovernancePolicy struct {
 	// DisplayName: Optional. The user-defined name of the
 	// SemanticGovernancePolicy.
 	DisplayName string `json:"displayName,omitempty"`
+	// DryRun: Optional. If true, this policy is evaluated and its result is
+	// reported, but the policy is not enforced: a violation does not block the
+	// agent's action. Use this to validate a policy against real traffic before
+	// turning enforcement on. Defaults to `false`, meaning the policy is enforced.
+	// This setting applies only to this policy. If the
+	// SemanticGovernancePolicyEngine for the project is itself in dry run, every
+	// policy behaves as dry run regardless of this field.
+	DryRun bool `json:"dryRun,omitempty"`
 	// Etag: Optional. Used to perform consistent read-modify-write transactions.
 	// If provided, the request will only succeed if the etag matches the current
 	// value. Otherwise, an ABORTED error will be returned.
@@ -47810,6 +47868,32 @@ type GoogleCloudAiplatformV1SpeechConfig struct {
 
 func (s GoogleCloudAiplatformV1SpeechConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1SpeechConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1SpeechMetadata: Structured Metadata Sub-Message for
+// Part
+type GoogleCloudAiplatformV1SpeechMetadata struct {
+	// Speaker: Optional. Identifies which speaker is speaking this turn.
+	Speaker string `json:"speaker,omitempty"`
+	// Style: Optional. Natural language description of the vocal style (e.g.,
+	// "cheerful").
+	Style string `json:"style,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Speaker") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Speaker") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1SpeechMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1SpeechMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -50677,6 +50761,19 @@ type GoogleCloudAiplatformV1ToolCodeExecution struct {
 
 // GoogleCloudAiplatformV1ToolComputerUse: Tool to support computer use.
 type GoogleCloudAiplatformV1ToolComputerUse struct {
+	// DisabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+	//
+	// Possible values:
+	//   "SAFETY_POLICY_UNSPECIFIED" - Unspecified safety policy. This value should
+	// not be used.
+	//   "FINANCIAL_TRANSACTIONS" - Financial transactions safety policy.
+	//   "SENSITIVE_DATA_MODIFICATION" - Sensitive data modification safety policy.
+	//   "COMMUNICATION_TOOL" - Communication tool safety policy.
+	//   "ACCOUNT_CREATION" - Account creation safety policy.
+	//   "DATA_MODIFICATION" - Data modification safety policy.
+	//   "USER_CONSENT_MANAGEMENT" - User consent management safety policy.
+	//   "LEGAL_TERMS_AND_AGREEMENTS" - Legal terms and agreements safety policy.
+	DisabledSafetyPolicies []string `json:"disabledSafetyPolicies,omitempty"`
 	// EnablePromptInjectionDetection: Optional. Enables the prompt injection
 	// detection check on computer-use request.
 	EnablePromptInjectionDetection bool `json:"enablePromptInjectionDetection,omitempty"`
@@ -50695,15 +50792,14 @@ type GoogleCloudAiplatformV1ToolComputerUse struct {
 	// Using a more restricted / different action space. 2. Improving the
 	// definitions / instructions of predefined functions.
 	ExcludedPredefinedFunctions []string `json:"excludedPredefinedFunctions,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "EnablePromptInjectionDetection") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "DisabledSafetyPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnablePromptInjectionDetection")
-	// to include in API requests with the JSON null value. By default, fields with
+	// NullFields is a list of field names (e.g. "DisabledSafetyPolicies") to
+	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
@@ -52503,6 +52599,9 @@ type GoogleCloudAiplatformV1TuningJob struct {
 	EvaluateDatasetRuns []*GoogleCloudAiplatformV1EvaluateDatasetRun `json:"evaluateDatasetRuns,omitempty"`
 	// Experiment: Output only. The Experiment associated with this TuningJob.
 	Experiment string `json:"experiment,omitempty"`
+	// GcsMetricsUri: Output only. The Cloud Storage metrics URI associated with
+	// this TuningJob.
+	GcsMetricsUri string `json:"gcsMetricsUri,omitempty"`
 	// Labels: Optional. The labels with user-defined metadata to organize
 	// TuningJob and generated resources such as Model and Endpoint. Label keys and
 	// values can be no longer than 64 characters (Unicode codepoints), can only
@@ -53903,6 +54002,11 @@ type GoogleCloudAiplatformV1VoiceConfig struct {
 	// ReplicatedVoiceConfig: Optional. The configuration for a replicated voice.
 	// This enables users to replicate a voice from an audio sample.
 	ReplicatedVoiceConfig *GoogleCloudAiplatformV1ReplicatedVoiceConfig `json:"replicatedVoiceConfig,omitempty"`
+	// Voice: Optional. The speaker identifier for synthesis. Supported formats: *
+	// Speaker name for prebuilt voices (for example, `Orus` or `Kore`). * Voice ID
+	// for stored voices (for example, `voice_xxx`). * Voice replication key (for
+	// example, `voicekey_xxx`).
+	Voice string `json:"voice,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PrebuiltVoiceConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -78859,6 +78963,26 @@ func (r *ProjectsService) UpdateCacheConfig(name string, googlecloudaiplatformv1
 	c := &ProjectsUpdateCacheConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.googlecloudaiplatformv1cacheconfig = googlecloudaiplatformv1cacheconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields of
+// `cache_config` to update. Supported paths are `disable_cache`,
+// `retention_config` (and its subfields such as
+// `retention_config.retention_type`), and the special value `*`; any other
+// path returns `INVALID_ARGUMENT`. Fields not covered by the mask keep their
+// stored value. If the mask is omitted, it is treated as an implied mask
+// covering the fields populated in `cache_config`, so updating one field never
+// clears another. `retention_config` is covered only when the request carries
+// it. `disable_cache` is always covered: it is a bare `bool`, so the server
+// cannot tell a request that omits it from one that sets it to `false`. `*`
+// requests full replacement of the resource: every settable field is written
+// from the request, clearing `retention_config` when the request omits it. It
+// cannot be combined with other paths. Prefer naming fields explicitly -- a
+// caller that sends `*` without knowing about a field added to `CacheConfig`
+// later would silently reset that field.
+func (c *ProjectsUpdateCacheConfigCall) UpdateMask(updateMask string) *ProjectsUpdateCacheConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 

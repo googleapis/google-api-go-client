@@ -2838,6 +2838,25 @@ func (c *ProjectsAppsReportsGetCall) Granularity(granularity string) *ProjectsAp
 	return c
 }
 
+// MetricsMode sets the optional parameter "metricsMode": Controls whether
+// metrics are raw observed values (mobile and web) or extrapolated values (web
+// only). If omitted, defaults to OBSERVED.
+//
+// Possible values:
+//
+//	"METRICS_MODE_UNSPECIFIED" - Unknown.
+//	"METRICS_MODE_OBSERVED" - Raw counts of the events, sessions, and users
+//
+// that were actually collected.
+//
+//	"METRICS_MODE_EXTRAPOLATED" - Web only. Estimated event counts based on
+//
+// the per-session sampling rate recorded on each event.
+func (c *ProjectsAppsReportsGetCall) MetricsMode(metricsMode string) *ProjectsAppsReportsGetCall {
+	c.urlParams_.Set("metricsMode", metricsMode)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // result groups to return. If omitted, defaults to 25.
 func (c *ProjectsAppsReportsGetCall) PageSize(pageSize int64) *ProjectsAppsReportsGetCall {

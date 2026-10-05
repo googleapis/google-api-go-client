@@ -740,9 +740,9 @@ type ColumnFamilyMapping struct {
 	DelimitedKey *DelimitedKey `json:"delimitedKey,omitempty"`
 	// RowKeySchema: Optional. If set, the row key is constructed from the field
 	// names of the table's structured row key
-	// (https://docs.cloud.google.com/bigtable/docs/manage-row-key-schemas). Note
-	// that if the field is nullable in the structured row key, then it need not be
-	// present in the message; null will be used instead.
+	// (https://cloud.google.com/bigtable/docs/manage-row-key-schemas). Note that
+	// if the field is nullable in the structured row key, then it need not be
+	// present in the message; `null` will be used instead.
 	RowKeySchema *RowKeySchema `json:"rowKeySchema,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DelimitedKey") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1469,9 +1469,9 @@ type GooglePubsubV1Subscription struct {
 	RetryPolicy *RetryPolicy `json:"retryPolicy,omitempty"`
 	// Tags: Optional. Input only. Immutable. Tag keys/values directly bound to
 	// this resource. For example: "123/environment": "production",
-	// "123/costCenter": "marketing" See
-	// https://{$universe.dns_names.final_documentation_domain}/pubsub/docs/tags
-	// for more information on using tags with Pub/Sub resources.
+	// "123/costCenter": "marketing" See Create and manage tags
+	// (https://cloud.google.com/pubsub/docs/tags) for more information on using
+	// tags with Pub/Sub resources.
 	Tags map[string]string `json:"tags,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AckDeadlineSeconds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2520,9 +2520,9 @@ func (s Routine) MarshalJSON() ([]byte, error) {
 
 // RowKeySchema: Row key definition that reads the input message fields based
 // on the field names of the table's structured row key
-// (https://docs.cloud.google.com/bigtable/docs/manage-row-key-schemas). Note
-// that if the field is nullable in the structured row key, then it need not be
-// present in the message; null will be used instead.
+// (https://cloud.google.com/bigtable/docs/manage-row-key-schemas). Note that
+// if the field is nullable in the structured row key, then it need not be
+// present in the message; `null` will be used instead.
 type RowKeySchema struct {
 }
 

@@ -1659,7 +1659,7 @@ type DailyRollUpDataPointsRequest struct {
 	// unspecified, at most 1440 data points will be returned. The maximum page
 	// size is 10000; values above that will be truncated accordingly.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: Optional. The `next_page_token` from a previous request, if any.
+	// PageToken: Optional. The next_page_token from a previous request, if any.
 	// All other request fields need to be the same as in the initial request when
 	// the page token is specified.
 	PageToken string `json:"pageToken,omitempty"`
@@ -1696,20 +1696,23 @@ func (s DailyRollUpDataPointsRequest) MarshalJSON() ([]byte, error) {
 // DailyRollUpDataPointsResponse: Response containing the list of rolled up
 // data points.
 type DailyRollUpDataPointsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 	// RollupDataPoints: Values for each aggregation time window.
 	RollupDataPoints []*DailyRollupDataPoint `json:"rollupDataPoints,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "RollupDataPoints") to
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RollupDataPoints") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9190,6 +9193,27 @@ func (c *UsersDataTypesDataPointsDailyRollUpCall) Do(opts ...googleapi.CallOptio
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "health.users.dataTypes.dataPoints.dailyRollUp", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UsersDataTypesDataPointsDailyRollUpCall) Pages(ctx context.Context, f func(*DailyRollUpDataPointsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.dailyrollupdatapointsrequest.PageToken = pt }(c.dailyrollupdatapointsrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.dailyrollupdatapointsrequest.PageToken = x.NextPageToken
+	}
 }
 
 type UsersDataTypesDataPointsExportExerciseTcxCall struct {

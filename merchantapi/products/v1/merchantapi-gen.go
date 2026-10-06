@@ -2185,6 +2185,7 @@ type ProductCertification struct {
 	//   "BMWK" - For the German CO2 emissions classes for vehicles.
 	//   "EPA" - Environment Protection Agency.
 	//   "EC" - European Commission for energy labels in the EU.
+	//   "DESNZ" - Department for Energy Security and Net Zero.
 	CertificationAuthority string `json:"certificationAuthority,omitempty"`
 	// CertificationCode: The certification code. Maximum length is 2000
 	// characters.
@@ -2213,6 +2214,7 @@ type ProductCertification struct {
 	//   "VEHICLE_ENERGY_EFFICIENCY" - The overall CO2 class of a vehicle
 	//   "VEHICLE_ENERGY_EFFICIENCY_DISCHARGED_BATTERY" - For the CO2 class of a
 	// vehicle with a discharged battery.
+	//   "GB_ENERGY_INFO" - Great Britain Energy Information.
 	CertificationName string `json:"certificationName,omitempty"`
 	// CertificationValue: The certification value (also known as class, level or
 	// grade), for example "A+", "C", "gold". Maximum length is 2000 characters.

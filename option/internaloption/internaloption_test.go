@@ -41,19 +41,25 @@ func TestDefaultApply(t *testing.T) {
 		WithDefaultUniverseDomain("foo.com"),
 		WithDefaultAudience("audience"),
 		AllowHardBoundTokens("MTLS_S2A"),
+		EnableDirectPath(true),
+		EnableDirectPathXds(),
+		EnableDirectPathXdsOverInterconnect(),
 	}
 	var got internal.DialSettings
 	for _, opt := range opts {
 		opt.Apply(&got)
 	}
 	want := internal.DialSettings{
-		DefaultScopes:           []string{"a"},
-		DefaultEndpoint:         "https://example.com:443",
-		DefaultEndpointTemplate: "https://foo.UNIVERSE_DOMAIN/",
-		DefaultUniverseDomain:   "foo.com",
-		DefaultAudience:         "audience",
-		DefaultMTLSEndpoint:     "http://mtls.example.com:445",
-		AllowHardBoundTokens:    []string{"MTLS_S2A"},
+		DefaultScopes:                       []string{"a"},
+		DefaultEndpoint:                     "https://example.com:443",
+		DefaultEndpointTemplate:             "https://foo.UNIVERSE_DOMAIN/",
+		DefaultUniverseDomain:               "foo.com",
+		DefaultAudience:                     "audience",
+		DefaultMTLSEndpoint:                 "http://mtls.example.com:445",
+		AllowHardBoundTokens:                []string{"MTLS_S2A"},
+		EnableDirectPath:                    true,
+		EnableDirectPathXds:                 true,
+		EnableDirectPathXdsOverInterconnect: true,
 	}
 	ignore := []cmp.Option{
 		cmpopts.IgnoreUnexported(grpc.ClientConn{}),

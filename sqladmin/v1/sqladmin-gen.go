@@ -6810,7 +6810,7 @@ func (s SqlSubOperationType) MarshalJSON() ([]byte, error) {
 // workload on a replay instance (the Cloud SQL instance where the recorded SQL
 // queries are executed).
 type SqlWorkloadCapturesStartReplayRequest struct {
-	// StartWorkloadReplayContext: Optional. Contains details about the start
+	// StartWorkloadReplayContext: Required. Contains details about the start
 	// workload replay operation.
 	StartWorkloadReplayContext *StartWorkloadReplayContext `json:"startWorkloadReplayContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StartWorkloadReplayContext")
@@ -6858,7 +6858,7 @@ func (s SqlWorkloadCapturesStartRequest) MarshalJSON() ([]byte, error) {
 // SqlWorkloadCapturesStopReplayRequest: Request to stop executing a captured
 // workload on a replay instance.
 type SqlWorkloadCapturesStopReplayRequest struct {
-	// StopWorkloadReplayContext: Optional. Contains details about the stop
+	// StopWorkloadReplayContext: Required. Contains details about the stop
 	// workload replay operation.
 	StopWorkloadReplayContext *StopWorkloadReplayContext `json:"stopWorkloadReplayContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StopWorkloadReplayContext")

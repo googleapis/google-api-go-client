@@ -3652,6 +3652,9 @@ type ExternalRuntimeOptions struct {
 	RuntimeConnection string `json:"runtimeConnection,omitempty"`
 	// RuntimeVersion: Optional. Language runtime version. Example: `python-3.11`.
 	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+	// VolumeMounts: Optional. List of volume mounts for the Python UDF container
+	// that executes the managed function.
+	VolumeMounts []*ExternalVolumeMount `json:"volumeMounts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContainerCpu") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3726,6 +3729,35 @@ type ExternalServiceCost struct {
 
 func (s ExternalServiceCost) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalServiceCost
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExternalVolumeMount: Configuration of a volume mount for the Python UDF
+// container that executes the managed function.
+type ExternalVolumeMount struct {
+	// MountPath: Optional. The absolute path within the container where the volume
+	// should be mounted.
+	MountPath string `json:"mountPath,omitempty"`
+	// SourcePath: Optional. The absolute path of the source to be mounted, only
+	// support Google Cloud Storage bucket or folder now. Eg: gs://bucket-xxx for
+	// Google Cloud Storage bucket, gs://bucket-xxx/folder1/folder2 for Google
+	// Cloud Storage folder.
+	SourcePath string `json:"sourcePath,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MountPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MountPath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalVolumeMount) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalVolumeMount
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5034,6 +5066,10 @@ type JobConfigurationExtract struct {
 	// ModelExtractOptions: Optional. Model extract options only applicable when
 	// extracting models.
 	ModelExtractOptions *ModelExtractOptions `json:"modelExtractOptions,omitempty"`
+	// NativeGeographyExportEnabled: Optional. Applicable to formats: PARQUET. If
+	// enabled, BigQuery to Parquet export will write the native Parquet Geography
+	// type instead of the default GeoParquet type.
+	NativeGeographyExportEnabled bool `json:"nativeGeographyExportEnabled,omitempty"`
 	// PrintHeader: Optional. Whether to print out a header row in the results.
 	// Default is true. Not applicable when extracting models.
 	//
@@ -5509,6 +5545,11 @@ type JobConfigurationQuery struct {
 	SchemaUpdateOptions []string `json:"schemaUpdateOptions,omitempty"`
 	// ScriptOptions: Options controlling the execution of scripts.
 	ScriptOptions *ScriptOptions `json:"scriptOptions,omitempty"`
+	// SecureContext: Optional. A set of key-value pairs representing the secure
+	// context. This can be used to pass sensitive or context-specific information.
+	// They can be retrieved via the SECURE_CONTEXT() function and used to modify
+	// the run-time behavior of a query.
+	SecureContext *SecureContext `json:"secureContext,omitempty"`
 	// SystemVariables: Output only. System variables for GoogleSQL queries. A
 	// system variable is output if the variable is settable and its value differs
 	// from the system default. "@@" prefix is not included in the name of the
@@ -5828,14 +5869,24 @@ type JobStatistics struct {
 	// execution of the final attempt of this job, as BigQuery may internally
 	// re-attempt to execute the job.
 	FinalExecutionDurationMs int64 `json:"finalExecutionDurationMs,omitempty,string"`
-	// GlobalQueryRemoteRegions: Output only. Regions where the global query
-	// accesses data.
+	// GlobalQueryRemoteRegions: Output only. The list of remote regions from which
+	// a global query accesses data. This field is populated only for parent global
+	// query jobs in the primary execution region. It is empty for child global
+	// query jobs and single-region queries. For more information, see Global
+	// queries (https://cloud.google.com/bigquery/docs/global-queries).
 	GlobalQueryRemoteRegions []string `json:"globalQueryRemoteRegions,omitempty"`
 	// Load: Output only. Statistics for a load job.
 	Load *JobStatistics3 `json:"load,omitempty"`
 	// NumChildJobs: Output only. Number of child jobs executed.
 	NumChildJobs int64 `json:"numChildJobs,omitempty,string"`
-	// ParentGlobalQueryJob: Output only. The global query that created this job.
+	// ParentGlobalQueryJob: Output only. Reference to the parent global query job,
+	// if this is a child global query job. This field is populated only for child
+	// global query jobs (remote subqueries or cross-region table copy jobs)
+	// executed in remote regions on behalf of a global query. It contains the
+	// project ID, job ID, and location of the parent global query job. It is unset
+	// for parent global query jobs and single-region queries. For more
+	// information, see Global queries
+	// (https://cloud.google.com/bigquery/docs/global-queries).
 	ParentGlobalQueryJob *JobReference `json:"parentGlobalQueryJob,omitempty"`
 	// ParentJobId: Output only. If this is a child job, specifies the job ID of
 	// the parent.
@@ -5846,8 +5897,8 @@ type JobStatistics struct {
 	QuotaDeferments []string `json:"quotaDeferments,omitempty"`
 	// ReservationGroupPath: Output only. The reservation group path of the
 	// reservation assigned to this job. This field has a limit of 10 nested
-	// reservation groups. This is to maintain consistency between reservatins info
-	// schema and jobs info schema. The first reservation group is the root
+	// reservation groups. This is to maintain consistency between reservations
+	// info schema and jobs info schema. The first reservation group is the root
 	// reservation group and the last is the leaf or lowest level reservation
 	// group.
 	ReservationGroupPath []string `json:"reservationGroupPath,omitempty"`
@@ -6026,6 +6077,8 @@ type JobStatistics2 struct {
 	QueryInfo *QueryInfo `json:"queryInfo,omitempty"`
 	// QueryPlan: Output only. Describes execution plan for the query.
 	QueryPlan []*ExplainQueryStage `json:"queryPlan,omitempty"`
+	// ReferencedLogicalViews: Output only. Referenced logical views for the job.
+	ReferencedLogicalViews []*TableReference `json:"referencedLogicalViews,omitempty"`
 	// ReferencedPropertyGraphs: Output only. Referenced property graphs for the
 	// job. Queries that reference more than 50 property graphs will not have a
 	// complete list.
@@ -6057,6 +6110,8 @@ type JobStatistics2 struct {
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language)
 	// statement. * `MERGE`: `MERGE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language)
+	// statement. * `TRUNCATE_TABLE`: `TRUNCATE TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#truncate_table_statement)
 	// statement. * `CREATE_TABLE`: `CREATE TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_table_statement)
 	// statement, without `AS SELECT`. * `CREATE_TABLE_AS_SELECT`: `CREATE TABLE AS
@@ -6078,10 +6133,28 @@ type JobStatistics2 struct {
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_row_access_policy_statement)
 	// statement. * `CREATE_SCHEMA`: `CREATE SCHEMA`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_schema_statement)
+	// statement. * `CREATE_EXTERNAL_SCHEMA`: `CREATE EXTERNAL SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_external_schema_statement)
+	// statement. * `CREATE_EXTERNAL_TABLE`: `CREATE EXTERNAL TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_external_table_statement)
 	// statement. * `CREATE_SNAPSHOT_TABLE`: `CREATE SNAPSHOT TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_snapshot_table_statement)
 	// statement. * `CREATE_SEARCH_INDEX`: `CREATE SEARCH INDEX`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_search_index_statement)
+	// statement. * `CREATE_VECTOR_INDEX`: `CREATE VECTOR INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_vector_index_statement)
+	// statement. * `CREATE_CONNECTION`: `CREATE CONNECTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_connection_statement)
+	// statement. * `CREATE_DATA_POLICY`: `CREATE DATA_POLICY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_data_policy_statement)
+	// statement. * `CREATE_PROPERTY_GRAPH`: `CREATE PROPERTY GRAPH`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/graph-schema-statements#gql_create_graph)
+	// statement. * `CREATE_CAPACITY`: `CREATE CAPACITY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_capacity_statement)
+	// statement. * `CREATE_RESERVATION`: `CREATE RESERVATION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_reservation_statement)
+	// statement. * `CREATE_ASSIGNMENT`: `CREATE ASSIGNMENT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_assignment_statement)
 	// statement. * `DROP_TABLE`: `DROP TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_table_statement)
 	// statement. * `DROP_EXTERNAL_TABLE`: `DROP EXTERNAL TABLE`
@@ -6092,21 +6165,37 @@ type JobStatistics2 struct {
 	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-drop-model)
 	// statement. * `DROP_MATERIALIZED_VIEW`: `DROP MATERIALIZED VIEW`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_materialized_view_statement)
-	// statement. * `DROP_FUNCTION` : `DROP FUNCTION`
+	// statement. * `DROP_FUNCTION`: `DROP FUNCTION`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_function_statement)
-	// statement. * `DROP_TABLE_FUNCTION` : `DROP TABLE FUNCTION`
+	// statement. * `DROP_TABLE_FUNCTION`: `DROP TABLE FUNCTION`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_table_function)
 	// statement. * `DROP_PROCEDURE`: `DROP PROCEDURE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_procedure_statement)
 	// statement. * `DROP_SEARCH_INDEX`: `DROP SEARCH INDEX`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_search_index)
+	// statement. * `DROP_VECTOR_INDEX`: `DROP VECTOR INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_vector_index)
 	// statement. * `DROP_SCHEMA`: `DROP SCHEMA`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_schema_statement)
+	// statement. * `UNDROP_SCHEMA`: `UNDROP SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#undrop_schema_statement)
 	// statement. * `DROP_SNAPSHOT_TABLE`: `DROP SNAPSHOT TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_snapshot_table_statement)
 	// statement. * `DROP_ROW_ACCESS_POLICY`: [`DROP ALL] ROW ACCESS
 	// POLICY|POLICIES`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_row_access_policy_statement)
+	// statement. * `DROP_CONNECTION`: `DROP CONNECTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_connection_statement)
+	// statement. * `DROP_DATA_POLICY`: `DROP DATA_POLICY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_data_policy)
+	// statement. * `DROP_PROPERTY_GRAPH`: `DROP PROPERTY GRAPH`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/graph-schema-statements#gql_drop_graph)
+	// statement. * `DROP_CAPACITY`: `DROP CAPACITY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_capacity_statement)
+	// statement. * `DROP_RESERVATION`: `DROP RESERVATION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_reservation_statement)
+	// statement. * `DROP_ASSIGNMENT`: `DROP ASSIGNMENT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_assignment_statement)
 	// statement. * `ALTER_TABLE`: `ALTER TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_table_set_options_statement)
 	// statement. * `ALTER_VIEW`: `ALTER VIEW`
@@ -6115,20 +6204,62 @@ type JobStatistics2 struct {
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_materialized_view_set_options_statement)
 	// statement. * `ALTER_SCHEMA`: `ALTER SCHEMA`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_schema_set_options_statement)
+	// statement. * `ALTER_MODEL`: `ALTER MODEL`
+	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-alter-model)
+	// statement. * `ALTER_SEARCH_INDEX`: `ALTER SEARCH INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_search_index_statement)
+	// statement. * `ALTER_VECTOR_INDEX`: `ALTER VECTOR INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_vector_index_rebuild_statement)
+	// statement. * `ALTER_CONNECTION`: `ALTER CONNECTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_connection_set_options_statement)
+	// statement. * `ALTER_DATA_POLICY`: `ALTER DATA_POLICY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_data_policy_statement)
+	// statement. * `ALTER_PROJECT`: `ALTER PROJECT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_project_set_options_statement)
+	// statement. * `ALTER_ORGANIZATION`: `ALTER ORGANIZATION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_organization_set_options_statement)
+	// statement. * `ALTER_BI_CAPACITY`: `ALTER BI_CAPACITY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_bi_capacity_set_options_statement)
+	// statement. * `ALTER_CAPACITY`: `ALTER CAPACITY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_capacity_set_options_statement)
+	// statement. * `ALTER_RESERVATION`: `ALTER RESERVATION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_reservation_set_options_statement)
 	// statement. * `SCRIPT`: `SCRIPT`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language).
-	// * `TRUNCATE_TABLE`: `TRUNCATE TABLE`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#truncate_table_statement)
-	// statement. * `CREATE_EXTERNAL_TABLE`: `CREATE EXTERNAL TABLE`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_external_table_statement)
-	// statement. * `EXPORT_DATA`: `EXPORT DATA`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/other-statements#export_data_statement)
-	// statement. * `EXPORT_MODEL`: `EXPORT MODEL`
-	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-export-model)
-	// statement. * `LOAD_DATA`: `LOAD DATA`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/other-statements#load_data_statement)
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language)
 	// statement. * `CALL`: `CALL`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#call)
+	// statement. * `BEGIN_TRANSACTION`: `BEGIN TRANSACTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#begin_transaction)
+	// statement. * `COMMIT_TRANSACTION`: `COMMIT TRANSACTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#commit_transaction)
+	// statement. * `ROLLBACK_TRANSACTION`: `ROLLBACK TRANSACTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#rollback_transaction)
+	// statement. * `EXPORT_DATA`: `EXPORT DATA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/export-statements#export_data_statement)
+	// statement. * `EXPORT_MODEL`: `EXPORT MODEL`
+	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-export-model)
+	// statement. * `EXPORT_METADATA`: `EXPORT TABLE METADATA`
+	// (https://cloud.google.com/bigquery/docs/biglake-iceberg-tables-in-bigquery)
+	// statement, for BigLake Iceberg tables. * `LOAD_DATA`: `LOAD DATA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/load-statements#load_data_statement)
+	// statement. * `GRANT_ON_SCHEMA`: `GRANT ... ON SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#grant_statement)
+	// statement. * `GRANT_ON_TABLE`: `GRANT ... ON TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#grant_statement)
+	// statement. Also used for `GRANT ... ON EXTERNAL TABLE`. * `GRANT_ON_VIEW`:
+	// `GRANT ... ON VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#grant_statement)
+	// statement. * `GRANT_ON_PROJECT`: `GRANT ... ON PROJECT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#grant_statement)
+	// statement. * `REVOKE_ON_SCHEMA`: `REVOKE ... ON SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#revoke_statement)
+	// statement. * `REVOKE_ON_TABLE`: `REVOKE ... ON TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#revoke_statement)
+	// statement. Also used for `REVOKE ... ON EXTERNAL TABLE`. * `REVOKE_ON_VIEW`:
+	// `REVOKE ... ON VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#revoke_statement)
+	// statement. * `REVOKE_ON_PROJECT`: `REVOKE ... ON PROJECT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#revoke_statement)
 	// statement.
 	StatementType string `json:"statementType,omitempty"`
 	// Timeline: Output only. Describes a timeline of job execution.
@@ -7971,6 +8102,11 @@ type QueryRequest struct {
 	// the project or organization to have `reservation_override_mode` set to
 	// `ALLOW_ANY_OVERRIDE`.
 	Reservation string `json:"reservation,omitempty"`
+	// SecureContext: Optional. A set of key-value pairs representing the secure
+	// context. This can be used to pass sensitive or context-specific information.
+	// They can be retrieved via the SECURE_CONTEXT() function and used to modify
+	// the run-time behavior of a query.
+	SecureContext *SecureContext `json:"secureContext,omitempty"`
 	// TimeoutMs: Optional. Optional: Specifies the maximum amount of time, in
 	// milliseconds, that the client is willing to wait for the query to complete.
 	// By default, this limit is 10 seconds (10,000 milliseconds). If the query is
@@ -8109,6 +8245,8 @@ type QueryResponse struct {
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language)
 	// statement. * `MERGE`: `MERGE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language)
+	// statement. * `TRUNCATE_TABLE`: `TRUNCATE TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#truncate_table_statement)
 	// statement. * `CREATE_TABLE`: `CREATE TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_table_statement)
 	// statement, without `AS SELECT`. * `CREATE_TABLE_AS_SELECT`: `CREATE TABLE AS
@@ -8130,10 +8268,28 @@ type QueryResponse struct {
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_row_access_policy_statement)
 	// statement. * `CREATE_SCHEMA`: `CREATE SCHEMA`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_schema_statement)
+	// statement. * `CREATE_EXTERNAL_SCHEMA`: `CREATE EXTERNAL SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_external_schema_statement)
+	// statement. * `CREATE_EXTERNAL_TABLE`: `CREATE EXTERNAL TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_external_table_statement)
 	// statement. * `CREATE_SNAPSHOT_TABLE`: `CREATE SNAPSHOT TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_snapshot_table_statement)
 	// statement. * `CREATE_SEARCH_INDEX`: `CREATE SEARCH INDEX`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_search_index_statement)
+	// statement. * `CREATE_VECTOR_INDEX`: `CREATE VECTOR INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_vector_index_statement)
+	// statement. * `CREATE_CONNECTION`: `CREATE CONNECTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_connection_statement)
+	// statement. * `CREATE_DATA_POLICY`: `CREATE DATA_POLICY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_data_policy_statement)
+	// statement. * `CREATE_PROPERTY_GRAPH`: `CREATE PROPERTY GRAPH`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/graph-schema-statements#gql_create_graph)
+	// statement. * `CREATE_CAPACITY`: `CREATE CAPACITY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_capacity_statement)
+	// statement. * `CREATE_RESERVATION`: `CREATE RESERVATION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_reservation_statement)
+	// statement. * `CREATE_ASSIGNMENT`: `CREATE ASSIGNMENT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_assignment_statement)
 	// statement. * `DROP_TABLE`: `DROP TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_table_statement)
 	// statement. * `DROP_EXTERNAL_TABLE`: `DROP EXTERNAL TABLE`
@@ -8144,21 +8300,37 @@ type QueryResponse struct {
 	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-drop-model)
 	// statement. * `DROP_MATERIALIZED_VIEW`: `DROP MATERIALIZED VIEW`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_materialized_view_statement)
-	// statement. * `DROP_FUNCTION` : `DROP FUNCTION`
+	// statement. * `DROP_FUNCTION`: `DROP FUNCTION`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_function_statement)
-	// statement. * `DROP_TABLE_FUNCTION` : `DROP TABLE FUNCTION`
+	// statement. * `DROP_TABLE_FUNCTION`: `DROP TABLE FUNCTION`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_table_function)
 	// statement. * `DROP_PROCEDURE`: `DROP PROCEDURE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_procedure_statement)
 	// statement. * `DROP_SEARCH_INDEX`: `DROP SEARCH INDEX`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_search_index)
+	// statement. * `DROP_VECTOR_INDEX`: `DROP VECTOR INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_vector_index)
 	// statement. * `DROP_SCHEMA`: `DROP SCHEMA`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_schema_statement)
+	// statement. * `UNDROP_SCHEMA`: `UNDROP SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#undrop_schema_statement)
 	// statement. * `DROP_SNAPSHOT_TABLE`: `DROP SNAPSHOT TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_snapshot_table_statement)
 	// statement. * `DROP_ROW_ACCESS_POLICY`: [`DROP ALL] ROW ACCESS
 	// POLICY|POLICIES`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_row_access_policy_statement)
+	// statement. * `DROP_CONNECTION`: `DROP CONNECTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_connection_statement)
+	// statement. * `DROP_DATA_POLICY`: `DROP DATA_POLICY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_data_policy)
+	// statement. * `DROP_PROPERTY_GRAPH`: `DROP PROPERTY GRAPH`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/graph-schema-statements#gql_drop_graph)
+	// statement. * `DROP_CAPACITY`: `DROP CAPACITY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_capacity_statement)
+	// statement. * `DROP_RESERVATION`: `DROP RESERVATION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_reservation_statement)
+	// statement. * `DROP_ASSIGNMENT`: `DROP ASSIGNMENT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#drop_assignment_statement)
 	// statement. * `ALTER_TABLE`: `ALTER TABLE`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_table_set_options_statement)
 	// statement. * `ALTER_VIEW`: `ALTER VIEW`
@@ -8167,20 +8339,62 @@ type QueryResponse struct {
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_materialized_view_set_options_statement)
 	// statement. * `ALTER_SCHEMA`: `ALTER SCHEMA`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_schema_set_options_statement)
+	// statement. * `ALTER_MODEL`: `ALTER MODEL`
+	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-alter-model)
+	// statement. * `ALTER_SEARCH_INDEX`: `ALTER SEARCH INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_search_index_statement)
+	// statement. * `ALTER_VECTOR_INDEX`: `ALTER VECTOR INDEX`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_vector_index_rebuild_statement)
+	// statement. * `ALTER_CONNECTION`: `ALTER CONNECTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_connection_set_options_statement)
+	// statement. * `ALTER_DATA_POLICY`: `ALTER DATA_POLICY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_data_policy_statement)
+	// statement. * `ALTER_PROJECT`: `ALTER PROJECT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_project_set_options_statement)
+	// statement. * `ALTER_ORGANIZATION`: `ALTER ORGANIZATION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_organization_set_options_statement)
+	// statement. * `ALTER_BI_CAPACITY`: `ALTER BI_CAPACITY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_bi_capacity_set_options_statement)
+	// statement. * `ALTER_CAPACITY`: `ALTER CAPACITY`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_capacity_set_options_statement)
+	// statement. * `ALTER_RESERVATION`: `ALTER RESERVATION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#alter_reservation_set_options_statement)
 	// statement. * `SCRIPT`: `SCRIPT`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language).
-	// * `TRUNCATE_TABLE`: `TRUNCATE TABLE`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/dml-syntax#truncate_table_statement)
-	// statement. * `CREATE_EXTERNAL_TABLE`: `CREATE EXTERNAL TABLE`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-definition-language#create_external_table_statement)
-	// statement. * `EXPORT_DATA`: `EXPORT DATA`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/other-statements#export_data_statement)
-	// statement. * `EXPORT_MODEL`: `EXPORT MODEL`
-	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-export-model)
-	// statement. * `LOAD_DATA`: `LOAD DATA`
-	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/other-statements#load_data_statement)
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language)
 	// statement. * `CALL`: `CALL`
 	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#call)
+	// statement. * `BEGIN_TRANSACTION`: `BEGIN TRANSACTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#begin_transaction)
+	// statement. * `COMMIT_TRANSACTION`: `COMMIT TRANSACTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#commit_transaction)
+	// statement. * `ROLLBACK_TRANSACTION`: `ROLLBACK TRANSACTION`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/procedural-language#rollback_transaction)
+	// statement. * `EXPORT_DATA`: `EXPORT DATA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/export-statements#export_data_statement)
+	// statement. * `EXPORT_MODEL`: `EXPORT MODEL`
+	// (https://cloud.google.com/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-export-model)
+	// statement. * `EXPORT_METADATA`: `EXPORT TABLE METADATA`
+	// (https://cloud.google.com/bigquery/docs/biglake-iceberg-tables-in-bigquery)
+	// statement, for BigLake Iceberg tables. * `LOAD_DATA`: `LOAD DATA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/load-statements#load_data_statement)
+	// statement. * `GRANT_ON_SCHEMA`: `GRANT ... ON SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#grant_statement)
+	// statement. * `GRANT_ON_TABLE`: `GRANT ... ON TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#grant_statement)
+	// statement. Also used for `GRANT ... ON EXTERNAL TABLE`. * `GRANT_ON_VIEW`:
+	// `GRANT ... ON VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#grant_statement)
+	// statement. * `GRANT_ON_PROJECT`: `GRANT ... ON PROJECT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#grant_statement)
+	// statement. * `REVOKE_ON_SCHEMA`: `REVOKE ... ON SCHEMA`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#revoke_statement)
+	// statement. * `REVOKE_ON_TABLE`: `REVOKE ... ON TABLE`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#revoke_statement)
+	// statement. Also used for `REVOKE ... ON EXTERNAL TABLE`. * `REVOKE_ON_VIEW`:
+	// `REVOKE ... ON VIEW`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#revoke_statement)
+	// statement. * `REVOKE_ON_PROJECT`: `REVOKE ... ON PROJECT`
+	// (https://cloud.google.com/bigquery/docs/reference/standard-sql/data-control-language#revoke_statement)
 	// statement.
 	StatementType string `json:"statementType,omitempty"`
 	// TotalBytesBilled: Output only. If the project is configured to use on-demand
@@ -9100,6 +9314,30 @@ func (s SearchStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SecureContext: A set of key-value pairs representing the secure context.
+type SecureContext struct {
+	// SecureParameterEntries: Optional. A set of key-value pairs representing the
+	// secure parameter values. They can be retrieved via the SECURE_CONTEXT()
+	// function and used to modify the run-time behavior of a query.
+	SecureParameterEntries googleapi.RawMessage `json:"secureParameterEntries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SecureParameterEntries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SecureParameterEntries") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SecureContext) MarshalJSON() ([]byte, error) {
+	type NoMethod SecureContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SerDeInfo: Serializer and deserializer information.
 type SerDeInfo struct {
 	// Name: Optional. Name of the SerDe. The maximum length is 256 characters.
@@ -9481,6 +9719,7 @@ type StandardSqlDataType struct {
 	// is used because a JSON object cannot have duplicate field names.
 	//   "RANGE" - Encoded as a pair with types matching range_element_type. Pairs
 	// must begin with "[", end with ")", and be separated by ", ".
+	//   "UUID" - Encoded as a string.
 	TypeKind string `json:"typeKind,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArrayElementType") to
 	// unconditionally include in API requests. By default, fields with empty or

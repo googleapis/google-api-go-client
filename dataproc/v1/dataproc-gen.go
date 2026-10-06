@@ -1003,9 +1003,11 @@ type ApplicationAttemptInfo struct {
 	Completed       bool   `json:"completed,omitempty"`
 	DurationMillis  int64  `json:"durationMillis,omitempty,string"`
 	EndTime         string `json:"endTime,omitempty"`
-	LastUpdated     string `json:"lastUpdated,omitempty"`
-	SparkUser       string `json:"sparkUser,omitempty"`
-	StartTime       string `json:"startTime,omitempty"`
+	// EventLogPath: Output only. The event log path for the application attempt.
+	EventLogPath string `json:"eventLogPath,omitempty"`
+	LastUpdated  string `json:"lastUpdated,omitempty"`
+	SparkUser    string `json:"sparkUser,omitempty"`
+	StartTime    string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppSparkVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3087,6 +3089,10 @@ type GceClusterConfig struct {
 	// instances (see Project and instance metadata
 	// (https://cloud.google.com/compute/docs/storing-retrieving-metadata#project_and_instance_metadata)).
 	Metadata map[string]string `json:"metadata,omitempty"`
+	// MultiZoneConfig: Optional. Controls how instances within this Cluster are
+	// allowed to exist in multiple Zones within the Region. Only one of zone_uri
+	// or multi_zone_config must be set.
+	MultiZoneConfig *MultiZoneConfig `json:"multiZoneConfig,omitempty"`
 	// NetworkUri: Optional. The Compute Engine network to be used for machine
 	// communications. Cannot be specified with subnetwork_uri. If neither
 	// network_uri nor subnetwork_uri is specified, the "default" network of the
@@ -5056,6 +5062,35 @@ type Metric struct {
 
 func (s Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod Metric
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MultiZoneConfig: Configuration for multi-zonal clusters that can create
+// instances across multiple Zones within the Region.
+type MultiZoneConfig struct {
+	// TargetShape: Optional. The distribution shape of the nodes in the
+	// multi-zonal cluster.
+	//
+	// Possible values:
+	//   "TARGET_SHAPE_UNSPECIFIED" - Target shape is unspecified. Setting this
+	// will cause error.
+	//   "ANY" - Instances may exist in any Zones within the Region.
+	TargetShape string `json:"targetShape,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetShape") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetShape") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiZoneConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiZoneConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7152,13 +7187,11 @@ type Session struct {
 	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
 	// RuntimeInfo: Output only. Runtime information about session execution.
 	RuntimeInfo *RuntimeInfo `json:"runtimeInfo,omitempty"`
-	// SessionTemplate: Optional. The session template used by the session.Only
-	// resource names, including project ID and location, are valid.Example: *
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]
-	// *
+	// SessionTemplate: Optional. The session template used by the session.Resource
+	// names and short template IDs are valid. Examples: *
 	// projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_
-	// id]The template must be in the same project and Dataproc region as the
-	// session.
+	// id] * [template_id]The template must be in the same project and Dataproc
+	// region as the session.
 	SessionTemplate string `json:"sessionTemplate,omitempty"`
 	// SparkConnectSession: Optional. Spark connect session config.
 	SparkConnectSession *SparkConnectConfig `json:"sparkConnectSession,omitempty"`
@@ -9767,6 +9800,50 @@ type VirtualClusterConfig struct {
 
 func (s VirtualClusterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualClusterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VirtualClusterOperationMetadata: Metadata describing the VirtualCluster
+// operation.
+type VirtualClusterOperationMetadata struct {
+	// CreateTime: Output only. The time when the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Output only. Short description of the operation.
+	Description string `json:"description,omitempty"`
+	// DoneTime: Output only. The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
+	// Labels: Output only. Labels associated with the operation.
+	Labels map[string]string `json:"labels,omitempty"`
+	// OperationType: Output only. The operation type.
+	//
+	// Possible values:
+	//   "VIRTUAL_CLUSTER_OPERATION_TYPE_UNSPECIFIED" - VirtualCluster operation
+	// type is unknown.
+	//   "CREATE" - Create VirtualCluster operation type.
+	//   "UPDATE" - Update VirtualCluster operation type.
+	//   "DELETE" - Delete VirtualCluster operation type.
+	OperationType string `json:"operationType,omitempty"`
+	// VirtualCluster: Output only. Name of the virtual cluster for the operation.
+	VirtualCluster string `json:"virtualCluster,omitempty"`
+	// VirtualClusterUuid: Output only. VirtualCluster UUID for the operation.
+	VirtualClusterUuid string `json:"virtualClusterUuid,omitempty"`
+	// Warnings: Output only. Warnings encountered during operation execution.
+	Warnings []string `json:"warnings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VirtualClusterOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualClusterOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

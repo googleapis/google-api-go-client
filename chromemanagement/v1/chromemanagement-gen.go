@@ -3191,7 +3191,8 @@ type GoogleChromeManagementV1RiskAssessmentEntry struct {
 	// Possible values:
 	//   "RISK_ASSESSMENT_PROVIDER_UNSPECIFIED" - Default value when no provider is
 	// specified.
-	//   "RISK_ASSESSMENT_PROVIDER_CRXCAVATOR" - CRXcavator.
+	//   "RISK_ASSESSMENT_PROVIDER_CRXCAVATOR" - Deprecated: Please use other risk
+	// score providers instead. CRXcavator.
 	//   "RISK_ASSESSMENT_PROVIDER_SPIN_AI" - Deprecated: Please use
 	// RISK_ASSESSMENT_PROVIDER_SPIN_AI_V2 instead. Spin.Ai.
 	//   "RISK_ASSESSMENT_PROVIDER_LAYERX" - LayerX Security.

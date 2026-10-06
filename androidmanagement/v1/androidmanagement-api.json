@@ -1265,7 +1265,7 @@
       }
     }
   },
-  "revision": "20260928",
+  "revision": "20261001",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -1315,7 +1315,7 @@
       "id": "AdvancedSecurityOverrides",
       "properties": {
         "commonCriteriaMode": {
-          "description": "Controls Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common Criteria Mode increases certain security components on a device, see CommonCriteriaMode for details.Warning: Common Criteria Mode enforces a strict security model typically only required for IT products used in national security systems and other highly sensitive organizations. Standard device use may be affected. Only enabled if required. If Common Criteria Mode is turned off after being enabled previously, all user-configured Wi-Fi networks may be lost and any enterprise-configured Wi-Fi networks that require user input may need to be reconfigured.",
+          "description": "Optional. Controls Common Criteria Mode—security standards defined in the Common Criteria for Information Technology Security Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common Criteria Mode increases certain security components on a device, see CommonCriteriaMode for details.Warning: Common Criteria Mode enforces a strict security model typically only required for IT products used in national security systems and other highly sensitive organizations. Standard device use may be affected. Only enabled if required. If Common Criteria Mode is turned off after being enabled previously, all user-configured Wi-Fi networks may be lost and any enterprise-configured Wi-Fi networks that require user input may need to be reconfigured.",
           "enum": [
             "COMMON_CRITERIA_MODE_UNSPECIFIED",
             "COMMON_CRITERIA_MODE_DISABLED",
@@ -1345,7 +1345,7 @@
           "type": "string"
         },
         "developerSettings": {
-          "description": "Controls access to developer settings: developer options and safe boot. Replaces safeBootDisabled (deprecated) and debuggingFeaturesAllowed (deprecated). On personally-owned devices with a work profile, setting this policy will not disable safe boot. In this case, a NonComplianceDetail with MANAGEMENT_MODE is reported.",
+          "description": "Optional. Controls access to developer settings: developer options and safe boot. Replaces safeBootDisabled (deprecated) and debuggingFeaturesAllowed (deprecated). On personally-owned devices with a work profile, setting this policy will not disable safe boot. In this case, a NonComplianceDetail with MANAGEMENT_MODE is reported.",
           "enum": [
             "DEVELOPER_SETTINGS_UNSPECIFIED",
             "DEVELOPER_SETTINGS_DISABLED",
@@ -1359,7 +1359,7 @@
           "type": "string"
         },
         "googlePlayProtectVerifyApps": {
-          "description": "Whether Google Play Protect verification (https://support.google.com/accounts/answer/2812853) is enforced. Replaces ensureVerifyAppsEnabled (deprecated).",
+          "description": "Optional. Whether Google Play Protect verification (https://support.google.com/accounts/answer/2812853) is enforced. Replaces ensureVerifyAppsEnabled (deprecated).",
           "enum": [
             "GOOGLE_PLAY_PROTECT_VERIFY_APPS_UNSPECIFIED",
             "VERIFY_APPS_ENFORCED",
@@ -1389,14 +1389,14 @@
           "type": "string"
         },
         "personalAppsThatCanReadWorkNotifications": {
-          "description": "Personal apps that can read work profile notifications using a NotificationListenerService (https://developer.android.com/reference/android/service/notification/NotificationListenerService). By default, no personal apps (aside from system apps) can read work notifications. Each value in the list must be a package name.",
+          "description": "Optional. Personal apps that can read work profile notifications using a NotificationListenerService (https://developer.android.com/reference/android/service/notification/NotificationListenerService). By default, no personal apps (aside from system apps) can read work notifications. Each value in the list must be a package name.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "untrustedAppsPolicy": {
-          "description": "The policy for untrusted apps (apps from unknown sources) enforced on the device. Replaces install_unknown_sources_allowed (deprecated).",
+          "description": "Optional. The policy for untrusted apps (apps from unknown sources) enforced on the device. Replaces install_unknown_sources_allowed (deprecated).",
           "enum": [
             "UNTRUSTED_APPS_POLICY_UNSPECIFIED",
             "DISALLOW_INSTALL",
@@ -6138,7 +6138,7 @@
         },
         "advancedSecurityOverrides": {
           "$ref": "AdvancedSecurityOverrides",
-          "description": "Advanced security settings. In most cases, setting these is not needed."
+          "description": "Optional. Advanced security settings. In most cases, setting these is not needed."
         },
         "alwaysOnVpnPackage": {
           "$ref": "AlwaysOnVpnPackage",
@@ -6801,7 +6801,7 @@
         },
         "usageLog": {
           "$ref": "UsageLog",
-          "description": "Configuration of device activity logging."
+          "description": "Optional. Configuration of device activity logging."
         },
         "usbFileTransferDisabled": {
           "deprecated": true,
@@ -7885,7 +7885,7 @@
       "id": "UsageLog",
       "properties": {
         "enabledLogTypes": {
-          "description": "Specifies which log types are enabled. Note that users will receive on-device messaging when usage logging is enabled.",
+          "description": "Optional. Specifies which log types are enabled. Note that users will receive on-device messaging when usage logging is enabled.",
           "items": {
             "enum": [
               "LOG_TYPE_UNSPECIFIED",
@@ -7902,7 +7902,7 @@
           "type": "array"
         },
         "uploadOnCellularAllowed": {
-          "description": "Specifies which of the enabled log types can be uploaded over mobile data. By default logs are queued for upload when the device connects to WiFi.",
+          "description": "Optional. Specifies which of the enabled log types can be uploaded over mobile data. By default logs are queued for upload when the device connects to WiFi.",
           "items": {
             "enum": [
               "LOG_TYPE_UNSPECIFIED",

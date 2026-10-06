@@ -5876,6 +5876,11 @@ type Rollout struct {
 	// Name: Identifier. The full, unique resource name of this Rollout in the
 	// format of `projects/{project}/locations/global/rollouts/{rollout}`.
 	Name string `json:"name,omitempty"`
+	// Prioritized: Optional. If set to true, conflicting rollouts will be paused,
+	// to allow this rollout to progress through the sequence. Conflicting rollouts
+	// running on the first stage will be canceled, to allow this rollout to be
+	// created.
+	Prioritized bool `json:"prioritized,omitempty"`
 	// RolloutSequence: Optional. Immutable. The full, unique resource name of the
 	// rollout sequence that initiatied this Rollout. In the format of
 	// `projects/{project}/locations/global/rolloutSequences/{rollout_sequence}`.
@@ -7079,6 +7084,11 @@ type UpgradeRolloutSequenceRequest struct {
 	// that match the minor version of the `version` field, but are on an earlier
 	// patch version.
 	PatchOnly bool `json:"patchOnly,omitempty"`
+	// Prioritized: Optional. If set to true, conflicting rollouts will be paused,
+	// to allow this rollout to progress through the sequence. Conflicting rollouts
+	// running on the first stage will be canceled, to allow this rollout to be
+	// created.
+	Prioritized bool `json:"prioritized,omitempty"`
 	// SoakDurationOverrideAllStages: Optional. Overrides the soak duration for all
 	// stages of the rollout.
 	SoakDurationOverrideAllStages string `json:"soakDurationOverrideAllStages,omitempty"`

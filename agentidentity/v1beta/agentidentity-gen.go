@@ -228,6 +228,10 @@ type AccessSummary struct {
 	//   "AUTH_PROVIDER_TYPE_API_KEY" - API key auth provider type.
 	//   "AUTH_PROVIDER_TYPE_GEMINI_ENTERPRISE" - Gemini Enterprise auth provider
 	// type.
+	//   "AUTH_PROVIDER_TYPE_CROSS_APP_ACCESS" - Cross-App Access auth provider
+	// type.
+	//   "AUTH_PROVIDER_TYPE_CONNECTOR_REFERENCE" - Connector Reference auth
+	// provider type.
 	AuthProviderType string `json:"authProviderType,omitempty"`
 	// FirstAccessTime: Output only. The first time this user interacted with this
 	// workload, rounded to the previous hour.
@@ -274,6 +278,11 @@ type AccessSummary struct {
 func (s AccessSummary) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessSummary
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentIdentityPool: Marker message to indicate the managed Agent Identity
+// Pool is used.
+type AgentIdentityPool struct {
 }
 
 // ApiKeyParams: Configuration for API key authentication.
@@ -445,12 +454,17 @@ func (s AuthProvider) MarshalJSON() ([]byte, error) {
 type AuthProviderTypeParams struct {
 	// ApiKey: Parameters for API key authentication.
 	ApiKey *ApiKeyParams `json:"apiKey,omitempty"`
+	// ConnectorReferenceAuthProvider: Parameters for Connector Reference
+	// authentication.
+	ConnectorReferenceAuthProvider *ConnectorReferenceAuthProvider `json:"connectorReferenceAuthProvider,omitempty"`
 	// GeAuthProvider: Parameters for Gemini Enterprise authentication.
 	GeAuthProvider *GeminiEnterpriseAuthProviderParams `json:"geAuthProvider,omitempty"`
 	// ThreeLeggedOauth: Parameters for 3-legged OAuth (3LO) authentication.
 	ThreeLeggedOauth *ThreeLeggedOAuth `json:"threeLeggedOauth,omitempty"`
 	// TwoLeggedOauth: Parameters for 2-legged OAuth (2LO) authentication.
 	TwoLeggedOauth *TwoLeggedOAuth `json:"twoLeggedOauth,omitempty"`
+	// XaaAuthProvider: Parameters for Cross-App Access authentication.
+	XaaAuthProvider *CrossAppAccessAuthProvider `json:"xaaAuthProvider,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -610,6 +624,154 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ClientAssertionJwtAuth: Configuration for client ID and client assertion JWT
+// authentication.
+type ClientAssertionJwtAuth struct {
+	// ClientId: Required. The client identifier.
+	ClientId string `json:"clientId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientAssertionJwtAuth) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientAssertionJwtAuth
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ClientSecretAuth: Configuration for client ID and client secret
+// authentication.
+type ClientSecretAuth struct {
+	// ClientId: Required. The client identifier.
+	ClientId string `json:"clientId,omitempty"`
+	// ClientSecret: Required. Input only. The client secret.
+	ClientSecret string `json:"clientSecret,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientSecretAuth) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientSecretAuth
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorReferenceAuthProvider: Configuration parameters for the Connector
+// Reference auth provider.
+type ConnectorReferenceAuthProvider struct {
+	// AuthorizationDetails: Optional. Rich Authorization Requests (RFC 9396)
+	// detailing targeted OAuth resources/scopes, formatted as a JSON array of JSON
+	// objects.
+	AuthorizationDetails []googleapi.RawMessage `json:"authorizationDetails,omitempty"`
+	// Connector: Required. The name of the referenced connector.
+	Connector string `json:"connector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizationDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizationDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectorReferenceAuthProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorReferenceAuthProvider
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CrossAppAccessAuthProvider: Configuration parameters for the Cross-App
+// Access auth provider.
+type CrossAppAccessAuthProvider struct {
+	// AdditionalParameters: Optional. Additional parameters to be passed to the
+	// token endpoint.
+	AdditionalParameters map[string]string `json:"additionalParameters,omitempty"`
+	// ClientAssertionJwtAuth: Option 2: Authenticate using a standard `client_id`
+	// and a Client Assertion JWT.
+	ClientAssertionJwtAuth *ClientAssertionJwtAuth `json:"clientAssertionJwtAuth,omitempty"`
+	// ClientSecretAuth: Option 1: Authenticate using a standard `client_id` and
+	// `client_secret`.
+	ClientSecretAuth *ClientSecretAuth `json:"clientSecretAuth,omitempty"`
+	// CustomIssuer: Configuration when using a custom or third-party authorization
+	// server as the issuer.
+	CustomIssuer *CustomIssuer `json:"customIssuer,omitempty"`
+	// GoogleAccount: Configuration when using Google Accounts as the issuer.
+	GoogleAccount *GoogleAccount `json:"googleAccount,omitempty"`
+	// IdJagInput: Configuration for when the input is already an ID-JAG.
+	IdJagInput *DirectIdJagInput `json:"idJagInput,omitempty"`
+	// IdTokenInput: Configuration for when the input is an ID token.
+	IdTokenInput *IdTokenProcessingConfig `json:"idTokenInput,omitempty"`
+	// WorkforceIdentityFederation: Configuration when using Workforce Identity
+	// Federation as the issuer.
+	WorkforceIdentityFederation *WorkforceIdentityFederation `json:"workforceIdentityFederation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalParameters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalParameters") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrossAppAccessAuthProvider) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossAppAccessAuthProvider
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomIssuer: Configuration for a custom or third-party authorization server
+// issuer.
+type CustomIssuer struct {
+	// Issuer: Optional. The issuer identifier of the target Authorization Server.
+	Issuer string `json:"issuer,omitempty"`
+	// TokenUrl: Required. The token endpoint of the target OAuth authorization
+	// server to retrieve resource tokens.
+	TokenUrl string `json:"tokenUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Issuer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Issuer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomIssuer) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomIssuer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DirectIdJagInput: Marker message indicating the input is already an ID-JAG,
+// so no fetching is required.
+type DirectIdJagInput struct {
+}
+
 // DisableAuthProviderRequest: Request message for `DisableAuthProvider`.
 type DisableAuthProviderRequest struct {
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
@@ -724,6 +886,40 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 // GeminiEnterpriseAuthProviderParams: Configuration for Gemini Enterprise
 // authentication.
 type GeminiEnterpriseAuthProviderParams struct {
+}
+
+// GoogleAccount: Configuration for Google Account usage as the issuer.
+type GoogleAccount struct {
+}
+
+// IdTokenProcessingConfig: Defines how to process an input ID token to obtain
+// an ID-JAG.
+type IdTokenProcessingConfig struct {
+	// AgentIdentityPool: Indicates the managed Agent Identity pool should be used
+	// to fetch the ID-JAG.
+	AgentIdentityPool *AgentIdentityPool `json:"agentIdentityPool,omitempty"`
+	// IdJagAdditionalClaims: Optional. Optional additional claims to include when
+	// fetching an ID-JAG.
+	IdJagAdditionalClaims googleapi.RawMessage `json:"idJagAdditionalClaims,omitempty"`
+	// IdJagAuthProvider: The resource name of the ID-JAG auth provider. Format:
+	// "projects/{project}/locations/{location}/authProviders/{auth_provider}"
+	IdJagAuthProvider string `json:"idJagAuthProvider,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentIdentityPool") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentIdentityPool") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s IdTokenProcessingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdTokenProcessingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccessSummariesResponse: Response message for `ListAccessSummaries`.
@@ -1031,6 +1227,56 @@ func (s QueryWorkloadsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResolveAuthorizationRequest: Request message for `ResolveAuthorization`.
+type ResolveAuthorizationRequest struct {
+	// ClientUserId: Required. The user ID of the client for whom the authorization
+	// is resolved.
+	ClientUserId string `json:"clientUserId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ClientUserId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ClientUserId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResolveAuthorizationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResolveAuthorizationRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResolveAuthorizationResponse: Response message for `ResolveAuthorization`.
+type ResolveAuthorizationResponse struct {
+	// Authorization: The resource name of the resolved authorization. Format:
+	// projects/{project}/locations/{location}/authProviders/{auth_provider}/authori
+	// zations/{authorization}
+	Authorization string `json:"authorization,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Authorization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Authorization") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResolveAuthorizationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ResolveAuthorizationResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RevokeAuthorizationRequest: Request message for `RevokeAuthorization`.
 type RevokeAuthorizationRequest struct {
 	// UserId: Required. The identity of the user to revoke authorization for.
@@ -1232,6 +1478,11 @@ type UndeleteAuthProviderRequest struct {
 func (s UndeleteAuthProviderRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UndeleteAuthProviderRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkforceIdentityFederation: Configuration for Workforce Identity Federation
+// usage as the issuer.
+type WorkforceIdentityFederation struct {
 }
 
 type ProjectsLocationsGetCall struct {
@@ -3090,6 +3341,112 @@ func (c *ProjectsLocationsAuthProvidersQueryWorkloadsCall) Pages(ctx context.Con
 	}
 }
 
+type ProjectsLocationsAuthProvidersResolveAuthorizationCall struct {
+	s                           *Service
+	name                        string
+	resolveauthorizationrequest *ResolveAuthorizationRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// ResolveAuthorization: Resolves an authorization for a user on an auth
+// provider, creating one if it does not exist or returning an existing one.
+//
+//   - name: The name of the auth provider to resolve authorization for. Format:
+//     projects/{project}/locations/{location}/authProviders/{auth_provider}.
+func (r *ProjectsLocationsAuthProvidersService) ResolveAuthorization(name string, resolveauthorizationrequest *ResolveAuthorizationRequest) *ProjectsLocationsAuthProvidersResolveAuthorizationCall {
+	c := &ProjectsLocationsAuthProvidersResolveAuthorizationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resolveauthorizationrequest = resolveauthorizationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthProvidersResolveAuthorizationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) Context(ctx context.Context) *ProjectsLocationsAuthProvidersResolveAuthorizationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resolveauthorizationrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:resolveAuthorization")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.resolveAuthorization", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentidentity.projects.locations.authProviders.resolveAuthorization" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResolveAuthorizationResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthProvidersResolveAuthorizationCall) Do(opts ...googleapi.CallOption) (*ResolveAuthorizationResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ResolveAuthorizationResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.resolveAuthorization", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAuthProvidersRevokeAuthorizationCall struct {
 	s                          *Service
 	name                       string
@@ -3743,6 +4100,135 @@ func (c *ProjectsLocationsAuthProvidersAuthorizationsGetCall) Do(opts ...googlea
 	return ret, nil
 }
 
+type ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsAuthProvidersAuthorizationsService) GetIamPolicy(resource string) *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall {
+	c := &ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.authorizations.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentidentity.projects.locations.authProviders.authorizations.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.authorizations.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAuthProvidersAuthorizationsListCall struct {
 	s            *Service
 	parent       string
@@ -3905,4 +4391,222 @@ func (c *ProjectsLocationsAuthProvidersAuthorizationsListCall) Pages(ctx context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`,
+// and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsAuthProvidersAuthorizationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall {
+	c := &ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.authorizations.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentidentity.projects.locations.authProviders.authorizations.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.authorizations.setIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a `NOT_FOUND` error. Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
+func (r *ProjectsLocationsAuthProvidersAuthorizationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall {
+	c := &ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.authorizations.testIamPermissions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentidentity.projects.locations.authProviders.authorizations.testIamPermissions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAuthProvidersAuthorizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentidentity.projects.locations.authProviders.authorizations.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

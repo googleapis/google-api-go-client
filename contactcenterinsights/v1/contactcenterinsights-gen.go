@@ -922,6 +922,10 @@ type GoogleCloudContactcenterinsightsV1Analysis struct {
 	Name string `json:"name,omitempty"`
 	// RequestTime: Output only. The time at which the analysis was requested.
 	RequestTime string `json:"requestTime,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1037,6 +1041,10 @@ type GoogleCloudContactcenterinsightsV1AnalysisRule struct {
 	// Name: Identifier. The resource name of the analysis rule. Format:
 	// projects/{project}/locations/{location}/analysisRules/{analysis_rule}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which this analysis rule
 	// was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1400,6 +1408,10 @@ type GoogleCloudContactcenterinsightsV1AssessmentRule struct {
 	Name string `json:"name,omitempty"`
 	// SampleRule: The sample rule for the assessment rule.
 	SampleRule *GoogleCloudContactcenterinsightsV1SampleRule `json:"sampleRule,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScheduleInfo: Schedule info for the assessment rule.
 	ScheduleInfo *GoogleCloudContactcenterinsightsV1ScheduleInfo `json:"scheduleInfo,omitempty"`
 	// UpdateTime: Output only. The most recent time at which this assessment rule
@@ -1547,6 +1559,10 @@ type GoogleCloudContactcenterinsightsV1AuthorizedView struct {
 	// projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_s
 	// et}/authorizedViews/{authorized_view}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the authorized view
 	// was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1582,6 +1598,10 @@ type GoogleCloudContactcenterinsightsV1AuthorizedViewSet struct {
 	// projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_s
 	// et}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Update time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1699,8 +1719,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata struct {
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -1740,8 +1761,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest struct {
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2730,6 +2752,10 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	// RuntimeAnnotations: Output only. The annotations that were generated during
 	// the customer and agent interaction.
 	RuntimeAnnotations []*GoogleCloudContactcenterinsightsV1RuntimeAnnotation `json:"runtimeAnnotations,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: The time at which the conversation started.
 	StartTime string `json:"startTime,omitempty"`
 	// Transcript: Output only. The conversation transcript.
@@ -4080,6 +4106,10 @@ type GoogleCloudContactcenterinsightsV1Dataset struct {
 	// Name: Immutable. Identifier. Resource name of the dataset. Format:
 	// projects/{project}/locations/{location}/datasets/{dataset}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Ttl: Optional. Option TTL for the dataset.
 	Ttl string `json:"ttl,omitempty"`
 	// Type: Dataset usage type.
@@ -4834,6 +4864,10 @@ type GoogleCloudContactcenterinsightsV1EncryptionSpec struct {
 	// Name: Immutable. The resource name of the encryption key specification
 	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5291,6 +5325,10 @@ type GoogleCloudContactcenterinsightsV1FeedbackLabel struct {
 	Name string `json:"name,omitempty"`
 	// QaAnswerLabel: QaAnswer label used for Quality AI example conversations.
 	QaAnswerLabel *GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue `json:"qaAnswerLabel,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Update time of the label.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -7847,6 +7885,10 @@ type GoogleCloudContactcenterinsightsV1QaQuestion struct {
 	// upload feedback labels for the question nor fine-tune the question. However,
 	// users may edit other fields like question tags, question order, etc.
 	QuestionType string `json:"questionType,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Tags: Questions are tagged for categorization and scoring. Tags can either
 	// be: - Default Tags: These are predefined categories. They are identified by
 	// their string value (e.g., "BUSINESS", "COMPLIANCE", and "CUSTOMER"). -
@@ -8054,6 +8096,10 @@ type GoogleCloudContactcenterinsightsV1QaQuestionTag struct {
 	// containing the Question ID. Lastly, Since a tag may not necessarily be
 	// referenced by any Scorecard Questions, we treat this field as optional.
 	QaQuestionIds []string `json:"qaQuestionIds,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the question tag was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -8137,6 +8183,10 @@ type GoogleCloudContactcenterinsightsV1QaScorecard struct {
 	// Name: Identifier. The scorecard name. Format:
 	// projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Source: Output only. The source of the scorecard.
 	//
 	// Possible values:
@@ -8363,6 +8413,10 @@ type GoogleCloudContactcenterinsightsV1QaScorecardRevision struct {
 	// projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions
 	// /{revision}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Snapshot: The snapshot of the scorecard at the time of this revision's
 	// creation.
 	Snapshot *GoogleCloudContactcenterinsightsV1QaScorecard `json:"snapshot,omitempty"`
@@ -9600,6 +9654,10 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// `UploadConversation` and `IngestConversations` endpoints, including
 	// conversations coming from CCAI Platform.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScreenRecordingBucketUri: Optional. The path to a Cloud Storage bucket
 	// containing conversation screen recordings. If provided, Insights will search
 	// in the bucket for a screen recording file matching the conversation data
@@ -10503,6 +10561,10 @@ type GoogleCloudContactcenterinsightsV1alpha1Analysis struct {
 	Name string `json:"name,omitempty"`
 	// RequestTime: Output only. The time at which the analysis was requested.
 	RequestTime string `json:"requestTime,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisResult") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10860,8 +10922,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata st
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -10901,8 +10964,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest str
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11294,6 +11358,10 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	// RuntimeAnnotations: Output only. The annotations that were generated during
 	// the customer and agent interaction.
 	RuntimeAnnotations []*GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation `json:"runtimeAnnotations,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: The time at which the conversation started.
 	StartTime string `json:"startTime,omitempty"`
 	// Transcript: Output only. The conversation transcript.
@@ -12473,6 +12541,10 @@ type GoogleCloudContactcenterinsightsV1alpha1Dataset struct {
 	// Name: Immutable. Identifier. Resource name of the dataset. Format:
 	// projects/{project}/locations/{location}/datasets/{dataset}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Ttl: Optional. Option TTL for the dataset.
 	Ttl string `json:"ttl,omitempty"`
 	// Type: Dataset usage type.
@@ -13161,6 +13233,10 @@ type GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec struct {
 	// Name: Immutable. The resource name of the encryption key specification
 	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -13591,6 +13667,10 @@ type GoogleCloudContactcenterinsightsV1alpha1FeedbackLabel struct {
 	Name string `json:"name,omitempty"`
 	// QaAnswerLabel: QaAnswer label used for Quality AI example conversations.
 	QaAnswerLabel *GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue `json:"qaAnswerLabel,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Update time of the label.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -14921,6 +15001,10 @@ type GoogleCloudContactcenterinsightsV1alpha1QaQuestionTag struct {
 	// containing the Question ID. Lastly, Since a tag may not necessarily be
 	// referenced by any Scorecard Questions, we treat this field as optional.
 	QaQuestionIds []string `json:"qaQuestionIds,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the question tag was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -16478,6 +16562,10 @@ type GoogleCloudContactcenterinsightsV1mainAnalysis struct {
 	Name string `json:"name,omitempty"`
 	// RequestTime: Output only. The time at which the analysis was requested.
 	RequestTime string `json:"requestTime,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisResult") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -16835,8 +16923,9 @@ type GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsMetadata stru
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -16876,8 +16965,9 @@ type GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsRequest struc
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17473,6 +17563,10 @@ type GoogleCloudContactcenterinsightsV1mainConversation struct {
 	// RuntimeAnnotations: Output only. The annotations that were generated during
 	// the customer and agent interaction.
 	RuntimeAnnotations []*GoogleCloudContactcenterinsightsV1mainRuntimeAnnotation `json:"runtimeAnnotations,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: The time at which the conversation started.
 	StartTime string `json:"startTime,omitempty"`
 	// Transcript: Output only. The conversation transcript.
@@ -18650,6 +18744,10 @@ type GoogleCloudContactcenterinsightsV1mainDataset struct {
 	// Name: Immutable. Identifier. Resource name of the dataset. Format:
 	// projects/{project}/locations/{location}/datasets/{dataset}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Ttl: Optional. Option TTL for the dataset.
 	Ttl string `json:"ttl,omitempty"`
 	// Type: Dataset usage type.
@@ -19337,6 +19435,10 @@ type GoogleCloudContactcenterinsightsV1mainEncryptionSpec struct {
 	// Name: Immutable. The resource name of the encryption key specification
 	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -19767,6 +19869,10 @@ type GoogleCloudContactcenterinsightsV1mainFeedbackLabel struct {
 	Name string `json:"name,omitempty"`
 	// QaAnswerLabel: QaAnswer label used for Quality AI example conversations.
 	QaAnswerLabel *GoogleCloudContactcenterinsightsV1mainQaAnswerAnswerValue `json:"qaAnswerLabel,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Update time of the label.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -21096,6 +21202,10 @@ type GoogleCloudContactcenterinsightsV1mainQaQuestionTag struct {
 	// containing the Question ID. Lastly, Since a tag may not necessarily be
 	// referenced by any Scorecard Questions, we treat this field as optional.
 	QaQuestionIds []string `json:"qaQuestionIds,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the question tag was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`

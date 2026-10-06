@@ -271,9 +271,10 @@ type LogicalProduct struct {
 	//   "LIFECYCLE_STATE_PUBLIC_PREVIEW" - The entity is in Public Preview. It is
 	// available to all customers, but may not be feature-complete or have full
 	// support guarantees.
-	//   "LIFECYCLE_STATE_PRIVATE_GA" - The entity is in Private General
-	// Availability. It is fully supported and stable, but only available to a
-	// select group of customers.
+	//   "LIFECYCLE_STATE_PRIVATE_GA" - Deprecated: Private General Availability
+	// entities are not exposed. The entity is in Private General Availability. It
+	// is fully supported and stable, but only available to a select group of
+	// customers.
 	//   "LIFECYCLE_STATE_GA" - The entity is Generally Available. It is fully
 	// supported, stable, and available to all customers.
 	//   "LIFECYCLE_STATE_DEPRECATED" - The entity is deprecated. It is no longer
@@ -335,9 +336,10 @@ type LogicalProductVariant struct {
 	//   "LIFECYCLE_STATE_PUBLIC_PREVIEW" - The entity is in Public Preview. It is
 	// available to all customers, but may not be feature-complete or have full
 	// support guarantees.
-	//   "LIFECYCLE_STATE_PRIVATE_GA" - The entity is in Private General
-	// Availability. It is fully supported and stable, but only available to a
-	// select group of customers.
+	//   "LIFECYCLE_STATE_PRIVATE_GA" - Deprecated: Private General Availability
+	// entities are not exposed. The entity is in Private General Availability. It
+	// is fully supported and stable, but only available to a select group of
+	// customers.
 	//   "LIFECYCLE_STATE_GA" - The entity is Generally Available. It is fully
 	// supported, stable, and available to all customers.
 	//   "LIFECYCLE_STATE_DEPRECATED" - The entity is deprecated. It is no longer

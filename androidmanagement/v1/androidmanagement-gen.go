@@ -350,8 +350,8 @@ func (s AddEsimParams) MarshalJSON() ([]byte, error) {
 // AdvancedSecurityOverrides: Advanced security settings. In most cases,
 // setting these is not needed.
 type AdvancedSecurityOverrides struct {
-	// CommonCriteriaMode: Controls Common Criteria Mode—security standards
-	// defined in the Common Criteria for Information Technology Security
+	// CommonCriteriaMode: Optional. Controls Common Criteria Mode—security
+	// standards defined in the Common Criteria for Information Technology Security
 	// Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common
 	// Criteria Mode increases certain security components on a device, see
 	// CommonCriteriaMode for details.Warning: Common Criteria Mode enforces a
@@ -385,8 +385,8 @@ type AdvancedSecurityOverrides struct {
 	// protection.Supported on Android 15 and above. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 15.
 	ContentProtectionPolicy string `json:"contentProtectionPolicy,omitempty"`
-	// DeveloperSettings: Controls access to developer settings: developer options
-	// and safe boot. Replaces safeBootDisabled (deprecated) and
+	// DeveloperSettings: Optional. Controls access to developer settings:
+	// developer options and safe boot. Replaces safeBootDisabled (deprecated) and
 	// debuggingFeaturesAllowed (deprecated). On personally-owned devices with a
 	// work profile, setting this policy will not disable safe boot. In this case,
 	// a NonComplianceDetail with MANAGEMENT_MODE is reported.
@@ -399,9 +399,9 @@ type AdvancedSecurityOverrides struct {
 	//   "DEVELOPER_SETTINGS_ALLOWED" - Allows all developer settings. The user can
 	// access and optionally configure the settings.
 	DeveloperSettings string `json:"developerSettings,omitempty"`
-	// GooglePlayProtectVerifyApps: Whether Google Play Protect verification
-	// (https://support.google.com/accounts/answer/2812853) is enforced. Replaces
-	// ensureVerifyAppsEnabled (deprecated).
+	// GooglePlayProtectVerifyApps: Optional. Whether Google Play Protect
+	// verification (https://support.google.com/accounts/answer/2812853) is
+	// enforced. Replaces ensureVerifyAppsEnabled (deprecated).
 	//
 	// Possible values:
 	//   "GOOGLE_PLAY_PROTECT_VERIFY_APPS_UNSPECIFIED" - Unspecified. Defaults to
@@ -434,15 +434,15 @@ type AdvancedSecurityOverrides struct {
 	// not support MTE.Supported on Android 14 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 14.
 	MtePolicy string `json:"mtePolicy,omitempty"`
-	// PersonalAppsThatCanReadWorkNotifications: Personal apps that can read work
-	// profile notifications using a NotificationListenerService
+	// PersonalAppsThatCanReadWorkNotifications: Optional. Personal apps that can
+	// read work profile notifications using a NotificationListenerService
 	// (https://developer.android.com/reference/android/service/notification/NotificationListenerService).
 	// By default, no personal apps (aside from system apps) can read work
 	// notifications. Each value in the list must be a package name.
 	PersonalAppsThatCanReadWorkNotifications []string `json:"personalAppsThatCanReadWorkNotifications,omitempty"`
-	// UntrustedAppsPolicy: The policy for untrusted apps (apps from unknown
-	// sources) enforced on the device. Replaces install_unknown_sources_allowed
-	// (deprecated).
+	// UntrustedAppsPolicy: Optional. The policy for untrusted apps (apps from
+	// unknown sources) enforced on the device. Replaces
+	// install_unknown_sources_allowed (deprecated).
 	//
 	// Possible values:
 	//   "UNTRUSTED_APPS_POLICY_UNSPECIFIED" - Unspecified. Defaults to
@@ -6392,8 +6392,8 @@ type Policy struct {
 	// AdjustVolumeDisabled: Whether adjusting the master volume is disabled. Also
 	// mutes the device. The setting has effect only on fully managed devices.
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
-	// AdvancedSecurityOverrides: Advanced security settings. In most cases,
-	// setting these is not needed.
+	// AdvancedSecurityOverrides: Optional. Advanced security settings. In most
+	// cases, setting these is not needed.
 	AdvancedSecurityOverrides *AdvancedSecurityOverrides `json:"advancedSecurityOverrides,omitempty"`
 	// AlwaysOnVpnPackage: Configuration for an always-on VPN connection. Use with
 	// vpn_config_disabled to prevent modification of this setting.
@@ -6965,7 +6965,7 @@ type Policy struct {
 	// disabled, otherwise they are available. This is available only on fully
 	// managed devices.
 	UnmuteMicrophoneDisabled bool `json:"unmuteMicrophoneDisabled,omitempty"`
-	// UsageLog: Configuration of device activity logging.
+	// UsageLog: Optional. Configuration of device activity logging.
 	UsageLog *UsageLog `json:"usageLog,omitempty"`
 	// UsbFileTransferDisabled: Whether transferring files over USB is disabled.
 	// This is supported only on company-owned devices.
@@ -8475,8 +8475,8 @@ func (s TermsAndConditions) MarshalJSON() ([]byte, error) {
 // and reported via Pub/Sub notification
 // (https://developers.google.com/android/management/notifications).
 type UsageLog struct {
-	// EnabledLogTypes: Specifies which log types are enabled. Note that users will
-	// receive on-device messaging when usage logging is enabled.
+	// EnabledLogTypes: Optional. Specifies which log types are enabled. Note that
+	// users will receive on-device messaging when usage logging is enabled.
 	//
 	// Possible values:
 	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
@@ -8495,9 +8495,9 @@ type UsageLog struct {
 	// work profile are logged. Can be overridden by the application delegated
 	// scope NETWORK_ACTIVITY_LOGS
 	EnabledLogTypes []string `json:"enabledLogTypes,omitempty"`
-	// UploadOnCellularAllowed: Specifies which of the enabled log types can be
-	// uploaded over mobile data. By default logs are queued for upload when the
-	// device connects to WiFi.
+	// UploadOnCellularAllowed: Optional. Specifies which of the enabled log types
+	// can be uploaded over mobile data. By default logs are queued for upload when
+	// the device connects to WiFi.
 	//
 	// Possible values:
 	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.

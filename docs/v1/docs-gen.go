@@ -696,6 +696,59 @@ func (s CommentThread) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateDropdownDefinitionRequest: Creates a new DropdownDefinition in the
+// document.
+type CreateDropdownDefinitionRequest struct {
+	// DropdownDefinition: Required. The DropdownDefinition to create.
+	DropdownDefinition *DropdownDefinition `json:"dropdownDefinition,omitempty"`
+	// TabId: The ID of the tab to create the dropdown definition in. When omitted,
+	// the request is applied to the first tab. In a document containing a single
+	// tab: - If provided, must match the singular tab's ID. - If omitted, the
+	// request applies to the singular tab. In a document containing multiple tabs:
+	// - If provided, the request applies to the specified tab. - If omitted, the
+	// request applies to the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownDefinition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownDefinition") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateDropdownDefinitionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateDropdownDefinitionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateDropdownDefinitionResponse: Response message for creating a dropdown
+// definition.
+type CreateDropdownDefinitionResponse struct {
+	// DropdownDefinition: The newly-created DropdownDefinition.
+	DropdownDefinition *DropdownDefinition `json:"dropdownDefinition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownDefinition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownDefinition") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateDropdownDefinitionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateDropdownDefinitionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CreateFooterRequest: Creates a Footer. The new footer is applied to the
 // SectionStyle at the location of the SectionBreak if specified, otherwise it
 // is applied to the DocumentStyle. If a footer of the specified type already
@@ -1326,6 +1379,38 @@ type DeleteContentRangeRequest struct {
 
 func (s DeleteContentRangeRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteContentRangeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteDropdownDefinitionRequest: Deletes a DropdownDefinition. If the
+// dropdown definition is referenced by any dropdown instances (chips) in the
+// document, a 400 bad request error is returned.
+type DeleteDropdownDefinitionRequest struct {
+	// DropdownDefinitionId: The ID of the DropdownDefinition to delete.
+	DropdownDefinitionId string `json:"dropdownDefinitionId,omitempty"`
+	// TabId: The ID of the tab that contains the dropdown definition to delete.
+	// When omitted, the request is applied to the first tab. In a document
+	// containing a single tab: - If provided, must match the singular tab's ID. -
+	// If omitted, the request applies to the singular tab. In a document
+	// containing multiple tabs: - If provided, the request applies to the
+	// specified tab. - If omitted, the request applies to the first tab in the
+	// document.
+	TabId string `json:"tabId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownDefinitionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownDefinitionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeleteDropdownDefinitionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeleteDropdownDefinitionRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2017,6 +2102,9 @@ type DocumentTab struct {
 	CommentAnchors map[string]CommentAnchor `json:"commentAnchors,omitempty"`
 	// DocumentStyle: The style of the document tab.
 	DocumentStyle *DocumentStyle `json:"documentStyle,omitempty"`
+	// DropdownDefinitions: The dropdown definitions in a document tab, keyed by
+	// dropdown definition ID.
+	DropdownDefinitions map[string]DropdownDefinition `json:"dropdownDefinitions,omitempty"`
 	// Footers: The footers in the document tab, keyed by footer ID.
 	Footers map[string]Footer `json:"footers,omitempty"`
 	// Footnotes: The footnotes in the document tab, keyed by footnote ID.
@@ -2055,6 +2143,220 @@ type DocumentTab struct {
 
 func (s DocumentTab) MarshalJSON() ([]byte, error) {
 	type NoMethod DocumentTab
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Dropdown: A dropdown in the document. The chip is displayed as a dropdown
+// menu that allows users to select an option from a configurable list of
+// options.
+type Dropdown struct {
+	// DropdownId: The ID of this dropdown.
+	DropdownId string `json:"dropdownId,omitempty"`
+	// DropdownProperties: The properties of this dropdown.
+	DropdownProperties *DropdownProperties `json:"dropdownProperties,omitempty"`
+	// SuggestedDeletionIds: IDs for suggestions that remove this dropdown from the
+	// document. If empty, then this dropdown isn't suggested for deletion.
+	SuggestedDeletionIds []string `json:"suggestedDeletionIds,omitempty"`
+	// SuggestedDropdownPropertiesChanges: The suggested properties changes to this
+	// dropdown, keyed by suggestion ID.
+	SuggestedDropdownPropertiesChanges map[string]SuggestedDropdownProperties `json:"suggestedDropdownPropertiesChanges,omitempty"`
+	// SuggestedInsertionIds: IDs for suggestions that insert this dropdown into
+	// the document. If empty, then this dropdown isn't a suggested insertion.
+	SuggestedInsertionIds []string `json:"suggestedInsertionIds,omitempty"`
+	// SuggestedTextStyleChanges: The suggested text style changes to this
+	// dropdown, keyed by suggestion ID.
+	SuggestedTextStyleChanges map[string]SuggestedTextStyle `json:"suggestedTextStyleChanges,omitempty"`
+	// TextStyle: The text style of this dropdown.
+	TextStyle *TextStyle `json:"textStyle,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Dropdown) MarshalJSON() ([]byte, error) {
+	type NoMethod Dropdown
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DropdownDefinition: A dropdown definition in the document.
+type DropdownDefinition struct {
+	// DropdownDefinitionId: The ID of this dropdown definition. If you specify an
+	// ID, it must be unique among all IDs in the tab. The ID must start with
+	// `kix.` and match regex `^kix\.[a-zA-Z0-9_-]{2,14}$` (length 6-18 chars). If
+	// you don't specify an ID, a unique one is generated.
+	DropdownDefinitionId string `json:"dropdownDefinitionId,omitempty"`
+	// DropdownDefinitionProperties: The properties of this dropdown definition.
+	DropdownDefinitionProperties *DropdownDefinitionProperties `json:"dropdownDefinitionProperties,omitempty"`
+	// SuggestedDeletionId: ID for suggestion that deletes this dropdown
+	// definition.
+	SuggestedDeletionId string `json:"suggestedDeletionId,omitempty"`
+	// SuggestedDropdownDefinitionPropertiesChanges: Suggested property changes to
+	// this definition, keyed by suggestion ID.
+	SuggestedDropdownDefinitionPropertiesChanges map[string]SuggestedDropdownDefinitionProperties `json:"suggestedDropdownDefinitionPropertiesChanges,omitempty"`
+	// SuggestedInsertionId: ID for suggestion that inserts this dropdown
+	// definition.
+	SuggestedInsertionId string `json:"suggestedInsertionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownDefinitionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownDefinitionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DropdownDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod DropdownDefinition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DropdownDefinitionProperties: Properties of a dropdown definition.
+type DropdownDefinitionProperties struct {
+	// Options: The list of options defined by this dropdown definition. A dropdown
+	// definition must have at least 2 options and at most 50 options.
+	Options []*DropdownOption `json:"options,omitempty"`
+	// Title: The title of the dropdown definition.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Options") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DropdownDefinitionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DropdownDefinitionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DropdownDefinitionPropertiesSuggestionState: A mask that indicates which of
+// the fields on the base DropdownDefinitionProperties have been changed in
+// this suggestion. For any field set to true, there's a new suggested value.
+type DropdownDefinitionPropertiesSuggestionState struct {
+	// OptionsSuggested: Indicates if there was a suggested change to options.
+	OptionsSuggested bool `json:"optionsSuggested,omitempty"`
+	// TitleSuggested: Indicates if there was a suggested change to title.
+	TitleSuggested bool `json:"titleSuggested,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OptionsSuggested") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OptionsSuggested") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DropdownDefinitionPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
+	type NoMethod DropdownDefinitionPropertiesSuggestionState
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DropdownOption: An option in a Dropdown.
+type DropdownOption struct {
+	// DisplayValue: The display value of this dropdown option.
+	DisplayValue string `json:"displayValue,omitempty"`
+	// OptionId: The ID of this dropdown option. If you specify an ID, it must be
+	// unique among all options in this dropdown definition. The ID must start with
+	// `dropdownItem.` and match regex `^dropdownItem\.[a-zA-Z0-9_-]{2,14}$`
+	// (length 15-27 chars). If you don't specify an ID, a unique one is generated.
+	OptionId string `json:"optionId,omitempty"`
+	// TextStyle: The text style of this dropdown option. Currently, only the
+	// `foreground_color` and `background_color` properties are supported. If other
+	// properties are set, a 400 bad request error is returned.
+	TextStyle *TextStyle `json:"textStyle,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DropdownOption) MarshalJSON() ([]byte, error) {
+	type NoMethod DropdownOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DropdownProperties: Properties specific to a dropdown.
+type DropdownProperties struct {
+	// DisplayValue: The human-readable display text of the currently selected
+	// item. This field is populated by the server based on the dropdown definition
+	// and the selected option ID. It may differ from
+	// `DropdownOption.display_value` if the underlying option definition was
+	// modified or deleted, or during pending suggested changes.
+	DisplayValue string `json:"displayValue,omitempty"`
+	// DropdownDefinitionId: The ID of the DropdownDefinition that defines the
+	// options for this dropdown.
+	DropdownDefinitionId string `json:"dropdownDefinitionId,omitempty"`
+	// SelectedOptionId: The ID of the selected option in this dropdown.
+	SelectedOptionId string `json:"selectedOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DropdownProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod DropdownProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DropdownPropertiesSuggestionState: A mask that indicates which of the fields
+// on the base DropdownProperties have been changed in this suggestion. For any
+// field set to true, there's a new suggested value.
+type DropdownPropertiesSuggestionState struct {
+	// SelectedOptionIdSuggested: Indicates if there was a suggested change to
+	// selected_option_id.
+	SelectedOptionIdSuggested bool `json:"selectedOptionIdSuggested,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SelectedOptionIdSuggested")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SelectedOptionIdSuggested") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DropdownPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
+	type NoMethod DropdownPropertiesSuggestionState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2779,6 +3081,61 @@ type InsertDateRequest struct {
 
 func (s InsertDateRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod InsertDateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InsertDropdownRequest: Inserts a Dropdown at the specified location.
+type InsertDropdownRequest struct {
+	// DropdownDefinitionId: Required. The DropdownDefinition ID.
+	DropdownDefinitionId string `json:"dropdownDefinitionId,omitempty"`
+	// EndOfSegmentLocation: The EndOfSegmentLocation in the document to insert the
+	// dropdown at.
+	EndOfSegmentLocation *EndOfSegmentLocation `json:"endOfSegmentLocation,omitempty"`
+	// Location: The Location in the document to insert the dropdown at.
+	Location *Location `json:"location,omitempty"`
+	// SelectedOptionId: Optional initial value for the dropdown. If this field is
+	// not specified, the new dropdown will default to selecting the first option
+	// defined in the dropdown definition. If this field is specified but does not
+	// reference a valid option in the dropdown definition, a 400 bad request error
+	// is returned.
+	SelectedOptionId string `json:"selectedOptionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownDefinitionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownDefinitionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertDropdownRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertDropdownRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InsertDropdownResponse: The result of inserting a Dropdown.
+type InsertDropdownResponse struct {
+	// Dropdown: The newly-inserted Dropdown.
+	Dropdown *Dropdown `json:"dropdown,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dropdown") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dropdown") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InsertDropdownResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod InsertDropdownResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3886,6 +4243,8 @@ type ParagraphElement struct {
 	ColumnBreak *ColumnBreak `json:"columnBreak,omitempty"`
 	// DateElement: A paragraph element that represents a date.
 	DateElement *DateElement `json:"dateElement,omitempty"`
+	// Dropdown: A paragraph element that represents a dropdown menu.
+	Dropdown *Dropdown `json:"dropdown,omitempty"`
 	// EndIndex: The zero-base end index of this paragraph element, exclusive, in
 	// UTF-16 code units.
 	EndIndex int64 `json:"endIndex,omitempty"`
@@ -4754,6 +5113,8 @@ type Request struct {
 	AddCommentReply *AddCommentReplyRequest `json:"addCommentReply,omitempty"`
 	// AddDocumentTab: Adds a document tab.
 	AddDocumentTab *AddDocumentTabRequest `json:"addDocumentTab,omitempty"`
+	// CreateDropdownDefinition: Creates a DropdownDefinition.
+	CreateDropdownDefinition *CreateDropdownDefinitionRequest `json:"createDropdownDefinition,omitempty"`
 	// CreateFooter: Creates a footer.
 	CreateFooter *CreateFooterRequest `json:"createFooter,omitempty"`
 	// CreateFootnote: Creates a footnote.
@@ -4773,6 +5134,8 @@ type Request struct {
 	DeleteCommentReply *DeleteCommentReplyRequest `json:"deleteCommentReply,omitempty"`
 	// DeleteContentRange: Deletes content from the document.
 	DeleteContentRange *DeleteContentRangeRequest `json:"deleteContentRange,omitempty"`
+	// DeleteDropdownDefinition: Deletes a DropdownDefinition.
+	DeleteDropdownDefinition *DeleteDropdownDefinitionRequest `json:"deleteDropdownDefinition,omitempty"`
 	// DeleteFooter: Deletes a footer from the document.
 	DeleteFooter *DeleteFooterRequest `json:"deleteFooter,omitempty"`
 	// DeleteHeader: Deletes a header from the document.
@@ -4797,6 +5160,8 @@ type Request struct {
 	InsertComment *InsertCommentRequest `json:"insertComment,omitempty"`
 	// InsertDate: Inserts a date.
 	InsertDate *InsertDateRequest `json:"insertDate,omitempty"`
+	// InsertDropdown: Inserts a Dropdown at the specified location.
+	InsertDropdown *InsertDropdownRequest `json:"insertDropdown,omitempty"`
 	// InsertInlineImage: Inserts an inline image at the specified location.
 	InsertInlineImage *InsertInlineImageRequest `json:"insertInlineImage,omitempty"`
 	// InsertPageBreak: Inserts a page break at the specified location.
@@ -4838,6 +5203,11 @@ type Request struct {
 	UpdateDocumentStyle *UpdateDocumentStyleRequest `json:"updateDocumentStyle,omitempty"`
 	// UpdateDocumentTabProperties: Updates the properties of a document tab.
 	UpdateDocumentTabProperties *UpdateDocumentTabPropertiesRequest `json:"updateDocumentTabProperties,omitempty"`
+	// UpdateDropdownDefinitionProperties: Updates the properties of a
+	// DropdownDefinition.
+	UpdateDropdownDefinitionProperties *UpdateDropdownDefinitionPropertiesRequest `json:"updateDropdownDefinitionProperties,omitempty"`
+	// UpdateDropdownProperties: Updates the properties of a Dropdown.
+	UpdateDropdownProperties *UpdateDropdownPropertiesRequest `json:"updateDropdownProperties,omitempty"`
 	// UpdateNamedStyle: Updates a named style.
 	UpdateNamedStyle *UpdateNamedStyleRequest `json:"updateNamedStyle,omitempty"`
 	// UpdateParagraphStyle: Updates the paragraph style at the specified range.
@@ -4877,6 +5247,8 @@ type Response struct {
 	AddCommentReply *AddCommentReplyResponse `json:"addCommentReply,omitempty"`
 	// AddDocumentTab: The result of adding a document tab.
 	AddDocumentTab *AddDocumentTabResponse `json:"addDocumentTab,omitempty"`
+	// CreateDropdownDefinition: The result of creating a dropdown definition.
+	CreateDropdownDefinition *CreateDropdownDefinitionResponse `json:"createDropdownDefinition,omitempty"`
 	// CreateFooter: The result of creating a footer.
 	CreateFooter *CreateFooterResponse `json:"createFooter,omitempty"`
 	// CreateFootnote: The result of creating a footnote.
@@ -4888,6 +5260,8 @@ type Response struct {
 	// InsertComment: The result of inserting a comment. Developer Preview
 	// (https://developers.google.com/workspace/preview).
 	InsertComment *InsertCommentResponse `json:"insertComment,omitempty"`
+	// InsertDropdown: The result of inserting a dropdown.
+	InsertDropdown *InsertDropdownResponse `json:"insertDropdown,omitempty"`
 	// InsertInlineImage: The result of inserting an inline image.
 	InsertInlineImage *InsertInlineImageResponse `json:"insertInlineImage,omitempty"`
 	// InsertInlineSheetsChart: The result of inserting an inline Google Sheets
@@ -5556,6 +5930,64 @@ type SuggestedDocumentStyle struct {
 
 func (s SuggestedDocumentStyle) MarshalJSON() ([]byte, error) {
 	type NoMethod SuggestedDocumentStyle
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SuggestedDropdownDefinitionProperties: A suggested change to dropdown
+// definition properties.
+type SuggestedDropdownDefinitionProperties struct {
+	// DropdownDefinitionProperties: A DropdownDefinitionProperties that only
+	// includes the changes made in this suggestion. This can be used along with
+	// the dropdown_definition_properties_suggestion_state to see which fields have
+	// changed and their new values.
+	DropdownDefinitionProperties *DropdownDefinitionProperties `json:"dropdownDefinitionProperties,omitempty"`
+	// DropdownDefinitionPropertiesSuggestionState: A mask that indicates which of
+	// the fields on the base DropdownDefinitionProperties have been changed in
+	// this suggestion.
+	DropdownDefinitionPropertiesSuggestionState *DropdownDefinitionPropertiesSuggestionState `json:"dropdownDefinitionPropertiesSuggestionState,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DropdownDefinitionProperties") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownDefinitionProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuggestedDropdownDefinitionProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SuggestedDropdownDefinitionProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SuggestedDropdownProperties: A suggested change to dropdown properties.
+type SuggestedDropdownProperties struct {
+	// DropdownProperties: A DropdownProperties that only includes the changes made
+	// in this suggestion. This can be used along with the
+	// dropdown_properties_suggestion_state to see which fields have changed and
+	// their new values.
+	DropdownProperties *DropdownProperties `json:"dropdownProperties,omitempty"`
+	// DropdownPropertiesSuggestionState: A mask that indicates which of the fields
+	// on the base DropdownProperties have been changed in this suggestion.
+	DropdownPropertiesSuggestionState *DropdownPropertiesSuggestionState `json:"dropdownPropertiesSuggestionState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownProperties") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SuggestedDropdownProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SuggestedDropdownProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6737,6 +7169,93 @@ type UpdateDocumentTabPropertiesRequest struct {
 
 func (s UpdateDocumentTabPropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateDocumentTabPropertiesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateDropdownDefinitionPropertiesRequest: Updates the properties of a
+// DropdownDefinition.
+type UpdateDropdownDefinitionPropertiesRequest struct {
+	// DropdownDefinitionId: The ID of the DropdownDefinition to update.
+	DropdownDefinitionId string `json:"dropdownDefinitionId,omitempty"`
+	// DropdownDefinitionProperties: The properties to update.
+	DropdownDefinitionProperties *DropdownDefinitionProperties `json:"dropdownDefinitionProperties,omitempty"`
+	// Fields: The fields that should be updated. At least one field must be
+	// specified. The root `dropdown_definition_properties` is implied and should
+	// not be specified. A single "*" can be used as short-hand for listing every
+	// field. When `dropdown_definition_properties.options` is included in the
+	// field mask, the full, complete list of desired options must be provided in
+	// `dropdown_definition_properties.options`.
+	Fields string `json:"fields,omitempty"`
+	// SelectedOptionIdReplacements: A map of option IDs to their replacements,
+	// used to automatically reassign orphaned Dropdown chips when an option is
+	// deleted. The keys are the IDs of the options being deleted, and the values
+	// are the IDs of their replacement options. If an option being deleted is
+	// selected in one or more Dropdown chips in the document, a replacement entry
+	// for that option must be provided in this map, and the replacement option ID
+	// must exist in the updated DropdownDefinition. If a replacement is required
+	// but not provided, a 400 bad request error is returned. Options being deleted
+	// that are not selected in any Dropdown chips do not require a replacement.
+	// For example, if option A is being replaced by option B, the map should be
+	// `{"A": "B"}`.
+	SelectedOptionIdReplacements map[string]string `json:"selectedOptionIdReplacements,omitempty"`
+	// TabId: The ID of the tab that contains the dropdown definition to update.
+	// When omitted, the request is applied to the first tab. In a document
+	// containing a single tab: - If provided, must match the singular tab's ID. -
+	// If omitted, the request applies to the singular tab. In a document
+	// containing multiple tabs: - If provided, the request applies to the
+	// specified tab. - If omitted, the request applies to the first tab in the
+	// document.
+	TabId string `json:"tabId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownDefinitionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownDefinitionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateDropdownDefinitionPropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDropdownDefinitionPropertiesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpdateDropdownPropertiesRequest: Updates the properties of a Dropdown.
+type UpdateDropdownPropertiesRequest struct {
+	// DropdownId: Required. The Dropdown ID.
+	DropdownId string `json:"dropdownId,omitempty"`
+	// DropdownProperties: The properties to update.
+	DropdownProperties *DropdownProperties `json:"dropdownProperties,omitempty"`
+	// Fields: The fields that should be updated. At least one field must be
+	// specified. The root `dropdown_properties` is implied and should not be
+	// specified. A single "*" can be used as short-hand for listing every field.
+	Fields string `json:"fields,omitempty"`
+	// TabId: The ID of the tab that contains the dropdown to update. When omitted,
+	// the request is applied to the first tab. In a document containing a single
+	// tab: - If provided, must match the singular tab's ID. - If omitted, the
+	// request applies to the singular tab. In a document containing multiple tabs:
+	// - If provided, the request applies to the specified tab. - If omitted, the
+	// request applies to the first tab in the document.
+	TabId string `json:"tabId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DropdownId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DropdownId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpdateDropdownPropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateDropdownPropertiesRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -448,6 +448,16 @@ type GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest struct {
 	// folders/{folder_id}/policies/{constraint_name}
 	// organizations/{organization_id}/policies/{constraint_name}
 	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
+	// View: Optional. Specifies the violation view (`AssuredWorkloads` or
+	// `DataBoundary`) for acknowledging violations.
+	//
+	// Possible values:
+	//   "VIOLATION_VIEW_UNSPECIFIED" - Defaults to the ASSURED_WORKLOADS view.
+	//   "VIOLATION_VIEW_ASSURED_WORKLOADS" - Includes the basic metadata about the
+	// violation.
+	//   "VIOLATION_VIEW_DATA_BOUNDARY" - Includes all information about the
+	// violation, including details about the data boundary.
+	View string `json:"view,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcknowledgeType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2094,6 +2104,10 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// violation was acknowledged when there are more than one violations. This
 	// field will be absent when acknowledged field is marked as false.
 	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
+	// AffectedFrameworks: Output only. List of compliance frameworks that are
+	// affected by this violation. This field is only populated when using
+	// `VIOLATION_VIEW_DATA_BOUNDARY`. e.g. "FedRAMP High", "NIST 800-53".
+	AffectedFrameworks []string `json:"affectedFrameworks,omitempty"`
 	// AssociatedOrgPolicyViolationId: Optional. Output only. Violation Id of the
 	// org-policy violation due to which the resource violation is caused. Empty
 	// for org-policy violations.
@@ -2107,6 +2121,10 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	// Category: Output only. Category under which this violation is mapped. e.g.
 	// Location, Service Usage, Access, Encryption, etc.
 	Category string `json:"category,omitempty"`
+	// ChildResourceViolationCount: Optional. Output only. The number of resource
+	// violations for particular org policy violation. This will be 0 in case of
+	// resource violation.
+	ChildResourceViolationCount int64 `json:"childResourceViolationCount,omitempty"`
 	// Description: Output only. Description for the Violation. e.g. OrgPolicy
 	// gcp.resourceLocations has non compliant value.
 	Description string `json:"description,omitempty"`
@@ -2135,6 +2153,9 @@ type GoogleCloudAssuredworkloadsV1beta1Violation struct {
 	ParentProjectNumber string `json:"parentProjectNumber,omitempty"`
 	// Remediation: Output only. Compliance violation remediation
 	Remediation *GoogleCloudAssuredworkloadsV1beta1ViolationRemediation `json:"remediation,omitempty"`
+	// RemediationMarkdown: Output only. Contains the remediation instructions for
+	// the violation in markdown format.
+	RemediationMarkdown string `json:"remediationMarkdown,omitempty"`
 	// ResolveTime: Output only. Time of the event which fixed the Violation. If
 	// the violation is ACTIVE this will be empty.
 	ResolveTime string `json:"resolveTime,omitempty"`
@@ -6622,6 +6643,24 @@ func (r *OrganizationsLocationsWorkloadsViolationsService) Get(name string) *Org
 	return c
 }
 
+// View sets the optional parameter "view": Specifies the violation view
+// (`AssuredWorkloads` or `DataBoundary`) for fetching violations.
+//
+// Possible values:
+//
+//	"VIOLATION_VIEW_UNSPECIFIED" - Defaults to the ASSURED_WORKLOADS view.
+//	"VIOLATION_VIEW_ASSURED_WORKLOADS" - Includes the basic metadata about the
+//
+// violation.
+//
+//	"VIOLATION_VIEW_DATA_BOUNDARY" - Includes all information about the
+//
+// violation, including details about the data boundary.
+func (c *OrganizationsLocationsWorkloadsViolationsGetCall) View(view string) *OrganizationsLocationsWorkloadsViolationsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -6775,6 +6814,24 @@ func (c *OrganizationsLocationsWorkloadsViolationsListCall) PageSize(pageSize in
 // previous request.
 func (c *OrganizationsLocationsWorkloadsViolationsListCall) PageToken(pageToken string) *OrganizationsLocationsWorkloadsViolationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies the violation
+// view(AssuredWorkloads or DataBoundary) for fetching violations.
+//
+// Possible values:
+//
+//	"VIOLATION_VIEW_UNSPECIFIED" - Defaults to the ASSURED_WORKLOADS view.
+//	"VIOLATION_VIEW_ASSURED_WORKLOADS" - Includes the basic metadata about the
+//
+// violation.
+//
+//	"VIOLATION_VIEW_DATA_BOUNDARY" - Includes all information about the
+//
+// violation, including details about the data boundary.
+func (c *OrganizationsLocationsWorkloadsViolationsListCall) View(view string) *OrganizationsLocationsWorkloadsViolationsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

@@ -308,6 +308,29 @@ type Alert struct {
 	//   "BENIGN" - alert is benign.
 	//   "TRACKED_EXTERNALLY" - alert is tracked externally.
 	State string `json:"state,omitempty"`
+	// Tags: Output only. System taxonomy tags associated with this alert.
+	//
+	// Possible values:
+	//   "ALERT_TAG_UNSPECIFIED" - Default value, should never be set.
+	//   "ALERT_TAG_PASSWORD_LENGTH_UNDER_8" - Password length is under 8
+	// characters.
+	//   "ALERT_TAG_PASSWORD_LENGTH_8_TO_11" - Password length is between 8 and 11
+	// characters inclusive.
+	//   "ALERT_TAG_PASSWORD_LENGTH_12_PLUS" - Password length is 12 or more
+	// characters.
+	//   "ALERT_TAG_PASSWORD_HAS_LOWERCASE" - Password contains at least one
+	// lowercase letter.
+	//   "ALERT_TAG_PASSWORD_HAS_UPPERCASE" - Password contains at least one
+	// uppercase letter.
+	//   "ALERT_TAG_PASSWORD_HAS_NUMBER" - Password contains at least one numeric
+	// digit.
+	//   "ALERT_TAG_PASSWORD_HAS_SPECIAL" - Password contains at least one special
+	// character.
+	//   "ALERT_TAG_MATCH_LOGIN_EMAIL_DOMAIN" - Credential login email domain
+	// matches a customer domain.
+	//   "ALERT_TAG_MATCH_SERVICE_DOMAIN" - Credential service domain matches a
+	// customer domain.
+	Tags []string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

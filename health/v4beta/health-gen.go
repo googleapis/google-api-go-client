@@ -1800,6 +1800,9 @@ type DailyRollupDataPoint struct {
 	// `sedentary-period` data type, or when requested explicitly using the
 	// `sedentary-period` rollup type identifier.
 	SedentaryPeriod *SedentaryPeriodRollupValue `json:"sedentaryPeriod,omitempty"`
+	// SkinTemperature: Returned by default when rolling up data points from the
+	// `skin-temperature` data type.
+	SkinTemperature *SkinTemperatureRollupValue `json:"skinTemperature,omitempty"`
 	// Steps: Returned by default when rolling up data points from the `steps` data
 	// type, or when requested explicitly using the `steps` rollup type identifier.
 	Steps *StepsRollupValue `json:"steps,omitempty"`
@@ -2068,6 +2071,12 @@ type DataPoint struct {
 	// SedentaryPeriod: Optional. Data for points in the `sedentary-period`
 	// interval data type collection.
 	SedentaryPeriod *SedentaryPeriod `json:"sedentaryPeriod,omitempty"`
+	// SkinTemperature: Optional. Data for points in the `skin-temperature` sample
+	// data type collection.
+	SkinTemperature *SkinTemperature `json:"skinTemperature,omitempty"`
+	// SkinTemperatureSensors: Optional. Data for points in the
+	// `skin-temperature-sensors` sample data type collection.
+	SkinTemperatureSensors *SkinTemperatureSensors `json:"skinTemperatureSensors,omitempty"`
 	// Sleep: Optional. Data for points in the `sleep` session data type
 	// collection.
 	Sleep *Sleep `json:"sleep,omitempty"`
@@ -5046,6 +5055,12 @@ type ReconciledDataPoint struct {
 	// SedentaryPeriod: Data for points in the `sedentary-period` interval data
 	// type collection.
 	SedentaryPeriod *SedentaryPeriod `json:"sedentaryPeriod,omitempty"`
+	// SkinTemperature: Data for points in the `skin-temperature` sample data type
+	// collection.
+	SkinTemperature *SkinTemperature `json:"skinTemperature,omitempty"`
+	// SkinTemperatureSensors: Data for points in the `skin-temperature-sensors`
+	// sample data type collection.
+	SkinTemperatureSensors *SkinTemperatureSensors `json:"skinTemperatureSensors,omitempty"`
 	// Sleep: Data for points in the `sleep` session data type collection.
 	Sleep *Sleep `json:"sleep,omitempty"`
 	// Steps: Data for points in the `steps` interval data type collection.
@@ -5356,6 +5371,9 @@ type RollupDataPoint struct {
 	// `sedentary-period` data type, or when requested explicitly using the
 	// `sedentary-period` rollup type identifier.
 	SedentaryPeriod *SedentaryPeriodRollupValue `json:"sedentaryPeriod,omitempty"`
+	// SkinTemperature: Returned by default when rolling up data points from the
+	// `skin-temperature` data type.
+	SkinTemperature *SkinTemperatureRollupValue `json:"skinTemperature,omitempty"`
 	// StartTime: Start time of the window this value aggregates over
 	StartTime string `json:"startTime,omitempty"`
 	// Steps: Returned by default when rolling up data points from the `steps` data
@@ -5524,6 +5542,90 @@ type SedentaryPeriodRollupValue struct {
 
 func (s SedentaryPeriodRollupValue) MarshalJSON() ([]byte, error) {
 	type NoMethod SedentaryPeriodRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SensorData: Individual sensor reading and metadata.
+type SensorData struct {
+	// Metadata: Optional. Metadata for the sensor reading.
+	Metadata *SensorMetadata `json:"metadata,omitempty"`
+	// TemperatureCelsius: Required. The temperature reading in Celsius.
+	TemperatureCelsius float64 `json:"temperatureCelsius,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SensorData) MarshalJSON() ([]byte, error) {
+	type NoMethod SensorData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *SensorData) UnmarshalJSON(data []byte) error {
+	type NoMethod SensorData
+	var s1 struct {
+		TemperatureCelsius gensupport.JSONFloat64 `json:"temperatureCelsius"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TemperatureCelsius = float64(s1.TemperatureCelsius)
+	return nil
+}
+
+// SensorMetadata: Metadata for the sensor measurement.
+type SensorMetadata struct {
+	// MeasurementLocation: Optional. The location of the sensor measurement.
+	//
+	// Possible values:
+	//   "MEASUREMENT_LOCATION_UNSPECIFIED" - Measurement location is unspecified.
+	//   "OTHER" - Other measurement location.
+	//   "FINGER" - Finger measurement location.
+	//   "TOE" - Toe measurement location.
+	//   "WRIST" - Wrist measurement location.
+	MeasurementLocation string `json:"measurementLocation,omitempty"`
+	// MeasurementState: Optional. The motion state of the sensor measurement.
+	//
+	// Possible values:
+	//   "MEASUREMENT_STATE_UNSPECIFIED" - Measurement state is unspecified.
+	//   "OTHER" - Other measurement state.
+	//   "AT_REST" - Measurement state at rest.
+	//   "SLEEP" - Measurement state during sleep.
+	MeasurementState string `json:"measurementState,omitempty"`
+	// SensorType: Optional. The type of the sensor.
+	//
+	// Possible values:
+	//   "SENSOR_TYPE_UNSPECIFIED" - Sensor type is unspecified.
+	//   "SKIN_TEMPERATURE_SENSOR" - Skin temperature sensor (bottom contact
+	// sensor).
+	//   "INTERNAL_DEVICE_TEMPERATURE_SENSOR" - Internal device temperature sensor
+	// (top/ambient sensor).
+	SensorType string `json:"sensorType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MeasurementLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MeasurementLocation") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SensorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SensorMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5736,6 +5838,165 @@ type Settings struct {
 
 func (s Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod Settings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SkinTemperature:
+// //////////////////////////////////////////////////////////////////////////
+// SkinTemperature
+// //////////////////////////////////////////////////////////////////////////
+// Skin temperature measurement.
+type SkinTemperature struct {
+	// BaselineTemperatureCelsius: Required. The baseline skin temperature in
+	// Celsius. Must be in the range `[0, 100]`.
+	BaselineTemperatureCelsius float64 `json:"baselineTemperatureCelsius,omitempty"`
+	// Metadata: Optional. Metadata for the skin temperature measurement.
+	Metadata *SkinTemperatureMetadata `json:"metadata,omitempty"`
+	// SampleTime: Required. The time at which skin temperature was measured.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// TemperatureCelsius: Required. The skin temperature in Celsius. Must be in
+	// the range `[0, 100]`.
+	TemperatureCelsius float64 `json:"temperatureCelsius,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaselineTemperatureCelsius")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaselineTemperatureCelsius") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SkinTemperature) MarshalJSON() ([]byte, error) {
+	type NoMethod SkinTemperature
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *SkinTemperature) UnmarshalJSON(data []byte) error {
+	type NoMethod SkinTemperature
+	var s1 struct {
+		BaselineTemperatureCelsius gensupport.JSONFloat64 `json:"baselineTemperatureCelsius"`
+		TemperatureCelsius         gensupport.JSONFloat64 `json:"temperatureCelsius"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.BaselineTemperatureCelsius = float64(s1.BaselineTemperatureCelsius)
+	s.TemperatureCelsius = float64(s1.TemperatureCelsius)
+	return nil
+}
+
+// SkinTemperatureMetadata: Metadata for the skin temperature measurement.
+type SkinTemperatureMetadata struct {
+	// MeasurementLocation: Optional. The location of the skin temperature
+	// measurement.
+	//
+	// Possible values:
+	//   "MEASUREMENT_LOCATION_UNSPECIFIED" - Measurement location is unspecified.
+	//   "OTHER" - Other measurement location.
+	//   "FINGER" - Finger measurement location.
+	//   "TOE" - Toe measurement location.
+	//   "WRIST" - Wrist measurement location.
+	MeasurementLocation string `json:"measurementLocation,omitempty"`
+	// MeasurementState: Optional. The motion state of the skin temperature
+	// measurement.
+	//
+	// Possible values:
+	//   "MEASUREMENT_STATE_UNSPECIFIED" - Measurement state is unspecified.
+	//   "MEASUREMENT_STATE_OTHER" - Other measurement state.
+	//   "MEASUREMENT_STATE_AT_REST" - Measurement state at rest.
+	//   "MEASUREMENT_STATE_SLEEP" - Measurement state during sleep.
+	MeasurementState string `json:"measurementState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MeasurementLocation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MeasurementLocation") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SkinTemperatureMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SkinTemperatureMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SkinTemperatureRollupValue: Represents the result of the rollup of the skin
+// temperature data type.
+type SkinTemperatureRollupValue struct {
+	// TemperatureCelsiusAvg: Average skin temperature in Celsius.
+	TemperatureCelsiusAvg float64 `json:"temperatureCelsiusAvg,omitempty"`
+	// TemperatureCelsiusMax: Maximum skin temperature in Celsius.
+	TemperatureCelsiusMax float64 `json:"temperatureCelsiusMax,omitempty"`
+	// TemperatureCelsiusMin: Minimum skin temperature in Celsius.
+	TemperatureCelsiusMin float64 `json:"temperatureCelsiusMin,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TemperatureCelsiusAvg") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TemperatureCelsiusAvg") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SkinTemperatureRollupValue) MarshalJSON() ([]byte, error) {
+	type NoMethod SkinTemperatureRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *SkinTemperatureRollupValue) UnmarshalJSON(data []byte) error {
+	type NoMethod SkinTemperatureRollupValue
+	var s1 struct {
+		TemperatureCelsiusAvg gensupport.JSONFloat64 `json:"temperatureCelsiusAvg"`
+		TemperatureCelsiusMax gensupport.JSONFloat64 `json:"temperatureCelsiusMax"`
+		TemperatureCelsiusMin gensupport.JSONFloat64 `json:"temperatureCelsiusMin"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TemperatureCelsiusAvg = float64(s1.TemperatureCelsiusAvg)
+	s.TemperatureCelsiusMax = float64(s1.TemperatureCelsiusMax)
+	s.TemperatureCelsiusMin = float64(s1.TemperatureCelsiusMin)
+	return nil
+}
+
+// SkinTemperatureSensors: Skin temperature sensor data containing multi-sensor
+// readings.
+type SkinTemperatureSensors struct {
+	// SampleTime: Required. The observation sample time.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// SensorData: Required. Repeated sensor data readings for this sample.
+	SensorData []*SensorData `json:"sensorData,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SampleTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SampleTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SkinTemperatureSensors) MarshalJSON() ([]byte, error) {
+	type NoMethod SkinTemperatureSensors
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

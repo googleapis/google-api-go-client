@@ -187,14 +187,20 @@ type BillingAccountsBudgetsService struct {
 // GoogleCloudBillingBudgetsV1Budget: A budget is a plan that describes what
 // you expect to spend on Cloud projects, plus the rules to execute as spend is
 // tracked against that plan, (for example, send an alert when 90% of the
-// target spend is met). The budget time period is configurable, with options
-// such as month (default), quarter, year, or custom time period.
+// target spend is met, or pause usage of the specified service when a spend
+// cap budget is enforced). For alerts-only budgets, the budget time period is
+// configurable, with options such as month (default), quarter, year, or custom
+// time period. For spend cap budgets, the budget time period is limited to
+// month.
 type GoogleCloudBillingBudgetsV1Budget struct {
-	// Amount: Required. Budgeted amount.
+	// Amount: Required. Budgeted amount. When `spend_cap` is set,
+	// `specified_amount` must be set to a non-negative amount (>= 0);
+	// `last_period_amount` is not supported.
 	Amount *GoogleCloudBillingBudgetsV1BudgetAmount `json:"amount,omitempty"`
 	// BudgetFilter: Optional. Filters that define which resources are used to
 	// compute the actual spend against the budget amount, such as projects,
-	// services, and the budget's time period, as well as other filters.
+	// services, and the budget's time period, as well as other filters. Must be
+	// set when `spend_cap` is set. See `Filter` fields for spend cap restrictions.
 	BudgetFilter *GoogleCloudBillingBudgetsV1Filter `json:"budgetFilter,omitempty"`
 	// DisplayName: User data for display name in UI. The name must be less than or
 	// equal to 60 characters.
@@ -208,8 +214,15 @@ type GoogleCloudBillingBudgetsV1Budget struct {
 	// `billingAccounts/{billingAccountId}/budgets/{budgetId}`.
 	Name string `json:"name,omitempty"`
 	// NotificationsRule: Optional. Rules to apply to notifications sent based on
-	// budget spend and thresholds.
+	// budget spend and thresholds. Must be set when `spend_cap` is set. For spend
+	// caps, `enable_project_level_recipients` must be set to `true`,
+	// `disable_default_iam_recipients` must be `false` (or unset), and
+	// `pubsub_topic` and `monitoring_notification_channels` must be empty.
 	NotificationsRule *GoogleCloudBillingBudgetsV1NotificationsRule `json:"notificationsRule,omitempty"`
+	// OwnershipScope: Optional. When `spend_cap` is set, must be
+	// `OWNERSHIP_SCOPE_UNSPECIFIED` or `ALL_USERS`. `BILLING_ACCOUNT` is not
+	// supported for spend caps.
+	//
 	// Possible values:
 	//   "OWNERSHIP_SCOPE_UNSPECIFIED" - Unspecified ownership scope, same as
 	// ALL_USERS.
@@ -218,12 +231,24 @@ type GoogleCloudBillingBudgetsV1Budget struct {
 	// permissions.
 	//   "BILLING_ACCOUNT" - Only billing account-level users have full access to
 	// the budget. Project-level users have read-only access, even if they have the
-	// required IAM permissions.
+	// required IAM permissions. Not supported when `spend_cap` is set.
 	OwnershipScope string `json:"ownershipScope,omitempty"`
+	// SpendCap: Optional. The spend cap configured for this budget. When
+	// `spend_cap` is set, strict field restrictions apply to the budget (see
+	// field-level comments on `ownership_scope`, `budget_filter`, `amount`,
+	// `threshold_rules`, and `notifications_rule`). When `spend_cap.output_state`
+	// is `ENFORCED`, only `spend_cap.input_state` can be modified in an
+	// `UpdateBudget` request (e.g., setting `input_state` to
+	// `AWAITING_NEXT_PERIOD` to lift the cap); modifying any other budget field
+	// while enforced will fail with `FAILED_PRECONDITION`.
+	SpendCap *GoogleCloudBillingBudgetsV1SpendCap `json:"spendCap,omitempty"`
 	// ThresholdRules: Optional. Rules that trigger alerts (notifications of
 	// thresholds being crossed) when spend exceeds the specified percentages of
 	// the budget. Optional for `pubsubTopic` notifications. Required if using
-	// email notifications.
+	// email notifications. Must be set when `spend_cap` is set. Spend caps must
+	// have exactly three `CURRENT_SPEND` threshold rules with `threshold_percent`
+	// values of `0.5`, `0.8`, and `1.0` (50%, 80%, and 100%). `FORECASTED_SPEND`
+	// threshold rules are not supported for spend caps.
 	ThresholdRules []*GoogleCloudBillingBudgetsV1ThresholdRule `json:"thresholdRules,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -252,13 +277,13 @@ type GoogleCloudBillingBudgetsV1BudgetAmount struct {
 	// LastPeriodAmount: Use the last period's actual spend as the budget for the
 	// present period. LastPeriodAmount can only be set when the budget's time
 	// period is a Filter.calendar_period. It cannot be set in combination with
-	// Filter.custom_period.
+	// Filter.custom_period. Not supported when `spend_cap` is set.
 	LastPeriodAmount *GoogleCloudBillingBudgetsV1LastPeriodAmount `json:"lastPeriodAmount,omitempty"`
 	// SpecifiedAmount: A specified amount to use as the budget. `currency_code` is
 	// optional. If specified when creating a budget, it must match the currency of
 	// the billing account. If specified when updating a budget, it must match the
 	// currency_code of the existing budget. The `currency_code` is provided on
-	// output.
+	// output. Must be set when `spend_cap` is set; must be non-negative (>= 0).
 	SpecifiedAmount *GoogleTypeMoney `json:"specifiedAmount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LastPeriodAmount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -312,7 +337,9 @@ type GoogleCloudBillingBudgetsV1Filter struct {
 	// period. For example, assume that CalendarPeriod.QUARTER is set. The budget
 	// tracks usage from April 1 to June 30, when the current calendar month is
 	// April, May, June. After that, it tracks usage from July 1 to September 30
-	// when the current calendar month is July, August, September, so on.
+	// when the current calendar month is July, August, September, so on. When
+	// `spend_cap` is set, must be `MONTH` (or `usage_period` left unset, which
+	// defaults to `MONTH`). `QUARTER` and `YEAR` are not supported for spend caps.
 	//
 	// Possible values:
 	//   "CALENDAR_PERIOD_UNSPECIFIED" - Calendar period is unset. This is the
@@ -327,12 +354,13 @@ type GoogleCloudBillingBudgetsV1Filter struct {
 	// INCLUDE_SPECIFIED_CREDITS, this is a list of credit types to be subtracted
 	// from gross cost to determine the spend for threshold calculations. See a
 	// list of acceptable credit type values
-	// (https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tables#credits-type).
+	// (https://docs.cloud.google.com/billing/docs/how-to/export-data-bigquery-tables/detailed-usage#credits-type).
 	// If Filter.credit_types_treatment is **not** INCLUDE_SPECIFIED_CREDITS, this
-	// field must be empty.
+	// field must be empty. Not supported when `spend_cap` is set; must be empty.
 	CreditTypes []string `json:"creditTypes,omitempty"`
 	// CreditTypesTreatment: Optional. If not set, default behavior is
-	// `INCLUDE_ALL_CREDITS`.
+	// `INCLUDE_ALL_CREDITS`. Must be set to `EXCLUDE_ALL_CREDITS` when `spend_cap`
+	// is set.
 	//
 	// Possible values:
 	//   "CREDIT_TYPES_TREATMENT_UNSPECIFIED"
@@ -341,24 +369,27 @@ type GoogleCloudBillingBudgetsV1Filter struct {
 	//   "EXCLUDE_ALL_CREDITS" - All types of credit are added to the net cost to
 	// determine the spend for threshold calculations.
 	//   "INCLUDE_SPECIFIED_CREDITS" - [Credit
-	// types](https://cloud.google.com/billing/docs/how-to/export-data-bigquery-tabl
-	// es#credits-type) specified in the credit_types field are subtracted from the
-	// gross cost to determine the spend for threshold calculations.
+	// types](https://docs.cloud.google.com/billing/docs/how-to/export-data-bigquery
+	// -tables/detailed-usage#credits-type) specified in the credit_types field are
+	// subtracted from the gross cost to determine the spend for threshold
+	// calculations.
 	CreditTypesTreatment string `json:"creditTypesTreatment,omitempty"`
 	// CustomPeriod: Optional. Specifies to track usage from any start date
 	// (required) to any end date (optional). This time period is static, it does
-	// not recur.
+	// not recur. Not supported when `spend_cap` is set.
 	CustomPeriod *GoogleCloudBillingBudgetsV1CustomPeriod `json:"customPeriod,omitempty"`
 	// Labels: Optional. A single label and value pair specifying that usage from
 	// only this set of labeled resources should be included in the budget. If
 	// omitted, the report includes all labeled and unlabeled usage. An object
 	// containing a single "key": value` pair. Example: `{ "name": "wrench" }`.
 	// _Currently, multiple entries or multiple values per entry are not allowed._
+	// Not supported when `spend_cap` is set; must be empty.
 	Labels map[string][]interface{} `json:"labels,omitempty"`
 	// Projects: Optional. A set of projects of the form `projects/{project}`,
 	// specifying that usage from only this set of projects should be included in
 	// the budget. If omitted, the report includes all usage for the billing
-	// account, regardless of which project the usage occurred on.
+	// account, regardless of which project the usage occurred on. Must be set when
+	// `spend_cap` is set; must contain exactly one project.
 	Projects []string `json:"projects,omitempty"`
 	// ResourceAncestors: Optional. A set of folder and organization names of the
 	// form `folders/{folderId}` or `organizations/{organizationId}`, specifying
@@ -366,20 +397,25 @@ type GoogleCloudBillingBudgetsV1Filter struct {
 	// included in the budget. If omitted, the budget includes all usage that the
 	// billing account pays for. If the folder or organization contains projects
 	// that are paid for by a different Cloud Billing account, the budget *doesn't*
-	// apply to those projects.
+	// apply to those projects. Not supported when `spend_cap` is set; must be
+	// empty.
 	ResourceAncestors []string `json:"resourceAncestors,omitempty"`
 	// Services: Optional. A set of services of the form `services/{service_id}`,
 	// specifying that usage from only this set of services should be included in
 	// the budget. If omitted, the report includes usage for all the services. The
 	// service names are available through the Catalog API:
-	// https://cloud.google.com/billing/v1/how-tos/catalog-api.
+	// https://docs.cloud.google.com/billing/v1/how-tos/catalog-api. When
+	// `spend_cap` is set, the services filter must be set and must contain exactly
+	// one service from this list of eligible services:
+	// https://docs.cloud.google.com/billing/docs/how-to/budgets-spend-caps#eligible-services.
 	Services []string `json:"services,omitempty"`
 	// Subaccounts: Optional. A set of subaccounts of the form
 	// `billingAccounts/{account_id}`, specifying that usage from only this set of
 	// subaccounts should be included in the budget. If a subaccount is set to the
 	// name of the parent account, usage from the parent account is included. If
 	// the field is omitted, the report includes usage from the parent account and
-	// all subaccounts, if they exist.
+	// all subaccounts, if they exist. Not supported when `spend_cap` is set; must
+	// be empty.
 	Subaccounts []string `json:"subaccounts,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CalendarPeriod") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -442,13 +478,15 @@ type GoogleCloudBillingBudgetsV1NotificationsRule struct {
 	// DisableDefaultIamRecipients: Optional. When set to true, disables default
 	// notifications sent when a threshold is exceeded. Default notifications are
 	// sent to those with Billing Account Administrator and Billing Account User
-	// IAM roles for the target account.
+	// IAM roles for the target account. Must be `false` (or unset) when
+	// `spend_cap` is set; default notifications cannot be disabled for spend caps.
 	DisableDefaultIamRecipients bool `json:"disableDefaultIamRecipients,omitempty"`
 	// EnableProjectLevelRecipients: Optional. When set to true, and when the
 	// budget has a single project configured, notifications will be sent to
 	// project level recipients of that project. This field will be ignored if the
 	// budget has multiple or no project configured. Currently, project level
-	// recipients are the users with `Owner` role on a cloud project.
+	// recipients are the users with `Owner` role on a cloud project. Must be set
+	// to `true` when `spend_cap` is set.
 	EnableProjectLevelRecipients bool `json:"enableProjectLevelRecipients,omitempty"`
 	// MonitoringNotificationChannels: Optional. Email targets to send
 	// notifications to when a threshold is exceeded. This is in addition to the
@@ -461,13 +499,14 @@ type GoogleCloudBillingBudgetsV1NotificationsRule struct {
 	// notification channels before you link them to a budget_. For guidance on
 	// setting up notification channels to use with budgets, see Customize budget
 	// alert email recipients
-	// (https://cloud.google.com/billing/docs/how-to/budgets-notification-recipients).
+	// (https://docs.cloud.google.com/billing/docs/how-to/budgets-notification-recipients).
 	// For Cloud Billing budget alerts, you _must use email notification channels_.
 	// The other types of notification channels are _not_ supported, such as Slack,
 	// SMS, or PagerDuty. If you want to send budget notifications to Slack
-	// (https://cloud.google.com/billing/docs/how-to/notify#send_notifications_to_slack),
+	// (https://docs.cloud.google.com/billing/docs/how-to/send-notifications-to-slack),
 	// use a pubsubTopic and configure programmatic notifications
-	// (https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications).
+	// (https://docs.cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications).
+	// Not supported when `spend_cap` is set; must be empty.
 	MonitoringNotificationChannels []string `json:"monitoringNotificationChannels,omitempty"`
 	// PubsubTopic: Optional. The name of the Pub/Sub topic where budget-related
 	// messages are published, in the form
@@ -475,7 +514,7 @@ type GoogleCloudBillingBudgetsV1NotificationsRule struct {
 	// regular intervals; the timing of the updates is not dependent on the
 	// threshold rules (#thresholdrule) you've set. Note that if you want your
 	// Pub/Sub JSON object
-	// (https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format)
+	// (https://docs.cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification-format)
 	// to contain data for `alertThresholdExceeded`, you need at least one alert
 	// threshold rule (#thresholdrule). When you set threshold rules, you must also
 	// enable at least one of the email notification options, either using the
@@ -483,18 +522,19 @@ type GoogleCloudBillingBudgetsV1NotificationsRule struct {
 	// use Pub/Sub topics with budgets, you must do the following: 1. Create the
 	// Pub/Sub topic before connecting it to your budget. For guidance, see Manage
 	// programmatic budget alert notifications
-	// (https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications).
+	// (https://docs.cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications).
 	// 2. Grant the API caller the `pubsub.topics.setIamPolicy` permission on the
 	// Pub/Sub topic. If not set, the API call fails with PERMISSION_DENIED. For
 	// additional details on Pub/Sub roles and permissions, see Permissions
 	// required for this task
-	// (https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#permissions_required_for_this_task).
+	// (https://docs.cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#permissions).
+	// Not supported when `spend_cap` is set; must be empty.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 	// SchemaVersion: Optional. Required when NotificationsRule.pubsub_topic is
 	// set. The schema version of the notification sent to
 	// NotificationsRule.pubsub_topic. Only "1.0" is accepted. It represents the
 	// JSON schema as defined in
-	// https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format.
+	// https://docs.cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification-format.
 	SchemaVersion string `json:"schemaVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "DisableDefaultIamRecipients") to unconditionally include in API requests.
@@ -514,6 +554,53 @@ func (s GoogleCloudBillingBudgetsV1NotificationsRule) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBillingBudgetsV1SpendCap: SpendCap defines the spend cap
+// configuration and state.
+type GoogleCloudBillingBudgetsV1SpendCap struct {
+	// InputState: Required. The desired state specified by the user. Valid values
+	// for mutation: - `CONFIGURED`: Must be set when creating a spend cap
+	// (`CreateBudget`). Also valid when updating (`UpdateBudget`) to activate the
+	// spend cap. - `AWAITING_NEXT_PERIOD`: Valid only when updating
+	// (`UpdateBudget`) to explicitly lift an enforced cap. Supplying any other
+	// value will result in an INVALID_ARGUMENT error.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "CONFIGURED" - Spend cap is configured and active.
+	//   "ENFORCED" - Spend cap limit is reached and enforced.
+	//   "AWAITING_NEXT_PERIOD" - Spend cap is waiting for the next period to
+	// start.
+	InputState string `json:"inputState,omitempty"`
+	// OutputState: Output only. The actual resting state of the spend cap.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "CONFIGURED" - Spend cap is configured and active.
+	//   "ENFORCED" - Spend cap limit is reached and enforced.
+	//   "AWAITING_NEXT_PERIOD" - Spend cap is waiting for the next period to
+	// start.
+	OutputState string `json:"outputState,omitempty"`
+	// Reconciling: Output only. Indicates whether the server is actively
+	// processing a state transition or async workflow.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InputState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InputState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudBillingBudgetsV1SpendCap) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBillingBudgetsV1SpendCap
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBillingBudgetsV1ThresholdRule: ThresholdRule contains the
 // definition of a threshold. Threshold rules define the triggering events used
 // to generate a budget notification email. When a threshold is crossed (spend
@@ -521,16 +608,18 @@ func (s GoogleCloudBillingBudgetsV1NotificationsRule) MarshalJSON() ([]byte, err
 // sent to the email recipients you specify in the NotificationsRule
 // (#notificationsrule). Threshold rules also affect the fields included in the
 // JSON data object
-// (https://cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification_format)
+// (https://docs.cloud.google.com/billing/docs/how-to/budgets-programmatic-notifications#notification-format)
 // sent to a Pub/Sub topic. Threshold rules are _required_ if using email
 // notifications. Threshold rules are _optional_ if only setting a
 // `pubsubTopic` NotificationsRule (#NotificationsRule), unless you want your
 // JSON data object to include data about the thresholds you set. For more
 // information, see set budget threshold rules and actions
-// (https://cloud.google.com/billing/docs/how-to/budgets#budget-actions).
+// (https://docs.cloud.google.com/billing/docs/how-to/budgets#budget-actions).
 type GoogleCloudBillingBudgetsV1ThresholdRule struct {
 	// SpendBasis: Optional. The type of basis used to determine if spend has
-	// passed the threshold. Behavior defaults to CURRENT_SPEND if not set.
+	// passed the threshold. Behavior defaults to CURRENT_SPEND if not set. When
+	// `spend_cap` is set on the budget, must be `CURRENT_SPEND` or
+	// `BASIS_UNSPECIFIED`. `FORECASTED_SPEND` is not supported.
 	//
 	// Possible values:
 	//   "BASIS_UNSPECIFIED" - Unspecified threshold basis.
@@ -539,11 +628,14 @@ type GoogleCloudBillingBudgetsV1ThresholdRule struct {
 	//   "FORECASTED_SPEND" - Use forecasted spend for the period as the basis for
 	// comparison against the threshold. FORECASTED_SPEND can only be set when the
 	// budget's time period is a Filter.calendar_period. It cannot be set in
-	// combination with Filter.custom_period.
+	// combination with Filter.custom_period. Not supported when `spend_cap` is
+	// set.
 	SpendBasis string `json:"spendBasis,omitempty"`
 	// ThresholdPercent: Required. Send an alert when this threshold is exceeded.
 	// This is a 1.0-based percentage, so 0.5 = 50%. Validation: non-negative
-	// number.
+	// number. When `spend_cap` is set on the budget, `threshold_rules` must
+	// contain exactly three rules with `threshold_percent` values of `0.5`, `0.8`,
+	// and `1.0` (50%, 80%, and 100%).
 	ThresholdPercent float64 `json:"thresholdPercent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SpendBasis") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -1799,10 +1799,9 @@ func (c *ProjectsAppsEventsListCall) FilterVersionDisplayNames(filterVersionDisp
 // state" = "background". OR across different keys, repeating a key within an
 // AND, NOT, and comparators other than `=` and `:` are rejected with
 // INVALID_ARGUMENT. Wildcards are not supported in values; use
-// `custom_keys.:*` to match events that set a key to any value. Only supported
-// for Android and iOS. This filter expression applies in addition to the
-// `filter` field above. The syntax is a subset of AIP-160
-// (https://google.aip.dev/160).
+// `custom_keys.:*` to match events that set a key to any value. This filter
+// expression applies in addition to the `filter` field above. The syntax is a
+// subset of AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsAppsEventsListCall) FilterExpression(filterExpression string) *ProjectsAppsEventsListCall {
 	c.urlParams_.Set("filterExpression", filterExpression)
 	return c
@@ -2836,6 +2835,25 @@ func (c *ProjectsAppsReportsGetCall) FilterVersionDisplayNames(filterVersionDisp
 //	"TIME_GRANULARITY_DAY" - Day.
 func (c *ProjectsAppsReportsGetCall) Granularity(granularity string) *ProjectsAppsReportsGetCall {
 	c.urlParams_.Set("granularity", granularity)
+	return c
+}
+
+// MetricsMode sets the optional parameter "metricsMode": Controls whether
+// metrics are raw observed values (mobile and web) or extrapolated values (web
+// only). If omitted, defaults to OBSERVED.
+//
+// Possible values:
+//
+//	"METRICS_MODE_UNSPECIFIED" - Unknown.
+//	"METRICS_MODE_OBSERVED" - Raw counts of the events, sessions, and users
+//
+// that were actually collected.
+//
+//	"METRICS_MODE_EXTRAPOLATED" - Web only. Estimated event counts based on
+//
+// the per-session sampling rate recorded on each event.
+func (c *ProjectsAppsReportsGetCall) MetricsMode(metricsMode string) *ProjectsAppsReportsGetCall {
+	c.urlParams_.Set("metricsMode", metricsMode)
 	return c
 }
 

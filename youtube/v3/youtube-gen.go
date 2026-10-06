@@ -2517,6 +2517,11 @@ type CommentSnippet struct {
 	// comment this is the channel the comment refers to. In case of a video or
 	// post comment it's the video/post's channel.
 	ChannelId string `json:"channelId,omitempty"`
+	// ImageUrl: Output only. The URL of the image or animated GIF attached to the
+	// comment, if any. This property is only present when a comment contains an
+	// image or GIF. The URL is served as a signed link with a six-hour time to
+	// live (TTL) and expires six hours after retrieval.
+	ImageUrl string `json:"imageUrl,omitempty"`
 	// LikeCount: The total number of likes this comment has received.
 	LikeCount int64 `json:"likeCount,omitempty"`
 	// ModerationStatus: The comment's moderation status. Will not be set if the

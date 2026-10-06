@@ -833,6 +833,34 @@ func (s Money) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Obstacle: Details of a single detected obstacle.
+type Obstacle struct {
+	// PolygonGeojson: Output only. A GeoJSON representation of the obstacle. An
+	// obstacle is defined as any non-buildable area where solar panels cannot be
+	// placed due to physical barriers (vents, chimneys, dormers, etc.). The
+	// GeoJSON data must be in RFC 7946 format and represent a Polygon for a single
+	// contiguous area. The Polygon will be represented by several loops when it
+	// contains holes. Example: { "type": "Polygon", "coordinates": [ [ [-1, -1,
+	// 0], [-1, 0, 0], [0, 0, 0], [-1, -1, 0] ] ] }
+	PolygonGeojson googleapi.RawMessage `json:"polygonGeojson,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolygonGeojson") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolygonGeojson") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Obstacle) MarshalJSON() ([]byte, error) {
+	type NoMethod Obstacle
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RoofSegmentSizeAndSunshineStats: Information about the size and sunniness
 // quantiles of a roof segment.
 type RoofSegmentSizeAndSunshineStats struct {
@@ -853,6 +881,16 @@ type RoofSegmentSizeAndSunshineStats struct {
 	// pitch, azimuth, and center location, this fully defines the roof segment
 	// plane.
 	PlaneHeightAtCenterMeters float64 `json:"planeHeightAtCenterMeters,omitempty"`
+	// PolygonGeojson: Output only. A GeoJSON representation of the detailed
+	// geometry for the roof segment plane. The polygon represents the physical
+	// roof facet, excluding overlapping vegetation and internal cutouts (e.g.,
+	// courtyards). This field is only populated if ROOF_GEOMETRY is included in
+	// the request's FindClosestBuildingInsightsRequest.additional_insights
+	// parameter. The GeoJSON data must be in RFC 7946 format and represent a
+	// Polygon for a single contiguous area. The Polygon will be represented by
+	// several loops when it contains holes. Example: { "type": "Polygon",
+	// "coordinates": [ [ [-1, -1, 0], [-1, 0, 0], [0, 0, 0], [-1, -1, 0] ] ] }
+	PolygonGeojson googleapi.RawMessage `json:"polygonGeojson,omitempty"`
 	// Stats: Total size and sunlight quantiles for the roof segment.
 	Stats *SizeAndSunshineStats `json:"stats,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AzimuthDegrees") to
@@ -1170,6 +1208,12 @@ type SolarPotential struct {
 	// of insolation (energy) received per year. 1 sunshine hour = 1 kWh per kW
 	// (where kW refers to kW of capacity under Standard Testing Conditions).
 	MaxSunshineHoursPerYear float64 `json:"maxSunshineHoursPerYear,omitempty"`
+	// Obstacles: Details for each obstacle detected on the rooftop. An obstacle is
+	// defined as any non-buildable area where solar panels cannot be placed due to
+	// physical barriers (vents, chimneys, etc.). This field is only populated if
+	// ROOF_GEOMETRY is included in the request's
+	// FindClosestBuildingInsightsRequest.additional_insights.
+	Obstacles []*Obstacle `json:"obstacles,omitempty"`
 	// PanelCapacityWatts: Capacity, in watts, of the panel used in the
 	// calculations.
 	PanelCapacityWatts float64 `json:"panelCapacityWatts,omitempty"`
@@ -1265,6 +1309,12 @@ func (r *BuildingInsightsService) FindClosest() *BuildingInsightsFindClosestCall
 //
 // BuildingInsights will be returned.
 //
+//	"ROOF_GEOMETRY" - Determines whether to include the roof segment polygons
+//
+// and obstacles in the response. If specified, the response will contain a
+// polygon_geojson field in each RoofSegmentSizeAndSunshineStats and the
+// obstacles field in SolarPotential.
+//
 //	"DETECTED_ARRAYS" - Determines whether the response will include the
 //
 // detected arrays. If specified, the `detected_arrays` field will be populated
@@ -1302,6 +1352,11 @@ func (c *BuildingInsightsFindClosestCall) ExactQualityRequired(exactQualityRequi
 // solar data. For more information, see [Expanded
 // Coverage](https://developers.google.com/maps/documentation/solar/expanded-cov
 // erage).
+//
+//	"ROOF_GEOMETRY_INSIGHTS" - Enables experimental roof geometry data via
+//
+// FindClosestBuildingInsights. Requires `ROOF_GEOMETRY` to be included in the
+// `additional_insights` field. Returns an error if passed to GetDataLayers.
 func (c *BuildingInsightsFindClosestCall) Experiments(experiments ...string) *BuildingInsightsFindClosestCall {
 	c.urlParams_.SetMulti("experiments", append([]string{}, experiments...))
 	return c
@@ -1481,6 +1536,11 @@ func (c *DataLayersGetCall) ExactQualityRequired(exactQualityRequired bool) *Dat
 // solar data. For more information, see [Expanded
 // Coverage](https://developers.google.com/maps/documentation/solar/expanded-cov
 // erage).
+//
+//	"ROOF_GEOMETRY_INSIGHTS" - Enables experimental roof geometry data via
+//
+// FindClosestBuildingInsights. Requires `ROOF_GEOMETRY` to be included in the
+// `additional_insights` field. Returns an error if passed to GetDataLayers.
 func (c *DataLayersGetCall) Experiments(experiments ...string) *DataLayersGetCall {
 	c.urlParams_.SetMulti("experiments", append([]string{}, experiments...))
 	return c

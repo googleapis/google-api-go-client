@@ -1894,8 +1894,7 @@ type PolicyCompliance struct {
 	//   "DISAPPROVED" - Creative cannot serve.
 	//   "APPROVED" - Creative is approved.
 	//   "CERTIFICATE_REQUIRED" - Certificates are required for the creative to be
-	// served in some regions. For more information about creative certification,
-	// refer to: https://support.google.com/authorizedbuyers/answer/7450776
+	// served in some regions.
 	Status string `json:"status,omitempty"`
 	// Topics: Topics related to the policy compliance for this transaction type
 	// (for example, open auction, deals) or region (for example, China, Russia).
@@ -1928,9 +1927,7 @@ type PolicyTopicEntry struct {
 	// HelpCenterUrl: URL of the help center article describing this policy topic.
 	HelpCenterUrl string `json:"helpCenterUrl,omitempty"`
 	// MissingCertificate: Whether or not the policy topic is missing a
-	// certificate. Some policy topics require a certificate to unblock serving in
-	// some regions. For more information about creative certification, refer to:
-	// https://support.google.com/authorizedbuyers/answer/7450776
+	// certificate.
 	MissingCertificate bool `json:"missingCertificate,omitempty"`
 	// PolicyTopic: Policy topic this entry refers to. For example, "ALCOHOL",
 	// "TRADEMARKS_IN_AD_TEXT", or "DESTINATION_NOT_WORKING". The set of possible

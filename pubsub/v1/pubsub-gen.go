@@ -625,17 +625,19 @@ func (s BigQueryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BigtableConfig: Configuration for a Bigtable subscription. The Pub/Sub
-// message will be written to a Bigtable row as follows: - row key:
-// subscription name, message ID hash, and message ID delimited by `#`. -
-// columns: message bytes written to a single column family `data` with an
-// empty-string column qualifier. - cell timestamp: the message publish
-// timestamp.
+// BigtableConfig: Configuration for a Bigtable subscription, which will write
+// a Pub/Sub message to a Bigtable row. See the ColumnFamilyMapping
+// documentation below for details on how the row keys and columns will be
+// written.
 type BigtableConfig struct {
 	// AppProfileId: Optional. The app profile to use for the Bigtable writes. If
 	// not specified, the "default" application profile will be used. The app
 	// profile must use single-cluster routing.
 	AppProfileId string `json:"appProfileId,omitempty"`
+	// ColumnFamilyMapping: Optional. Configuration that allows writing row keys
+	// and/or columns based on fields in the input message. The input message
+	// format must be JSON if this field is set.
+	ColumnFamilyMapping *ColumnFamilyMapping `json:"columnFamilyMapping,omitempty"`
 	// ServiceAccountEmail: Optional. The service account to use to write to
 	// Bigtable. The subscription creator or updater that specifies this field must
 	// have `iam.serviceAccounts.actAs` permission on the service account. If not
@@ -947,6 +949,49 @@ func (s CloudStorageConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ColumnFamilyMapping: Configuration for writing a Pub/Sub message to a
+// Bigtable row with a user-defined key and writing to column families. If this
+// field is set: - The subscription messages must be formatted as JSON. - The
+// row key mapping is configured in the `key_definition` section. - The
+// top-level fields will be written either: - By default, they will be written
+// to the `data` column family with the field name as the column qualifier. -
+// But if the field name matches an existing column family (except for the
+// default `data` column), then that field will be written to that column
+// family, either as a scalar or its next level nested fields if it's a JSON
+// object. - The cell timestamp will be the message publish timestamp. If the
+// field is not set, the default behavior is to write: - row key: subscription
+// name, message ID hash, and message ID delimited by `#`. - columns: message
+// bytes written to a single column family `data` with an empty-string column
+// qualifier. - cell timestamp: the message publish timestamp.
+type ColumnFamilyMapping struct {
+	// DelimitedKey: Optional. If set, the row key is constructed from the given
+	// key fields and delimiter. All key fields must be present in the message;
+	// otherwise, the message remains in the subscription backlog.
+	DelimitedKey *DelimitedKey `json:"delimitedKey,omitempty"`
+	// RowKeySchema: Optional. If set, the row key is constructed from the field
+	// names of the table's structured row key
+	// ({$universe.dns_names.final_documentation_domain}/bigtable/docs/manage-row-ke
+	// y-schemas). Note that if the field is nullable in the structured row key,
+	// then it need not be present in the message; null will be used instead.
+	RowKeySchema *RowKeySchema `json:"rowKeySchema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DelimitedKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DelimitedKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ColumnFamilyMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod ColumnFamilyMapping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CommitSchemaRequest: Request for CommitSchema method.
 type CommitSchemaRequest struct {
 	// Schema: Required. The schema revision to commit.
@@ -1159,6 +1204,34 @@ type DeadLetterPolicy struct {
 
 func (s DeadLetterPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod DeadLetterPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DelimitedKey: Row key definition based on fields from the message.
+type DelimitedKey struct {
+	// Delimiter: Optional. Byte sequence used to delimit concatenated fields. Must
+	// be specified if multiple key fields are used. The delimiter must contain at
+	// least 1 character and at most 50 characters.
+	Delimiter string `json:"delimiter,omitempty"`
+	// KeyFields: Optional. The key fields to construct from the row key. The
+	// fields must be present in the message as a top-level field, i.e. JSON path
+	// expressions will not traverse into nested objects.
+	KeyFields []string `json:"keyFields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Delimiter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Delimiter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DelimitedKey) MarshalJSON() ([]byte, error) {
+	type NoMethod DelimitedKey
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2208,6 +2281,14 @@ type RollbackSchemaRequest struct {
 func (s RollbackSchemaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RollbackSchemaRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RowKeySchema: Row key definition that reads the input message fields based
+// on the field names of the table's structured row key
+// ({$universe.dns_names.final_documentation_domain}/bigtable/docs/manage-row-ke
+// y-schemas). Note that if the field is nullable in the structured row key,
+// then it need not be present in the message; null will be used instead.
+type RowKeySchema struct {
 }
 
 // Schema: A schema resource.

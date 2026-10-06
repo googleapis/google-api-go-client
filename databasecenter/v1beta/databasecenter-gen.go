@@ -1987,8 +1987,8 @@ type QueryDatabaseResourceGroupsRequest struct {
 	// product.type * product.engine * product.version * location * labels *
 	// resource_category * machine_config.cpu_count *
 	// machine_config.memory_size_bytes * machine_config.shard_count *
-	// resource_name * tags * backupdr_config.backupdr_managed * edition The
-	// expression is a list of zero or more restrictions combined via logical
+	// resource_name * tags * backupdr_config.backupdr_managed * edition * modes
+	// The expression is a list of zero or more restrictions combined via logical
 	// operators `AND` and `OR`. When `AND` and `OR` are both used in the
 	// expression, parentheses must be appropriately used to group the
 	// combinations. Example: `location="us-east1" Example:
@@ -2002,7 +2002,7 @@ type QueryDatabaseResourceGroupsRequest struct {
 	// product.engine * product.version * container * issue_count *
 	// machine_config.vcpu_count * machine_config.memory_size_bytes *
 	// machine_config.shard_count * resource_name * issue_severity * signal_type *
-	// location * resource_type * instance_type * edition *
+	// location * resource_type * instance_type * edition * modes *
 	// metrics.p99_cpu_utilization * metrics.p95_cpu_utilization *
 	// metrics.current_storage_used_bytes * metrics.node_count *
 	// metrics.processing_unit_count * metrics.current_memory_used_bytes *

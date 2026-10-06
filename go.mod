@@ -5,7 +5,7 @@ go 1.26.0
 retract v0.258.0 // due to https://github.com/googleapis/google-cloud-go/issues/13503
 
 require (
-	cloud.google.com/go/auth v0.24.0
+	cloud.google.com/go/auth v0.24.1-0.20261001053825-dbc26066f70a
 	cloud.google.com/go/auth/oauth2adapt v0.3.0
 	cloud.google.com/go/compute/metadata v0.10.0
 	github.com/google/go-cmp v0.7.0

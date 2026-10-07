@@ -1298,7 +1298,7 @@ func (s GoogleDevtoolsArtifactregistryV1File) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepo
 // sitory: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.apt.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1355,7 +1355,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPubli
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomR
 // epository: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the custom remote repository, for ex:
+	// Uri: An https uri reference to the custom remote repository, for ex:
 	// "https://registry-1.docker.io".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1379,7 +1379,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCu
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRe
 // pository: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.maven.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1403,7 +1403,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCus
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepo
 // sitory: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.npm.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1427,7 +1427,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCusto
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomR
 // epository: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.python.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1451,7 +1451,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCu
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepo
 // sitory: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.yum.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally

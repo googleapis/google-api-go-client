@@ -5601,6 +5601,7 @@ type NonComplianceDetail struct {
 	// high enough.
 	//   "APP_NOT_UPDATED" - The app is installed, but it hasn't been updated to
 	// the minimum version code specified by policy.
+	//   "OS_NOT_PERMITTED" - This OS version is not permitted by the policy
 	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
 	// requirements.
 	//   "APP_SIGNING_CERT_MISMATCH" - The app's signing certificate does not match
@@ -5726,6 +5727,7 @@ type NonComplianceDetailCondition struct {
 	// high enough.
 	//   "APP_NOT_UPDATED" - The app is installed, but it hasn't been updated to
 	// the minimum version code specified by policy.
+	//   "OS_NOT_PERMITTED" - This OS version is not permitted by the policy
 	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
 	// requirements.
 	//   "APP_SIGNING_CERT_MISMATCH" - The app's signing certificate does not match
@@ -6769,7 +6771,9 @@ type Policy struct {
 	// toggle. On devices which run Android 11 or below, this is equivalent to
 	// MICROPHONE_ACCESS_USER_CHOICE.
 	MicrophoneAccess string `json:"microphoneAccess,omitempty"`
-	// MinimumApiLevel: The minimum allowed Android API level.
+	// MinimumApiLevel: The minimum allowed Android API level. A
+	// NonComplianceDetail with OS_NOT_PERMITTED is reported if the Android API
+	// level of the device is lower than this value.
 	MinimumApiLevel int64 `json:"minimumApiLevel,omitempty"`
 	// MobileNetworksConfigDisabled: Whether configuring mobile networks is
 	// disabled.

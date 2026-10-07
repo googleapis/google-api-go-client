@@ -1,5 +1,17 @@
 # Changes
 
+## [0.301.0](https://github.com/googleapis/google-api-go-client/compare/v0.300.0...v0.301.0) (2026-10-07)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3754](https://github.com/googleapis/google-api-go-client/issues/3754)) ([ebafad3](https://github.com/googleapis/google-api-go-client/commit/ebafad334e2218c37dbbcc267219e338fbd0d056))
+* **all:** Auto-regenerate discovery clients ([#3756](https://github.com/googleapis/google-api-go-client/issues/3756)) ([e85ebac](https://github.com/googleapis/google-api-go-client/commit/e85ebac72dd7e12c538a14f6e2b8a1c83f9872b9))
+* **all:** Auto-regenerate discovery clients ([#3759](https://github.com/googleapis/google-api-go-client/issues/3759)) ([267f7a8](https://github.com/googleapis/google-api-go-client/commit/267f7a8c8e539f21e64b696686bb9476bf0c5ef0))
+* **all:** Auto-regenerate discovery clients ([#3760](https://github.com/googleapis/google-api-go-client/issues/3760)) ([282280c](https://github.com/googleapis/google-api-go-client/commit/282280c028412560d8c259c0e5ce80cd3c16d624))
+* **all:** Auto-regenerate discovery clients ([#3761](https://github.com/googleapis/google-api-go-client/issues/3761)) ([3f7eebf](https://github.com/googleapis/google-api-go-client/commit/3f7eebf8a548d20db29fa5c654f2de96c4f8db14))
+* **option/internaloption:** Add EnableDirectPathXdsOverInterconnect ([#3742](https://github.com/googleapis/google-api-go-client/issues/3742)) ([9bda4c1](https://github.com/googleapis/google-api-go-client/commit/9bda4c115cedcef9f5938378563e04592f56fe18))
+
 ## [0.300.0](https://github.com/googleapis/google-api-go-client/compare/v0.299.0...v0.300.0) (2026-10-01)
 
 

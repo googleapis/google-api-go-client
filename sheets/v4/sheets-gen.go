@@ -313,8 +313,7 @@ func (s AddChartResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AddCommentReplyRequest: Inserts a reply Post into a CommentThread. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// AddCommentReplyRequest: Inserts a reply Post into a CommentThread.
 type AddCommentReplyRequest struct {
 	// CommentId: The ID of the CommentThread to add the reply to.
 	CommentId string `json:"commentId,omitempty"`
@@ -338,8 +337,7 @@ func (s AddCommentReplyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AddCommentReplyResponse: The result of creating a reply. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// AddCommentReplyResponse: The result of creating a reply.
 type AddCommentReplyResponse struct {
 	// Post: The newly-inserted reply Post.
 	Post *Post `json:"post,omitempty"`
@@ -1639,8 +1637,7 @@ type BatchUpdateSpreadsheetRequest struct {
 	// CommentsViewMode: The comments view mode to apply to the spreadsheet. This
 	// allows viewing the spreadsheet with comments omitted or included. If one is
 	// not specified, COMMENTS_VIEW_MODE_OMITTED is used. Meaningful only if
-	// include_spreadsheet_in_response is 'true'. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// include_spreadsheet_in_response is 'true'.
 	//
 	// Possible values:
 	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
@@ -1690,8 +1687,7 @@ func (s BatchUpdateSpreadsheetRequest) MarshalJSON() ([]byte, error) {
 // BatchUpdateSpreadsheetResponse: The reply for batch updating a spreadsheet.
 type BatchUpdateSpreadsheetResponse struct {
 	// CommentUpdateState: Whether comment updates were applied in the batch
-	// request. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// request.
 	//
 	// Possible values:
 	//   "COMMENT_UPDATE_STATE_UNSPECIFIED" - The status of comment updates is
@@ -3369,8 +3365,7 @@ func (s ColorStyle) MarshalJSON() ([]byte, error) {
 
 // CommentAnchor: A location in the spreadsheet that is tied to a CommentThread
 // with the same anchorId. Note: Multiple anchors may refer to the same
-// location. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// location.
 type CommentAnchor struct {
 	// AnchorId: The unique ID of the comment anchor. Output only.
 	AnchorId string `json:"anchorId,omitempty"`
@@ -3395,7 +3390,6 @@ func (s CommentAnchor) MarshalJSON() ([]byte, error) {
 }
 
 // CommentThread: Represents a single comment thread inside a spreadsheet.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type CommentThread struct {
 	// AnchorId: The ID of the CommentAnchor in the sheet that this thread is tied
 	// to.
@@ -4444,8 +4438,7 @@ func (s DeleteBandingRequest) MarshalJSON() ([]byte, error) {
 // DeleteCommentReplyRequest: Deletes a reply Post from a CommentThread.
 // Returns a 400 bad request error if: - The requesting user is not the author
 // of the post. - The reply post contains a comment action. - The reply post
-// contains an assignee. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// contains an assignee.
 type DeleteCommentReplyRequest struct {
 	// CommentId: The ID of the CommentThread which the post belongs to.
 	CommentId string `json:"commentId,omitempty"`
@@ -4470,8 +4463,7 @@ func (s DeleteCommentReplyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // DeleteCommentRequest: Deletes a CommentThread. Returns a 400 bad request
-// error if the requesting user is not the author of the headPost. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// error if the requesting user is not the author of the headPost.
 type DeleteCommentRequest struct {
 	// CommentId: The ID of the CommentThread that is being deleted.
 	CommentId string `json:"commentId,omitempty"`
@@ -5698,8 +5690,7 @@ func (s FindReplaceResponse) MarshalJSON() ([]byte, error) {
 type GetSpreadsheetByDataFilterRequest struct {
 	// CommentsViewMode: The comments view mode to apply to the spreadsheet. This
 	// allows viewing the spreadsheet with comments omitted or included. If one is
-	// not specified, COMMENTS_VIEW_MODE_OMITTED is used. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// not specified, COMMENTS_VIEW_MODE_OMITTED is used.
 	//
 	// Possible values:
 	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
@@ -6075,7 +6066,6 @@ func (s HistogramSeries) MarshalJSON() ([]byte, error) {
 }
 
 // InsertCommentRequest: Inserts a CommentThread into the spreadsheet.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type InsertCommentRequest struct {
 	// AssigneeEmailAddress: Optional. The email address of the assignee of the
 	// comment. Leave empty for a non-assigned comment. May not exceed 2048 UTF-8
@@ -6106,8 +6096,7 @@ func (s InsertCommentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InsertCommentResponse: The result of creating a comment. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// InsertCommentResponse: The result of creating a comment.
 type InsertCommentResponse struct {
 	// CommentThread: The newly-inserted comment thread.
 	CommentThread *CommentThread `json:"commentThread,omitempty"`
@@ -7351,8 +7340,7 @@ func (s *PointStyle) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Post: Represents a single post in a comment thread. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// Post: Represents a single post in a comment thread.
 type Post struct {
 	// AssigneeEmail: Optional. The email of the user who is being newly assigned
 	// to the thread as part of this post. Returns a 400 bad request error if: -
@@ -7410,8 +7398,7 @@ func (s Post) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostAuthor: Represents a user who authored a comment post. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// PostAuthor: Represents a user who authored a comment post.
 type PostAuthor struct {
 	// Anonymous: Whether the user is anonymous.
 	Anonymous bool `json:"anonymous,omitempty"`
@@ -7691,8 +7678,7 @@ type Request struct {
 	AddBanding *AddBandingRequest `json:"addBanding,omitempty"`
 	// AddChart: Adds a chart.
 	AddChart *AddChartRequest `json:"addChart,omitempty"`
-	// AddCommentReply: Adds a reply to a CommentThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// AddCommentReply: Adds a reply to a CommentThread.
 	AddCommentReply *AddCommentReplyRequest `json:"addCommentReply,omitempty"`
 	// AddConditionalFormatRule: Adds a new conditional format rule.
 	AddConditionalFormatRule *AddConditionalFormatRuleRequest `json:"addConditionalFormatRule,omitempty"`
@@ -7734,11 +7720,9 @@ type Request struct {
 	CutPaste *CutPasteRequest `json:"cutPaste,omitempty"`
 	// DeleteBanding: Removes a banded range
 	DeleteBanding *DeleteBandingRequest `json:"deleteBanding,omitempty"`
-	// DeleteComment: Deletes a CommentThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// DeleteComment: Deletes a CommentThread.
 	DeleteComment *DeleteCommentRequest `json:"deleteComment,omitempty"`
-	// DeleteCommentReply: Deletes a reply Post from a CommentThread Developer
-	// Preview (https://developers.google.com/workspace/preview).
+	// DeleteCommentReply: Deletes a reply Post from a CommentThread
 	DeleteCommentReply *DeleteCommentReplyRequest `json:"deleteCommentReply,omitempty"`
 	// DeleteConditionalFormatRule: Deletes an existing conditional format rule.
 	DeleteConditionalFormatRule *DeleteConditionalFormatRuleRequest `json:"deleteConditionalFormatRule,omitempty"`
@@ -7775,8 +7759,7 @@ type Request struct {
 	DuplicateSheet *DuplicateSheetRequest `json:"duplicateSheet,omitempty"`
 	// FindReplace: Finds and replaces occurrences of some text with other text.
 	FindReplace *FindReplaceRequest `json:"findReplace,omitempty"`
-	// InsertComment: Inserts a CommentThread into the spreadsheet. Developer
-	// Preview (https://developers.google.com/workspace/preview).
+	// InsertComment: Inserts a CommentThread into the spreadsheet.
 	InsertComment *InsertCommentRequest `json:"insertComment,omitempty"`
 	// InsertDimension: Inserts new rows or columns in a sheet.
 	InsertDimension *InsertDimensionRequest `json:"insertDimension,omitempty"`
@@ -7817,8 +7800,7 @@ type Request struct {
 	// UpdateChartSpec: Updates a chart's specifications.
 	UpdateChartSpec *UpdateChartSpecRequest `json:"updateChartSpec,omitempty"`
 	// UpdateCommentPost: Updates an existing post (head post or reply) of a
-	// CommentThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// CommentThread.
 	UpdateCommentPost *UpdateCommentPostRequest `json:"updateCommentPost,omitempty"`
 	// UpdateConditionalFormatRule: Updates an existing conditional format rule.
 	UpdateConditionalFormatRule *UpdateConditionalFormatRuleRequest `json:"updateConditionalFormatRule,omitempty"`
@@ -7873,8 +7855,7 @@ type Response struct {
 	AddBanding *AddBandingResponse `json:"addBanding,omitempty"`
 	// AddChart: A reply from adding a chart.
 	AddChart *AddChartResponse `json:"addChart,omitempty"`
-	// AddCommentReply: The result of creating a reply. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// AddCommentReply: The result of creating a reply.
 	AddCommentReply *AddCommentReplyResponse `json:"addCommentReply,omitempty"`
 	// AddDataSource: A reply from adding a data source.
 	AddDataSource *AddDataSourceResponse `json:"addDataSource,omitempty"`
@@ -7912,8 +7893,7 @@ type Response struct {
 	DuplicateSheet *DuplicateSheetResponse `json:"duplicateSheet,omitempty"`
 	// FindReplace: A reply from doing a find/replace.
 	FindReplace *FindReplaceResponse `json:"findReplace,omitempty"`
-	// InsertComment: The result of creating a comment. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// InsertComment: The result of creating a comment.
 	InsertComment *InsertCommentResponse `json:"insertComment,omitempty"`
 	// RefreshDataSource: A reply from refreshing data source objects.
 	RefreshDataSource *RefreshDataSourceResponse `json:"refreshDataSource,omitempty"`
@@ -8194,8 +8174,7 @@ type Sheet struct {
 	// ColumnGroups: All column groups on this sheet, ordered by increasing range
 	// start index, then by group depth.
 	ColumnGroups []*DimensionGroup `json:"columnGroups,omitempty"`
-	// CommentAnchors: The comment anchors on this sheet. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// CommentAnchors: The comment anchors on this sheet.
 	CommentAnchors []*CommentAnchor `json:"commentAnchors,omitempty"`
 	// ConditionalFormats: The conditional format rules in this sheet.
 	ConditionalFormats []*ConditionalFormatRule `json:"conditionalFormats,omitempty"`
@@ -8499,12 +8478,10 @@ func (s SourceAndDestination) MarshalJSON() ([]byte, error) {
 
 // Spreadsheet: Resource that represents a spreadsheet.
 type Spreadsheet struct {
-	// Comments: The comment threads associated with the spreadsheet. Developer
-	// Preview (https://developers.google.com/workspace/preview).
+	// Comments: The comment threads associated with the spreadsheet.
 	Comments []*CommentThread `json:"comments,omitempty"`
 	// CommentsViewMode: Output only. The comments view mode applied to the
-	// spreadsheet. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// spreadsheet.
 	//
 	// Possible values:
 	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
@@ -9364,7 +9341,6 @@ func (s UpdateChartSpecRequest) MarshalJSON() ([]byte, error) {
 
 // UpdateCommentPostRequest: Updates a Post in a CommentThread. Returns a 400
 // bad request error if: - The requesting user is not the author of the post.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type UpdateCommentPostRequest struct {
 	// CommentId: The ID of the CommentThread which the post belongs to.
 	CommentId string `json:"commentId,omitempty"`
@@ -10447,8 +10423,7 @@ func (r *SpreadsheetsService) Get(spreadsheetId string) *SpreadsheetsGetCall {
 // CommentsViewMode sets the optional parameter "commentsViewMode": The
 // comments view mode to apply to the spreadsheet. This allows viewing the
 // spreadsheet with comments omitted or included. If one is not specified,
-// COMMENTS_VIEW_MODE_OMITTED is used. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// COMMENTS_VIEW_MODE_OMITTED is used.
 //
 // Possible values:
 //

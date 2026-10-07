@@ -1462,6 +1462,15 @@ type EffectiveVpcFlowLogsConfig struct {
 	//   "INTERVAL_10_MIN" - Aggregate logs in 10m intervals.
 	//   "INTERVAL_15_MIN" - Aggregate logs in 15m intervals.
 	AggregationInterval string `json:"aggregationInterval,omitempty"`
+	// ConnectionLogging: Optional. Configures whether connection logging is
+	// enabled for VPC Flow Logs.
+	//
+	// Possible values:
+	//   "CONNECTION_LOGGING_UNSPECIFIED" - If not specified, will default to
+	// CONNECTION_LOGGING_DISABLED.
+	//   "CONNECTION_LOGGING_ENABLED" - Include connection logs.
+	//   "CONNECTION_LOGGING_DISABLED" - Do not include connection logs.
+	ConnectionLogging string `json:"connectionLogging,omitempty"`
 	// CrossProjectMetadata: Determines whether to include cross project
 	// annotations in the logs. This field is available only for organization
 	// configurations. If not specified in org configs will be set to
@@ -4781,6 +4790,15 @@ type VpcFlowLogsConfig struct {
 	//   "INTERVAL_10_MIN" - Aggregate logs in 10m intervals.
 	//   "INTERVAL_15_MIN" - Aggregate logs in 15m intervals.
 	AggregationInterval string `json:"aggregationInterval,omitempty"`
+	// ConnectionLogging: Optional. Configures whether connection logging is
+	// enabled for VPC Flow Logs.
+	//
+	// Possible values:
+	//   "CONNECTION_LOGGING_UNSPECIFIED" - If not specified, will default to
+	// CONNECTION_LOGGING_DISABLED.
+	//   "CONNECTION_LOGGING_ENABLED" - Include connection logs.
+	//   "CONNECTION_LOGGING_DISABLED" - Do not include connection logs.
+	ConnectionLogging string `json:"connectionLogging,omitempty"`
 	// CreateTime: Output only. The time the config was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CrossProjectMetadata: Optional. Determines whether to include cross project

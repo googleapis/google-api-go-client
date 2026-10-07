@@ -5108,35 +5108,6 @@ type BusinessChainTargetingOptionDetails struct {
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
-	//   "GEO_REGION_TYPE_TOWN" - The geographic region is a town.
-	//   "GEO_REGION_TYPE_VILLAGE" - The geographic region is a village.
-	//   "GEO_REGION_TYPE_CITY_DISTRICT" - The geographic region is a city
-	// district.
-	//   "GEO_REGION_TYPE_SUBURB" - The geographic region is a suburb.
-	//   "GEO_REGION_TYPE_HAMLET" - The geographic region is a hamlet.
-	//   "GEO_REGION_TYPE_MUNICIPAL_DISTRICT" - The geographic region is a
-	// municipal district.
-	//   "GEO_REGION_TYPE_COMMUNITY" - The geographic region is a community.
-	//   "GEO_REGION_TYPE_TOWNSHIP" - The geographic region is a township.
-	//   "GEO_REGION_TYPE_URBAN_DISTRICT" - The geographic region is an urban
-	// district.
-	//   "GEO_REGION_TYPE_RESIDENTIAL_AREA" - The geographic region is a
-	// residential area.
-	//   "GEO_REGION_TYPE_INDEPENDENT_CITY" - The geographic region is an
-	// independent city.
-	//   "GEO_REGION_TYPE_SECTOR" - The geographic region is a sector.
-	//   "GEO_REGION_TYPE_AREA" - The geographic region is an area.
-	//   "GEO_REGION_TYPE_ESTATE" - The geographic region is an estate.
-	//   "GEO_REGION_TYPE_PARISH" - The geographic region is a parish.
-	//   "GEO_REGION_TYPE_SETTLEMENT" - The geographic region is a settlement.
-	//   "GEO_REGION_TYPE_ZONE" - The geographic region is a zone.
-	//   "GEO_REGION_TYPE_COLONY" - The geographic region is a colony.
-	//   "GEO_REGION_TYPE_INDUSTRIAL_AREA" - The geographic region is an industrial
-	// area.
-	//   "GEO_REGION_TYPE_PROVINCIAL_CITY" - The geographic region is a provincial
-	// city.
-	//   "GEO_REGION_TYPE_RURAL_DISTRICT" - The geographic region is a rural
-	// district.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BusinessChain") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5768,7 +5739,7 @@ type CommonInStreamAttribute struct {
 	// TrackingUrl: Output only. The URL address loaded in the background for
 	// tracking purposes.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
-	// Video: Required. The YouTube video of the ad.
+	// Video: Required. Immutable. The YouTube video of the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionButtonLabel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8283,35 +8254,27 @@ func (s DeviceTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
 type DigitalContentLabelAssignedTargetingOptionDetails struct {
 	// ExcludedContentRatingTier: Required. The display name of the digital content
-	// label rating tier to be EXCLUDED. **Starting on *October 1, 2026*, this
-	// field will only accept the value `CONTENT_RATING_TIER_UNRATED`. All other
-	// values will be deprecated and no longer be accepted.**
+	// label rating tier to be EXCLUDED. This field only accepts the value
+	// `CONTENT_RATING_TIER_UNRATED`.
 	//
 	// Possible values:
 	//   "CONTENT_RATING_TIER_UNSPECIFIED" - Content label is not specified in this
 	// version. This enum is a place holder for a default value and does not
-	// represent a real content rating. **Starting on *October 1, 2026*, this value
-	// will be deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
+	// represent a real content rating.
 	//   "CONTENT_RATING_TIER_UNRATED" - Content that has not been labeled.
-	//   "CONTENT_RATING_TIER_GENERAL" - Content suitable for general audiences.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
-	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Content suitable for most
-	// audiences with parental guidance. **Starting on *October 1, 2026*, this
-	// value will be deprecated and no longer be accepted as a valid value when
-	// assigning targeting.**
-	//   "CONTENT_RATING_TIER_TEENS" - Content suitable for teen and older
-	// audiences. **Starting on *October 1, 2026*, this value will be deprecated
-	// and no longer be accepted as a valid value when assigning targeting.**
-	//   "CONTENT_RATING_TIER_MATURE" - Content suitable only for mature audiences.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
-	//   "CONTENT_RATING_TIER_FAMILIES" - Content suitable for family audiences. It
-	// is a subset of CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and
-	// Partners line items. **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
+	//   "CONTENT_RATING_TIER_GENERAL" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable for general audiences.
+	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Deprecated: This content rating
+	// tier is no longer supported. Content suitable for most audiences with
+	// parental guidance.
+	//   "CONTENT_RATING_TIER_TEENS" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable for teen and older audiences.
+	//   "CONTENT_RATING_TIER_MATURE" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable only for mature audiences.
+	//   "CONTENT_RATING_TIER_FAMILIES" - Deprecated: This content rating tier is
+	// no longer supported. Content suitable for family audiences. It is a subset
+	// of CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and Partners line
+	// items.
 	ExcludedContentRatingTier string `json:"excludedContentRatingTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedContentRatingTier")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -8342,28 +8305,21 @@ type DigitalContentLabelTargetingOptionDetails struct {
 	// Possible values:
 	//   "CONTENT_RATING_TIER_UNSPECIFIED" - Content label is not specified in this
 	// version. This enum is a place holder for a default value and does not
-	// represent a real content rating. **Starting on *October 1, 2026*, this value
-	// will be deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
+	// represent a real content rating.
 	//   "CONTENT_RATING_TIER_UNRATED" - Content that has not been labeled.
-	//   "CONTENT_RATING_TIER_GENERAL" - Content suitable for general audiences.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
-	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Content suitable for most
-	// audiences with parental guidance. **Starting on *October 1, 2026*, this
-	// value will be deprecated and no longer be accepted as a valid value when
-	// assigning targeting.**
-	//   "CONTENT_RATING_TIER_TEENS" - Content suitable for teen and older
-	// audiences. **Starting on *October 1, 2026*, this value will be deprecated
-	// and no longer be accepted as a valid value when assigning targeting.**
-	//   "CONTENT_RATING_TIER_MATURE" - Content suitable only for mature audiences.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
-	//   "CONTENT_RATING_TIER_FAMILIES" - Content suitable for family audiences. It
-	// is a subset of CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and
-	// Partners line items. **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
+	//   "CONTENT_RATING_TIER_GENERAL" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable for general audiences.
+	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Deprecated: This content rating
+	// tier is no longer supported. Content suitable for most audiences with
+	// parental guidance.
+	//   "CONTENT_RATING_TIER_TEENS" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable for teen and older audiences.
+	//   "CONTENT_RATING_TIER_MATURE" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable only for mature audiences.
+	//   "CONTENT_RATING_TIER_FAMILIES" - Deprecated: This content rating tier is
+	// no longer supported. Content suitable for family audiences. It is a subset
+	// of CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and Partners line
+	// items.
 	ContentRatingTier string `json:"contentRatingTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentRatingTier") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9922,35 +9878,6 @@ type GeoRegionAssignedTargetingOptionDetails struct {
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
-	//   "GEO_REGION_TYPE_TOWN" - The geographic region is a town.
-	//   "GEO_REGION_TYPE_VILLAGE" - The geographic region is a village.
-	//   "GEO_REGION_TYPE_CITY_DISTRICT" - The geographic region is a city
-	// district.
-	//   "GEO_REGION_TYPE_SUBURB" - The geographic region is a suburb.
-	//   "GEO_REGION_TYPE_HAMLET" - The geographic region is a hamlet.
-	//   "GEO_REGION_TYPE_MUNICIPAL_DISTRICT" - The geographic region is a
-	// municipal district.
-	//   "GEO_REGION_TYPE_COMMUNITY" - The geographic region is a community.
-	//   "GEO_REGION_TYPE_TOWNSHIP" - The geographic region is a township.
-	//   "GEO_REGION_TYPE_URBAN_DISTRICT" - The geographic region is an urban
-	// district.
-	//   "GEO_REGION_TYPE_RESIDENTIAL_AREA" - The geographic region is a
-	// residential area.
-	//   "GEO_REGION_TYPE_INDEPENDENT_CITY" - The geographic region is an
-	// independent city.
-	//   "GEO_REGION_TYPE_SECTOR" - The geographic region is a sector.
-	//   "GEO_REGION_TYPE_AREA" - The geographic region is an area.
-	//   "GEO_REGION_TYPE_ESTATE" - The geographic region is an estate.
-	//   "GEO_REGION_TYPE_PARISH" - The geographic region is a parish.
-	//   "GEO_REGION_TYPE_SETTLEMENT" - The geographic region is a settlement.
-	//   "GEO_REGION_TYPE_ZONE" - The geographic region is a zone.
-	//   "GEO_REGION_TYPE_COLONY" - The geographic region is a colony.
-	//   "GEO_REGION_TYPE_INDUSTRIAL_AREA" - The geographic region is an industrial
-	// area.
-	//   "GEO_REGION_TYPE_PROVINCIAL_CITY" - The geographic region is a provincial
-	// city.
-	//   "GEO_REGION_TYPE_RURAL_DISTRICT" - The geographic region is a rural
-	// district.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
@@ -10058,35 +9985,6 @@ type GeoRegionTargetingOptionDetails struct {
 	// area.
 	//   "GEO_REGION_TYPE_POST_TOWN" - The geographic region is a post town.
 	//   "GEO_REGION_TYPE_WARD" - The geographic region is a ward.
-	//   "GEO_REGION_TYPE_TOWN" - The geographic region is a town.
-	//   "GEO_REGION_TYPE_VILLAGE" - The geographic region is a village.
-	//   "GEO_REGION_TYPE_CITY_DISTRICT" - The geographic region is a city
-	// district.
-	//   "GEO_REGION_TYPE_SUBURB" - The geographic region is a suburb.
-	//   "GEO_REGION_TYPE_HAMLET" - The geographic region is a hamlet.
-	//   "GEO_REGION_TYPE_MUNICIPAL_DISTRICT" - The geographic region is a
-	// municipal district.
-	//   "GEO_REGION_TYPE_COMMUNITY" - The geographic region is a community.
-	//   "GEO_REGION_TYPE_TOWNSHIP" - The geographic region is a township.
-	//   "GEO_REGION_TYPE_URBAN_DISTRICT" - The geographic region is an urban
-	// district.
-	//   "GEO_REGION_TYPE_RESIDENTIAL_AREA" - The geographic region is a
-	// residential area.
-	//   "GEO_REGION_TYPE_INDEPENDENT_CITY" - The geographic region is an
-	// independent city.
-	//   "GEO_REGION_TYPE_SECTOR" - The geographic region is a sector.
-	//   "GEO_REGION_TYPE_AREA" - The geographic region is an area.
-	//   "GEO_REGION_TYPE_ESTATE" - The geographic region is an estate.
-	//   "GEO_REGION_TYPE_PARISH" - The geographic region is a parish.
-	//   "GEO_REGION_TYPE_SETTLEMENT" - The geographic region is a settlement.
-	//   "GEO_REGION_TYPE_ZONE" - The geographic region is a zone.
-	//   "GEO_REGION_TYPE_COLONY" - The geographic region is a colony.
-	//   "GEO_REGION_TYPE_INDUSTRIAL_AREA" - The geographic region is an industrial
-	// area.
-	//   "GEO_REGION_TYPE_PROVINCIAL_CITY" - The geographic region is a provincial
-	// city.
-	//   "GEO_REGION_TYPE_RURAL_DISTRICT" - The geographic region is a rural
-	// district.
 	GeoRegionType string `json:"geoRegionType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11625,7 +11523,7 @@ type LineItem struct {
 	//   "PARENT_INSERTION_ORDER_EXPIRED" - The insertion order of this line item
 	// has its end date set in the past. The line item will not run.
 	WarningMessages []string `json:"warningMessages,omitempty"`
-	// YoutubeAndPartnersSettings: Output only. Settings specific to YouTube and
+	// YoutubeAndPartnersSettings: Optional. Settings specific to YouTube and
 	// Partners line items.
 	YoutubeAndPartnersSettings *YoutubeAndPartnersSettings `json:"youtubeAndPartnersSettings,omitempty"`
 
@@ -14999,92 +14897,72 @@ func (s SelectedInventories) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 type SensitiveCategoryAssignedTargetingOptionDetails struct {
-	// ExcludedSensitiveCategory: Required. An enum for the DV360 Sensitive
-	// category content classified to be EXCLUDED. **Starting on *October 1, 2026*,
-	// this field will only accept `SENSITIVE_CATEGORY_EMBEDDED_VIDEO` or
-	// `SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO`. All other values will be
-	// deprecated and no longer be accepted.**
+	// ExcludedSensitiveCategory: Required. An enum for the Display & Video 360
+	// Sensitive category content classified to be EXCLUDED. This field only
+	// accepts the following values: * `SENSITIVE_CATEGORY_EMBEDDED_VIDEO` *
+	// `SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO`
 	//
 	// Possible values:
-	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder and
-	// doesn't specify a DV360 sensitive category.
-	//   "SENSITIVE_CATEGORY_ADULT" - Adult or pornographic text, image, or video
-	// content. **Starting on *October 1, 2026*, this value will be deprecated and
-	// no longer be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_DEROGATORY" - Content that may be construed as biased
-	// against individuals, groups, or organizations based on criteria such as
-	// race, religion, disability, sex, age, veteran status, sexual orientation,
-	// gender identity, or political affiliation. May also indicate discussion of
-	// such content, for instance, in an academic or journalistic context.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Content related to audio, video,
-	// or software downloads. **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_WEAPONS" - Contains content related to personal
-	// weapons, including knives, guns, small firearms, and ammunition. Selecting
-	// either "weapons" or "sensitive social issues" will result in selecting both.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_GAMBLING" - Contains content related to betting or
-	// wagering in a real-world or online setting. **Starting on *October 1, 2026*,
-	// this value will be deprecated and no longer be accepted as a valid value
-	// when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_VIOLENCE" - Content which may be considered
-	// graphically violent, gory, gruesome, or shocking, such as street fighting
-	// videos, accident photos, descriptions of torture, etc. **Starting on
-	// *October 1, 2026*, this value will be deprecated and no longer be accepted
-	// as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Adult content, as well as suggestive
-	// content that's not explicitly pornographic. This category includes all pages
-	// categorized as adult. **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_PROFANITY" - Prominent use of words considered
-	// indecent, such as curse words and sexual slang. Pages with only very
-	// occasional usage, such as news sites that might include such words in a
-	// quotation, are not included. **Starting on *October 1, 2026*, this value
-	// will be deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_ALCOHOL" - Contains content related to alcoholic
-	// beverages, alcohol brands, recipes, etc. **Starting on *October 1, 2026*,
-	// this value will be deprecated and no longer be accepted as a valid value
-	// when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_DRUGS" - Contains content related to the recreational
-	// use of legal or illegal drugs, as well as to drug paraphernalia or
-	// cultivation. **Starting on *October 1, 2026*, this value will be deprecated
-	// and no longer be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_TOBACCO" - Contains content related to tobacco and
-	// tobacco accessories, including lighters, humidors, ashtrays, etc. **Starting
-	// on *October 1, 2026*, this value will be deprecated and no longer be
-	// accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_POLITICS" - Political news and media, including
-	// discussions of social, governmental, and public policy. **Starting on
-	// *October 1, 2026*, this value will be deprecated and no longer be accepted
-	// as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_RELIGION" - Content related to religious thought or
-	// beliefs. **Starting on *October 1, 2026*, this value will be deprecated and
-	// no longer be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_TRAGEDY" - Content related to death, disasters,
-	// accidents, war, etc. **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Content related to motor
-	// vehicle, aviation or other transportation accidents. **Starting on *October
-	// 1, 2026*, this value will be deprecated and no longer be accepted as a valid
-	// value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Issues that evoke strong,
-	// opposing views and spark debate. These include issues that are controversial
-	// in most countries and markets (such as abortion), as well as those that are
+	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - Serves as a placeholder and doesn't
+	// specify a Display & Video 360 sensitive category.
+	//   "SENSITIVE_CATEGORY_ADULT" - Deprecated: This sensitive category is no
+	// longer supported. Adult or pornographic text, image, or video content.
+	//   "SENSITIVE_CATEGORY_DEROGATORY" - Deprecated: This sensitive category is
+	// no longer supported. Content that may be construed as biased against
+	// individuals, groups, or organizations based on criteria such as race,
+	// religion, disability, sex, age, veteran status, sexual orientation, gender
+	// identity, or political affiliation. May also indicate discussion of such
+	// content, for instance, in an academic or journalistic context.
+	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Deprecated: This sensitive
+	// category is no longer supported. Content related to audio, video, or
+	// software downloads.
+	//   "SENSITIVE_CATEGORY_WEAPONS" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to personal weapons, including
+	// knives, guns, small firearms, and ammunition. Selecting either "weapons" or
+	// "sensitive social issues" will result in selecting both.
+	//   "SENSITIVE_CATEGORY_GAMBLING" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to betting or wagering in a
+	// real-world or online setting.
+	//   "SENSITIVE_CATEGORY_VIOLENCE" - Deprecated: This sensitive category is no
+	// longer supported. Content which may be considered graphically violent, gory,
+	// gruesome, or shocking, such as street fighting videos, accident photos,
+	// descriptions of torture, etc.
+	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Deprecated: This sensitive category is
+	// no longer supported. Adult content, as well as suggestive content that's not
+	// explicitly pornographic. This category includes all pages categorized as
+	// adult.
+	//   "SENSITIVE_CATEGORY_PROFANITY" - Deprecated: This sensitive category is no
+	// longer supported. Prominent use of words considered indecent, such as curse
+	// words and sexual slang. Pages with only very occasional usage, such as news
+	// sites that might include such words in a quotation, are not included.
+	//   "SENSITIVE_CATEGORY_ALCOHOL" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to alcoholic beverages, alcohol
+	// brands, recipes, etc.
+	//   "SENSITIVE_CATEGORY_DRUGS" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to the recreational use of legal
+	// or illegal drugs, as well as to drug paraphernalia or cultivation.
+	//   "SENSITIVE_CATEGORY_TOBACCO" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to tobacco and tobacco
+	// accessories, including lighters, humidors, ashtrays, etc.
+	//   "SENSITIVE_CATEGORY_POLITICS" - Deprecated: This sensitive category is no
+	// longer supported. Political news and media, including discussions of social,
+	// governmental, and public policy.
+	//   "SENSITIVE_CATEGORY_RELIGION" - Deprecated: This sensitive category is no
+	// longer supported. Content related to religious thought or beliefs.
+	//   "SENSITIVE_CATEGORY_TRAGEDY" - Deprecated: This sensitive category is no
+	// longer supported. Content related to death, disasters, accidents, war, etc.
+	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Deprecated: This sensitive
+	// category is no longer supported. Content related to motor vehicle, aviation
+	// or other transportation accidents.
+	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Deprecated: This sensitive
+	// category is no longer supported. Issues that evoke strong, opposing views
+	// and spark debate. These include issues that are controversial in most
+	// countries and markets (such as abortion), as well as those that are
 	// controversial in specific countries and markets (such as immigration reform
-	// in the United States). **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
-	// or disturbing, such as violent news stories, stunts, or toilet humor.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
+	// in the United States).
+	//   "SENSITIVE_CATEGORY_SHOCKING" - Deprecated: This sensitive category is no
+	// longer supported. Content which may be considered shocking or disturbing,
+	// such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
 	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
@@ -15113,89 +14991,70 @@ func (s SensitiveCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, 
 // the TargetingOption when targeting_type is
 // `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 type SensitiveCategoryTargetingOptionDetails struct {
-	// SensitiveCategory: Output only. An enum for the DV360 Sensitive category
-	// content classifier.
+	// SensitiveCategory: Output only. An enum for the Display & Video 360
+	// Sensitive category content classifier.
 	//
 	// Possible values:
-	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder and
-	// doesn't specify a DV360 sensitive category.
-	//   "SENSITIVE_CATEGORY_ADULT" - Adult or pornographic text, image, or video
-	// content. **Starting on *October 1, 2026*, this value will be deprecated and
-	// no longer be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_DEROGATORY" - Content that may be construed as biased
-	// against individuals, groups, or organizations based on criteria such as
-	// race, religion, disability, sex, age, veteran status, sexual orientation,
-	// gender identity, or political affiliation. May also indicate discussion of
-	// such content, for instance, in an academic or journalistic context.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Content related to audio, video,
-	// or software downloads. **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_WEAPONS" - Contains content related to personal
-	// weapons, including knives, guns, small firearms, and ammunition. Selecting
-	// either "weapons" or "sensitive social issues" will result in selecting both.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_GAMBLING" - Contains content related to betting or
-	// wagering in a real-world or online setting. **Starting on *October 1, 2026*,
-	// this value will be deprecated and no longer be accepted as a valid value
-	// when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_VIOLENCE" - Content which may be considered
-	// graphically violent, gory, gruesome, or shocking, such as street fighting
-	// videos, accident photos, descriptions of torture, etc. **Starting on
-	// *October 1, 2026*, this value will be deprecated and no longer be accepted
-	// as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Adult content, as well as suggestive
-	// content that's not explicitly pornographic. This category includes all pages
-	// categorized as adult. **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_PROFANITY" - Prominent use of words considered
-	// indecent, such as curse words and sexual slang. Pages with only very
-	// occasional usage, such as news sites that might include such words in a
-	// quotation, are not included. **Starting on *October 1, 2026*, this value
-	// will be deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_ALCOHOL" - Contains content related to alcoholic
-	// beverages, alcohol brands, recipes, etc. **Starting on *October 1, 2026*,
-	// this value will be deprecated and no longer be accepted as a valid value
-	// when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_DRUGS" - Contains content related to the recreational
-	// use of legal or illegal drugs, as well as to drug paraphernalia or
-	// cultivation. **Starting on *October 1, 2026*, this value will be deprecated
-	// and no longer be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_TOBACCO" - Contains content related to tobacco and
-	// tobacco accessories, including lighters, humidors, ashtrays, etc. **Starting
-	// on *October 1, 2026*, this value will be deprecated and no longer be
-	// accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_POLITICS" - Political news and media, including
-	// discussions of social, governmental, and public policy. **Starting on
-	// *October 1, 2026*, this value will be deprecated and no longer be accepted
-	// as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_RELIGION" - Content related to religious thought or
-	// beliefs. **Starting on *October 1, 2026*, this value will be deprecated and
-	// no longer be accepted as a valid value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_TRAGEDY" - Content related to death, disasters,
-	// accidents, war, etc. **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Content related to motor
-	// vehicle, aviation or other transportation accidents. **Starting on *October
-	// 1, 2026*, this value will be deprecated and no longer be accepted as a valid
-	// value when assigning targeting.**
-	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Issues that evoke strong,
-	// opposing views and spark debate. These include issues that are controversial
-	// in most countries and markets (such as abortion), as well as those that are
+	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - Serves as a placeholder and doesn't
+	// specify a Display & Video 360 sensitive category.
+	//   "SENSITIVE_CATEGORY_ADULT" - Deprecated: This sensitive category is no
+	// longer supported. Adult or pornographic text, image, or video content.
+	//   "SENSITIVE_CATEGORY_DEROGATORY" - Deprecated: This sensitive category is
+	// no longer supported. Content that may be construed as biased against
+	// individuals, groups, or organizations based on criteria such as race,
+	// religion, disability, sex, age, veteran status, sexual orientation, gender
+	// identity, or political affiliation. May also indicate discussion of such
+	// content, for instance, in an academic or journalistic context.
+	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Deprecated: This sensitive
+	// category is no longer supported. Content related to audio, video, or
+	// software downloads.
+	//   "SENSITIVE_CATEGORY_WEAPONS" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to personal weapons, including
+	// knives, guns, small firearms, and ammunition. Selecting either "weapons" or
+	// "sensitive social issues" will result in selecting both.
+	//   "SENSITIVE_CATEGORY_GAMBLING" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to betting or wagering in a
+	// real-world or online setting.
+	//   "SENSITIVE_CATEGORY_VIOLENCE" - Deprecated: This sensitive category is no
+	// longer supported. Content which may be considered graphically violent, gory,
+	// gruesome, or shocking, such as street fighting videos, accident photos,
+	// descriptions of torture, etc.
+	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Deprecated: This sensitive category is
+	// no longer supported. Adult content, as well as suggestive content that's not
+	// explicitly pornographic. This category includes all pages categorized as
+	// adult.
+	//   "SENSITIVE_CATEGORY_PROFANITY" - Deprecated: This sensitive category is no
+	// longer supported. Prominent use of words considered indecent, such as curse
+	// words and sexual slang. Pages with only very occasional usage, such as news
+	// sites that might include such words in a quotation, are not included.
+	//   "SENSITIVE_CATEGORY_ALCOHOL" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to alcoholic beverages, alcohol
+	// brands, recipes, etc.
+	//   "SENSITIVE_CATEGORY_DRUGS" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to the recreational use of legal
+	// or illegal drugs, as well as to drug paraphernalia or cultivation.
+	//   "SENSITIVE_CATEGORY_TOBACCO" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to tobacco and tobacco
+	// accessories, including lighters, humidors, ashtrays, etc.
+	//   "SENSITIVE_CATEGORY_POLITICS" - Deprecated: This sensitive category is no
+	// longer supported. Political news and media, including discussions of social,
+	// governmental, and public policy.
+	//   "SENSITIVE_CATEGORY_RELIGION" - Deprecated: This sensitive category is no
+	// longer supported. Content related to religious thought or beliefs.
+	//   "SENSITIVE_CATEGORY_TRAGEDY" - Deprecated: This sensitive category is no
+	// longer supported. Content related to death, disasters, accidents, war, etc.
+	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Deprecated: This sensitive
+	// category is no longer supported. Content related to motor vehicle, aviation
+	// or other transportation accidents.
+	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Deprecated: This sensitive
+	// category is no longer supported. Issues that evoke strong, opposing views
+	// and spark debate. These include issues that are controversial in most
+	// countries and markets (such as abortion), as well as those that are
 	// controversial in specific countries and markets (such as immigration reform
-	// in the United States). **Starting on *October 1, 2026*, this value will be
-	// deprecated and no longer be accepted as a valid value when assigning
-	// targeting.**
-	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
-	// or disturbing, such as violent news stories, stunts, or toilet humor.
-	// **Starting on *October 1, 2026*, this value will be deprecated and no longer
-	// be accepted as a valid value when assigning targeting.**
+	// in the United States).
+	//   "SENSITIVE_CATEGORY_SHOCKING" - Deprecated: This sensitive category is no
+	// longer supported. Content which may be considered shocking or disturbing,
+	// such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
 	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
@@ -15369,7 +15228,8 @@ type TargetFrequency struct {
 	// time_unit_count.
 	TargetCount int64 `json:"targetCount,omitempty,string"`
 	// TimeUnit: The unit of time in which the target frequency will be applied.
-	// The following time unit is applicable: * `TIME_UNIT_WEEKS`
+	// The following time unit is applicable: * `TIME_UNIT_WEEKS` *
+	// `TIME_UNIT_MONTHS`
 	//
 	// Possible values:
 	//   "TIME_UNIT_UNSPECIFIED" - Time unit value is not specified or is unknown
@@ -15388,7 +15248,7 @@ type TargetFrequency struct {
 	TimeUnit string `json:"timeUnit,omitempty"`
 	// TimeUnitCount: The number of time_unit the target frequency will last. The
 	// following restrictions apply based on the value of time_unit: *
-	// `TIME_UNIT_WEEKS` - must be 1
+	// `TIME_UNIT_WEEKS` - must be 1 * `TIME_UNIT_MONTHS` - must be 1
 	TimeUnitCount int64 `json:"timeUnitCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15412,22 +15272,6 @@ func (s TargetFrequency) MarshalJSON() ([]byte, error) {
 // (//support.google.com/displayvideo/answer/12060859) settings of the line
 // item.
 type TargetingExpansionConfig struct {
-	// AudienceExpansionLevel: Output only. Magnitude of expansion for eligible
-	// first-party user lists under this ad group. This field only applies to
-	// YouTube and Partners line item and ad group resources.
-	//
-	// Possible values:
-	//   "UNKNOWN" - Audience expansion level is not specified or is unknown in
-	// this version.
-	//   "NO_REACH" - Audience expansion off.
-	//   "LEAST_REACH" - Conservative audience expansion.
-	//   "MID_REACH" - Moderate audience expansion.
-	//   "MOST_REACH" - Aggressive audience expansion.
-	AudienceExpansionLevel string `json:"audienceExpansionLevel,omitempty"`
-	// AudienceExpansionSeedListExcluded: Output only. Whether to exclude seed list
-	// for audience expansion. This field only applies to YouTube and Partners line
-	// item and ad group resources.
-	AudienceExpansionSeedListExcluded bool `json:"audienceExpansionSeedListExcluded,omitempty"`
 	// EnableOptimizedTargeting: Required. Whether to enable Optimized Targeting
 	// for the line item. Optimized targeting is not compatible with all bid
 	// strategies. Attempting to set this field to `true` for a line item using the
@@ -15449,13 +15293,13 @@ type TargetingExpansionConfig struct {
 	// expansion for Optimized Targeting. This field can only be set for Demand Gen
 	// ad groups.
 	ExcludeDemographicExpansion bool `json:"excludeDemographicExpansion,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AudienceExpansionLevel") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "EnableOptimizedTargeting")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AudienceExpansionLevel") to
+	// NullFields is a list of field names (e.g. "EnableOptimizedTargeting") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

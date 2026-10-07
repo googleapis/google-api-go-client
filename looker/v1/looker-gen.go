@@ -233,6 +233,32 @@ func (s AdminSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AuthType: Auth type for the Looker instance.
+type AuthType struct {
+	// GoogleAuthEnabled: Optional. Whether google auth is enabled on the Looker
+	// instance.
+	GoogleAuthEnabled bool `json:"googleAuthEnabled,omitempty"`
+	// WorkforceAuthEnabled: Optional. Whether Workforce auth is enabled on the
+	// Looker instance.
+	WorkforceAuthEnabled bool `json:"workforceAuthEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleAuthEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleAuthEnabled") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthType) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -694,6 +720,8 @@ type Instance struct {
 	AcceleratedSecurityPatchEnabled bool `json:"acceleratedSecurityPatchEnabled,omitempty"`
 	// AdminSettings: Looker Instance Admin settings.
 	AdminSettings *AdminSettings `json:"adminSettings,omitempty"`
+	// AuthType: Optional. Auth type for the Looker instance.
+	AuthType *AuthType `json:"authType,omitempty"`
 	// CatalogIntegrationOptOut: Optional. Indicates whether catalog integration is
 	// disabled for the Looker instance.
 	CatalogIntegrationOptOut bool `json:"catalogIntegrationOptOut,omitempty"`

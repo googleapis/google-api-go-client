@@ -759,13 +759,12 @@ type GoogleCloudRecaptchaenterpriseV1Bot struct {
 	// * google-agent - AI_AGENT * browser-base - AI_AGENT * chat-gpt - AI_AGENT *
 	// aws-bedrock - AI_AGENT * cybaa-bot - AI_AGENT * cloudflare - AI_AGENT *
 	// payhawk - AI_AGENT * duck-duck-go - SEARCH_INDEXER * mediaboard -
-	// CONTENT_SCRAPER * marker-io - AI_AGENT * broadcom - AI_AGENT *
-	// anchor-browser - AI_AGENT * shopify - AI_AGENT * stackscope -
-	// CONTENT_SCRAPER * manus - AI_AGENT * kernel-sh - AI_AGENT * zvelo -
-	// SEARCH_INDEXER Ensure that your applications can handle identifier values
-	// not explicitly listed here. Deprecated values might take some time to stop
-	// showing up in responses. New values can be pushed so this list should be
-	// taken as non exhaustive.
+	// CONTENT_SCRAPER * marker-io - AI_AGENT * anchor-browser - AI_AGENT * shopify
+	// - AI_AGENT * stackscope - CONTENT_SCRAPER * manus - AI_AGENT * kernel-sh -
+	// AI_AGENT * zvelo - SEARCH_INDEXER Ensure that your applications can handle
+	// identifier values not explicitly listed here. Deprecated values might take
+	// some time to stop showing up in responses. New values can be pushed so this
+	// list should be taken as non exhaustive.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BotType") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2597,9 +2596,12 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// AndroidPackageName: Output only. The name of the Android package with which
 	// the token was generated (Android keys only).
 	AndroidPackageName string `json:"androidPackageName,omitempty"`
+	// ClientProperties: Output only. Information collected by the reCAPTCHA
+	// Enterprise client-side integration when the token is generated.
+	ClientProperties *GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties `json:"clientProperties,omitempty"`
 	// ClientSignalsFailed: Output only. Indicates a failure collecting reCAPTCHA
 	// signals at token generation. This might be a transient condition, or
-	// persistent for a user’s environment.
+	// persistent for a user's environment.
 	ClientSignalsFailed bool `json:"clientSignalsFailed,omitempty"`
 	// CreateTime: Output only. The timestamp corresponding to the generation of
 	// the token.
@@ -2652,6 +2654,37 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 
 func (s GoogleCloudRecaptchaenterpriseV1TokenProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TokenProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties: Information
+// collected by the reCAPTCHA Enterprise client-side integration when the token
+// is generated.
+type GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties struct {
+	// UserAgent: Output only. The `User-Agent` header string observed by reCAPTCHA
+	// during token generation. This string is truncated to a maximum length of
+	// 1000 characters.
+	UserAgent string `json:"userAgent,omitempty"`
+	// UserIpAddress: Output only. The user's IP address at token generation. This
+	// can be either an IPv4 address (e.g., `192.0.2.1`) or an IPv6 address in
+	// canonical format per RFC 5952 section 4 (e.g., `2001:db8::1`). IPv4-mapped
+	// IPv6 addresses are canonicalized to standard IPv4.
+	UserIpAddress string `json:"userIpAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserAgent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserAgent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -2873,6 +2873,28 @@ func (c *ProjectsAppsReportsGetCall) PageToken(pageToken string) *ProjectsAppsRe
 	return c
 }
 
+// View sets the optional parameter "view": Response view. If not set, defaults
+// to `REPORT_VIEW_FULL`.
+//
+// Possible values:
+//
+//	"REPORT_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+// default to `REPORT_VIEW_BASIC` view for `ListReports` and `REPORT_VIEW_FULL`
+// for `GetReport`.
+//
+//	"REPORT_VIEW_BASIC" - Only includes the report `display_name` and optional
+//
+// `usage`. This is the default view for `ListReports`.
+//
+//	"REPORT_VIEW_FULL" - Includes all fields on report. This is the default
+//
+// view for `GetReport`.
+func (c *ProjectsAppsReportsGetCall) View(view string) *ProjectsAppsReportsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -3001,6 +3023,29 @@ type ProjectsAppsReportsListCall struct {
 func (r *ProjectsAppsReportsService) List(parent string) *ProjectsAppsReportsListCall {
 	c := &ProjectsAppsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// View sets the optional parameter "view": Response view. If not set, defaults
+// to `REPORT_VIEW_BASIC`. `REPORT_VIEW_FULL` is not supported for list
+// operations.
+//
+// Possible values:
+//
+//	"REPORT_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+// default to `REPORT_VIEW_BASIC` view for `ListReports` and `REPORT_VIEW_FULL`
+// for `GetReport`.
+//
+//	"REPORT_VIEW_BASIC" - Only includes the report `display_name` and optional
+//
+// `usage`. This is the default view for `ListReports`.
+//
+//	"REPORT_VIEW_FULL" - Includes all fields on report. This is the default
+//
+// view for `GetReport`.
+func (c *ProjectsAppsReportsListCall) View(view string) *ProjectsAppsReportsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

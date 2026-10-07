@@ -847,7 +847,9 @@ func (c *ProjectsLocationsCloudLocationsListCall) Filter(filter string) *Project
 
 // PageSize sets the optional parameter "pageSize": The maximum number of cloud
 // locations to return per page. The service might return fewer cloud locations
-// than this value. If unspecified, server will pick an appropriate default.
+// than this value. If unspecified, at most 500 cloud locations will be
+// returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000.
 func (c *ProjectsLocationsCloudLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsCloudLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -997,7 +999,8 @@ func (r *ProjectsLocationsCloudLocationsService) Search(parent string) *Projects
 
 // PageSize sets the optional parameter "pageSize": The maximum number of cloud
 // locations to return. The service might return fewer cloud locations than
-// this value. If unspecified, server will pick an appropriate default.
+// this value. If unspecified, at most 500 cloud locations will be returned.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsCloudLocationsSearchCall) PageSize(pageSize int64) *ProjectsLocationsCloudLocationsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

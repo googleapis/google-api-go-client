@@ -693,8 +693,11 @@ func (s GoogleCloudOsconfigV2__OrchestratedResource) MarshalJSON() ([]byte, erro
 // GoogleCloudOsconfigV2__OrchestrationScope: Defines a set of selectors which
 // drive which resources are in scope of policy orchestration.
 type GoogleCloudOsconfigV2__OrchestrationScope struct {
-	// Selectors: Optional. Selectors of the orchestration scope. There is a
-	// logical AND between each selector defined. When there is no explicit
+	// Selectors: Optional. Selectors of the orchestration scope. Each `Selector`
+	// entry can specify either a `ResourceHierarchySelector` or a
+	// `LocationSelector`, but not both. To filter by both resource hierarchy and
+	// location, specify separate `Selector` entries for each selector type. There
+	// is a logical AND between each selector defined. When there is no explicit
 	// `ResourceHierarchySelector` selector specified, the scope is by default
 	// bounded to the parent of the policy orchestrator resource.
 	Selectors []*GoogleCloudOsconfigV2OrchestrationScopeSelector `json:"selectors,omitempty"`

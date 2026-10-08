@@ -3700,7 +3700,8 @@ type AssignedTargetingOption struct {
 	// from advertiser targeting settings.
 	Inheritance string `json:"inheritance,omitempty"`
 	// InventorySourceDetails: Inventory source details. This field will be
-	// populated when the targeting_type is `TARGETING_TYPE_INVENTORY_SOURCE`.
+	// populated when the targeting_type is `TARGETING_TYPE_INVENTORY_SOURCE` or
+	// `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`.
 	InventorySourceDetails *InventorySourceAssignedTargetingOptionDetails `json:"inventorySourceDetails,omitempty"`
 	// InventorySourceGroupDetails: Inventory source group details. This field will
 	// be populated when the targeting_type is
@@ -12136,8 +12137,8 @@ func (s InventorySourceAccessorsPartnerAccessor) MarshalJSON() ([]byte, error) {
 
 // InventorySourceAssignedTargetingOptionDetails: Targeting details for
 // inventory source. This will be populated in the details field of an
-// AssignedTargetingOption when targeting_type is
-// `TARGETING_TYPE_INVENTORY_SOURCE`.
+// AssignedTargetingOption when targeting_type is one of
+// `TARGETING_TYPE_INVENTORY_SOURCE` or `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`.
 type InventorySourceAssignedTargetingOptionDetails struct {
 	// InventorySourceId: Required. ID of the inventory source. Should refer to the
 	// inventory_source_id field of an InventorySource resource.
@@ -18051,6 +18052,7 @@ type ThirdPartyVendorConfig struct {
 	//   "THIRD_PARTY_VENDOR_INTAGE" - Intage.
 	//   "THIRD_PARTY_VENDOR_MACROMILL" - Macromill.
 	//   "THIRD_PARTY_VENDOR_VIDEO_RESEARCH" - Video Research.
+	//   "THIRD_PARTY_VENDOR_AQUILA" - Aquila.
 	Vendor string `json:"vendor,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlacementId") to
 	// unconditionally include in API requests. By default, fields with empty or

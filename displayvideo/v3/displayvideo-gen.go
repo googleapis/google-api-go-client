@@ -3410,7 +3410,8 @@ type AssignedTargetingOption struct {
 	// from advertiser targeting settings.
 	Inheritance string `json:"inheritance,omitempty"`
 	// InventorySourceDetails: Inventory source details. This field will be
-	// populated when the targeting_type is `TARGETING_TYPE_INVENTORY_SOURCE`.
+	// populated when the targeting_type is `TARGETING_TYPE_INVENTORY_SOURCE` or
+	// `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`.
 	InventorySourceDetails *InventorySourceAssignedTargetingOptionDetails `json:"inventorySourceDetails,omitempty"`
 	// InventorySourceGroupDetails: Inventory source group details. This field will
 	// be populated when the targeting_type is
@@ -3538,8 +3539,6 @@ type AssignedTargetingOption struct {
 	// example, 80% viewable).
 	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content category (for
 	// example, arts & entertainment).
-	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from specific
-	// deals and auction packages.
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
 	// example, English or Japanese).
 	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
@@ -6441,8 +6440,6 @@ type CreateAssignedTargetingOptionsRequest struct {
 	// example, 80% viewable).
 	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content category (for
 	// example, arts & entertainment).
-	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from specific
-	// deals and auction packages.
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
 	// example, English or Japanese).
 	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
@@ -7664,8 +7661,6 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	// example, 80% viewable).
 	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content category (for
 	// example, arts & entertainment).
-	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from specific
-	// deals and auction packages.
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
 	// example, English or Japanese).
 	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
@@ -10926,8 +10921,8 @@ func (s IntegrationDetails) MarshalJSON() ([]byte, error) {
 
 // InventorySourceAssignedTargetingOptionDetails: Targeting details for
 // inventory source. This will be populated in the details field of an
-// AssignedTargetingOption when targeting_type is
-// `TARGETING_TYPE_INVENTORY_SOURCE`.
+// AssignedTargetingOption when targeting_type is one of
+// `TARGETING_TYPE_INVENTORY_SOURCE` or `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`.
 type InventorySourceAssignedTargetingOptionDetails struct {
 	// InventorySourceId: Required. ID of the inventory source. Should refer to the
 	// inventory_source_id field of an InventorySource resource.
@@ -15447,8 +15442,6 @@ type TargetingOption struct {
 	// example, 80% viewable).
 	//   "TARGETING_TYPE_CATEGORY" - Target ads to a specific content category (for
 	// example, arts & entertainment).
-	//   "TARGETING_TYPE_INVENTORY_SOURCE" - Purchase impressions from specific
-	// deals and auction packages.
 	//   "TARGETING_TYPE_LANGUAGE" - Target ads to a specific language (for
 	// example, English or Japanese).
 	//   "TARGETING_TYPE_AUTHORIZED_SELLER_STATUS" - Target ads to ads.txt
@@ -15686,6 +15679,7 @@ type ThirdPartyVendorConfig struct {
 	//   "THIRD_PARTY_VENDOR_INTAGE" - Intage.
 	//   "THIRD_PARTY_VENDOR_MACROMILL" - Macromill.
 	//   "THIRD_PARTY_VENDOR_VIDEO_RESEARCH" - Video Research.
+	//   "THIRD_PARTY_VENDOR_AQUILA" - Aquila.
 	Vendor string `json:"vendor,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlacementId") to
 	// unconditionally include in API requests. By default, fields with empty or

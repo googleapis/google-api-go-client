@@ -204,8 +204,7 @@ type PresentationsPagesService struct {
 	s *Service
 }
 
-// AddCommentReplyRequest: Inserts a reply Post into a CommentThread. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// AddCommentReplyRequest: Inserts a reply Post into a CommentThread.
 type AddCommentReplyRequest struct {
 	// CommentId: The ID of the CommentThread to add the reply to.
 	CommentId string `json:"commentId,omitempty"`
@@ -229,8 +228,7 @@ func (s AddCommentReplyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AddCommentReplyResponse: The result of creating a reply. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// AddCommentReplyResponse: The result of creating a reply.
 type AddCommentReplyResponse struct {
 	// Post: The newly-inserted reply Post.
 	Post *Post `json:"post,omitempty"`
@@ -443,8 +441,7 @@ func (s BatchUpdatePresentationRequest) MarshalJSON() ([]byte, error) {
 // BatchUpdatePresentationResponse: Response message from a batch update.
 type BatchUpdatePresentationResponse struct {
 	// CommentUpdateState: Whether comment updates were applied in the batch
-	// request. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// request.
 	//
 	// Possible values:
 	//   "COMMENT_UPDATE_STATE_UNSPECIFIED" - The status of comment updates is
@@ -580,7 +577,7 @@ func (s *ColorStop) UnmarshalJSON(data []byte) error {
 // CommentAnchor: Contains a list of all locations in a `Page` that are
 // anchored to a CommentThread via the same anchorId. Multiple separate anchors
 // may refer to the same location, either within a `Page` or across different
-// pages, Developer Preview (https://developers.google.com/workspace/preview).
+// pages,
 type CommentAnchor struct {
 	// AnchorId: Output only. The unique ID of the comment anchor.
 	AnchorId string `json:"anchorId,omitempty"`
@@ -606,7 +603,6 @@ func (s CommentAnchor) MarshalJSON() ([]byte, error) {
 }
 
 // CommentThread: Represents a single comment thread inside a presentation.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type CommentThread struct {
 	// AnchorId: The ID of the CommentAnchor in the presentation that this thread
 	// is tied to.
@@ -1531,8 +1527,7 @@ func (s *CropProperties) UnmarshalJSON(data []byte) error {
 // DeleteCommentReplyRequest: Deletes a reply Post from a CommentThread.
 // Returns a 400 bad request error if: - The requesting user is not the author
 // of the post. - The reply post contains a comment action. - The reply post
-// contains an assignee. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// contains an assignee.
 type DeleteCommentReplyRequest struct {
 	// CommentId: The ID of the CommentThread which the post belongs to.
 	CommentId string `json:"commentId,omitempty"`
@@ -1557,8 +1552,7 @@ func (s DeleteCommentReplyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // DeleteCommentRequest: Deletes a CommentThread. Returns a 400 bad request
-// error if the requesting user is not the author of the headPost. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// error if the requesting user is not the author of the headPost.
 type DeleteCommentRequest struct {
 	// CommentId: The ID of the CommentThread that is being deleted.
 	CommentId string `json:"commentId,omitempty"`
@@ -2013,7 +2007,6 @@ func (s *ImageProperties) UnmarshalJSON(data []byte) error {
 }
 
 // InsertCommentRequest: Inserts a CommentThread into the presentation.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type InsertCommentRequest struct {
 	// AssigneeEmailAddress: Optional. The email address of the assignee of the
 	// comment. Leave empty for a non-assigned comment. May not exceed 2048 UTF-8
@@ -2055,8 +2048,7 @@ func (s InsertCommentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InsertCommentResponse: The result of creating a comment. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// InsertCommentResponse: The result of creating a comment.
 type InsertCommentResponse struct {
 	// CommentThread: The newly-inserted comment thread.
 	CommentThread *CommentThread `json:"commentThread,omitempty"`
@@ -2666,8 +2658,7 @@ func (s NotesProperties) MarshalJSON() ([]byte, error) {
 }
 
 // ObjectAnchor: Represents comment anchor data tied to a Slides object, for
-// example a `Page` or PageElement. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// example a `Page` or PageElement.
 type ObjectAnchor struct {
 	// ObjectId: Output only. The page or page element that the comment thread is
 	// anchored to.
@@ -2854,18 +2845,15 @@ func (s OutlineFill) MarshalJSON() ([]byte, error) {
 // Page: A page in a presentation.
 type Page struct {
 	// CommentAnchors: Output only. The comment anchors present on the page.
-	// Developer Preview (https://developers.google.com/workspace/preview).
 	CommentAnchors []*CommentAnchor `json:"commentAnchors,omitempty"`
 	// Comments: Output only. The comment threads associated with the page. Only
 	// populated if the page was fetched via a GetPageRequest with a populated
 	// comments_view_mode. Otherwise, comments are returned in the Presentation via
-	// the GetPresentationRequest. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// the GetPresentationRequest.
 	Comments []*CommentThread `json:"comments,omitempty"`
 	// CommentsViewMode: Output only. The comments view mode applied to the page.
 	// Only populated if the page was fetched via a GetPageRequest with a populated
-	// comments_view_mode. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// comments_view_mode.
 	//
 	// Possible values:
 	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
@@ -3275,8 +3263,7 @@ func (s Placeholder) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Post: Represents a single post in a comment thread. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// Post: Represents a single post in a comment thread.
 type Post struct {
 	// AssigneeEmail: Optional. The email of the user who is being newly assigned
 	// to the thread as part of this post. Returns a 400 bad request error if: -
@@ -3334,8 +3321,7 @@ func (s Post) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostAuthor: Represents a user who authored a comment post. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// PostAuthor: Represents a user who authored a comment post.
 type PostAuthor struct {
 	// Anonymous: Whether the user is anonymous.
 	Anonymous bool `json:"anonymous,omitempty"`
@@ -3371,11 +3357,9 @@ func (s PostAuthor) MarshalJSON() ([]byte, error) {
 // Presentation: A Google Slides presentation.
 type Presentation struct {
 	// Comments: Output only. The comment threads associated with the presentation.
-	// Developer Preview (https://developers.google.com/workspace/preview).
 	Comments []*CommentThread `json:"comments,omitempty"`
 	// CommentsViewMode: Output only. The comments view mode applied to the
-	// presentation. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// presentation.
 	//
 	// Possible values:
 	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified;
@@ -3857,8 +3841,7 @@ func (s ReplaceImageRequest) MarshalJSON() ([]byte, error) {
 
 // Request: A single kind of update to apply to a presentation.
 type Request struct {
-	// AddCommentReply: Adds a reply to a CommentThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// AddCommentReply: Adds a reply to a CommentThread.
 	AddCommentReply *AddCommentReplyRequest `json:"addCommentReply,omitempty"`
 	// CreateImage: Creates an image.
 	CreateImage *CreateImageRequest `json:"createImage,omitempty"`
@@ -3876,11 +3859,9 @@ type Request struct {
 	CreateTable *CreateTableRequest `json:"createTable,omitempty"`
 	// CreateVideo: Creates a video.
 	CreateVideo *CreateVideoRequest `json:"createVideo,omitempty"`
-	// DeleteComment: Deletes a CommentThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// DeleteComment: Deletes a CommentThread.
 	DeleteComment *DeleteCommentRequest `json:"deleteComment,omitempty"`
-	// DeleteCommentReply: Deletes a reply Post from a CommentThread. Developer
-	// Preview (https://developers.google.com/workspace/preview).
+	// DeleteCommentReply: Deletes a reply Post from a CommentThread.
 	DeleteCommentReply *DeleteCommentReplyRequest `json:"deleteCommentReply,omitempty"`
 	// DeleteObject: Deletes a page or page element from the presentation.
 	DeleteObject *DeleteObjectRequest `json:"deleteObject,omitempty"`
@@ -3896,8 +3877,7 @@ type Request struct {
 	DuplicateObject *DuplicateObjectRequest `json:"duplicateObject,omitempty"`
 	// GroupObjects: Groups objects, such as page elements.
 	GroupObjects *GroupObjectsRequest `json:"groupObjects,omitempty"`
-	// InsertComment: Inserts a CommentThread into the presentation. Developer
-	// Preview (https://developers.google.com/workspace/preview).
+	// InsertComment: Inserts a CommentThread into the presentation.
 	InsertComment *InsertCommentRequest `json:"insertComment,omitempty"`
 	// InsertTableColumns: Inserts columns into a table.
 	InsertTableColumns *InsertTableColumnsRequest `json:"insertTableColumns,omitempty"`
@@ -3927,8 +3907,7 @@ type Request struct {
 	// UnmergeTableCells: Unmerges cells in a Table.
 	UnmergeTableCells *UnmergeTableCellsRequest `json:"unmergeTableCells,omitempty"`
 	// UpdateCommentPost: Updates an existing post (head post or reply) of a
-	// CommentThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// CommentThread.
 	UpdateCommentPost *UpdateCommentPostRequest `json:"updateCommentPost,omitempty"`
 	// UpdateImageProperties: Updates the properties of an Image.
 	UpdateImageProperties *UpdateImagePropertiesRequest `json:"updateImageProperties,omitempty"`
@@ -4013,8 +3992,7 @@ func (s RerouteLineRequest) MarshalJSON() ([]byte, error) {
 
 // Response: A single response from an update.
 type Response struct {
-	// AddCommentReply: The result of creating a reply. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// AddCommentReply: The result of creating a reply.
 	AddCommentReply *AddCommentReplyResponse `json:"addCommentReply,omitempty"`
 	// CreateImage: The result of creating an image.
 	CreateImage *CreateImageResponse `json:"createImage,omitempty"`
@@ -4034,8 +4012,7 @@ type Response struct {
 	DuplicateObject *DuplicateObjectResponse `json:"duplicateObject,omitempty"`
 	// GroupObjects: The result of grouping objects.
 	GroupObjects *GroupObjectsResponse `json:"groupObjects,omitempty"`
-	// InsertComment: The result of creating a comment. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// InsertComment: The result of creating a comment.
 	InsertComment *InsertCommentResponse `json:"insertComment,omitempty"`
 	// ReplaceAllShapesWithImage: The result of replacing all shapes matching some
 	// criteria with an image.
@@ -4597,8 +4574,7 @@ func (s ShapeProperties) MarshalJSON() ([]byte, error) {
 }
 
 // ShapeTextAnchor: An anchor to a specific range of text within a Shape's
-// text. Developer Preview (https://developers.google.com/workspace/preview).
-// To insert comments in speaker notes, use the ShapeTextAnchor with the
+// text. To insert comments in speaker notes, use the ShapeTextAnchor with the
 // speaker notes object ID.
 type ShapeTextAnchor struct {
 	// ObjectId: The object ID of the page element containing the text.
@@ -4624,7 +4600,7 @@ func (s ShapeTextAnchor) MarshalJSON() ([]byte, error) {
 }
 
 // ShapeTextAnchors: Represents text ranges within a shape covered by a comment
-// anchor. Developer Preview (https://developers.google.com/workspace/preview).
+// anchor.
 type ShapeTextAnchors struct {
 	// Ranges: A list of text ranges covered by the comment anchor.
 	Ranges []*TextRange `json:"ranges,omitempty"`
@@ -4965,7 +4941,6 @@ func (s Table) MarshalJSON() ([]byte, error) {
 
 // TableAnchor: An anchor to a specific range of cells within a Table. Used to
 // anchor a comment to all of the text in each cell in a range within a table.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type TableAnchor struct {
 	// ObjectId: The object ID of the table.
 	ObjectId string `json:"objectId,omitempty"`
@@ -5131,8 +5106,7 @@ func (s TableCell) MarshalJSON() ([]byte, error) {
 }
 
 // TableCellAnchors: Represents table cell ranges within a table covered by a
-// comment anchor. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// comment anchor.
 type TableCellAnchors struct {
 	// CellRanges: A list of all table cells in a table that have text covered by
 	// the anchor in the table.
@@ -5262,8 +5236,7 @@ func (s TableCellProperties) MarshalJSON() ([]byte, error) {
 }
 
 // TableCellTextAnchor: An anchor to a specific range of text within a
-// TableCell's TextElement. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// TableCell's TextElement.
 type TableCellTextAnchor struct {
 	// CellLocation: The location of the cell in the table.
 	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
@@ -5290,8 +5263,7 @@ func (s TableCellTextAnchor) MarshalJSON() ([]byte, error) {
 }
 
 // TableCellTextRanges: Represents text ranges within a table cell covered by a
-// comment anchor. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// comment anchor.
 type TableCellTextRanges struct {
 	// CellLocation: The location of the table cell.
 	CellLocation *TableCellLocation `json:"cellLocation,omitempty"`
@@ -5490,8 +5462,7 @@ func (s TextElement) MarshalJSON() ([]byte, error) {
 }
 
 // TextRange: Specifies a contiguous range of text within a shape or table
-// cell's text. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// cell's text.
 type TextRange struct {
 	// EndIndex: The zero-based index of the end of the range. This field is an
 	// Int32Value in order to accommodate future use cases with open-ended ranges.
@@ -5786,7 +5757,6 @@ func (s UnmergeTableCellsRequest) MarshalJSON() ([]byte, error) {
 
 // UpdateCommentPostRequest: Updates a Post in a CommentThread. Returns a 400
 // bad request error if: - The requesting user is not the author of the post.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type UpdateCommentPostRequest struct {
 	// CommentId: The ID of the CommentThread which the post belongs to.
 	CommentId string `json:"commentId,omitempty"`
@@ -6809,8 +6779,7 @@ func (r *PresentationsService) Get(presentationId string) *PresentationsGetCall 
 // CommentsViewMode sets the optional parameter "commentsViewMode": The
 // comments view mode to apply to the presentation. This allows viewing the
 // presentation with comments omitted or included. If one is not specified,
-// COMMENTS_VIEW_MODE_OMITTED is used. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// COMMENTS_VIEW_MODE_OMITTED is used.
 //
 // Possible values:
 //
@@ -6952,8 +6921,7 @@ func (r *PresentationsPagesService) Get(presentationId string, pageObjectId stri
 // CommentsViewMode sets the optional parameter "commentsViewMode": The
 // comments view mode to apply to the page. This allows viewing the page with
 // comments omitted or included. If one is not specified,
-// COMMENTS_VIEW_MODE_OMITTED is used. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// COMMENTS_VIEW_MODE_OMITTED is used.
 //
 // Possible values:
 //

@@ -731,6 +731,10 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	CitationMetadata *GoogleCloudAiplatformV1beta1CitationMetadata `json:"citationMetadata,omitempty"`
 	// Content: Output only. The content of the candidate.
 	Content *GoogleCloudAiplatformV1beta1Content `json:"content,omitempty"`
+	// ContinuationToken: Output only. An optional opaque continuation token
+	// returned when `finish_reason` is `CONTINUATION`. Clients can pass this token
+	// in a subsequent `GenerateContentRequest` to continue generation.
+	ContinuationToken string `json:"continuationToken,omitempty"`
 	// FinishMessage: Output only. Describes the reason the model stopped
 	// generating tokens in more detail. This field is returned only when
 	// `finish_reason` is set.
@@ -771,6 +775,10 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	// semantically invalid. This can happen, for example, if function calling is
 	// not enabled or the generated function is not in the function declaration.
 	//   "NO_IMAGE" - The model was expected to generate an image, but didn't.
+	//   "CONTINUATION" - Token generation was stopped because the response reached
+	// the per-request token limit, but generation is not yet complete. The model
+	// response can be continued via a subsequent request using the returned
+	// `continuation_token`.
 	FinishReason string `json:"finishReason,omitempty"`
 	// GroundingMetadata: Output only. Metadata returned when grounding is enabled.
 	// It contains the sources used to ground the generated content.
@@ -1567,6 +1575,10 @@ type GoogleCloudAiplatformV1beta1GenerateContentRequest struct {
 	// this is a repeated field that contains conversation history + latest
 	// request.
 	Contents []*GoogleCloudAiplatformV1beta1Content `json:"contents,omitempty"`
+	// ContinuationToken: Optional. An opaque continuation token used to resume
+	// generation from a previous `GenerateContent` or `StreamGenerateContent`
+	// response that stopped with `finish_reason` set to `CONTINUATION`.
+	ContinuationToken string `json:"continuationToken,omitempty"`
 	// GenerationConfig: Optional. Generation config.
 	GenerationConfig *GoogleCloudAiplatformV1beta1GenerationConfig `json:"generationConfig,omitempty"`
 	// Labels: Optional. The labels with user-defined metadata for the request. It
@@ -4082,38 +4094,42 @@ func (s GoogleCloudAiplatformV1beta1Tool) MarshalJSON() ([]byte, error) {
 type GoogleCloudAiplatformV1beta1ToolCodeExecution struct {
 }
 
-// GoogleCloudAiplatformV1beta1ToolComputerUse: Tool to support computer use.
+// GoogleCloudAiplatformV1beta1ToolComputerUse: A tool that enables the model
+// to interact directly with a computer environment.
 type GoogleCloudAiplatformV1beta1ToolComputerUse struct {
-	// DisabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+	// DisabledSafetyPolicies: Optional. A list of safety policies to disable for
+	// the computer use tool.
 	//
 	// Possible values:
-	//   "SAFETY_POLICY_UNSPECIFIED" - Unspecified safety policy. This value should
-	// not be used.
-	//   "FINANCIAL_TRANSACTIONS" - Financial transactions safety policy.
-	//   "SENSITIVE_DATA_MODIFICATION" - Sensitive data modification safety policy.
-	//   "COMMUNICATION_TOOL" - Communication tool safety policy.
-	//   "ACCOUNT_CREATION" - Account creation safety policy.
-	//   "DATA_MODIFICATION" - Data modification safety policy.
-	//   "USER_CONSENT_MANAGEMENT" - User consent management safety policy.
-	//   "LEGAL_TERMS_AND_AGREEMENTS" - Legal terms and agreements safety policy.
+	//   "SAFETY_POLICY_UNSPECIFIED" - The safety policy is unspecified.
+	//   "FINANCIAL_TRANSACTIONS" - Policy that restricts financial transactions.
+	//   "SENSITIVE_DATA_MODIFICATION" - Policy that restricts modification of
+	// sensitive data.
+	//   "COMMUNICATION_TOOL" - Policy that restricts the use of communication
+	// tools.
+	//   "ACCOUNT_CREATION" - Policy that restricts the creation of accounts.
+	//   "DATA_MODIFICATION" - Policy that restricts general data modification.
+	//   "USER_CONSENT_MANAGEMENT" - Policy that restricts user consent management.
+	//   "LEGAL_TERMS_AND_AGREEMENTS" - Policy that restricts interaction with
+	// legal terms and agreements.
 	DisabledSafetyPolicies []string `json:"disabledSafetyPolicies,omitempty"`
-	// EnablePromptInjectionDetection: Optional. Enables the prompt injection
-	// detection check on computer-use request.
+	// EnablePromptInjectionDetection: Optional. Whether to enable the prompt
+	// injection detection check on the computer use request.
 	EnablePromptInjectionDetection bool `json:"enablePromptInjectionDetection,omitempty"`
-	// Environment: Required. The environment being operated.
+	// Environment: Required. The target environment where the computer use tool
+	// operates.
 	//
 	// Possible values:
-	//   "ENVIRONMENT_UNSPECIFIED" - Defaults to browser.
-	//   "ENVIRONMENT_BROWSER" - Operates in a web browser.
-	//   "ENVIRONMENT_MOBILE" - Operates in a mobile environment.
-	//   "ENVIRONMENT_DESKTOP" - Operates in a desktop environment.
+	//   "ENVIRONMENT_UNSPECIFIED" - The environment is unspecified.
+	//   "ENVIRONMENT_BROWSER" - The tool operates in a web browser.
+	//   "ENVIRONMENT_MOBILE" - The tool operates in a mobile environment.
+	//   "ENVIRONMENT_DESKTOP" - The tool operates in a desktop environment.
 	Environment string `json:"environment,omitempty"`
-	// ExcludedPredefinedFunctions: Optional. By default, predefined functions
+	// ExcludedPredefinedFunctions: Optional. A list of predefined functions to
+	// explicitly exclude from the model call. By default, predefined functions
 	// (https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
-	// are included in the final model call. Some of them can be explicitly
-	// excluded from being automatically included. This can serve two purposes: 1.
-	// Using a more restricted / different action space. 2. Improving the
-	// definitions / instructions of predefined functions.
+	// are included. Excluding functions allows for a more restricted action space
+	// or custom definitions for predefined functions.
 	ExcludedPredefinedFunctions []string `json:"excludedPredefinedFunctions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledSafetyPolicies") to
 	// unconditionally include in API requests. By default, fields with empty or

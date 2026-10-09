@@ -1637,23 +1637,26 @@ func (s DailyRestingHeartRateMetadata) MarshalJSON() ([]byte, error) {
 type DailyRollUpDataPointsRequest struct {
 	// DataSourceFamily: Optional. The data source family name to roll up. If
 	// empty, data points from all available data sources will be rolled up.
-	// Format: `users/me/dataSourceFamilies/{data_source_family}` The supported
-	// values are: - `users/me/dataSourceFamilies/all-sources` - Default value.
-	// Includes data from all available data sources. -
-	// `users/me/dataSourceFamilies/google-wearables` - Includes data from Google
-	// and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+	// Format: `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}`
+	// can be either the alias `me` or the authenticated user's numeric Health User
+	// ID, retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or
+	// `users/1234567890/dataSourceFamilies/...`). The supported values are: -
+	// `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data
+	// from all available data sources. -
+	// `users/{user}/dataSourceFamilies/google-wearables` - Includes data from
+	// Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
 	// Excludes manually logged data. -
-	// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
-	// data, such as data from tracker devices, manually logged data, and Health
-	// Connect. - `users/me/dataSourceFamilies/self-sources` - Includes only the
-	// data the calling client wrote through this API, that is, data points whose
-	// data source was registered through this API with the same OAuth client ID as
-	// the caller. Callers that were only granted write scopes for the requested
-	// data type may only read the data they wrote themselves: their requests are
-	// implicitly restricted to `self-sources`, and requesting any other data
-	// source family fails with `PERMISSION_DENIED`. If no data point matches the
-	// requested data source family, the response is an empty list rather than an
-	// error.
+	// `users/{user}/dataSourceFamilies/google-sources` - Includes first-party
+	// Google data, such as data from tracker devices, manually logged data, and
+	// Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes
+	// only the data the calling client wrote through this API, that is, data
+	// points whose data source was registered through this API with the same OAuth
+	// client ID as the caller. Callers that were only granted write scopes for the
+	// requested data type may only read the data they wrote themselves: their
+	// requests are implicitly restricted to `self-sources`, and requesting any
+	// other data source family fails with `PERMISSION_DENIED`. If no data point
+	// matches the requested data source family, the response is an empty list
+	// rather than an error.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
 	// unspecified, at most 1440 data points will be returned. The maximum page
@@ -2047,10 +2050,12 @@ type DataPoint struct {
 	// Name: Identifier. Data point name, only supported for the subset of
 	// identifiable data types. For the majority of the data types, individual data
 	// points do not need to be identified and this field would be empty. Format:
-	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example:
-	// `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcd
-	// ef` The `{user}` ID is a system-generated identifier, as described in
-	// Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case
+	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples: ##
+	// `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef`
+	// `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890ab
+	// cdef` The `{user}` can be either the alias `me` or the authenticated user's
+	// numeric Health User ID, which can be retrieved by calling GetIdentity (see
+	// Identity.health_user_id). The `{data_type}` ID corresponds to the kebab-case
 	// version of the field names in the DataPoint data union field, e.g.
 	// `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
 	// client-provided or system-generated. If client-provided, it must be a string
@@ -3109,8 +3114,10 @@ func (s *FoodServing) UnmarshalJSON(data []byte) error {
 // not need to interact with this resource directly.
 type GoogleDevicesandservicesHealthV4DataType struct {
 	// Name: Identifier. The resource name of the data type. Format:
-	// `users/{user}/dataTypes/{data_type}` See DataPoint.name for examples and
-	// possible values.
+	// `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+	// `users/1234567890/dataTypes/steps` The `{user}` can be either the alias `me`
+	// or the authenticated user's numeric Health User ID (retrieved via
+	// GetIdentity). See DataPoint.name for examples and possible values.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3187,8 +3194,10 @@ func (s GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog) MarshalJSON
 // currently do not need to interact with this resource directly.
 type GoogleDevicesandservicesHealthV4betaDataType struct {
 	// Name: Identifier. The resource name of the data type. Format:
-	// `users/{user}/dataTypes/{data_type}` See DataPoint.name for examples and
-	// possible values.
+	// `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+	// `users/1234567890/dataTypes/steps` The `{user}` can be either the alias `me`
+	// or the authenticated user's numeric Health User ID (retrieved via
+	// GetIdentity). See DataPoint.name for examples and possible values.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5019,10 +5028,12 @@ type ReconciledDataPoint struct {
 	// DataPointName: Identifier. Data point name, only supported for the subset of
 	// identifiable data types. For the majority of the data types, individual data
 	// points do not need to be identified and this field would be empty. Format:
-	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example:
-	// `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcd
-	// ef` The `{user}` ID is a system-generated identifier, as described in
-	// Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case
+	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples: ##
+	// `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef`
+	// `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890ab
+	// cdef` The `{user}` can be either the alias `me` or the authenticated user's
+	// numeric Health User ID, which can be retrieved by calling GetIdentity (see
+	// Identity.health_user_id). The `{data_type}` ID corresponds to the kebab-case
 	// version of the field names in the DataPoint data union field, e.g.
 	// `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
 	// client-provided or system-generated. If client-provided, it must be a string
@@ -5221,23 +5232,26 @@ func (s *RestingHeartRatePersonalRangeRollupValue) UnmarshalJSON(data []byte) er
 type RollUpDataPointsRequest struct {
 	// DataSourceFamily: Optional. The data source family name to roll up. If
 	// empty, data points from all available data sources will be rolled up.
-	// Format: `users/me/dataSourceFamilies/{data_source_family}` The supported
-	// values are: - `users/me/dataSourceFamilies/all-sources` - Default value.
-	// Includes data from all available data sources. -
-	// `users/me/dataSourceFamilies/google-wearables` - Includes data from Google
-	// and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+	// Format: `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}`
+	// can be either the alias `me` or the authenticated user's numeric Health User
+	// ID, retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or
+	// `users/1234567890/dataSourceFamilies/...`). The supported values are: -
+	// `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data
+	// from all available data sources. -
+	// `users/{user}/dataSourceFamilies/google-wearables` - Includes data from
+	// Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
 	// Excludes manually logged data. -
-	// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
-	// data, such as data from tracker devices, manually logged data, and Health
-	// Connect. - `users/me/dataSourceFamilies/self-sources` - Includes only the
-	// data the calling client wrote through this API, that is, data points whose
-	// data source was registered through this API with the same OAuth client ID as
-	// the caller. Callers that were only granted write scopes for the requested
-	// data type may only read the data they wrote themselves: their requests are
-	// implicitly restricted to `self-sources`, and requesting any other data
-	// source family fails with `PERMISSION_DENIED`. If no data point matches the
-	// requested data source family, the response is an empty list rather than an
-	// error.
+	// `users/{user}/dataSourceFamilies/google-sources` - Includes first-party
+	// Google data, such as data from tracker devices, manually logged data, and
+	// Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes
+	// only the data the calling client wrote through this API, that is, data
+	// points whose data source was registered through this API with the same OAuth
+	// client ID as the caller. Callers that were only granted write scopes for the
+	// requested data type may only read the data they wrote themselves: their
+	// requests are implicitly restricted to `self-sources`, and requesting any
+	// other data source family fails with `PERMISSION_DENIED`. If no data point
+	// matches the requested data source family, the response is an empty list
+	// rather than an error.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
 	// unspecified, at most 1440 data points will be returned. The maximum page
@@ -5844,11 +5858,7 @@ func (s Settings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SkinTemperature:
-// //////////////////////////////////////////////////////////////////////////
-// SkinTemperature
-// //////////////////////////////////////////////////////////////////////////
-// Skin temperature measurement.
+// SkinTemperature: Skin temperature measurement.
 type SkinTemperature struct {
 	// BaselineTemperatureCelsius: Required. The baseline skin temperature in
 	// Celsius. Must be in the range `[0, 100]`.
@@ -9147,9 +9157,12 @@ type UsersDataTypesDataPointsBatchDeleteCall struct {
 // BatchDelete: Delete a batch of identifyable data points.
 //
 //   - parent: Optional. Parent (data type) for the Data Point collection Format:
-//     `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/-` For a list of the supported data types see the
-//     DataPoint data union field. Deleting data points across multiple data type
+//     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/-` -
+//     `users/1234567890/dataTypes/-` The `{user}` can be either the alias `me`
+//     or the authenticated user's numeric Health User ID (retrieved via
+//     GetIdentity). For a list of the supported data types see the DataPoint
+//     data union field. Deleting data points across multiple data type
 //     collections is supported following https://aip.dev/159. If this is set,
 //     the parent of all of the data points specified in `names` must match this
 //     field.
@@ -9256,7 +9269,10 @@ type UsersDataTypesDataPointsCreateCall struct {
 // Create: Creates a single identifiable data point.
 //
 //   - parent: The parent resource name where the data point will be created.
-//     Format: `users/{user}/dataTypes/{data_type}`.
+//     Format: `users/{user}/dataTypes/{data_type}`, e.g.: -
+//     `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` The
+//     `{user}` can be either the alias `me` or the authenticated user's numeric
+//     Health User ID (retrieved via GetIdentity).
 func (r *UsersDataTypesDataPointsService) Create(parent string, datapoint *DataPoint) *UsersDataTypesDataPointsCreateCall {
 	c := &UsersDataTypesDataPointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9362,8 +9378,11 @@ type UsersDataTypesDataPointsDailyRollUpCall struct {
 //
 //   - parent: Parent data type of the Data Point collection. Format:
 //     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/distance` For a list of the supported data types see
-//     the DailyRollupDataPoint value union field.
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/distance` -
+//     `users/1234567890/dataTypes/distance` The `{user}` can be either the alias
+//     `me` or the authenticated user's numeric Health User ID (retrieved via
+//     GetIdentity). For a list of the supported data types see the
+//     DailyRollupDataPoint value union field.
 func (r *UsersDataTypesDataPointsService) DailyRollUp(parent string, dailyrollupdatapointsrequest *DailyRollUpDataPointsRequest) *UsersDataTypesDataPointsDailyRollUpCall {
 	c := &UsersDataTypesDataPointsDailyRollUpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9488,21 +9507,25 @@ type UsersDataTypesDataPointsExportExerciseTcxCall struct {
 
 // ExportExerciseTcx: Exports exercise data in TCX format. **IMPORTANT:** HTTP
 // clients must append `?alt=media` to the request URL to download the raw TCX
-// file. Example:
+// file. ## Examples: ##
 // `https://health.googleapis.com/v4/users/me/dataTypes/exercise/dataPoints/EXER
-// CISE_ID:exportExerciseTcx?alt=media` Without `alt=media`, the server returns
-// a JSON response (`ExportExerciseTcxResponse`) which is intended primarily
-// for gRPC clients. **Note:** While the Authorization section below states
-// that any one of the listed scopes is accepted, this specific method requires
-// the user to provide both one of the `activity_and_fitness` scopes (`normal`
-// or `readonly`) AND one of the `location` scopes (`normal` or `readonly`) in
-// their access token to succeed.
+// CISE_ID:exportExerciseTcx?alt=media`
+// `https://health.googleapis.com/v4/users/1234567890/dataTypes/exercise/dataPoi
+// nts/EXERCISE_ID:exportExerciseTcx?alt=media` Without `alt=media`, the server
+// returns a JSON response (`ExportExerciseTcxResponse`) which is intended
+// primarily for gRPC clients. **Note:** While the Authorization section below
+// states that any one of the listed scopes is accepted, this specific method
+// requires the user to provide both one of the `activity_and_fitness` scopes
+// (`normal` or `readonly`) AND one of the `location` scopes (`normal` or
+// `readonly`) in their access token to succeed.
 //
 //   - name: The resource name of the exercise data point to export. Format:
-//     `users/{user}/dataTypes/exercise/dataPoints/{data_point}` Example:
-//     `users/me/dataTypes/exercise/dataPoints/2026443605080188808` The `{user}`
-//     is the alias "me" currently. Future versions may support user IDs. The
-//     `{data_point}` ID maps to the exercise ID, which is a long integer.
+//     `users/{user}/dataTypes/exercise/dataPoints/{data_point}` Examples: -
+//     `users/me/dataTypes/exercise/dataPoints/2026443605080188808` -
+//     `users/1234567890/dataTypes/exercise/dataPoints/2026443605080188808` The
+//     `{user}` can be either the alias `me` or the authenticated user's numeric
+//     Health User ID (retrieved via GetIdentity). The `{data_point}` ID maps to
+//     the exercise ID, which is a long integer.
 func (r *UsersDataTypesDataPointsService) ExportExerciseTcx(name string) *UsersDataTypesDataPointsExportExerciseTcxCall {
 	c := &UsersDataTypesDataPointsExportExerciseTcxCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9637,7 +9660,12 @@ type UsersDataTypesDataPointsGetCall struct {
 // Get: Get a single identifyable data point.
 //
 //   - name: The name of the data point to retrieve. Format:
-//     `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` See
+//     `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples:
+//     ##
+//     `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef`
+//     `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890
+//     abcdef` The `{user}` can be either the alias `me` or the authenticated
+//     user's numeric Health User ID (retrieved via GetIdentity). See
 //     DataPoint.name for examples and possible values.
 func (r *UsersDataTypesDataPointsService) Get(name string) *UsersDataTypesDataPointsGetCall {
 	c := &UsersDataTypesDataPointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9748,9 +9776,12 @@ type UsersDataTypesDataPointsListCall struct {
 // List: Query user health and fitness data points.
 //
 //   - parent: Parent data type of the Data Point collection. Format:
-//     `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/weight` For a list of the supported data types see the
-//     DataPoint data union field.
+//     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/weight` -
+//     `users/1234567890/dataTypes/weight` The `{user}` can be either the alias
+//     `me` or the authenticated user's numeric Health User ID (retrieved via
+//     GetIdentity). For a list of the supported data types see the DataPoint
+//     data union field.
 func (r *UsersDataTypesDataPointsService) List(parent string) *UsersDataTypesDataPointsListCall {
 	c := &UsersDataTypesDataPointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9760,28 +9791,32 @@ func (r *UsersDataTypesDataPointsService) List(parent string) *UsersDataTypesDat
 // DataSourceFamily sets the optional parameter "dataSourceFamily": The data
 // source family name to filter by. If empty, data points from all available
 // data sources will be returned. Format:
-// `users/me/dataSourceFamilies/{data_source_family}` The supported values are:
-// - `users/me/dataSourceFamilies/all-sources` - Default value. Includes data
+// `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}` can be
+// either the alias `me` or the authenticated user's numeric Health User ID,
+// retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or
+// `users/1234567890/dataSourceFamilies/...`). The supported values are: -
+// `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data
 // from all available data sources. -
-// `users/me/dataSourceFamilies/google-wearables` - Includes data from Google
-// and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+// `users/{user}/dataSourceFamilies/google-wearables` - Includes data from
+// Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
 // Excludes manually logged data. -
-// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
-// data, such as data from tracker devices, manually logged data, and Health
-// Connect. - `users/me/dataSourceFamilies/self-sources` - Includes only the
-// data the calling client wrote through this API, that is, data points whose
-// data source was registered through this API with the same OAuth client ID as
-// the caller. Callers that were only granted write scopes for the requested
-// data types may only read the data they wrote themselves: their requests are
-// implicitly restricted to `self-sources`, and requesting any other data
-// source family fails with `PERMISSION_DENIED`. If no data point matches the
-// requested data source family, the response is an empty list rather than an
-// error. Filtering by data source family is not supported for the `sleep`,
-// `food` and `food-measurement-unit` data types, because the underlying
-// listing implementation cannot restrict results by data source. Such requests
-// fail with `INVALID_ARGUMENT` when the data source family is set explicitly,
-// and with `PERMISSION_DENIED` when the restriction is only implied by the
-// caller's scopes. For `sleep`, use ReconcileDataPoints instead.
+// `users/{user}/dataSourceFamilies/google-sources` - Includes first-party
+// Google data, such as data from tracker devices, manually logged data, and
+// Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes
+// only the data the calling client wrote through this API, that is, data
+// points whose data source was registered through this API with the same OAuth
+// client ID as the caller. Callers that were only granted write scopes for the
+// requested data types may only read the data they wrote themselves: their
+// requests are implicitly restricted to `self-sources`, and requesting any
+// other data source family fails with `PERMISSION_DENIED`. If no data point
+// matches the requested data source family, the response is an empty list
+// rather than an error. Filtering by data source family is not supported for
+// the `sleep`, `food` and `food-measurement-unit` data types, because the
+// underlying listing implementation cannot restrict results by data source.
+// Such requests fail with `INVALID_ARGUMENT` when the data source family is
+// set explicitly, and with `PERMISSION_DENIED` when the restriction is only
+// implied by the caller's scopes. For `sleep`, use ReconcileDataPoints
+// instead.
 func (c *UsersDataTypesDataPointsListCall) DataSourceFamily(dataSourceFamily string) *UsersDataTypesDataPointsListCall {
 	c.urlParams_.Set("dataSourceFamily", dataSourceFamily)
 	return c
@@ -9981,7 +10016,7 @@ func (c *UsersDataTypesDataPointsListCall) Pages(ctx context.Context, f func(*Li
 
 type UsersDataTypesDataPointsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	datapoint  *DataPoint
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -9994,19 +10029,21 @@ type UsersDataTypesDataPointsPatchCall struct {
 //   - name: Identifier. Data point name, only supported for the subset of
 //     identifiable data types. For the majority of the data types, individual
 //     data points do not need to be identified and this field would be empty.
-//     Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}`
-//     Example:
-//     `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890ab
-//     cdef` The `{user}` ID is a system-generated identifier, as described in
-//     Identity.health_user_id. The `{data_type}` ID corresponds to the
-//     kebab-case version of the field names in the DataPoint data union field,
-//     e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
-//     client-provided or system-generated. If client-provided, it must be a
-//     string of 4-63 characters, containing only lowercase letters, numbers, and
-//     hyphens.
-func (r *UsersDataTypesDataPointsService) Patch(nameid string, datapoint *DataPoint) *UsersDataTypesDataPointsPatchCall {
+//     Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ##
+//     Examples: ##
+//     `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef`
+//     `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890
+//     abcdef` The `{user}` can be either the alias `me` or the authenticated
+//     user's numeric Health User ID, which can be retrieved by calling
+//     GetIdentity (see Identity.health_user_id). The `{data_type}` ID
+//     corresponds to the kebab-case version of the field names in the DataPoint
+//     data union field, e.g. `heart-rate` for the `heart_rate` field. The
+//     `{data_point}` ID can be client-provided or system-generated. If
+//     client-provided, it must be a string of 4-63 characters, containing only
+//     lowercase letters, numbers, and hyphens.
+func (r *UsersDataTypesDataPointsService) Patch(name string, datapoint *DataPoint) *UsersDataTypesDataPointsPatchCall {
 	c := &UsersDataTypesDataPointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.datapoint = datapoint
 	return c
 }
@@ -10050,7 +10087,7 @@ func (c *UsersDataTypesDataPointsPatchCall) doRequest(alt string) (*http.Respons
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.users.dataTypes.dataPoints.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -10108,9 +10145,12 @@ type UsersDataTypesDataPointsReconcileCall struct {
 // data stream.
 //
 //   - parent: Parent data type of the Data Point collection. Format:
-//     `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/heart-rate` For a list of the supported data types see
-//     the DataPoint data union field.
+//     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/heart-rate` -
+//     `users/1234567890/dataTypes/heart-rate` The `{user}` can be either the
+//     alias `me` or the authenticated user's numeric Health User ID (retrieved
+//     via GetIdentity). For a list of the supported data types see the DataPoint
+//     data union field.
 func (r *UsersDataTypesDataPointsService) Reconcile(parent string) *UsersDataTypesDataPointsReconcileCall {
 	c := &UsersDataTypesDataPointsReconcileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10120,23 +10160,26 @@ func (r *UsersDataTypesDataPointsService) Reconcile(parent string) *UsersDataTyp
 // DataSourceFamily sets the optional parameter "dataSourceFamily": The data
 // source family name to reconcile. If empty, data points from all data sources
 // will be reconciled. Format:
-// `users/me/dataSourceFamilies/{data_source_family}` -
-// `users/me/dataSourceFamilies/all-sources` - Default value. Includes data
+// `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}` can be
+// either the alias `me` or the authenticated user's numeric Health User ID,
+// retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or
+// `users/1234567890/dataSourceFamilies/...`). The supported values are: -
+// `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data
 // from all available data sources. -
-// `users/me/dataSourceFamilies/google-wearables` - Includes data from Google
-// and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+// `users/{user}/dataSourceFamilies/google-wearables` - Includes data from
+// Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
 // Excludes manually logged data. -
-// `users/me/dataSourceFamilies/google-sources` - Includes first-party Google
-// data, such as data from tracker devices, manually logged data, and Health
-// Connect. - `users/me/dataSourceFamilies/self-sources` - Includes only the
-// data the calling client wrote through this API, that is, data points whose
-// data source was registered through this API with the same OAuth client ID as
-// the caller. Callers that were only granted write scopes for the requested
-// data type may only read the data they wrote themselves: their requests are
-// implicitly restricted to `self-sources`, and requesting any other data
-// source family fails with `PERMISSION_DENIED`. If no data point matches the
-// requested data source family, the response is an empty list rather than an
-// error.
+// `users/{user}/dataSourceFamilies/google-sources` - Includes first-party
+// Google data, such as data from tracker devices, manually logged data, and
+// Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes
+// only the data the calling client wrote through this API, that is, data
+// points whose data source was registered through this API with the same OAuth
+// client ID as the caller. Callers that were only granted write scopes for the
+// requested data type may only read the data they wrote themselves: their
+// requests are implicitly restricted to `self-sources`, and requesting any
+// other data source family fails with `PERMISSION_DENIED`. If no data point
+// matches the requested data source family, the response is an empty list
+// rather than an error.
 func (c *UsersDataTypesDataPointsReconcileCall) DataSourceFamily(dataSourceFamily string) *UsersDataTypesDataPointsReconcileCall {
 	c.urlParams_.Set("dataSourceFamily", dataSourceFamily)
 	return c
@@ -10295,8 +10338,11 @@ type UsersDataTypesDataPointsRollUpCall struct {
 //
 //   - parent: Parent data type of the Data Point collection. Format:
 //     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/distance` For a list of the supported data types see
-//     the RollupDataPoint value union field.
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/distance` -
+//     `users/1234567890/dataTypes/distance` The `{user}` can be either the alias
+//     `me` or the authenticated user's numeric Health User ID (retrieved via
+//     GetIdentity). For a list of the supported data types see the
+//     RollupDataPoint value union field.
 func (r *UsersDataTypesDataPointsService) RollUp(parent string, rollupdatapointsrequest *RollUpDataPointsRequest) *UsersDataTypesDataPointsRollUpCall {
 	c := &UsersDataTypesDataPointsRollUpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

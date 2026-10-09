@@ -30289,6 +30289,9 @@ type Instance struct {
 	// Local SSDs attached to the VM.
 	//
 	// Possible values:
+	//   "CMEK_ENCRYPTION" - The given VM will use customer-managed encryption keys
+	// for
+	// encryption of Local SSDs.
 	//   "EPHEMERAL_KEY_ENCRYPTION" - The given VM will opt-in for using ephemeral
 	// key for
 	// encryption of Local SSDs.
@@ -36048,6 +36051,9 @@ type InstanceProperties struct {
 	// Local SSDs attached to the VM.
 	//
 	// Possible values:
+	//   "CMEK_ENCRYPTION" - The given VM will use customer-managed encryption keys
+	// for
+	// encryption of Local SSDs.
 	//   "EPHEMERAL_KEY_ENCRYPTION" - The given VM will opt-in for using ephemeral
 	// key for
 	// encryption of Local SSDs.

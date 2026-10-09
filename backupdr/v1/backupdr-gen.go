@@ -1604,6 +1604,7 @@ type BackupPlanAssociation struct {
 	//   "DELETING" - The resource is being deleted.
 	//   "INACTIVE" - The resource has been created but is not usable.
 	//   "UPDATING" - The resource is being updated.
+	//   "PAUSED" - The resource has been created but backups are paused.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. The time when the instance was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -2493,6 +2494,7 @@ type DataSource struct {
 	// BackupPlanAssociation or Appliance SLA pointing to it)
 	//   "PASSIVE" - The data source is no longer protected (but may have backups
 	// under it)
+	//   "PAUSED" - The data source has been created but backups are paused
 	ConfigState string `json:"configState,omitempty"`
 	// CreateTime: Output only. The time when the instance was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2740,6 +2742,7 @@ type DataSourceReference struct {
 	// BackupPlanAssociation or Appliance SLA pointing to it)
 	//   "PASSIVE" - The data source is no longer protected (but may have backups
 	// under it)
+	//   "PAUSED" - The data source has been created but backups are paused
 	DataSourceBackupConfigState string `json:"dataSourceBackupConfigState,omitempty"`
 	// DataSourceBackupCount: Output only. Number of backups in the DataSource.
 	DataSourceBackupCount int64 `json:"dataSourceBackupCount,omitempty,string"`
@@ -5361,6 +5364,7 @@ type SetInternalStatusRequest struct {
 	// BackupPlanAssociation or Appliance SLA pointing to it)
 	//   "PASSIVE" - The data source is no longer protected (but may have backups
 	// under it)
+	//   "PAUSED" - The data source has been created but backups are paused
 	BackupConfigState string `json:"backupConfigState,omitempty"`
 	// RequestId: Optional. An optional request ID to identify requests. Specify a
 	// unique request ID so that if you must retry your request, the server will

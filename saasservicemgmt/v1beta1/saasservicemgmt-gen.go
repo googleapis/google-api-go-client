@@ -484,12 +484,12 @@ func (s AppParams) MarshalJSON() ([]byte, error) {
 
 // Blueprint: Blueprints are OCI Images that contain all of the artifacts
 // needed to provision a unit. Metadata such as, type of the engine used to
-// actuate the blueprint (e.g. terraform, helm etc) and version will come from
+// actuate the blueprint (Terraform, for example) and version will come from
 // the image manifest. If the hostname is omitted, it will be assumed to be the
 // regional path to Artifact Registry (eg. us-east1-docker.pkg.dev).
 type Blueprint struct {
-	// Engine: Output only. Type of the engine used to actuate the blueprint. e.g.
-	// terraform, helm etc.
+	// Engine: Output only. Type of the engine used to actuate the blueprint.
+	// (Terraform, for example)
 	Engine string `json:"engine,omitempty"`
 	// Package: Optional. Immutable. URI to a blueprint used by the Unit (required
 	// unless unitKind or release is set).
@@ -1884,8 +1884,7 @@ func (s Provision) MarshalJSON() ([]byte, error) {
 }
 
 // Release: A new version to be propagated and deployed to units. This includes
-// pointers to packaged blueprints for actuation (e.g Helm or Terraform
-// configuration packages) via artifact registry.
+// pointers to packaged blueprints for actuation via Artifact Registry.
 type Release struct {
 	// Annotations: Optional. Annotations is an unstructured key-value map stored
 	// with a resource that may be set by external tools to store and retrieve
@@ -2075,6 +2074,7 @@ type Rollout struct {
 	//   "ROLLOUT_STATE_CANCELLING" - Rollout is being canceled.
 	//   "ROLLOUT_STATE_RESUMING" - Rollout is being resumed.
 	//   "ROLLOUT_STATE_PAUSING" - Rollout is being paused.
+	//   "ROLLOUT_STATE_AWAITING_APPROVAL" - Rollout is awaiting manual approval.
 	State string `json:"state,omitempty"`
 	// StateMessage: Output only. Human readable message indicating details about
 	// the last state transition.
@@ -2201,7 +2201,7 @@ type RolloutKind struct {
 	// must not be changed. UID is used to uniquely identify resources with
 	// resource name reuses. This should be a UUID4.
 	Uid string `json:"uid,omitempty"`
-	// UnitFilter: Optional. CEL(https://github.com/google/cel-spec) formatted
+	// UnitFilter: Optional. CEL (https://github.com/google/cel-spec) formatted
 	// filter string against Unit. The filter will be applied to determine the
 	// eligible unit population. This filter can only reduce, but not expand the
 	// scope of the rollout.
@@ -2665,7 +2665,7 @@ func (s ToMapping) MarshalJSON() ([]byte, error) {
 }
 
 // Unit: A unit of deployment that has its lifecycle via a CRUD API using an
-// actuation engine under the hood (e.g. based on Terraform, Helm or a custom
+// actuation engine under the hood (e.g. based on Terraform, or a custom
 // implementation provided by a service producer). A building block of a SaaS
 // Tenant.
 type Unit struct {
@@ -2728,9 +2728,8 @@ type Unit struct {
 	OngoingOperations []string `json:"ongoingOperations,omitempty"`
 	// OutputVariables: Optional. Output only. Set of key/value pairs corresponding
 	// to output variables from execution of actuation templates. The variables are
-	// declared in actuation configs (e.g in helm chart or terraform) and the
-	// values are fetched and returned by the actuation engine upon completion of
-	// execution.
+	// declared in actuation configs (in Terraform for example) and the values are
+	// fetched and returned by the actuation engine upon completion of execution.
 	OutputVariables []*UnitVariable `json:"outputVariables,omitempty"`
 	// PendingOperations: Optional. Output only. List of pending (wait to be
 	// executed) UnitOperations for this unit.
@@ -3040,6 +3039,9 @@ type UnitKind struct {
 	// specified, a new unit must explicitly reference which release to use for its
 	// creation.
 	DefaultRelease string `json:"defaultRelease,omitempty"`
+	// DeleteTime: Output only. The timestamp when the resource was marked for
+	// deletion (deletion is an asynchronous operation).
+	DeleteTime string `json:"deleteTime,omitempty"`
 	// Dependencies: Optional. Immutable. List of other unit kinds that this
 	// release will depend on. Dependencies will be automatically provisioned if
 	// not found. Maximum 10.

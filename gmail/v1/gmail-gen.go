@@ -674,7 +674,8 @@ type CsePrivateKeyMetadata struct {
 	// HardwareKeyMetadata: Metadata for hardware keys.
 	HardwareKeyMetadata *HardwareKeyMetadata `json:"hardwareKeyMetadata,omitempty"`
 	// KaclsKeyMetadata: Metadata for a private key instance managed by an external
-	// key access control list service.
+	// key access control list service. The maximum size of the KACLS data field is
+	// 8 KiB.
 	KaclsKeyMetadata *KaclsKeyMetadata `json:"kaclsKeyMetadata,omitempty"`
 	// PrivateKeyMetadataId: Output only. The immutable ID for the private key
 	// metadata instance.
@@ -1108,16 +1109,16 @@ func (s ImapSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// KaclsKeyMetadata: Metadata for private keys managed by an external key
-// access control list service. For details about managing key access, see
+// KaclsKeyMetadata: Metadata for a cryptographic key managed by an external
+// key access control list service. For details about managing key access, see
 // Google Workspace CSE API Reference
 // (https://developers.google.com/workspace/cse/reference).
 type KaclsKeyMetadata struct {
 	// KaclsData: Opaque data generated and used by the key access control list
-	// service. Maximum size: 8 KiB.
+	// service.
 	KaclsData string `json:"kaclsData,omitempty"`
 	// KaclsUri: The URI of the key access control list service that manages the
-	// private key.
+	// key.
 	KaclsUri string `json:"kaclsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KaclsData") to
 	// unconditionally include in API requests. By default, fields with empty or

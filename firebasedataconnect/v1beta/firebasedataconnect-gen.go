@@ -193,6 +193,7 @@ type ProjectsLocationsOperationsService struct {
 func NewProjectsLocationsServicesService(s *APIService) *ProjectsLocationsServicesService {
 	rs := &ProjectsLocationsServicesService{s: s}
 	rs.Connectors = NewProjectsLocationsServicesConnectorsService(s)
+	rs.Postgrest = NewProjectsLocationsServicesPostgrestService(s)
 	rs.Schemas = NewProjectsLocationsServicesSchemasService(s)
 	return rs
 }
@@ -201,6 +202,8 @@ type ProjectsLocationsServicesService struct {
 	s *APIService
 
 	Connectors *ProjectsLocationsServicesConnectorsService
+
+	Postgrest *ProjectsLocationsServicesPostgrestService
 
 	Schemas *ProjectsLocationsServicesSchemasService
 }
@@ -211,6 +214,27 @@ func NewProjectsLocationsServicesConnectorsService(s *APIService) *ProjectsLocat
 }
 
 type ProjectsLocationsServicesConnectorsService struct {
+	s *APIService
+}
+
+func NewProjectsLocationsServicesPostgrestService(s *APIService) *ProjectsLocationsServicesPostgrestService {
+	rs := &ProjectsLocationsServicesPostgrestService{s: s}
+	rs.Rpc = NewProjectsLocationsServicesPostgrestRpcService(s)
+	return rs
+}
+
+type ProjectsLocationsServicesPostgrestService struct {
+	s *APIService
+
+	Rpc *ProjectsLocationsServicesPostgrestRpcService
+}
+
+func NewProjectsLocationsServicesPostgrestRpcService(s *APIService) *ProjectsLocationsServicesPostgrestRpcService {
+	rs := &ProjectsLocationsServicesPostgrestRpcService{s: s}
+	return rs
+}
+
+type ProjectsLocationsServicesPostgrestRpcService struct {
 	s *APIService
 }
 
@@ -1009,6 +1033,53 @@ type GraphqlResponseExtensions struct {
 
 func (s GraphqlResponseExtensions) MarshalJSON() ([]byte, error) {
 	type NoMethod GraphqlResponseExtensions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// HttpBody: Message that represents an arbitrary HTTP body. It should only be
+// used for payload formats that can't be represented as JSON, such as raw
+// binary or an HTML page. This message can be used both in streaming and
+// non-streaming API methods in the request as well as the response. It can be
+// used as a top-level request field, which is convenient if one wants to
+// extract parameters from either the URL or HTTP template into the request
+// fields and also want access to the raw HTTP body. Example: message
+// GetResourceRequest { // A unique request id. string request_id = 1; // The
+// raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; }
+// service ResourceService { rpc GetResource(GetResourceRequest) returns
+// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns
+// (google.protobuf.Empty); } Example with streaming methods: service
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream
+// google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); } Use of this type only changes how the
+// request and response bodies are handled, all other features will continue to
+// work unchanged.
+type HttpBody struct {
+	// ContentType: The HTTP Content-Type header value specifying the content type
+	// of the body.
+	ContentType string `json:"contentType,omitempty"`
+	// Data: The HTTP request/response body as raw binary.
+	Data string `json:"data,omitempty"`
+	// Extensions: Application specific response metadata. Must be set in the first
+	// response for streaming APIs.
+	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HttpBody) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpBody
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4954,6 +5025,774 @@ func (c *ProjectsLocationsServicesConnectorsPatchCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.connectors.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesPostgrestPostgrestDeleteCall struct {
+	s                          *APIService
+	firebasedataconnectService string
+	firebasedataconnectTable   string
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// PostgrestDelete: Executes a dynamic DELETE mutation on rows matching the URL
+// filters.
+//
+//   - firebasedataconnectService: The resource name of the service, in the
+//     format: `projects/{project}/locations/{location}/services/{service}`.
+//   - firebasedataconnectTable: The name of the table to delete from.
+func (r *ProjectsLocationsServicesPostgrestService) PostgrestDelete(firebasedataconnectService string, firebasedataconnectTable string) *ProjectsLocationsServicesPostgrestPostgrestDeleteCall {
+	c := &ProjectsLocationsServicesPostgrestPostgrestDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.firebasedataconnectService = firebasedataconnectService
+	c.firebasedataconnectTable = firebasedataconnectTable
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesPostgrestPostgrestDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesPostgrestPostgrestDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesPostgrestPostgrestDeleteCall) Context(ctx context.Context) *ProjectsLocationsServicesPostgrestPostgrestDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesPostgrestPostgrestDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesPostgrestPostgrestDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+firebasedataconnectService}/postgrest/{+firebasedataconnectTable}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"firebasedataconnectService": c.firebasedataconnectService,
+		"firebasedataconnectTable":   c.firebasedataconnectTable,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestDelete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.postgrest.postgrestDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesPostgrestPostgrestDeleteCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestDelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesPostgrestPostgrestInsertCall struct {
+	s                          *APIService
+	firebasedataconnectService string
+	firebasedataconnectTable   string
+	httpbody                   *HttpBody
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// PostgrestInsert: Executes a dynamic INSERT (create) or UPSERT mutation on a
+// target table.
+//
+//   - firebasedataconnectService: The resource name of the service, in the
+//     format: `projects/{project}/locations/{location}/services/{service}`.
+//   - firebasedataconnectTable: The name of the table to insert into.
+func (r *ProjectsLocationsServicesPostgrestService) PostgrestInsert(firebasedataconnectService string, firebasedataconnectTable string, httpbody *HttpBody) *ProjectsLocationsServicesPostgrestPostgrestInsertCall {
+	c := &ProjectsLocationsServicesPostgrestPostgrestInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.firebasedataconnectService = firebasedataconnectService
+	c.firebasedataconnectTable = firebasedataconnectTable
+	c.httpbody = httpbody
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesPostgrestPostgrestInsertCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesPostgrestPostgrestInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesPostgrestPostgrestInsertCall) Context(ctx context.Context) *ProjectsLocationsServicesPostgrestPostgrestInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesPostgrestPostgrestInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesPostgrestPostgrestInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.httpbody)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+firebasedataconnectService}/postgrest/{+firebasedataconnectTable}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"firebasedataconnectService": c.firebasedataconnectService,
+		"firebasedataconnectTable":   c.firebasedataconnectTable,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestInsert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.postgrest.postgrestInsert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesPostgrestPostgrestInsertCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestInsert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesPostgrestPostgrestSelectCall struct {
+	s                          *APIService
+	firebasedataconnectService string
+	firebasedataconnectTable   string
+	urlParams_                 gensupport.URLParams
+	ifNoneMatch_               string
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// PostgrestSelect: Executes a dynamic SELECT (read) query on a target
+// PostgreSQL table. Projections, filters, sorting, and embeddings are mapped
+// from the HTTP URL query parameters.
+//
+//   - firebasedataconnectService: The resource name of the service, in the
+//     format: `projects/{project}/locations/{location}/services/{service}`.
+//   - firebasedataconnectTable: The name of the table to select from.
+func (r *ProjectsLocationsServicesPostgrestService) PostgrestSelect(firebasedataconnectService string, firebasedataconnectTable string) *ProjectsLocationsServicesPostgrestPostgrestSelectCall {
+	c := &ProjectsLocationsServicesPostgrestPostgrestSelectCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.firebasedataconnectService = firebasedataconnectService
+	c.firebasedataconnectTable = firebasedataconnectTable
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesPostgrestPostgrestSelectCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesPostgrestPostgrestSelectCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsServicesPostgrestPostgrestSelectCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesPostgrestPostgrestSelectCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesPostgrestPostgrestSelectCall) Context(ctx context.Context) *ProjectsLocationsServicesPostgrestPostgrestSelectCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesPostgrestPostgrestSelectCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesPostgrestPostgrestSelectCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+firebasedataconnectService}/postgrest/{+firebasedataconnectTable}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"firebasedataconnectService": c.firebasedataconnectService,
+		"firebasedataconnectTable":   c.firebasedataconnectTable,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestSelect", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.postgrest.postgrestSelect" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesPostgrestPostgrestSelectCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestSelect", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesPostgrestPostgrestUpdateCall struct {
+	s                          *APIService
+	firebasedataconnectService string
+	firebasedataconnectTable   string
+	httpbody                   *HttpBody
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// PostgrestUpdate: Executes a dynamic UPDATE (modify) mutation on rows
+// matching the URL filters.
+//
+//   - firebasedataconnectService: The resource name of the service, in the
+//     format: `projects/{project}/locations/{location}/services/{service}`.
+//   - firebasedataconnectTable: The name of the table to update.
+func (r *ProjectsLocationsServicesPostgrestService) PostgrestUpdate(firebasedataconnectService string, firebasedataconnectTable string, httpbody *HttpBody) *ProjectsLocationsServicesPostgrestPostgrestUpdateCall {
+	c := &ProjectsLocationsServicesPostgrestPostgrestUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.firebasedataconnectService = firebasedataconnectService
+	c.firebasedataconnectTable = firebasedataconnectTable
+	c.httpbody = httpbody
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpdateCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesPostgrestPostgrestUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpdateCall) Context(ctx context.Context) *ProjectsLocationsServicesPostgrestPostgrestUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.httpbody)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+firebasedataconnectService}/postgrest/{+firebasedataconnectTable}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"firebasedataconnectService": c.firebasedataconnectService,
+		"firebasedataconnectTable":   c.firebasedataconnectTable,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestUpdate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.postgrest.postgrestUpdate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpdateCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestUpdate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesPostgrestPostgrestUpsertCall struct {
+	s                          *APIService
+	firebasedataconnectService string
+	firebasedataconnectTable   string
+	httpbody                   *HttpBody
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// PostgrestUpsert: Executes a dynamic UPSERT (replace or create) mutation on a
+// target table identified by primary key filters.
+//
+//   - firebasedataconnectService: The resource name of the service, in the
+//     format: `projects/{project}/locations/{location}/services/{service}`.
+//   - firebasedataconnectTable: The name of the table to upsert into.
+func (r *ProjectsLocationsServicesPostgrestService) PostgrestUpsert(firebasedataconnectService string, firebasedataconnectTable string, httpbody *HttpBody) *ProjectsLocationsServicesPostgrestPostgrestUpsertCall {
+	c := &ProjectsLocationsServicesPostgrestPostgrestUpsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.firebasedataconnectService = firebasedataconnectService
+	c.firebasedataconnectTable = firebasedataconnectTable
+	c.httpbody = httpbody
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpsertCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesPostgrestPostgrestUpsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpsertCall) Context(ctx context.Context) *ProjectsLocationsServicesPostgrestPostgrestUpsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.httpbody)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+firebasedataconnectService}/postgrest/{+firebasedataconnectTable}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PUT", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"firebasedataconnectService": c.firebasedataconnectService,
+		"firebasedataconnectTable":   c.firebasedataconnectTable,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestUpsert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.postgrest.postgrestUpsert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesPostgrestPostgrestUpsertCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.postgrestUpsert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall struct {
+	s                           *APIService
+	firebasedataconnectService  string
+	firebasedataconnectFunction string
+	httpbody                    *HttpBody
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// PostgrestCallFunction: Executes a PostgreSQL database function.
+//
+//   - firebasedataconnectFunction: The name of the database function.
+//   - firebasedataconnectService: The resource name of the service, in the
+//     format: `projects/{project}/locations/{location}/services/{service}`.
+func (r *ProjectsLocationsServicesPostgrestRpcService) PostgrestCallFunction(firebasedataconnectService string, firebasedataconnectFunction string, httpbody *HttpBody) *ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall {
+	c := &ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.firebasedataconnectService = firebasedataconnectService
+	c.firebasedataconnectFunction = firebasedataconnectFunction
+	c.httpbody = httpbody
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall) Context(ctx context.Context) *ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.httpbody)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+firebasedataconnectService}/postgrest/rpc/{+firebasedataconnectFunction}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"firebasedataconnectService":  c.firebasedataconnectService,
+		"firebasedataconnectFunction": c.firebasedataconnectFunction,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.rpc.postgrestCallFunction", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.postgrest.rpc.postgrestCallFunction" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestCallFunctionCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.rpc.postgrestCallFunction", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall struct {
+	s                           *APIService
+	firebasedataconnectService  string
+	firebasedataconnectFunction string
+	urlParams_                  gensupport.URLParams
+	ifNoneMatch_                string
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// PostgrestQueryFunction: Executes a read-only PostgreSQL database function.
+//
+//   - firebasedataconnectFunction: The name of the database function.
+//   - firebasedataconnectService: The resource name of the service, in the
+//     format: `projects/{project}/locations/{location}/services/{service}`.
+func (r *ProjectsLocationsServicesPostgrestRpcService) PostgrestQueryFunction(firebasedataconnectService string, firebasedataconnectFunction string) *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall {
+	c := &ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.firebasedataconnectService = firebasedataconnectService
+	c.firebasedataconnectFunction = firebasedataconnectFunction
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall) Context(ctx context.Context) *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+firebasedataconnectService}/postgrest/rpc/{+firebasedataconnectFunction}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"firebasedataconnectService":  c.firebasedataconnectService,
+		"firebasedataconnectFunction": c.firebasedataconnectFunction,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.rpc.postgrestQueryFunction", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasedataconnect.projects.locations.services.postgrest.rpc.postgrestQueryFunction" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *HttpBody.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesPostgrestRpcPostgrestQueryFunctionCall) Do(opts ...googleapi.CallOption) (*HttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &HttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasedataconnect.projects.locations.services.postgrest.rpc.postgrestQueryFunction", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

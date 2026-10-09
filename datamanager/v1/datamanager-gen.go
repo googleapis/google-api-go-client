@@ -933,6 +933,8 @@ type ErrorCount struct {
 	//   "PROCESSING_ERROR_REASON_INVALID_OPERATING_ACCOUNT_FOR_CLICK"
 	//   "PROCESSING_ERROR_REASON_CLICK_NOT_FOUND"
 	//   "PROCESSING_ERROR_REASON_EXTERNAL_ATTRIBUTION_DATA_MISSING"
+	//   "PROCESSING_ERROR_REASON_DESTINATION_TOO_RECENTLY_CREATED"
+	//   "PROCESSING_ERROR_REASON_EXPIRED_CLICK"
 	Reason      string `json:"reason,omitempty"`
 	RecordCount int64  `json:"recordCount,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally

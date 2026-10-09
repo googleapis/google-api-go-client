@@ -1127,7 +1127,11 @@ func (s DimensionValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// EmptyFilter: Filter for empty values.
+// EmptyFilter: Filter for empty values. Matches dimension values that are ""
+// or `(not set)` values. Use this filter to match rows with missing or
+// unpopulated dimension values, or combine it with `not_expression` to exclude
+// them from a report without filtering for both "" and `(not set)`
+// separately.
 type EmptyFilter struct {
 }
 
@@ -1135,7 +1139,7 @@ type EmptyFilter struct {
 type Filter struct {
 	// BetweenFilter: A filter for two values.
 	BetweenFilter *BetweenFilter `json:"betweenFilter,omitempty"`
-	// EmptyFilter: A filter for empty values such as "(not set)" and "" values.
+	// EmptyFilter: A filter for empty values such as `(not set)` and "" values.
 	EmptyFilter *EmptyFilter `json:"emptyFilter,omitempty"`
 	// FieldName: The dimension name or metric name. In most methods, dimensions &
 	// metrics can be used for the first time in this field. However in a

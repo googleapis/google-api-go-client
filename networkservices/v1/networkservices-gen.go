@@ -528,6 +528,7 @@ type AgentConnectivityTemplate struct {
 	//   "GKE" - Google Kubernetes Engine.
 	//   "CLOUD_RUN" - Google Cloud Run.
 	//   "BORG" - Google Borg (for 1P producers).
+	//   "GCE_VM" - Google Compute Engine VM.
 	AgentCompute string `json:"agentCompute,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1456,10 +1457,11 @@ type ExtensionBinding struct {
 	// resource. The format must comply with the following requirements
 	// (https://cloud.google.com/compute/docs/labeling-resources#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
-	// MatchConditions: Optional. A list of match conditions to match against the
-	// incoming request. The extension will be invoked if at least one condition
-	// matches the request, or if no match conditions are specified. Limited to 5
-	// conditions.
+	// MatchConditions: Optional. A list of match conditions to evaluate against
+	// the incoming request. The extension is invoked if the request matches at
+	// least one condition, or if no match conditions are specified. A request
+	// matches a condition only if it matches every field that is set in that
+	// condition. Limited to 5 conditions.
 	MatchConditions []*ExtensionBindingMatchCondition `json:"matchConditions,omitempty"`
 	// Name: Identifier. Name of the `ExtensionBinding` resource in the following
 	// format:
@@ -1467,20 +1469,23 @@ type ExtensionBinding struct {
 	// }`.
 	Name string `json:"name,omitempty"`
 	// Priority: Optional. Priority of the extension binding. Lower numbers
-	// indicate higher priority. Priority of extension bindings are used to
-	// determine the order in which extension bindings are applied to a request.
+	// indicate higher priority. The priority determines the order in which
+	// extension bindings are applied to a request.
 	Priority int64 `json:"priority,omitempty"`
 	// ProducerExtension: Required. The name of the extension that this binding
 	// should attach to target resources. Format: For Google-provided extensions,
-	// specify the service endpoint (see Model Armor integration
-	// (https://docs.cloud.google.com/model-armor/integrations))
+	// specify the service endpoint, for example
+	// `modelarmor.us-central1.rep.googleapis.com`.
 	ProducerExtension string `json:"producerExtension,omitempty"`
 	// ProducerMetadata: Optional. Additional metadata that should be passed to the
-	// attached extension with each request.
+	// attached extension with each request. This field is subject to the following
+	// limitations: * The total size of the metadata must be less than 1 KiB. * The
+	// total number of keys must be less than 16. * The length of each key must be
+	// less than 64 characters. * The length of each value must be less than 1024
+	// characters.
 	ProducerMetadata map[string]string `json:"producerMetadata,omitempty"`
 	// Target: Required. Specifies a target to which this `ExtensionBinding` should
-	// be attached. The target can be either a single resource or a scope of
-	// resources.
+	// be attached.
 	Target *ExtensionBindingTarget `json:"target,omitempty"`
 	// UpdateTime: Output only. The timestamp when the resource was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1558,24 +1563,22 @@ func (s ExtensionBindingMatchConditionHeaderMatch) MarshalJSON() ([]byte, error)
 // ExtensionBindingMatchConditionStringMatch: Specifies matching logic for
 // string values.
 type ExtensionBindingMatchConditionStringMatch struct {
-	// Contains: Optional. The input string must have the substring specified here.
-	// Note: empty contains match is not allowed, please use regex instead.
-	// Examples: * ``abc`` matches the value ``xyz.abc.def``
+	// Contains: Optional. The input string must contain the substring specified
+	// here. An empty substring is not allowed. Examples: * `abc` matches the value
+	// `xyz.abc.def`.
 	Contains string `json:"contains,omitempty"`
 	// Exact: Optional. The input string must match exactly the string specified
-	// here. Examples: * ``abc`` only matches the value ``abc``.
+	// here. Examples: * `abc` only matches the value `abc`.
 	Exact string `json:"exact,omitempty"`
-	// IgnoreCase: Optional. If true, indicates the exact/prefix/suffix/contains
-	// matching should be case insensitive. For example, the matcher ``data`` will
-	// match both input string ``Data`` and ``data`` if set to true.
+	// IgnoreCase: Optional. If true, the `exact`, `prefix`, `suffix`, or
+	// `contains` match is case insensitive. For example, the matcher `data`
+	// matches both `Data` and `data` when set to true.
 	IgnoreCase bool `json:"ignoreCase,omitempty"`
-	// Prefix: Optional. The input string must have the prefix specified here.
-	// Note: empty prefix is not allowed. Examples: * ``abc`` matches the value
-	// ``abc.xyz``
+	// Prefix: Optional. The input string must have the prefix specified here. An
+	// empty prefix is not allowed. Examples: * `abc` matches the value `abc.xyz`.
 	Prefix string `json:"prefix,omitempty"`
-	// Suffix: Optional. The input string must have the suffix specified here.
-	// Note: empty prefix is not allowed, please use regex instead. Examples: *
-	// ``abc`` matches the value ``xyz.abc``
+	// Suffix: Optional. The input string must have the suffix specified here. An
+	// empty suffix is not allowed. Examples: * `abc` matches the value `xyz.abc`.
 	Suffix string `json:"suffix,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Contains") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1598,11 +1601,12 @@ func (s ExtensionBindingMatchConditionStringMatch) MarshalJSON() ([]byte, error)
 // ExtensionBindingMatchConditionTo: Describes properties of one or more
 // destinations of a request.
 type ExtensionBindingMatchConditionTo struct {
-	// Destination: Optional. Describes properties of destination of a request.
-	// Within a destination, the match follows AND semantics across fields and OR
-	// semantics within a field, i.e. a match occurs when ANY path matches AND ANY
-	// header matches and ANY method matches. At least one of destination or
-	// not_destination must be specified.
+	// Destination: Optional. Describes properties of the destination of a request.
+	// A request matches the destination only if it matches every field that is
+	// set. Fields that are not set are always considered a match. For example, if
+	// only `hosts` and `paths` are set, a request matches when any host matches
+	// and any path matches. At least one of `destination` or `not_destination`
+	// must be specified.
 	Destination *ExtensionBindingMatchConditionToDestination `json:"destination,omitempty"`
 	// NotDestination: Optional. Describes the negated properties of the request
 	// destination. Extension will not be invoked on requests that match the
@@ -1670,9 +1674,9 @@ func (s ExtensionBindingMatchConditionToDestination) MarshalJSON() ([]byte, erro
 // ExtensionBindingMatchConditionToDestinationHeaderSet: Describes a set of
 // HTTP headers to match against.
 type ExtensionBindingMatchConditionToDestinationHeaderSet struct {
-	// Headers: Required. A list of headers to match against in http header. If
-	// multiple header matches are provided, they will be evaluated as an AND, i.e.
-	// all header matches must match for the request to match.
+	// Headers: Required. A list of HTTP headers to match against. If multiple
+	// header matches are provided, they are evaluated as an AND, meaning that all
+	// header matches must match for the request to match. Limited to 10 headers.
 	Headers []*ExtensionBindingMatchConditionHeaderMatch `json:"headers,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1695,8 +1699,11 @@ func (s ExtensionBindingMatchConditionToDestinationHeaderSet) MarshalJSON() ([]b
 // ExtensionBindingTarget: Specifies a list of targets to which this
 // `ExtensionBinding` should attach.
 type ExtensionBindingTarget struct {
-	// Resources: Optional. The reference to the target resource, to which this
+	// Resources: Optional. The references to the target resources to which this
 	// binding should attach. Exactly one of `resources` or `scope` must be set.
+	// For AI Application resources, specify the full resource name in the format:
+	// `projects/{project}/locations/{location}/applications/{application}`.
+	// Limited to 1 resource.
 	Resources []string `json:"resources,omitempty"`
 	// Scope: Optional. Specifies the scope of resources to which this binding
 	// should attach. Exactly one of `resources` or `scope` must be set.
@@ -1722,10 +1729,14 @@ func (s ExtensionBindingTarget) MarshalJSON() ([]byte, error) {
 // ExtensionBindingTargetScope: Specifies the scope of resources to which this
 // binding should attach.
 type ExtensionBindingTargetScope struct {
-	// Parent: Required. Parent resource name specification, in the format:
-	// `projects/{project_number}`.
+	// Parent: Required. The parent resource that defines the scope, in the format
+	// `projects/{project_number}`. When the scope is a project, the binding
+	// applies to the resources that meet all of the following conditions: * The
+	// resource belongs to the specified project. * The resource is in the same
+	// location as the `ExtensionBinding`. * The resource type is listed in
+	// `resource_types`.
 	Parent string `json:"parent,omitempty"`
-	// ResourceTypes: Required. Type of the resource to which the binding should
+	// ResourceTypes: Required. The types of resources to which the binding should
 	// attach. Limited to 1 resource type.
 	//
 	// Possible values:

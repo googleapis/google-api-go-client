@@ -185,8 +185,7 @@ type DocumentsService struct {
 }
 
 // AcceptSuggestionRequest: Accepts a suggestion. Returns a 403 forbidden error
-// if the requesting user does not have edit access to the document. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// if the requesting user does not have edit access to the document.
 type AcceptSuggestionRequest struct {
 	// SuggestionId: The ID of the suggestion.
 	SuggestionId string `json:"suggestionId,omitempty"`
@@ -209,8 +208,7 @@ func (s AcceptSuggestionRequest) MarshalJSON() ([]byte, error) {
 }
 
 // AddCommentReplyRequest: Inserts a reply Post into a CommentThread or
-// SuggestionThread. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// SuggestionThread.
 type AddCommentReplyRequest struct {
 	// CommentId: The ID of the CommentThread to add the reply to.
 	CommentId string `json:"commentId,omitempty"`
@@ -236,8 +234,7 @@ func (s AddCommentReplyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AddCommentReplyResponse: Response message for adding a reply. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// AddCommentReplyResponse: Response message for adding a reply.
 type AddCommentReplyResponse struct {
 	// Post: The newly-inserted reply Post.
 	Post *Post `json:"post,omitempty"`
@@ -423,8 +420,7 @@ func (s BatchUpdateDocumentRequest) MarshalJSON() ([]byte, error) {
 // request.
 type BatchUpdateDocumentResponse struct {
 	// CommentUpdateState: Whether comment updates were applied in the batch
-	// request. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// request.
 	//
 	// Possible values:
 	//   "COMMENT_UPDATE_STATE_UNSPECIFIED" - The status of comment updates is
@@ -441,8 +437,7 @@ type BatchUpdateDocumentResponse struct {
 	// replies to some requests may be empty.
 	Replies []*Response `json:"replies,omitempty"`
 	// SuggestionResponses: The suggestions which were affected by each update.
-	// This maps 1:1 with the updates. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// This maps 1:1 with the updates.
 	SuggestionResponses []*SuggestionResponse `json:"suggestionResponses,omitempty"`
 	// WriteControl: The updated write control after applying the request.
 	WriteControl *WriteControl `json:"writeControl,omitempty"`
@@ -630,8 +625,7 @@ func (s ColumnBreak) MarshalJSON() ([]byte, error) {
 
 // CommentAnchor: One or more locations in the document that are tied to
 // CommentThreads with the same anchorId. Note: Multiple anchors may refer to
-// the same location. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// the same location.
 type CommentAnchor struct {
 	// AnchorId: The ID of the comment anchor.
 	AnchorId string `json:"anchorId,omitempty"`
@@ -656,8 +650,7 @@ func (s CommentAnchor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CommentThread: Represents a single comment thread. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// CommentThread: Represents a single comment thread.
 type CommentThread struct {
 	// AnchorId: The ID of the CommentAnchor in the document that this thread is
 	// tied to. Multiple comment threads may be anchored to the same CommentAnchor.
@@ -1298,8 +1291,7 @@ func (s DateElementPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 // DeleteCommentReplyRequest: Deletes a reply Post from a CommentThread or
 // SuggestionThread. Returns a 400 bad request error if: - The requesting user
 // is not the author of the post. - The reply post contains an action. - The
-// reply post contains an assignee. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// reply post contains an assignee.
 type DeleteCommentReplyRequest struct {
 	// CommentId: The ID of the CommentThread which the post belongs to.
 	CommentId string `json:"commentId,omitempty"`
@@ -1326,8 +1318,7 @@ func (s DeleteCommentReplyRequest) MarshalJSON() ([]byte, error) {
 }
 
 // DeleteCommentRequest: Deletes a CommentThread. Returns a 400 bad request
-// error if the requesting user is not the author of the headPost. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// error if the requesting user is not the author of the headPost.
 type DeleteCommentRequest struct {
 	// CommentId: The ID of the CommentThread that is being deleted.
 	CommentId string `json:"commentId,omitempty"`
@@ -1568,8 +1559,7 @@ func (s DeletePositionedObjectRequest) MarshalJSON() ([]byte, error) {
 }
 
 // DeleteSuggestionRequest: Deletes a suggestion. Returns a 403 forbidden error
-// if the requesting user is not the author of the suggestion. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// if the requesting user is not the author of the suggestion.
 type DeleteSuggestionRequest struct {
 	// SuggestionId: The ID of the suggestion.
 	SuggestionId string `json:"suggestionId,omitempty"`
@@ -1718,12 +1708,10 @@ type Document struct {
 	Body *Body `json:"body,omitempty"`
 	// Comments: Output only. The comments associated with the document. Only
 	// populated if the commentsViewMode parameter is set to require comments (such
-	// as `COMMENTS_VIEW_MODE_INCLUDED`). Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// as `COMMENTS_VIEW_MODE_INCLUDED`).
 	Comments []*CommentThread `json:"comments,omitempty"`
 	// CommentsViewMode: Output only. The comments view mode applied to the
-	// document. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// document.
 	//
 	// Possible values:
 	//   "COMMENTS_VIEW_MODE_UNSPECIFIED" - The CommentsViewMode is unspecified.
@@ -1825,8 +1813,7 @@ type Document struct {
 	SuggestedNamedStylesChanges map[string]SuggestedNamedStyles `json:"suggestedNamedStylesChanges,omitempty"`
 	// Suggestions: Output only. The suggestions associated with the document. Only
 	// populated if the commentsViewMode parameter is set to require comments (such
-	// as `COMMENTS_VIEW_MODE_INCLUDED`). Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// as `COMMENTS_VIEW_MODE_INCLUDED`).
 	Suggestions []*SuggestionThread `json:"suggestions,omitempty"`
 	// SuggestionsViewMode: Output only. The suggestions view mode applied to the
 	// document. Note: When editing a document, changes must be based on a document
@@ -2097,8 +2084,7 @@ type DocumentTab struct {
 	Body *Body `json:"body,omitempty"`
 	// CommentAnchors: The comment anchors in a document tab, keyed by anchor ID.
 	// Only populated if the commentsViewMode parameter is set to require comments
-	// (such as `COMMENTS_VIEW_MODE_INCLUDED`). Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// (such as `COMMENTS_VIEW_MODE_INCLUDED`).
 	CommentAnchors map[string]CommentAnchor `json:"commentAnchors,omitempty"`
 	// DocumentStyle: The style of the document tab.
 	DocumentStyle *DocumentStyle `json:"documentStyle,omitempty"`
@@ -2999,8 +2985,7 @@ func (s InlineObjectPropertiesSuggestionState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InsertCommentRequest: Inserts a CommentThread into the document. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// InsertCommentRequest: Inserts a CommentThread into the document.
 type InsertCommentRequest struct {
 	// AssigneeEmailAddress: Optional. The email address of the assignee of the
 	// comment. Leave empty for a non-assigned comment. May not exceed 2048 UTF-8
@@ -3031,8 +3016,7 @@ func (s InsertCommentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// InsertCommentResponse: Response message for inserting a comment. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// InsertCommentResponse: Response message for inserting a comment.
 type InsertCommentResponse struct {
 	// CommentThread: The newly-inserted comment thread.
 	CommentThread *CommentThread `json:"commentThread,omitempty"`
@@ -4787,8 +4771,7 @@ func (s PositionedObjectPropertiesSuggestionState) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Post: Represents a single post in a comment or suggestion thread. Developer
-// Preview (https://developers.google.com/workspace/preview).
+// Post: Represents a single post in a comment or suggestion thread.
 type Post struct {
 	// AssigneeEmail: Optional. The email of the user who is being newly assigned
 	// to the thread as part of this post. Returns a 400 bad request error if: -
@@ -4860,7 +4843,6 @@ func (s Post) MarshalJSON() ([]byte, error) {
 }
 
 // PostAuthor: Represents a user who authored a comment or suggestion post.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type PostAuthor struct {
 	// Anonymous: Whether the user is anonymous.
 	Anonymous bool `json:"anonymous,omitempty"`
@@ -4933,8 +4915,7 @@ func (s Range) MarshalJSON() ([]byte, error) {
 
 // RejectSuggestionRequest: Rejects a suggestion. Returns a 403 forbidden error
 // if the requesting user does not have edit access to the document and is not
-// the author of the suggestion. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// the author of the suggestion.
 type RejectSuggestionRequest struct {
 	// SuggestionId: The ID of the suggestion.
 	SuggestionId string `json:"suggestionId,omitempty"`
@@ -5105,11 +5086,9 @@ func (s ReplaceNamedRangeContentRequest) MarshalJSON() ([]byte, error) {
 
 // Request: A single update to apply to a document.
 type Request struct {
-	// AcceptSuggestion: Accepts a suggestion. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// AcceptSuggestion: Accepts a suggestion.
 	AcceptSuggestion *AcceptSuggestionRequest `json:"acceptSuggestion,omitempty"`
 	// AddCommentReply: Adds a reply to a CommentThread or SuggestionThread.
-	// Developer Preview (https://developers.google.com/workspace/preview).
 	AddCommentReply *AddCommentReplyRequest `json:"addCommentReply,omitempty"`
 	// AddDocumentTab: Adds a document tab.
 	AddDocumentTab *AddDocumentTabRequest `json:"addDocumentTab,omitempty"`
@@ -5125,12 +5104,10 @@ type Request struct {
 	CreateNamedRange *CreateNamedRangeRequest `json:"createNamedRange,omitempty"`
 	// CreateParagraphBullets: Creates bullets for paragraphs.
 	CreateParagraphBullets *CreateParagraphBulletsRequest `json:"createParagraphBullets,omitempty"`
-	// DeleteComment: Deletes a CommentThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// DeleteComment: Deletes a CommentThread.
 	DeleteComment *DeleteCommentRequest `json:"deleteComment,omitempty"`
 	// DeleteCommentReply: Deletes a reply Post from a CommentThread or
-	// SuggestionThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// SuggestionThread.
 	DeleteCommentReply *DeleteCommentReplyRequest `json:"deleteCommentReply,omitempty"`
 	// DeleteContentRange: Deletes content from the document.
 	DeleteContentRange *DeleteContentRangeRequest `json:"deleteContentRange,omitempty"`
@@ -5146,8 +5123,7 @@ type Request struct {
 	DeleteParagraphBullets *DeleteParagraphBulletsRequest `json:"deleteParagraphBullets,omitempty"`
 	// DeletePositionedObject: Deletes a positioned object from the document.
 	DeletePositionedObject *DeletePositionedObjectRequest `json:"deletePositionedObject,omitempty"`
-	// DeleteSuggestion: Deletes a suggestion. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// DeleteSuggestion: Deletes a suggestion.
 	DeleteSuggestion *DeleteSuggestionRequest `json:"deleteSuggestion,omitempty"`
 	// DeleteTab: Deletes a document tab.
 	DeleteTab *DeleteTabRequest `json:"deleteTab,omitempty"`
@@ -5155,8 +5131,7 @@ type Request struct {
 	DeleteTableColumn *DeleteTableColumnRequest `json:"deleteTableColumn,omitempty"`
 	// DeleteTableRow: Deletes a row from a table.
 	DeleteTableRow *DeleteTableRowRequest `json:"deleteTableRow,omitempty"`
-	// InsertComment: Inserts a CommentThread into the document. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// InsertComment: Inserts a CommentThread into the document.
 	InsertComment *InsertCommentRequest `json:"insertComment,omitempty"`
 	// InsertDate: Inserts a date.
 	InsertDate *InsertDateRequest `json:"insertDate,omitempty"`
@@ -5184,8 +5159,7 @@ type Request struct {
 	MergeTableCells *MergeTableCellsRequest `json:"mergeTableCells,omitempty"`
 	// PinTableHeaderRows: Updates the number of pinned header rows in a table.
 	PinTableHeaderRows *PinTableHeaderRowsRequest `json:"pinTableHeaderRows,omitempty"`
-	// RejectSuggestion: Rejects a suggestion. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// RejectSuggestion: Rejects a suggestion.
 	RejectSuggestion *RejectSuggestionRequest `json:"rejectSuggestion,omitempty"`
 	// ReplaceAllText: Replaces all instances of the specified text.
 	ReplaceAllText *ReplaceAllTextRequest `json:"replaceAllText,omitempty"`
@@ -5196,8 +5170,7 @@ type Request struct {
 	// UnmergeTableCells: Unmerges cells in a table.
 	UnmergeTableCells *UnmergeTableCellsRequest `json:"unmergeTableCells,omitempty"`
 	// UpdateCommentPost: Updates an existing post (head post or reply) of a
-	// CommentThread or SuggestionThread. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// CommentThread or SuggestionThread.
 	UpdateCommentPost *UpdateCommentPostRequest `json:"updateCommentPost,omitempty"`
 	// UpdateDocumentStyle: Updates the style of the document.
 	UpdateDocumentStyle *UpdateDocumentStyleRequest `json:"updateDocumentStyle,omitempty"`
@@ -5243,7 +5216,6 @@ func (s Request) MarshalJSON() ([]byte, error) {
 // Response: A single response from an update.
 type Response struct {
 	// AddCommentReply: The result of adding a reply to a comment or suggestion.
-	// Developer Preview (https://developers.google.com/workspace/preview).
 	AddCommentReply *AddCommentReplyResponse `json:"addCommentReply,omitempty"`
 	// AddDocumentTab: The result of adding a document tab.
 	AddDocumentTab *AddDocumentTabResponse `json:"addDocumentTab,omitempty"`
@@ -5257,8 +5229,7 @@ type Response struct {
 	CreateHeader *CreateHeaderResponse `json:"createHeader,omitempty"`
 	// CreateNamedRange: The result of creating a named range.
 	CreateNamedRange *CreateNamedRangeResponse `json:"createNamedRange,omitempty"`
-	// InsertComment: The result of inserting a comment. Developer Preview
-	// (https://developers.google.com/workspace/preview).
+	// InsertComment: The result of inserting a comment.
 	InsertComment *InsertCommentResponse `json:"insertComment,omitempty"`
 	// InsertDropdown: The result of inserting a dropdown.
 	InsertDropdown *InsertDropdownResponse `json:"insertDropdown,omitempty"`
@@ -6215,7 +6186,6 @@ func (s SuggestedTextStyle) MarshalJSON() ([]byte, error) {
 }
 
 // SuggestionResponse: The suggestions which were affected by a given update.
-// Developer Preview (https://developers.google.com/workspace/preview).
 type SuggestionResponse struct {
 	// AcceptedSuggestionIds: The IDs of suggestions which were accepted during the
 	// update.
@@ -6252,8 +6222,7 @@ func (s SuggestionResponse) MarshalJSON() ([]byte, error) {
 
 // SuggestionThread: Represents a single suggestion thread. Suggestion threads
 // are created as a byproduct of saving changes to the document while in
-// suggestion mode, and cannot be created directly. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// suggestion mode, and cannot be created directly.
 type SuggestionThread struct {
 	// HeadPost: The first post in the thread.
 	HeadPost *Post `json:"headPost,omitempty"`
@@ -7078,8 +7047,7 @@ func (s UnmergeTableCellsRequest) MarshalJSON() ([]byte, error) {
 // UpdateCommentPostRequest: Updates a Post in a CommentThread or
 // SuggestionThread. Returns a 400 bad request error if: - The post is the
 // headPost of a SuggestionThread. - The requesting user is not the author of
-// the post. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// the post.
 type UpdateCommentPostRequest struct {
 	// CommentId: The ID of the CommentThread which the post belongs to.
 	CommentId string `json:"commentId,omitempty"`
@@ -7571,15 +7539,13 @@ type WriteControl struct {
 	// edited documents this window might be shorter.
 	TargetRevisionId string `json:"targetRevisionId,omitempty"`
 	// WriteMode: How the request updates should be applied to the document. If
-	// unspecified, the request updates will be applied as normal edits. Developer
-	// Preview (https://developers.google.com/workspace/preview).
+	// unspecified, the request updates will be applied as normal edits.
 	//
 	// Possible values:
 	//   "WRITE_MODE_UNSPECIFIED" - The write mode is unspecified. Defaults to EDIT
 	// behavior.
 	//   "EDIT" - Apply all updates as normal edits.
-	//   "SUGGEST" - Apply all updates as suggestions. [Developer
-	// Preview](https://developers.google.com/workspace/preview).
+	//   "SUGGEST" - Apply all updates as suggestions.
 	WriteMode string `json:"writeMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequiredRevisionId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7842,8 +7808,7 @@ func (r *DocumentsService) Get(documentId string) *DocumentsGetCall {
 // comments_view_mode to COMMENTS_VIEW_MODE_INCLUDED or
 // COMMENTS_VIEW_MODE_DEFAULT_FOR_CURRENT_ACCESS, you may not set
 // suggestions_view_mode to PREVIEW_WITHOUT_SUGGESTIONS or
-// PREVIEW_SUGGESTIONS_ACCEPTED. Developer Preview
-// (https://developers.google.com/workspace/preview).
+// PREVIEW_SUGGESTIONS_ACCEPTED.
 //
 // Possible values:
 //

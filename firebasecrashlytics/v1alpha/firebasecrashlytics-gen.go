@@ -2858,7 +2858,8 @@ func (c *ProjectsAppsReportsGetCall) MetricsMode(metricsMode string) *ProjectsAp
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// result groups to return. If omitted, defaults to 25.
+// result groups to return. The maximum value is 100; values above 100 will be
+// coerced to 100. If omitted, defaults to 25.
 func (c *ProjectsAppsReportsGetCall) PageSize(pageSize int64) *ProjectsAppsReportsGetCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

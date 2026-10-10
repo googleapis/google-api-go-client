@@ -26555,6 +26555,10 @@ type GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo struct {
 	QuestionIndex int64 `json:"questionIndex,omitempty"`
 	// Session: Name of the newly generated or continued session.
 	Session string `json:"session,omitempty"`
+	// TaskName: Optional. The full resource name of the Sobi task if the
+	// conversation was handled by a long-running agent task. Format:
+	// projects/{project}/locations/{location}/tasks/{task_id}
+	TaskName string `json:"taskName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnswerQueryToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

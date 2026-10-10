@@ -2283,14 +2283,15 @@ func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudSecuritycenterV1BigQueryExport struct {
-	CreateTime       string `json:"createTime,omitempty"`
-	Dataset          string `json:"dataset,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Filter           string `json:"filter,omitempty"`
-	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	Name             string `json:"name,omitempty"`
-	Principal        string `json:"principal,omitempty"`
-	UpdateTime       string `json:"updateTime,omitempty"`
+	CreateTime                   string `json:"createTime,omitempty"`
+	Dataset                      string `json:"dataset,omitempty"`
+	DeletionNotificationsEnabled bool   `json:"deletionNotificationsEnabled,omitempty"`
+	Description                  string `json:"description,omitempty"`
+	Filter                       string `json:"filter,omitempty"`
+	MostRecentEditor             string `json:"mostRecentEditor,omitempty"`
+	Name                         string `json:"name,omitempty"`
+	Principal                    string `json:"principal,omitempty"`
+	UpdateTime                   string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2523,18 +2524,19 @@ func (s GoogleCloudSecuritycenterV1MuteConfig) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudSecuritycenterV1NotificationMessage struct {
+	DeletedFinding         bool                                 `json:"deletedFinding,omitempty"`
 	Finding                *Finding                             `json:"finding,omitempty"`
 	NotificationConfigName string                               `json:"notificationConfigName,omitempty"`
 	Resource               *GoogleCloudSecuritycenterV1Resource `json:"resource,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Finding") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DeletedFinding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Finding") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeletedFinding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3811,15 +3813,16 @@ func (s GoogleCloudSecuritycenterV2BackupDisasterRecovery) MarshalJSON() ([]byte
 }
 
 type GoogleCloudSecuritycenterV2BigQueryExport struct {
-	CreateTime       string `json:"createTime,omitempty"`
-	CryptoKeyName    string `json:"cryptoKeyName,omitempty"`
-	Dataset          string `json:"dataset,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Filter           string `json:"filter,omitempty"`
-	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	Name             string `json:"name,omitempty"`
-	Principal        string `json:"principal,omitempty"`
-	UpdateTime       string `json:"updateTime,omitempty"`
+	CreateTime                   string `json:"createTime,omitempty"`
+	CryptoKeyName                string `json:"cryptoKeyName,omitempty"`
+	Dataset                      string `json:"dataset,omitempty"`
+	DeletionNotificationsEnabled bool   `json:"deletionNotificationsEnabled,omitempty"`
+	Description                  string `json:"description,omitempty"`
+	Filter                       string `json:"filter,omitempty"`
+	MostRecentEditor             string `json:"mostRecentEditor,omitempty"`
+	Name                         string `json:"name,omitempty"`
+	Principal                    string `json:"principal,omitempty"`
+	UpdateTime                   string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6441,18 +6444,19 @@ func (s GoogleCloudSecuritycenterV2Notebook) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudSecuritycenterV2NotificationMessage struct {
+	DeletedFinding         bool                                 `json:"deletedFinding,omitempty"`
 	Finding                *GoogleCloudSecuritycenterV2Finding  `json:"finding,omitempty"`
 	NotificationConfigName string                               `json:"notificationConfigName,omitempty"`
 	Resource               *GoogleCloudSecuritycenterV2Resource `json:"resource,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Finding") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DeletedFinding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Finding") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeletedFinding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

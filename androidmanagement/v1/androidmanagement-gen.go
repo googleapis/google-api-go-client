@@ -4751,7 +4751,7 @@ type KeyguardSecuredEvent struct {
 
 // KioskCustomization: Settings controlling the behavior of a device in kiosk
 // mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true or
-// specify an app in the policy with installType KIOSK.
+// specify an app in the policy with the KIOSK role.
 type KioskCustomization struct {
 	// DeviceSettings: Optional. Specifies whether the Settings app is allowed in
 	// kiosk mode.
@@ -6712,7 +6712,7 @@ type Policy struct {
 	KioskCustomLauncherEnabled bool `json:"kioskCustomLauncherEnabled,omitempty"`
 	// KioskCustomization: Optional. Settings controlling the behavior of a device
 	// in kiosk mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true
-	// or specify an app in the policy with installType KIOSK.
+	// or specify an app in the policy with the KIOSK role.
 	KioskCustomization *KioskCustomization `json:"kioskCustomization,omitempty"`
 	// LocationMode: The degree of location detection enabled.
 	//

@@ -14104,6 +14104,11 @@ func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 //	"MINIMUM" - Organization data will be retained for the minimum period of
 //
 // 24 hours.
+//
+//	"NO_RETENTION" - Does not retain organization data and permanently deletes
+//
+// the organization immediately. **Warning:** You will NOT be able to restore
+// the Apigee organization when using this option.
 func (c *OrganizationsDeleteCall) Retention(retention string) *OrganizationsDeleteCall {
 	c.urlParams_.Set("retention", retention)
 	return c

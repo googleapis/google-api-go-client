@@ -2145,6 +2145,8 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// Possible values:
 	//   "NOT_VERIFIED" - Not a verifiable build (the default).
 	//   "VERIFIED" - Build must be verified.
+	//   "BEST_EFFORT" - Build verification is best effort. If provenance
+	// generation fails, the build will still succeed.
 	RequestedVerifyOption string `json:"requestedVerifyOption,omitempty"`
 	// ResolvedWorkerRelease: Output only. Worker release resolved from the release
 	// channel.

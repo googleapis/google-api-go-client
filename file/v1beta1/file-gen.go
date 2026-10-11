@@ -443,6 +443,39 @@ func (s Backup) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// CreateFromSourceRequest: Request for creating a volume from an existing data
+// source (such as a backup).
+type CreateFromSourceRequest struct {
+	// Backup: The resource name of the backup to create from. Format:
+	// projects/{project}/locations/{location}/backups/{backup}
+	Backup string `json:"backup,omitempty"`
+	// IpAcls: Optional. IP ACLs defining permissions/ACLs to apply to the newly
+	// created volume.
+	IpAcls []*NfsExportOptions `json:"ipAcls,omitempty"`
+	// Quota: Optional. The limit for how much data can be written to this volume,
+	// in MiB.
+	Quota int64 `json:"quota,omitempty,string"`
+	// VolumeId: Required. Unique identifier for the volume which also appears in
+	// the volumes resource name.
+	VolumeId string `json:"volumeId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateFromSourceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateFromSourceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DailyCycle: Time window specified for daily operations.
 type DailyCycle struct {
 	// Duration: Output only. Duration of the time window, set by service producer.
@@ -503,6 +536,10 @@ type Date struct {
 func (s Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeleteVolumeRequest: DeleteVolumeRequest deletes a volume.
+type DeleteVolumeRequest struct {
 }
 
 // DenyMaintenancePeriod: DenyMaintenancePeriod definition. Maintenance is
@@ -2468,6 +2505,32 @@ func (s TimeOfDay) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// UnfreezeVolumeRequest: Request for unfreezing a volume.
+type UnfreezeVolumeRequest struct {
+	// IpAcls: Optional. IP ACLs defining permissions/ACLs to apply to the unfrozen
+	// volume
+	IpAcls []*NfsExportOptions `json:"ipAcls,omitempty"`
+	// Quota: Optional. The limit for how much data can be written to this volume,
+	// in MiB.
+	Quota int64 `json:"quota,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "IpAcls") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IpAcls") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnfreezeVolumeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UnfreezeVolumeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpdatePolicy: Maintenance policy applicable to instance updates.
 type UpdatePolicy struct {
 	// Channel: Optional. Relative scheduling channel applied to resource.
@@ -2523,6 +2586,8 @@ type Volume struct {
 	// Description: Optional. A description of the volume with 2048 characters or
 	// less. Requests with longer descriptions will be rejected.
 	Description string `json:"description,omitempty"`
+	// IpAcls: Optional. User-defined permissions protecting mount points.
+	IpAcls []*NfsExportOptions `json:"ipAcls,omitempty"`
 	// Labels: Optional. Resource labels to represent user provided metadata.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MountPoint: Output only. The mount point of the volume.
@@ -2531,6 +2596,21 @@ type Volume struct {
 	// `projects/{project}/locations/{location}/volumePools/{volume_pool}/volumes/{v
 	// olume}`.
 	Name string `json:"name,omitempty"`
+	// QuotaMib: Optional. The maximum size of the volume in mebibytes (MiB).
+	QuotaMib int64 `json:"quotaMib,omitempty,string"`
+	// State: Optional. The state of the volume. This field is caller-settable via
+	// `UpdateVolume` to transition a volume from `HOT` to `COLD` (freezing the
+	// volume). In `CreateVolume`, this field is output-only and initialized to
+	// `HOT`.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the volume is unknown.
+	//   "CREATING" - The volume is being created.
+	//   "HOT" - The volume is hot and bound to a physical share.
+	//   "WARM" - The volume is warm - volume is unmountable and doesn't count as
+	// an active share, but is on hot storage.
+	//   "COLD" - The volume is cold and released from its physical share.
+	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -2554,13 +2634,15 @@ func (s Volume) MarshalJSON() ([]byte, error) {
 
 // VolumePool: VolumePool representation of a Cloud Filestore volume pool.
 type VolumePool struct {
+	// ActiveVolumeCount: Optional. The number of active volumes. Default: 100.
+	ActiveVolumeCount int64 `json:"activeVolumeCount,omitempty"`
 	// ActiveVolumeIops: Optional. The number of IOPs provisioned per active
 	// volume.
 	ActiveVolumeIops int64 `json:"activeVolumeIops,omitempty"`
 	// CreateTime: Output only. The time when the volume pool was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DefaultVolumeQuotaMib: Optional. The default quota per volume in MiB.
-	// Default: 1024 MiB.
+	// DefaultVolumeQuotaMib: Optional. The default quota per volume in MiB. Must
+	// be between 100 MiB and 102400 MiB (100 GiB). Default: 1024 MiB.
 	DefaultVolumeQuotaMib int64 `json:"defaultVolumeQuotaMib,omitempty"`
 	// Description: Optional. A description of the volume pool with 2048 characters
 	// or less.
@@ -2573,18 +2655,26 @@ type VolumePool struct {
 	// Network: Required. The VPC network to which the VolumePool should be
 	// attached. Only Private Service Connect (PSC) is supported.
 	Network string `json:"network,omitempty"`
+	// State: Output only. The state of the volume pool.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State is not specified.
+	//   "READY" - Volume pool is available for use.
+	//   "DELETING" - Volume pool is being deleted.
+	//   "INVALID" - Volume pool is in an invalid state.
+	State string `json:"state,omitempty"`
 	// Uid: Output only. System-assigned unique identifier for the volume pool.
 	Uid string `json:"uid,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ActiveVolumeIops") to
+	// ForceSendFields is a list of field names (e.g. "ActiveVolumeCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ActiveVolumeIops") to include in
+	// NullFields is a list of field names (e.g. "ActiveVolumeCount") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -7237,6 +7327,111 @@ func (c *ProjectsLocationsVolumePoolsVolumesCreateCall) Do(opts ...googleapi.Cal
 	return ret, nil
 }
 
+type ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall struct {
+	s                       *Service
+	parent                  string
+	createfromsourcerequest *CreateFromSourceRequest
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// CreateFromSource: Creates a volume in a volume pool from an existing data
+// source (such as a Filestore backup).
+//
+//   - parent: The parent resource where this volume will be created. Format:
+//     projects/{project}/locations/{location}/volumePools/{volume_pool}.
+func (r *ProjectsLocationsVolumePoolsVolumesService) CreateFromSource(parent string, createfromsourcerequest *CreateFromSourceRequest) *ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall {
+	c := &ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createfromsourcerequest = createfromsourcerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall) Context(ctx context.Context) *ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createfromsourcerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/volumes:createFromSource")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.createFromSource", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "file.projects.locations.volumePools.volumes.createFromSource" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumePoolsVolumesCreateFromSourceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.createFromSource", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsVolumePoolsVolumesDeleteCall struct {
 	s          *Service
 	name       string
@@ -7333,6 +7528,224 @@ func (c *ProjectsLocationsVolumePoolsVolumesDeleteCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsVolumePoolsVolumesDirectCreateCall struct {
+	s          *Service
+	parent     string
+	volume     *Volume
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// DirectCreate: Creates a volume directly on the CLH, bypassing CCFE. This is
+// a temporary PoC that will be used for testing and removed.
+//
+//   - parent: The parent volume pool path, in the format
+//     `projects/{project}/locations/{location}/volumePools/{volume_pool}`.
+func (r *ProjectsLocationsVolumePoolsVolumesService) DirectCreate(parent string, volume *Volume) *ProjectsLocationsVolumePoolsVolumesDirectCreateCall {
+	c := &ProjectsLocationsVolumePoolsVolumesDirectCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.volume = volume
+	return c
+}
+
+// VolumeId sets the optional parameter "volumeId": Required. The ID to use for
+// the volume. The ID must be unique within the specified volume pool.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectCreateCall) VolumeId(volumeId string) *ProjectsLocationsVolumePoolsVolumesDirectCreateCall {
+	c.urlParams_.Set("volumeId", volumeId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumePoolsVolumesDirectCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectCreateCall) Context(ctx context.Context) *ProjectsLocationsVolumePoolsVolumesDirectCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumePoolsVolumesDirectCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.volume)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/volumes:directCreate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.directCreate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "file.projects.locations.volumePools.volumes.directCreate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Volume.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectCreateCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Volume{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.directCreate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsVolumePoolsVolumesDirectDeleteCall struct {
+	s                   *Service
+	name                string
+	deletevolumerequest *DeleteVolumeRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// DirectDelete: Deletes a volume directly on the CLH, bypassing CCFE. This is
+// a temporary PoC that will be used for testing and removed.
+//
+//   - name: The volume resource name, in the format
+//     `projects/{project}/locations/{location}/volumePools/{volume_pool}/volumes/
+//     {volume}`.
+func (r *ProjectsLocationsVolumePoolsVolumesService) DirectDelete(name string, deletevolumerequest *DeleteVolumeRequest) *ProjectsLocationsVolumePoolsVolumesDirectDeleteCall {
+	c := &ProjectsLocationsVolumePoolsVolumesDirectDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.deletevolumerequest = deletevolumerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumePoolsVolumesDirectDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectDeleteCall) Context(ctx context.Context) *ProjectsLocationsVolumePoolsVolumesDirectDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumePoolsVolumesDirectDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deletevolumerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:directDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.directDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "file.projects.locations.volumePools.volumes.directDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumePoolsVolumesDirectDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.directDelete", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7605,4 +8018,221 @@ func (c *ProjectsLocationsVolumePoolsVolumesListCall) Pages(ctx context.Context,
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsVolumePoolsVolumesPatchCall struct {
+	s          *Service
+	name       string
+	volume     *Volume
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the settings of a specific volume.
+//
+//   - name: Identifier. The resource name of the volume, in the format
+//     `projects/{project}/locations/{location}/volumePools/{volume_pool}/volumes/
+//     {volume}`.
+func (r *ProjectsLocationsVolumePoolsVolumesService) Patch(name string, volume *Volume) *ProjectsLocationsVolumePoolsVolumesPatchCall {
+	c := &ProjectsLocationsVolumePoolsVolumesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.volume = volume
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Mask of
+// fields to update. At least one path must be supplied in this field.
+func (c *ProjectsLocationsVolumePoolsVolumesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsVolumePoolsVolumesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumePoolsVolumesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumePoolsVolumesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumePoolsVolumesPatchCall) Context(ctx context.Context) *ProjectsLocationsVolumePoolsVolumesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumePoolsVolumesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumePoolsVolumesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.volume)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "file.projects.locations.volumePools.volumes.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Volume.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumePoolsVolumesPatchCall) Do(opts ...googleapi.CallOption) (*Volume, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Volume{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsVolumePoolsVolumesUnfreezeCall struct {
+	s                     *Service
+	name                  string
+	unfreezevolumerequest *UnfreezeVolumeRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Unfreeze: Unfreezes a volume.
+//
+//   - name: The name of the volume to unfreeze. Format:
+//     `projects/{project}/locations/{location}/volumePools/{volume_pool}/volumes/
+//     {volume}`.
+func (r *ProjectsLocationsVolumePoolsVolumesService) Unfreeze(name string, unfreezevolumerequest *UnfreezeVolumeRequest) *ProjectsLocationsVolumePoolsVolumesUnfreezeCall {
+	c := &ProjectsLocationsVolumePoolsVolumesUnfreezeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.unfreezevolumerequest = unfreezevolumerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsVolumePoolsVolumesUnfreezeCall) Fields(s ...googleapi.Field) *ProjectsLocationsVolumePoolsVolumesUnfreezeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsVolumePoolsVolumesUnfreezeCall) Context(ctx context.Context) *ProjectsLocationsVolumePoolsVolumesUnfreezeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsVolumePoolsVolumesUnfreezeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsVolumePoolsVolumesUnfreezeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unfreezevolumerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:unfreeze")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.unfreeze", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "file.projects.locations.volumePools.volumes.unfreeze" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsVolumePoolsVolumesUnfreezeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "file.projects.locations.volumePools.volumes.unfreeze", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }

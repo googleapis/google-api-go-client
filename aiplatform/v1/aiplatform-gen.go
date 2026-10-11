@@ -3549,6 +3549,9 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	ExrColorSpaceOverride string `json:"exrColorSpaceOverride,omitempty"`
 	// HumanPose: Human pose parameters for Pose Control
 	HumanPose *CloudAiLargeModelsVisionHumanPose `json:"humanPose,omitempty"`
+	// LoraConfig: Optional. LoRA configuration for Omni editing/stylization
+	// models.
+	LoraConfig *CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfig `json:"loraConfig,omitempty"`
 	// ModelEndpointOverride: Optional. BNS override for model backend. Enabled
 	// only for local and autopush environments by the flag
 	// `lvm_allow_model_zoo_bns_override`.
@@ -3584,6 +3587,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	Seamless *CloudAiLargeModelsVisionSeamless `json:"seamless,omitempty"`
 	// SpatialAlignment: Optional. Spatial alignment configuration.
 	SpatialAlignment *CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig `json:"spatialAlignment,omitempty"`
+	// SuperResConfig: Config for the Pro Super Res upsampling task.
+	SuperResConfig *CloudAiLargeModelsVisionGenerateVideoExperimentsSuperResConfig `json:"superResConfig,omitempty"`
 	// TruncateInputVideo: If true (default), truncate input videos that exceed the
 	// model's maximum frame count by applying a frame_selection_config to
 	// __video_file__ inputs. Set to false to preserve the existing fail-fast
@@ -3706,6 +3711,70 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame struct {
 func (s CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsConditioningFrame
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfig: Configuration
+// for Multi-LoRA adaptation.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfig struct {
+	// Adapters: List of LoRA adapters to apply.
+	Adapters []*CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfigAdapter `json:"adapters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Adapters") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Adapters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfigAdapter struct {
+	// Id: The registered ID of the LoRA adapter (e.g. "lora_xxx").
+	Id string `json:"id,omitempty"`
+	// ResolvedPath: Internal field populated after validation: resolved TFHub
+	// path.
+	ResolvedPath string `json:"resolvedPath,omitempty"`
+	// Weight: The blending scale/weight of the LoRA adapter. Must be in the range
+	// (0.0, 1.0]. Default is 1.0.
+	Weight float64 `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfigAdapter) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfigAdapter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfigAdapter) UnmarshalJSON(data []byte) error {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfigAdapter
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
 }
 
 // CloudAiLargeModelsVisionGenerateVideoExperimentsOmniRewriterConfig:
@@ -3869,6 +3938,35 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig stru
 
 func (s CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsSpatialAlignmentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CloudAiLargeModelsVisionGenerateVideoExperimentsSuperResConfig: Config for
+// the Pro Super Res upsampling task.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsSuperResConfig struct {
+	// Mode: Super Res mode. Required.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED"
+	//   "MODE_4K" - Single-pass 4K UDiT.
+	//   "MODE_8K" - Single-pass 8K UDiT.
+	//   "MODE_4K_PRO" - "8K UDiT, downsampled 2x in the decoder.
+	Mode string `json:"mode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsSuperResConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsSuperResConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4869,6 +4967,10 @@ type GoogleCloudAiplatformV1Agent struct {
 	Id string `json:"id,omitempty"`
 	// Metadata: Optional. The metadata for the agent.
 	Metadata map[string]string `json:"metadata,omitempty"`
+	// ModelConfig: Optional. Model configuration for the agent. When set, tasks
+	// running under this agent default to this model configuration if they do not
+	// specify their own.
+	ModelConfig *GoogleCloudAiplatformV1AgentModelConfig `json:"modelConfig,omitempty"`
 	// Name: Identifier. The resource name of the agent. Format:
 	// `projects/{project}/locations/{location}/agents/{agent}`.
 	Name string `json:"name,omitempty"`
@@ -5011,6 +5113,53 @@ type GoogleCloudAiplatformV1AgentEvent struct {
 func (s GoogleCloudAiplatformV1AgentEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1AgentEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1AgentModelConfig: Selects the model configuration for
+// an agent. Starts with just the model id/alias; extensible with further model
+// parameters without a breaking change.
+type GoogleCloudAiplatformV1AgentModelConfig struct {
+	// Model: Optional. Publisher model resource name (an
+	// `aiplatform.googleapis.com/PublisherModel`) of the form
+	// "publishers/{publisher}/models/{model}", e.g.
+	// "publishers/anthropic/models/claude-opus-4-8" or
+	// "publishers/google/models/gemini-3-flash". Empty means the agent's default
+	// gemini model.
+	Model string `json:"model,omitempty"`
+	// Temperature: Optional. Sampling temperature for the model's generation
+	// config (valid range (0.0, 2.0]); a value outside that range leaves the
+	// backend default standing.
+	Temperature float64 `json:"temperature,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Model") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Model") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1AgentModelConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1AgentModelConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1AgentModelConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1AgentModelConfig
+	var s1 struct {
+		Temperature gensupport.JSONFloat64 `json:"temperature"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Temperature = float64(s1.Temperature)
+	return nil
 }
 
 // GoogleCloudAiplatformV1AgentResponseCustomization: Customizes the agent's
@@ -14154,7 +14303,12 @@ func (s GoogleCloudAiplatformV1EvaluationPromptUserScenario) MarshalJSON() ([]by
 // (containing text or AgentData context). 2. Offline Eval Mode: `prompt` is
 // unset, and `candidate_responses` contains `agent_data` (the completed
 // execution trace). Validation Rule: Either `prompt` must be set, OR at least
-// one of the `candidate_responses` must contain `agent_data`.
+// one of the `candidate_responses` must contain `agent_data`. Metrics receive
+// each candidate as an `EvaluationInstance`, whose fields are the names
+// metrics can reference: `prompt` -> `prompt`, the candidate -> `response` (or
+// `agent_eval_data` for `agent_data`), `golden_response` -> `reference`,
+// `rubrics` -> `rubric_groups`, and `prompt.prompt_template_data.values` and
+// `extra_context` -> `other_data`.
 type GoogleCloudAiplatformV1EvaluationRequest struct {
 	// CandidateResponses: Optional. Responses from model under test and other
 	// baseline models for comparison.
@@ -14382,6 +14536,13 @@ func (s GoogleCloudAiplatformV1EvaluationRunDataSource) MarshalJSON() ([]byte, e
 // GoogleCloudAiplatformV1EvaluationRunEvaluationConfig: The Evalution
 // configuration used for the evaluation run.
 type GoogleCloudAiplatformV1EvaluationRunEvaluationConfig struct {
+	// AllowCrossRegionModel: Optional. Allows the evaluation run to use cross
+	// region models. When this flag is set, the service may route traffic to other
+	// regions if a model is unavailable in the current region (e.g., to a `global`
+	// endpoint). If a fully-qualified model endpoint resource name with a
+	// different region than the run location is provided elsewhere in the run
+	// config, this flag must be set to true or the request will fail.
+	AllowCrossRegionModel bool `json:"allowCrossRegionModel,omitempty"`
 	// AutoraterConfig: Optional. The autorater config for the evaluation run.
 	AutoraterConfig *GoogleCloudAiplatformV1EvaluationRunEvaluationConfigAutoraterConfig `json:"autoraterConfig,omitempty"`
 	// CloudLoggingConfig: Optional. Configuration for exporting evaluation results
@@ -14411,15 +14572,15 @@ type GoogleCloudAiplatformV1EvaluationRunEvaluationConfig struct {
 	// evaluation metric, the rubrics generated for the metric will be used for
 	// evaluation.
 	RubricConfigs []*GoogleCloudAiplatformV1EvaluationRubricConfig `json:"rubricConfigs,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AutoraterConfig") to
+	// ForceSendFields is a list of field names (e.g. "AllowCrossRegionModel") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AutoraterConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowCrossRegionModel") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -47099,7 +47260,8 @@ func (s GoogleCloudAiplatformV1Segment) MarshalJSON() ([]byte, error) {
 // that Agent.
 type GoogleCloudAiplatformV1SemanticGovernancePolicy struct {
 	// Agent: Required. The name of the agent in Agent Registry that is affected by
-	// this policy.
+	// this policy. Format:
+	// `projects/{project}/locations/{location}/agents/{agent}`
 	Agent string `json:"agent,omitempty"`
 	// AgentIdentity: Output only. Represents the principal of the agent, used by
 	// the Policy Decision Point (PDP) for governance checks. For more information,
@@ -47236,9 +47398,8 @@ type GoogleCloudAiplatformV1SemanticGovernancePolicyMcpTool struct {
 	// that is affected by this policy. Format:
 	// `projects/{project}/locations/{location}/mcpServers/{mcp_server}`
 	McpServer string `json:"mcpServer,omitempty"`
-	// Tools: Optional. The resource names of the McpTools used by the Agent that
-	// is affected by this policy. If not specified, the policy applies to all
-	// McpTools in the McpServer.
+	// Tools: Required. The resource names of the tools used by the Agent that is
+	// affected by this policy. Currently, exactly one tool must be specified.
 	Tools []string `json:"tools,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "McpServer") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -50759,38 +50920,42 @@ type GoogleCloudAiplatformV1ToolCallValidSpec struct {
 type GoogleCloudAiplatformV1ToolCodeExecution struct {
 }
 
-// GoogleCloudAiplatformV1ToolComputerUse: Tool to support computer use.
+// GoogleCloudAiplatformV1ToolComputerUse: A tool that enables the model to
+// interact directly with a computer environment.
 type GoogleCloudAiplatformV1ToolComputerUse struct {
-	// DisabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+	// DisabledSafetyPolicies: Optional. A list of safety policies to disable for
+	// the computer use tool.
 	//
 	// Possible values:
-	//   "SAFETY_POLICY_UNSPECIFIED" - Unspecified safety policy. This value should
-	// not be used.
-	//   "FINANCIAL_TRANSACTIONS" - Financial transactions safety policy.
-	//   "SENSITIVE_DATA_MODIFICATION" - Sensitive data modification safety policy.
-	//   "COMMUNICATION_TOOL" - Communication tool safety policy.
-	//   "ACCOUNT_CREATION" - Account creation safety policy.
-	//   "DATA_MODIFICATION" - Data modification safety policy.
-	//   "USER_CONSENT_MANAGEMENT" - User consent management safety policy.
-	//   "LEGAL_TERMS_AND_AGREEMENTS" - Legal terms and agreements safety policy.
+	//   "SAFETY_POLICY_UNSPECIFIED" - The safety policy is unspecified.
+	//   "FINANCIAL_TRANSACTIONS" - Policy that restricts financial transactions.
+	//   "SENSITIVE_DATA_MODIFICATION" - Policy that restricts modification of
+	// sensitive data.
+	//   "COMMUNICATION_TOOL" - Policy that restricts the use of communication
+	// tools.
+	//   "ACCOUNT_CREATION" - Policy that restricts the creation of accounts.
+	//   "DATA_MODIFICATION" - Policy that restricts general data modification.
+	//   "USER_CONSENT_MANAGEMENT" - Policy that restricts user consent management.
+	//   "LEGAL_TERMS_AND_AGREEMENTS" - Policy that restricts interaction with
+	// legal terms and agreements.
 	DisabledSafetyPolicies []string `json:"disabledSafetyPolicies,omitempty"`
-	// EnablePromptInjectionDetection: Optional. Enables the prompt injection
-	// detection check on computer-use request.
+	// EnablePromptInjectionDetection: Optional. Whether to enable the prompt
+	// injection detection check on the computer use request.
 	EnablePromptInjectionDetection bool `json:"enablePromptInjectionDetection,omitempty"`
-	// Environment: Required. The environment being operated.
+	// Environment: Required. The target environment where the computer use tool
+	// operates.
 	//
 	// Possible values:
-	//   "ENVIRONMENT_UNSPECIFIED" - Defaults to browser.
-	//   "ENVIRONMENT_BROWSER" - Operates in a web browser.
-	//   "ENVIRONMENT_MOBILE" - Operates in a mobile environment.
-	//   "ENVIRONMENT_DESKTOP" - Operates in a desktop environment.
+	//   "ENVIRONMENT_UNSPECIFIED" - The environment is unspecified.
+	//   "ENVIRONMENT_BROWSER" - The tool operates in a web browser.
+	//   "ENVIRONMENT_MOBILE" - The tool operates in a mobile environment.
+	//   "ENVIRONMENT_DESKTOP" - The tool operates in a desktop environment.
 	Environment string `json:"environment,omitempty"`
-	// ExcludedPredefinedFunctions: Optional. By default, predefined functions
+	// ExcludedPredefinedFunctions: Optional. A list of predefined functions to
+	// explicitly exclude from the model call. By default, predefined functions
 	// (https://cloud.google.com/vertex-ai/generative-ai/docs/computer-use#supported-actions)
-	// are included in the final model call. Some of them can be explicitly
-	// excluded from being automatically included. This can serve two purposes: 1.
-	// Using a more restricted / different action space. 2. Improving the
-	// definitions / instructions of predefined functions.
+	// are included. Excluding functions allows for a more restricted action space
+	// or custom definitions for predefined functions.
 	ExcludedPredefinedFunctions []string `json:"excludedPredefinedFunctions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisabledSafetyPolicies") to
 	// unconditionally include in API requests. By default, fields with empty or

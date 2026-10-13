@@ -12,6 +12,12 @@ all: $(GENERATOR)
 	$(GENERATOR) -cache=false -install -api=* -gendir=..
 	go test . -v
 
+# A version of "all" but that doesn't exit if some API generations fail.
+all-with-failures: SHELL:=/bin/bash
+all-with-failures: $(GENERATOR)
+	$(GENERATOR) --allow_failure_limit=99 -cache=false -install -api=* -gendir=..
+	go test . -v
+
 # Reuse cached API specifications in $TMPDIR and rebuild Go bindings.
 cached: $(GENERATOR)
 	$(GENERATOR) -cache=true -install -api=* -gendir=..
@@ -33,4 +39,4 @@ generator: $(GENERATOR)
 $(GENERATOR):
 	go build -o $@
 
-.PHONY: all cached local generator $(GENERATOR)
+.PHONY: all all-with-failures cached local generator $(GENERATOR)

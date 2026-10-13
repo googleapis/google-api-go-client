@@ -210,7 +210,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.NodeGroups = NewNodeGroupsService(s)
 	s.NodeTemplates = NewNodeTemplatesService(s)
 	s.NodeTypes = NewNodeTypesService(s)
-	s.OrgVmExtensionPolicies = NewOrgVmExtensionPoliciesService(s)
 	s.OrganizationGlobalVmExtensionPolicies = NewOrganizationGlobalVmExtensionPoliciesService(s)
 	s.OrganizationRolloutPlans = NewOrganizationRolloutPlansService(s)
 	s.OrganizationRollouts = NewOrganizationRolloutsService(s)
@@ -453,8 +452,6 @@ type Service struct {
 	NodeTemplates *NodeTemplatesService
 
 	NodeTypes *NodeTypesService
-
-	OrgVmExtensionPolicies *OrgVmExtensionPoliciesService
 
 	OrganizationGlobalVmExtensionPolicies *OrganizationGlobalVmExtensionPoliciesService
 
@@ -1219,15 +1216,6 @@ func NewNodeTypesService(s *Service) *NodeTypesService {
 }
 
 type NodeTypesService struct {
-	s *Service
-}
-
-func NewOrgVmExtensionPoliciesService(s *Service) *OrgVmExtensionPoliciesService {
-	rs := &OrgVmExtensionPoliciesService{s: s}
-	return rs
-}
-
-type OrgVmExtensionPoliciesService struct {
 	s *Service
 }
 
@@ -33740,6 +33728,9 @@ type Instance struct {
 	// Local SSDs attached to the VM.
 	//
 	// Possible values:
+	//   "CMEK_ENCRYPTION" - The given VM will use customer-managed encryption keys
+	// for
+	// encryption of Local SSDs.
 	//   "EPHEMERAL_KEY_ENCRYPTION" - The given VM will opt-in for using ephemeral
 	// key for
 	// encryption of Local SSDs.
@@ -39800,6 +39791,9 @@ type InstanceProperties struct {
 	// Local SSDs attached to the VM.
 	//
 	// Possible values:
+	//   "CMEK_ENCRYPTION" - The given VM will use customer-managed encryption keys
+	// for
+	// encryption of Local SSDs.
 	//   "EPHEMERAL_KEY_ENCRYPTION" - The given VM will opt-in for using ephemeral
 	// key for
 	// encryption of Local SSDs.

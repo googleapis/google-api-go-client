@@ -1,5 +1,14 @@
 # Changes
 
+## [0.304.0](https://github.com/googleapis/google-api-go-client/compare/v0.303.0...v0.304.0) (2026-10-14)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3770](https://github.com/googleapis/google-api-go-client/issues/3770)) ([a3ea7ac](https://github.com/googleapis/google-api-go-client/commit/a3ea7ac8e2ba2175bf3a62a987a9339c62ec4e55))
+* **all:** Auto-regenerate discovery clients ([#3773](https://github.com/googleapis/google-api-go-client/issues/3773)) ([795f958](https://github.com/googleapis/google-api-go-client/commit/795f958ae8e693013a1932902b194f937290aff0))
+* Enable non-blocking mode for generation pipeline ([#3772](https://github.com/googleapis/google-api-go-client/issues/3772)) ([bd231b0](https://github.com/googleapis/google-api-go-client/commit/bd231b0d6b8ab91ed5f2e9ad977c53620872ecd9))
+
 ## [0.303.0](https://github.com/googleapis/google-api-go-client/compare/v0.302.0...v0.303.0) (2026-10-13)
 
 

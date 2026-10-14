@@ -2001,8 +2001,8 @@ func (s Interval) MarshalJSON() ([]byte, error) {
 // invocation. If both `included_targets` and `included_tags` are unset, all
 // actions will be included.
 type InvocationConfig struct {
-	// EndUserAuthConfig: Optional. Configuration for end user authentication. Note
-	// that this should not be set when `service_account` is used.
+	// EndUserAuthConfig: Optional. Configuration for end user authentication. Do
+	// not set if `service_account` is used.
 	EndUserAuthConfig *EndUserAuthenticationConfig `json:"endUserAuthConfig,omitempty"`
 	// ExecutionMode: Optional. Specifies the execution mode for the workflow
 	// invocation.

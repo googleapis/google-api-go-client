@@ -395,14 +395,17 @@ type Backup struct {
 	Description string `json:"description,omitempty"`
 	// DisplayName: User-settable and human-readable display name for the Backup.
 	DisplayName string `json:"displayName,omitempty"`
-	// Edition: Output only. The edition of the cluster this backup was created
-	// from. Any restored cluster created from this backup will have the same
-	// edition.
+	// Edition: Output only. Deprecated: Use `express_config` instead. Output only.
+	// The edition of the cluster this backup was created from. Any restored
+	// cluster created from this backup will have the same edition.
 	//
 	// Possible values:
-	//   "EDITION_UNSPECIFIED" - An unknown Edition type.
-	//   "EDITION_ALLOYDB" - Standard AlloyDB cluster.
-	//   "EDITION_ALLOYDB_DEVELOPER" - Developer edition cluster.
+	//   "EDITION_UNSPECIFIED" - Deprecated: Use `ExpressConfig` instead. An
+	// unknown Edition type.
+	//   "EDITION_ALLOYDB" - Deprecated: Use `ExpressConfig` instead. Standard
+	// AlloyDB cluster.
+	//   "EDITION_ALLOYDB_DEVELOPER" - Deprecated: Use `ExpressConfig` instead.
+	// Developer edition cluster.
 	Edition string `json:"edition,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the backup with a customer-managed encryption key (CMEK). When this
@@ -421,6 +424,10 @@ type Backup struct {
 	// be garbage collected. It is the duration specified by the backup's retention
 	// policy, added to the backup's create_time.
 	ExpiryTime string `json:"expiryTime,omitempty"`
+	// ExpressConfig: Output only. The Express configuration of the cluster this
+	// backup was created from. Any restored cluster created from this backup will
+	// have the same Express configuration.
+	ExpressConfig *ExpressConfig `json:"expressConfig,omitempty"`
 	// Labels: Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Output only. The name of the backup resource with the format: *
@@ -801,13 +808,16 @@ type Cluster struct {
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// DisplayName: User-settable and human-readable display name for the Cluster.
 	DisplayName string `json:"displayName,omitempty"`
-	// Edition: Optional. Edition of the cluster. If left unspecified, the cluster
-	// behaves as `EDITION_ALLOYDB`.
+	// Edition: Optional. Deprecated: Use `express_config` instead. Edition of the
+	// cluster. If left unspecified, the cluster behaves as `EDITION_ALLOYDB`.
 	//
 	// Possible values:
-	//   "EDITION_UNSPECIFIED" - An unknown Edition type.
-	//   "EDITION_ALLOYDB" - Standard AlloyDB cluster.
-	//   "EDITION_ALLOYDB_DEVELOPER" - Developer edition cluster.
+	//   "EDITION_UNSPECIFIED" - Deprecated: Use `ExpressConfig` instead. An
+	// unknown Edition type.
+	//   "EDITION_ALLOYDB" - Deprecated: Use `ExpressConfig` instead. Standard
+	// AlloyDB cluster.
+	//   "EDITION_ALLOYDB_DEVELOPER" - Deprecated: Use `ExpressConfig` instead.
+	// Developer edition cluster.
 	Edition string `json:"edition,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the data disks and other persistent data resources of a cluster with
@@ -2174,9 +2184,11 @@ type Instance struct {
 	// PscInstanceInfo: Output only. Information about the Private Service Connect
 	// (PSC) for the instance.
 	PscInstanceInfo *PscInstanceInfo `json:"pscInstanceInfo,omitempty"`
-	// PublicIpAddress: Output only. The public IP addresses for the Instance. This
-	// is available ONLY when enable_public_ip is set. This is the connection
-	// endpoint for an end-user application.
+	// PublicIpAddress: Output only. The public IP address for the Instance. This
+	// is available ONLY when `enable_public_ip` is set or when you have upgraded
+	// from an Express Instance that has public DNS enabled. This field is not
+	// available for Express Instances. This is the connection endpoint for an
+	// end-user application.
 	PublicIpAddress string `json:"publicIpAddress,omitempty"`
 	// QueryInsightsConfig: Configuration for query insights.
 	QueryInsightsConfig *QueryInsightsInstanceConfig `json:"queryInsightsConfig,omitempty"`
@@ -3434,8 +3446,8 @@ func (s QueryInsightsInstanceInfo) MarshalJSON() ([]byte, error) {
 
 // ReadPoolConfig: Configuration for a read pool instance.
 type ReadPoolConfig struct {
-	// AutoScalingConfig: Autoscaling configuration for the read pool instance. If
-	// not set, the read pool instance will not be autoscaled.
+	// AutoScalingConfig: Optional. Autoscaling configuration for the read pool
+	// instance. If not set, the read pool instance will not be autoscaled.
 	AutoScalingConfig *AutoScalingConfig `json:"autoScalingConfig,omitempty"`
 	// NodeCount: Read capacity, i.e. number of nodes in a read pool instance.
 	NodeCount int64 `json:"nodeCount,omitempty"`

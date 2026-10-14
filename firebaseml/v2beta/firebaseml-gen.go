@@ -775,6 +775,7 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	// semantically invalid. This can happen, for example, if function calling is
 	// not enabled or the generated function is not in the function declaration.
 	//   "NO_IMAGE" - The model was expected to generate an image, but didn't.
+	//   "MALFORMED_RESPONSE" - Finishes due to malformed response.
 	//   "CONTINUATION" - Token generation was stopped because the response reached
 	// the per-request token limit, but generation is not yet complete. The model
 	// response can be continued via a subsequent request using the returned
@@ -2957,7 +2958,7 @@ func (s GoogleCloudAiplatformV1beta1MultiSpeakerVoiceConfig) MarshalJSON() ([]by
 
 // GoogleCloudAiplatformV1beta1Part: A datatype containing media that is part
 // of a multi-part Content message. A `Part` consists of data which has an
-// associated datatype. A `Part` can only contain one of the accepted types in
+// associated datatype. A `Part` must contain one of the accepted types in
 // `Part.data`. For media types that are not text, `Part` must have a fixed
 // IANA MIME type identifying the type and subtype of the media if
 // `inline_data` or `file_data` field is filled with raw bytes.

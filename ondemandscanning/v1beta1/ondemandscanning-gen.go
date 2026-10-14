@@ -2143,8 +2143,34 @@ func (s Layer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LayerAttribute: An attribute attached to a layer by a plugin.
+type LayerAttribute struct {
+	// Plugin: The name of the plugin that generated this attribute.
+	Plugin string `json:"plugin,omitempty"`
+	// Value: The value of the attribute, with a meaning defined by the plugin.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Plugin") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Plugin") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LayerAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod LayerAttribute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LayerDetails: Details about the layer a package was found in.
 type LayerDetails struct {
+	// Attributes: Attributes attached to this layer by plugins.
+	Attributes []*LayerAttribute `json:"attributes,omitempty"`
 	// BaseImages: The base images the layer is found within.
 	BaseImages []*BaseImage `json:"baseImages,omitempty"`
 	// ChainId: The layer chain ID (sha256 hash) of the layer in the container
@@ -2158,13 +2184,13 @@ type LayerDetails struct {
 	DiffId string `json:"diffId,omitempty"`
 	// Index: The index of the layer in the container image.
 	Index int64 `json:"index,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BaseImages") to
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BaseImages") to include in API
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

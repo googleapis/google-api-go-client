@@ -375,6 +375,30 @@ func (s Browser) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomAttribute: Developer-provided custom key-value pair metadata.
+type CustomAttribute struct {
+	// Key: Output only. Custom attribute key name.
+	Key string `json:"key,omitempty"`
+	// Value: Output only. Custom attribute value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomAttribute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeleteUserCrashReportsResponse: Response message for the
 // DeleteUserCrashReports method. All crash reports associated with the
 // specified user will be deleted typically within 24 hours of receiving the
@@ -1225,6 +1249,8 @@ func (s Report) MarshalJSON() ([]byte, error) {
 type ReportGroup struct {
 	// Browser: Browser metrics group.
 	Browser *Browser `json:"browser,omitempty"`
+	// CustomAttribute: Custom attribute metrics group.
+	CustomAttribute *CustomAttribute `json:"customAttribute,omitempty"`
 	// Device: Device metrics group.
 	Device *Device `json:"device,omitempty"`
 	// Issue: Issue metrics group.

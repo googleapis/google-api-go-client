@@ -4812,7 +4812,7 @@ func (s LiveChatFanFundingEventDetails) MarshalJSON() ([]byte, error) {
 }
 
 // LiveChatGiftDetails: Details about the gift event, this is only set if the
-// type is 'giftEvent'.
+// type is `giftEvent`.
 type LiveChatGiftDetails struct {
 	// AltText: The alternative text to be used for accessibility.
 	AltText string `json:"altText,omitempty"`
@@ -4851,7 +4851,7 @@ func (s LiveChatGiftDetails) MarshalJSON() ([]byte, error) {
 type LiveChatGiftMembershipReceivedDetails struct {
 	// AssociatedMembershipGiftingMessageId: The ID of the membership gifting
 	// message that is related to this gift membership. This ID will always refer
-	// to a message whose type is 'membershipGiftingEvent'.
+	// to a message whose type is `membershipGiftingEvent`.
 	AssociatedMembershipGiftingMessageId string `json:"associatedMembershipGiftingMessageId,omitempty"`
 	// GifterChannelId: The ID of the user that made the membership gifting
 	// purchase. This matches the `snippet.authorChannelId` of the associated
@@ -5049,7 +5049,7 @@ type LiveChatMessageListResponse struct {
 	// polling again.
 	PollingIntervalMillis int64            `json:"pollingIntervalMillis,omitempty"`
 	TokenPagination       *TokenPagination `json:"tokenPagination,omitempty"`
-	// VisitorId: The visitorId identifies the visitor.
+	// VisitorId: Identifies the visitor.
 	VisitorId string `json:"visitorId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5111,43 +5111,43 @@ type LiveChatMessageSnippet struct {
 	// type TOMBSTONE and CHAT_ENDED_EVENT are silent.
 	DisplayMessage string `json:"displayMessage,omitempty"`
 	// FanFundingEventDetails: Details about the funding event, this is only set if
-	// the type is 'fanFundingEvent'.
+	// the type is `fanFundingEvent`.
 	FanFundingEventDetails *LiveChatFanFundingEventDetails `json:"fanFundingEventDetails,omitempty"`
 	// GiftDetails: Details about the gift event, this is only set if the type is
-	// 'giftEvent'.
+	// `giftEvent`.
 	GiftDetails *LiveChatGiftDetails `json:"giftDetails,omitempty"`
 	// GiftMembershipReceivedDetails: Details about the Gift Membership Received
-	// event, this is only set if the type is 'giftMembershipReceivedEvent'.
+	// event, this is only set if the type is `giftMembershipReceivedEvent`.
 	GiftMembershipReceivedDetails *LiveChatGiftMembershipReceivedDetails `json:"giftMembershipReceivedDetails,omitempty"`
 	// HasDisplayContent: Whether the message has display content that should be
 	// displayed to users.
 	HasDisplayContent bool   `json:"hasDisplayContent,omitempty"`
 	LiveChatId        string `json:"liveChatId,omitempty"`
 	// MemberMilestoneChatDetails: Details about the Member Milestone Chat event,
-	// this is only set if the type is 'memberMilestoneChatEvent'.
+	// this is only set if the type is `memberMilestoneChatEvent`.
 	MemberMilestoneChatDetails *LiveChatMemberMilestoneChatDetails `json:"memberMilestoneChatDetails,omitempty"`
 	// MembershipGiftingDetails: Details about the Membership Gifting event, this
-	// is only set if the type is 'membershipGiftingEvent'.
+	// is only set if the type is `membershipGiftingEvent`.
 	MembershipGiftingDetails *LiveChatMembershipGiftingDetails `json:"membershipGiftingDetails,omitempty"`
 	MessageDeletedDetails    *LiveChatMessageDeletedDetails    `json:"messageDeletedDetails,omitempty"`
 	MessageRetractedDetails  *LiveChatMessageRetractedDetails  `json:"messageRetractedDetails,omitempty"`
 	// NewSponsorDetails: Details about the New Member Announcement event, this is
-	// only set if the type is 'newSponsorEvent'. Please note that "member" is the
-	// new term for "sponsor".
+	// only set if the type is `newSponsorEvent`. The term "member" replaces
+	// "sponsor".
 	NewSponsorDetails *LiveChatNewSponsorDetails `json:"newSponsorDetails,omitempty"`
 	// PollDetails: Details about the poll event, this is only set if the type is
-	// 'pollEvent'.
+	// `pollEvent`.
 	PollDetails *LiveChatPollDetails `json:"pollDetails,omitempty"`
 	// PublishedAt: The date and time when the message was orignally published.
 	PublishedAt string `json:"publishedAt,omitempty"`
 	// SuperChatDetails: Details about the Super Chat event, this is only set if
-	// the type is 'superChatEvent'.
+	// the type is `superChatEvent`.
 	SuperChatDetails *LiveChatSuperChatDetails `json:"superChatDetails,omitempty"`
 	// SuperStickerDetails: Details about the Super Sticker event, this is only set
-	// if the type is 'superStickerEvent'.
+	// if the type is `superStickerEvent`.
 	SuperStickerDetails *LiveChatSuperStickerDetails `json:"superStickerDetails,omitempty"`
 	// TextMessageDetails: Details about the text message, this is only set if the
-	// type is 'textMessageEvent'.
+	// type is `textMessageEvent`.
 	TextMessageDetails *LiveChatTextMessageDetails `json:"textMessageDetails,omitempty"`
 	// Type: The type of message, this will always be present, it determines the
 	// contents of the message as well as which fields will be present.
@@ -5394,7 +5394,7 @@ type LiveChatSuperChatDetails struct {
 	// Currency: The currency in which the purchase was made.
 	Currency string `json:"currency,omitempty"`
 	// Tier: The tier in which the amount belongs. Lower amounts belong to lower
-	// tiers. The lowest tier is 1.
+	// tiers. The lowest tier is `1`.
 	Tier int64 `json:"tier,omitempty"`
 	// UserComment: The comment added by the user to this Super Chat event.
 	UserComment string `json:"userComment,omitempty"`
@@ -5428,7 +5428,7 @@ type LiveChatSuperStickerDetails struct {
 	// SuperStickerMetadata: Information about the Super Sticker.
 	SuperStickerMetadata *SuperStickerMetadata `json:"superStickerMetadata,omitempty"`
 	// Tier: The tier in which the amount belongs. Lower amounts belong to lower
-	// tiers. The lowest tier is 1.
+	// tiers. The lowest tier is `1`.
 	Tier int64 `json:"tier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AmountDisplayString") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5471,7 +5471,7 @@ func (s LiveChatTextMessageDetails) MarshalJSON() ([]byte, error) {
 
 type LiveChatUserBannedMessageDetails struct {
 	// BanDurationSeconds: The duration of the ban. This property is only present
-	// if the banType is temporary.
+	// if the `banType` is `temporary`.
 	BanDurationSeconds uint64 `json:"banDurationSeconds,omitempty,string"`
 	// BanType: The type of ban.
 	//
@@ -8756,7 +8756,7 @@ type VideoStatus struct {
 	// website. @mutable youtube.videos.insert youtube.videos.update
 	Embeddable bool `json:"embeddable,omitempty"`
 	// FailureReason: This value explains why a video failed to upload. This
-	// property is only present if the uploadStatus property indicates that the
+	// property is only present if the `uploadStatus` property indicates that the
 	// upload failed.
 	//
 	// Possible values:
@@ -8775,7 +8775,12 @@ type VideoStatus struct {
 	//   "creativeCommon" - Creative Commons license.
 	License     string `json:"license,omitempty"`
 	MadeForKids bool   `json:"madeForKids,omitempty"`
-	// PrivacyStatus: The video's privacy status.
+	// PrivacyStatus: The video's privacy status. In a `videos.insert` request, if
+	// you don't specify a value for this property, the uploaded video's privacy
+	// status defaults to `public`. Certain uploads might default to `private`
+	// based on creator account settings, as explained in the YouTube Help Center
+	// (https://support.google.com/youtube/answer/157177). Videos uploaded from
+	// unverified API projects are not restricted to private viewing mode.
 	//
 	// Possible values:
 	//   "public"
@@ -8791,7 +8796,7 @@ type VideoStatus struct {
 	// be set only if the privacy status of the video is private..
 	PublishAt string `json:"publishAt,omitempty"`
 	// RejectionReason: This value explains why YouTube rejected an uploaded video.
-	// This property is only present if the uploadStatus property indicates that
+	// This property is only present if the `uploadStatus` property indicates that
 	// the upload was rejected.
 	//
 	// Possible values:
@@ -13537,7 +13542,8 @@ type LiveChatMessagesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a chat message.
+// Delete: Deletes a chat message. A call to this method has a quota cost of 20
+// units.
 //
 // - id: .
 func (r *LiveChatMessagesService) Delete(id string) *LiveChatMessagesDeleteCall {
@@ -13607,11 +13613,12 @@ type LiveChatMessagesInsertCall struct {
 	header_         http.Header
 }
 
-// Insert: Inserts a new resource into this collection.
+// Insert: Inserts a new resource into this collection. A call to this method
+// has a quota cost of 20 units.
 //
-//   - part: The *part* parameter serves two purposes. It identifies the
-//     properties that the write operation will set as well as the properties
-//     that the API response will include. Set the parameter value to snippet.
+//   - part: The `part` parameter serves two purposes. It identifies the
+//     properties that the write operation sets as well as the properties that
+//     the API response includes. Set the parameter value to `snippet`.
 func (r *LiveChatMessagesService) Insert(part []string, livechatmessage *LiveChatMessage) *LiveChatMessagesInsertCall {
 	c := &LiveChatMessagesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
@@ -13709,12 +13716,13 @@ type LiveChatMessagesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves a list of resources, possibly filtered.
+// List: Retrieves a list of resources, possibly filtered. A call to this
+// method has a quota cost of 5 units.
 //
-//   - liveChatId: The id of the live chat for which comments should be returned.
-//   - part: The *part* parameter specifies the liveChatComment resource parts
-//     that the API response will include. Supported values are id, snippet, and
-//     authorDetails.
+//   - liveChatId: The ID of the live chat for which messages should be returned.
+//   - part: The `part` parameter specifies the `liveChatMessage` resource parts
+//     that the API response includes. Supported values are `id`, `snippet`, and
+//     `authorDetails`.
 func (r *LiveChatMessagesService) List(liveChatId string, part []string) *LiveChatMessagesListCall {
 	c := &LiveChatMessagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("liveChatId", liveChatId)
@@ -13729,7 +13737,7 @@ func (c *LiveChatMessagesListCall) Hl(hl string) *LiveChatMessagesListCall {
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": The *maxResults*
+// MaxResults sets the optional parameter "maxResults": The `maxResults`
 // parameter specifies the maximum number of items that should be returned in
 // the result set. Not used in the streaming RPC.
 func (c *LiveChatMessagesListCall) MaxResults(maxResults int64) *LiveChatMessagesListCall {
@@ -13737,10 +13745,10 @@ func (c *LiveChatMessagesListCall) MaxResults(maxResults int64) *LiveChatMessage
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The *pageToken* parameter
+// PageToken sets the optional parameter "pageToken": The `pageToken` parameter
 // identifies a specific page in the result set that should be returned. In an
-// API response, the nextPageToken property identify other pages that could be
-// retrieved.
+// API response, the `nextPageToken` property identifies other pages that could
+// be retrieved.
 func (c *LiveChatMessagesListCall) PageToken(pageToken string) *LiveChatMessagesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -13870,14 +13878,15 @@ type LiveChatMessagesTransitionCall struct {
 	header_    http.Header
 }
 
-// Transition: Transition a durable chat event.
+// Transition: Transitions a durable chat event. A call to this method has a
+// quota cost of 20 units.
 func (r *LiveChatMessagesService) Transition() *LiveChatMessagesTransitionCall {
 	c := &LiveChatMessagesTransitionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Id sets the optional parameter "id": The ID that uniquely identify the chat
-// message event to transition.
+// Id sets the optional parameter "id": The ID that uniquely identifies the
+// chat message event to transition.
 func (c *LiveChatMessagesTransitionCall) Id(id string) *LiveChatMessagesTransitionCall {
 	c.urlParams_.Set("id", id)
 	return c
@@ -20399,7 +20408,8 @@ type YoutubeV3LiveChatMessagesStreamCall struct {
 	header_      http.Header
 }
 
-// Stream: Allows a user to load live chat through a server-streamed RPC.
+// Stream: Allows a user to load live chat through a server-streamed RPC. A
+// call to this method has a quota cost of 5 units.
 func (r *YoutubeV3LiveChatMessagesService) Stream() *YoutubeV3LiveChatMessagesStreamCall {
 	c := &YoutubeV3LiveChatMessagesStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -20412,14 +20422,14 @@ func (c *YoutubeV3LiveChatMessagesStreamCall) Hl(hl string) *YoutubeV3LiveChatMe
 	return c
 }
 
-// LiveChatId sets the optional parameter "liveChatId": The id of the live chat
-// for which comments should be returned.
+// LiveChatId sets the optional parameter "liveChatId": The ID of the live chat
+// for which messages should be returned.
 func (c *YoutubeV3LiveChatMessagesStreamCall) LiveChatId(liveChatId string) *YoutubeV3LiveChatMessagesStreamCall {
 	c.urlParams_.Set("liveChatId", liveChatId)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": The *maxResults*
+// MaxResults sets the optional parameter "maxResults": The `maxResults`
 // parameter specifies the maximum number of items that should be returned in
 // the result set. Not used in the streaming RPC.
 func (c *YoutubeV3LiveChatMessagesStreamCall) MaxResults(maxResults int64) *YoutubeV3LiveChatMessagesStreamCall {
@@ -20427,18 +20437,18 @@ func (c *YoutubeV3LiveChatMessagesStreamCall) MaxResults(maxResults int64) *Yout
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The *pageToken* parameter
+// PageToken sets the optional parameter "pageToken": The `pageToken` parameter
 // identifies a specific page in the result set that should be returned. In an
-// API response, the nextPageToken property identify other pages that could be
-// retrieved.
+// API response, the `nextPageToken` property identifies other pages that could
+// be retrieved.
 func (c *YoutubeV3LiveChatMessagesStreamCall) PageToken(pageToken string) *YoutubeV3LiveChatMessagesStreamCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Part sets the optional parameter "part": The *part* parameter specifies the
-// liveChatComment resource parts that the API response will include. Supported
-// values are id, snippet, and authorDetails.
+// Part sets the optional parameter "part": The `part` parameter specifies the
+// `liveChatMessage` resource parts that the API response includes. Supported
+// values are `id`, `snippet`, and `authorDetails`.
 func (c *YoutubeV3LiveChatMessagesStreamCall) Part(part ...string) *YoutubeV3LiveChatMessagesStreamCall {
 	c.urlParams_.SetMulti("part", append([]string{}, part...))
 	return c

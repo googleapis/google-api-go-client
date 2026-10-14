@@ -2124,8 +2124,8 @@ type ProductAttributes struct {
 	// article (https://support.google.com/merchants/answer/13674896) for more
 	// information.
 	VirtualModelLink string `json:"virtualModelLink,omitempty"`
-	// Warranty: The warranty
-	// (https://support.google.com/merchants/answer/15957626) of the product.
+	// Warranty: The `warranty`
+	// (https://support.google.com/merchants/answer/18562485) of the product.
 	Warranty *Warranty `json:"warranty,omitempty"`
 	// Year: The Year (https://support.google.com/google-ads/answer/14152816) of
 	// the vehicle model.
@@ -3426,7 +3426,7 @@ func (s VariantOption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Warranty: The warranty of the vehicle.
+// Warranty: The warranty of the product.
 type Warranty struct {
 	// Duration: The warranty duration in units. Default is in months, can be
 	// overridden by the `duration_unit` field.

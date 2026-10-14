@@ -48,13 +48,13 @@ var (
 	apisURL        = flag.String("discoveryurl", googleDiscoveryURL, "URL to root discovery document")
 	remoteCacheDir = flag.String("remote_cache_dir", os.Getenv("REMOTE_CACHE_DIR"), "Directory of remote cache index and schemas.")
 
-	publicOnly = flag.Bool("publiconly", true, "Only build public, released APIs. Only applicable for Google employees.")
-
-	jsonFile       = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
-	output         = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
-	apiPackageBase = flag.String("api_pkg_base", "google.golang.org/api", "Go package prefix to use for all generated APIs.")
-	baseURL        = flag.String("base_url", "", "(optional) Override the default service API URL. If empty, the service's root URL will be used.")
-	headerPath     = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
+	publicOnly        = flag.Bool("publiconly", true, "Only build public, released APIs. Only applicable for Google employees.")
+	allowFailureLimit = flag.Int("allow_failure_limit", 0, "allow N API generations to fail before exiting in error")
+	jsonFile          = flag.String("api_json_file", "", "If non-empty, the path to a local file on disk containing the API to generate. Exclusive with setting --api.")
+	output            = flag.String("output", "", "(optional) Path to source output file. If not specified, the API name and version are used to construct an output path (e.g. tasks/v1).")
+	apiPackageBase    = flag.String("api_pkg_base", "google.golang.org/api", "Go package prefix to use for all generated APIs.")
+	baseURL           = flag.String("base_url", "", "(optional) Override the default service API URL. If empty, the service's root URL will be used.")
+	headerPath        = flag.String("header_path", "", "If non-empty, prepend the contents of this file to generated services.")
 
 	internalPkg       = flag.String("internal_pkg", "google.golang.org/api/internal", "Go package path of the 'internal' support package.")
 	gensupportPkg     = flag.String("gensupport_pkg", "google.golang.org/api/internal/gensupport", "Go package path of the 'api/internal/gensupport' support package.")
@@ -75,15 +75,12 @@ var (
 
 // skipAPIGeneration is a set of APIs to not generate when generating all clients.
 var skipAPIGeneration = map[string]bool{
-	"integrations:v1alpha":                true,
-	"integrations:v1":                     true,
-	"integrations:v2":                     true,
-	"sql:v1beta4":                         true,
-	"datalineage:v1":                      true,
-	"aiplatform:v1beta1":                  true,
-	"discoveryengine:v1alpha":             true,
-	"discoveryengine:v1":                  true,
-	"readerrevenuesubscriptionlinking:v1": true,
+	"integrations:v1alpha": true,
+	"integrations:v1":      true,
+	"integrations:v2":      true,
+	"sql:v1beta4":          true,
+	"datalineage:v1":       true,
+	"aiplatform:v1beta1":   true,
 }
 
 var apisToSplit = map[string]bool{
@@ -165,7 +162,17 @@ func main() {
 		}
 		matches = append(matches, api)
 		log.Printf("Generating API %s", api.ID)
-		err := api.WriteGeneratedCode()
+
+		// Run each generation in a closure so we can deal with individual API failures more cleanly.
+		err := func() (err error) {
+			defer func() {
+				if r := recover(); r != nil {
+					err = fmt.Errorf("fatal generation: %v", r)
+				}
+			}()
+			err = api.WriteGeneratedCode()
+			return
+		}()
 		if err == errOldRevision {
 			log.Printf("Old revision found for %s, skipping generation", api.ID)
 			continue
@@ -197,7 +204,11 @@ func main() {
 		for _, ce := range errs {
 			log.Println(ce.Error())
 		}
-		os.Exit(1)
+		if len(errs) > *allowFailureLimit {
+			log.Printf("generation errors exceeds allowed failure threshhold (%d)", *allowFailureLimit)
+			os.Exit(1)
+		}
+		log.Printf("errors present but within the allowed failure limit (%d)", *allowFailureLimit)
 	}
 }
 

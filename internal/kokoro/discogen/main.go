@@ -146,7 +146,7 @@ func generate(dir, remoteCacheDir string) error {
 		os.Setenv(remoteCacheEnv, oldCache)
 	}()
 	fp := filepath.Join(dir, "google-api-go-generator")
-	cmd := exec.Command("make", "all")
+	cmd := exec.Command("make", "all-with-failure-limit")
 	cmd.Dir = fp
 	cmd.Stderr = os.Stderr
 	cmd.Stdout = os.Stdout

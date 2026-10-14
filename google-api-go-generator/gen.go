@@ -199,8 +199,6 @@ func main() {
 		log.Fatalf("No APIs matched %q; options are %v", *apiToGenerate, apiIds)
 	}
 
-	log.Printf("generated %d APIS, %d with errors", len(matches), len(errs))
-
 	if len(errs) > 0 {
 		log.Printf("%d API(s) failed to generate or compile:", len(errs))
 		for _, ce := range errs {

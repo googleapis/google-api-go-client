@@ -13,8 +13,8 @@ all: $(GENERATOR)
 	go test . -v
 
 # A version of "all" but that doesn't exit if some API generations fail.
-all-with-failures: SHELL:=/bin/bash
-all-with-failures: $(GENERATOR)
+all-with-failure-limit: SHELL:=/bin/bash
+all-with-failure-limit: $(GENERATOR)
 	$(GENERATOR) --allow_failure_limit=99 -cache=false -install -api=* -gendir=..
 	go test . -v
 
@@ -39,4 +39,4 @@ generator: $(GENERATOR)
 $(GENERATOR):
 	go build -o $@
 
-.PHONY: all all-with-failures cached local generator $(GENERATOR)
+.PHONY: all all-with-failure-limit cached local generator $(GENERATOR)

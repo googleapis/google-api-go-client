@@ -1710,6 +1710,17 @@ type DatabaseInstance struct {
 	// (https://groups.google.com/d/msg/google-cloud-sql-announce/I_7-F9EBhT0/BtvFtdFeAgAJ)
 	// for details.
 	CurrentDiskSize int64 `json:"currentDiskSize,omitempty,string"`
+	// DatabaseCenterIntegration: Optional. State of the Database Center
+	// integration for this instance. When unspecified, Database Center integration
+	// is enabled by default.
+	//
+	// Possible values:
+	//   "DATABASE_CENTER_INTEGRATION_UNSPECIFIED" - Default value. The integration
+	// state is unspecified. When unspecified, Database Center integration is
+	// enabled by default.
+	//   "ENABLED" - Database Center integration is enabled.
+	//   "DISABLED" - Database Center integration is disabled.
+	DatabaseCenterIntegration string `json:"databaseCenterIntegration,omitempty"`
 	// DatabaseCenterIntegrationEnabled: Optional. If true, instance metadata is
 	// sent to the Database Center. If false, instance metadata is not sent to the
 	// Database Center.
@@ -1930,6 +1941,9 @@ type DatabaseInstance struct {
 	ServiceAccountEmailAddress string `json:"serviceAccountEmailAddress,omitempty"`
 	// Settings: The user settings.
 	Settings *Settings `json:"settings,omitempty"`
+	// SkipPrecheck: Optional. Input only. Determines whether the precheck step is
+	// skipped during a major version upgrade.
+	SkipPrecheck bool `json:"skipPrecheck,omitempty"`
 	// Possible values:
 	//   "SQL_NETWORK_ARCHITECTURE_UNSPECIFIED"
 	//   "NEW_NETWORK_ARCHITECTURE" - The instance uses the new network
@@ -2432,7 +2446,8 @@ type ExecuteSqlPayload struct {
 	// caller must be an IAM user in the database.
 	AutoIamAuthn bool `json:"autoIamAuthn,omitempty"`
 	// Database: Optional. Name of the database on which the statement will be
-	// executed.
+	// executed. For Postgres and SQL Server it's required, for MySQL it's
+	// optional.
 	Database string `json:"database,omitempty"`
 	// PartialResultMode: Optional. Controls how the API should respond when the
 	// SQL execution result is incomplete due to the size limit or another error.
@@ -5095,6 +5110,9 @@ func (s PoolNodeConfig) MarshalJSON() ([]byte, error) {
 type PreCheckMajorVersionUpgradeContext struct {
 	// Kind: Optional. This is always `sql#preCheckMajorVersionUpgradeContext`.
 	Kind string `json:"kind,omitempty"`
+	// MaxRuntime: Optional. The maximum allowed runtime for the precheck
+	// operation.
+	MaxRuntime string `json:"maxRuntime,omitempty"`
 	// PreCheckResponse: Output only. The responses from the precheck operation.
 	PreCheckResponse []*PreCheckResponse `json:"preCheckResponse,omitempty"`
 	// TargetDatabaseVersion: Required. The target database version to upgrade to.
@@ -7608,6 +7626,9 @@ func (s Value) MarshalJSON() ([]byte, error) {
 
 // WorkloadCapture: Captured workload for an instance.
 type WorkloadCapture struct {
+	// BackupId: Output only. The base backup ID associated with the workload
+	// capture.
+	BackupId string `json:"backupId,omitempty"`
 	// EndTime: Output only. The end time of the workload capture.
 	EndTime string `json:"endTime,omitempty"`
 	// ReplayInstance: Output only. The name of the replay instance, if live replay
@@ -7625,18 +7646,22 @@ type WorkloadCapture struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
 	//   "RUNNING" - Workload capture is currently running.
-	//   "COMPLETED" - Workload capture completed successfully.
+	//   "COMPLETED" - Workload capture completed successfully. This state is set
+	// when the user explicitly stops the capture.
 	//   "FAILED" - Workload capture failed.
+	//   "TERMINATED" - Workload capture was terminated automatically. This state
+	// is set when Cloud SQL automatically stops the capture due to a conflicting
+	// operation or when the maximum duration is reached.
 	WorkloadCaptureState string `json:"workloadCaptureState,omitempty"`
 	// WorkloadId: Output only. The ID of the captured workload.
 	WorkloadId string `json:"workloadId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "BackupId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// NullFields is a list of field names (e.g. "BackupId") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

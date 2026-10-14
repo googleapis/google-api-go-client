@@ -1828,8 +1828,6 @@ type AssignedTargetingOption struct {
 	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites by
 	// specific digital content label ratings (for example, DL-MA: suitable only
 	// for mature audiences).
-	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website content by
-	// sensitive categories (for example, adult).
 	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment (for
 	// example, web or app).
 	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
@@ -2058,6 +2056,8 @@ type AudioAd struct {
 	// the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
 	// TrackingUrl: The URL address loaded in the background for tracking purposes.
+	// In v4 and earlier, this field represents the tracking URL specified by the
+	// user manually. This can be found at userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 	// Video: The YouTube video of the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
@@ -3894,7 +3894,8 @@ func (s CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 // CommonInStreamAttribute: Common attributes for in-stream, non-skippable and
 // bumper ads.
 type CommonInStreamAttribute struct {
-	// ActionButtonLabel: Optional. The text on the call-to-action button.
+	// ActionButtonLabel: Optional. The text on the call-to-action button. Must be
+	// set if actionHeadline is set.
 	ActionButtonLabel string `json:"actionButtonLabel,omitempty"`
 	// ActionHeadline: Optional. The headline of the call-to-action banner.
 	ActionHeadline string `json:"actionHeadline,omitempty"`
@@ -3906,7 +3907,9 @@ type CommonInStreamAttribute struct {
 	// they click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
-	// tracking purposes.
+	// tracking purposes. In v4 and earlier, this field represents the tracking URL
+	// specified by the user manually. This can be found at
+	// userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 	// Video: Required. Immutable. The YouTube video of the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
@@ -4491,8 +4494,6 @@ type CreateAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites by
 	// specific digital content label ratings (for example, DL-MA: suitable only
 	// for mature audiences).
-	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website content by
-	// sensitive categories (for example, adult).
 	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment (for
 	// example, web or app).
 	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
@@ -5515,8 +5516,6 @@ type DeleteAssignedTargetingOptionsRequest struct {
 	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites by
 	// specific digital content label ratings (for example, DL-MA: suitable only
 	// for mature audiences).
-	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website content by
-	// sensitive categories (for example, adult).
 	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment (for
 	// example, web or app).
 	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
@@ -12839,8 +12838,6 @@ type TargetingOption struct {
 	//   "TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION" - Filter web sites by
 	// specific digital content label ratings (for example, DL-MA: suitable only
 	// for mature audiences).
-	//   "TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION" - Filter website content by
-	// sensitive categories (for example, adult).
 	//   "TARGETING_TYPE_ENVIRONMENT" - Target ads to a specific environment (for
 	// example, web or app).
 	//   "TARGETING_TYPE_CARRIER_AND_ISP" - Target ads to a specific network
@@ -13567,7 +13564,7 @@ func (s VideoDiscoveryAd) MarshalJSON() ([]byte, error) {
 // VideoPerformanceAd: Details for a video performance ad.
 type VideoPerformanceAd struct {
 	// ActionButtonLabels: Optional. The list of text assets shown on the
-	// call-to-action button.
+	// call-to-action button. Must be set if headlines is set.
 	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
 	// CompanionBanners: Optional. The list of companion banners used by this ad.
 	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
@@ -13575,13 +13572,15 @@ type VideoPerformanceAd struct {
 	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// Descriptions: Optional. The list of descriptions shown on the call-to-action
-	// banner.
+	// banner. Must be set unless the parent line item's lineItemType is
+	// `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE`, in which case this
+	// field cannot be set.
 	Descriptions []string `json:"descriptions,omitempty"`
 	// DisplayUrlBreadcrumb1: Optional. The first piece after the domain in the
 	// display URL.
 	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
 	// DisplayUrlBreadcrumb2: Optional. The second piece after the domain in the
-	// display URL.
+	// display URL. Can only be set if displayUrlBreadcrumb1 is also set.
 	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
 	// Domain: Output only. The domain of the display URL.
 	Domain string `json:"domain,omitempty"`
@@ -13592,10 +13591,14 @@ type VideoPerformanceAd struct {
 	// banner.
 	Headlines []string `json:"headlines,omitempty"`
 	// LongHeadlines: Optional. The list of long headlines shown on the
-	// call-to-action banner.
+	// call-to-action banner. Must be set unless the parent line item's
+	// lineItemType is `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE`, in
+	// which case this field cannot be set.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
-	// tracking purposes.
+	// tracking purposes. In v4 and earlier, this field represents the tracking URL
+	// specified by the user manually. This can be found at
+	// userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 	// Videos: Required. The list of YouTube video assets used by this ad.
 	Videos []*YoutubeVideoDetails `json:"videos,omitempty"`

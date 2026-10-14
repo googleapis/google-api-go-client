@@ -252,8 +252,8 @@ func (s AllocationConfig) MarshalJSON() ([]byte, error) {
 // output directory.
 type AndroidBugreportDeviceAction struct {
 	// CollectOnPass: Optional. Whether to deliver the bugreport when the test
-	// passes. If false, the bugreport is skipped on pass to save time (default
-	// behavior). If true, the bugreport is always delivered.
+	// passes. If `false`, the bugreport is skipped on pass to save time (default
+	// behavior). If `true`, the bugreport is always delivered.
 	CollectOnPass bool `json:"collectOnPass,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CollectOnPass") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -278,8 +278,8 @@ func (s AndroidBugreportDeviceAction) MarshalJSON() ([]byte, error) {
 // directory.
 type AndroidDumpsysDeviceAction struct {
 	// CollectOnPass: Optional. Whether to deliver the dumpsys when the test
-	// passes. If false, the dumpsys is skipped on pass to save time (default
-	// behavior). If true, the dumpsys is always delivered.
+	// passes. If `false`, the dumpsys is skipped on pass to save time (default
+	// behavior). If `true`, the dumpsys is always delivered.
 	CollectOnPass bool `json:"collectOnPass,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CollectOnPass") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -687,7 +687,7 @@ func (s AndroidPushFilesDeviceActionFileConfig) MarshalJSON() ([]byte, error) {
 // execution output directory.
 type AndroidRecordVideoDeviceAction struct {
 	// DiscardOnPass: Optional. Whether to discard and not upload the recording
-	// when the test passes. Default is false.
+	// when the test passes. Default is `false`.
 	DiscardOnPass bool `json:"discardOnPass,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiscardOnPass") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1362,7 +1362,8 @@ type DeviceAction struct {
 	// IosPushFiles: Pushes files to the iOS device sandbox at the beginning of the
 	// run.
 	IosPushFiles *IosPushFilesDeviceAction `json:"iosPushFiles,omitempty"`
-	// IosRecordVideo: Records a video of the iOS device screen during the run.
+	// IosRecordVideo: Records videos of the iOS device screen, one per UI test
+	// case.
 	IosRecordVideo *IosRecordVideoDeviceAction `json:"iosRecordVideo,omitempty"`
 	// IosSwitchLocale: Switches the locale (language and region) of the iOS
 	// application.
@@ -1780,12 +1781,15 @@ func (s IosPushFilesDeviceActionFileConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// IosRecordVideoDeviceAction: Records a video of the iOS device screen during
-// the run. The video will be written to a file named `video.mp4` in the
-// execution output directory.
+// IosRecordVideoDeviceAction: Records videos of the iOS device screen, one per
+// UI test case. Each video covers only the execution of its test case, and
+// will be written to `testcases/{test_class}/{test_method}/video.mp4` in the
+// execution output directory. No video is recorded for unit tests, or on
+// devices running a version earlier than iOS 17.
 type IosRecordVideoDeviceAction struct {
-	// DiscardOnPass: Optional. Whether to discard the video if the test passes. If
-	// not specified, the default is false (always keep the video).
+	// DiscardOnPass: Optional. Whether to discard the video of a test case when it
+	// passes. If not specified, the default is `false` (videos of all test cases
+	// are kept).
 	DiscardOnPass bool `json:"discardOnPass,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiscardOnPass") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1868,6 +1872,8 @@ func (s IosXcTest) MarshalJSON() ([]byte, error) {
 type IssueSummary struct {
 	// Message: Output only. Human-readable explanation of the issue in English.
 	Message string `json:"message,omitempty"`
+	// Metadata: Output only. Additional metadata about the issue.
+	Metadata map[string]string `json:"metadata,omitempty"`
 	// Reason: Output only. The reason of the issue. This is a constant value that
 	// identifies the proximate cause of the issue. This should be at most 63
 	// characters and match a regular expression of `A-Z*[A-Z0-9]`, which
@@ -2360,6 +2366,8 @@ func (s RetrySettingsFlakyTestRetryStrategy) MarshalJSON() ([]byte, error) {
 // `Session` describes the configuration of one or multiple jobs, the state
 // transitions it goes through, and the results.
 type Session struct {
+	// CreateTime: Output only. The time when the session was created.
+	CreateTime string `json:"createTime,omitempty"`
 	// Name: Identifier. The resource name of the session. Format:
 	// `projects/{project}/locations/{location}/sessions/{session}`.
 	Name string `json:"name,omitempty"`
@@ -2371,15 +2379,15 @@ type Session struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4113,21 +4121,20 @@ func (r *ProjectsLocationsSessionsService) Get(name string) *ProjectsLocationsSe
 }
 
 // View sets the optional parameter "view": The view of the session to return.
-// If not set, the default BASIC view will be returned.
+// If not set, the `FULL` view will be returned.
 //
 // Possible values:
 //
 //	"SESSION_VIEW_UNSPECIFIED" - The default / unset value. The API will
 //
-// default to the BASIC view.
+// default to the FULL view.
 //
 //	"SESSION_VIEW_BASIC" - Include basic view of the session but not the full
 //
 // contents. Only the uid/display_name/status/result of the session and its
-// jobs/executions will be included. This is the default value (for
-// GetSession).
+// jobs/executions will be included.
 //
-//	"SESSION_VIEW_FULL" - Include everything.
+//	"SESSION_VIEW_FULL" - Include everything. This is the default value.
 func (c *ProjectsLocationsSessionsGetCall) View(view string) *ProjectsLocationsSessionsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -4281,21 +4288,20 @@ func (c *ProjectsLocationsSessionsListCall) PageToken(pageToken string) *Project
 }
 
 // View sets the optional parameter "view": The view of the sessions to return.
-// If not set, the `BASIC` view will be returned.
+// If not set, the `FULL` view will be returned.
 //
 // Possible values:
 //
 //	"SESSION_VIEW_UNSPECIFIED" - The default / unset value. The API will
 //
-// default to the BASIC view.
+// default to the FULL view.
 //
 //	"SESSION_VIEW_BASIC" - Include basic view of the session but not the full
 //
 // contents. Only the uid/display_name/status/result of the session and its
-// jobs/executions will be included. This is the default value (for
-// GetSession).
+// jobs/executions will be included.
 //
-//	"SESSION_VIEW_FULL" - Include everything.
+//	"SESSION_VIEW_FULL" - Include everything. This is the default value.
 func (c *ProjectsLocationsSessionsListCall) View(view string) *ProjectsLocationsSessionsListCall {
 	c.urlParams_.Set("view", view)
 	return c

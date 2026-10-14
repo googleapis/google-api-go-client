@@ -798,11 +798,6 @@ type CloudRunRevisionEndpoint struct {
 	// isions/get) URI. The format is:
 	// projects/{project}/locations/{location}/revisions/{revision}
 	Uri string `json:"uri,omitempty"`
-	// WorkerPoolUri: Output only. The URI of the worker pool that the revision
-	// belongs to. The format is:
-	// projects/{project}/locations/{location}/workerPools/{workerPool}. Mutually
-	// exclusive with service_uri.
-	WorkerPoolUri string `json:"workerPoolUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ServiceUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

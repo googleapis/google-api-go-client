@@ -957,7 +957,7 @@ func (s AdAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdGroup: A single ad group associated with a line item.
+// AdGroup: LINT: LEGACY_NAMES A single ad group associated with a line item.
 type AdGroup struct {
 	// AdGroupFormat: Required. Immutable. The format of the ads in the ad group.
 	//
@@ -1045,7 +1045,7 @@ func (s AdGroup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdGroupAd: LINT: LEGACY_NAMES A single ad associated with an ad group.
+// AdGroupAd: A single ad associated with an ad group.
 type AdGroupAd struct {
 	// AdGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 	AdGroupAdId int64 `json:"adGroupAdId,omitempty,string"`
@@ -1067,8 +1067,8 @@ type AdGroupAd struct {
 	// (//support.google.com/displayvideo/answer/6274216), equal to or less than 6
 	// seconds, used for reach.
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
-	// DcmTrackingInfo: Optional. The DCM tracking ad info. Only valid for Demand
-	// Gen ads. To remove the DCM tracking ad info, please leave this field empty.
+	// DcmTrackingInfo: Optional. The DCM tracking ad info. To remove the DCM
+	// tracking ad info, please leave this field empty.
 	DcmTrackingInfo *DcmTrackingInfo `json:"dcmTrackingInfo,omitempty"`
 	// DemandGenCarouselAd: Optional. Details of a Demand Gen carousel ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
@@ -4065,6 +4065,8 @@ type AudioAd struct {
 	// the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
 	// TrackingUrl: The URL address loaded in the background for tracking purposes.
+	// In v4 and earlier, this field represents the tracking URL specified by the
+	// user manually. This can be found at userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 	// Video: The YouTube video of the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
@@ -6090,7 +6092,8 @@ func (s CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 // CommonInStreamAttribute: Common attributes for in-stream, non-skippable and
 // bumper ads.
 type CommonInStreamAttribute struct {
-	// ActionButtonLabel: Optional. The text on the call-to-action button.
+	// ActionButtonLabel: Optional. The text on the call-to-action button. Must be
+	// set if actionHeadline is set.
 	ActionButtonLabel string `json:"actionButtonLabel,omitempty"`
 	// ActionHeadline: Optional. The headline of the call-to-action banner.
 	ActionHeadline string `json:"actionHeadline,omitempty"`
@@ -6102,7 +6105,9 @@ type CommonInStreamAttribute struct {
 	// they click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
-	// tracking purposes.
+	// tracking purposes. In v4 and earlier, this field represents the tracking URL
+	// specified by the user manually. This can be found at
+	// userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 	// Video: Required. Immutable. The YouTube video of the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
@@ -18649,7 +18654,7 @@ func (s VideoDiscoveryAd) MarshalJSON() ([]byte, error) {
 // VideoPerformanceAd: Details for a video performance ad.
 type VideoPerformanceAd struct {
 	// ActionButtonLabels: Optional. The list of text assets shown on the
-	// call-to-action button.
+	// call-to-action button. Must be set if headlines is set.
 	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
 	// CompanionBanners: Optional. The list of companion banners used by this ad.
 	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
@@ -18657,13 +18662,15 @@ type VideoPerformanceAd struct {
 	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// Descriptions: Optional. The list of descriptions shown on the call-to-action
-	// banner.
+	// banner. Must be set unless the parent line item's lineItemType is
+	// `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE`, in which case this
+	// field cannot be set.
 	Descriptions []string `json:"descriptions,omitempty"`
 	// DisplayUrlBreadcrumb1: Optional. The first piece after the domain in the
 	// display URL.
 	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
 	// DisplayUrlBreadcrumb2: Optional. The second piece after the domain in the
-	// display URL.
+	// display URL. Can only be set if displayUrlBreadcrumb1 is also set.
 	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
 	// Domain: Output only. The domain of the display URL.
 	Domain string `json:"domain,omitempty"`
@@ -18674,10 +18681,14 @@ type VideoPerformanceAd struct {
 	// banner.
 	Headlines []string `json:"headlines,omitempty"`
 	// LongHeadlines: Optional. The list of long headlines shown on the
-	// call-to-action banner.
+	// call-to-action banner. Must be set unless the parent line item's
+	// lineItemType is `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE`, in
+	// which case this field cannot be set.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
 	// TrackingUrl: Output only. The URL address loaded in the background for
-	// tracking purposes.
+	// tracking purposes. In v4 and earlier, this field represents the tracking URL
+	// specified by the user manually. This can be found at
+	// userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 	// Videos: Required. The list of YouTube video assets used by this ad.
 	Videos []*YoutubeVideoDetails `json:"videos,omitempty"`
@@ -21318,8 +21329,7 @@ type AdvertisersAdGroupAdsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates an ad group ad. This method is only supported for Demand Gen
-// ads.
+// Create: Creates an ad group ad.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
 //     to.
@@ -21423,12 +21433,10 @@ type AdvertisersAdGroupAdsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes an ad group ad. This method is only supported for Demand Gen
-// ads.
+// Delete: Deletes an ad group ad.
 //
-//   - adGroupAdId: The ID of the ad to delete. Only Demand Gen ads are
-//     supported.
-//   - advertiserId: The ID of the advertiser the ad belongs to.
+// - adGroupAdId: The ID of the ad to delete.
+// - advertiserId: The ID of the advertiser the ad belongs to.
 func (r *AdvertisersAdGroupAdsService) Delete(advertiserId int64, adGroupAdId int64) *AdvertisersAdGroupAdsDeleteCall {
 	c := &AdvertisersAdGroupAdsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21818,8 +21826,7 @@ type AdvertisersAdGroupAdsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an ad group ad. This method is only supported for Demand Gen
-// ads.
+// Patch: Updates an ad group ad.
 //
 //   - adGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs

@@ -3237,9 +3237,16 @@ type DeviceRadioState struct {
 	// USER_INITIATED_ADD_ESIM_ALLOWED.
 	//   "USER_INITIATED_ADD_ESIM_ALLOWED" - The user is allowed to add eSIM
 	// profiles.
-	//   "USER_INITIATED_ADD_ESIM_DISALLOWED" - Supported only on company-owned
-	// devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for
-	// personally-owned devices.
+	//   "USER_INITIATED_ADD_ESIM_DISALLOWED" - Prevents the user from adding any
+	// new eSIM profiles. Note the following behaviors: * Admin-provisioned eSIMs:
+	// This setting does not block adding or managing eSIMs programmatically using
+	// commands like ADD_ESIM. * Existing eSIMs: Any eSIM profiles already present
+	// on the device before this restriction is applied, will remain and are not
+	// removed. To view existing eSIMs, refer to the data reported in
+	// TelephonyInfo.Supported on Android 15 and higher. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 15.Supported only
+	// on company-owned devices. A NonComplianceDetail with MANAGEMENT_MODE is
+	// reported for personally-owned devices.
 	UserInitiatedAddEsimSettings string `json:"userInitiatedAddEsimSettings,omitempty"`
 	// WifiState: Optional. Controls current state of Wi-Fi and if user can change
 	// its state.

@@ -211,6 +211,578 @@ type UsersService struct {
 	s *Service
 }
 
+// AnswerChoiceTemplate: A predefined answer choice template for a catalog
+// question.
+type AnswerChoiceTemplate struct {
+	// Category: Output only. Category of the answer based on the IAB Audience
+	// Taxonomy.
+	//
+	// Possible values:
+	//   "ANSWER_CATEGORY_UNSPECIFIED" - Unspecified answer category.
+	//   "INTEREST__ACADEMIC_INTERESTS" - Interest | Academic Interests.
+	//   "INTEREST__AUTOMOTIVE" - Interest | Automotive.
+	//   "INTEREST__BOOKS_AND_LITERATURE" - Interest | Books and Literature.
+	//   "INTEREST__BUSINESS_AND_FINANCE" - Interest | Business and Finance.
+	//   "INTEREST__CAREERS" - Interest | Careers.
+	//   "INTEREST__FAMILY_AND_RELATIONSHIPS" - Interest | Family and
+	// Relationships.
+	//   "INTEREST__FINE_ART" - Interest | Fine Art.
+	//   "INTEREST__FOOD_AND_DRINK" - Interest | Food & Drink.
+	//   "INTEREST__HEALTH_AND_MEDICAL_SERVICES" - Interest | Health and Medical
+	// Services.
+	//   "INTEREST__HEALTHY_LIVING" - Interest | Healthy Living.
+	//   "INTEREST__HOBBIES_AND_INTERESTS" - Interest | Hobbies & Interests.
+	//   "INTEREST__HOME_AND_GARDEN" - Interest | Home & Garden.
+	//   "INTEREST__MEDICAL_HEALTH" - Interest | Medical Health.
+	//   "INTEREST__MOVIES" - Interest | Movies.
+	//   "INTEREST__MUSIC_AND_AUDIO" - Interest | Music and Audio.
+	//   "INTEREST__NEWS_AND_POLITICS" - Interest | News and Politics.
+	//   "INTEREST__PERSONAL_FINANCE" - Interest | Personal Finance.
+	//   "INTEREST__PETS" - Interest | Pets.
+	//   "INTEREST__PHARMACEUTICALS_CONDITIONS_AND_SYMPTOMS" - Interest |
+	// Pharmaceuticals, Conditions, and Symptoms.
+	//   "INTEREST__POP_CULTURE" - Interest | Pop Culture.
+	//   "INTEREST__REAL_ESTATE" - Interest | Real Estate.
+	//   "INTEREST__SHOPPING" - Interest | Shopping.
+	//   "INTEREST__SPORTS" - Interest | Sports.
+	//   "INTEREST__STYLE_AND_FASHION" - Interest | Style & Fashion.
+	//   "INTEREST__TECHNOLOGY_AND_COMPUTING" - Interest | Technology & Computing.
+	//   "INTEREST__TELEVISION" - Interest | Television.
+	//   "INTEREST__TRAVEL" - Interest | Travel.
+	//   "INTEREST__VIDEO_GAMING" - Interest | Video Gaming.
+	//   "INTEREST__ACADEMIC_INTERESTS__ARTS_AND_HUMANITIES" - Interest | Academic
+	// Interests | Arts and Humanities.
+	//   "INTEREST__ACADEMIC_INTERESTS__LANGUAGE_LEARNING" - Interest | Academic
+	// Interests | Language Learning.
+	//   "INTEREST__ACADEMIC_INTERESTS__LIFE_SCIENCES" - Interest | Academic
+	// Interests | Life Sciences.
+	//   "INTEREST__ACADEMIC_INTERESTS__PHYSICAL_SCIENCE_AND_ENGINEERING" -
+	// Interest | Academic Interests | Physical Science and Engineering.
+	//   "INTEREST__ACADEMIC_INTERESTS__SOCIAL_SCIENCES" - Interest | Academic
+	// Interests | Social Sciences.
+	//   "INTEREST__AUTOMOTIVE__AUTO_BUYING_AND_SELLING" - Interest | Automotive |
+	// Auto Buying and Selling.
+	//   "INTEREST__AUTOMOTIVE__AUTO_SHOWS" - Interest | Automotive | Auto Shows.
+	//   "INTEREST__AUTOMOTIVE__AUTO_TECHNOLOGY" - Interest | Automotive | Auto
+	// Technology.
+	//   "INTEREST__AUTOMOTIVE__BUDGET_CARS" - Interest | Automotive | Budget Cars.
+	//   "INTEREST__AUTOMOTIVE__CAR_CULTURE" - Interest | Automotive | Car Culture.
+	//   "INTEREST__AUTOMOTIVE__CLASSIC_CARS" - Interest | Automotive | Classic
+	// Cars.
+	//   "INTEREST__AUTOMOTIVE__CONCEPT_CARS" - Interest | Automotive | Concept
+	// Cars.
+	//   "INTEREST__AUTOMOTIVE__DASH_CAM_VIDEOS" - Interest | Automotive | Dash Cam
+	// Videos.
+	//   "INTEREST__AUTOMOTIVE__DRIVERLESS_CARS" - Interest | Automotive |
+	// Driverless Cars.
+	//   "INTEREST__AUTOMOTIVE__GREEN_VEHICLES" - Interest | Automotive | Green
+	// Vehicles.
+	//   "INTEREST__AUTOMOTIVE__LUXURY_CARS" - Interest | Automotive | Luxury Cars.
+	//   "INTEREST__AUTOMOTIVE__MOTORCYCLES" - Interest | Automotive | Motorcycles.
+	//   "INTEREST__AUTOMOTIVE__PERFORMANCE_CARS" - Interest | Automotive |
+	// Performance Cars.
+	//   "INTEREST__AUTOMOTIVE__SCOOTERS" - Interest | Automotive | Scooters.
+	//   "INTEREST__BOOKS_AND_LITERATURE__ART_AND_PHOTOGRAPHY_BOOKS" - Interest |
+	// Books and Literature | Art and Photography Books.
+	//   "INTEREST__BOOKS_AND_LITERATURE__BIOGRAPHIES" - Interest | Books and
+	// Literature | Biographies.
+	//   "INTEREST__BOOKS_AND_LITERATURE__CHILDRENS_LITERATURE" - Interest | Books
+	// and Literature | Children's Literature.
+	//   "INTEREST__BOOKS_AND_LITERATURE__COMICS_AND_GRAPHIC_NOVELS" - Interest |
+	// Books and Literature | Comics and Graphic Novels.
+	//   "INTEREST__BOOKS_AND_LITERATURE__COOKBOOKS" - Interest | Books and
+	// Literature | Cookbooks.
+	//   "INTEREST__BOOKS_AND_LITERATURE__FICTION" - Interest | Books and
+	// Literature | Fiction.
+	//   "INTEREST__BOOKS_AND_LITERATURE__POETRY" - Interest | Books and Literature
+	// | Poetry.
+	//   "INTEREST__BOOKS_AND_LITERATURE__TRAVEL_BOOKS" - Interest | Books and
+	// Literature | Travel Books.
+	//   "INTEREST__BOOKS_AND_LITERATURE__YOUNG_ADULT_LITERATURE" - Interest |
+	// Books and Literature | Young Adult Literature.
+	//   "INTEREST__BUSINESS_AND_FINANCE__BUSINESS" - Interest | Business and
+	// Finance | Business.
+	//   "INTEREST__BUSINESS_AND_FINANCE__ECONOMY" - Interest | Business and
+	// Finance | Economy.
+	//   "INTEREST__BUSINESS_AND_FINANCE__INDUSTRIES" - Interest | Business and
+	// Finance | Industries.
+	//   "INTEREST__CAREERS__APPRENTICESHIPS" - Interest | Careers |
+	// Apprenticeships.
+	//   "INTEREST__CAREERS__CAREER_ADVICE" - Interest | Careers | Career Advice.
+	//   "INTEREST__CAREERS__CAREER_PLANNING" - Interest | Careers | Career
+	// Planning.
+	//   "INTEREST__CAREERS__REMOTE_WORKING" - Interest | Careers | Remote Working.
+	//   "INTEREST__CAREERS__VOCATIONAL_TRAINING" - Interest | Careers | Vocational
+	// Training.
+	//   "INTEREST__EDUCATION__ADULT_EDUCATION" - Interest | Education | Adult
+	// Education.
+	//   "INTEREST__EDUCATION__ONLINE_EDUCATION" - Interest | Education | Online
+	// Education.
+	//   "INTEREST__FAMILY_AND_RELATIONSHIPS__PARENTING" - Interest | Family and
+	// Relationships | Parenting.
+	//   "INTEREST__FINE_ART__COSTUME" - Interest | Fine Art | Costume.
+	//   "INTEREST__FINE_ART__DANCE" - Interest | Fine Art | Dance.
+	//   "INTEREST__FINE_ART__DESIGN" - Interest | Fine Art | Design.
+	//   "INTEREST__FINE_ART__DIGITAL_ARTS" - Interest | Fine Art | Digital Arts.
+	//   "INTEREST__FINE_ART__FINE_ART_PHOTOGRAPHY" - Interest | Fine Art | Fine
+	// Art Photography.
+	//   "INTEREST__FINE_ART__MODERN_ART" - Interest | Fine Art | Modern Art.
+	//   "INTEREST__FINE_ART__OPERA" - Interest | Fine Art | Opera.
+	//   "INTEREST__FINE_ART__THEATER" - Interest | Fine Art | Theater.
+	//   "INTEREST__FOOD_AND_DRINK__ALCOHOLIC_BEVERAGES" - Interest | Food & Drink
+	// | Alcoholic Beverages.
+	//   "INTEREST__FOOD_AND_DRINK__BARBECUES_AND_GRILLING" - Interest | Food &
+	// Drink | Barbecues and Grilling.
+	//   "INTEREST__FOOD_AND_DRINK__COOKING" - Interest | Food & Drink | Cooking.
+	//   "INTEREST__FOOD_AND_DRINK__DESSERTS_AND_BAKING" - Interest | Food & Drink
+	// | Desserts and Baking.
+	//   "INTEREST__FOOD_AND_DRINK__DINING_OUT" - Interest | Food & Drink | Dining
+	// Out.
+	//   "INTEREST__FOOD_AND_DRINK__FOOD_ALLERGIES" - Interest | Food & Drink |
+	// Food Allergies.
+	//   "INTEREST__FOOD_AND_DRINK__FOOD_MOVEMENTS" - Interest | Food & Drink |
+	// Food Movements.
+	//   "INTEREST__FOOD_AND_DRINK__HEALTHY_COOKING_AND_EATING" - Interest | Food &
+	// Drink | Healthy Cooking and Eating.
+	//   "INTEREST__FOOD_AND_DRINK__NON_ALCOHOLIC_BEVERAGES" - Interest | Food &
+	// Drink | Non-Alcoholic Beverages.
+	//   "INTEREST__FOOD_AND_DRINK__VEGAN_DIETS" - Interest | Food & Drink | Vegan
+	// Diets.
+	//   "INTEREST__FOOD_AND_DRINK__VEGETARIAN_DIETS" - Interest | Food & Drink |
+	// Vegetarian Diets.
+	//   "INTEREST__FOOD_AND_DRINK__WORLD_CUISINES" - Interest | Food & Drink |
+	// World Cuisines.
+	//   "INTEREST__HEALTH_AND_MEDICAL_SERVICES__HEALTH_AND_PHARMA" - Interest |
+	// Health and Medical Services | Health & Pharma.
+	//   "INTEREST__HEALTHY_LIVING__CHILDRENS_HEALTH" - Interest | Healthy Living |
+	// Children's Health.
+	//   "INTEREST__HEALTHY_LIVING__FITNESS_AND_EXERCISE" - Interest | Healthy
+	// Living | Fitness and Exercise.
+	//   "INTEREST__HEALTHY_LIVING__MENS_HEALTH" - Interest | Healthy Living |
+	// Men's Health.
+	//   "INTEREST__HEALTHY_LIVING__NUTRITION" - Interest | Healthy Living |
+	// Nutrition.
+	//   "INTEREST__HEALTHY_LIVING__SENIOR_HEALTH" - Interest | Healthy Living |
+	// Senior Health.
+	//   "INTEREST__HEALTHY_LIVING__WEIGHT_LOSS" - Interest | Healthy Living |
+	// Weight Loss.
+	//   "INTEREST__HEALTHY_LIVING__WELLNESS" - Interest | Healthy Living |
+	// Wellness.
+	//   "INTEREST__HEALTHY_LIVING__WOMENS_HEALTH" - Interest | Healthy Living |
+	// Women's Health.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__ANTIQUING_AND_ANTIQUES" - Interest |
+	// Hobbies & Interests | Antiquing and Antiques.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__ARTS_AND_CRAFTS" - Interest | Hobbies &
+	// Interests | Arts and Crafts.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__BEEKEEPING" - Interest | Hobbies &
+	// Interests | Beekeeping.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__BIRDWATCHING" - Interest | Hobbies &
+	// Interests | Birdwatching.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__CIGARS" - Interest | Hobbies & Interests
+	// | Cigars.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__COLLECTING" - Interest | Hobbies &
+	// Interests | Collecting.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__CONTENT_PRODUCTION" - Interest | Hobbies
+	// & Interests | Content Production.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__GAMES_AND_PUZZLES" - Interest | Hobbies
+	// & Interests | Games and Puzzles.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__GENEALOGY_AND_ANCESTRY" - Interest |
+	// Hobbies & Interests | Genealogy and Ancestry.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__MAGIC_AND_ILLUSION" - Interest | Hobbies
+	// & Interests | Magic and Illusion.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__MODEL_TOYS" - Interest | Hobbies &
+	// Interests | Model Toys.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__MUSICAL_INSTRUMENTS" - Interest |
+	// Hobbies & Interests | Musical Instruments.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__PARANORMAL_PHENOMENA" - Interest |
+	// Hobbies & Interests | Paranormal Phenomena.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__RADIO_CONTROL" - Interest | Hobbies &
+	// Interests | Radio Control.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__SCI_FI_AND_FANTASY" - Interest | Hobbies
+	// & Interests | Sci-fi and Fantasy.
+	//   "INTEREST__HOBBIES_AND_INTERESTS__WORKSHOPS_AND_CLASSES" - Interest |
+	// Hobbies & Interests | Workshops and Classes.
+	//   "INTEREST__HOME_AND_GARDEN__GARDENING" - Interest | Home & Garden |
+	// Gardening.
+	//   "INTEREST__HOME_AND_GARDEN__HOME_ENTERTAINING" - Interest | Home & Garden
+	// | Home Entertaining.
+	//   "INTEREST__HOME_AND_GARDEN__HOME_IMPROVEMENT" - Interest | Home & Garden |
+	// Home Improvement.
+	//   "INTEREST__HOME_AND_GARDEN__INTERIOR_DECORATING" - Interest | Home &
+	// Garden | Interior Decorating.
+	//   "INTEREST__HOME_AND_GARDEN__LANDSCAPING" - Interest | Home & Garden |
+	// Landscaping.
+	//   "INTEREST__HOME_AND_GARDEN__OUTDOOR_DECORATING" - Interest | Home & Garden
+	// | Outdoor Decorating.
+	//   "INTEREST__HOME_AND_GARDEN__REMODELING_AND_CONSTRUCTION" - Interest | Home
+	// & Garden | Remodeling & Construction.
+	//   "INTEREST__HOME_AND_GARDEN__SMART_HOME" - Interest | Home & Garden | Smart
+	// Home.
+	//   "INTEREST__MOVIES__ACTION_AND_ADVENTURE_MOVIES" - Interest | Movies |
+	// Action and Adventure Movies.
+	//   "INTEREST__MOVIES__ANIMATION_MOVIES" - Interest | Movies | Animation
+	// Movies.
+	//   "INTEREST__MOVIES__COMEDY_MOVIES" - Interest | Movies | Comedy Movies.
+	//   "INTEREST__MOVIES__CRIME_AND_MYSTERY_MOVIES" - Interest | Movies | Crime
+	// and Mystery Movies.
+	//   "INTEREST__MOVIES__DOCUMENTARY_MOVIES" - Interest | Movies | Documentary
+	// Movies.
+	//   "INTEREST__MOVIES__DRAMA_MOVIES" - Interest | Movies | Drama Movies.
+	//   "INTEREST__MOVIES__FAMILY_AND_CHILDREN_MOVIES" - Interest | Movies |
+	// Family and Children Movies.
+	//   "INTEREST__MOVIES__FANTASY_MOVIES" - Interest | Movies | Fantasy Movies.
+	//   "INTEREST__MOVIES__HORROR_MOVIES" - Interest | Movies | Horror Movies.
+	//   "INTEREST__MOVIES__INDIE_AND_ARTHOUSE_MOVIES" - Interest | Movies | Indie
+	// and Arthouse Movies.
+	//   "INTEREST__MOVIES__ROMANCE_MOVIES" - Interest | Movies | Romance Movies.
+	//   "INTEREST__MOVIES__SCIENCE_FICTION_MOVIES" - Interest | Movies | Science
+	// Fiction Movies.
+	//   "INTEREST__MOVIES__WORLD_MOVIES" - Interest | Movies | World Movies.
+	//   "INTEREST__MUSIC_AND_AUDIO__ADULT_ALBUM_ALTERNATIVE" - Interest | Music
+	// and Audio | Adult Album Alternative.
+	//   "INTEREST__MUSIC_AND_AUDIO__ADULT_CONTEMPORARY_MUSIC" - Interest | Music
+	// and Audio | Adult Contemporary Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__ALTERNATIVE_MUSIC" - Interest | Music and
+	// Audio | Alternative Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__BLUES" - Interest | Music and Audio | Blues.
+	//   "INTEREST__MUSIC_AND_AUDIO__CHILDRENS_MUSIC" - Interest | Music and Audio
+	// | Children's Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__CLASSIC_HITS" - Interest | Music and Audio |
+	// Classic Hits.
+	//   "INTEREST__MUSIC_AND_AUDIO__CLASSICAL_MUSIC" - Interest | Music and Audio
+	// | Classical Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__COLLEGE_RADIO" - Interest | Music and Audio |
+	// College Radio.
+	//   "INTEREST__MUSIC_AND_AUDIO__COMEDY_MUSIC_AND_AUDIO" - Interest | Music and
+	// Audio | Comedy (Music and Audio).
+	//   "INTEREST__MUSIC_AND_AUDIO__CONTEMPORARY_HITS_POP_TOP_40" - Interest |
+	// Music and Audio | Contemporary Hits/Pop/Top 40.
+	//   "INTEREST__MUSIC_AND_AUDIO__COUNTRY_MUSIC" - Interest | Music and Audio |
+	// Country Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__DANCE_AND_ELECTRONIC_MUSIC" - Interest | Music
+	// and Audio | Dance and Electronic Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__GOSPEL_MUSIC" - Interest | Music and Audio |
+	// Gospel Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__HIP_HOP_MUSIC" - Interest | Music and Audio |
+	// Hip Hop Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__INSPIRATIONAL_NEW_AGE_MUSIC" - Interest |
+	// Music and Audio | Inspirational/New Age Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__JAZZ" - Interest | Music and Audio | Jazz.
+	//   "INTEREST__MUSIC_AND_AUDIO__OLDIES_ADULT_STANDARDS" - Interest | Music and
+	// Audio | Oldies/Adult Standards.
+	//   "INTEREST__MUSIC_AND_AUDIO__RNB_SOUL_FUNK" - Interest | Music and Audio |
+	// R&B/Soul/Funk.
+	//   "INTEREST__MUSIC_AND_AUDIO__REGGAE" - Interest | Music and Audio | Reggae.
+	//   "INTEREST__MUSIC_AND_AUDIO__RELIGIOUS__MUSIC_AND_AUDIO" - Interest | Music
+	// and Audio | Religious (Music and Audio).
+	//   "INTEREST__MUSIC_AND_AUDIO__ROCK_MUSIC" - Interest | Music and Audio |
+	// Rock Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__SONGWRITERS_FOLK" - Interest | Music and Audio
+	// | Songwriters/Folk.
+	//   "INTEREST__MUSIC_AND_AUDIO__SOUNDTRACKS_TV_AND_SHOWTUNES" - Interest |
+	// Music and Audio | Soundtracks, TV and Showtunes.
+	//   "INTEREST__MUSIC_AND_AUDIO__SPORTS_RADIO" - Interest | Music and Audio |
+	// Sports Radio.
+	//   "INTEREST__MUSIC_AND_AUDIO__TALK_RADIO" - Interest | Music and Audio |
+	// Talk Radio.
+	//   "INTEREST__MUSIC_AND_AUDIO__URBAN_CONTEMPORARY_MUSIC" - Interest | Music
+	// and Audio | Urban Contemporary Music.
+	//   "INTEREST__MUSIC_AND_AUDIO__VARIETY__MUSIC_AND_AUDIO" - Interest | Music
+	// and Audio | Variety (Music and Audio).
+	//   "INTEREST__MUSIC_AND_AUDIO__WORLD_INTERNATIONAL_MUSIC" - Interest | Music
+	// and Audio | World/International Music.
+	//   "INTEREST__NEWS_AND_POLITICS__CRIME" - Interest | News and Politics |
+	// Crime.
+	//   "INTEREST__NEWS_AND_POLITICS__DISASTERS" - Interest | News and Politics |
+	// Disasters.
+	//   "INTEREST__NEWS_AND_POLITICS__INTERNATIONAL_NEWS" - Interest | News and
+	// Politics | International News.
+	//   "INTEREST__NEWS_AND_POLITICS__LAW" - Interest | News and Politics | Law.
+	//   "INTEREST__NEWS_AND_POLITICS__LOCAL_NEWS" - Interest | News and Politics |
+	// Local News.
+	//   "INTEREST__NEWS_AND_POLITICS__NATIONAL_NEWS" - Interest | News and
+	// Politics | National News.
+	//   "INTEREST__NEWS_AND_POLITICS__POLITICS" - Interest | News and Politics |
+	// Politics.
+	//   "INTEREST__NEWS_AND_POLITICS__WEATHER" - Interest | News and Politics |
+	// Weather.
+	//   "INTEREST__PERSONAL_FINANCE__FRUGAL_LIVING" - Interest | Personal Finance
+	// | Frugal Living.
+	//   "INTEREST__PERSONAL_FINANCE__INSURANCE" - Interest | Personal Finance |
+	// Insurance.
+	//   "INTEREST__PERSONAL_FINANCE__PERSONAL_DEBT" - Interest | Personal Finance
+	// | Personal Debt.
+	//   "INTEREST__PERSONAL_FINANCE__PERSONAL_INVESTING" - Interest | Personal
+	// Finance | Personal Investing.
+	//   "INTEREST__PERSONAL_FINANCE__PERSONAL_TAXES" - Interest | Personal Finance
+	// | Personal Taxes.
+	//   "INTEREST__PERSONAL_FINANCE__RETIREMENT_PLANNING" - Interest | Personal
+	// Finance | Retirement Planning.
+	//   "INTEREST__PETS__BIRDS" - Interest | Pets | Birds.
+	//   "INTEREST__PETS__CATS" - Interest | Pets | Cats.
+	//   "INTEREST__PETS__DOGS" - Interest | Pets | Dogs.
+	//   "INTEREST__PETS__FISH_AND_AQUARIUMS" - Interest | Pets | Fish and
+	// Aquariums.
+	//   "INTEREST__PETS__HORSES_AND_EQUINE" - Interest | Pets | Horses and Equine.
+	//   "INTEREST__PETS__LARGE_ANIMALS" - Interest | Pets | Large Animals.
+	//   "INTEREST__PETS__PET_ADOPTIONS" - Interest | Pets | Pet Adoptions.
+	//   "INTEREST__PETS__REPTILES" - Interest | Pets | Reptiles.
+	//   "INTEREST__POP_CULTURE__HUMOR_AND_SATIRE" - Interest | Pop Culture | Humor
+	// and Satire.
+	//   "INTEREST__REAL_ESTATE__APARTMENTS" - Interest | Real Estate | Apartments.
+	//   "INTEREST__REAL_ESTATE__DEVELOPMENTAL_SITES" - Interest | Real Estate |
+	// Developmental Sites.
+	//   "INTEREST__REAL_ESTATE__HOTEL_PROPERTIES" - Interest | Real Estate | Hotel
+	// Properties.
+	//   "INTEREST__REAL_ESTATE__HOUSES" - Interest | Real Estate | Houses.
+	//   "INTEREST__REAL_ESTATE__INDUSTRIAL_PROPERTY" - Interest | Real Estate |
+	// Industrial Property.
+	//   "INTEREST__REAL_ESTATE__LAND_AND_FARMS" - Interest | Real Estate | Land
+	// and Farms.
+	//   "INTEREST__REAL_ESTATE__OFFICE_PROPERTY" - Interest | Real Estate | Office
+	// Property.
+	//   "INTEREST__REAL_ESTATE__REAL_ESTATE_BUYING_AND_SELLING" - Interest | Real
+	// Estate | Real Estate Buying and Selling.
+	//   "INTEREST__REAL_ESTATE__REAL_ESTATE_RENTING_AND_LEASING" - Interest | Real
+	// Estate | Real Estate Renting and Leasing.
+	//   "INTEREST__REAL_ESTATE__RETAIL_PROPERTY" - Interest | Real Estate | Retail
+	// Property.
+	//   "INTEREST__REAL_ESTATE__VACATION_PROPERTIES" - Interest | Real Estate |
+	// Vacation Properties.
+	//   "INTEREST__SPORTS__AMERICAN_FOOTBALL" - Interest | Sports | American
+	// Football.
+	//   "INTEREST__SPORTS__AUSTRALIAN_RULES_FOOTBALL" - Interest | Sports |
+	// Australian Rules Football.
+	//   "INTEREST__SPORTS__AUTO_RACING" - Interest | Sports | Auto Racing.
+	//   "INTEREST__SPORTS__BADMINTON" - Interest | Sports | Badminton.
+	//   "INTEREST__SPORTS__BASEBALL" - Interest | Sports | Baseball.
+	//   "INTEREST__SPORTS__BASKETBALL" - Interest | Sports | Basketball.
+	//   "INTEREST__SPORTS__BEACH_VOLLEYBALL" - Interest | Sports | Beach
+	// Volleyball.
+	//   "INTEREST__SPORTS__BODYBUILDING" - Interest | Sports | Bodybuilding.
+	//   "INTEREST__SPORTS__BOWLING" - Interest | Sports | Bowling.
+	//   "INTEREST__SPORTS__BOXING" - Interest | Sports | Boxing.
+	//   "INTEREST__SPORTS__CHEERLEADING" - Interest | Sports | Cheerleading.
+	//   "INTEREST__SPORTS__COLLEGE_SPORTS" - Interest | Sports | College Sports.
+	//   "INTEREST__SPORTS__CRICKET" - Interest | Sports | Cricket.
+	//   "INTEREST__SPORTS__CYCLING" - Interest | Sports | Cycling.
+	//   "INTEREST__SPORTS__DARTS" - Interest | Sports | Darts.
+	//   "INTEREST__SPORTS__DISABLED_SPORTS" - Interest | Sports | Disabled Sports.
+	//   "INTEREST__SPORTS__DIVING" - Interest | Sports | Diving.
+	//   "INTEREST__SPORTS__EQUINE_SPORTS" - Interest | Sports | Equine Sports.
+	//   "INTEREST__SPORTS__EXTREME_SPORTS" - Interest | Sports | Extreme Sports.
+	//   "INTEREST__SPORTS__FANTASY_SPORTS" - Interest | Sports | Fantasy Sports.
+	//   "INTEREST__SPORTS__FIELD_HOCKEY" - Interest | Sports | Field Hockey.
+	//   "INTEREST__SPORTS__FIGURE_SKATING" - Interest | Sports | Figure Skating.
+	//   "INTEREST__SPORTS__FISHING_SPORTS" - Interest | Sports | Fishing Sports.
+	//   "INTEREST__SPORTS__GOLF" - Interest | Sports | Golf.
+	//   "INTEREST__SPORTS__GYMNASTICS" - Interest | Sports | Gymnastics.
+	//   "INTEREST__SPORTS__HUNTING_AND_SHOOTING" - Interest | Sports | Hunting and
+	// Shooting.
+	//   "INTEREST__SPORTS__ICE_HOCKEY" - Interest | Sports | Ice Hockey.
+	//   "INTEREST__SPORTS__INLINE_SKATING" - Interest | Sports | Inline Skating.
+	//   "INTEREST__SPORTS__LACROSSE" - Interest | Sports | Lacrosse.
+	//   "INTEREST__SPORTS__MARTIAL_ARTS" - Interest | Sports | Martial Arts.
+	//   "INTEREST__SPORTS__OLYMPIC_SPORTS" - Interest | Sports | Olympic Sports.
+	//   "INTEREST__SPORTS__POKER_AND_PROFESSIONAL_GAMBLING" - Interest | Sports |
+	// Poker and Professional Gambling.
+	//   "INTEREST__SPORTS__RODEO" - Interest | Sports | Rodeo.
+	//   "INTEREST__SPORTS__ROWING" - Interest | Sports | Rowing.
+	//   "INTEREST__SPORTS__RUGBY" - Interest | Sports | Rugby.
+	//   "INTEREST__SPORTS__SAILING" - Interest | Sports | Sailing.
+	//   "INTEREST__SPORTS__SKIING" - Interest | Sports | Skiing.
+	//   "INTEREST__SPORTS__SNOOKER_POOL_BILLIARDS" - Interest | Sports |
+	// Snooker/Pool/Billiards.
+	//   "INTEREST__SPORTS__SOCCER" - Interest | Sports | Soccer.
+	//   "INTEREST__SPORTS__SOFTBALL" - Interest | Sports | Softball.
+	//   "INTEREST__SPORTS__SPORTS_EQUIPMENT" - Interest | Sports | Sports
+	// Equipment.
+	//   "INTEREST__SPORTS__SQUASH" - Interest | Sports | Squash.
+	//   "INTEREST__SPORTS__SWIMMING" - Interest | Sports | Swimming.
+	//   "INTEREST__SPORTS__TABLE_TENNIS" - Interest | Sports | Table Tennis.
+	//   "INTEREST__SPORTS__TENNIS" - Interest | Sports | Tennis.
+	//   "INTEREST__SPORTS__TRACK_AND_FIELD" - Interest | Sports | Track and Field.
+	//   "INTEREST__SPORTS__VOLLEYBALL" - Interest | Sports | Volleyball.
+	//   "INTEREST__SPORTS__WALKING" - Interest | Sports | Walking.
+	//   "INTEREST__SPORTS__WATER_POLO" - Interest | Sports | Water Polo.
+	//   "INTEREST__SPORTS__WEIGHTLIFTING" - Interest | Sports | Weightlifting.
+	//   "INTEREST__SPORTS__WRESTLING" - Interest | Sports | Wrestling.
+	//   "INTEREST__STYLE_AND_FASHION__BEAUTY" - Interest | Style & Fashion |
+	// Beauty.
+	//   "INTEREST__STYLE_AND_FASHION__BODY_ART" - Interest | Style & Fashion |
+	// Body Art.
+	//   "INTEREST__STYLE_AND_FASHION__CHILDRENS_CLOTHING" - Interest | Style &
+	// Fashion | Children's Clothing.
+	//   "INTEREST__STYLE_AND_FASHION__DESIGNER_CLOTHING" - Interest | Style &
+	// Fashion | Designer Clothing.
+	//   "INTEREST__STYLE_AND_FASHION__FASHION_TRENDS" - Interest | Style & Fashion
+	// | Fashion Trends.
+	//   "INTEREST__STYLE_AND_FASHION__HIGH_FASHION" - Interest | Style & Fashion |
+	// High Fashion.
+	//   "INTEREST__STYLE_AND_FASHION__MENS_FASHION" - Interest | Style & Fashion |
+	// Men's Fashion.
+	//   "INTEREST__STYLE_AND_FASHION__PERSONAL_CARE" - Interest | Style & Fashion
+	// | Personal Care.
+	//   "INTEREST__STYLE_AND_FASHION__STREET_STYLE" - Interest | Style & Fashion |
+	// Street Style.
+	//   "INTEREST__STYLE_AND_FASHION__WOMENS_FASHION" - Interest | Style & Fashion
+	// | Women's Fashion.
+	//   "INTEREST__TECHNOLOGY_AND_COMPUTING__ARTIFICIAL_INTELLIGENCE" - Interest |
+	// Technology & Computing | Artificial Intelligence.
+	//   "INTEREST__TECHNOLOGY_AND_COMPUTING__AUGMENTED_REALITY" - Interest |
+	// Technology & Computing | Augmented Reality.
+	//   "INTEREST__TECHNOLOGY_AND_COMPUTING__COMPUTING" - Interest | Technology &
+	// Computing | Computing.
+	//   "INTEREST__TECHNOLOGY_AND_COMPUTING__CONSUMER_ELECTRONICS" - Interest |
+	// Technology & Computing | Consumer Electronics.
+	//   "INTEREST__TECHNOLOGY_AND_COMPUTING__ROBOTICS" - Interest | Technology &
+	// Computing | Robotics.
+	//   "INTEREST__TECHNOLOGY_AND_COMPUTING__VIRTUAL_REALITY" - Interest |
+	// Technology & Computing | Virtual Reality.
+	//   "INTEREST__TELEVISION__ANIMATION_TV" - Interest | Television | Animation
+	// TV.
+	//   "INTEREST__TELEVISION__CHILDRENS_TV" - Interest | Television | Children's
+	// TV.
+	//   "INTEREST__TELEVISION__COMEDY_TV" - Interest | Television | Comedy TV.
+	//   "INTEREST__TELEVISION__DRAMA_TV" - Interest | Television | Drama TV.
+	//   "INTEREST__TELEVISION__FACTUAL_TV" - Interest | Television | Factual TV.
+	//   "INTEREST__TELEVISION__HOLIDAY_TV" - Interest | Television | Holiday TV.
+	//   "INTEREST__TELEVISION__MUSIC_TV" - Interest | Television | Music TV.
+	//   "INTEREST__TELEVISION__REALITY_TV" - Interest | Television | Reality TV.
+	//   "INTEREST__TELEVISION__SCIENCE_FICTION_TV" - Interest | Television |
+	// Science Fiction TV.
+	//   "INTEREST__TELEVISION__SOAP_OPERA_TV" - Interest | Television | Soap Opera
+	// TV.
+	//   "INTEREST__TELEVISION__SPECIAL_INTEREST_TV" - Interest | Television |
+	// Special Interest TV.
+	//   "INTEREST__TELEVISION__SPORTS_TV" - Interest | Television | Sports TV.
+	//   "INTEREST__TRAVEL__ADVENTURE_TRAVEL" - Interest | Travel | Adventure
+	// Travel.
+	//   "INTEREST__TRAVEL__AFRICA_TRAVEL" - Interest | Travel | Africa Travel.
+	//   "INTEREST__TRAVEL__ASIA_TRAVEL" - Interest | Travel | Asia Travel.
+	//   "INTEREST__TRAVEL__AUSTRALIA_AND_OCEANIA_TRAVEL" - Interest | Travel |
+	// Australia and Oceania Travel.
+	//   "INTEREST__TRAVEL__BEACH_TRAVEL" - Interest | Travel | Beach Travel.
+	//   "INTEREST__TRAVEL__CAMPING" - Interest | Travel | Camping.
+	//   "INTEREST__TRAVEL__DAY_TRIPS" - Interest | Travel | Day Trips.
+	//   "INTEREST__TRAVEL__EUROPE_TRAVEL" - Interest | Travel | Europe Travel.
+	//   "INTEREST__TRAVEL__FAMILY_TRAVEL" - Interest | Travel | Family Travel.
+	//   "INTEREST__TRAVEL__NORTH_AMERICA_TRAVEL" - Interest | Travel | North
+	// America Travel.
+	//   "INTEREST__TRAVEL__POLAR_TRAVEL" - Interest | Travel | Polar Travel.
+	//   "INTEREST__TRAVEL__ROAD_TRIPS" - Interest | Travel | Road Trips.
+	//   "INTEREST__TRAVEL__SOUTH_AMERICA_TRAVEL" - Interest | Travel | South
+	// America Travel.
+	//   "INTEREST__VIDEO_GAMING__CONSOLE_GAMES" - Interest | Video Gaming |
+	// Console Games.
+	//   "INTEREST__VIDEO_GAMING__ESPORTS" - Interest | Video Gaming | eSports.
+	//   "INTEREST__VIDEO_GAMING__MOBILE_GAMES" - Interest | Video Gaming | Mobile
+	// Games.
+	//   "INTEREST__VIDEO_GAMING__PC_GAMES" - Interest | Video Gaming | PC Games.
+	//   "INTEREST__VIDEO_GAMING__VIDEO_GAME_GENRES" - Interest | Video Gaming |
+	// Video Game Genres.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__HIGH_SCHOOL_GRADUATE" -
+	// Demographic | Education & Occupation | High school graduate.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__ASSOCIATES_DEGREE" - Demographic |
+	// Education & Occupation | Associate's degree.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__BACHELORS_DEGREE" - Demographic |
+	// Education & Occupation | Bachelor's degree.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__GRADUATE_DEGREE_AND_ABOVE" -
+	// Demographic | Education & Occupation | Graduate degree and above.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__EDUCATION_OTHER" - Demographic |
+	// Education & Occupation | Other.
+	//   "DEMOGRAPHIC__AGE_RANGE__18_TO_24" - Demographic | Age Range | 18-24.
+	//   "DEMOGRAPHIC__AGE_RANGE__25_TO_34" - Demographic | Age Range | 25-34.
+	//   "DEMOGRAPHIC__AGE_RANGE__35_TO_44" - Demographic | Age Range | 35-44.
+	//   "DEMOGRAPHIC__AGE_RANGE__45_TO_54" - Demographic | Age Range | 45-54.
+	//   "DEMOGRAPHIC__AGE_RANGE__55_AND_ABOVE" - Demographic | Age Range | 55+.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__LESS_THAN_10000" - Demographic | Household
+	// Data | Less than $10,000.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__10000_TO_49999" - Demographic | Household
+	// Data | $10,000-$49,999.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__50000_TO_149999" - Demographic | Household
+	// Data | $50,000-$149,999.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__150000_TO_249999" - Demographic | Household
+	// Data | $150,000-$249,999.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__250000_AND_ABOVE" - Demographic | Household
+	// Data | $250,000+.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__LESS_THAN_50000" - Deprecated: Demographic |
+	// Household Data | Less than $50,000.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__1_ADULT" - Demographic | Household Data | 1
+	// Adult.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__2_ADULTS" - Demographic | Household Data | 2
+	// Adults.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__3_AND_ABOVE_ADULTS" - Demographic |
+	// Household Data | 3+ Adults.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__0_CHILD" - Demographic | Household Data | 0
+	// Child.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__1_CHILD" - Demographic | Household Data | 1
+	// Child.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__2_CHILDREN" - Demographic | Household Data |
+	// 2 Children.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__3_AND_ABOVE_CHILDREN" - Demographic |
+	// Household Data | 3+ Children.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__RETIRED" - Demographic | Education
+	// & Occupation | Retired.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__STUDENT" - Demographic | Education
+	// & Occupation | Student.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__PART_TIME" - Demographic |
+	// Education & Occupation | Part-Time.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__FULL_TIME" - Demographic |
+	// Education & Occupation | Full-Time.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__SELF_EMPLOYED" - Demographic |
+	// Education & Occupation | Self-Employed.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__UNEMPLOYED_JOB_SEEKER" -
+	// Demographic | Education & Occupation | Unemployed / Job Seeker.
+	//   "PURCHASE_INTENT__BEAUTY" - Purchase Intent | Beauty.
+	//   "PURCHASE_INTENT__CLOTHING" - Purchase Intent | Clothing.
+	//   "PURCHASE_INTENT__CREDIT_CARDS" - Purchase Intent | Credit Cards.
+	//   "PURCHASE_INTENT__ELECTRONICS" - Purchase Intent | Electronics.
+	//   "PURCHASE_INTENT__HOME_AND_GARDEN_PRODUCTS" - Purchase Intent | Home and
+	// Garden Products.
+	//   "PURCHASE_INTENT__HOUSEHOLD_APPLIANCES" - Purchase Intent | Household
+	// Appliances.
+	//   "PURCHASE_INTENT__INSURANCE" - Purchase Intent | Insurance.
+	//   "PURCHASE_INTENT__NEW_OR_PRE_OWNED_VEHICLES" - Purchase Intent | New /
+	// Pre-owned vehicles.
+	//   "PURCHASE_INTENT__NONE_OF_THE_ABOVE" - Purchase Intent | None of the
+	// above.
+	//   "DIGITAL_SUBSCRIPTION_BENEFITS__ACCESS_TO_EXCLUSIVE_CONTENT" - Digital
+	// Subscription Benefits | Access to Exclusive Content.
+	//   "DIGITAL_SUBSCRIPTION_BENEFITS__ANYTIME_CANCELLATION" - Digital
+	// Subscription Benefits | Anytime Cancellation.
+	//   "DIGITAL_SUBSCRIPTION_BENEFITS__DISCOUNTED_SUBSCRIPTION_PLANS" - Digital
+	// Subscription Benefits | Discounted Subscription Plans.
+	//   "DIGITAL_SUBSCRIPTION_BENEFITS__EARLY_ACCESS" - Digital Subscription
+	// Benefits | Early Access.
+	//   "DIGITAL_SUBSCRIPTION_BENEFITS__SHARED_ACCESS" - Digital Subscription
+	// Benefits | Shared Access.
+	Category string `json:"category,omitempty"`
+	// CategoryLabel: Output only. Text label used for aggregating responses by
+	// category in analytics.
+	CategoryLabel string `json:"categoryLabel,omitempty"`
+	// DisplayText: Output only. Localized answer choice text displayed to readers.
+	DisplayText string `json:"displayText,omitempty"`
+	// Id: Output only. Unique identifier of the answer choice within the question.
+	Id int64 `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AnswerChoiceTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod AnswerChoiceTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CheckFreeAccessResponse: Response message for CheckFreeAccess
 type CheckFreeAccessResponse struct {
 	// IsAllowed: Output only. True if free access should be allowed, false
@@ -294,11 +866,15 @@ type Cta struct {
 	//   "DRAFT" - The CTA is a draft and not yet visible to users.
 	//   "ACTIVE" - The CTA is active and visible to users.
 	State string `json:"state,omitempty"`
+	// SurveyConfig: Optional. Configuration specific to survey CTAs. Only
+	// populated if type is `SURVEY`.
+	SurveyConfig *SurveyConfig `json:"surveyConfig,omitempty"`
 	// Type: Required. The type of this CTA.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified CTA type.
 	//   "NEWSLETTER_SIGNUP" - CTA for newsletter subscription signup.
+	//   "SURVEY" - CTA for reader surveys.
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -318,6 +894,59 @@ type Cta struct {
 
 func (s Cta) MarshalJSON() ([]byte, error) {
 	type NoMethod Cta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomAnswerChoice: An answer choice for a custom survey question.
+type CustomAnswerChoice struct {
+	// DisplayText: Required. The display text of the answer choice shown to
+	// readers.
+	DisplayText string `json:"displayText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomAnswerChoice) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomAnswerChoice
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomQuestion: A custom question defined by the publisher.
+type CustomQuestion struct {
+	// AnswerChoices: Required. Ordered list of answer choices for the custom
+	// question (2-5 items).
+	AnswerChoices []*CustomAnswerChoice `json:"answerChoices,omitempty"`
+	// CategoryLabel: Optional. Reporting category label sent to Google Analytics
+	// (up to 100 characters).
+	CategoryLabel string `json:"categoryLabel,omitempty"`
+	// DisplayText: Required. The question prompt displayed to readers.
+	DisplayText string `json:"displayText,omitempty"`
+	// Id: Output only. Server-assigned unique identifier for the custom question.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerChoices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerChoices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomQuestion) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomQuestion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -468,6 +1097,34 @@ func (s NewsletterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PresetQuestion: A preset question referencing a template in the survey
+// question catalog.
+type PresetQuestion struct {
+	// AnswerIds: Optional. Selected answer choice IDs from the question template.
+	// Required (2-5 unique IDs) when the catalog question is
+	// `CONFIGURABLE_CHOICES`, and must be omitted for `FIXED_CHOICES`.
+	AnswerIds []int64 `json:"answerIds,omitempty"`
+	// QuestionId: Required. ID of the question template from
+	// `SurveyQuestionCatalog`.
+	QuestionId int64 `json:"questionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PresetQuestion) MarshalJSON() ([]byte, error) {
+	type NoMethod PresetQuestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Publication: Represents a publisher's publication in Reader Revenue Manager.
 type Publication struct {
 	// AdditionalDomains: Optional. Additional domain properties verified for the
@@ -555,6 +1212,67 @@ func (s Publication) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// QuestionTemplate: A predefined question template in the survey question
+// catalog.
+type QuestionTemplate struct {
+	// AnswerChoices: Output only. Possible answer choices for this question.
+	AnswerChoices []*AnswerChoiceTemplate `json:"answerChoices,omitempty"`
+	// Category: Output only. Category of the question based on the IAB Audience
+	// Taxonomy.
+	//
+	// Possible values:
+	//   "QUESTION_CATEGORY_UNSPECIFIED" - Unspecified question category.
+	//   "INTEREST" - Interest.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__EDUCATION" - Demographic |
+	// Education & Occupation | Education.
+	//   "DEMOGRAPHIC__AGE_RANGE" - Demographic | Age Range.
+	//   "PURCHASE_INTENT" - Purchase Intent.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__HOUSEHOLD_INCOME_USD" - Demographic |
+	// Household Data | Household Income (USD).
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__NUMBER_OF_ADULTS" - Demographic | Household
+	// Data | Number of Adults.
+	//   "DEMOGRAPHIC__HOUSEHOLD_DATA__NUMBER_OF_CHILDREN" - Demographic |
+	// Household Data | Number of Children.
+	//   "DEMOGRAPHIC__EDUCATION_AND_OCCUPATION__EMPLOYMENT_STATUS" - Demographic |
+	// Education & Occupation | Employment Status.
+	//   "DIGITAL_SUBSCRIPTION_BENEFITS" - Digital Subscription Benefits.
+	Category string `json:"category,omitempty"`
+	// CategoryLabel: Output only. Text label used for aggregating responses by
+	// category in analytics.
+	CategoryLabel string `json:"categoryLabel,omitempty"`
+	// ConfigurationType: Output only. The type of answer choice configuration for
+	// this question.
+	//
+	// Possible values:
+	//   "QUESTION_CONFIGURATION_TYPE_UNSPECIFIED" - Unspecified question
+	// configuration type.
+	//   "FIXED_CHOICES" - Fixed set of answer choices for this question.
+	// Publishers are not able to select their own.
+	//   "CONFIGURABLE_CHOICES" - Publishers are able to select answer choices from
+	// `AnswerChoiceTemplate` for the question.
+	ConfigurationType string `json:"configurationType,omitempty"`
+	// DisplayText: Output only. Localized question text displayed to readers.
+	DisplayText string `json:"displayText,omitempty"`
+	// Id: Output only. Unique identifier of the question template.
+	Id int64 `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerChoices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerChoices") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuestionTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod QuestionTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RrmProduct: Configuration and status of the Reader Revenue Manager (RRM)
 // product for a publication.
 type RrmProduct struct {
@@ -629,6 +1347,89 @@ type SlProduct struct {
 
 func (s SlProduct) MarshalJSON() ([]byte, error) {
 	type NoMethod SlProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SurveyConfig: Configuration for survey calls-to-action (CTAs).
+type SurveyConfig struct {
+	// CustomMessage: Optional. Header prompt shown to readers. If omitted, the
+	// server populates the default prompt localized to the parent publication's
+	// configured primary language.
+	CustomMessage string `json:"customMessage,omitempty"`
+	// Questions: Optional. Ordered list of questions presented in the survey (1-3
+	// items when `ACTIVE`; 0-3 when `DRAFT`).
+	Questions []*SurveyQuestion `json:"questions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SurveyConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SurveyConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SurveyQuestion: A single question within a survey, which can be either a
+// preset question from the catalog or a custom publisher-defined question.
+type SurveyQuestion struct {
+	// CustomQuestion: Optional. A custom question defined by the publisher.
+	CustomQuestion *CustomQuestion `json:"customQuestion,omitempty"`
+	// PresetQuestion: Optional. A question selected from the preset question
+	// catalog.
+	PresetQuestion *PresetQuestion `json:"presetQuestion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomQuestion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomQuestion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SurveyQuestion) MarshalJSON() ([]byte, error) {
+	type NoMethod SurveyQuestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SurveyQuestionCatalog: Represents the catalog of predefined survey questions
+// and localized answer choices available for a publication.
+type SurveyQuestionCatalog struct {
+	// Name: Identifier. The resource name of the survey question catalog. Format:
+	// `organizations/{organization}/publications/{publication}/surveyQuestionCatalo
+	// g`.
+	Name string `json:"name,omitempty"`
+	// Questions: Output only. The list of available predefined question templates.
+	Questions []*QuestionTemplate `json:"questions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SurveyQuestionCatalog) MarshalJSON() ([]byte, error) {
+	type NoMethod SurveyQuestionCatalog
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -876,6 +1677,128 @@ func (c *OrganizationsPublicationsGetCall) Do(opts ...googleapi.CallOption) (*Pu
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "webcontentpublisher.organizations.publications.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsPublicationsGetSurveyQuestionCatalogCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSurveyQuestionCatalog: Retrieves the catalog of predefined survey
+// questions and answer choices available for a publication.
+//
+//   - name: The resource name of the survey question catalog to retrieve.
+//     Format:
+//     `organizations/{organization}/publications/{publication}/surveyQuestionCata
+//     log`.
+func (r *OrganizationsPublicationsService) GetSurveyQuestionCatalog(name string) *OrganizationsPublicationsGetSurveyQuestionCatalogCall {
+	c := &OrganizationsPublicationsGetSurveyQuestionCatalogCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code (e.g., "en-US", "es-419") to override the publication's configured
+// primary language.
+func (c *OrganizationsPublicationsGetSurveyQuestionCatalogCall) LanguageCode(languageCode string) *OrganizationsPublicationsGetSurveyQuestionCatalogCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsPublicationsGetSurveyQuestionCatalogCall) Fields(s ...googleapi.Field) *OrganizationsPublicationsGetSurveyQuestionCatalogCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsPublicationsGetSurveyQuestionCatalogCall) IfNoneMatch(entityTag string) *OrganizationsPublicationsGetSurveyQuestionCatalogCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsPublicationsGetSurveyQuestionCatalogCall) Context(ctx context.Context) *OrganizationsPublicationsGetSurveyQuestionCatalogCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsPublicationsGetSurveyQuestionCatalogCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsPublicationsGetSurveyQuestionCatalogCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "webcontentpublisher.organizations.publications.getSurveyQuestionCatalog", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "webcontentpublisher.organizations.publications.getSurveyQuestionCatalog" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SurveyQuestionCatalog.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsPublicationsGetSurveyQuestionCatalogCall) Do(opts ...googleapi.CallOption) (*SurveyQuestionCatalog, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SurveyQuestionCatalog{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "webcontentpublisher.organizations.publications.getSurveyQuestionCatalog", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

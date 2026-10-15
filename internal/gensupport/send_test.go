@@ -8,11 +8,15 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"io"
 	"net/http"
 	"regexp"
+	"strings"
 	"testing"
+	"time"
 
 	"github.com/google/go-cmp/cmp"
+	"github.com/googleapis/gax-go/v2"
 	"github.com/googleapis/gax-go/v2/callctx"
 )
 
@@ -136,5 +140,51 @@ func TestCanceledContextDoesNotPerformRequest(t *testing.T) {
 		if !errors.Is(err, context.Canceled) {
 			t.Fatalf("got %v, want %v", err, context.Canceled)
 		}
+	}
+}
+
+type stubRoundTripper struct {
+	roundTrip func(*http.Request) (*http.Response, error)
+}
+
+func (rt *stubRoundTripper) RoundTrip(r *http.Request) (*http.Response, error) {
+	return rt.roundTrip(r)
+}
+
+func TestSendRequestWithRetry_RequestTimeout(t *testing.T) {
+	attempts := 0
+	transport := &stubRoundTripper{
+		roundTrip: func(r *http.Request) (*http.Response, error) {
+			attempts++
+			if attempts < 3 {
+				// Simulate stall by blocking until the request context is cancelled.
+				<-r.Context().Done()
+				return nil, r.Context().Err()
+			}
+			return &http.Response{StatusCode: 200}, nil
+		},
+	}
+	client := http.Client{Transport: transport}
+	req, _ := http.NewRequest("GET", "url", nil)
+	req.GetBody = func() (io.ReadCloser, error) {
+		return io.NopCloser(strings.NewReader("")), nil
+	}
+
+	retry := &RetryConfig{
+		RequestTimeout: 50 * time.Millisecond,
+		Backoff: &gax.Backoff{
+			Initial: 1 * time.Millisecond,
+		},
+	}
+
+	resp, err := SendRequestWithRetry(context.Background(), &client, req, retry)
+	if err != nil {
+		t.Fatalf("SendRequestWithRetry failed: %v", err)
+	}
+	if resp.StatusCode != 200 {
+		t.Errorf("got status %d, want 200", resp.StatusCode)
+	}
+	if attempts != 3 {
+		t.Errorf("got %d attempts, want 3", attempts)
 	}
 }

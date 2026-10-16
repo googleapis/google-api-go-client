@@ -692,6 +692,16 @@ func (s CreateProjectMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateSemanticTagBindingMetadata: Metadata for the
+// `CreateSemanticTagBinding` long-running operation.
+type CreateSemanticTagBindingMetadata struct {
+}
+
+// CreateSemanticTagValueMetadata: Runtime operation information for creating a
+// `SemanticTagValue`.
+type CreateSemanticTagValueMetadata struct {
+}
+
 // CreateTagBindingMetadata: Runtime operation information for creating a
 // TagValue.
 type CreateTagBindingMetadata struct {
@@ -730,6 +740,16 @@ type DeleteOrganizationMetadata struct {
 // DeleteProjectMetadata: A status object which is used as the `metadata` field
 // for the Operation returned by `DeleteProject`.
 type DeleteProjectMetadata struct {
+}
+
+// DeleteSemanticTagBindingMetadata: Metadata for the
+// `DeleteSemanticTagBinding` long-running operation.
+type DeleteSemanticTagBindingMetadata struct {
+}
+
+// DeleteSemanticTagValueMetadata: Runtime operation information for deleting a
+// `SemanticTagValue`.
+type DeleteSemanticTagValueMetadata struct {
 }
 
 // DeleteTagBindingMetadata: Runtime operation information for deleting a

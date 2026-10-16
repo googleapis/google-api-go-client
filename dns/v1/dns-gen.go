@@ -1884,9 +1884,10 @@ type OutboundEndpoint struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. User provided description.
 	Description string `json:"description,omitempty"`
-	// EndpointIp: Required. Immutable. User provided IP address to use for
+	// EndpointIp: Optional. Immutable. User provided IP address to use for
 	// outbound DNS forwarding. This address must be a free address on the
-	// subnetwork.
+	// subnetwork. If omitted, a free IP address from the subnetwork is
+	// automatically allocated.
 	EndpointIp string `json:"endpointIp,omitempty"`
 	// Labels: Optional. Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`

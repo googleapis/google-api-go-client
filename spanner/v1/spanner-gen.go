@@ -3535,6 +3535,9 @@ type Instance struct {
 	//   "READY" - The instance is fully created and ready to do work such as
 	// creating databases.
 	State string `json:"state,omitempty"`
+	// Tags: Optional. Tag keys/values directly bound to this resource. For
+	// example: "123/environment": "prod", "123/costCenter": "marketing"
+	Tags map[string]string `json:"tags,omitempty"`
 	// UpdateTime: Output only. The time at which the instance was most recently
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`

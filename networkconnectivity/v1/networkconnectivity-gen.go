@@ -5209,6 +5209,8 @@ type Transport struct {
 	//   "DEPROVISIONED" - The Transport was deleted on the remote provider's end
 	// and is no longer operational. GCP has insufficient information to move the
 	// resource back to PENDING_KEY state.
+	//   "SUSPENDED" - The Transport is suspended due to an Abuse suspension or
+	// Wipeout Hide event. Underlying connectivity is administratively disabled.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. Update time stamp.
 	UpdateTime string `json:"updateTime,omitempty"`

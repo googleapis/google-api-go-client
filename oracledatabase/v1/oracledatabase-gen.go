@@ -617,15 +617,15 @@ func (s AmazonS3IcebergStorage) MarshalJSON() ([]byte, error) {
 // AutonomousDatabase: Details of the Autonomous Database resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/AutonomousDatabase/
 type AutonomousDatabase struct {
-	// AdminPassword: Optional. Immutable. The password for the default ADMIN user.
-	// Note: Only one of `admin_password_secret_version` or `admin_password` can be
-	// populated.
+	// AdminPassword: Optional. Input only. Immutable. The password for the default
+	// ADMIN user. Note: Only one of `admin_password_secret_version` or
+	// `admin_password` can be populated.
 	AdminPassword string `json:"adminPassword,omitempty"`
-	// AdminPasswordSecretVersion: Optional. Immutable. The resource name of a
-	// secret version in Secret Manager which contains the database admin user's
-	// password. Format: projects/{project}/secrets/{secret}/versions/{version}.
-	// Note: Only one of `admin_password_secret_version` or `admin_password` can be
-	// populated.
+	// AdminPasswordSecretVersion: Optional. Input only. Immutable. The resource
+	// name of a secret version in Secret Manager which contains the database admin
+	// user's password. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}. Note: Only one of
+	// `admin_password_secret_version` or `admin_password` can be populated.
 	AdminPasswordSecretVersion string `json:"adminPasswordSecretVersion,omitempty"`
 	// Cidr: Optional. Immutable. The subnet CIDR range for the Autonomous
 	// Database.
@@ -1638,12 +1638,12 @@ type CloudExadataInfrastructure struct {
 	// CreateTime: Output only. The date and time that the Exadata Infrastructure
 	// was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. User friendly name for this resource.
+	// DisplayName: Optional. Immutable. User friendly name for this resource.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntitlementId: Output only. Entitlement ID of the private offer against
 	// which this infrastructure resource is provisioned.
 	EntitlementId string `json:"entitlementId,omitempty"`
-	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle Exadata
+	// GcpOracleZone: Optional. Immutable. The GCP Oracle zone where Oracle Exadata
 	// Infrastructure is hosted. Example: us-east4-b-r2. If not specified, the
 	// system will pick a zone based on availability.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
@@ -1654,7 +1654,7 @@ type CloudExadataInfrastructure struct {
 	// projects/{project}/locations/{region}/cloudExadataInfrastructures/{cloud_exad
 	// ata_infrastructure}
 	Name string `json:"name,omitempty"`
-	// Properties: Optional. Various properties of the infra.
+	// Properties: Optional. Immutable. Various properties of the infra.
 	Properties *CloudExadataInfrastructureProperties `json:"properties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1817,26 +1817,28 @@ func (s *CloudExadataInfrastructureProperties) UnmarshalJSON(data []byte) error 
 // CloudVmCluster: Details of the Cloud VM Cluster resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/CloudVmCluster/
 type CloudVmCluster struct {
-	// BackupOdbSubnet: Optional. The name of the backup OdbSubnet associated with
-	// the VM Cluster. Format:
+	// BackupOdbSubnet: Optional. Immutable. The name of the backup OdbSubnet
+	// associated with the VM Cluster. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
 	// {odb_subnet}
 	BackupOdbSubnet string `json:"backupOdbSubnet,omitempty"`
-	// BackupSubnetCidr: Optional. CIDR range of the backup subnet.
+	// BackupSubnetCidr: Optional. Immutable. CIDR range of the backup subnet.
 	BackupSubnetCidr string `json:"backupSubnetCidr,omitempty"`
-	// Cidr: Optional. Network settings. CIDR to use for cluster IP allocation.
+	// Cidr: Optional. Immutable. Network settings. CIDR to use for cluster IP
+	// allocation.
 	Cidr string `json:"cidr,omitempty"`
 	// CreateTime: Output only. The date and time that the VM cluster was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. User friendly name for this resource.
+	// DisplayName: Optional. Immutable. User friendly name for this resource.
 	DisplayName string `json:"displayName,omitempty"`
-	// ExadataInfrastructure: Required. The name of the Exadata Infrastructure
-	// resource on which VM cluster resource is created, in the following format:
+	// ExadataInfrastructure: Required. Immutable. The name of the Exadata
+	// Infrastructure resource on which VM cluster resource is created, in the
+	// following format:
 	// projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extra
 	// data_infrastructure}
 	ExadataInfrastructure string `json:"exadataInfrastructure,omitempty"`
-	// ExascaleDbStorageVault: Optional. The name of ExascaleDbStorageVault
-	// associated with the VM Cluster. Format:
+	// ExascaleDbStorageVault: Optional. Immutable. The name of
+	// ExascaleDbStorageVault associated with the VM Cluster. Format:
 	// projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_
 	// storage_vault}
 	ExascaleDbStorageVault string `json:"exascaleDbStorageVault,omitempty"`
@@ -1852,21 +1854,21 @@ type CloudVmCluster struct {
 	// Name: Identifier. The name of the VM Cluster resource with the format:
 	// projects/{project}/locations/{region}/cloudVmClusters/{cloud_vm_cluster}
 	Name string `json:"name,omitempty"`
-	// Network: Optional. The name of the VPC network. Format:
+	// Network: Optional. Immutable. The name of the VPC network. Format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
-	// OdbNetwork: Optional. The name of the OdbNetwork associated with the VM
-	// Cluster. Format:
+	// OdbNetwork: Optional. Immutable. The name of the OdbNetwork associated with
+	// the VM Cluster. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network} It is
 	// optional but if specified, this should match the parent ODBNetwork of the
 	// odb_subnet and backup_odb_subnet.
 	OdbNetwork string `json:"odbNetwork,omitempty"`
-	// OdbSubnet: Optional. The name of the OdbSubnet associated with the VM
-	// Cluster for IP allocation. Format:
+	// OdbSubnet: Optional. Immutable. The name of the OdbSubnet associated with
+	// the VM Cluster for IP allocation. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
 	// {odb_subnet}
 	OdbSubnet string `json:"odbSubnet,omitempty"`
-	// Properties: Optional. Various properties of the VM Cluster.
+	// Properties: Optional. Immutable. Various properties of the VM Cluster.
 	Properties *CloudVmClusterProperties `json:"properties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2194,13 +2196,15 @@ func (s DataCollectionOptionsDbSystem) MarshalJSON() ([]byte, error) {
 // Database: Details of the Database resource.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/Database/
 type Database struct {
-	// AdminPassword: Optional. The password for the default ADMIN user. Note: Only
-	// one of `admin_password_secret_version` or `admin_password` can be populated.
+	// AdminPassword: Optional. Input only. The password for the default ADMIN
+	// user. Note: Only one of `admin_password_secret_version` or `admin_password`
+	// can be populated.
 	AdminPassword string `json:"adminPassword,omitempty"`
-	// AdminPasswordSecretVersion: Optional. The resource name of a secret version
-	// in Secret Manager which contains the database admin user's password. Format:
-	// projects/{project}/secrets/{secret}/versions/{version}. Note: Only one of
-	// `admin_password_secret_version` or `admin_password` can be populated.
+	// AdminPasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the database admin user's
+	// password. Format: projects/{project}/secrets/{secret}/versions/{version}.
+	// Note: Only one of `admin_password_secret_version` or `admin_password` can be
+	// populated.
 	AdminPasswordSecretVersion string `json:"adminPasswordSecretVersion,omitempty"`
 	// CharacterSet: Optional. The character set for the database. The default is
 	// AL32UTF8.
@@ -2254,15 +2258,16 @@ type Database struct {
 	PluggableDatabaseName string `json:"pluggableDatabaseName,omitempty"`
 	// Properties: Optional. The properties of the Database.
 	Properties *DatabaseProperties `json:"properties,omitempty"`
-	// TdeWalletPassword: Optional. The TDE wallet password for the database. Note:
-	// Only one of `tde_wallet_password_secret_version` or `tde_wallet_password`
-	// can be populated.
-	TdeWalletPassword string `json:"tdeWalletPassword,omitempty"`
-	// TdeWalletPasswordSecretVersion: Optional. The resource name of a secret
-	// version in Secret Manager which contains the TDE wallet password for the
-	// database. Format: projects/{project}/secrets/{secret}/versions/{version}.
-	// Note: Only one of `tde_wallet_password_secret_version` or
+	// TdeWalletPassword: Optional. Input only. The TDE wallet password for the
+	// database. Note: Only one of `tde_wallet_password_secret_version` or
 	// `tde_wallet_password` can be populated.
+	TdeWalletPassword string `json:"tdeWalletPassword,omitempty"`
+	// TdeWalletPasswordSecretVersion: Optional. Input only. The resource name of a
+	// secret version in Secret Manager which contains the TDE wallet password for
+	// the database. Format:
+	// projects/{project}/secrets/{secret}/versions/{version}. Note: Only one of
+	// `tde_wallet_password_secret_version` or `tde_wallet_password` can be
+	// populated.
 	TdeWalletPasswordSecretVersion string `json:"tdeWalletPasswordSecretVersion,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2767,15 +2772,15 @@ func (s DbServerProperties) MarshalJSON() ([]byte, error) {
 type DbSystem struct {
 	// CreateTime: Output only. The date and time that the DbSystem was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Required. The display name for the System db. The name does not
-	// have to be unique within your project.
+	// DisplayName: Required. Immutable. The display name for the System db. The
+	// name does not have to be unique within your project.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntitlementId: Output only. The ID of the subscription entitlement
 	// associated with the DbSystem
 	EntitlementId string `json:"entitlementId,omitempty"`
-	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle DbSystem is
-	// hosted. Example: us-east4-b-r2. If not specified, the system will pick a
-	// zone based on availability.
+	// GcpOracleZone: Optional. Immutable. The GCP Oracle zone where Oracle
+	// DbSystem is hosted. Example: us-east4-b-r2. If not specified, the system
+	// will pick a zone based on availability.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
 	// Labels: Optional. The labels or tags associated with the DbSystem.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -2785,18 +2790,18 @@ type DbSystem struct {
 	// OciUrl: Output only. HTTPS link to OCI resources exposed to Customer via UI
 	// Interface.
 	OciUrl string `json:"ociUrl,omitempty"`
-	// OdbNetwork: Optional. The name of the OdbNetwork associated with the
-	// DbSystem. Format:
+	// OdbNetwork: Optional. Immutable. The name of the OdbNetwork associated with
+	// the DbSystem. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network} It is
 	// optional but if specified, this should match the parent ODBNetwork of the
 	// OdbSubnet.
 	OdbNetwork string `json:"odbNetwork,omitempty"`
-	// OdbSubnet: Required. The name of the OdbSubnet associated with the DbSystem
-	// for IP allocation. Format:
+	// OdbSubnet: Required. Immutable. The name of the OdbSubnet associated with
+	// the DbSystem for IP allocation. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
 	// {odb_subnet}
 	OdbSubnet string `json:"odbSubnet,omitempty"`
-	// Properties: Optional. The properties of the DbSystem.
+	// Properties: Optional. Immutable. The properties of the DbSystem.
 	Properties *DbSystemProperties `json:"properties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3553,19 +3558,21 @@ type ExascaleDbStorageVault struct {
 	// CreateTime: Output only. The date and time when the ExascaleDbStorageVault
 	// was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Required. The display name for the ExascaleDbStorageVault. The
-	// name does not have to be unique within your project. The name must be 1-255
-	// characters long and can only contain alphanumeric characters.
+	// DisplayName: Required. Immutable. The display name for the
+	// ExascaleDbStorageVault. The name does not have to be unique within your
+	// project. The name must be 1-255 characters long and can only contain
+	// alphanumeric characters.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntitlementId: Output only. The ID of the subscription entitlement
 	// associated with the ExascaleDbStorageVault.
 	EntitlementId string `json:"entitlementId,omitempty"`
-	// ExadataInfrastructure: Optional. The Exadata Infrastructure resource on
-	// which ExascaleDbStorageVault resource is created, in the following format:
+	// ExadataInfrastructure: Optional. Immutable. The Exadata Infrastructure
+	// resource on which ExascaleDbStorageVault resource is created, in the
+	// following format:
 	// projects/{project}/locations/{region}/cloudExadataInfrastuctures/{cloud_extra
 	// data_infrastructure}
 	ExadataInfrastructure string `json:"exadataInfrastructure,omitempty"`
-	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle
+	// GcpOracleZone: Optional. Immutable. The GCP Oracle zone where Oracle
 	// ExascaleDbStorageVault is hosted. Example: us-east4-b-r2. If not specified,
 	// the system will pick a zone based on availability.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
@@ -3576,7 +3583,8 @@ type ExascaleDbStorageVault struct {
 	// projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_db_
 	// storage_vault}
 	Name string `json:"name,omitempty"`
-	// Properties: Required. The properties of the ExascaleDbStorageVault.
+	// Properties: Required. Immutable. The properties of the
+	// ExascaleDbStorageVault.
 	Properties *ExascaleDbStorageVaultProperties `json:"properties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4053,7 +4061,7 @@ type GoldengateConnection struct {
 	// EntitlementId: Output only. The ID of the subscription entitlement
 	// associated with the GoldengateConnection.
 	EntitlementId string `json:"entitlementId,omitempty"`
-	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle
+	// GcpOracleZone: Optional. Immutable. The GCP Oracle zone where Oracle
 	// GoldengateConnection is hosted. Example: us-east4-b-r2. If not specified,
 	// the system will pick a zone based on availability.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
@@ -4068,18 +4076,18 @@ type GoldengateConnection struct {
 	// OciUrl: Output only. HTTPS link to OCI resources exposed to Customer via UI
 	// Interface.
 	OciUrl string `json:"ociUrl,omitempty"`
-	// OdbNetwork: Optional. The name of the OdbNetwork associated with the
-	// GoldengateConnection. The format is
+	// OdbNetwork: Optional. Immutable. The name of the OdbNetwork associated with
+	// the GoldengateConnection. The format is
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network}. It is
 	// optional but if specified, this should match the parent ODBNetwork of the
 	// OdbSubnet.
 	OdbNetwork string `json:"odbNetwork,omitempty"`
-	// OdbSubnet: Optional. The name of the OdbSubnet associated with the
-	// GoldengateConnection for IP allocation. Format:
+	// OdbSubnet: Optional. Immutable. The name of the OdbSubnet associated with
+	// the GoldengateConnection for IP allocation. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
 	// {odb_subnet}
 	OdbSubnet string `json:"odbSubnet,omitempty"`
-	// Properties: Required. The properties of the GoldengateConnection.
+	// Properties: Required. Immutable. The properties of the GoldengateConnection.
 	Properties *GoldengateConnectionProperties `json:"properties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4108,7 +4116,7 @@ type GoldengateConnectionAssignment struct {
 	// CreateTime: Output only. The time when the connection assignment was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Optional. The display name for the
+	// DisplayName: Optional. Immutable. The display name for the
 	// GoldengateConnectionAssignment.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntitlementId: Output only. The OCID of the entitlement linked to this
@@ -4122,7 +4130,8 @@ type GoldengateConnectionAssignment struct {
 	// projects/{project}/locations/{region}/goldengateConnectionAssignments/{golden
 	// gate_connection_assignment}
 	Name string `json:"name,omitempty"`
-	// Properties: Required. The properties of the GoldengateConnectionAssignment.
+	// Properties: Required. Immutable. The properties of the
+	// GoldengateConnectionAssignment.
 	Properties *GoldengateConnectionAssignmentProperties `json:"properties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4550,12 +4559,13 @@ type GoldengateDeployment struct {
 	// CreateTime: Output only. The date and time that the GoldengateDeployment was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Required. The display name for the GoldengateDeployment.
+	// DisplayName: Required. Immutable. The display name for the
+	// GoldengateDeployment.
 	DisplayName string `json:"displayName,omitempty"`
 	// EntitlementId: Output only. The ID of the subscription entitlement
 	// associated with the GoldengateDeployment
 	EntitlementId string `json:"entitlementId,omitempty"`
-	// GcpOracleZone: Optional. The GCP Oracle zone where Oracle
+	// GcpOracleZone: Optional. Immutable. The GCP Oracle zone where Oracle
 	// GoldengateDeployment is hosted. Example: us-east4-b-r2. If not specified,
 	// the system will pick a zone based on availability.
 	GcpOracleZone string `json:"gcpOracleZone,omitempty"`
@@ -4570,13 +4580,13 @@ type GoldengateDeployment struct {
 	// OciUrl: Output only. HTTPS link to OCI resources exposed to Customer via UI
 	// Interface.
 	OciUrl string `json:"ociUrl,omitempty"`
-	// OdbNetwork: Optional. The name of the OdbNetwork associated with the
-	// GoldengateDeployment.
+	// OdbNetwork: Optional. Immutable. The name of the OdbNetwork associated with
+	// the GoldengateDeployment.
 	OdbNetwork string `json:"odbNetwork,omitempty"`
-	// OdbSubnet: Required. The name of the OdbSubnet associated with the
-	// GoldengateDeployment for IP allocation.
+	// OdbSubnet: Required. Immutable. The name of the OdbSubnet associated with
+	// the GoldengateDeployment for IP allocation.
 	OdbSubnet string `json:"odbSubnet,omitempty"`
-	// Properties: Required. The properties of the GoldengateDeployment.
+	// Properties: Required. Immutable. The properties of the GoldengateDeployment.
 	Properties *GoldengateDeploymentProperties `json:"properties,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5963,8 +5973,8 @@ func (s GoldengateOciObjectStorageConnectionProperties) MarshalJSON() ([]byte, e
 
 // GoldengateOggDeployment: The Ogg data of the GoldengateDeployment.
 type GoldengateOggDeployment struct {
-	// AdminPassword: Optional. The Goldengate deployment console password in plain
-	// text.
+	// AdminPassword: Optional. Input only. The Goldengate deployment console
+	// password in plain text.
 	AdminPassword string `json:"adminPassword,omitempty"`
 	// AdminPasswordSecretVersion: Optional. Input only. The Goldengate deployment
 	// console password secret version.
@@ -7790,7 +7800,7 @@ func (s OdbNetwork) MarshalJSON() ([]byte, error) {
 
 // OdbSubnet: Represents OdbSubnet resource.
 type OdbSubnet struct {
-	// CidrRange: Required. The CIDR range of the subnet.
+	// CidrRange: Required. Immutable. The CIDR range of the subnet.
 	CidrRange string `json:"cidrRange,omitempty"`
 	// CreateTime: Output only. The date and time that the OdbNetwork was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -7801,7 +7811,7 @@ type OdbSubnet struct {
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnets/
 	// {odb_subnet}
 	Name string `json:"name,omitempty"`
-	// Purpose: Required. Purpose of the subnet.
+	// Purpose: Required. Immutable. Purpose of the subnet.
 	//
 	// Possible values:
 	//   "PURPOSE_UNSPECIFIED" - Default unspecified value.
@@ -11618,6 +11628,137 @@ func (c *ProjectsLocationsCloudExadataInfrastructuresListCall) Pages(ctx context
 	}
 }
 
+type ProjectsLocationsCloudExadataInfrastructuresPatchCall struct {
+	s                          *Service
+	name                       string
+	cloudexadatainfrastructure *CloudExadataInfrastructure
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// Patch: Updates the parameters of a single Exadata Infrastructure.
+//
+//   - name: Identifier. The name of the Exadata Infrastructure resource with the
+//     format:
+//     projects/{project}/locations/{region}/cloudExadataInfrastructures/{cloud_ex
+//     adata_infrastructure}.
+func (r *ProjectsLocationsCloudExadataInfrastructuresService) Patch(name string, cloudexadatainfrastructure *CloudExadataInfrastructure) *ProjectsLocationsCloudExadataInfrastructuresPatchCall {
+	c := &ProjectsLocationsCloudExadataInfrastructuresPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cloudexadatainfrastructure = cloudexadatainfrastructure
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCloudExadataInfrastructuresPatchCall) RequestId(requestId string) *ProjectsLocationsCloudExadataInfrastructuresPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the Exadata resource by the update.
+// The fields specified in the `update_mask` are relative to the resource, not
+// the full request. A field will be overwritten if it is in the mask. If the
+// user does not provide a mask then the service treats this as an implied
+// field mask equivalent to all fields that are populated (have a non-empty
+// value). To clear or unset a field, the field must be explicitly specified in
+// the `update_mask`.
+func (c *ProjectsLocationsCloudExadataInfrastructuresPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCloudExadataInfrastructuresPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCloudExadataInfrastructuresPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCloudExadataInfrastructuresPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCloudExadataInfrastructuresPatchCall) Context(ctx context.Context) *ProjectsLocationsCloudExadataInfrastructuresPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCloudExadataInfrastructuresPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCloudExadataInfrastructuresPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cloudexadatainfrastructure)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudExadataInfrastructures.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.cloudExadataInfrastructures.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCloudExadataInfrastructuresPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudExadataInfrastructures.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCloudExadataInfrastructuresDbServersListCall struct {
 	s            *Service
 	parent       string
@@ -12272,6 +12413,133 @@ func (c *ProjectsLocationsCloudVmClustersListCall) Pages(ctx context.Context, f 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsCloudVmClustersPatchCall struct {
+	s              *Service
+	name           string
+	cloudvmcluster *CloudVmCluster
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates the parameters of a single Vm Cluster.
+//
+//   - name: Identifier. The name of the VM Cluster resource with the format:
+//     projects/{project}/locations/{region}/cloudVmClusters/{cloud_vm_cluster}.
+func (r *ProjectsLocationsCloudVmClustersService) Patch(name string, cloudvmcluster *CloudVmCluster) *ProjectsLocationsCloudVmClustersPatchCall {
+	c := &ProjectsLocationsCloudVmClustersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cloudvmcluster = cloudvmcluster
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCloudVmClustersPatchCall) RequestId(requestId string) *ProjectsLocationsCloudVmClustersPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the VM Cluster should be updated. A field specified in the mask is
+// overwritten. If a mask isn't provided, the service treats this as an implied
+// field mask equivalent to all fields that are populated (have a non-empty
+// value). To clear or unset a field, the field must be explicitly specified in
+// the `update_mask`.
+func (c *ProjectsLocationsCloudVmClustersPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCloudVmClustersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCloudVmClustersPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCloudVmClustersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCloudVmClustersPatchCall) Context(ctx context.Context) *ProjectsLocationsCloudVmClustersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCloudVmClustersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCloudVmClustersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cloudvmcluster)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudVmClusters.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.cloudVmClusters.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCloudVmClustersPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.cloudVmClusters.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsCloudVmClustersDbNodesListCall struct {
@@ -13667,6 +13935,132 @@ func (c *ProjectsLocationsDbSystemsListCall) Pages(ctx context.Context, f func(*
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsDbSystemsPatchCall struct {
+	s          *Service
+	name       string
+	dbsystem   *DbSystem
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the `labels` of a single DbSystem.
+//
+//   - name: Identifier. The name of the DbSystem resource in the following
+//     format: projects/{project}/locations/{region}/dbSystems/{db_system}.
+func (r *ProjectsLocationsDbSystemsService) Patch(name string, dbsystem *DbSystem) *ProjectsLocationsDbSystemsPatchCall {
+	c := &ProjectsLocationsDbSystemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.dbsystem = dbsystem
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDbSystemsPatchCall) RequestId(requestId string) *ProjectsLocationsDbSystemsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the DbSystem should be updated. A field specified in the mask is
+// updated. If a mask isn't provided, the service treats this as an implied
+// field mask equivalent to all fields that are populated (have a non-empty
+// value).
+func (c *ProjectsLocationsDbSystemsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDbSystemsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDbSystemsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDbSystemsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDbSystemsPatchCall) Context(ctx context.Context) *ProjectsLocationsDbSystemsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDbSystemsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDbSystemsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.dbsystem)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.dbSystems.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDbSystemsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.dbSystems.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsDbVersionsListCall struct {
@@ -15386,6 +15780,134 @@ func (c *ProjectsLocationsExascaleDbStorageVaultsListCall) Pages(ctx context.Con
 	}
 }
 
+type ProjectsLocationsExascaleDbStorageVaultsPatchCall struct {
+	s                      *Service
+	name                   string
+	exascaledbstoragevault *ExascaleDbStorageVault
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Patch: Updates the `labels` of a single ExascaleDbStorageVault.
+//
+//   - name: Identifier. The resource name of the ExascaleDbStorageVault. Format:
+//     projects/{project}/locations/{location}/exascaleDbStorageVaults/{exascale_d
+//     b_storage_vault}.
+func (r *ProjectsLocationsExascaleDbStorageVaultsService) Patch(name string, exascaledbstoragevault *ExascaleDbStorageVault) *ProjectsLocationsExascaleDbStorageVaultsPatchCall {
+	c := &ProjectsLocationsExascaleDbStorageVaultsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.exascaledbstoragevault = exascaledbstoragevault
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsExascaleDbStorageVaultsPatchCall) RequestId(requestId string) *ProjectsLocationsExascaleDbStorageVaultsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the ExascaleDbStorageVault should be updated. A field specified in
+// the mask is updated. If a mask isn't provided, the service treats this as an
+// implied field mask equivalent to all fields that are populated (have a
+// non-empty value). To clear or unset a field, the field must be explicitly
+// specified in the `update_mask`.
+func (c *ProjectsLocationsExascaleDbStorageVaultsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsExascaleDbStorageVaultsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExascaleDbStorageVaultsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsExascaleDbStorageVaultsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExascaleDbStorageVaultsPatchCall) Context(ctx context.Context) *ProjectsLocationsExascaleDbStorageVaultsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExascaleDbStorageVaultsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExascaleDbStorageVaultsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.exascaledbstoragevault)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.exascaleDbStorageVaults.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExascaleDbStorageVaultsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.exascaleDbStorageVaults.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGiVersionsListCall struct {
 	s            *Service
 	parent       string
@@ -16225,6 +16747,135 @@ func (c *ProjectsLocationsGoldengateConnectionAssignmentsListCall) Pages(ctx con
 	}
 }
 
+type ProjectsLocationsGoldengateConnectionAssignmentsPatchCall struct {
+	s                              *Service
+	name                           string
+	goldengateconnectionassignment *GoldengateConnectionAssignment
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Patch: Updates the `labels` of a single GoldengateConnectionAssignment.
+//
+//   - name: Identifier. The name of the GoldengateConnectionAssignment resource
+//     in the following format:
+//     projects/{project}/locations/{region}/goldengateConnectionAssignments/{gold
+//     engate_connection_assignment}.
+func (r *ProjectsLocationsGoldengateConnectionAssignmentsService) Patch(name string, goldengateconnectionassignment *GoldengateConnectionAssignment) *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall {
+	c := &ProjectsLocationsGoldengateConnectionAssignmentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.goldengateconnectionassignment = goldengateconnectionassignment
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall) RequestId(requestId string) *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the GoldengateConnectionAssignment should be updated. A field
+// specified in the mask is updated. If a mask isn't provided, the service
+// treats this as an implied field mask equivalent to all fields that are
+// populated (have a non-empty value). To clear or unset a field, the field
+// must be explicitly specified in the `update_mask`.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.goldengateconnectionassignment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnectionAssignments.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionAssignmentsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnectionAssignments.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsGoldengateConnectionAssignmentsTestCall struct {
 	s                                         *Service
 	name                                      string
@@ -17001,6 +17652,135 @@ func (c *ProjectsLocationsGoldengateConnectionsListCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsGoldengateConnectionsPatchCall struct {
+	s                    *Service
+	name                 string
+	goldengateconnection *GoldengateConnection
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Patch: Updates the `labels` of a single GoldengateConnection.
+//
+//   - name: Identifier. The name of the GoldengateConnection resource in the
+//     following format:
+//     projects/{project}/locations/{region}/goldengateConnections/{goldengate_con
+//     nection}.
+func (r *ProjectsLocationsGoldengateConnectionsService) Patch(name string, goldengateconnection *GoldengateConnection) *ProjectsLocationsGoldengateConnectionsPatchCall {
+	c := &ProjectsLocationsGoldengateConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.goldengateconnection = goldengateconnection
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateConnectionsPatchCall) RequestId(requestId string) *ProjectsLocationsGoldengateConnectionsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the GoldengateConnection should be updated. A field specified in
+// the mask is updated. If a mask isn't provided, the service treats this as an
+// implied field mask equivalent to all fields that are populated (have a
+// non-empty value). To clear or unset a field, the field must be explicitly
+// specified in the `update_mask`.
+func (c *ProjectsLocationsGoldengateConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGoldengateConnectionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateConnectionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateConnectionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateConnectionsPatchCall) Context(ctx context.Context) *ProjectsLocationsGoldengateConnectionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateConnectionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.goldengateconnection)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateConnections.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateConnectionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateConnections.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsGoldengateDeploymentEnvironmentsListCall struct {
@@ -17991,6 +18771,135 @@ func (c *ProjectsLocationsGoldengateDeploymentsListCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsGoldengateDeploymentsPatchCall struct {
+	s                    *Service
+	name                 string
+	goldengatedeployment *GoldengateDeployment
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Patch: Updates the `labels` of a single GoldengateDeployment.
+//
+//   - name: Identifier. The name of the GoldengateDeployment resource in the
+//     following format:
+//     projects/{project}/locations/{region}/goldengateDeployments/{goldengate_dep
+//     loyment}.
+func (r *ProjectsLocationsGoldengateDeploymentsService) Patch(name string, goldengatedeployment *GoldengateDeployment) *ProjectsLocationsGoldengateDeploymentsPatchCall {
+	c := &ProjectsLocationsGoldengateDeploymentsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.goldengatedeployment = goldengatedeployment
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGoldengateDeploymentsPatchCall) RequestId(requestId string) *ProjectsLocationsGoldengateDeploymentsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the GoldengateDeployment should be updated. A field specified in
+// the mask is updated. If a mask isn't provided, the service treats this as an
+// implied field mask equivalent to all fields that are populated (have a
+// non-empty value). To clear or unset a field, the field must be explicitly
+// specified in the `update_mask`.
+func (c *ProjectsLocationsGoldengateDeploymentsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGoldengateDeploymentsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGoldengateDeploymentsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGoldengateDeploymentsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGoldengateDeploymentsPatchCall) Context(ctx context.Context) *ProjectsLocationsGoldengateDeploymentsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGoldengateDeploymentsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGoldengateDeploymentsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.goldengatedeployment)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.goldengateDeployments.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGoldengateDeploymentsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.goldengateDeployments.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsGoldengateDeploymentsStartCall struct {
@@ -19217,6 +20126,135 @@ func (c *ProjectsLocationsOdbNetworksOdbSubnetsListCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsOdbNetworksOdbSubnetsPatchCall struct {
+	s          *Service
+	name       string
+	odbsubnet  *OdbSubnet
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the `labels` of a single ODB Subnet.
+//
+//   - name: Identifier. The name of the OdbSubnet resource in the following
+//     format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbSubnet
+//     s/{odb_subnet}.
+func (r *ProjectsLocationsOdbNetworksOdbSubnetsService) Patch(name string, odbsubnet *OdbSubnet) *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall {
+	c := &ProjectsLocationsOdbNetworksOdbSubnetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.odbsubnet = odbsubnet
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall) RequestId(requestId string) *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the OdbSubnet should be updated. A field specified in the mask is
+// updated. If a mask isn't provided, the service treats this as an implied
+// field mask equivalent to all fields that are populated (have a non-empty
+// value). To clear or unset a field, the field must be explicitly specified in
+// the `update_mask`.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.odbsubnet)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbSubnets.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksOdbSubnetsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbSubnets.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

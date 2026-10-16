@@ -4243,7 +4243,35 @@ type MTLSPolicy struct {
 	// the backend only if validation of the client certificate passed. If set,
 	// requires a reference to non-empty TrustConfig specified in
 	// `client_validation_trust_config`.
+	//   "ALLOW_VALIDATION_RELAXATIONS" - Require a client certificate, but apply
+	// the specific validation relaxations requested in
+	// `client_validation_relaxations`. All selected relaxations are applied
+	// simultaneously.
 	ClientValidationMode string `json:"clientValidationMode,omitempty"`
+	// ClientValidationRelaxations: A list of validation relaxations to apply when
+	// `client_validation_mode` is set to ALLOW_VALIDATION_RELAXATIONS.
+	//
+	// Possible values:
+	//   "CLIENT_VALIDATION_RELAXATION_UNSPECIFIED" - Not allowed.
+	//   "ALLOW_MISSING_EKU" - Allows the client certificate to completely omit the
+	// Extended Key Usage (EKU) extension. If the EKU extension is present, it must
+	// permit the `clientAuth` key purpose (OID 1.3.6.1.5.5.7.3.2). Security
+	// Warning: Enabling this option is risky if the customer uses a Root CA that
+	// issues certificates for multiple different purposes. Without EKU
+	// enforcement, a certificate intended for a non-authentication purpose (like
+	// S/MIME or server-only auth) might be accepted for mTLS client
+	// authentication. Customers should only use this relaxation if they are using
+	// a dedicated Private CA solely for issuing client authentication
+	// certificates.
+	//   "ALLOW_SHA1_HASHING" - Allows validation of client certificate chains
+	// signed using legacy SHA-1 message digests. Enabling this is insecure and
+	// should only be used to support legacy clients during migration periods.
+	//   "ALLOW_EXPIRED_LEAF_CERTIFICATE" - Allows validation of an expired client
+	// leaf certificate. The certificate will be validated as if the current time
+	// was one second before the end of its validity period (the `notAfter`
+	// timestamp). This relaxation applies strictly to the leaf certificate and not
+	// to the rest of the chain.
+	ClientValidationRelaxations []string `json:"clientValidationRelaxations,omitempty"`
 	// ClientValidationTrustConfig: Reference to the TrustConfig from
 	// certificatemanager.googleapis.com namespace. If specified, the chain
 	// validation will be performed against certificates configured in the given

@@ -747,14 +747,14 @@ func (s AppList) MarshalJSON() ([]byte, error) {
 type Approval struct {
 	// ApprovalId: The approval ID.
 	ApprovalId string `json:"approvalId,omitempty"`
-	// CompleteTime: Output only. The time the approval was completed.
+	// CompleteTime: The time the approval was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
-	// CreateTime: Output only. The time the approval was created.
+	// CreateTime: The time the approval was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DueTime: The time that the approval is due.
 	DueTime string `json:"dueTime,omitempty"`
-	// FileContentChangeBehavior: Output only. The behavior of the approval when
-	// the file content changes.
+	// FileContentChangeBehavior: The behavior of the approval when the file
+	// content changes.
 	//
 	// Possible values:
 	//   "FILE_CONTENT_CHANGE_BEHAVIOR_UNSPECIFIED" - The behavior is unspecified.
@@ -768,12 +768,11 @@ type Approval struct {
 	Initiator *User `json:"initiator,omitempty"`
 	// Kind: This is always drive#approval.
 	Kind string `json:"kind,omitempty"`
-	// ModifyTime: Output only. The most recent time the approval was modified.
+	// ModifyTime: The most recent time the approval was modified.
 	ModifyTime string `json:"modifyTime,omitempty"`
 	// ReviewerResponses: The responses made on the approval by reviewers.
 	ReviewerResponses []*ReviewerResponse `json:"reviewerResponses,omitempty"`
-	// Status: Output only. The status of the approval at the time this resource
-	// was requested.
+	// Status: The status of the approval at the time this resource was requested.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - The approval status has not been set or was set to

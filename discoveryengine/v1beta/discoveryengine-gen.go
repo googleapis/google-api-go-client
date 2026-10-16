@@ -4246,16 +4246,24 @@ func (s GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigA
 // GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig:
 // Config for connecting to NotebookLM Enterprise.
 type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// Notebooks: Optional. Restricts this data store to the given notebooks. When
+	// empty, the data store covers every notebook the querying user can access,
+	// which is the existing behaviour. Each entry is a full notebook resource
+	// name, such as `projects/*/locations/*/notebooks/*`. Scoping is enforced on
+	// results as well as requested upstream, so a notebook outside this list
+	// cannot appear in a search response through this data store even if the
+	// backend returns one.
+	Notebooks []string `json:"notebooks,omitempty"`
 	// SearchConfig: Required. Search config name. Format:
 	// projects/*/locations/global/notebookLmSearchConfigs/*
 	SearchConfig string `json:"searchConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// ForceSendFields is a list of field names (e.g. "Notebooks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// NullFields is a list of field names (e.g. "Notebooks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4957,7 +4965,7 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications`
+	// `workflow-agents` * `in-app-notifications` * `code-extraction`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -5986,10 +5994,10 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	// is in the future.
 	//   "WITHDRAWN" - This is when a sub license config has returned all its seats
 	// back to BillingAccountLicenseConfig that it belongs to. Similar to EXPIRED.
-	//   "DEACTIVATING" - The license config is terminated earlier than the
-	// expiration date and it is deactivating. The customer will still have access
-	// in this state. It will be converted to EXPIRED after the deactivating period
-	// ends (14 days) or when the end date is reached, whichever comes first.
+	//   "DEACTIVATING" - The license config is in a grace period. Its subscription
+	// has ended, either through early termination or by reaching its end date, but
+	// the customer keeps access for a limited time. It becomes EXPIRED when the
+	// grace period ends.
 	State string `json:"state,omitempty"`
 	// SubscriptionTerm: Required. Subscription term.
 	//
@@ -12177,16 +12185,24 @@ func (s GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbCo
 // GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConf
 // ig: Config for connecting to NotebookLM Enterprise.
 type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// Notebooks: Optional. Restricts this data store to the given notebooks. When
+	// empty, the data store covers every notebook the querying user can access,
+	// which is the existing behaviour. Each entry is a full notebook resource
+	// name, such as `projects/*/locations/*/notebooks/*`. Scoping is enforced on
+	// results as well as requested upstream, so a notebook outside this list
+	// cannot appear in a search response through this data store even if the
+	// backend returns one.
+	Notebooks []string `json:"notebooks,omitempty"`
 	// SearchConfig: Required. Search config name. Format:
 	// projects/*/locations/global/notebookLmSearchConfigs/*
 	SearchConfig string `json:"searchConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// ForceSendFields is a list of field names (e.g. "Notebooks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// NullFields is a list of field names (e.g. "Notebooks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -13043,7 +13059,7 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications`
+	// `workflow-agents` * `in-app-notifications` * `code-extraction`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -13950,6 +13966,34 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	// metatag. If the user does not define this field, the FieldConfig.field_path
 	// will be used to extract metatag.
 	MetatagName string `json:"metatagName,omitempty"`
+	// PartialMatchableOption: Optional. If partial_matchable_option is
+	// PARTIAL_MATCHABLE_OPTION_ENABLED, field values are partial matchable. If
+	// partial_matchable_option is unset, the server behavior defaults to
+	// PARTIAL_MATCHABLE_OPTION_DISABLED for fields that support setting partial
+	// matchable options. For those fields that do not support setting partial
+	// matchable options, the server will skip partial matchable option setting,
+	// and setting partial_matchable_option for those fields will throw
+	// `INVALID_ARGUMENT` error.
+	//
+	// Possible values:
+	//   "PARTIAL_MATCHABLE_OPTION_UNSPECIFIED" - Value used when unset.
+	//   "PARTIAL_MATCHABLE_OPTION_ENABLED" - Partial Matchable option enabled.
+	//   "PARTIAL_MATCHABLE_OPTION_DISABLED" - Partial Matchable option disabled.
+	PartialMatchableOption string `json:"partialMatchableOption,omitempty"`
+	// PrefixMatchableOption: Optional. If prefix_matchable_option is
+	// PREFIX_MATCHABLE_OPTION_ENABLED, field values are prefix matchable. If
+	// prefix_matchable_option is unset, the server behavior defaults to
+	// PREFIX_MATCHABLE_OPTION_DISABLED for fields that support setting prefix
+	// matchable options. For those fields that do not support setting prefix
+	// matchable options, the server will skip prefix matchable option setting, and
+	// setting prefix_matchable_option for those fields will throw
+	// `INVALID_ARGUMENT` error.
+	//
+	// Possible values:
+	//   "PREFIX_MATCHABLE_OPTION_UNSPECIFIED" - Value used when unset.
+	//   "PREFIX_MATCHABLE_OPTION_ENABLED" - Prefix Matchable option enabled.
+	//   "PREFIX_MATCHABLE_OPTION_DISABLED" - Prefix Matchable option disabled.
+	PrefixMatchableOption string `json:"prefixMatchableOption,omitempty"`
 	// RecsFilterableOption: If recs_filterable_option is FILTERABLE_ENABLED, field
 	// values are filterable by filter expression in
 	// RecommendationService.Recommend. If FILTERABLE_ENABLED but the field type is
@@ -14727,10 +14771,10 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	// is in the future.
 	//   "WITHDRAWN" - This is when a sub license config has returned all its seats
 	// back to BillingAccountLicenseConfig that it belongs to. Similar to EXPIRED.
-	//   "DEACTIVATING" - The license config is terminated earlier than the
-	// expiration date and it is deactivating. The customer will still have access
-	// in this state. It will be converted to EXPIRED after the deactivating period
-	// ends (14 days) or when the end date is reached, whichever comes first.
+	//   "DEACTIVATING" - The license config is in a grace period. Its subscription
+	// has ended, either through early termination or by reaching its end date, but
+	// the customer keeps access for a limited time. It becomes EXPIRED when the
+	// grace period ends.
 	State string `json:"state,omitempty"`
 	// SubscriptionTerm: Required. Subscription term.
 	//
@@ -16480,7 +16524,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
-	// data store, the specs directly under SearchRequest should be used.
+	// data store, the specs directly under SearchRequest should be used. On an
+	// engine with multiple data stores, this field is optional. If it's empty, all
+	// of the engine's data stores are searched (blended search). Unless it
+	// specifies exactly one data store, some request fields, such as `order_by`
+	// and `query_expansion_spec`, aren't supported and return an
+	// `INVALID_ARGUMENT` error.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// DisplaySpec: Optional. Config for display feature, like match highlighting
 	// on search results.
@@ -24772,16 +24821,24 @@ func (s GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbCon
 // GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfi
 // g: Config for connecting to NotebookLM Enterprise.
 type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// Notebooks: Optional. Restricts this data store to the given notebooks. When
+	// empty, the data store covers every notebook the querying user can access,
+	// which is the existing behaviour. Each entry is a full notebook resource
+	// name, such as `projects/*/locations/*/notebooks/*`. Scoping is enforced on
+	// results as well as requested upstream, so a notebook outside this list
+	// cannot appear in a search response through this data store even if the
+	// backend returns one.
+	Notebooks []string `json:"notebooks,omitempty"`
 	// SearchConfig: Required. Search config name. Format:
 	// projects/*/locations/global/notebookLmSearchConfigs/*
 	SearchConfig string `json:"searchConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// ForceSendFields is a list of field names (e.g. "Notebooks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// NullFields is a list of field names (e.g. "Notebooks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -25774,7 +25831,7 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications`
+	// `workflow-agents` * `in-app-notifications` * `code-extraction`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -26492,6 +26549,8 @@ type GoogleCloudDiscoveryengineV1betaFeedback struct {
 	//   "GOOGLE_WEBAPP" - Feedback source is Google Webapp.
 	//   "GOOGLE_AGENTSPACE_MOBILE" - Feedback source is Google AgentSpace Mobile
 	// app.
+	//   "GOOGLE_AGENTSPACE_DESKTOP" - Feedback source is Google AgentSpace Desktop
+	// app.
 	FeedbackSource string `json:"feedbackSource,omitempty"`
 	// FeedbackType: Required. Indicate whether the user gives a positive or
 	// negative feedback. If the user gives a negative feedback, there might be
@@ -26555,10 +26614,19 @@ type GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo struct {
 	QuestionIndex int64 `json:"questionIndex,omitempty"`
 	// Session: Name of the newly generated or continued session.
 	Session string `json:"session,omitempty"`
+	// StepSeqNum: Optional. The `TaskServerEvent.seq_num` of the step that opened
+	// the rated agent task reply.
+	StepSeqNum int64 `json:"stepSeqNum,omitempty,string"`
 	// TaskName: Optional. The full resource name of the Sobi task if the
-	// conversation was handled by a long-running agent task. Format:
-	// projects/{project}/locations/{location}/tasks/{task_id}
+	// conversation was handled by a long-running agent task. Format (canonical, or
+	// the short alias the Task API also accepts):
+	// projects/{project}/locations/{location}/agents/{agent}/tasks/{task}
+	// projects/{project}/locations/{location}/tasks/{task}
 	TaskName string `json:"taskName,omitempty"`
+	// TrajectoryId: Optional. The runtime trajectory id of the rated agent task
+	// turn, as set on `TaskServerEvent.trajectory_id`. Shared by all steps of the
+	// turn.
+	TrajectoryId string `json:"trajectoryId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnswerQueryToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -27851,10 +27919,10 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	// is in the future.
 	//   "WITHDRAWN" - This is when a sub license config has returned all its seats
 	// back to BillingAccountLicenseConfig that it belongs to. Similar to EXPIRED.
-	//   "DEACTIVATING" - The license config is terminated earlier than the
-	// expiration date and it is deactivating. The customer will still have access
-	// in this state. It will be converted to EXPIRED after the deactivating period
-	// ends (14 days) or when the end date is reached, whichever comes first.
+	//   "DEACTIVATING" - The license config is in a grace period. Its subscription
+	// has ended, either through early termination or by reaching its end date, but
+	// the customer keeps access for a limited time. It becomes EXPIRED when the
+	// grace period ends.
 	State string `json:"state,omitempty"`
 	// SubscriptionTerm: Required. Subscription term.
 	//
@@ -30729,7 +30797,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
-	// data store, the specs directly under SearchRequest should be used.
+	// data store, the specs directly under SearchRequest should be used. On an
+	// engine with multiple data stores, this field is optional. If it's empty, all
+	// of the engine's data stores are searched (blended search). Unless it
+	// specifies exactly one data store, some request fields, such as `order_by`
+	// and `query_expansion_spec`, aren't supported and return an
+	// `INVALID_ARGUMENT` error.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// DisplaySpec: Optional. Config for display feature, like match highlighting
 	// on search results.

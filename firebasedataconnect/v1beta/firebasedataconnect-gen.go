@@ -1710,6 +1710,9 @@ type Service struct {
 	// ensure the client has an up-to-date value before proceeding. AIP-154
 	// (https://google.aip.dev/154)
 	Etag string `json:"etag,omitempty"`
+	// GraphqlSource: Optional. Input only. The GraphQL source files like
+	// `dataconnect.yaml` and `*.gql`.
+	GraphqlSource *Source `json:"graphqlSource,omitempty"`
 	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Identifier. The relative resource name of the Firebase SQL Connect
@@ -1721,11 +1724,15 @@ type Service struct {
 	// Reconciling: Output only. A field that if true, indicates that the system is
 	// working update the service.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// Schemas: Output only. The list of schemas in this service.
+	// Schemas: Optional. The list of schemas in this service.
 	Schemas []*Schema `json:"schemas,omitempty"`
-	// Source: Optional. Input only. The source files for service, schemas, and
+	// Source: Optional. Input only. Deprecated: Use `sql_source` or
+	// `graphql_source` instead. The source files for service, schemas, and
 	// connectors.
 	Source *Source `json:"source,omitempty"`
+	// SqlSource: Optional. Input only. The SQL source files like `*.sql` for
+	// deploying a PostgREST service.
+	SqlSource *Source `json:"sqlSource,omitempty"`
 	// Uid: Output only. System-assigned, unique identifier.
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. [Output only] Update time stamp.

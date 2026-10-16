@@ -1008,6 +1008,9 @@ type Backup struct {
 	// backup}". `{backup}` cannot be changed after creation. It must be between
 	// 3-63 characters long and must be unique within the datasource.
 	Name string `json:"name,omitempty"`
+	// NetappVolumeBackupProperties: Output only. NetApp Volume specific backup
+	// properties.
+	NetappVolumeBackupProperties *NetAppVolumeBackupProperties `json:"netappVolumeBackupProperties,omitempty"`
 	// ResourceSizeBytes: Output only. source resource size in bytes at the time of
 	// the backup.
 	ResourceSizeBytes int64 `json:"resourceSizeBytes,omitempty,string"`
@@ -1583,6 +1586,9 @@ type BackupPlanAssociation struct {
 	// projects/{project}/locations/{location}/backupPlanAssociations/{backupPlanAss
 	// ociationId}
 	Name string `json:"name,omitempty"`
+	// NetappVolumeBackupPlanAssociationProperties: Output only. NetApp volume
+	// backup plan association properties.
+	NetappVolumeBackupPlanAssociationProperties *NetAppVolumeBackupPlanAssociationProperties `json:"netappVolumeBackupPlanAssociationProperties,omitempty"`
 	// Resource: Required. Immutable. Resource name of workload on which the backup
 	// plan is applied. The format can either be the resource name (e.g.,
 	// "projects/my-project/zones/us-central1-a/instances/my-instance") or the full
@@ -2658,6 +2664,10 @@ type DataSourceGcpResource struct {
 	GcpResourcename string `json:"gcpResourcename,omitempty"`
 	// Location: Location of the resource: //"global"/"unspecified".
 	Location string `json:"location,omitempty"`
+	// NetappVolumeDatasourceProperties: Output only.
+	// NetAppVolumeDataSourceProperties has a subset of NetApp Volume properties
+	// that are useful at the Datasource level.
+	NetappVolumeDatasourceProperties *NetAppVolumeDataSourceProperties `json:"netappVolumeDatasourceProperties,omitempty"`
 	// Type: The type of the Google Cloud resource. Use the Unified Resource Type,
 	// eg. compute.googleapis.com/Instance.
 	Type string `json:"type,omitempty"`
@@ -2699,6 +2709,8 @@ type DataSourceGcpResourceInfo struct {
 	// Location: Output only. The location of the Google Cloud resource. Ex:
 	// //"global"/"unspecified"
 	Location string `json:"location,omitempty"`
+	// NetappVolumeProperties: Output only. The NetApp Volume properties.
+	NetappVolumeProperties *NetAppVolumeDataSourceReferenceProperties `json:"netappVolumeProperties,omitempty"`
 	// Type: Output only. The type of the Google Cloud resource. Ex:
 	// compute.googleapis.com/Instance
 	Type string `json:"type,omitempty"`
@@ -4575,6 +4587,107 @@ type Metadata struct {
 
 func (s Metadata) MarshalJSON() ([]byte, error) {
 	type NoMethod Metadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetAppVolumeBackupPlanAssociationProperties:
+// NetAppVolumeBackupPlanAssociationProperties represents NetApp Volume backup
+// plan association properties in BackupPlanAssociation. .
+type NetAppVolumeBackupPlanAssociationProperties struct {
+	// SourceResourceCreateTime: Output only. The creation timestamp of the source
+	// resource.
+	SourceResourceCreateTime string `json:"sourceResourceCreateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceResourceCreateTime")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceResourceCreateTime") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetAppVolumeBackupPlanAssociationProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod NetAppVolumeBackupPlanAssociationProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetAppVolumeBackupProperties: NetAppVolumeBackupProperties represents NetApp
+// Volume backup properties in Backup. .
+type NetAppVolumeBackupProperties struct {
+	// SourceResource: Output only. The source volume of the Backup.
+	SourceResource string `json:"sourceResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceResource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetAppVolumeBackupProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod NetAppVolumeBackupProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetAppVolumeDataSourceProperties: NetAppVolumeDataSourceProperties
+// represents NetApp Volume properties stored in DataSource. .
+type NetAppVolumeDataSourceProperties struct {
+	// SourceResource: Output only. The source volume represented by this
+	// DataSource.
+	SourceResource string `json:"sourceResource,omitempty"`
+	// SourceResourceCreateTime: Output only. The volume creation timestamp.
+	SourceResourceCreateTime string `json:"sourceResourceCreateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceResource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetAppVolumeDataSourceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod NetAppVolumeDataSourceProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// NetAppVolumeDataSourceReferenceProperties:
+// NetAppVolumeDataSourceReferenceProperties represents NetApp Volume
+// properties stored in DataSourceReference. .
+type NetAppVolumeDataSourceReferenceProperties struct {
+	// SourceResource: Output only. The source volume represented by this
+	// DataSourceReference.
+	SourceResource string `json:"sourceResource,omitempty"`
+	// SourceResourceCreateTime: Output only. The volume creation timestamp.
+	SourceResourceCreateTime string `json:"sourceResourceCreateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceResource") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s NetAppVolumeDataSourceReferenceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod NetAppVolumeDataSourceReferenceProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

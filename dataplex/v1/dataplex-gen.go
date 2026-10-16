@@ -1158,8 +1158,9 @@ type GoogleCloudDataplexV1AspectTypeMetadataTemplateAnnotations struct {
 	DisplayOrder int64 `json:"displayOrder,omitempty"`
 	// StringType: Optional. You can use String Type annotations to specify special
 	// meaning to string fields. The following values are supported: richText: The
-	// field must be interpreted as a rich text field. url: A fully qualified URL
-	// link. resource: A service qualified resource reference.
+	// field must be interpreted as a rich text field. markdown: The field must be
+	// interpreted as a markdown field. url: A fully qualified URL link. resource:
+	// A service qualified resource reference.
 	StringType string `json:"stringType,omitempty"`
 	// StringValues: Optional. Suggested hints for string fields. You can use them
 	// to suggest values to users through console.
@@ -1621,6 +1622,160 @@ func (s GoogleCloudDataplexV1AssetStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1BatchChangeMetadataRequest: Request message for batch
+// changing metadata. Requires permission to perform the underlying change,
+// depending on the type and content of the change. Per operation, required
+// permissions are: - for CreateEntry: dataplex.entries.create - for
+// UpdateEntry: dataplex.entries.update - for DeleteEntry:
+// dataplex.entries.delete - for CreateEntryLink: dataplex.entryLinks.create -
+// for UpdateEntryLink: dataplex.entryLinks.update - for DeleteEntryLink:
+// dataplex.entryLinks.deleteAnd per used type permissions are: - for
+// EntryType: dataplex.entryTypes.use or dataplex.entryGroups.useEntry for
+// reusable built-in types, - for AspectType: dataplex.aspectTypes.use or
+// dataplex.entryGroups.useAspect for reusable built-in types and - for
+// EntryLinkType: dataplex.entryLinkTypes.use or
+// dataplex.entryGroups.useEntryLink for reusable built-in types.
+type GoogleCloudDataplexV1BatchChangeMetadataRequest struct {
+	// Changes: Required. The list of changes to apply. Only a single change per
+	// resource is supported. Maximum number of changes supported is 250.
+	Changes []*GoogleCloudDataplexV1BatchChangeMetadataRequestChange `json:"changes,omitempty"`
+	// Description: Optional. Text description of the batch change.
+	Description *GoogleCloudDataplexV1BatchChangeMetadataRequestDescription `json:"description,omitempty"`
+	// Name: Required. The resource name of the EntryGroup on which the batch
+	// change applies. Format:
+	// projects/{project_number_or_id}/locations/{location_id}/entryGroups/{entry_gr
+	// oup_id}
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Changes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Changes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1BatchChangeMetadataRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1BatchChangeMetadataRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1BatchChangeMetadataRequestChange: Detailed description
+// of an individual change.
+type GoogleCloudDataplexV1BatchChangeMetadataRequestChange struct {
+	// CreateEntryLinkRequest: Payload for creating an EntryLink.
+	CreateEntryLinkRequest *GoogleCloudDataplexV1CreateEntryLinkRequest `json:"createEntryLinkRequest,omitempty"`
+	// CreateEntryRequest: Payload for creating an Entry.
+	CreateEntryRequest *GoogleCloudDataplexV1CreateEntryRequest `json:"createEntryRequest,omitempty"`
+	// DeleteEntryLinkRequest: Payload for deleting an EntryLink.
+	DeleteEntryLinkRequest *GoogleCloudDataplexV1DeleteEntryLinkRequest `json:"deleteEntryLinkRequest,omitempty"`
+	// DeleteEntryRequest: Payload for deleting an Entry.
+	DeleteEntryRequest *GoogleCloudDataplexV1DeleteEntryRequest `json:"deleteEntryRequest,omitempty"`
+	// UpdateEntryLinkRequest: Payload for updating an EntryLink.
+	UpdateEntryLinkRequest *GoogleCloudDataplexV1UpdateEntryLinkRequest `json:"updateEntryLinkRequest,omitempty"`
+	// UpdateEntryRequest: Payload for updating an Entry.
+	UpdateEntryRequest *GoogleCloudDataplexV1UpdateEntryRequest `json:"updateEntryRequest,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateEntryLinkRequest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateEntryLinkRequest") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1BatchChangeMetadataRequestChange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1BatchChangeMetadataRequestChange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1BatchChangeMetadataRequestDescription: Description of
+// the batch change.
+type GoogleCloudDataplexV1BatchChangeMetadataRequestDescription struct {
+	// Content: Optional. The text description content.
+	Content string `json:"content,omitempty"`
+	// Job: Optional. The job that created the batch change.
+	Job *GoogleCloudDataplexV1BatchChangeMetadataRequestDescriptionJob `json:"job,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1BatchChangeMetadataRequestDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1BatchChangeMetadataRequestDescription
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1BatchChangeMetadataRequestDescriptionJob: Description
+// of the job that created the batch change.
+type GoogleCloudDataplexV1BatchChangeMetadataRequestDescriptionJob struct {
+	// Name: Optional. The name of the job that created the batch change. For
+	// example:
+	// projects/{project_number}/locations/{location_id}/enrichmentTasks/{enrichment
+	// _task_id}/runs/{enrichment_run_id}
+	Name string `json:"name,omitempty"`
+	// RunTime: Optional. The start time of the job run that created the batch
+	// change.
+	RunTime string `json:"runTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1BatchChangeMetadataRequestDescriptionJob) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1BatchChangeMetadataRequestDescriptionJob
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1BatchChangeMetadataResponse: Response message for
+// BatchChangeMetadata.
+type GoogleCloudDataplexV1BatchChangeMetadataResponse struct {
+	// FailedRequests: A map of failed requests for a batch change, where the key
+	// is the 0-based index of the failed request in the batch and the value is the
+	// error status. If all operations succeeded, this map is empty.
+	FailedRequests map[string]GoogleRpcStatus `json:"failedRequests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FailedRequests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailedRequests") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1BatchChangeMetadataResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1BatchChangeMetadataResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1BusinessGlossaryEvent: Payload associated with Business
 // Glossary related log events.
 type GoogleCloudDataplexV1BusinessGlossaryEvent struct {
@@ -1689,6 +1844,12 @@ type GoogleCloudDataplexV1ChangeRequest struct {
 	// Author: Output only. The email address of the user who created the
 	// ChangeRequest.
 	Author string `json:"author,omitempty"`
+	// BatchChangeMetadataRequest: Payload for executing a batch of catalog
+	// changes.
+	BatchChangeMetadataRequest *GoogleCloudDataplexV1BatchChangeMetadataRequest `json:"batchChangeMetadataRequest,omitempty"`
+	// BatchChangeMetadataResponse: Output only. Result of applying a batch change
+	// metadata request.
+	BatchChangeMetadataResponse *GoogleCloudDataplexV1BatchChangeMetadataResponse `json:"batchChangeMetadataResponse,omitempty"`
 	// ChangeType: Output only. The type of change represented by the
 	// change_payload. This field is derived from the populated field in the
 	// change_payload oneof.
@@ -1710,6 +1871,7 @@ type GoogleCloudDataplexV1ChangeRequest struct {
 	//   "UPDATE_GLOSSARY_TERM" - Request to update a GlossaryTerm.
 	//   "DELETE_GLOSSARY_TERM" - Request to delete a GlossaryTerm.
 	//   "REQUEST_DATA_PRODUCT_ACCESS" - Request to request Data Product access.
+	//   "BATCH_CHANGE_METADATA" - Request to execute a batch of catalog changes.
 	ChangeType string `json:"changeType,omitempty"`
 	// CreateEntry: Payload for creating an Entry.
 	CreateEntry *GoogleCloudDataplexV1CreateEntryRequest `json:"createEntry,omitempty"`
@@ -1769,6 +1931,9 @@ type GoogleCloudDataplexV1ChangeRequest struct {
 	//   "REJECTED" - The change has been rejected.
 	//   "EXPIRED" - The change request has expired.
 	//   "REVOKED" - The approved change has been revoked.
+	//   "APPLYING" - The change request has been approved and changes are
+	// currently being applied.
+	//   "FAILED" - The change request execution failed.
 	State string `json:"state,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the ChangeRequest.
 	Uid string `json:"uid,omitempty"`
@@ -6253,6 +6418,9 @@ func (s GoogleCloudDataplexV1Entry) MarshalJSON() ([]byte, error) {
 // GoogleCloudDataplexV1EntryGroup: An Entry Group represents a logical
 // grouping of one or more Entries.
 type GoogleCloudDataplexV1EntryGroup struct {
+	// ChangeRequestConfig: Optional. Specifies the configuration for requesting
+	// changes in the metadata belonging to the Entry Group.
+	ChangeRequestConfig *GoogleCloudDataplexV1EntryGroupChangeRequestConfig `json:"changeRequestConfig,omitempty"`
 	// CreateTime: Output only. The time when the EntryGroup was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// Description: Optional. Description of the EntryGroup.
@@ -6292,21 +6460,48 @@ type GoogleCloudDataplexV1EntryGroup struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "ChangeRequestConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CreateTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ChangeRequestConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDataplexV1EntryGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1EntryGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1EntryGroupChangeRequestConfig: Specifies the
+// configuration for requesting changes in the metadata belonging to the Entry
+// Group.
+type GoogleCloudDataplexV1EntryGroupChangeRequestConfig struct {
+	// ApproverEmails: Optional. Specifies the email addresses of users who are
+	// potential approvers and are notified when a change request is created for
+	// the metadata belonging to the Entry Group. The maximum number of emails
+	// allowed is 10.
+	ApproverEmails []string `json:"approverEmails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApproverEmails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApproverEmails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1EntryGroupChangeRequestConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1EntryGroupChangeRequestConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8834,6 +9029,62 @@ func (s GoogleCloudDataplexV1RejectChangeRequestRequest) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1RequestBatchMetadataChangeRequest: Request message for
+// submitting a set of catalog changes proposals.
+type GoogleCloudDataplexV1RequestBatchMetadataChangeRequest struct {
+	// ChangePayload: Required. The detailed specification of the proposed changes.
+	// This payload is intended to be embedded as the change_payload in the
+	// resulting ChangeRequest.
+	ChangePayload *GoogleCloudDataplexV1BatchChangeMetadataRequest `json:"changePayload,omitempty"`
+	// Justification: Optional. Justification for the metadata change request.
+	Justification string `json:"justification,omitempty"`
+	// Labels: Optional. User-defined labels for the metadata change request.
+	Labels map[string]string `json:"labels,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChangePayload") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChangePayload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1RequestBatchMetadataChangeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1RequestBatchMetadataChangeRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1RequestBatchMetadataChangeResponse: Response message
+// containing the reference to the created change request.
+type GoogleCloudDataplexV1RequestBatchMetadataChangeResponse struct {
+	// ChangeRequest: The resource name of the created ChangeRequest. Format:
+	// projects/{project}/locations/{location}/changeRequests/{change_request}
+	ChangeRequest string `json:"changeRequest,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ChangeRequest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChangeRequest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1RequestBatchMetadataChangeResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1RequestBatchMetadataChangeResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDataplexV1RequestDataProductAccessRequest: Message for requesting
 // access to a Data Product.
 type GoogleCloudDataplexV1RequestDataProductAccessRequest struct {
@@ -9991,6 +10242,38 @@ type GoogleCloudDataplexV1TriggerSchedule struct {
 
 func (s GoogleCloudDataplexV1TriggerSchedule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1TriggerSchedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1UpdateEntryLinkRequest: Request message for
+// UpdateEntryLink method.
+type GoogleCloudDataplexV1UpdateEntryLinkRequest struct {
+	// AllowMissing: Optional. If set to true and the entry link doesn't exist, the
+	// service will create it.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+	// AspectKeys: Optional. The map keys of the Aspects which the service should
+	// modify. It should be the aspect type reference in the format
+	// {project_id_or_number}.{location_id}.{aspect_type_id}.If this field is left
+	// empty, the service treats it as specifying exactly those Aspects present in
+	// the request.
+	AspectKeys []string `json:"aspectKeys,omitempty"`
+	// EntryLink: Required. Entry Link resource.
+	EntryLink *GoogleCloudDataplexV1EntryLink `json:"entryLink,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowMissing") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1UpdateEntryLinkRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1UpdateEntryLinkRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -21768,6 +22051,113 @@ func (c *ProjectsLocationsDataTaxonomiesAttributesTestIamPermissionsCall) Do(opt
 	return ret, nil
 }
 
+type ProjectsLocationsEntryGroupsBatchChangeMetadataCall struct {
+	s                                               *Service
+	name                                            string
+	googleclouddataplexv1batchchangemetadatarequest *GoogleCloudDataplexV1BatchChangeMetadataRequest
+	urlParams_                                      gensupport.URLParams
+	ctx_                                            context.Context
+	header_                                         http.Header
+}
+
+// BatchChangeMetadata: Batch changes metadata within an EntryGroup.
+//
+//   - name: The resource name of the EntryGroup on which the batch change
+//     applies. Format:
+//     projects/{project_number_or_id}/locations/{location_id}/entryGroups/{entry_
+//     group_id}.
+func (r *ProjectsLocationsEntryGroupsService) BatchChangeMetadata(name string, googleclouddataplexv1batchchangemetadatarequest *GoogleCloudDataplexV1BatchChangeMetadataRequest) *ProjectsLocationsEntryGroupsBatchChangeMetadataCall {
+	c := &ProjectsLocationsEntryGroupsBatchChangeMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1batchchangemetadatarequest = googleclouddataplexv1batchchangemetadatarequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEntryGroupsBatchChangeMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsBatchChangeMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEntryGroupsBatchChangeMetadataCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsBatchChangeMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEntryGroupsBatchChangeMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsBatchChangeMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1batchchangemetadatarequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:batchChangeMetadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.batchChangeMetadata", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.entryGroups.batchChangeMetadata" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsBatchChangeMetadataCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.batchChangeMetadata", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsEntryGroupsCreateCall struct {
 	s                               *Service
 	parent                          string
@@ -22522,6 +22912,113 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall struct {
+	s                                                      *Service
+	name                                                   string
+	googleclouddataplexv1requestbatchmetadatachangerequest *GoogleCloudDataplexV1RequestBatchMetadataChangeRequest
+	urlParams_                                             gensupport.URLParams
+	ctx_                                                   context.Context
+	header_                                                http.Header
+}
+
+// RequestBatchMetadataChange: Submits a catalog change request for multiple
+// resources within an EntryGroup. This method creates a ChangeRequest resource
+// that must be reviewed and approved before the proposed changes are applied.
+//
+//   - name: The resource name of the Entry Group on which the change applies.
+//     Format: projects/{project}/locations/{location}/entryGroups/{entry_group}.
+func (r *ProjectsLocationsEntryGroupsService) RequestBatchMetadataChange(name string, googleclouddataplexv1requestbatchmetadatachangerequest *GoogleCloudDataplexV1RequestBatchMetadataChangeRequest) *ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall {
+	c := &ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddataplexv1requestbatchmetadatachangerequest = googleclouddataplexv1requestbatchmetadatachangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall) Fields(s ...googleapi.Field) *ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall) Context(ctx context.Context) *ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddataplexv1requestbatchmetadatachangerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:requestBatchMetadataChange")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.requestBatchMetadataChange", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataplex.projects.locations.entryGroups.requestBatchMetadataChange" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudDataplexV1RequestBatchMetadataChangeResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEntryGroupsRequestBatchMetadataChangeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDataplexV1RequestBatchMetadataChangeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDataplexV1RequestBatchMetadataChangeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataplex.projects.locations.entryGroups.requestBatchMetadataChange", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -518,7 +518,7 @@ func (s Blueprint) MarshalJSON() ([]byte, error) {
 type ComponentRef struct {
 	// Component: Optional. Name of the component in composite.Components
 	Component string `json:"component,omitempty"`
-	// CompositeRef: Reference to the Composite ApplicationTemplate.
+	// CompositeRef: Optional. Reference to the Composite ApplicationTemplate.
 	CompositeRef *CompositeRef `json:"compositeRef,omitempty"`
 	// Revision: Optional. Revision of the component. If the component does not
 	// have a revision, this field will be explicitly set to the revision of the
@@ -748,9 +748,13 @@ type EvaluationSpec struct {
 	// Attributes: Optional. Names of the context attributes that are used in the
 	// evaluation rules and allocations.
 	Attributes []string `json:"attributes,omitempty"`
+	// DefaultAllocation: Optional. The ID of an allocation to use as the default.
+	DefaultAllocation string `json:"defaultAllocation,omitempty"`
 	// DefaultTarget: Optional. Deprecated: Use `base_target` instead. Default
 	// variant or allocation of the flag.
 	DefaultTarget string `json:"defaultTarget,omitempty"`
+	// DefaultVariant: Optional. The name of a variant to use as the default.
+	DefaultVariant string `json:"defaultVariant,omitempty"`
 	// Rules: Optional. Evaluation rules define the logic for evaluating the flag
 	// against a given context. The rules are evaluated sequentially in their
 	// specified order.
@@ -793,9 +797,9 @@ type Flag struct {
 	Etag string `json:"etag,omitempty"`
 	// EvaluationSpec: Optional. Specification of how the flag value should be
 	// evaluated. If a bool flag is created without an evaluation_spec specified,
-	// two default variants, "Enabled" (with bool_value = true) and "Disabled"
-	// (with bool_value = false), are created by default, and "Disabled" is set as
-	// the default_target.
+	// two default variants, "Enabled" (with boolean_value = true) and "Disabled"
+	// (with boolean_value = false), are created by default, and "Disabled" is set
+	// as the default_variant.
 	EvaluationSpec *EvaluationSpec `json:"evaluationSpec,omitempty"`
 	// FlagSet: Optional. Flag set this flag belongs to.
 	FlagSet string `json:"flagSet,omitempty"`
@@ -2020,10 +2024,7 @@ type Rollout struct {
 	// server agree on the ordering of a resource being written.
 	Etag string `json:"etag,omitempty"`
 	// FlagRelease: Optional. Immutable. Name of the FlagRelease to be rolled out
-	// to the target Units. Release and FlagRelease are mutually exclusive. Note:
-	// `release` comment needs to be adjusted to mention that "Release and
-	// FlagRelease are mutually exclusive" when visibility restriction will be
-	// lifted.
+	// to the target Units. Release and FlagRelease are mutually exclusive.
 	FlagRelease string `json:"flagRelease,omitempty"`
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
@@ -2312,11 +2313,11 @@ type Saas struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// ApplicationTemplate: Reference to composite ApplicationTemplate. When
-	// specified, the template components will be imported into their equivalent
-	// UnitKind, Release and Blueprint resources. Deleted references will not
-	// delete imported resources. Should only be specified on source regions, and
-	// be unspecified on replica regions.
+	// ApplicationTemplate: Optional. Reference to composite ApplicationTemplate.
+	// When specified, the template components will be imported into their
+	// equivalent UnitKind, Release and Blueprint resources. Deleted references
+	// will not delete imported resources. Should only be specified on source
+	// regions, and be unspecified on replica regions.
 	ApplicationTemplate *CompositeRef `json:"applicationTemplate,omitempty"`
 	// BlueprintRepo: Output only. Name of repository in Artifact Registry for
 	// system-generated Blueprints, eg. Blueprints of imported

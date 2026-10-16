@@ -1582,9 +1582,10 @@ type GoogleIdentityAccesscontextmanagerV1EgressSource struct {
 	// organization, not just the organization that the perimeter is defined in.
 	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource from the service perimeter that you want
-	// to allow to access data outside the perimeter. This field supports only
-	// projects. The project format is `projects/{project_number}`. You can't use
-	// `*` in this field to allow all Google Cloud resources.
+	// to allow to access data outside the perimeter. This field supports projects,
+	// folders, and organizations in the form `projects/`, `folders/`, and
+	// `organizations/`. You can't use `*` in this field to allow all Google Cloud
+	// resources.
 	Resource string `json:"resource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1625,11 +1626,12 @@ type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
 	// specified in the corresponding EgressFrom. A request matches if it uses an
 	// operation/service in this list.
 	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
-	// Resources: A list of resources, currently only projects in the form
-	// `projects/`, that are allowed to be accessed by sources defined in the
-	// corresponding EgressFrom. A request matches if it contains a resource in
-	// this list. If `*` is specified for `resources`, then this EgressTo rule will
-	// authorize access to all resources outside the perimeter.
+	// Resources: A list of resources, currently projects, folders, and
+	// organizations in the form `projects/`, `folders/`, and `organizations/`,
+	// that are allowed to be accessed by sources defined in the corresponding
+	// EgressFrom. A request matches if it contains a resource in this list. If `*`
+	// is specified for `resources`, then this EgressTo rule will authorize access
+	// to all resources outside the perimeter.
 	Resources []string `json:"resources,omitempty"`
 	// Roles: IAM roles that represent the set of operations that the sources
 	// specified in the corresponding EgressFrom. are allowed to perform in this
@@ -1756,8 +1758,9 @@ type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
 	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource that is allowed to ingress the perimeter.
 	// Requests from these resources will be allowed to access perimeter data.
-	// Currently only projects and VPCs are allowed. Project format:
-	// `projects/{project_number}` VPC network format:
+	// Currently projects, folders, organizations, and VPCs are allowed. Project
+	// format: `projects/{project_number}` Folder format: `folders/{folder_id}`
+	// Organization format: `organizations/{organization_id}` VPC network format:
 	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}`. The
 	// project may be in any Google Cloud organization, not just the organization
 	// that the perimeter is defined in. `*` is not allowed, the case of allowing
@@ -1790,11 +1793,12 @@ type GoogleIdentityAccesscontextmanagerV1IngressTo struct {
 	// Operations: A list of ApiOperations allowed to be performed by the sources
 	// specified in corresponding IngressFrom in this ServicePerimeter.
 	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
-	// Resources: A list of resources, currently only projects in the form
-	// `projects/`, protected by this ServicePerimeter that are allowed to be
-	// accessed by sources defined in the corresponding IngressFrom. If a single
-	// `*` is specified, then access to all resources inside the perimeter are
-	// allowed.
+	// Resources: A list of resources, currently projects, folders, and
+	// organizations in the form `projects/{project_number}`,
+	// `folders/{folder_id}`, and `organizations/{organization_id}`, protected by
+	// this ServicePerimeter that are allowed to be accessed by sources defined in
+	// the corresponding IngressFrom. If a single `*` is specified, then access to
+	// all resources inside the perimeter are allowed.
 	Resources []string `json:"resources,omitempty"`
 	// Roles: IAM roles that represent the set of operations that the sources
 	// specified in the corresponding IngressFrom are allowed to perform in this
@@ -1885,6 +1889,7 @@ type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
 	//   "DESKTOP_WINDOWS" - A desktop Windows operating system.
 	//   "DESKTOP_LINUX" - A desktop Linux operating system.
 	//   "DESKTOP_CHROME_OS" - A desktop ChromeOS operating system.
+	//   "GOOGLEBOOK_OS" - A Googlebook operating system.
 	//   "ANDROID" - An Android operating system.
 	//   "IOS" - An iOS operating system.
 	OsType string `json:"osType,omitempty"`
@@ -2067,8 +2072,9 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig struct {
 	// for a perimeter bridge.
 	IngressPolicies []*GoogleIdentityAccesscontextmanagerV1IngressPolicy `json:"ingressPolicies,omitempty"`
 	// Resources: A list of Google Cloud resources that are inside of the service
-	// perimeter. Currently only projects and VPCs are allowed. Project format:
-	// `projects/{project_number}` VPC network format:
+	// perimeter. Currently projects, folders, and VPCs are allowed. Project
+	// format: `projects/{project_number}` Folder format: `folders/{folder_id}` VPC
+	// network format:
 	// `//compute.googleapis.com/projects/{PROJECT_ID}/global/networks/{NAME}`.
 	Resources []string `json:"resources,omitempty"`
 	// RestrictedServices: Google Cloud services that are subject to the Service

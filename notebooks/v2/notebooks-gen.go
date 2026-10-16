@@ -221,7 +221,9 @@ type AcceleratorConfig struct {
 	//
 	// Possible values:
 	//   "ACCELERATOR_TYPE_UNSPECIFIED" - Accelerator type is not specified.
-	//   "NVIDIA_TESLA_P100" - Accelerator type is Nvidia Tesla P100.
+	//   "NVIDIA_TESLA_P100" - Deprecated: Use `NVIDIA_TESLA_T4` (N1) or
+	// `NVIDIA_L4` (G2) instead. The NVIDIA Tesla P100 GPU is being decommissioned
+	// fleet-wide by Compute Engine and is no longer available for new instances.
 	//   "NVIDIA_TESLA_V100" - Accelerator type is Nvidia Tesla V100.
 	//   "NVIDIA_TESLA_P4" - Accelerator type is Nvidia Tesla P4.
 	//   "NVIDIA_TESLA_T4" - Accelerator type is Nvidia Tesla T4.
@@ -234,8 +236,9 @@ type AcceleratorConfig struct {
 	//   "NVIDIA_H200_141GB" - Accelerator type is Nvidia Tesla H200 - 141GB.
 	//   "NVIDIA_TESLA_T4_VWS" - Accelerator type is NVIDIA Tesla T4 Virtual
 	// Workstations.
-	//   "NVIDIA_TESLA_P100_VWS" - Accelerator type is NVIDIA Tesla P100 Virtual
-	// Workstations.
+	//   "NVIDIA_TESLA_P100_VWS" - Deprecated: Use `NVIDIA_TESLA_T4_VWS` instead.
+	// The NVIDIA Tesla P100 GPU (Virtual Workstations) is being decommissioned
+	// fleet-wide by Compute Engine and is no longer available for new instances.
 	//   "NVIDIA_TESLA_P4_VWS" - Accelerator type is NVIDIA Tesla P4 Virtual
 	// Workstations.
 	//   "NVIDIA_B200" - Accelerator type is NVIDIA B200.
@@ -1154,6 +1157,10 @@ type Instance struct {
 	//   "INITIALIZING" - The instance is being created.
 	//   "SUSPENDING" - The instance is suspending.
 	//   "SUSPENDED" - The instance is suspended.
+	//   "ORPHANED" - The instance has no VM. An upgrade removed the original and
+	// could not create its replacement; the data disk and any snapshots are
+	// intact. Retry the upgrade to finish it, or roll the instance back to the
+	// snapshot taken before it started.
 	State string `json:"state,omitempty"`
 	// ThirdPartyProxyUrl: Output only. The workforce pools proxy endpoint that is
 	// used to access the Jupyter notebook.
@@ -1323,6 +1330,11 @@ type NetworkInterface struct {
 	// accessConfigs specified, the instance will have an external internet access
 	// through an ephemeral external IP address.
 	AccessConfigs []*AccessConfig `json:"accessConfigs,omitempty"`
+	// InternalIp: Optional. An internal IP address associated with this instance.
+	// Specify an unused static internal IP address available to the subnet this
+	// instance is in, or leave this field undefined to use an IP from the subnet's
+	// ephemeral range.
+	InternalIp string `json:"internalIp,omitempty"`
 	// Network: Optional. The name of the VPC that this VM instance is in. Format:
 	// `projects/{project_id}/global/networks/{network_id}`
 	Network string `json:"network,omitempty"`
@@ -2024,6 +2036,10 @@ type VmImage struct {
 	// read time from the image release configuration (the source of truth). Set to
 	// "Custom" for unrecognized boot-disk images.
 	ImageDescription string `json:"imageDescription,omitempty"`
+	// ImageId: Output only. The ID of the specific Compute Engine VM image the
+	// instance is currently running (for example,
+	// "workbench-instances-2603-20260918-2130-rc0").
+	ImageId string `json:"imageId,omitempty"`
 	// Name: Optional. Use VM image name to find the image.
 	Name string `json:"name,omitempty"`
 	// Project: Required. The name of the Google Cloud project that this VM image

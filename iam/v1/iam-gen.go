@@ -2379,6 +2379,22 @@ type Oidc struct {
 	// https://iam.googleapis.com/projects//locations//workloadIdentityPools//providers/
 	// ```
 	AllowedAudiences []string `json:"allowedAudiences,omitempty"`
+	// DiscoveryUri: Optional. The URL to fetch the OIDC discovery document from,
+	// overriding the default URL derived from `issuer_uri`. If not set,
+	// `discovery_uri` defaults to `issuer_uri` with
+	// `/.well-known/openid-configuration` appended, as per the OpenID Connect
+	// Discovery 1.0 specification. If set, `discovery_uri` must meet the following
+	// requirements: - Must start with `https://`. - Must not exceed 2000
+	// characters. - The scheme, host, and port must match `issuer_uri`. - The path
+	// must contain `/.well-known/` (where `` is not empty, such as
+	// `openid-configuration`) and conform to the `issuer_uri` topology: - The
+	// well-known path segment is inserted before the issuer path (for example,
+	// `https://example.com/.well-known/openid-configuration/tenant1` for issuer
+	// `https://example.com/tenant1`), or - The well-known path segment is appended
+	// under the issuer path (for example,
+	// `https://example.com/tenant1/.well-known/openid-configuration` for issuer
+	// `https://example.com/tenant1`).
+	DiscoveryUri string `json:"discoveryUri,omitempty"`
 	// IssuerUri: Required. The OIDC `issuer_uri`. Must be an HTTPS endpoint. Per
 	// OpenID Connect Discovery 1.0 spec, the OIDC issuer URL is used to locate the
 	// provider's public keys (via `jwks_uri`) for verifying tokens like the OIDC
@@ -4291,6 +4307,12 @@ type WorkloadIdentityPoolOperationMetadata struct {
 // WorkloadIdentityPoolProvider: A configuration for an external identity
 // provider.
 type WorkloadIdentityPoolProvider struct {
+	// ActorProviders: Optional. A list of the resource names of
+	// WorkloadIdentityPoolProviders in the same pool that are authorized to issue
+	// actor tokens for this provider. An actor token represents the identity of
+	// the acting party to whom authority is delegated. At most 3 actor providers
+	// can be specified.
+	ActorProviders []string `json:"actorProviders,omitempty"`
 	// AttributeCondition: Optional. A Common Expression Language
 	// (https://opensource.google/projects/cel) expression, in plain text, to
 	// restrict what otherwise valid authentication credentials issued by the
@@ -4386,15 +4408,15 @@ type WorkloadIdentityPoolProvider struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AttributeCondition") to
+	// ForceSendFields is a list of field names (e.g. "ActorProviders") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AttributeCondition") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ActorProviders") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -9102,12 +9124,15 @@ type LocationsWorkforcePoolsSubjectsRevokeSessionsCall struct {
 	header_                                   http.Header
 }
 
-// RevokeSessions: Revokes all sessions for a given WorkforcePoolSubject.
+// RevokeSessions: Revokes all sessions for the specified WorkforcePoolSubject.
+// Revoking sessions invalidates all active sessions and previously issued
+// credentials for the subject, requiring the user to re-authenticate with the
+// identity provider.
 //
 //   - name: The resource name of the WorkforcePoolSubject. Special characters,
-//     like `/` and `:`, must be escaped, because all URLs need to conform to the
-//     "When to Escape and Unescape" section of RFC3986
-//     (https://www.ietf.org/rfc/rfc2396.txt). Format:
+//     such as `/` and `:`, must be escaped, because all URLs must conform to the
+//     "When to Escape and Unescape" section of RFC 3986
+//     (https://www.rfc-editor.org/info/rfc3986/). Format:
 //     `locations/{location}/workforcePools/{workforce_pool_id}/subjects/{subject_
 //     id}`.
 func (r *LocationsWorkforcePoolsSubjectsService) RevokeSessions(name string, revokeworkforcepoolsubjectsessionsrequest *RevokeWorkforcePoolSubjectSessionsRequest) *LocationsWorkforcePoolsSubjectsRevokeSessionsCall {

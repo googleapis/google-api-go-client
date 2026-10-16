@@ -214,6 +214,8 @@ type DailyMetricTimeSeries struct {
 	// clicked.
 	//   "WEBSITE_CLICKS" - The number of times the business profile website was
 	// clicked.
+	//   "MESSAGING_CLICKS" - The number of times the business profile messaging
+	// (e.g. Whatsapp) button was clicked.
 	//   "BUSINESS_BOOKINGS" - The number of bookings made from the business
 	// profile via Reserve with Google.
 	//   "BUSINESS_FOOD_ORDERS" - The number of food orders received from the
@@ -629,6 +631,10 @@ func (r *LocationsService) FetchMultiDailyMetricsTimeSeries(location string) *Lo
 //
 // clicked.
 //
+//	"MESSAGING_CLICKS" - The number of times the business profile messaging
+//
+// (e.g. Whatsapp) button was clicked.
+//
 //	"BUSINESS_BOOKINGS" - The number of bookings made from the business
 //
 // profile via Reserve with Google.
@@ -852,6 +858,10 @@ func (r *LocationsService) GetDailyMetricsTimeSeries(name string) *LocationsGetD
 //	"WEBSITE_CLICKS" - The number of times the business profile website was
 //
 // clicked.
+//
+//	"MESSAGING_CLICKS" - The number of times the business profile messaging
+//
+// (e.g. Whatsapp) button was clicked.
 //
 //	"BUSINESS_BOOKINGS" - The number of bookings made from the business
 //

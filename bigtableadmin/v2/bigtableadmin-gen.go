@@ -556,10 +556,19 @@ func (s AuthorizedView) MarshalJSON() ([]byte, error) {
 
 // AutomatedBackupPolicy: Defines an automated backup policy for a table
 type AutomatedBackupPolicy struct {
+	// Disabled: Optional. If `true`, automated backups are explicitly disabled on
+	// this table. This allows users to opt out of default enablement.
+	Disabled bool `json:"disabled,omitempty"`
 	// Frequency: How frequently automated backups should occur. The only supported
 	// value at this time is 24 hours. An undefined frequency is treated as 24
 	// hours.
 	Frequency string `json:"frequency,omitempty"`
+	// KeepHotDuration: Optional. The amount of time that the automated backups
+	// remain hot. If specified, the backups created by this policy are `HOT`
+	// backups. If not specified, the backups are `STANDARD` backups. The value
+	// must be at least 24 hours and at most 10 days, and can't exceed the policy's
+	// `retention_period`. Only SSD instances support `HOT` automated backups.
+	KeepHotDuration string `json:"keepHotDuration,omitempty"`
 	// Locations: Optional. A list of Cloud Bigtable zones where automated backups
 	// are allowed to be created. If empty, automated backups will be created in
 	// all zones of the instance. Locations are in the format
@@ -569,13 +578,13 @@ type AutomatedBackupPolicy struct {
 	// RetentionPeriod: Required. How long the automated backups should be
 	// retained. Values must be at least 3 days and at most 90 days.
 	RetentionPeriod string `json:"retentionPeriod,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Frequency") to
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Frequency") to include in API
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4110,10 +4119,25 @@ type RestoreTableRequest struct {
 	// Backup: Name of the backup from which to restore. Values are of the form
 	// `projects//instances//clusters//backups/`.
 	Backup string `json:"backup,omitempty"`
+	// Table: Optional. Properties of the table to be restored. Only the fields
+	// specified in update_mask will be used to set the restored table's
+	// properties.
+	Table *Table `json:"table,omitempty"`
 	// TableId: Required. The id of the table to create and restore to. This table
 	// must not already exist. The `table_id` appended to `parent` forms the full
 	// table name of the form `projects//instances//tables/`.
 	TableId string `json:"tableId,omitempty"`
+	// UpdateMask: Optional. The list of fields to set on the new table. A mask
+	// specifying which fields (e.g. `deletion_protection`) in the `table` field
+	// should be set. This mask is relative to the `table` field, not to the
+	// request message. The wildcard (*) path is currently not supported. Currently
+	// RestoreTable only supports the following fields for modification: *
+	// `deletion_protection`: Defaults to `false` if not set. *
+	// `automated_backup_policy`: Defaults to no automated backup policy if not
+	// set. Output-only fields in the mask will be ignored. If any other field not
+	// listed above is included in `update_mask`, it will result in an
+	// INVALID_ARGUMENT error.
+	UpdateMask string `json:"updateMask,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4356,6 +4380,11 @@ type Table struct {
 	// containing the table. Note one can still delete the data stored in the table
 	// through Data APIs.
 	DeletionProtection bool `json:"deletionProtection,omitempty"`
+	// EffectiveAutomatedBackupPolicy: Output only. The effective automated backup
+	// policy applied to the table. This represents the policy actually in effect,
+	// which may be a system-default policy if the user has not explicitly
+	// configured one. Views: `SCHEMA_VIEW`, `FULL`.
+	EffectiveAutomatedBackupPolicy *AutomatedBackupPolicy `json:"effectiveAutomatedBackupPolicy,omitempty"`
 	// Granularity: Immutable. The granularity at which timestamps are stored in
 	// this table. Timestamps not matching the granularity will be rejected. If
 	// unspecified at creation time, the value will be set to `MILLIS`. Views:

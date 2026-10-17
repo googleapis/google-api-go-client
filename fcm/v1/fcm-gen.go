@@ -209,6 +209,11 @@ type ProjectsRegistrationsTopicSubscriptionsService struct {
 	s *Service
 }
 
+// AndroidBackgroundSyncMessage: A Background Sync message that is sent to an
+// Android device.
+type AndroidBackgroundSyncMessage struct {
+}
+
 // AndroidConfig: Android specific options for messages sent through FCM
 // connection server (https://goo.gl/4GLdUl).
 type AndroidConfig struct {
@@ -290,6 +295,76 @@ type AndroidConfig struct {
 
 func (s AndroidConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AndroidConfigV2: Android specific V2 options for messages sent through FCM
+// connection server (https://goo.gl/4GLdUl). This is a v2 version of the
+// AndroidConfig message and will replace it in the v2 API.
+type AndroidConfigV2 struct {
+	// BackgroundSync: Optional. Non-urgent background sync message to send to
+	// android devices.
+	BackgroundSync *AndroidBackgroundSyncMessage `json:"backgroundSync,omitempty"`
+	// BandwidthConstrainedOk: Optional. If set to true, messages will be allowed
+	// to be delivered to the app while the device is in bandwidth constrained
+	// mode. This should only be enabled when the app has been tested to properly
+	// handle messages in bandwidth constrained mode.
+	BandwidthConstrainedOk bool `json:"bandwidthConstrainedOk,omitempty"`
+	// CollapseKey: An identifier of a group of messages that can be collapsed, so
+	// that only the last message gets sent when delivery can be resumed. A maximum
+	// of 4 different collapse keys is allowed at any given time.
+	CollapseKey string `json:"collapseKey,omitempty"`
+	// Data: Arbitrary key/value payload. If present, it will override
+	// google.firebase.fcm.v1.Message.data.
+	Data map[string]string `json:"data,omitempty"`
+	// DirectBootOk: Optional. If set to true, messages will be allowed to be
+	// delivered to the app while the device is in direct boot mode. See Support
+	// Direct Boot mode
+	// (https://developer.android.com/training/articles/direct-boot).
+	DirectBootOk bool `json:"directBootOk,omitempty"`
+	// FcmOptions: Options for features provided by the FCM SDK for Android. If
+	// present, it will override google.firebase.fcm.v1.Message.fcm_options.
+	FcmOptions *AndroidFcmOptions `json:"fcmOptions,omitempty"`
+	// RemoteNotification: Optional. User-facing notification to send to android
+	// devices.
+	RemoteNotification *AndroidRemoteNotification `json:"remoteNotification,omitempty"`
+	// RestrictedPackageName: Package name of the application where the
+	// registration token must match in order to receive the message.
+	RestrictedPackageName string `json:"restrictedPackageName,omitempty"`
+	// RestrictedSatelliteOk: Optional. If set to true, messages will be allowed to
+	// be delivered to the app while the device is connected over a restricted
+	// satellite network. This should only be enabled for messages that can be
+	// handled over a restricted satellite network and only for apps that are
+	// enabled to work over a restricted satellite network. Note that the ability
+	// of the app to connect to a restricted satellite network is dependent on the
+	// carrier's settings and the device model.
+	RestrictedSatelliteOk bool `json:"restrictedSatelliteOk,omitempty"`
+	// Ttl: How long (in seconds) the message should be kept in FCM storage if the
+	// device is offline. The maximum time to live supported is 4 weeks, and the
+	// default value is 4 weeks if not set. Set it to 0 if want to send the message
+	// immediately. In JSON format, the Duration type is encoded as a string rather
+	// than an object, where the string ends in the suffix "s" (indicating seconds)
+	// and is preceded by the number of seconds, with nanoseconds expressed as
+	// fractional seconds. For example, 3 seconds with 0 nanoseconds should be
+	// encoded in JSON format as "3s", while 3 seconds and 1 nanosecond should be
+	// expressed in JSON format as "3.000000001s". The ttl will be rounded down to
+	// the nearest second.
+	Ttl string `json:"ttl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackgroundSync") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackgroundSync") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AndroidConfigV2) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidConfigV2
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -513,6 +588,236 @@ func (s AndroidNotification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AndroidNotificationV2: Notification v2 to send to android devices. This is a
+// v2 version of the AndroidNotification message and will replace it in the v2
+// API.
+type AndroidNotificationV2 struct {
+	// Body: The notification's body text. If present, it will override
+	// google.firebase.fcm.v1.Notification.body.
+	Body string `json:"body,omitempty"`
+	// BodyLocArgs: Variable string values to be used in place of the format
+	// specifiers in body_loc_key to use to localize the body text to the user's
+	// current localization. See Formatting and Styling (https://goo.gl/MalYE3) for
+	// more information.
+	BodyLocArgs []string `json:"bodyLocArgs,omitempty"`
+	// BodyLocKey: The key to the body string in the app's string resources to use
+	// to localize the body text to the user's current localization. See String
+	// Resources (https://goo.gl/NdFZGI) for more information.
+	BodyLocKey string `json:"bodyLocKey,omitempty"`
+	// ChannelId: The notification's channel id
+	// (https://developer.android.com/guide/topics/ui/notifiers/notifications#ManageChannels)
+	// (new in Android O). The app must create a channel with this channel ID
+	// before any notification with this channel ID is received. If you don't send
+	// this channel ID in the request, or if the channel ID provided has not yet
+	// been created by the app, FCM uses the channel ID specified in the app
+	// manifest.
+	ChannelId string `json:"channelId,omitempty"`
+	// ClickAction: The action associated with a user click on the notification. If
+	// specified, an activity with a matching intent filter is launched when a user
+	// clicks on the notification.
+	ClickAction string `json:"clickAction,omitempty"`
+	// Color: The notification's icon color, expressed in #rrggbb format.
+	Color string `json:"color,omitempty"`
+	// DefaultLightSettings: If set to true, use the Android framework's default
+	// LED light settings for the notification. Default values are specified in
+	// config.xml
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/values/config.xml).
+	// If `default_light_settings` is set to true and `light_settings` is also set,
+	// the user-specified `light_settings` is used instead of the default value.
+	DefaultLightSettings bool `json:"defaultLightSettings,omitempty"`
+	// DefaultSound: If set to true, use the Android framework's default sound for
+	// the notification. Default values are specified in config.xml
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/values/config.xml).
+	DefaultSound bool `json:"defaultSound,omitempty"`
+	// DefaultVibrateTimings: If set to true, use the Android framework's default
+	// vibrate pattern for the notification. Default values are specified in
+	// config.xml
+	// (https://android.googlesource.com/platform/frameworks/base/+/master/core/res/res/values/config.xml).
+	// If `default_vibrate_timings` is set to true and `vibrate_timings` is also
+	// set, the default value is used instead of the user-specified
+	// `vibrate_timings`.
+	DefaultVibrateTimings bool `json:"defaultVibrateTimings,omitempty"`
+	// EventTime: Set the time that the event in the notification occurred.
+	// Notifications in the panel are sorted by this time. A point in time is
+	// represented using protobuf.Timestamp
+	// (https://developers.google.com/protocol-buffers/docs/reference/java/com/google/protobuf/Timestamp).
+	EventTime string `json:"eventTime,omitempty"`
+	// Icon: The notification's icon. Sets the notification icon to myicon for
+	// drawable resource myicon. If you don't send this key in the request, FCM
+	// displays the launcher icon specified in your app manifest.
+	Icon string `json:"icon,omitempty"`
+	// Id: Optional. Identifier used to replace existing notifications in the
+	// notification drawer. It is used in conjunction with `tag` to form a unique
+	// identifier `(tag, id`)` within the app. If not specified, each request
+	// creates a new notification. If specified and a notification with the same
+	// `(tag, id)` is already being shown, the new notification replaces the
+	// existing one in the notification drawer.
+	Id int64 `json:"id,omitempty"`
+	// Image: Contains the URL of an image that is going to be displayed in a
+	// notification. If present, it will override
+	// google.firebase.fcm.v1.Notification.image.
+	Image string `json:"image,omitempty"`
+	// LightSettings: Settings to control the notification's LED blinking rate and
+	// color if LED is available on the device. The total blinking time is
+	// controlled by the OS.
+	LightSettings *GoogleFirebaseFcmV1AndroidNotificationV2LightSettings `json:"lightSettings,omitempty"`
+	// LocalOnly: Set whether or not this notification is relevant only to the
+	// current device. Some notifications can be bridged to other devices for
+	// remote display, such as a Wear OS watch. This hint can be set to recommend
+	// this notification not be bridged. See Wear OS guides
+	// (https://developer.android.com/training/wearables/notifications/bridger#existing-method-of-preventing-bridging)
+	LocalOnly bool `json:"localOnly,omitempty"`
+	// NotificationCount: Sets the number of items this notification represents.
+	// May be displayed as a badge count for launchers that support badging.See
+	// Notification Badge
+	// (https://developer.android.com/training/notify-user/badges). For example,
+	// this might be useful if you're using just one notification to represent
+	// multiple new messages but you want the count here to represent the number of
+	// total new messages. If non-positive or unspecified, systems that support
+	// badging use the default, which is to increment a number displayed on the
+	// long-press menu each time a new notification arrives.
+	NotificationCount int64 `json:"notificationCount,omitempty"`
+	// NotificationPriority: Set the relative priority for this notification.
+	// Priority is an indication of how much of the user's attention should be
+	// consumed by this notification. Low-priority notifications may be hidden from
+	// the user in certain situations, while the user might be interrupted for a
+	// higher-priority notification. This parameter affects notification priority
+	// only on devices running Android 7.1 (API level 25) and lower. On Android 8.0
+	// (API level 26) and higher, priority is ignored in favor of channel
+	// importance
+	// (https://developer.android.com/develop/ui/views/notifications/channels#importance).
+	// Note this priority differs from `AndroidMessagePriority`. This priority is
+	// processed by the client after the message has been delivered, whereas
+	// AndroidMessagePriority
+	// (https://firebase.google.com/docs/reference/fcm/rest/v1/projects.messages#androidmessagepriority)
+	// is an FCM concept that controls when the message is delivered.
+	//
+	// Possible values:
+	//   "PRIORITY_UNSPECIFIED" - If priority is unspecified, notification priority
+	// is set to `PRIORITY_DEFAULT`.
+	//   "PRIORITY_MIN" - Lowest notification priority. Notifications with this
+	// `PRIORITY_MIN` might not be shown to the user except under special
+	// circumstances, such as detailed notification logs.
+	//   "PRIORITY_LOW" - Lower notification priority. The UI may choose to show
+	// the notifications smaller, or at a different position in the list, compared
+	// with notifications with `PRIORITY_DEFAULT`.
+	//   "PRIORITY_DEFAULT" - Default notification priority. If the application
+	// does not prioritize its own notifications, use this value for all
+	// notifications.
+	//   "PRIORITY_HIGH" - Higher notification priority. Use this for more
+	// important notifications or alerts. The UI may choose to show these
+	// notifications larger, or at a different position in the notification lists,
+	// compared with notifications with `PRIORITY_DEFAULT`.
+	//   "PRIORITY_MAX" - Highest notification priority. Use this for the
+	// application's most important items that require the user's prompt attention
+	// or input.
+	NotificationPriority string `json:"notificationPriority,omitempty"`
+	// Sound: The sound to play when the device receives the notification. Supports
+	// "default" or the filename of a sound resource bundled in the app. Sound
+	// files must reside in /res/raw/.
+	Sound string `json:"sound,omitempty"`
+	// Sticky: When set to false or unset, the notification is automatically
+	// dismissed when the user clicks it in the panel. When set to true, the
+	// notification persists even when the user clicks it.
+	Sticky bool `json:"sticky,omitempty"`
+	// Tag: Identifier used to replace existing notifications in the notification
+	// drawer. It is used in conjunction with `id` to form a unique identifier
+	// `(tag, id`)` within the app. If not specified, each request creates a new
+	// notification. If specified and a notification with the same `(tag, id)` is
+	// already being shown, the new notification replaces the existing one in the
+	// notification drawer.
+	Tag string `json:"tag,omitempty"`
+	// Ticker: Sets the "ticker" text, which is sent to accessibility services.
+	// Prior to API level 21 (`Lollipop`), sets the text that is displayed in the
+	// status bar when the notification first arrives.
+	Ticker string `json:"ticker,omitempty"`
+	// Title: The notification's title. If present, it will override
+	// google.firebase.fcm.v1.Notification.title.
+	Title string `json:"title,omitempty"`
+	// TitleLocArgs: Variable string values to be used in place of the format
+	// specifiers in title_loc_key to use to localize the title text to the user's
+	// current localization. See Formatting and Styling (https://goo.gl/MalYE3) for
+	// more information.
+	TitleLocArgs []string `json:"titleLocArgs,omitempty"`
+	// TitleLocKey: The key to the title string in the app's string resources to
+	// use to localize the title text to the user's current localization. See
+	// String Resources (https://goo.gl/NdFZGI) for more information.
+	TitleLocKey string `json:"titleLocKey,omitempty"`
+	// VibrateTimings: Set the vibration pattern to use. Pass in an array of
+	// protobuf.Duration
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)
+	// to turn on or off the vibrator. The first value indicates the `Duration` to
+	// wait before turning the vibrator on. The next value indicates the `Duration`
+	// to keep the vibrator on. Subsequent values alternate between `Duration` to
+	// turn the vibrator off and to turn the vibrator on. If `vibrate_timings` is
+	// set and `default_vibrate_timings` is set to `true`, the default value is
+	// used instead of the user-specified `vibrate_timings`.
+	VibrateTimings []string `json:"vibrateTimings,omitempty"`
+	// Visibility: Set the Notification.visibility
+	// (https://developer.android.com/reference/android/app/Notification.html#visibility)
+	// of the notification.
+	//
+	// Possible values:
+	//   "VISIBILITY_UNSPECIFIED" - If unspecified, default to
+	// `Visibility.PRIVATE`.
+	//   "PRIVATE" - Show this notification on all lockscreens, but conceal
+	// sensitive or private information on secure lockscreens.
+	//   "PUBLIC" - Show this notification in its entirety on all lockscreens.
+	//   "SECRET" - Do not reveal any part of this notification on a secure
+	// lockscreen.
+	Visibility string `json:"visibility,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AndroidNotificationV2) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidNotificationV2
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AndroidRemoteNotification: A Remote Notification message that is sent to an
+// Android device.
+type AndroidRemoteNotification struct {
+	// MutableContent: Optional. If set to true, the notification content can be
+	// updated by the app after the notification is received on the device.
+	MutableContent bool `json:"mutableContent,omitempty"`
+	// Notification: Optional. Notification to send to android devices.
+	Notification *AndroidNotificationV2 `json:"notification,omitempty"`
+	// UseAsV1DataMessage: Optional. If set to true, this RemoteNotification
+	// message will be delivered to legacy V1 clients as data messages by omitting
+	// the
+	// google.firebase.fcm.v1.Message.android_v2.remote_notification.notification.
+	// This should only be enabled when migration from legacy V1 data messages.
+	// Note that by default (when set to false), RemoteNotification messages are
+	// automatically translated to V1 notification message for legacy clients;
+	UseAsV1DataMessage bool `json:"useAsV1DataMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MutableContent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MutableContent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AndroidRemoteNotification) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidRemoteNotification
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ApnsConfig: Apple Push Notification Service (https://goo.gl/MXRTPa) specific
 // options.
 type ApnsConfig struct {
@@ -722,6 +1027,38 @@ func (s FcmOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseFcmV1AndroidNotificationV2LightSettings: Settings to control
+// notification LED.
+type GoogleFirebaseFcmV1AndroidNotificationV2LightSettings struct {
+	// Color: Required. Set `color` of the LED with google.type.Color
+	// (https://github.com/googleapis/googleapis/blob/master/google/type/color.proto).
+	Color *Color `json:"color,omitempty"`
+	// LightOffDuration: Required. Along with `light_on_duration`, define the blink
+	// rate of LED flashes. Resolution defined by proto.Duration
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)
+	LightOffDuration string `json:"lightOffDuration,omitempty"`
+	// LightOnDuration: Required. Along with `light_off_duration`, define the blink
+	// rate of LED flashes. Resolution defined by proto.Duration
+	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#google.protobuf.Duration)
+	LightOnDuration string `json:"lightOnDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Color") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Color") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseFcmV1AndroidNotificationV2LightSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseFcmV1AndroidNotificationV2LightSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LightSettings: Settings to control notification LED.
 type LightSettings struct {
 	// Color: Required. Set `color` of the LED with google.type.Color
@@ -786,6 +1123,10 @@ type Message struct {
 	// Android: Input only. Android specific options for messages sent through FCM
 	// connection server (https://goo.gl/4GLdUl).
 	Android *AndroidConfig `json:"android,omitempty"`
+	// AndroidV2: Optional. Input only. Android specific V2 options for messages
+	// sent through FCM connection server. Mutually exclusive with `android`.
+	// Requests with both `AndroidConfig` and `AndroidConfigV2` will be rejected.
+	AndroidV2 *AndroidConfigV2 `json:"androidV2,omitempty"`
 	// Apns: Input only. Apple Push Notification Service (https://goo.gl/MXRTPa)
 	// specific options.
 	Apns *ApnsConfig `json:"apns,omitempty"`

@@ -562,7 +562,7 @@ type ConfigManagementConfigSync struct {
 	// for details.
 	PreventDrift bool `json:"preventDrift,omitempty"`
 	// SourceFormat: Optional. Specifies whether the Config Sync repo is in
-	// `hierarchical` or `unstructured` mode. Defaults to `hierarchical`. See
+	// `hierarchy` or `unstructured` mode. Defaults to `hierarchy`. See
 	// https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/concepts/configs#organize-configs
 	// for an explanation.
 	SourceFormat string `json:"sourceFormat,omitempty"`
@@ -978,11 +978,17 @@ func (s ConfigManagementGatekeeperDeploymentState) MarshalJSON() ([]byte, error)
 // ConfigManagementGitConfig: Git repo configuration for a single cluster.
 type ConfigManagementGitConfig struct {
 	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
-	// used for auth when secret_type is `gcpserviceaccount`.
+	// used for auth when secret_type is `gcpserviceaccount`. Annotates the
+	// `RootSync` or `RepoSync` controller's Kubernetes Service Account.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 	// HttpsProxy: Optional. URL for the HTTPS proxy to be used when communicating
-	// with the Git repo. Only specify when secret_type is `cookiefile`, `token`,
-	// or `none`.
+	// with the Git repo. Defines an HTTPS_PROXY environment variable and only
+	// accepts `https` or unadorned URLs. For example,
+	// `https://proxy.internal.business.co:443` or
+	// `proxy.internal.business.co:443`. If using an unadorned URL, make sure the
+	// communication between your proxy server and Git host is secure. Rejects
+	// `http://` URLs. Only specify when secret_type is `cookiefile`, `token`, or
+	// `none`.
 	HttpsProxy string `json:"httpsProxy,omitempty"`
 	// PolicyDir: Optional. The path within the Git repository that represents the
 	// top level of the repo to sync. Default: the root directory of the
@@ -998,7 +1004,9 @@ type ConfigManagementGitConfig struct {
 	// SyncRepo: Required. The URL of the Git repository to use as the source of
 	// truth.
 	SyncRepo string `json:"syncRepo,omitempty"`
-	// SyncRev: Optional. Git revision (tag or hash) to check out. Default HEAD.
+	// SyncRev: Optional. Git revision (tag or hash) or branch to sync from.
+	// Default `HEAD`. If not `HEAD`, takes precedence over `sync_branch` field.
+	// When using a hash, must be a full hash, and not an abbreviated form.
 	SyncRev string `json:"syncRev,omitempty"`
 	// SyncWaitSecs: Optional. Period in seconds between consecutive syncs.
 	// Default: 15.
@@ -1190,7 +1198,8 @@ func (s ConfigManagementInstallError) MarshalJSON() ([]byte, error) {
 // ConfigManagementOciConfig: OCI repo configuration for a single cluster.
 type ConfigManagementOciConfig struct {
 	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
-	// used for auth when secret_type is `gcpserviceaccount`.
+	// used for auth when secret_type is `gcpserviceaccount`. Annotates the
+	// `RootSync` or `RepoSync` controller's Kubernetes Service Account.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 	// PolicyDir: Optional. The absolute path of the directory that contains the
 	// local resources. Default: the root directory of the image.

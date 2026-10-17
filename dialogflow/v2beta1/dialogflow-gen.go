@@ -12706,6 +12706,7 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	AudioEncoding                  string                                                         `json:"audioEncoding,omitempty"`
 	BargeInConfig                  *GoogleCloudDialogflowV2beta1BargeInConfig                     `json:"bargeInConfig,omitempty"`
 	DefaultNoSpeechTimeout         string                                                         `json:"defaultNoSpeechTimeout,omitempty"`
+	DisableInterimInputTranscripts bool                                                           `json:"disableInterimInputTranscripts,omitempty"`
 	DisableNoSpeechRecognizedEvent bool                                                           `json:"disableNoSpeechRecognizedEvent,omitempty"`
 	EnableAutomaticPunctuation     bool                                                           `json:"enableAutomaticPunctuation,omitempty"`
 	EnableVoiceActivityEvents      bool                                                           `json:"enableVoiceActivityEvents,omitempty"`
@@ -16330,13 +16331,14 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	//   "AUDIO_ENCODING_OGG_OPUS"
 	//   "AUDIO_ENCODING_SPEEX_WITH_HEADER_BYTE"
 	//   "AUDIO_ENCODING_ALAW"
-	AudioEncoding   string                                                         `json:"audioEncoding,omitempty"`
-	EnableWordInfo  bool                                                           `json:"enableWordInfo,omitempty"`
-	GeminiAsrConfig *GoogleCloudDialogflowV2beta1SpeechToTextConfigGeminiAsrConfig `json:"geminiAsrConfig,omitempty"`
-	LanguageCode    string                                                         `json:"languageCode,omitempty"`
-	Model           string                                                         `json:"model,omitempty"`
-	PhraseSets      []string                                                       `json:"phraseSets,omitempty"`
-	SampleRateHertz int64                                                          `json:"sampleRateHertz,omitempty"`
+	AudioEncoding                  string                                                         `json:"audioEncoding,omitempty"`
+	DisableInterimInputTranscripts bool                                                           `json:"disableInterimInputTranscripts,omitempty"`
+	EnableWordInfo                 bool                                                           `json:"enableWordInfo,omitempty"`
+	GeminiAsrConfig                *GoogleCloudDialogflowV2beta1SpeechToTextConfigGeminiAsrConfig `json:"geminiAsrConfig,omitempty"`
+	LanguageCode                   string                                                         `json:"languageCode,omitempty"`
+	Model                          string                                                         `json:"model,omitempty"`
+	PhraseSets                     []string                                                       `json:"phraseSets,omitempty"`
+	SampleRateHertz                int64                                                          `json:"sampleRateHertz,omitempty"`
 	// Possible values:
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED"
 	//   "USE_BEST_AVAILABLE"
@@ -16369,7 +16371,6 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfigGeminiAsrConfig struct {
 	//   "END_SENSITIVITY_HIGH"
 	//   "END_SENSITIVITY_LOW"
 	EndOfSpeechSensitivity string `json:"endOfSpeechSensitivity,omitempty"`
-	ModelId                string `json:"modelId,omitempty"`
 	PrefixPaddingMs        int64  `json:"prefixPaddingMs,omitempty"`
 	SilenceDurationMs      int64  `json:"silenceDurationMs,omitempty"`
 	// Possible values:

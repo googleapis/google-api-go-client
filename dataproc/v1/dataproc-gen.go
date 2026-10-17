@@ -1876,11 +1876,32 @@ type ClusterConfig struct {
 	// MasterConfig: Optional. The Compute Engine config settings for the cluster's
 	// master instance.
 	MasterConfig *InstanceGroupConfig `json:"masterConfig,omitempty"`
+	// MasterFlexibleConfig: Optional. The High Obtainability (HO) config settings
+	// for the cluster's master instances.In High Obtainability (HO) mode, flexible
+	// configs are the single source of truth for desired cluster configuration
+	// across node groups: * For single-node clusters: master_flexible_config must
+	// be specified, and no worker configs should be set. * For multi-node
+	// (standard) clusters: both master_flexible_config and worker_flexible_config
+	// must be specified. Mixing standard and flexible configs across node groups
+	// is not allowed.Only one of master_config or master_flexible_config can be
+	// set.
+	MasterFlexibleConfig *FlexibleInstanceGroupConfig `json:"masterFlexibleConfig,omitempty"`
 	// MetastoreConfig: Optional. Metastore configuration.
 	MetastoreConfig *MetastoreConfig `json:"metastoreConfig,omitempty"`
 	// SecondaryWorkerConfig: Optional. The Compute Engine config settings for a
 	// cluster's secondary worker instances
 	SecondaryWorkerConfig *InstanceGroupConfig `json:"secondaryWorkerConfig,omitempty"`
+	// SecondaryWorkerFlexibleConfig: Optional. The High Obtainability (HO) config
+	// settings for a cluster's secondary worker instances.In High Obtainability
+	// (HO) mode, flexible configs are the single source of truth for desired
+	// cluster configuration. num_instances represents the desired capacity of the
+	// secondary worker group and is mutable via cluster updates and
+	// autoscaling.Only one of secondary_worker_config or
+	// secondary_worker_flexible_config can be set.In High Obtainability (HO) mode,
+	// secondary workers are optional. If secondary workers are used in an HO
+	// cluster, they must be configured using secondary_worker_flexible_config (not
+	// secondary_worker_config).
+	SecondaryWorkerFlexibleConfig *FlexibleInstanceGroupConfig `json:"secondaryWorkerFlexibleConfig,omitempty"`
 	// SecurityConfig: Optional. Security settings for the cluster.
 	SecurityConfig *SecurityConfig `json:"securityConfig,omitempty"`
 	// SoftwareConfig: Optional. The config settings for cluster software.
@@ -1900,6 +1921,17 @@ type ClusterConfig struct {
 	// WorkerConfig: Optional. The Compute Engine config settings for the cluster's
 	// worker instances.
 	WorkerConfig *InstanceGroupConfig `json:"workerConfig,omitempty"`
+	// WorkerFlexibleConfig: Optional. The High Obtainability (HO) config settings
+	// for the cluster's worker instances.In High Obtainability (HO) mode, flexible
+	// configs are the single source of truth for desired cluster configuration.
+	// num_instances represents the desired capacity of the worker group and is
+	// mutable via cluster updates and autoscaling.Only one of worker_config or
+	// worker_flexible_config can be set.In High Obtainability (HO) mode, for
+	// multi-node (standard) clusters, both master_flexible_config and
+	// worker_flexible_config must be specified. Mixing standard and flexible
+	// configs across node groups is not allowed. Single-node clusters do not
+	// specify worker configs.
+	WorkerFlexibleConfig *FlexibleInstanceGroupConfig `json:"workerFlexibleConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoscalingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3012,6 +3044,64 @@ type FallbackReason struct {
 
 func (s FallbackReason) MarshalJSON() ([]byte, error) {
 	type NoMethod FallbackReason
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FlexibleInstanceGroupConfig: The configuration for High Obtainability (HO)
+// flexible instance groups. Flexible instance group configs serve as the
+// single source of truth for desired state.
+type FlexibleInstanceGroupConfig struct {
+	// BootDiskSizeGb: Optional. The boot disk size in GB. This is a create-time
+	// specification and is not currently mutable via update masks.
+	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
+	// CoreCount: Optional. The number of vCPUs per instance. Must be a power of 2
+	// (2, 4, 8, 16, 32). This is a create-time specification and is not currently
+	// mutable via update masks.
+	CoreCount int64 `json:"coreCount,omitempty"`
+	// HardwareClass: Optional. The hardware class of the instances. This is a
+	// create-time specification and is not currently mutable via update masks.
+	//
+	// Possible values:
+	//   "HARDWARE_CLASS_UNSPECIFIED" - Unspecified hardware class.
+	//   "STANDARD" - Standard hardware class. Provides a balanced compute
+	// configuration with approximately 4GB of memory per vCPU and standard disk
+	// storage tiers.Candidate machine types include n4-standard, n4d-standard,
+	// n2-standard, and n2d-standard (Rank 0), and c4-standard and c4d-standard
+	// (Rank 1) (for requested core counts 2, 4, 8, 16, 32).Warning: The specific
+	// machine families and types selected for this hardware class are subject to
+	// change. Users should not take a dependency on the underlying machine type
+	// selection.
+	//   "PERFORMANCE" - Performance hardware class. Provides a high-performance
+	// configuration with approximately 8GB of memory per vCPU (e.g. high-memory
+	// machine types) and higher-tier disk configurations (e.g. higher IOPS and
+	// throughput).Candidate machine types include n4-highmem, n4d-highmem,
+	// n2-highmem, and n2d-highmem (Rank 0), and c4-highmem and c4d-highmem (Rank
+	// 1) (for requested core counts 2, 4, 8, 16, 32). n4, n4d, c4, and c4d use
+	// Hyperdisk Balanced with provisioned storage, whereas n2 and n2d use SSD
+	// persistent disks.Warning: The specific machine families and types selected
+	// for this hardware class are subject to change. Users should not take a
+	// dependency on the underlying machine type selection.
+	HardwareClass string `json:"hardwareClass,omitempty"`
+	// NumInstances: Optional. The number of VM instances requested.For master
+	// instances, this must be 1. For worker and secondary worker instances, this
+	// represents the desired capacity of the group and is mutable via cluster
+	// update operations and autoscaling.
+	NumInstances int64 `json:"numInstances,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BootDiskSizeGb") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FlexibleInstanceGroupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FlexibleInstanceGroupConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7326,6 +7416,9 @@ type SessionTemplate struct {
 	Creator string `json:"creator,omitempty"`
 	// Description: Optional. Brief description of the template.
 	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. User-friendly display name for the session template.
+	// Can be up to 63 characters.
+	DisplayName string `json:"displayName,omitempty"`
 	// EnvironmentConfig: Optional. Environment configuration for session
 	// execution.
 	EnvironmentConfig *EnvironmentConfig `json:"environmentConfig,omitempty"`

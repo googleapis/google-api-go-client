@@ -1096,6 +1096,7 @@ type AutonomousDatabaseProperties struct {
 	//   "AJD" - Autonomous JSON Database.
 	//   "APEX" - Autonomous Database with the Oracle APEX Application Development
 	// workload type.
+	//   "LH" - Autonomous Database with the Lakehouse workload type.
 	DbWorkload string `json:"dbWorkload,omitempty"`
 	// DisasterRecoveryRoleChangedTime: Output only. The date and time the Disaster
 	// Recovery role was changed for the standby Autonomous Database.
@@ -1512,6 +1513,7 @@ type AutonomousDbVersion struct {
 	//   "AJD" - Autonomous JSON Database.
 	//   "APEX" - Autonomous Database with the Oracle APEX Application Development
 	// workload type.
+	//   "LH" - Autonomous Database with the Lakehouse workload type.
 	DbWorkload string `json:"dbWorkload,omitempty"`
 	// Name: Identifier. The name of the Autonomous Database Version resource with
 	// the format:

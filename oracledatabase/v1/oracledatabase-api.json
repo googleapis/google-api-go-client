@@ -3590,7 +3590,7 @@
       }
     }
   },
-  "revision": "20261011",
+  "revision": "20261012",
   "rootUrl": "https://oracledatabase.googleapis.com/",
   "schemas": {
     "AllConnectionStrings": {
@@ -4210,14 +4210,16 @@
             "OLTP",
             "DW",
             "AJD",
-            "APEX"
+            "APEX",
+            "LH"
           ],
           "enumDescriptions": [
             "Default unspecified value.",
             "Autonomous Transaction Processing database.",
             "Autonomous Data Warehouse database.",
             "Autonomous JSON Database.",
-            "Autonomous Database with the Oracle APEX Application Development workload type."
+            "Autonomous Database with the Oracle APEX Application Development workload type.",
+            "Autonomous Database with the Lakehouse workload type."
           ],
           "type": "string"
         },
@@ -4734,14 +4736,16 @@
             "OLTP",
             "DW",
             "AJD",
-            "APEX"
+            "APEX",
+            "LH"
           ],
           "enumDescriptions": [
             "Default unspecified value.",
             "Autonomous Transaction Processing database.",
             "Autonomous Data Warehouse database.",
             "Autonomous JSON Database.",
-            "Autonomous Database with the Oracle APEX Application Development workload type."
+            "Autonomous Database with the Oracle APEX Application Development workload type.",
+            "Autonomous Database with the Lakehouse workload type."
           ],
           "readOnly": true,
           "type": "string"

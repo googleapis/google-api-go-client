@@ -980,7 +980,7 @@ type DelimitedKey struct {
 	// be specified if multiple key fields are used. The delimiter must contain at
 	// least 1 character and at most 50 characters.
 	Delimiter string `json:"delimiter,omitempty"`
-	// KeyFields: Optional. The key fields to construct from the row key. The
+	// KeyFields: Required. The key fields to construct from the row key. The
 	// fields must be present in the message as a top-level field, i.e. JSON path
 	// expressions will not traverse into nested objects.
 	KeyFields []string `json:"keyFields,omitempty"`

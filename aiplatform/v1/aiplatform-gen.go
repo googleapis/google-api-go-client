@@ -146,6 +146,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.HyperparameterTuningJobs = NewHyperparameterTuningJobsService(s)
 	s.IndexEndpoints = NewIndexEndpointsService(s)
 	s.Indexes = NewIndexesService(s)
+	s.Interactions = NewInteractionsService(s)
 	s.Media = NewMediaService(s)
 	s.MemoryBanks = NewMemoryBanksService(s)
 	s.MetadataStores = NewMetadataStoresService(s)
@@ -222,6 +223,8 @@ type Service struct {
 	IndexEndpoints *IndexEndpointsService
 
 	Indexes *IndexesService
+
+	Interactions *InteractionsService
 
 	Media *MediaService
 
@@ -745,6 +748,15 @@ type IndexesOperationsService struct {
 	s *Service
 }
 
+func NewInteractionsService(s *Service) *InteractionsService {
+	rs := &InteractionsService{s: s}
+	return rs
+}
+
+type InteractionsService struct {
+	s *Service
+}
+
 func NewMediaService(s *Service) *MediaService {
 	rs := &MediaService{s: s}
 	return rs
@@ -1146,6 +1158,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.HyperparameterTuningJobs = NewProjectsLocationsHyperparameterTuningJobsService(s)
 	rs.IndexEndpoints = NewProjectsLocationsIndexEndpointsService(s)
 	rs.Indexes = NewProjectsLocationsIndexesService(s)
+	rs.Interactions = NewProjectsLocationsInteractionsService(s)
+	rs.InteractionsHttp = NewProjectsLocationsInteractionsHttpService(s)
 	rs.MemoryBanks = NewProjectsLocationsMemoryBanksService(s)
 	rs.MetadataStores = NewProjectsLocationsMetadataStoresService(s)
 	rs.MigratableResources = NewProjectsLocationsMigratableResourcesService(s)
@@ -1215,6 +1229,10 @@ type ProjectsLocationsService struct {
 	IndexEndpoints *ProjectsLocationsIndexEndpointsService
 
 	Indexes *ProjectsLocationsIndexesService
+
+	Interactions *ProjectsLocationsInteractionsService
+
+	InteractionsHttp *ProjectsLocationsInteractionsHttpService
 
 	MemoryBanks *ProjectsLocationsMemoryBanksService
 
@@ -1876,6 +1894,24 @@ func NewProjectsLocationsIndexesOperationsService(s *Service) *ProjectsLocations
 }
 
 type ProjectsLocationsIndexesOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInteractionsService(s *Service) *ProjectsLocationsInteractionsService {
+	rs := &ProjectsLocationsInteractionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInteractionsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsInteractionsHttpService(s *Service) *ProjectsLocationsInteractionsHttpService {
+	rs := &ProjectsLocationsInteractionsHttpService{s: s}
+	return rs
+}
+
+type ProjectsLocationsInteractionsHttpService struct {
 	s *Service
 }
 
@@ -3952,6 +3988,9 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsSuperResConfig struct {
 	//   "MODE_8K" - Single-pass 8K UDiT.
 	//   "MODE_4K_PRO" - "8K UDiT, downsampled 2x in the decoder.
 	Mode string `json:"mode,omitempty"`
+	// TileSmoothing: Smooths the seams between the tiles the model upscales
+	// separately.
+	TileSmoothing bool `json:"tileSmoothing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -4711,6 +4750,4106 @@ func (s CloudAiPlatformCommonCreatePipelineJobApiErrorDetail) MarshalJSON() ([]b
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenaiVertexV1AgentInteraction: Interaction for generating the completion
+// using agents.
+type GenaiVertexV1AgentInteraction struct {
+	// Agent: The name of the `Agent` used for generating the completion.
+	Agent string `json:"agent,omitempty"`
+	// AntigravityConfig: Antigravity agent configuration. This configuration is
+	// session-level settings that are passed to the agent runtime on a per-request
+	// basis.
+	AntigravityConfig  *GenaiVertexV1AntigravityAgentConfig  `json:"antigravityConfig,omitempty"`
+	CodeMenderConfig   *GenaiVertexV1CodeMenderAgentConfig   `json:"codeMenderConfig,omitempty"`
+	DeepResearchConfig *GenaiVertexV1DeepResearchAgentConfig `json:"deepResearchConfig,omitempty"`
+	DynamicConfig      *GenaiVertexV1DynamicAgentConfig      `json:"dynamicConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Agent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Agent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1AgentInteraction) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1AgentInteraction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1AllowedTools: The configuration for allowed tools.
+type GenaiVertexV1AllowedTools struct {
+	// Mode: The mode of the tool choice.
+	//
+	// Possible values:
+	//   "TOOL_CHOICE_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "AUTO" - Auto tool choice.
+	//   "ANY" - Any tool choice.
+	//   "NONE" - No tool choice.
+	//   "VALIDATED" - Validated tool choice.
+	Mode string `json:"mode,omitempty"`
+	// Tools: The names of the allowed tools.
+	Tools []string `json:"tools,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1AllowedTools) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1AllowedTools
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1AntigravityAgentConfig: Configuration for the Antigravity agent
+// runtime. Provides server-side control over the agent's execution environment
+// and tool configuration.
+type GenaiVertexV1AntigravityAgentConfig struct {
+	// MaxTotalTokens: Max total tokens for the agent run.
+	MaxTotalTokens int64 `json:"maxTotalTokens,omitempty,string"`
+	// Model: The model to use for agent reasoning.
+	Model string `json:"model,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxTotalTokens") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxTotalTokens") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1AntigravityAgentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1AntigravityAgentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ArgumentsDelta struct {
+	Arguments string `json:"arguments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ArgumentsDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ArgumentsDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1AudioContent: An audio content block.
+type GenaiVertexV1AudioContent struct {
+	// Channels: The number of audio channels.
+	Channels int64 `json:"channels,omitempty"`
+	// Data: The audio content.
+	Data string `json:"data,omitempty"`
+	// MimeTypeString: Flexible MIME type string of the audio, superseding
+	// mime_type = 1. Note: Bespoke logic in the GAOS parser/serializer maps this
+	// to the "mime_type" JSON key.
+	MimeTypeString string `json:"mimeTypeString,omitempty"`
+	// SampleRate: The sample rate of the audio.
+	SampleRate int64 `json:"sampleRate,omitempty"`
+	// Uri: The URI of the audio.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Channels") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Channels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1AudioContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1AudioContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1AudioDelta struct {
+	// Channels: The number of audio channels.
+	Channels int64  `json:"channels,omitempty"`
+	Data     string `json:"data,omitempty"`
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "TYPE_WAV" - WAV audio format
+	//   "TYPE_MP3" - MP3 audio format
+	//   "TYPE_AIFF" - AIFF audio format
+	//   "TYPE_AAC" - AAC audio format
+	//   "TYPE_OGG" - OGG audio format
+	//   "TYPE_FLAC" - FLAC audio format
+	//   "TYPE_MPEG" - MPEG audio format
+	//   "TYPE_M4A" - M4A audio format
+	//   "TYPE_L16" - L16 audio format
+	//   "TYPE_OPUS" - OPUS audio format
+	//   "TYPE_ALAW" - ALAW audio format
+	//   "TYPE_MULAW" - MULAW audio format
+	//   "TYPE_WEBM" - WEBM audio format
+	MimeType string `json:"mimeType,omitempty"`
+	// SampleRate: The sample rate of the audio.
+	SampleRate int64  `json:"sampleRate,omitempty"`
+	Uri        string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Channels") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Channels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1AudioDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1AudioDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1AudioResponseFormat: Configuration for audio output format.
+type GenaiVertexV1AudioResponseFormat struct {
+	// BitRate: Bit rate in bits per second (bps). Only applicable for compressed
+	// formats (MP3, Opus).
+	BitRate int64 `json:"bitRate,omitempty"`
+	// Delivery: The delivery mode for the audio output.
+	//
+	// Possible values:
+	//   "DELIVERY_UNSPECIFIED" - Default value. This value is unused.
+	//   "INLINE" - Audio data is returned inline in the response.
+	//   "URI" - Audio data is returned as a URI.
+	Delivery string `json:"delivery,omitempty"`
+	// MimeType: The MIME type of the audio output.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "TYPE_MP3" - MP3 audio format.
+	//   "TYPE_OGG_OPUS" - OGG Opus audio format.
+	//   "TYPE_L16" - Raw PCM (L16) audio format.
+	//   "TYPE_WAV" - WAV audio format.
+	//   "TYPE_ALAW" - A-law audio format.
+	//   "TYPE_MULAW" - Mu-law audio format.
+	MimeType string `json:"mimeType,omitempty"`
+	// SampleRate: Sample rate in Hz.
+	SampleRate int64 `json:"sampleRate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BitRate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BitRate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1AudioResponseFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1AudioResponseFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeExecution: A tool that can be used by the model to execute
+// code.
+type GenaiVertexV1CodeExecution struct {
+}
+
+// GenaiVertexV1CodeExecutionCallContentCodeExecutionCallArguments: The
+// arguments to pass to the code execution.
+type GenaiVertexV1CodeExecutionCallContentCodeExecutionCallArguments struct {
+	// Code: The code to be executed.
+	Code string `json:"code,omitempty"`
+	// Language: Programming language of the `code`.
+	//
+	// Possible values:
+	//   "LANGUAGE_UNSPECIFIED" - Unspecified language. This value should not be
+	// used.
+	//   "PYTHON" - Python >= 3.10, with numpy and simpy available.
+	Language string `json:"language,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeExecutionCallContentCodeExecutionCallArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeExecutionCallContentCodeExecutionCallArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1CodeExecutionCallDelta struct {
+	Arguments *GenaiVertexV1CodeExecutionCallContentCodeExecutionCallArguments `json:"arguments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeExecutionCallDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeExecutionCallDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeExecutionCallStep: Code execution call step.
+type GenaiVertexV1CodeExecutionCallStep struct {
+	// Arguments: Required. The arguments to pass to the code execution.
+	Arguments *GenaiVertexV1CodeExecutionCallStepCodeExecutionCallStepArguments `json:"arguments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeExecutionCallStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeExecutionCallStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeExecutionCallStepCodeExecutionCallStepArguments: The
+// arguments to pass to the code execution.
+type GenaiVertexV1CodeExecutionCallStepCodeExecutionCallStepArguments struct {
+	// Code: The code to be executed.
+	Code string `json:"code,omitempty"`
+	// Language: Programming language of the `code`.
+	//
+	// Possible values:
+	//   "LANGUAGE_UNSPECIFIED" - Unspecified language. This value should not be
+	// used.
+	//   "PYTHON" - Python >= 3.10, with numpy and simpy available.
+	Language string `json:"language,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeExecutionCallStepCodeExecutionCallStepArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeExecutionCallStepCodeExecutionCallStepArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1CodeExecutionResultDelta struct {
+	IsError bool   `json:"isError,omitempty"`
+	Result  string `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeExecutionResultDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeExecutionResultDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeExecutionResultStep: Code execution result step.
+type GenaiVertexV1CodeExecutionResultStep struct {
+	// IsError: Whether the code execution resulted in an error.
+	IsError bool `json:"isError,omitempty"`
+	// Result: Required. The output of the code execution.
+	Result string `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeExecutionResultStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeExecutionResultStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeMenderAgentConfig: Configuration for the CodeMender agent.
+type GenaiVertexV1CodeMenderAgentConfig struct {
+	// FindRequest: Parameters for finding vulnerabilities.
+	FindRequest *GenaiVertexV1CodeMenderAgentConfigFindRequest `json:"findRequest,omitempty"`
+	// FixRequest: Parameters for fixing vulnerabilities.
+	FixRequest *GenaiVertexV1CodeMenderAgentConfigFixRequest `json:"fixRequest,omitempty"`
+	// Model: The name of the model to use for the CodeMender agent. One CodeMender
+	// session will only use one model.
+	Model string `json:"model,omitempty"`
+	// SessionConfig: Optional session-specific configurations to override default
+	// agent behavior.
+	SessionConfig *GenaiVertexV1CodeMenderAgentConfigSessionConfig `json:"sessionConfig,omitempty"`
+	// SessionId: Parameter for grouping multiple interactions that belong to the
+	// same CodeMender session.
+	SessionId string `json:"sessionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FindRequest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FindRequest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeMenderAgentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeMenderAgentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeMenderAgentConfigFileContent: Content of a single file in
+// the codebase.
+type GenaiVertexV1CodeMenderAgentConfigFileContent struct {
+	// Content: The UTF-8 encoded text content of the file.
+	Content string `json:"content,omitempty"`
+	// Path: The relative path of the file from the project root.
+	Path string `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeMenderAgentConfigFileContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeMenderAgentConfigFileContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeMenderAgentConfigFindRequest: Request parameters specific
+// to FIND sessions, used for discovering vulnerabilities in a codebase.
+type GenaiVertexV1CodeMenderAgentConfigFindRequest struct {
+	// Description: Additional context or custom instructions provided by the user
+	// to guide the vulnerability analysis.
+	Description string `json:"description,omitempty"`
+	// FindingId: The identifier of a specific finding to verify. This is primarily
+	// used in VERIFY mode to focus the agent's execution-based validation on a
+	// single vulnerability.
+	FindingId string `json:"findingId,omitempty"`
+	// Mode: The mode of the find session.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value. This value is unused.
+	//   "MODE_SCAN" - Fast scan using only the initial classifier.
+	//   "MODE_VERIFY" - Performs classification followed by detailed
+	// investigation.
+	Mode string `json:"mode,omitempty"`
+	// SourceFiles: A list of source files to provide as context for the scan.
+	SourceFiles []*GenaiVertexV1CodeMenderAgentConfigFileContent `json:"sourceFiles,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeMenderAgentConfigFindRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeMenderAgentConfigFindRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeMenderAgentConfigFixRequest: Request parameters specific to
+// FIX sessions, used for generating and validating security patches.
+type GenaiVertexV1CodeMenderAgentConfigFixRequest struct {
+	// Description: Additional context or custom instructions provided by the user
+	// to guide the patch generation process.
+	Description string `json:"description,omitempty"`
+	// FindingId: The identifier of the specific security finding to be remediated.
+	// This ID maps to a previously discovered vulnerability.
+	FindingId string `json:"findingId,omitempty"`
+	// SourceFiles: A list of source files providing context for the remediation.
+	// These files are typically the ones containing the identified vulnerability.
+	SourceFiles []*GenaiVertexV1CodeMenderAgentConfigFileContent `json:"sourceFiles,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeMenderAgentConfigFixRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeMenderAgentConfigFixRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CodeMenderAgentConfigSessionConfig: The configuration of
+// CodeMender sessions.
+type GenaiVertexV1CodeMenderAgentConfigSessionConfig struct {
+	// MaxRounds: The maximum number of interaction rounds the agent is allowed to
+	// perform before reaching a timeout.
+	MaxRounds int64 `json:"maxRounds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxRounds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxRounds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CodeMenderAgentConfigSessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CodeMenderAgentConfigSessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ComputerUse: A tool that can be used by the model to interact
+// with the computer.
+type GenaiVertexV1ComputerUse struct {
+	// DisabledSafetyPolicies: Optional. Disabled safety policies for computer use.
+	//
+	// Possible values:
+	//   "SAFETY_POLICY_UNSPECIFIED" - Unspecified safety policy.
+	//   "FINANCIAL_TRANSACTIONS" - Safety policy for financial transactions.
+	//   "SENSITIVE_DATA_MODIFICATION" - Safety policy for sensitive data
+	// modification.
+	//   "COMMUNICATION_TOOL" - Safety policy for communication tools (e.g. Gmail,
+	// Chat, Meet).
+	//   "ACCOUNT_CREATION" - Safety policy for account creation.
+	//   "DATA_MODIFICATION" - Safety policy for data modification.
+	//   "USER_CONSENT_MANAGEMENT" - Safety policy for user consent management.
+	//   "LEGAL_TERMS_AND_AGREEMENTS" - Safety policy for legal terms and
+	// agreements.
+	DisabledSafetyPolicies []string `json:"disabledSafetyPolicies,omitempty"`
+	// EnablePromptInjectionDetection: Whether enable the prompt injection
+	// detection check on computer-use request.
+	EnablePromptInjectionDetection bool `json:"enablePromptInjectionDetection,omitempty"`
+	// Environment: The environment being operated.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Defaults to browser.
+	//   "BROWSER" - Operates in a web browser.
+	//   "MOBILE" - Operates in a mobile environment.
+	//   "DESKTOP" - Operates in a desktop environment.
+	Environment string `json:"environment,omitempty"`
+	// ExcludedPredefinedFunctions: The list of predefined functions that are
+	// excluded from the model call.
+	ExcludedPredefinedFunctions []string `json:"excludedPredefinedFunctions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisabledSafetyPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisabledSafetyPolicies") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ComputerUse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ComputerUse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Content: The content of the response.
+type GenaiVertexV1Content struct {
+	Audio    *GenaiVertexV1AudioContent    `json:"audio,omitempty"`
+	Document *GenaiVertexV1DocumentContent `json:"document,omitempty"`
+	Image    *GenaiVertexV1ImageContent    `json:"image,omitempty"`
+	Text     *GenaiVertexV1TextContent     `json:"text,omitempty"`
+	Video    *GenaiVertexV1VideoContent    `json:"video,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Audio") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Audio") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Content) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Content
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ContentList: A list of Content.
+type GenaiVertexV1ContentList struct {
+	// Contents: The contents of the list.
+	Contents []*GenaiVertexV1Content `json:"contents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Contents") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contents") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ContentList) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ContentList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CreateInteractionHttpRequest: Request message for
+// [InteractionsService.CreateInteractionHttp].
+type GenaiVertexV1CreateInteractionHttpRequest struct {
+	// HttpBody: Required. The interaction to create.
+	HttpBody *GoogleApiHttpBody `json:"httpBody,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HttpBody") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HttpBody") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CreateInteractionHttpRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CreateInteractionHttpRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1CreateInteractionRequest: Configuration parameters for creating
+// an interaction.
+type GenaiVertexV1CreateInteractionRequest struct {
+	// Background: Input only. Whether to run the model interaction in the
+	// background.
+	Background bool `json:"background,omitempty"`
+	// Interaction: The interaction to create.
+	Interaction *GenaiVertexV1Interaction `json:"interaction,omitempty"`
+	// Store: Input only. Whether to store the response and request for later
+	// retrieval.
+	Store bool `json:"store,omitempty"`
+	// Stream: Input only. Whether the interaction will be streamed.
+	Stream bool `json:"stream,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Background") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Background") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1CreateInteractionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1CreateInteractionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1DeepResearchAgentConfig: Configuration for the Deep Research
+// agent.
+type GenaiVertexV1DeepResearchAgentConfig struct {
+	// CollaborativePlanning: Enables human-in-the-loop planning for the Deep
+	// Research agent. If set to true, the Deep Research agent will provide a
+	// research plan in its response. The agent will then proceed only if the user
+	// confirms the plan in the next turn.
+	CollaborativePlanning bool `json:"collaborativePlanning,omitempty"`
+	// EnableBigqueryTool: Enables bigquery tool for the Deep Research agent.
+	EnableBigqueryTool bool `json:"enableBigqueryTool,omitempty"`
+	// ThinkingSummaries: Whether to include thought summaries in the response.
+	//
+	// Possible values:
+	//   "THINKING_SUMMARIES_UNSPECIFIED" - Default value. This value is unused.
+	//   "THINKING_SUMMARIES_AUTO" - Auto thinking summaries.
+	//   "THINKING_SUMMARIES_NONE" - No thinking summaries.
+	ThinkingSummaries string `json:"thinkingSummaries,omitempty"`
+	// Visualization: Whether to include visualizations in the response.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - The default visualization mode. Will default to AUTO.
+	//   "OFF" - Do not include visualizations.
+	//   "AUTO" - Automatically include visualizations.
+	Visualization string `json:"visualization,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CollaborativePlanning") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CollaborativePlanning") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1DeepResearchAgentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1DeepResearchAgentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1DeleteInteractionResponse: Response for
+// InteractionService.DeleteInteraction.
+type GenaiVertexV1DeleteInteractionResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// GenaiVertexV1DocumentContent: A document content block.
+type GenaiVertexV1DocumentContent struct {
+	// Data: The document content.
+	Data string `json:"data,omitempty"`
+	// MimeTypeString: Flexible MIME type string of the document, superseding
+	// mime_type = 1. Note: Bespoke logic in the GAOS parser/serializer maps this
+	// to the "mime_type" JSON key.
+	MimeTypeString string `json:"mimeTypeString,omitempty"`
+	// Uri: The URI of the document.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1DocumentContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1DocumentContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1DocumentDelta struct {
+	Data string `json:"data,omitempty"`
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "TYPE_PDF" - PDF document format
+	//   "TYPE_CSV" - CSV document format
+	MimeType string `json:"mimeType,omitempty"`
+	Uri      string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1DocumentDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1DocumentDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1DynamicAgentConfig: Configuration for dynamic agents.
+type GenaiVertexV1DynamicAgentConfig struct {
+	// Config: For agents that are not supported statically in the API definition.
+	Config *GenaiVertexV1Struct `json:"config,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Config") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1DynamicAgentConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1DynamicAgentConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Error: Error message from an interaction.
+type GenaiVertexV1Error struct {
+	// Code: A URI that identifies the error type.
+	Code string `json:"code,omitempty"`
+	// Message: A human-readable error message.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Error) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Error
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ErrorEvent struct {
+	Error *GenaiVertexV1Error `json:"error,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Error") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Error") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ErrorEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ErrorEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ExaAISearchConfig: Used to specify configuration for
+// ExaAISearch.
+type GenaiVertexV1ExaAISearchConfig struct {
+	// ApiKey: Required. The API key for ExaAiSearch.
+	ApiKey string `json:"apiKey,omitempty"`
+	// CustomConfig: Optional. This field can be used to pass any parameter from
+	// the Exa.ai Search API.
+	CustomConfig googleapi.RawMessage `json:"customConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ExaAISearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ExaAISearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Field: Represents a single field in a struct.
+type GenaiVertexV1Field struct {
+	Name  string              `json:"name,omitempty"`
+	Value *GenaiVertexV1Value `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Field) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Field
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1FileCitation: A file citation annotation.
+type GenaiVertexV1FileCitation struct {
+	// CustomMetadata: User provided metadata about the retrieved context.
+	CustomMetadata googleapi.RawMessage `json:"customMetadata,omitempty"`
+	// DocumentUri: The URI of the file.
+	DocumentUri string `json:"documentUri,omitempty"`
+	// FileName: The name of the file.
+	FileName string `json:"fileName,omitempty"`
+	// MediaId: Media ID in-case of image citations, if applicable.
+	MediaId string `json:"mediaId,omitempty"`
+	// PageNumber: Page number of the cited document, if applicable.
+	PageNumber int64 `json:"pageNumber,omitempty"`
+	// Source: Source attributed for a portion of the text.
+	Source string `json:"source,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1FileCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1FileCitation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1FileSearch: A tool that can be used by the model to search
+// files.
+type GenaiVertexV1FileSearch struct {
+	// FileSearchStoreNames: The file search store names to search.
+	FileSearchStoreNames []string `json:"fileSearchStoreNames,omitempty"`
+	// MetadataFilter: Metadata filter to apply to the semantic retrieval documents
+	// and chunks.
+	MetadataFilter string `json:"metadataFilter,omitempty"`
+	// TopK: The number of semantic retrieval chunks to retrieve.
+	TopK int64 `json:"topK,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileSearchStoreNames") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileSearchStoreNames") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1FileSearch) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1FileSearch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1FileSearchCallDelta struct {
+}
+
+// GenaiVertexV1FileSearchCallStep: File Search call step.
+type GenaiVertexV1FileSearchCallStep struct {
+}
+
+// GenaiVertexV1FileSearchResultContentFileSearchResult: The result of the File
+// Search.
+type GenaiVertexV1FileSearchResultContentFileSearchResult struct {
+}
+
+type GenaiVertexV1FileSearchResultDelta struct {
+	Result []*GenaiVertexV1FileSearchResultContentFileSearchResult `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Result") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Result") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1FileSearchResultDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1FileSearchResultDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1FileSearchResultStep: File Search result step.
+type GenaiVertexV1FileSearchResultStep struct {
+}
+
+// GenaiVertexV1Function: A tool that can be used by the model.
+type GenaiVertexV1Function struct {
+	// Description: A description of the function.
+	Description string `json:"description,omitempty"`
+	// Name: The name of the function.
+	Name string `json:"name,omitempty"`
+	// Parameters: The JSON Schema for the function's parameters.
+	Parameters *GenaiVertexV1Value `json:"parameters,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Function) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Function
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1FunctionCallStep: A function tool call step.
+type GenaiVertexV1FunctionCallStep struct {
+	// Arguments: Required. The arguments to pass to the function.
+	Arguments *GenaiVertexV1Struct `json:"arguments,omitempty"`
+	// Name: Required. The name of the tool to call.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1FunctionCallStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1FunctionCallStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1FunctionResultDelta struct {
+	IsError bool                `json:"isError,omitempty"`
+	Name    string              `json:"name,omitempty"`
+	Result  *GenaiVertexV1Value `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1FunctionResultDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1FunctionResultDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1FunctionResultStep: Result of a function tool call.
+type GenaiVertexV1FunctionResultStep struct {
+	// IsError: Whether the tool call resulted in an error.
+	IsError bool `json:"isError,omitempty"`
+	// Name: The name of the tool that was called.
+	Name string `json:"name,omitempty"`
+	// Result: Required. The result of the tool call.
+	Result *GenaiVertexV1Value `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1FunctionResultStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1FunctionResultStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GenerationConfig: Configuration parameters for model
+// interactions.
+type GenaiVertexV1GenerationConfig struct {
+	// MaxOutputTokens: The maximum number of tokens to include in the response.
+	MaxOutputTokens int64 `json:"maxOutputTokens,omitempty"`
+	// Seed: Seed used in decoding for reproducibility.
+	Seed int64 `json:"seed,omitempty"`
+	// StopSequences: A list of character sequences that will stop output
+	// interaction.
+	StopSequences []string `json:"stopSequences,omitempty"`
+	// StructuredSpeechConfig: Speech and multi-speaker configuration.
+	StructuredSpeechConfig *GenaiVertexV1SpeakerConfig `json:"structuredSpeechConfig,omitempty"`
+	// Temperature: Controls the randomness of the output.
+	Temperature float64 `json:"temperature,omitempty"`
+	// ThinkingLevel: The level of thought tokens that the model should generate.
+	//
+	// Possible values:
+	//   "THINKING_LEVEL_UNSPECIFIED" - Default value. This value is unused.
+	//   "THINKING_LEVEL_MINIMAL" - Little to no thinking.
+	//   "THINKING_LEVEL_LOW" - Low thinking level.
+	//   "THINKING_LEVEL_MEDIUM" - Medium thinking level.
+	//   "THINKING_LEVEL_HIGH" - High thinking level.
+	ThinkingLevel string `json:"thinkingLevel,omitempty"`
+	// ThinkingSummaries: Whether to include thought summaries in the response.
+	//
+	// Possible values:
+	//   "THINKING_SUMMARIES_UNSPECIFIED" - Default value. This value is unused.
+	//   "THINKING_SUMMARIES_AUTO" - Auto thinking summaries.
+	//   "THINKING_SUMMARIES_NONE" - No thinking summaries.
+	ThinkingSummaries string `json:"thinkingSummaries,omitempty"`
+	// ToolChoiceConfig: The config for the tool choice.
+	ToolChoiceConfig *GenaiVertexV1ToolChoiceConfig `json:"toolChoiceConfig,omitempty"`
+	// ToolChoiceMode: The mode of the tool choice.
+	//
+	// Possible values:
+	//   "TOOL_CHOICE_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "AUTO" - Auto tool choice.
+	//   "ANY" - Any tool choice.
+	//   "NONE" - No tool choice.
+	//   "VALIDATED" - Validated tool choice.
+	ToolChoiceMode string `json:"toolChoiceMode,omitempty"`
+	// TopP: The maximum cumulative probability of tokens to consider when
+	// sampling.
+	TopP float64 `json:"topP,omitempty"`
+	// TranscriptionConfig: Optional. Configuration for speech recognition
+	// (transcription). If present, ASR is enabled.
+	TranscriptionConfig *GenaiVertexV1TranscriptionConfig `json:"transcriptionConfig,omitempty"`
+	// VideoConfig: Configuration for video generation.
+	VideoConfig *GenaiVertexV1VideoConfig `json:"videoConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxOutputTokens") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxOutputTokens") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GenerationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GenerationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GenaiVertexV1GenerationConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GenaiVertexV1GenerationConfig
+	var s1 struct {
+		Temperature gensupport.JSONFloat64 `json:"temperature"`
+		TopP        gensupport.JSONFloat64 `json:"topP"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Temperature = float64(s1.Temperature)
+	s.TopP = float64(s1.TopP)
+	return nil
+}
+
+// GenaiVertexV1GoogleMaps: A tool that can be used by the model to call Google
+// Maps.
+type GenaiVertexV1GoogleMaps struct {
+	// EnableWidget: Whether to return a widget context token in the tool call
+	// result of the response.
+	EnableWidget bool `json:"enableWidget,omitempty"`
+	// Latitude: The latitude of the user's location.
+	Latitude float64 `json:"latitude,omitempty"`
+	// Longitude: The longitude of the user's location.
+	Longitude float64 `json:"longitude,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableWidget") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableWidget") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMaps) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMaps
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GenaiVertexV1GoogleMaps) UnmarshalJSON(data []byte) error {
+	type NoMethod GenaiVertexV1GoogleMaps
+	var s1 struct {
+		Latitude  gensupport.JSONFloat64 `json:"latitude"`
+		Longitude gensupport.JSONFloat64 `json:"longitude"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Latitude = float64(s1.Latitude)
+	s.Longitude = float64(s1.Longitude)
+	return nil
+}
+
+// GenaiVertexV1GoogleMapsCallContentGoogleMapsCallArguments: The arguments to
+// pass to the Google Maps tool.
+type GenaiVertexV1GoogleMapsCallContentGoogleMapsCallArguments struct {
+	// Queries: The queries to be executed.
+	Queries []string `json:"queries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Queries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Queries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsCallContentGoogleMapsCallArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsCallContentGoogleMapsCallArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1GoogleMapsCallDelta struct {
+	// Arguments: The arguments to pass to the Google Maps tool.
+	Arguments *GenaiVertexV1GoogleMapsCallContentGoogleMapsCallArguments `json:"arguments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsCallDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsCallDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleMapsCallStep: Google Maps call step.
+type GenaiVertexV1GoogleMapsCallStep struct {
+	// Arguments: The arguments to pass to the Google Maps tool.
+	Arguments *GenaiVertexV1GoogleMapsCallStepGoogleMapsCallStepArguments `json:"arguments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsCallStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsCallStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleMapsCallStepGoogleMapsCallStepArguments: The arguments to
+// pass to the Google Maps tool.
+type GenaiVertexV1GoogleMapsCallStepGoogleMapsCallStepArguments struct {
+	// Queries: The queries to be executed.
+	Queries []string `json:"queries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Queries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Queries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsCallStepGoogleMapsCallStepArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsCallStepGoogleMapsCallStepArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleMapsResultContentGoogleMapsResult: The result of the
+// Google Maps.
+type GenaiVertexV1GoogleMapsResultContentGoogleMapsResult struct {
+	// Places: The places that were found.
+	Places []*GenaiVertexV1GoogleMapsResultContentGoogleMapsResultPlaces `json:"places,omitempty"`
+	// WidgetContextToken: Resource name of the Google Maps widget context token.
+	WidgetContextToken string `json:"widgetContextToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Places") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Places") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsResultContentGoogleMapsResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsResultContentGoogleMapsResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1GoogleMapsResultContentGoogleMapsResultPlaces struct {
+	// Name: Title of the place.
+	Name string `json:"name,omitempty"`
+	// PlaceId: The ID of the place, in `places/{place_id}` format.
+	PlaceId string `json:"placeId,omitempty"`
+	// ReviewSnippets: Snippets of reviews that are used to generate answers about
+	// the features of a given place in Google Maps.
+	ReviewSnippets []*GenaiVertexV1ReviewSnippet `json:"reviewSnippets,omitempty"`
+	// Url: URI reference of the place.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsResultContentGoogleMapsResultPlaces) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsResultContentGoogleMapsResultPlaces
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1GoogleMapsResultDelta struct {
+	// Result: The results of the Google Maps.
+	Result []*GenaiVertexV1GoogleMapsResultContentGoogleMapsResult `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Result") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Result") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsResultDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsResultDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleMapsResultStep: Google Maps result step.
+type GenaiVertexV1GoogleMapsResultStep struct {
+	Result []*GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItem `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Result") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Result") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsResultStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsResultStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItem: The result of the
+// Google Maps.
+type GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItem struct {
+	Places             []*GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItemGoogleMapsResultPlaces `json:"places,omitempty"`
+	WidgetContextToken string                                                                         `json:"widgetContextToken,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Places") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Places") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItemGoogleMapsResultPlaces struct {
+	Name           string                        `json:"name,omitempty"`
+	PlaceId        string                        `json:"placeId,omitempty"`
+	ReviewSnippets []*GenaiVertexV1ReviewSnippet `json:"reviewSnippets,omitempty"`
+	Url            string                        `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItemGoogleMapsResultPlaces) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleMapsResultStepGoogleMapsResultItemGoogleMapsResultPlaces
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleSearch: A tool that can be used by the model to search
+// Google.
+type GenaiVertexV1GoogleSearch struct {
+	// SearchTypes: The types of search grounding to enable.
+	//
+	// Possible values:
+	//   "SEARCH_TYPE_UNSPECIFIED" - Unspecified search type. This value should not
+	// be used.
+	//   "SEARCH_TYPE_WEB_SEARCH" - Setting this field enables web search. Only
+	// text results are returned.
+	//   "SEARCH_TYPE_IMAGE_SEARCH" - Setting this field enables image search.
+	// Image bytes are returned.
+	//   "SEARCH_TYPE_ENTERPRISE_WEB_SEARCH" - Setting this field enables
+	// enterprise web search.
+	SearchTypes []string `json:"searchTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SearchTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SearchTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearch) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleSearchCallContentGoogleSearchCallArguments: The arguments
+// to pass to Google Search.
+type GenaiVertexV1GoogleSearchCallContentGoogleSearchCallArguments struct {
+	// Queries: Web search queries for the following-up web search.
+	Queries []string `json:"queries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Queries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Queries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearchCallContentGoogleSearchCallArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearchCallContentGoogleSearchCallArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1GoogleSearchCallDelta struct {
+	Arguments *GenaiVertexV1GoogleSearchCallContentGoogleSearchCallArguments `json:"arguments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearchCallDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearchCallDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleSearchCallStep: Google Search call step.
+type GenaiVertexV1GoogleSearchCallStep struct {
+	// Arguments: Required. The arguments to pass to Google Search.
+	Arguments *GenaiVertexV1GoogleSearchCallStepGoogleSearchCallStepArguments `json:"arguments,omitempty"`
+	// SearchType: The type of search grounding enabled.
+	//
+	// Possible values:
+	//   "SEARCH_TYPE_UNSPECIFIED" - Unspecified search type. This value should not
+	// be used.
+	//   "SEARCH_TYPE_WEB_SEARCH" - Setting this field enables web search. Only
+	// text results are returned.
+	//   "SEARCH_TYPE_IMAGE_SEARCH" - Setting this field enables image search.
+	// Image bytes are returned.
+	//   "SEARCH_TYPE_ENTERPRISE_WEB_SEARCH" - Setting this field enables
+	// enterprise web search.
+	SearchType string `json:"searchType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearchCallStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearchCallStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleSearchCallStepGoogleSearchCallStepArguments: The
+// arguments to pass to Google Search.
+type GenaiVertexV1GoogleSearchCallStepGoogleSearchCallStepArguments struct {
+	// Queries: Web search queries for the following-up web search.
+	Queries []string `json:"queries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Queries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Queries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearchCallStepGoogleSearchCallStepArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearchCallStepGoogleSearchCallStepArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleSearchResultContentGoogleSearchResult: The result of the
+// Google Search.
+type GenaiVertexV1GoogleSearchResultContentGoogleSearchResult struct {
+	// SearchSuggestions: Web content snippet that can be embedded in a web page or
+	// an app webview.
+	SearchSuggestions string `json:"searchSuggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SearchSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SearchSuggestions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearchResultContentGoogleSearchResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearchResultContentGoogleSearchResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1GoogleSearchResultDelta struct {
+	IsError bool                                                        `json:"isError,omitempty"`
+	Result  []*GenaiVertexV1GoogleSearchResultContentGoogleSearchResult `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearchResultDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearchResultDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleSearchResultStep: Google Search result step.
+type GenaiVertexV1GoogleSearchResultStep struct {
+	// IsError: Whether the Google Search resulted in an error.
+	IsError bool `json:"isError,omitempty"`
+	// Result: Required. The results of the Google Search.
+	Result []*GenaiVertexV1GoogleSearchResultStepGoogleSearchResultItem `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearchResultStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearchResultStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1GoogleSearchResultStepGoogleSearchResultItem: The result of the
+// Google Search.
+type GenaiVertexV1GoogleSearchResultStepGoogleSearchResultItem struct {
+	// SearchSuggestions: Web content snippet that can be embedded in a web page or
+	// an app webview.
+	SearchSuggestions string `json:"searchSuggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SearchSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SearchSuggestions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1GoogleSearchResultStepGoogleSearchResultItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1GoogleSearchResultStepGoogleSearchResultItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ImageContent: An image content block.
+type GenaiVertexV1ImageContent struct {
+	// Data: The image content.
+	Data string `json:"data,omitempty"`
+	// MimeTypeString: Flexible MIME type string of the image, superseding
+	// mime_type = 1. Note: Bespoke logic in the GAOS parser/serializer maps this
+	// to the "mime_type" JSON key.
+	MimeTypeString string `json:"mimeTypeString,omitempty"`
+	// Resolution: The resolution of the media.
+	//
+	// Possible values:
+	//   "MEDIA_RESOLUTION_UNSPECIFIED" - Default value. This value is unused.
+	//   "LOW" - Low resolution.
+	//   "MEDIUM" - Medium resolution.
+	//   "HIGH" - High resolution.
+	//   "ULTRA_HIGH" - Ultra high resolution.
+	Resolution string `json:"resolution,omitempty"`
+	// Uri: The URI of the image.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ImageContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ImageContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ImageDelta struct {
+	Data string `json:"data,omitempty"`
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "TYPE_PNG" - PNG image format
+	//   "TYPE_JPEG" - JPEG image format
+	//   "TYPE_WEBP" - WebP image format
+	//   "TYPE_HEIC" - HEIC image format
+	//   "TYPE_HEIF" - HEIF image format
+	//   "TYPE_GIF" - GIF image format
+	//   "TYPE_BMP" - BMP image format
+	//   "TYPE_TIFF" - TIFF image format
+	MimeType string `json:"mimeType,omitempty"`
+	// Resolution: The resolution of the media.
+	//
+	// Possible values:
+	//   "MEDIA_RESOLUTION_UNSPECIFIED" - Default value. This value is unused.
+	//   "LOW" - Low resolution.
+	//   "MEDIUM" - Medium resolution.
+	//   "HIGH" - High resolution.
+	//   "ULTRA_HIGH" - Ultra high resolution.
+	Resolution string `json:"resolution,omitempty"`
+	Uri        string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ImageDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ImageDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ImageResponseFormat: Configuration for image output format.
+type GenaiVertexV1ImageResponseFormat struct {
+	// AspectRatio: The aspect ratio for the image output.
+	//
+	// Possible values:
+	//   "ASPECT_RATIO_UNSPECIFIED" - Default value. This value is unused.
+	//   "ASPECT_RATIO_ONE_BY_ONE" - 1:1 aspect ratio.
+	//   "ASPECT_RATIO_TWO_BY_THREE" - 2:3 aspect ratio.
+	//   "ASPECT_RATIO_THREE_BY_TWO" - 3:2 aspect ratio.
+	//   "ASPECT_RATIO_THREE_BY_FOUR" - 3:4 aspect ratio.
+	//   "ASPECT_RATIO_FOUR_BY_THREE" - 4:3 aspect ratio.
+	//   "ASPECT_RATIO_FOUR_BY_FIVE" - 4:5 aspect ratio.
+	//   "ASPECT_RATIO_FIVE_BY_FOUR" - 5:4 aspect ratio.
+	//   "ASPECT_RATIO_NINE_BY_SIXTEEN" - 9:16 aspect ratio.
+	//   "ASPECT_RATIO_SIXTEEN_BY_NINE" - 16:9 aspect ratio.
+	//   "ASPECT_RATIO_TWENTY_ONE_BY_NINE" - 21:9 aspect ratio.
+	//   "ASPECT_RATIO_ONE_BY_EIGHT" - 1:8 aspect ratio.
+	//   "ASPECT_RATIO_EIGHT_BY_ONE" - 8:1 aspect ratio.
+	//   "ASPECT_RATIO_ONE_BY_FOUR" - 1:4 aspect ratio.
+	//   "ASPECT_RATIO_FOUR_BY_ONE" - 4:1 aspect ratio.
+	AspectRatio string `json:"aspectRatio,omitempty"`
+	// Delivery: The delivery mode for the image output.
+	//
+	// Possible values:
+	//   "DELIVERY_UNSPECIFIED" - Default value. This value is unused.
+	//   "INLINE" - Image data is returned inline in the response.
+	//   "URI" - Image data is returned as a URI.
+	Delivery string `json:"delivery,omitempty"`
+	// ImageSize: The size of the image output.
+	//
+	// Possible values:
+	//   "IMAGE_SIZE_UNSPECIFIED" - Default value. This value is unused.
+	//   "IMAGE_SIZE_FIVE_TWELVE" - 512px image size.
+	//   "IMAGE_SIZE_ONE_K" - 1K image size.
+	//   "IMAGE_SIZE_TWO_K" - 2K image size.
+	//   "IMAGE_SIZE_FOUR_K" - 4K image size.
+	ImageSize string `json:"imageSize,omitempty"`
+	// MimeType: The MIME type of the image output.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "TYPE_JPEG" - JPEG image format.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AspectRatio") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ImageResponseFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ImageResponseFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Interaction: Response for InteractionService.CreateInteraction.
+type GenaiVertexV1Interaction struct {
+	// AgentInteraction: Interaction for generating the completion using agents.
+	AgentInteraction *GenaiVertexV1AgentInteraction `json:"agentInteraction,omitempty"`
+	// Content: The content for the interaction.
+	Content *GenaiVertexV1Content `json:"content,omitempty"`
+	// Created: Required. Output only. The time at which the response was created
+	// in ISO 8601 format (YYYY-MM-DDThh:mm:ssZ).
+	Created string `json:"created,omitempty"`
+	// EnvId: The environment ID for the interaction. Can be 'remote' for default
+	// environment.
+	EnvId string `json:"envId,omitempty"`
+	// EnvironmentId: Output only. The environment ID for the interaction. Only
+	// populated if environment config is set in the request.
+	EnvironmentId string `json:"environmentId,omitempty"`
+	// Errors: Output only. Diagnostic faults / platform errors recorded on the
+	// interaction.
+	Errors []*GenaiVertexV1Error `json:"errors,omitempty"`
+	// Id: Required. Output only. A unique identifier for the interaction
+	// completion.
+	Id string `json:"id,omitempty"`
+	// Labels: The labels with user-defined metadata for the request. Label keys
+	// and values can be no longer than 63 characters (Unicode codepoints) and can
+	// only contain lowercase letters, numeric characters, underscores, and dashes.
+	// International characters are allowed. Label values are optional. Label keys
+	// must start with a letter.
+	Labels map[string]string `json:"labels,omitempty"`
+	// ModelInteraction: Interaction for generating the completion using models.
+	ModelInteraction *GenaiVertexV1ModelInteraction `json:"modelInteraction,omitempty"`
+	// PreviousInteractionId: The ID of the previous interaction, if any.
+	PreviousInteractionId   string                           `json:"previousInteractionId,omitempty"`
+	ResponseFormatList      *GenaiVertexV1ResponseFormatList `json:"responseFormatList,omitempty"`
+	ResponseFormatSingleton *GenaiVertexV1ResponseFormat     `json:"responseFormatSingleton,omitempty"`
+	// SafetySettings: Safety settings for the interaction.
+	SafetySettings []*GenaiVertexV1SafetySetting `json:"safetySettings,omitempty"`
+	// ServiceTier: The service tier for the interaction.
+	//
+	// Possible values:
+	//   "SERVICE_TIER_UNSPECIFIED" - Default service tier, which is standard.
+	//   "SERVICE_TIER_FLEX" - Flex service tier.
+	//   "SERVICE_TIER_STANDARD" - Standard service tier.
+	//   "SERVICE_TIER_PRIORITY" - Priority service tier.
+	//   "SERVICE_TIER_DEFERRED" - Deferred service tier.
+	ServiceTier string `json:"serviceTier,omitempty"`
+	// Status: Required. Output only. The status of the interaction.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Default value. This value is unused.
+	//   "IN_PROGRESS" - The interaction is in progress.
+	//   "REQUIRES_ACTION" - The interaction requires action/input from the user.
+	//   "COMPLETED" - The interaction is completed.
+	//   "FAILED" - The interaction failed.
+	//   "CANCELLED" - The interaction was cancelled.
+	//   "INCOMPLETE" - The interaction is completed, but contains incomplete
+	// results (e.g. hitting max_tokens).
+	//   "QUEUED" - The interaction is queued, waiting for processing (e.g. waiting
+	// for off-peak capacity).
+	Status string `json:"status,omitempty"`
+	// StepList: Input only. The steps for the interaction.
+	StepList *GenaiVertexV1StepList `json:"stepList,omitempty"`
+	// Steps: Required. Output only. The steps that make up the interaction, when
+	// included in the response.
+	Steps []*GenaiVertexV1Step `json:"steps,omitempty"`
+	// StringContent: A string input for the interaction, it will be processed as a
+	// single text input.
+	StringContent string `json:"stringContent,omitempty"`
+	// SystemInstruction: System instruction for the interaction.
+	SystemInstruction string `json:"systemInstruction,omitempty"`
+	// Tools: A list of tool declarations the model may call during interaction.
+	Tools []*GenaiVertexV1Tool `json:"tools,omitempty"`
+	// Updated: Required. Output only. The time at which the response was last
+	// updated in ISO 8601 format (YYYY-MM-DDThh:mm:ssZ).
+	Updated string `json:"updated,omitempty"`
+	// Usage: Output only. Statistics on the interaction request's token usage.
+	Usage *GenaiVertexV1InteractionUsage `json:"usage,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AgentInteraction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentInteraction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Interaction) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Interaction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1InteractionCompletedSseEvent: Signals that the Interaction
+// completed. Sent when the Interaction receives Complete/Cancel or naturally
+// terminates. No more input can be sent to the Interaction after this.
+type GenaiVertexV1InteractionCompletedSseEvent struct {
+	// Interaction: Required. Partial completed interaction resource emitted at the
+	// end of the stream.
+	Interaction *GenaiVertexV1Interaction `json:"interaction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interaction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interaction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1InteractionCompletedSseEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1InteractionCompletedSseEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1InteractionCreatedSseEvent: Server response confirming that a
+// new interaction was created.
+type GenaiVertexV1InteractionCreatedSseEvent struct {
+	// Interaction: Required. Partial interaction resource emitted when the stream
+	// is created.
+	Interaction *GenaiVertexV1Interaction `json:"interaction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interaction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interaction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1InteractionCreatedSseEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1InteractionCreatedSseEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1InteractionStatusUpdate struct {
+	InteractionId string `json:"interactionId,omitempty"`
+	// Possible values:
+	//   "UNSPECIFIED" - Default value. This value is unused.
+	//   "IN_PROGRESS" - The interaction is in progress.
+	//   "REQUIRES_ACTION" - The interaction requires action/input from the user.
+	//   "COMPLETED" - The interaction is completed.
+	//   "FAILED" - The interaction failed.
+	//   "CANCELLED" - The interaction was cancelled.
+	//   "INCOMPLETE" - The interaction is completed, but contains incomplete
+	// results (e.g. hitting max_tokens).
+	//   "QUEUED" - The interaction is queued, waiting for processing (e.g. waiting
+	// for off-peak capacity).
+	Status string `json:"status,omitempty"`
+	// Usage: Model usage statistics up to this checkpoint.
+	Usage *GenaiVertexV1InteractionUsage `json:"usage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InteractionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InteractionId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1InteractionStatusUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1InteractionStatusUpdate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1InteractionStreamingEvent struct {
+	// ErrorEvent: The error event data, used for error events.
+	ErrorEvent *GenaiVertexV1ErrorEvent `json:"errorEvent,omitempty"`
+	// EventId: The event_id token to be used to resume the interaction stream,
+	// from this event.
+	EventId string `json:"eventId,omitempty"`
+	// InteractionCompletedEvent: The interaction data, used for
+	// interaction.completed events. Used when steps are enabled.
+	InteractionCompletedEvent *GenaiVertexV1InteractionCompletedSseEvent `json:"interactionCompletedEvent,omitempty"`
+	// InteractionCreatedEvent: The interaction data, used for interaction.created
+	// events. Used when steps are enabled.
+	InteractionCreatedEvent *GenaiVertexV1InteractionCreatedSseEvent `json:"interactionCreatedEvent,omitempty"`
+	// InteractionStatusUpdate: The interaction status data, used for
+	// interaction.status_update events.
+	InteractionStatusUpdate *GenaiVertexV1InteractionStatusUpdate `json:"interactionStatusUpdate,omitempty"`
+	// StepDelta: The step delta data, used for step.delta events. Step-based
+	// streaming event, used when steps are enabled.
+	StepDelta *GenaiVertexV1StepDelta `json:"stepDelta,omitempty"`
+	// StepStart: The step start data, used for step.start events. Step-based
+	// streaming event, used when steps are enabled.
+	StepStart *GenaiVertexV1StepStart `json:"stepStart,omitempty"`
+	// StepStop: The step stop data, used for step.stop events. Step-based
+	// streaming event, used when steps are enabled.
+	StepStop *GenaiVertexV1StepStop `json:"stepStop,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ErrorEvent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorEvent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1InteractionStreamingEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1InteractionStreamingEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1InteractionUsage: Statistics on the interaction request's token
+// usage.
+type GenaiVertexV1InteractionUsage struct {
+	// CachedTokensByModality: A breakdown of cached token usage by modality.
+	CachedTokensByModality []*GenaiVertexV1InteractionUsageModalityTokens `json:"cachedTokensByModality,omitempty"`
+	// GroundingToolCount: Grounding tool count.
+	GroundingToolCount []*GenaiVertexV1InteractionUsageGroundingToolCount `json:"groundingToolCount,omitempty"`
+	// InputTokensByModality: A breakdown of input token usage by modality.
+	InputTokensByModality []*GenaiVertexV1InteractionUsageModalityTokens `json:"inputTokensByModality,omitempty"`
+	// OutputTokensByModality: A breakdown of output token usage by modality.
+	OutputTokensByModality []*GenaiVertexV1InteractionUsageModalityTokens `json:"outputTokensByModality,omitempty"`
+	// ToolUseTokensByModality: A breakdown of tool-use token usage by modality.
+	ToolUseTokensByModality []*GenaiVertexV1InteractionUsageModalityTokens `json:"toolUseTokensByModality,omitempty"`
+	// TotalCachedTokens: Number of tokens in the cached part of the prompt (the
+	// cached content).
+	TotalCachedTokens int64 `json:"totalCachedTokens,omitempty"`
+	// TotalInputTokens: Number of tokens in the prompt (context).
+	TotalInputTokens int64 `json:"totalInputTokens,omitempty"`
+	// TotalOutputTokens: Total number of tokens across all the generated
+	// responses.
+	TotalOutputTokens int64 `json:"totalOutputTokens,omitempty"`
+	// TotalThoughtTokens: Number of tokens of thoughts for thinking models.
+	TotalThoughtTokens int64 `json:"totalThoughtTokens,omitempty"`
+	// TotalTokens: Total token count for the interaction request (prompt +
+	// responses + other internal tokens).
+	TotalTokens int64 `json:"totalTokens,omitempty"`
+	// TotalToolUseTokens: Number of tokens present in tool-use prompt(s).
+	TotalToolUseTokens int64 `json:"totalToolUseTokens,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CachedTokensByModality") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CachedTokensByModality") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1InteractionUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1InteractionUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1InteractionUsageGroundingToolCount: The number of grounding
+// tool counts.
+type GenaiVertexV1InteractionUsageGroundingToolCount struct {
+	// Count: The number of grounding tool counts.
+	Count int64 `json:"count,omitempty"`
+	// Type: The grounding tool type associated with the count.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "GOOGLE_SEARCH" - Grounding with Google Web Search and Image Search, & Web
+	// Grounding for Enterprise.
+	//   "GOOGLE_MAPS" - Grounding with Google Maps.
+	//   "RETRIEVAL" - Grounding with customer's data, for example, VertexAISearch.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1InteractionUsageGroundingToolCount) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1InteractionUsageGroundingToolCount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1InteractionUsageModalityTokens: The token count for a single
+// response modality.
+type GenaiVertexV1InteractionUsageModalityTokens struct {
+	// Modality: The modality associated with the token count.
+	//
+	// Possible values:
+	//   "RESPONSE_MODALITY_UNSPECIFIED" - Default value. This value is unused.
+	//   "TEXT" - Indicates the model should return text.
+	//   "IMAGE" - Indicates the model should return images.
+	//   "AUDIO" - Indicates the model should return audio.
+	//   "VIDEO" - Indicates the model should return video.
+	//   "DOCUMENT" - Indicates the model should return documents.
+	Modality string `json:"modality,omitempty"`
+	// Tokens: Number of tokens for the modality.
+	Tokens int64 `json:"tokens,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Modality") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Modality") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1InteractionUsageModalityTokens) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1InteractionUsageModalityTokens
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ListValue: `ListValue` is a wrapper around a repeated field of
+// values.
+type GenaiVertexV1ListValue struct {
+	// Values: Repeated field of dynamically typed values.
+	Values []*GenaiVertexV1Value `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ListValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ListValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1McpServer: A MCPServer is a server that can be called by the
+// model to perform actions.
+type GenaiVertexV1McpServer struct {
+	// AllowedTools: The allowed tools.
+	AllowedTools []*GenaiVertexV1AllowedTools `json:"allowedTools,omitempty"`
+	// Headers: Optional: Fields for authentication headers, timeouts, etc., if
+	// needed.
+	Headers map[string]string `json:"headers,omitempty"`
+	// Name: The name of the MCPServer.
+	Name string `json:"name,omitempty"`
+	// Url: The full URL for the MCPServer endpoint. Example:
+	// "https://api.example.com/mcp"
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedTools") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedTools") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1McpServer) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1McpServer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ModelInteraction: Interaction for generating the completion
+// using models.
+type GenaiVertexV1ModelInteraction struct {
+	// GenerationConfig: Input only. Configuration parameters for the model
+	// interaction.
+	GenerationConfig *GenaiVertexV1GenerationConfig `json:"generationConfig,omitempty"`
+	// Model: The name of the `Model` used for generating the completion.
+	Model string `json:"model,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GenerationConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GenerationConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ModelInteraction) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ModelInteraction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ModelOutputStep: Output generated by the model.
+type GenaiVertexV1ModelOutputStep struct {
+	Content []*GenaiVertexV1Content `json:"content,omitempty"`
+	// Error: The error result of the operation in case of failure or cancellation.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ModelOutputStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ModelOutputStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ParallelAISearchConfig: Used to specify configuration for
+// ParallelAISearch.
+type GenaiVertexV1ParallelAISearchConfig struct {
+	// ApiKey: Optional. The API key for ParallelAiSearch.
+	ApiKey string `json:"apiKey,omitempty"`
+	// CustomConfig: Optional. Custom configs for ParallelAiSearch.
+	CustomConfig googleapi.RawMessage `json:"customConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ParallelAISearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ParallelAISearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1PlaceCitation: A place citation annotation.
+type GenaiVertexV1PlaceCitation struct {
+	// Name: Title of the place.
+	Name string `json:"name,omitempty"`
+	// PlaceId: The ID of the place, in `places/{place_id}` format.
+	PlaceId string `json:"placeId,omitempty"`
+	// ReviewSnippets: Snippets of reviews that are used to generate answers about
+	// the features of a given place in Google Maps.
+	ReviewSnippets []*GenaiVertexV1ReviewSnippet `json:"reviewSnippets,omitempty"`
+	// Url: URI reference of the place.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1PlaceCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1PlaceCitation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ProcessingCallDelta: Streaming delta for a server-initiated
+// media processing step.
+type GenaiVertexV1ProcessingCallDelta struct {
+}
+
+// GenaiVertexV1ProcessingCallStep: A server-initiated processing step for
+// media analysis (e.g. video understanding).
+type GenaiVertexV1ProcessingCallStep struct {
+}
+
+// GenaiVertexV1ProcessingResultDelta: Streaming delta for the result of a
+// server-initiated media processing step.
+type GenaiVertexV1ProcessingResultDelta struct {
+}
+
+// GenaiVertexV1ProcessingResultStep: The result of a server-initiated media
+// processing step.
+type GenaiVertexV1ProcessingResultStep struct {
+}
+
+// GenaiVertexV1RagStoreConfig: Use to specify configuration for RAG Store.
+type GenaiVertexV1RagStoreConfig struct {
+	// RagResources: Optional. The representation of the rag source.
+	RagResources []*GenaiVertexV1RagStoreConfigRagResource `json:"ragResources,omitempty"`
+	// RagRetrievalConfig: Optional. The retrieval config for the Rag query.
+	RagRetrievalConfig *GenaiVertexV1RagStoreConfigRagRetrievalConfig `json:"ragRetrievalConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RagResources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RagResources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RagStoreConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RagStoreConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RagStoreConfigRagResource: The definition of the Rag resource.
+type GenaiVertexV1RagStoreConfigRagResource struct {
+	// RagCorpus: Optional. RagCorpora resource name.
+	RagCorpus string `json:"ragCorpus,omitempty"`
+	// RagFileIds: Optional. rag_file_id. The files should be in the same
+	// rag_corpus set in rag_corpus field.
+	RagFileIds []string `json:"ragFileIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RagCorpus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RagCorpus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RagStoreConfigRagResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RagStoreConfigRagResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RagStoreConfigRagRetrievalConfig: Specifies the context
+// retrieval config.
+type GenaiVertexV1RagStoreConfigRagRetrievalConfig struct {
+	// Filter: Optional. Config for filters.
+	Filter *GenaiVertexV1RagStoreConfigRagRetrievalConfigFilter `json:"filter,omitempty"`
+	// HybridSearch: Optional. Config for Hybrid Search.
+	HybridSearch *GenaiVertexV1RagStoreConfigRagRetrievalConfigHybridSearch `json:"hybridSearch,omitempty"`
+	// Ranking: Optional. Config for ranking and reranking.
+	Ranking *GenaiVertexV1RagStoreConfigRagRetrievalConfigRanking `json:"ranking,omitempty"`
+	// TopK: Optional. The number of contexts to retrieve.
+	TopK int64 `json:"topK,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RagStoreConfigRagRetrievalConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RagStoreConfigRagRetrievalConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RagStoreConfigRagRetrievalConfigFilter: Config for filters.
+type GenaiVertexV1RagStoreConfigRagRetrievalConfigFilter struct {
+	// MetadataFilter: Optional. String for metadata filtering.
+	MetadataFilter string `json:"metadataFilter,omitempty"`
+	// VectorDistanceThreshold: Optional. Only returns contexts with vector
+	// distance smaller than the threshold.
+	VectorDistanceThreshold float64 `json:"vectorDistanceThreshold,omitempty"`
+	// VectorSimilarityThreshold: Optional. Only returns contexts with vector
+	// similarity larger than the threshold.
+	VectorSimilarityThreshold float64 `json:"vectorSimilarityThreshold,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MetadataFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MetadataFilter") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RagStoreConfigRagRetrievalConfigFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RagStoreConfigRagRetrievalConfigFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GenaiVertexV1RagStoreConfigRagRetrievalConfigFilter) UnmarshalJSON(data []byte) error {
+	type NoMethod GenaiVertexV1RagStoreConfigRagRetrievalConfigFilter
+	var s1 struct {
+		VectorDistanceThreshold   gensupport.JSONFloat64 `json:"vectorDistanceThreshold"`
+		VectorSimilarityThreshold gensupport.JSONFloat64 `json:"vectorSimilarityThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.VectorDistanceThreshold = float64(s1.VectorDistanceThreshold)
+	s.VectorSimilarityThreshold = float64(s1.VectorSimilarityThreshold)
+	return nil
+}
+
+// GenaiVertexV1RagStoreConfigRagRetrievalConfigHybridSearch: Config for Hybrid
+// Search.
+type GenaiVertexV1RagStoreConfigRagRetrievalConfigHybridSearch struct {
+	// Alpha: Optional. Alpha value controls the weight between dense and sparse
+	// vector search results.
+	Alpha float64 `json:"alpha,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Alpha") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Alpha") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RagStoreConfigRagRetrievalConfigHybridSearch) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RagStoreConfigRagRetrievalConfigHybridSearch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GenaiVertexV1RagStoreConfigRagRetrievalConfigHybridSearch) UnmarshalJSON(data []byte) error {
+	type NoMethod GenaiVertexV1RagStoreConfigRagRetrievalConfigHybridSearch
+	var s1 struct {
+		Alpha gensupport.JSONFloat64 `json:"alpha"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Alpha = float64(s1.Alpha)
+	return nil
+}
+
+// GenaiVertexV1RagStoreConfigRagRetrievalConfigRanking: Config for ranking and
+// reranking.
+type GenaiVertexV1RagStoreConfigRagRetrievalConfigRanking struct {
+	// RankService: Config for Rank Service.
+	RankService *GenaiVertexV1RagStoreConfigRagRetrievalConfigRankingRankService `json:"rankService,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RankService") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RankService") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RagStoreConfigRagRetrievalConfigRanking) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RagStoreConfigRagRetrievalConfigRanking
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RagStoreConfigRagRetrievalConfigRankingRankService: Config for
+// Rank Service.
+type GenaiVertexV1RagStoreConfigRagRetrievalConfigRankingRankService struct {
+	// ModelName: Optional. The model name of the rank service.
+	ModelName string `json:"modelName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RagStoreConfigRagRetrievalConfigRankingRankService) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RagStoreConfigRagRetrievalConfigRankingRankService
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ResponseFormat struct {
+	Audio *GenaiVertexV1AudioResponseFormat `json:"audio,omitempty"`
+	Image *GenaiVertexV1ImageResponseFormat `json:"image,omitempty"`
+	// StructValue: Multi-discriminator values is already enabled in GAOS
+	StructValue *GenaiVertexV1Struct              `json:"structValue,omitempty"`
+	Text        *GenaiVertexV1TextResponseFormat  `json:"text,omitempty"`
+	Video       *GenaiVertexV1VideoResponseFormat `json:"video,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Audio") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Audio") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ResponseFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ResponseFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ResponseFormatList struct {
+	ResponseFormats []*GenaiVertexV1ResponseFormat `json:"responseFormats,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ResponseFormats") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ResponseFormats") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ResponseFormatList) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ResponseFormatList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Retrieval: A tool that can be used by the model to retrieve
+// files.
+type GenaiVertexV1Retrieval struct {
+	// ExaAiSearchConfig: Used to specify configuration for ExaAISearch.
+	ExaAiSearchConfig *GenaiVertexV1ExaAISearchConfig `json:"exaAiSearchConfig,omitempty"`
+	// ParallelAiSearchConfig: Used to specify configuration for ParallelAISearch.
+	ParallelAiSearchConfig *GenaiVertexV1ParallelAISearchConfig `json:"parallelAiSearchConfig,omitempty"`
+	// RagStoreConfig: Used to specify configuration for RagStore.
+	RagStoreConfig *GenaiVertexV1RagStoreConfig `json:"ragStoreConfig,omitempty"`
+	// RetrievalTypes: The types of file retrieval to enable.
+	//
+	// Possible values:
+	//   "RETRIEVAL_TYPE_UNSPECIFIED"
+	//   "RETRIEVAL_TYPE_VERTEX_AI_SEARCH"
+	//   "RETRIEVAL_TYPE_RAG_STORE"
+	//   "RETRIEVAL_TYPE_EXA_AI_SEARCH"
+	//   "RETRIEVAL_TYPE_PARALLEL_AI_SEARCH"
+	RetrievalTypes []string `json:"retrievalTypes,omitempty"`
+	// VertexAiSearchConfig: Used to specify configuration for VertexAISearch.
+	VertexAiSearchConfig *GenaiVertexV1VertexAISearchConfig `json:"vertexAiSearchConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExaAiSearchConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExaAiSearchConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Retrieval) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Retrieval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RetrievalCallDelta: Used by Vertex Retrieval tools such as
+// Parallel AI, Exa AI, Vertex AI Search, etc. RetrievalType decides which tool
+// is used.
+type GenaiVertexV1RetrievalCallDelta struct {
+	// Arguments: Required. The arguments to pass to the Retrieval tool.
+	Arguments *GenaiVertexV1RetrievalCallStepRetrievalStepArguments `json:"arguments,omitempty"`
+	// RetrievalType: The type of retrieval tools.
+	//
+	// Possible values:
+	//   "RETRIEVAL_TYPE_UNSPECIFIED"
+	//   "RETRIEVAL_TYPE_VERTEX_AI_SEARCH"
+	//   "RETRIEVAL_TYPE_RAG_STORE"
+	//   "RETRIEVAL_TYPE_EXA_AI_SEARCH"
+	//   "RETRIEVAL_TYPE_PARALLEL_AI_SEARCH"
+	RetrievalType string `json:"retrievalType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RetrievalCallDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RetrievalCallDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RetrievalCallStep: Retrieval call step. Used by Vertex
+// Retrieval tools such as Parallel AI, Exa AI, Vertex AI Search, etc.
+// RetrievalType decides which tool is used.
+type GenaiVertexV1RetrievalCallStep struct {
+	// Arguments: Required. The arguments to pass to the retrieval tool.
+	Arguments *GenaiVertexV1RetrievalCallStepRetrievalStepArguments `json:"arguments,omitempty"`
+	// RetrievalType: The type of retrieval tools.
+	//
+	// Possible values:
+	//   "RETRIEVAL_TYPE_UNSPECIFIED"
+	//   "RETRIEVAL_TYPE_VERTEX_AI_SEARCH"
+	//   "RETRIEVAL_TYPE_RAG_STORE"
+	//   "RETRIEVAL_TYPE_EXA_AI_SEARCH"
+	//   "RETRIEVAL_TYPE_PARALLEL_AI_SEARCH"
+	RetrievalType string `json:"retrievalType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RetrievalCallStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RetrievalCallStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RetrievalCallStepRetrievalStepArguments: The arguments to pass
+// to Retrieval tools.
+type GenaiVertexV1RetrievalCallStepRetrievalStepArguments struct {
+	// Queries: Queries for Retrieval information.
+	Queries []string `json:"queries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Queries") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Queries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RetrievalCallStepRetrievalStepArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RetrievalCallStepRetrievalStepArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RetrievalResultDelta: Used by Vertex Retrieval tools such as
+// Parallel AI, Exa AI, Vertex AI Search, etc. ToolResultDelta.type
+type GenaiVertexV1RetrievalResultDelta struct {
+	// IsError: Whether the retrieval resulted in an error.
+	IsError bool `json:"isError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RetrievalResultDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RetrievalResultDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1RetrievalResultStep: Vertex Retrieval result step. Used by
+// Vertex Retrieval tools such as Parallel AI, Exa AI, Vertex AI Search, etc.
+type GenaiVertexV1RetrievalResultStep struct {
+	// IsError: Whether the retrieval resulted in an error.
+	IsError bool `json:"isError,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1RetrievalResultStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1RetrievalResultStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ReviewSnippet: Encapsulates a snippet of a user review that
+// answers a question about the features of a specific place in Google Maps.
+type GenaiVertexV1ReviewSnippet struct {
+	// ReviewId: The ID of the review snippet.
+	ReviewId string `json:"reviewId,omitempty"`
+	// Title: Title of the review.
+	Title string `json:"title,omitempty"`
+	// Url: A link that corresponds to the user review on Google Maps.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ReviewId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ReviewId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ReviewSnippet) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ReviewSnippet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1SafetySetting: A safety setting that affects the
+// safety-blocking behavior. A SafetySetting consists of a harm category and a
+// threshold for that category.
+type GenaiVertexV1SafetySetting struct {
+	// Method: Optional. The method for blocking content. If not specified, the
+	// default behavior is to use the probability score.
+	//
+	// Possible values:
+	//   "HARM_BLOCK_METHOD_UNSPECIFIED" - The harm block method is unspecified.
+	//   "SEVERITY" - The harm block method uses both probability and severity
+	// scores.
+	//   "PROBABILITY" - The harm block method uses the probability score.
+	Method string `json:"method,omitempty"`
+	// Threshold: Required. The threshold for blocking content. If the harm
+	// probability exceeds this threshold, the content will be blocked.
+	//
+	// Possible values:
+	//   "HARM_BLOCK_THRESHOLD_UNSPECIFIED" - The harm block threshold is
+	// unspecified.
+	//   "BLOCK_LOW_AND_ABOVE" - Block content with a low harm probability or
+	// higher.
+	//   "BLOCK_MEDIUM_AND_ABOVE" - Block content with a medium harm probability or
+	// higher.
+	//   "BLOCK_ONLY_HIGH" - Block content with a high harm probability.
+	//   "BLOCK_NONE" - Do not block any content, regardless of its harm
+	// probability.
+	//   "OFF" - Turn off the safety filter entirely.
+	Threshold string `json:"threshold,omitempty"`
+	// Type: Required. The type of harm category to be blocked.
+	//
+	// Possible values:
+	//   "HARM_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
+	//   "HARM_CATEGORY_HATE_SPEECH" - Content that promotes violence or incites
+	// hatred against individuals or groups based on certain attributes.
+	//   "HARM_CATEGORY_DANGEROUS_CONTENT" - Content that promotes, facilitates, or
+	// enables dangerous activities.
+	//   "HARM_CATEGORY_HARASSMENT" - Abusive, threatening, or content intended to
+	// bully, torment, or ridicule.
+	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - Content that contains sexually
+	// explicit material.
+	//   "HARM_CATEGORY_CIVIC_INTEGRITY" - Deprecated: Election filter is not
+	// longer supported. The harm category is civic integrity.
+	//   "HARM_CATEGORY_IMAGE_HATE" - Images that contain hate speech.
+	//   "HARM_CATEGORY_IMAGE_DANGEROUS_CONTENT" - Images that contain dangerous
+	// content.
+	//   "HARM_CATEGORY_IMAGE_HARASSMENT" - Images that contain harassment.
+	//   "HARM_CATEGORY_IMAGE_SEXUALLY_EXPLICIT" - Images that contain sexually
+	// explicit content.
+	//   "HARM_CATEGORY_JAILBREAK" - Prompts designed to bypass safety filters.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Method") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Method") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1SafetySetting) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1SafetySetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ServerToolCallDelta struct {
+	CodeExecutionCall *GenaiVertexV1CodeExecutionCallDelta `json:"codeExecutionCall,omitempty"`
+	FileSearchCall    *GenaiVertexV1FileSearchCallDelta    `json:"fileSearchCall,omitempty"`
+	GoogleMapsCall    *GenaiVertexV1GoogleMapsCallDelta    `json:"googleMapsCall,omitempty"`
+	GoogleSearchCall  *GenaiVertexV1GoogleSearchCallDelta  `json:"googleSearchCall,omitempty"`
+	ProcessingCall    *GenaiVertexV1ProcessingCallDelta    `json:"processingCall,omitempty"`
+	RetrievalCall     *GenaiVertexV1RetrievalCallDelta     `json:"retrievalCall,omitempty"`
+	// Signature: A signature hash for backend validation.
+	Signature      string                            `json:"signature,omitempty"`
+	UrlContextCall *GenaiVertexV1UrlContextCallDelta `json:"urlContextCall,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeExecutionCall") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeExecutionCall") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ServerToolCallDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ServerToolCallDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ServerToolResultDelta struct {
+	CodeExecutionResult *GenaiVertexV1CodeExecutionResultDelta `json:"codeExecutionResult,omitempty"`
+	FileSearchResult    *GenaiVertexV1FileSearchResultDelta    `json:"fileSearchResult,omitempty"`
+	GoogleMapsResult    *GenaiVertexV1GoogleMapsResultDelta    `json:"googleMapsResult,omitempty"`
+	GoogleSearchResult  *GenaiVertexV1GoogleSearchResultDelta  `json:"googleSearchResult,omitempty"`
+	ProcessingResult    *GenaiVertexV1ProcessingResultDelta    `json:"processingResult,omitempty"`
+	RetrievalResult     *GenaiVertexV1RetrievalResultDelta     `json:"retrievalResult,omitempty"`
+	// Signature: A signature hash for backend validation.
+	Signature        string                              `json:"signature,omitempty"`
+	UrlContextResult *GenaiVertexV1UrlContextResultDelta `json:"urlContextResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeExecutionResult") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeExecutionResult") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ServerToolResultDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ServerToolResultDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1SpeakerConfig: Configuration for multi-speaker and speech
+// generation.
+type GenaiVertexV1SpeakerConfig struct {
+	// Speakers: Individual speaker configurations.
+	Speakers []*GenaiVertexV1SpeechConfig `json:"speakers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Speakers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Speakers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1SpeakerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1SpeakerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1SpeechAnnotation: Speech annotation for text content.
+type GenaiVertexV1SpeechAnnotation struct {
+	// Speaker: The speaker to associate with this turn.
+	Speaker string `json:"speaker,omitempty"`
+	// Style: Style instruction for the speech synthesis.
+	Style string `json:"style,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Speaker") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Speaker") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1SpeechAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1SpeechAnnotation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1SpeechConfig: The configuration for speech interaction.
+type GenaiVertexV1SpeechConfig struct {
+	// Language: The language of the speech.
+	Language string `json:"language,omitempty"`
+	// Speaker: The speaker's name, it should match the speaker name given in the
+	// prompt.
+	Speaker string `json:"speaker,omitempty"`
+	// Voice: The voice of the speaker.
+	Voice string `json:"voice,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Language") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Language") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1SpeechConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1SpeechConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Step: A step in the interaction.
+type GenaiVertexV1Step struct {
+	ModelOutput *GenaiVertexV1ModelOutputStep `json:"modelOutput,omitempty"`
+	Thought     *GenaiVertexV1ThoughtStep     `json:"thought,omitempty"`
+	ToolCall    *GenaiVertexV1ToolCallStep    `json:"toolCall,omitempty"`
+	ToolResult  *GenaiVertexV1ToolResultStep  `json:"toolResult,omitempty"`
+	// UserInput: DO NOT USE -- These are for 3P JSON only
+	UserInput *GenaiVertexV1UserInputStep `json:"userInput,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ModelOutput") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ModelOutput") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Step) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Step
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1StepDelta struct {
+	Delta *GenaiVertexV1StepDeltaData `json:"delta,omitempty"`
+	Index int64                       `json:"index,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Delta") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Delta") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1StepDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1StepDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1StepDeltaData struct {
+	ArgumentsDelta      *GenaiVertexV1ArgumentsDelta        `json:"argumentsDelta,omitempty"`
+	Audio               *GenaiVertexV1AudioDelta            `json:"audio,omitempty"`
+	Document            *GenaiVertexV1DocumentDelta         `json:"document,omitempty"`
+	FunctionResult      *GenaiVertexV1FunctionResultDelta   `json:"functionResult,omitempty"`
+	Image               *GenaiVertexV1ImageDelta            `json:"image,omitempty"`
+	ServerToolCall      *GenaiVertexV1ServerToolCallDelta   `json:"serverToolCall,omitempty"`
+	ServerToolResult    *GenaiVertexV1ServerToolResultDelta `json:"serverToolResult,omitempty"`
+	Text                *GenaiVertexV1TextDelta             `json:"text,omitempty"`
+	TextAnnotationDelta *GenaiVertexV1TextAnnotationDelta   `json:"textAnnotationDelta,omitempty"`
+	ThoughtSignature    *GenaiVertexV1ThoughtSignatureDelta `json:"thoughtSignature,omitempty"`
+	ThoughtSummary      *GenaiVertexV1ThoughtSummaryDelta   `json:"thoughtSummary,omitempty"`
+	Video               *GenaiVertexV1VideoDelta            `json:"video,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArgumentsDelta") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArgumentsDelta") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1StepDeltaData) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1StepDeltaData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1StepList: A list of Steps.
+type GenaiVertexV1StepList struct {
+	// Steps: The steps of the list.
+	Steps []*GenaiVertexV1Step `json:"steps,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Steps") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Steps") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1StepList) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1StepList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1StepStart struct {
+	Index int64              `json:"index,omitempty"`
+	Step  *GenaiVertexV1Step `json:"step,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Index") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Index") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1StepStart) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1StepStart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1StepStop struct {
+	Index int64 `json:"index,omitempty"`
+	// StepUsage: Model usage stats for this specific step.
+	StepUsage *GenaiVertexV1InteractionUsage `json:"stepUsage,omitempty"`
+	// Usage: Cumulative model usage stats from the start of the session.
+	Usage *GenaiVertexV1InteractionUsage `json:"usage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Index") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Index") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1StepStop) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1StepStop
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Struct: `Struct` represents a structured data value, consisting
+// of fields which map to dynamically typed values.
+type GenaiVertexV1Struct struct {
+	// Fields: Dynamically typed fields. List instead of map because LLMs are
+	// sensitive to ordering, and we want to give users full control.
+	Fields []*GenaiVertexV1Field `json:"fields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Fields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Struct) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Struct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1TextAnnotationDelta struct {
+	// Annotations: Citation information for model-generated content.
+	Annotations []*GenaiVertexV1TextContentAnnotation `json:"annotations,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1TextAnnotationDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1TextAnnotationDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1TextContent: A text content block.
+type GenaiVertexV1TextContent struct {
+	// Annotations: Citation information for model-generated content.
+	Annotations []*GenaiVertexV1TextContentAnnotation `json:"annotations,omitempty"`
+	// Text: Required. The text content.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Annotations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1TextContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1TextContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1TextContentAnnotation: Citation information for model-generated
+// content.
+type GenaiVertexV1TextContentAnnotation struct {
+	// EndIndex: End of the attributed segment, exclusive.
+	EndIndex int64 `json:"endIndex,omitempty"`
+	// FileCitation: A file citation annotation.
+	FileCitation *GenaiVertexV1FileCitation `json:"fileCitation,omitempty"`
+	// PlaceCitation: A place citation annotation.
+	PlaceCitation *GenaiVertexV1PlaceCitation `json:"placeCitation,omitempty"`
+	// SpeechMetadata: Speech annotation for text content.
+	SpeechMetadata *GenaiVertexV1SpeechAnnotation `json:"speechMetadata,omitempty"`
+	// StartIndex: Start of segment of the response that is attributed to this
+	// source. Index indicates the start of the segment, measured in bytes.
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// UrlCitation: NOTE: We use these instead of the Citation message for
+	// historical reasons. A URL citation annotation.
+	UrlCitation *GenaiVertexV1UrlCitation `json:"urlCitation,omitempty"`
+	// WordInfo: Word-level ASR annotation with timing and speaker info.
+	WordInfo *GenaiVertexV1WordInfo `json:"wordInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndIndex") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1TextContentAnnotation) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1TextContentAnnotation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1TextDelta struct {
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1TextDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1TextDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1TextResponseFormat: Configuration for text output format.
+type GenaiVertexV1TextResponseFormat struct {
+	// MimeType: The MIME type of the text output.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "TYPE_APPLICATION_JSON" - JSON output format.
+	//   "TYPE_TEXT_PLAIN" - Plain text output format.
+	MimeType string `json:"mimeType,omitempty"`
+	// Schema: The JSON schema that the output should conform to. Only applicable
+	// when mime_type is application/json.
+	Schema *GenaiVertexV1Struct `json:"schema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MimeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MimeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1TextResponseFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1TextResponseFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ThoughtSignatureDelta struct {
+	// Signature: Signature to match the backend source to be part of the
+	// generation.
+	Signature string `json:"signature,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Signature") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Signature") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ThoughtSignatureDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ThoughtSignatureDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ThoughtStep: A thought step.
+type GenaiVertexV1ThoughtStep struct {
+	// Signature: A signature hash for backend validation.
+	Signature string `json:"signature,omitempty"`
+	// Summary: A summary of the thought.
+	Summary []*GenaiVertexV1Content `json:"summary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Signature") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Signature") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ThoughtStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ThoughtStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1ThoughtSummaryDelta struct {
+	// Content: A new summary item to be added to the thought.
+	Content *GenaiVertexV1Content `json:"content,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ThoughtSummaryDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ThoughtSummaryDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Tool: A tool that can be used by the model.
+type GenaiVertexV1Tool struct {
+	// CodeExecution: A tool that can be used by the model to execute code.
+	CodeExecution *GenaiVertexV1CodeExecution `json:"codeExecution,omitempty"`
+	// ComputerUse: Tool to support the model interacting directly with the
+	// computer.
+	ComputerUse *GenaiVertexV1ComputerUse `json:"computerUse,omitempty"`
+	// FileSearch: A tool that can be used by the model to search files.
+	FileSearch *GenaiVertexV1FileSearch `json:"fileSearch,omitempty"`
+	// Function: A function that can be used by the model.
+	Function *GenaiVertexV1Function `json:"function,omitempty"`
+	// GoogleMaps: A tool that can be used by the model to search Google Maps.
+	GoogleMaps *GenaiVertexV1GoogleMaps `json:"googleMaps,omitempty"`
+	// GoogleSearch: A tool that can be used by the model to search Google.
+	GoogleSearch *GenaiVertexV1GoogleSearch `json:"googleSearch,omitempty"`
+	// McpServer: A MCPServer is a server that can be called by the model to
+	// perform actions.
+	McpServer *GenaiVertexV1McpServer `json:"mcpServer,omitempty"`
+	// Retrieval: A tool that can be used by the model to retrieve files.
+	Retrieval *GenaiVertexV1Retrieval `json:"retrieval,omitempty"`
+	// UrlContext: A tool that can be used by the model to fetch URL context.
+	UrlContext *GenaiVertexV1UrlContext `json:"urlContext,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeExecution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeExecution") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Tool) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Tool
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ToolCallStep: Tool call step.
+type GenaiVertexV1ToolCallStep struct {
+	CodeExecutionCall *GenaiVertexV1CodeExecutionCallStep `json:"codeExecutionCall,omitempty"`
+	FileSearchCall    *GenaiVertexV1FileSearchCallStep    `json:"fileSearchCall,omitempty"`
+	FunctionCall      *GenaiVertexV1FunctionCallStep      `json:"functionCall,omitempty"`
+	GoogleMapsCall    *GenaiVertexV1GoogleMapsCallStep    `json:"googleMapsCall,omitempty"`
+	GoogleSearchCall  *GenaiVertexV1GoogleSearchCallStep  `json:"googleSearchCall,omitempty"`
+	// Id: Required. A unique ID for this specific tool call.
+	Id             string                           `json:"id,omitempty"`
+	ProcessingCall *GenaiVertexV1ProcessingCallStep `json:"processingCall,omitempty"`
+	RetrievalCall  *GenaiVertexV1RetrievalCallStep  `json:"retrievalCall,omitempty"`
+	// Signature: A signature hash for backend validation.
+	Signature      string                           `json:"signature,omitempty"`
+	UrlContextCall *GenaiVertexV1UrlContextCallStep `json:"urlContextCall,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CodeExecutionCall") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CodeExecutionCall") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ToolCallStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ToolCallStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ToolChoiceConfig: The tool choice configuration containing
+// allowed tools.
+type GenaiVertexV1ToolChoiceConfig struct {
+	// AllowedTools: The allowed tools.
+	AllowedTools *GenaiVertexV1AllowedTools `json:"allowedTools,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedTools") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedTools") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ToolChoiceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ToolChoiceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1ToolResultStep: Tool result step.
+type GenaiVertexV1ToolResultStep struct {
+	// CallId: Required. ID to match the ID from the function call block.
+	CallId              string                                `json:"callId,omitempty"`
+	CodeExecutionResult *GenaiVertexV1CodeExecutionResultStep `json:"codeExecutionResult,omitempty"`
+	FileSearchResult    *GenaiVertexV1FileSearchResultStep    `json:"fileSearchResult,omitempty"`
+	FunctionResult      *GenaiVertexV1FunctionResultStep      `json:"functionResult,omitempty"`
+	GoogleMapsResult    *GenaiVertexV1GoogleMapsResultStep    `json:"googleMapsResult,omitempty"`
+	GoogleSearchResult  *GenaiVertexV1GoogleSearchResultStep  `json:"googleSearchResult,omitempty"`
+	ProcessingResult    *GenaiVertexV1ProcessingResultStep    `json:"processingResult,omitempty"`
+	RetrievalResult     *GenaiVertexV1RetrievalResultStep     `json:"retrievalResult,omitempty"`
+	// Signature: A signature hash for backend validation.
+	Signature        string                             `json:"signature,omitempty"`
+	UrlContextResult *GenaiVertexV1UrlContextResultStep `json:"urlContextResult,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CallId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CallId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1ToolResultStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1ToolResultStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1TranscriptionConfig: Configuration for speech recognition
+// (transcription).
+type GenaiVertexV1TranscriptionConfig struct {
+	// AdaptationPhrases: Optional. A list of phrases to bias the ASR model
+	// towards.
+	AdaptationPhrases []string `json:"adaptationPhrases,omitempty"`
+	// CustomVocabulary: Optional. A list of custom vocabulary phrases to bias the
+	// speech recognition model toward recognizing specific terms.
+	CustomVocabulary []string `json:"customVocabulary,omitempty"`
+	// DiarizationMode: Optional. Configures speaker diarization. Supported values:
+	// "speaker".
+	DiarizationMode string `json:"diarizationMode,omitempty"`
+	// LanguageCodes: Optional. BCP-47 language codes providing hints about the
+	// languages present in the audio. If omitted or empty, defaults to automatic
+	// language detection.
+	LanguageCodes []string `json:"languageCodes,omitempty"`
+	// TimestampGranularities: Optional. The granularity of timestamps to include
+	// in the transcription output. Supported values: "word". If empty, no
+	// timestamps are generated.
+	TimestampGranularities []string `json:"timestampGranularities,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdaptationPhrases") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdaptationPhrases") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1TranscriptionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1TranscriptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1UrlCitation: A URL citation annotation.
+type GenaiVertexV1UrlCitation struct {
+	// Title: The title of the URL.
+	Title string `json:"title,omitempty"`
+	// Url: The URL.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Title") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Title") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlCitation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1UrlContext: A tool that can be used by the model to fetch URL
+// context.
+type GenaiVertexV1UrlContext struct {
+}
+
+// GenaiVertexV1UrlContextCallContentUrlContextCallArguments: The arguments to
+// pass to the URL context.
+type GenaiVertexV1UrlContextCallContentUrlContextCallArguments struct {
+	// Urls: The URLs to fetch.
+	Urls []string `json:"urls,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Urls") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Urls") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlContextCallContentUrlContextCallArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlContextCallContentUrlContextCallArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1UrlContextCallDelta struct {
+	Arguments *GenaiVertexV1UrlContextCallContentUrlContextCallArguments `json:"arguments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlContextCallDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlContextCallDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1UrlContextCallStep: URL context call step.
+type GenaiVertexV1UrlContextCallStep struct {
+	// Arguments: Required. The arguments to pass to the URL context.
+	Arguments *GenaiVertexV1UrlContextCallStepUrlContextCallStepArguments `json:"arguments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Arguments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Arguments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlContextCallStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlContextCallStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1UrlContextCallStepUrlContextCallStepArguments: The arguments to
+// pass to the URL context.
+type GenaiVertexV1UrlContextCallStepUrlContextCallStepArguments struct {
+	// Urls: The URLs to fetch.
+	Urls []string `json:"urls,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Urls") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Urls") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlContextCallStepUrlContextCallStepArguments) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlContextCallStepUrlContextCallStepArguments
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1UrlContextResultContentUrlContextResult: The result of the URL
+// context.
+type GenaiVertexV1UrlContextResultContentUrlContextResult struct {
+	// Status: The status of the URL retrieval.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified status. This value should not be used.
+	//   "SUCCESS" - Url retrieval is successful.
+	//   "ERROR" - Url retrieval is failed due to error.
+	//   "PAYWALL" - Url retrieval is failed because the content is behind paywall.
+	//   "UNSAFE" - Url retrieval is failed because the content is unsafe.
+	Status string `json:"status,omitempty"`
+	// Url: The URL that was fetched.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Status") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlContextResultContentUrlContextResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlContextResultContentUrlContextResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1UrlContextResultDelta struct {
+	IsError bool                                                    `json:"isError,omitempty"`
+	Result  []*GenaiVertexV1UrlContextResultContentUrlContextResult `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlContextResultDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlContextResultDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1UrlContextResultStep: URL context result step.
+type GenaiVertexV1UrlContextResultStep struct {
+	// IsError: Whether the URL context resulted in an error.
+	IsError bool `json:"isError,omitempty"`
+	// Result: Required. The results of the URL context.
+	Result []*GenaiVertexV1UrlContextResultStepUrlContextResultItem `json:"result,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlContextResultStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlContextResultStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1UrlContextResultStepUrlContextResultItem: The result of the URL
+// context.
+type GenaiVertexV1UrlContextResultStepUrlContextResultItem struct {
+	// Status: The status of the URL retrieval.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED"
+	//   "SUCCESS"
+	//   "ERROR"
+	//   "PAYWALL"
+	//   "UNSAFE"
+	Status string `json:"status,omitempty"`
+	// Url: The URL that was fetched.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Status") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Status") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UrlContextResultStepUrlContextResultItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UrlContextResultStepUrlContextResultItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1UserInputStep: Input provided by the user.
+type GenaiVertexV1UserInputStep struct {
+	// ContentList: The content of the step. An array of Content objects.
+	ContentList *GenaiVertexV1ContentList `json:"contentList,omitempty"`
+	// ContentString: The content of the step. A single string.
+	ContentString string `json:"contentString,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContentList") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContentList") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1UserInputStep) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1UserInputStep
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1Value: `Value` represents a dynamically typed value which can
+// be either null, a number, a string, a boolean, a recursive struct value, or
+// a list of values. A producer of value is expected to set one of these
+// variants. Absence of any variant indicates an error.
+type GenaiVertexV1Value struct {
+	// BoolValue: Represents a boolean value.
+	BoolValue bool `json:"boolValue,omitempty"`
+	// ContentValue: Represents rich content (text, image, etc.).
+	ContentValue *GenaiVertexV1Content `json:"contentValue,omitempty"`
+	// ListValue: Represents a repeated `Value`.
+	ListValue *GenaiVertexV1ListValue `json:"listValue,omitempty"`
+	// NullValue: Represents a null value.
+	//
+	// Possible values:
+	//   "NULL_VALUE" - Null value.
+	NullValue string `json:"nullValue,omitempty"`
+	// NumberValue: Represents a double value.
+	NumberValue float64 `json:"numberValue,omitempty"`
+	// StringValue: Represents a string value.
+	StringValue string `json:"stringValue,omitempty"`
+	// StructValue: Represents a structured value.
+	StructValue *GenaiVertexV1Struct `json:"structValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1Value) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1Value
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GenaiVertexV1Value) UnmarshalJSON(data []byte) error {
+	type NoMethod GenaiVertexV1Value
+	var s1 struct {
+		NumberValue gensupport.JSONFloat64 `json:"numberValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumberValue = float64(s1.NumberValue)
+	return nil
+}
+
+// GenaiVertexV1VertexAISearchConfig: Used to specify configuration for
+// VertexAISearch.
+type GenaiVertexV1VertexAISearchConfig struct {
+	// Datastores: Optional. Used to specify Vertex AI Search datastores.
+	Datastores []string `json:"datastores,omitempty"`
+	// Engine: Optional. Used to specify Vertex AI Search engine.
+	Engine string `json:"engine,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Datastores") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Datastores") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1VertexAISearchConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1VertexAISearchConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1VideoConfig: Configuration options for video generation.
+type GenaiVertexV1VideoConfig struct {
+	// Task: Optional task mode for video generation. If not specified, the model
+	// automatically determines the appropriate mode based on the provided text
+	// prompt and input media.
+	//
+	// Possible values:
+	//   "TASK_UNSPECIFIED" - Unspecified task. The task is inferred from the input
+	// prompt and media.
+	//   "TEXT_TO_VIDEO" - Generates video solely from a text prompt.
+	//   "IMAGE_TO_VIDEO" - Generates video from one or two source images. The
+	// first image defines the starting frame, and the optional second image
+	// defines the ending frame.
+	//   "REFERENCE_TO_VIDEO" - Generates video using reference media (such as
+	// images, audio, or video).
+	//   "EDIT" - Modifies an existing input video.
+	//   "EXTEND" - Extends an existing input video.
+	Task string `json:"task,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Task") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Task") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1VideoConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1VideoConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1VideoContent: A video content block.
+type GenaiVertexV1VideoContent struct {
+	// Data: The video content.
+	Data string `json:"data,omitempty"`
+	// MimeTypeString: Flexible MIME type string of the video, superseding
+	// mime_type = 1. Note: Bespoke logic in the GAOS parser/serializer maps this
+	// to the "mime_type" JSON key.
+	MimeTypeString string `json:"mimeTypeString,omitempty"`
+	// Name: A user-defined name for this content block. Can be referenced by the
+	// model in the final response.
+	Name             string                                    `json:"name,omitempty"`
+	ProcessingConfig *GenaiVertexV1VideoContentMediaProcessing `json:"processingConfig,omitempty"`
+	// Possible values:
+	//   "PROCESSING_UNSPECIFIED" - Default. Uses model-specific processing (3.5
+	// Pro+ --> AGENTIC, older models --> STATIC)
+	//   "STATIC" - Fixed-rate frame extraction. All frames placed in context.
+	//   "AGENTIC" - Model-driven dynamic navigation.
+	ProcessingType string `json:"processingType,omitempty"`
+	// Resolution: The resolution of the media.
+	//
+	// Possible values:
+	//   "MEDIA_RESOLUTION_UNSPECIFIED" - Default value. This value is unused.
+	//   "LOW" - Low resolution.
+	//   "MEDIUM" - Medium resolution.
+	//   "HIGH" - High resolution.
+	//   "ULTRA_HIGH" - Ultra high resolution.
+	Resolution string `json:"resolution,omitempty"`
+	// Uri: The URI of the video.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1VideoContent) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1VideoContent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1VideoContentMediaProcessing struct {
+	Static *GenaiVertexV1VideoContentStaticMediaProcessing `json:"static,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Static") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Static") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1VideoContentMediaProcessing) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1VideoContentMediaProcessing
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GenaiVertexV1VideoContentStaticMediaProcessing struct {
+	// EndOffset: Optional. Segment end time. Specified as a decimal number of
+	// seconds followed by an 's' suffix, e.g., "30s". Must be non-negative and
+	// greater than `start_offset` if `start_offset` is set.
+	EndOffset string `json:"endOffset,omitempty"`
+	// Fps: Optional. Video frame-rate sampling density.
+	Fps float64 `json:"fps,omitempty"`
+	// StartOffset: Optional. Segment start time. Specified as a decimal number of
+	// seconds followed by an 's' suffix, e.g., "10.5s". Must be non-negative.
+	StartOffset string `json:"startOffset,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndOffset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndOffset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1VideoContentStaticMediaProcessing) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1VideoContentStaticMediaProcessing
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GenaiVertexV1VideoContentStaticMediaProcessing) UnmarshalJSON(data []byte) error {
+	type NoMethod GenaiVertexV1VideoContentStaticMediaProcessing
+	var s1 struct {
+		Fps gensupport.JSONFloat64 `json:"fps"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Fps = float64(s1.Fps)
+	return nil
+}
+
+type GenaiVertexV1VideoDelta struct {
+	Data string `json:"data,omitempty"`
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "TYPE_MP4" - MP4 video format
+	//   "TYPE_MPEG" - MPEG video format
+	//   "TYPE_MPG" - MPG video format
+	//   "TYPE_MOV" - MOV video format
+	//   "TYPE_AVI" - AVI video format
+	//   "TYPE_X_FLV" - FLV video format
+	//   "TYPE_WEBM" - WebM video format
+	//   "TYPE_WMV" - WMV video format
+	//   "TYPE_3GPP" - 3GPP video format
+	//   "TYPE_JPEG2000" - JPEG 2000 video format
+	MimeType string `json:"mimeType,omitempty"`
+	// Resolution: The resolution of the media.
+	//
+	// Possible values:
+	//   "MEDIA_RESOLUTION_UNSPECIFIED" - Default value. This value is unused.
+	//   "LOW" - Low resolution.
+	//   "MEDIUM" - Medium resolution.
+	//   "HIGH" - High resolution.
+	//   "ULTRA_HIGH" - Ultra high resolution.
+	Resolution string `json:"resolution,omitempty"`
+	Uri        string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1VideoDelta) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1VideoDelta
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1VideoResponseFormat: Configuration for video output format.
+type GenaiVertexV1VideoResponseFormat struct {
+	// AspectRatio: The aspect ratio for the video output.
+	//
+	// Possible values:
+	//   "ASPECT_RATIO_UNSPECIFIED" - Default value. This value is unused.
+	//   "ASPECT_RATIO_SIXTEEN_BY_NINE" - 16:9 aspect ratio.
+	//   "ASPECT_RATIO_NINE_BY_SIXTEEN" - 9:16 aspect ratio.
+	AspectRatio string `json:"aspectRatio,omitempty"`
+	// Delivery: The delivery mode for the video output.
+	//
+	// Possible values:
+	//   "DELIVERY_UNSPECIFIED" - Default value. This value is unused.
+	//   "INLINE" - Video data is returned inline in the response.
+	//   "URI" - Video data is returned as a URI.
+	Delivery string `json:"delivery,omitempty"`
+	// Duration: The duration for the video output.
+	Duration string `json:"duration,omitempty"`
+	// GcsUri: The Cloud Storage URI to store the video output. Required for Vertex
+	// if delivery mode is URI.
+	GcsUri string `json:"gcsUri,omitempty"`
+	// Resolution: The video output resolution. Defaults to 720p.
+	//
+	// Possible values:
+	//   "RESOLUTION_UNSPECIFIED" - Default value. This value is unused.
+	//   "RESOLUTION_THREE_SIXTY_P" - 360p resolution.
+	//   "RESOLUTION_SEVEN_TWENTY_P" - 720p resolution.
+	//   "RESOLUTION_TEN_EIGHTY_P" - 1080p resolution.
+	//   "RESOLUTION_FOUR_K" - 4K resolution.
+	Resolution string `json:"resolution,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AspectRatio") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AspectRatio") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1VideoResponseFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1VideoResponseFormat
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1WordInfo: Word-level ASR annotation for transcription output.
+// Carries the word text, optional timing, and optional speaker attribution.
+type GenaiVertexV1WordInfo struct {
+	// EndOffset: End offset in time of the word relative to the start of the
+	// audio. Present when timestamp_granularities contains "word".
+	EndOffset string `json:"endOffset,omitempty"`
+	// Speaker: Optional. Speaker label for this word (e.g. "spk_1", "spk_2").
+	// Present when diarization_mode is set in TranscriptionConfig.
+	Speaker string `json:"speaker,omitempty"`
+	// StartOffset: Start offset in time of the word relative to the start of the
+	// audio. Present when timestamp_granularities contains "word".
+	StartOffset string `json:"startOffset,omitempty"`
+	// Text: The transcribed word.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndOffset") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndOffset") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1WordInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1WordInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleApiHttpBody: Message that represents an arbitrary HTTP body. It should
 // only be used for payload formats that can't be represented as JSON, such as
 // raw binary or an HTML page. This message can be used both in streaming and
@@ -4960,6 +9099,9 @@ type GoogleCloudAiplatformV1Agent struct {
 	Created string `json:"created,omitempty"`
 	// Description: Optional. The description of the agent.
 	Description string `json:"description,omitempty"`
+	// EffectiveIdentity: Output only. The resolved Agent Identity (SPIFFE
+	// principal) of the agent.
+	EffectiveIdentity string `json:"effectiveIdentity,omitempty"`
 	// Id: Immutable. The user-specified ID for the agent. This ID becomes the
 	// final component of the agent resource name. If not provided, Vertex AI will
 	// generate a value for this ID. The ID can be up to 63 characters and must
@@ -8019,6 +12161,10 @@ type GoogleCloudAiplatformV1Candidate struct {
 	CitationMetadata *GoogleCloudAiplatformV1CitationMetadata `json:"citationMetadata,omitempty"`
 	// Content: Output only. The content of the candidate.
 	Content *GoogleCloudAiplatformV1Content `json:"content,omitempty"`
+	// ContinuationToken: Output only. An optional opaque continuation token
+	// returned when `finish_reason` is `CONTINUATION`. Clients can pass this token
+	// in a subsequent `GenerateContentRequest` to continue generation.
+	ContinuationToken string `json:"continuationToken,omitempty"`
 	// FinishMessage: Output only. Describes the reason the model stopped
 	// generating tokens in more detail. This field is returned only when
 	// `finish_reason` is set.
@@ -8059,6 +12205,11 @@ type GoogleCloudAiplatformV1Candidate struct {
 	// semantically invalid. This can happen, for example, if function calling is
 	// not enabled or the generated function is not in the function declaration.
 	//   "NO_IMAGE" - The model was expected to generate an image, but didn't.
+	//   "MALFORMED_RESPONSE" - Finishes due to malformed response.
+	//   "CONTINUATION" - Token generation was stopped because the response reached
+	// the per-request token limit, but generation is not yet complete. The model
+	// response can be continued via a subsequent request using the returned
+	// `continuation_token`.
 	FinishReason string `json:"finishReason,omitempty"`
 	// GroundingMetadata: Output only. Metadata returned when grounding is enabled.
 	// It contains the sources used to ground the generated content.
@@ -13684,6 +17835,8 @@ type GoogleCloudAiplatformV1EvaluationInstance struct {
 	// AgentData: Optional. Deprecated: Use `agent_eval_data` instead. Data used
 	// for agent evaluation.
 	AgentData *GoogleCloudAiplatformV1EvaluationInstanceDeprecatedAgentData `json:"agentData,omitempty"`
+	// AgentEvalData: Optional. Data used for agent evaluation.
+	AgentEvalData *GoogleCloudAiplatformV1AgentData `json:"agentEvalData,omitempty"`
 	// InteractionsDataSource: Optional. Source for populating `AgentData` from an
 	// Interactions API interaction. If set, no other agent data source fields
 	// (`cloud_trace_agent_data_source`, `agent_eval_data`, `agent_data`) may be
@@ -28020,6 +32173,9 @@ type GoogleCloudAiplatformV1ModelContainerSpec struct {
 	// occur. This field corresponds to the `env` field of the Kubernetes
 	// Containers v1 core API
 	// (https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.23/#container-v1-core).
+	// At most 200 environment variables can be specified. Each variable
+	// (`NAME=value`) must be smaller than 128 KiB, and the total size of all
+	// variables must not exceed 512 KiB.
 	Env []*GoogleCloudAiplatformV1EnvVar `json:"env,omitempty"`
 	// GrpcPorts: Immutable. List of ports to expose from the container. Vertex AI
 	// sends gRPC prediction requests that it receives to the first port on this
@@ -31367,6 +35523,11 @@ type GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopePredica
 	ModelCallErrors *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate `json:"modelCallErrors,omitempty"`
 	// ModelCalls: Filter on the number of underlying LLM calls within a session.
 	ModelCalls *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate `json:"modelCalls,omitempty"`
+	// ServiceVersion: Filter on the versions that served a session
+	// (`service.version` OTel resource attribute); matches if any of them is
+	// listed. At most one is allowed. On Vertex AI Agent Engine, this is the
+	// runtime revision id, currently set only for agents created via v1beta1.
+	ServiceVersion *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityStringPredicate `json:"serviceVersion,omitempty"`
 	// ToolCallErrors: Filter on the number of tool call errors within a session.
 	ToolCallErrors *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate `json:"toolCallErrors,omitempty"`
 	// ToolCalls: Filter on the number of underlying tool calls within a session.
@@ -31390,6 +35551,30 @@ type GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopePredica
 
 func (s GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopePredicate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilitySessionScopePredicate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityStringPredicate:
+// Defines a predicate for filtering based on a string value.
+type GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityStringPredicate struct {
+	// Values: Required. The values to match exactly (case-sensitive). Requires 1
+	// to 20 values, each at most 128 characters long.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityStringPredicate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityStringPredicate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -31423,6 +35608,11 @@ func (s GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityTraceScope) Mars
 type GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityTraceScopePredicate struct {
 	// Duration: Filter on the duration of a trace (in seconds).
 	Duration *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate `json:"duration,omitempty"`
+	// ServiceVersion: Filter on the version that served a trace (`service.version`
+	// OTel resource attribute). At most one is allowed. On Vertex AI Agent Engine,
+	// this is the runtime revision id, currently set only for agents created via
+	// v1beta1.
+	ServiceVersion *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityStringPredicate `json:"serviceVersion,omitempty"`
 	// TotalTokenUsage: Filter on the total token usage within a trace.
 	TotalTokenUsage *GoogleCloudAiplatformV1OnlineEvaluatorCloudObservabilityNumericPredicate `json:"totalTokenUsage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Duration") to
@@ -32037,7 +36227,7 @@ func (s GoogleCloudAiplatformV1PairwiseSummarizationQualitySpec) MarshalJSON() (
 
 // GoogleCloudAiplatformV1Part: A datatype containing media that is part of a
 // multi-part Content message. A `Part` consists of data which has an
-// associated datatype. A `Part` can only contain one of the accepted types in
+// associated datatype. A `Part` must contain one of the accepted types in
 // `Part.data`. For media types that are not text, `Part` must have a fixed
 // IANA MIME type identifying the type and subtype of the media if
 // `inline_data` or `file_data` field is filled with raw bytes.
@@ -43203,6 +47393,31 @@ func (s GoogleCloudAiplatformV1SchemaPromptSpecAppBuilderDataLinkedResource) Mar
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1SchemaPromptSpecContentMetadata: Metadata the model
+// returned alongside the content it generated.
+type GoogleCloudAiplatformV1SchemaPromptSpecContentMetadata struct {
+	// CitationMetadata: Optional. Citations that apply to the content.
+	CitationMetadata *GoogleCloudAiplatformV1CitationMetadata `json:"citationMetadata,omitempty"`
+	// GroundingMetadata: Optional. Sources used to ground the content.
+	GroundingMetadata *GoogleCloudAiplatformV1GroundingMetadata `json:"groundingMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CitationMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CitationMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1SchemaPromptSpecContentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1SchemaPromptSpecContentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1SchemaPromptSpecInteractionData: Defines data for an
 // interaction prompt.
 type GoogleCloudAiplatformV1SchemaPromptSpecInteractionData struct {
@@ -43372,6 +47587,11 @@ func (s GoogleCloudAiplatformV1SchemaPromptSpecReferenceSentencePairList) Marsha
 type GoogleCloudAiplatformV1SchemaPromptSpecStructuredPrompt struct {
 	// AppBuilderData: Data for app builder use case.
 	AppBuilderData *GoogleCloudAiplatformV1SchemaPromptSpecAppBuilderData `json:"appBuilderData,omitempty"`
+	// ContentMetadata: Optional. Metadata the model returned with each of
+	// `prompt_message.contents`, such as citations and grounding sources. This
+	// maps 1:1 to PromptMessage.contents; an entry is empty when its content has
+	// no metadata.
+	ContentMetadata []*GoogleCloudAiplatformV1SchemaPromptSpecContentMetadata `json:"contentMetadata,omitempty"`
 	// Context: Preamble: The context of the prompt.
 	Context *GoogleCloudAiplatformV1Content `json:"context,omitempty"`
 	// Examples: Preamble: A set of examples for expected model response.
@@ -68646,6 +72866,359 @@ func (c *IndexesOperationsWaitCall) Do(opts ...googleapi.CallOption) (*GoogleLon
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.indexes.operations.wait", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InteractionsCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Cancels an interaction.
+//
+//   - name: The name of the interaction to cancel. Format:
+//     `interactions/{interaction}`.
+func (r *InteractionsService) Cancel(name string) *InteractionsCancelCall {
+	c := &InteractionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InteractionsCancelCall) Fields(s ...googleapi.Field) *InteractionsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InteractionsCancelCall) Context(ctx context.Context) *InteractionsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InteractionsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InteractionsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.interactions.cancel", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.interactions.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenaiVertexV1Interaction.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InteractionsCancelCall) Do(opts ...googleapi.CallOption) (*GenaiVertexV1Interaction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenaiVertexV1Interaction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.interactions.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InteractionsGetPollCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPoll: Fully typed proto, unary version of GetInteraction that returns
+// Interaction proto.
+//
+//   - name: The name of the interaction to retrieve. Format:
+//     interactions/{interaction}.
+func (r *InteractionsService) GetPoll(name string) *InteractionsGetPollCall {
+	c := &InteractionsGetPollCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// LastEventId sets the optional parameter "lastEventId": If set, resumes the
+// interaction stream from the chunk after the event marked by the event id.
+// Can only be used if `stream` is true.
+func (c *InteractionsGetPollCall) LastEventId(lastEventId string) *InteractionsGetPollCall {
+	c.urlParams_.Set("lastEventId", lastEventId)
+	return c
+}
+
+// Stream sets the optional parameter "stream": If true, streams the
+// interaction events as Server-Sent Events.
+func (c *InteractionsGetPollCall) Stream(stream bool) *InteractionsGetPollCall {
+	c.urlParams_.Set("stream", fmt.Sprint(stream))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InteractionsGetPollCall) Fields(s ...googleapi.Field) *InteractionsGetPollCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InteractionsGetPollCall) IfNoneMatch(entityTag string) *InteractionsGetPollCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InteractionsGetPollCall) Context(ctx context.Context) *InteractionsGetPollCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InteractionsGetPollCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InteractionsGetPollCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:poll")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.interactions.getPoll", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.interactions.getPoll" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenaiVertexV1Interaction.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InteractionsGetPollCall) Do(opts ...googleapi.CallOption) (*GenaiVertexV1Interaction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenaiVertexV1Interaction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.interactions.getPoll", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type InteractionsGetStreamCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetStream: Fully typed proto, streaming version of GetInteraction that
+// returns Interaction proto.
+//
+//   - name: The name of the interaction to retrieve. Format:
+//     interactions/{interaction}.
+func (r *InteractionsService) GetStream(name string) *InteractionsGetStreamCall {
+	c := &InteractionsGetStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// LastEventId sets the optional parameter "lastEventId": If set, resumes the
+// interaction stream from the chunk after the event marked by the event id.
+// Can only be used if `stream` is true.
+func (c *InteractionsGetStreamCall) LastEventId(lastEventId string) *InteractionsGetStreamCall {
+	c.urlParams_.Set("lastEventId", lastEventId)
+	return c
+}
+
+// Stream sets the optional parameter "stream": If true, streams the
+// interaction events as Server-Sent Events.
+func (c *InteractionsGetStreamCall) Stream(stream bool) *InteractionsGetStreamCall {
+	c.urlParams_.Set("stream", fmt.Sprint(stream))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *InteractionsGetStreamCall) Fields(s ...googleapi.Field) *InteractionsGetStreamCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *InteractionsGetStreamCall) IfNoneMatch(entityTag string) *InteractionsGetStreamCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *InteractionsGetStreamCall) Context(ctx context.Context) *InteractionsGetStreamCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *InteractionsGetStreamCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InteractionsGetStreamCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:stream")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.interactions.getStream", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.interactions.getStream" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenaiVertexV1InteractionStreamingEvent.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *InteractionsGetStreamCall) Do(opts ...googleapi.CallOption) (*GenaiVertexV1InteractionStreamingEvent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenaiVertexV1InteractionStreamingEvent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.interactions.getStream", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -115565,6 +120138,654 @@ func (c *ProjectsLocationsIndexesOperationsWaitCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.indexes.operations.wait", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInteractionsCreateCall struct {
+	s                                     *Service
+	projectsId                            string
+	locationsId                           string
+	genaivertexv1createinteractionrequest *GenaiVertexV1CreateInteractionRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// Create: Creates an interaction.
+//
+// - locationsId: .
+// - projectsId: .
+func (r *ProjectsLocationsInteractionsService) Create(projectsId string, locationsId string, genaivertexv1createinteractionrequest *GenaiVertexV1CreateInteractionRequest) *ProjectsLocationsInteractionsCreateCall {
+	c := &ProjectsLocationsInteractionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.genaivertexv1createinteractionrequest = genaivertexv1createinteractionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInteractionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInteractionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInteractionsCreateCall) Context(ctx context.Context) *ProjectsLocationsInteractionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInteractionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInteractionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genaivertexv1createinteractionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/interactions:create")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":  c.projectsId,
+		"locationsId": c.locationsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.interactions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenaiVertexV1Interaction.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInteractionsCreateCall) Do(opts ...googleapi.CallOption) (*GenaiVertexV1Interaction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenaiVertexV1Interaction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInteractionsCreateStreamCall struct {
+	s                                     *Service
+	projectsId                            string
+	locationsId                           string
+	genaivertexv1createinteractionrequest *GenaiVertexV1CreateInteractionRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// CreateStream: Creates an interaction and streams the response.
+//
+// - locationsId: .
+// - projectsId: .
+func (r *ProjectsLocationsInteractionsService) CreateStream(projectsId string, locationsId string, genaivertexv1createinteractionrequest *GenaiVertexV1CreateInteractionRequest) *ProjectsLocationsInteractionsCreateStreamCall {
+	c := &ProjectsLocationsInteractionsCreateStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectsId = projectsId
+	c.locationsId = locationsId
+	c.genaivertexv1createinteractionrequest = genaivertexv1createinteractionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInteractionsCreateStreamCall) Fields(s ...googleapi.Field) *ProjectsLocationsInteractionsCreateStreamCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInteractionsCreateStreamCall) Context(ctx context.Context) *ProjectsLocationsInteractionsCreateStreamCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInteractionsCreateStreamCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInteractionsCreateStreamCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genaivertexv1createinteractionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{projectsId}/locations/{locationsId}/interactions:createStream")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectsId":  c.projectsId,
+		"locationsId": c.locationsId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactions.createStream", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.interactions.createStream" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenaiVertexV1InteractionStreamingEvent.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInteractionsCreateStreamCall) Do(opts ...googleapi.CallOption) (*GenaiVertexV1InteractionStreamingEvent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenaiVertexV1InteractionStreamingEvent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactions.createStream", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInteractionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an interaction.
+//
+//   - name: The name of the interaction to delete. Format:
+//     interactions/{interaction}.
+func (r *ProjectsLocationsInteractionsService) Delete(name string) *ProjectsLocationsInteractionsDeleteCall {
+	c := &ProjectsLocationsInteractionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInteractionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsInteractionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInteractionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsInteractionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInteractionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInteractionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.interactions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenaiVertexV1DeleteInteractionResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsInteractionsDeleteCall) Do(opts ...googleapi.CallOption) (*GenaiVertexV1DeleteInteractionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenaiVertexV1DeleteInteractionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInteractionsHttpCancelCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Cancel: Cancels an interaction by id. This only applies to background
+// interactions that are still running.
+//
+//   - name: The name of the interaction to cancel. Format:
+//     `interactions/{interaction}`.
+func (r *ProjectsLocationsInteractionsHttpService) Cancel(name string) *ProjectsLocationsInteractionsHttpCancelCall {
+	c := &ProjectsLocationsInteractionsHttpCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInteractionsHttpCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsInteractionsHttpCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInteractionsHttpCancelCall) Context(ctx context.Context) *ProjectsLocationsInteractionsHttpCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInteractionsHttpCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInteractionsHttpCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactionsHttp.cancel", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.interactionsHttp.cancel" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleApiHttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInteractionsHttpCancelCall) Do(opts ...googleapi.CallOption) (*GoogleApiHttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleApiHttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactionsHttp.cancel", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInteractionsHttpCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	genaivertexv1createinteractionhttprequest *GenaiVertexV1CreateInteractionHttpRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Creates a new interaction.
+//
+//   - parent: The parent resource where this interaction will be created.
+//     Format: `projects/{project}/locations/{location}` Supported only by the
+//     Vertex API only.
+func (r *ProjectsLocationsInteractionsHttpService) Create(parent string, genaivertexv1createinteractionhttprequest *GenaiVertexV1CreateInteractionHttpRequest) *ProjectsLocationsInteractionsHttpCreateCall {
+	c := &ProjectsLocationsInteractionsHttpCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.genaivertexv1createinteractionhttprequest = genaivertexv1createinteractionhttprequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInteractionsHttpCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsInteractionsHttpCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInteractionsHttpCreateCall) Context(ctx context.Context) *ProjectsLocationsInteractionsHttpCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInteractionsHttpCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInteractionsHttpCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.genaivertexv1createinteractionhttprequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/interactionsHttp")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactionsHttp.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.interactionsHttp.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleApiHttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInteractionsHttpCreateCall) Do(opts ...googleapi.CallOption) (*GoogleApiHttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleApiHttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactionsHttp.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsInteractionsHttpGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the full details of a single interaction based on its
+// `Interaction.id`.
+//
+//   - name: The name of the interaction to retrieve. Format:
+//     interactions/{interaction}.
+func (r *ProjectsLocationsInteractionsHttpService) Get(name string) *ProjectsLocationsInteractionsHttpGetCall {
+	c := &ProjectsLocationsInteractionsHttpGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// LastEventId sets the optional parameter "lastEventId": If set, resumes the
+// interaction stream from the chunk after the event marked by the event id.
+// Can only be used if `stream` is true.
+func (c *ProjectsLocationsInteractionsHttpGetCall) LastEventId(lastEventId string) *ProjectsLocationsInteractionsHttpGetCall {
+	c.urlParams_.Set("lastEventId", lastEventId)
+	return c
+}
+
+// Stream sets the optional parameter "stream": If true, streams the
+// interaction events as Server-Sent Events.
+func (c *ProjectsLocationsInteractionsHttpGetCall) Stream(stream bool) *ProjectsLocationsInteractionsHttpGetCall {
+	c.urlParams_.Set("stream", fmt.Sprint(stream))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsInteractionsHttpGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsInteractionsHttpGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsInteractionsHttpGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsInteractionsHttpGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsInteractionsHttpGetCall) Context(ctx context.Context) *ProjectsLocationsInteractionsHttpGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsInteractionsHttpGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsInteractionsHttpGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactionsHttp.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.interactionsHttp.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleApiHttpBody.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsInteractionsHttpGetCall) Do(opts ...googleapi.CallOption) (*GoogleApiHttpBody, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleApiHttpBody{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.interactionsHttp.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

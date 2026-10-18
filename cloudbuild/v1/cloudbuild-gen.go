@@ -1164,6 +1164,8 @@ type BuildOptions struct {
 	// Possible values:
 	//   "NOT_VERIFIED" - Not a verifiable build (the default).
 	//   "VERIFIED" - Build must be verified.
+	//   "BEST_EFFORT" - Build verification is best effort. If provenance
+	// generation fails, the build will still succeed.
 	RequestedVerifyOption string `json:"requestedVerifyOption,omitempty"`
 	// ResolvedWorkerRelease: Output only. Worker release resolved from the release
 	// channel.
@@ -1221,6 +1223,66 @@ type BuildOptions struct {
 func (s BuildOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BuildResourceUsage: Aggregated/summary metrics over the entire build
+// lifecycle.
+type BuildResourceUsage struct {
+	// AverageCpuUtilization: Output only. The average CPU utilization ratio across
+	// all vCPUs over the duration of the build, expressed as a fraction in the
+	// range [0.0, 1.0].
+	AverageCpuUtilization float64 `json:"averageCpuUtilization,omitempty"`
+	// AverageMemoryUtilization: Output only. The average memory utilization ratio
+	// over the duration of the build, expressed as a fraction in the range [0.0,
+	// 1.0].
+	AverageMemoryUtilization float64 `json:"averageMemoryUtilization,omitempty"`
+	// PeakCpuUtilization: Output only. The highest CPU utilization ratio across
+	// all vCPUs observed over the duration of the build, expressed as a fraction
+	// in the range [0.0, 1.0].
+	PeakCpuUtilization float64 `json:"peakCpuUtilization,omitempty"`
+	// PeakMemoryUtilization: Output only. The highest memory utilization ratio
+	// observed over the duration of the build, expressed as a fraction in the
+	// range [0.0, 1.0].
+	PeakMemoryUtilization float64 `json:"peakMemoryUtilization,omitempty"`
+	// TotalCpuDuration: Output only. Total CPU execution time consumed across all
+	// cores during build execution.
+	TotalCpuDuration string `json:"totalCpuDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AverageCpuUtilization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AverageCpuUtilization") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BuildResourceUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildResourceUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *BuildResourceUsage) UnmarshalJSON(data []byte) error {
+	type NoMethod BuildResourceUsage
+	var s1 struct {
+		AverageCpuUtilization    gensupport.JSONFloat64 `json:"averageCpuUtilization"`
+		AverageMemoryUtilization gensupport.JSONFloat64 `json:"averageMemoryUtilization"`
+		PeakCpuUtilization       gensupport.JSONFloat64 `json:"peakCpuUtilization"`
+		PeakMemoryUtilization    gensupport.JSONFloat64 `json:"peakMemoryUtilization"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AverageCpuUtilization = float64(s1.AverageCpuUtilization)
+	s.AverageMemoryUtilization = float64(s1.AverageMemoryUtilization)
+	s.PeakCpuUtilization = float64(s1.PeakCpuUtilization)
+	s.PeakMemoryUtilization = float64(s1.PeakMemoryUtilization)
+	return nil
 }
 
 // BuildStep: A step in the build pipeline.
@@ -2037,7 +2099,8 @@ func (s GenericArtifact) MarshalJSON() ([]byte, error) {
 // GenericArtifactDependency: Represents a generic artifact as a build
 // dependency.
 type GenericArtifactDependency struct {
-	// DestPath: Required. Where the artifact files should be placed on the worker.
+	// DestPath: Optional. Where the artifact files should be placed on the worker.
+	// Required when specified in `Build.dependencies`.
 	DestPath string `json:"destPath,omitempty"`
 	// Resource: Required. The location to download the artifact files from. Ex:
 	// projects/p1/locations/us/repositories/r1/packages/p1/versions/v1
@@ -3447,6 +3510,8 @@ type Results struct {
 	// PythonPackages: Python artifacts uploaded to Artifact Registry at the end of
 	// the build.
 	PythonPackages []*UploadedPythonPackage `json:"pythonPackages,omitempty"`
+	// ResourceUsage: Output only. Aggregated metrics for the build.
+	ResourceUsage *BuildResourceUsage `json:"resourceUsage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArtifactManifest") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

@@ -436,7 +436,7 @@ type BatchCreateTasksRequest struct {
 	// specified in parent field of each CreateTaskRequest will be the same. This
 	// validation happens on the client side as well as in the handler.
 	// BatchCreateTasksRequest.parent will also be the same value as the individual
-	// CreateTaskRequest.parent . The maximum number of requests is 100.
+	// `CreateTaskRequest.parent`. The maximum number of requests is 100.
 	Requests []*CreateTaskRequest `json:"requests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RequestId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -642,7 +642,7 @@ type CmekConfig struct {
 	KmsKey string `json:"kmsKey,omitempty"`
 	// Name: Output only. The config resource name which includes the project and
 	// location and must end in 'cmekConfig', in the format
-	// projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`
+	// `projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1033,7 +1033,7 @@ type HttpTarget struct {
 	// by Cloud Tasks and derived from HttpRequest.url. * Content-Length: This will
 	// be computed by Cloud Tasks. `Content-Type` won't be set by Cloud Tasks. You
 	// can explicitly set `Content-Type` to a media type when the task is created.
-	// For example,`Content-Type` can be set to "application/octet-stream" or
+	// For example, `Content-Type` can be set to "application/octet-stream" or
 	// "application/json". The default value is set to "application/json". *
 	// User-Agent: This will be set to "Google-Cloud-Tasks". Headers which can
 	// have multiple values (according to RFC2616) can be specified using
@@ -2216,11 +2216,11 @@ type ProjectsLocationsGetCmekConfigCall struct {
 }
 
 // GetCmekConfig: Gets the CMEK config. Gets the Customer Managed Encryption
-// Key configured with the Cloud Tasks lcoation. By default there is no kms_key
-// configured.
+// Key configured with the Cloud Tasks location. By default there is no
+// `kms_key` configured.
 //
 //   - name: The config. For example:
-//     projects/PROJECT_ID/locations/LOCATION_ID/CmekConfig`.
+//     `projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`.
 func (r *ProjectsLocationsService) GetCmekConfig(name string) *ProjectsLocationsGetCmekConfigCall {
 	c := &ProjectsLocationsGetCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2507,7 +2507,7 @@ type ProjectsLocationsUpdateCmekConfigCall struct {
 //
 //   - name: Output only. The config resource name which includes the project and
 //     location and must end in 'cmekConfig', in the format
-//     projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`.
+//     `projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`.
 func (r *ProjectsLocationsService) UpdateCmekConfig(name string, cmekconfig *CmekConfig) *ProjectsLocationsUpdateCmekConfigCall {
 	c := &ProjectsLocationsUpdateCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

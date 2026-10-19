@@ -455,6 +455,10 @@ type CreateFromSourceRequest struct {
 	// Quota: Optional. The limit for how much data can be written to this volume,
 	// in MiB.
 	Quota int64 `json:"quota,omitempty,string"`
+	// RequestId: Optional. A unique ID used to identify the request, so retries
+	// are idempotent. Must be a valid UUID4; the zero UUID
+	// (`00000000-0000-0000-0000-000000000000`) is not supported.
+	RequestId string `json:"requestId,omitempty"`
 	// VolumeId: Required. Unique identifier for the volume which also appears in
 	// the volumes resource name.
 	VolumeId string `json:"volumeId,omitempty"`
@@ -2200,7 +2204,10 @@ func (s Replication) MarshalJSON() ([]byte, error) {
 
 // RestoreConfig: Optional configuration for restore backup operations.
 type RestoreConfig struct {
-	// PathPatterns: Optional. Example: If you want to restore
+	// PathPatterns: Optional. A collection of paths/patterns to restore from the
+	// backup. If empty, a full restore is performed. A valid path is relative to
+	// the file share's mount point and must not include a trailing slash. The path
+	// must start with a leading `/`. Example: If you want to restore
 	// `/mnt/share/dir1/file.txt`, the path pattern must be `/dir1/file.txt`. If
 	// you want to restore `/mnt/share/dir1/`, the path pattern must be `/dir1`.
 	// Currently only single path is supported, Glob patterns are not supported.
@@ -2513,6 +2520,10 @@ type UnfreezeVolumeRequest struct {
 	// Quota: Optional. The limit for how much data can be written to this volume,
 	// in MiB.
 	Quota int64 `json:"quota,omitempty,string"`
+	// RequestId: Optional. A unique ID used to identify the request, so retries
+	// are idempotent. Must be a valid UUID4; the zero UUID
+	// (`00000000-0000-0000-0000-000000000000`) is not supported.
+	RequestId string `json:"requestId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IpAcls") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See

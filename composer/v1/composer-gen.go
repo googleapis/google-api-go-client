@@ -1157,6 +1157,33 @@ func (s ImageVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ImageVersionRollbackTarget: The image version an environment can be rolled
+// back to.
+type ImageVersionRollbackTarget struct {
+	// ImageVersion: Output only. The image version the environment can be rolled
+	// back to.
+	ImageVersion string `json:"imageVersion,omitempty"`
+	// LastActiveTime: Output only. The last time when the environment was running
+	// this image version.
+	LastActiveTime string `json:"lastActiveTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImageVersionRollbackTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageVersionRollbackTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Line: Contains information about a single line from logs.
 type Line struct {
 	// Content: Text content of the log line.
@@ -2112,6 +2139,11 @@ type SoftwareConfig struct {
 	// list (/composer/docs/concepts/versioning/composer-versions) and versioning
 	// overview (/composer/docs/concepts/versioning/composer-versioning-overview).
 	ImageVersion string `json:"imageVersion,omitempty"`
+	// ImageVersionRollbackTargets: Output only. The list of image versions the
+	// environment can be rolled back to, sorted by last_active_time in descending
+	// order (most recent first). This field is supported for Cloud Composer
+	// environments in versions composer-3-airflow-*.*.*-build.* and newer.
+	ImageVersionRollbackTargets []*ImageVersionRollbackTarget `json:"imageVersionRollbackTargets,omitempty"`
 	// PypiPackages: Optional. Custom Python Package Index (PyPI) packages to be
 	// installed in the environment. Keys refer to the lowercase package name such
 	// as "numpy" and values are the lowercase extras and version specifier such as

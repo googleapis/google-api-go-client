@@ -2232,7 +2232,6 @@ type GoogleIamV3PolicyBinding struct {
 	// `iam.googleapis.com/WorkforcePoolIdentity` -
 	// `iam.googleapis.com/WorkloadPoolIdentity` -
 	// `iam.googleapis.com/ServiceAccount` - `iam.googleapis.com/AgentPoolIdentity`
-	// (available in Preview)
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
 	// CreateTime: Output only. The time when the policy binding was created.
 	CreateTime string `json:"createTime,omitempty"`

@@ -24,6 +24,18 @@ func (unexpectedReader) Read([]byte) (int, error) {
 	return 0, fmt.Errorf("unexpected read in test")
 }
 
+type contextBoundReader struct {
+	ctx context.Context
+	r   io.Reader
+}
+
+func (cr *contextBoundReader) Read(p []byte) (int, error) {
+	if err := cr.ctx.Err(); err != nil {
+		return 0, err
+	}
+	return cr.r.Read(p)
+}
+
 // event is an expected request/response pair
 type event struct {
 	// the byte range header that should be present in a request.
@@ -94,7 +106,11 @@ func (t *interruptibleTransport) RoundTrip(req *http.Request) (*http.Response, e
 		t.buf = append(t.buf, buf...)
 	}
 
-	tc := &trackingCloser{unexpectedReader{}, t.bodies}
+	var bodyReader io.Reader = unexpectedReader{}
+	if ev.responseStatus == http.StatusOK {
+		bodyReader = &contextBoundReader{ctx: req.Context(), r: strings.NewReader(`{"name":"obj"}`)}
+	}
+	tc := &trackingCloser{bodyReader, t.bodies}
 	tc.Open()
 	h := http.Header{}
 	status := ev.responseStatus
@@ -460,7 +476,7 @@ func TestChunkTransferTimeout(t *testing.T) {
 
 			res, err := rx.Upload(context.Background())
 			if res != nil {
-				res.Body.Close()
+				defer res.Body.Close()
 			}
 
 			if tc.shouldFail {
@@ -476,6 +492,9 @@ func TestChunkTransferTimeout(t *testing.T) {
 				}
 				if res.StatusCode != http.StatusOK {
 					t.Fatalf("got status code: %d, want: %d", res.StatusCode, http.StatusOK)
+				}
+				if _, err := io.ReadAll(res.Body); err != nil {
+					t.Fatalf("reading response body: %v", err)
 				}
 			}
 		})

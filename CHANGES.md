@@ -1,5 +1,18 @@
 # Changes
 
+## [0.306.0](https://github.com/googleapis/google-api-go-client/compare/v0.305.0...v0.306.0) (2026-10-20)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3779](https://github.com/googleapis/google-api-go-client/issues/3779)) ([3b5f058](https://github.com/googleapis/google-api-go-client/commit/3b5f05805d268bfba708a893b6be1da2fd1b8d65))
+* **all:** Auto-regenerate discovery clients ([#3781](https://github.com/googleapis/google-api-go-client/issues/3781)) ([795219d](https://github.com/googleapis/google-api-go-client/commit/795219d564a58d0ff44efde7b6be21544b4ff057))
+
+
+### Bug Fixes
+
+* **gensupport:** Defer chunk context cancellation until response body is closed ([#3782](https://github.com/googleapis/google-api-go-client/issues/3782)) ([ef4e011](https://github.com/googleapis/google-api-go-client/commit/ef4e0118589b66428d0e3ec4643a0ee46f18799e))
+
 ## [0.305.0](https://github.com/googleapis/google-api-go-client/compare/v0.304.0...v0.305.0) (2026-10-18)
 
 

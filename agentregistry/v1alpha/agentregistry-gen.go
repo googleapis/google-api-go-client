@@ -2345,6 +2345,76 @@ func (s SearchMcpServersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SearchSkillsRequest: Requesting a deep search of Skills.
+type SearchSkillsRequest struct {
+	// Filter: Optional. Use this field to specify additional filter criteria on
+	// search results. Filter expressions can be used to restrict results based
+	// upon filterable fields, where equality operators can be used. See
+	// instructions
+	// (https://docs.cloud.google.com/agent-registry/search-agents-and-tools) for
+	// more details. Allowed operators: `=`, `<`, `>`, `NOT`, `AND`, `OR`, and
+	// `()`. | Field | `=` | `<`, `>` | |--------------|-----|----------| | state |
+	// Yes | No | | targetState | Yes | No | | createTime | Yes | Yes | |
+	// updateTime | Yes | Yes | Examples: * `state=ACTIVE` to restrict results to
+	// skills in the `ACTIVE` state.
+	Filter string `json:"filter,omitempty"`
+	// PageSize: Optional. The maximum number of search results to return per page.
+	// The page size is capped at `100`, even if a larger value is specified. A
+	// negative value will result in an `INVALID_ARGUMENT` error. If unspecified or
+	// set to `0`, a default value of `20` will be used. The server may return
+	// fewer results than requested.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. If present, retrieve the next batch of results from the
+	// preceding call to this method. `page_token` must be the value of
+	// `next_page_token` from the previous response. The values of all other method
+	// parameters, must be identical to those in the previous call.
+	PageToken string `json:"pageToken,omitempty"`
+	// SearchString: Optional. Search criteria used to select the Skills to return.
+	// If no search criteria is specified then all accessible Skills will be
+	// returned. Search expressions can be used to restrict results based upon
+	// searchable fields, where the operators can be used along with the suffix
+	// wildcard symbol `*`. See instructions
+	// (https://docs.cloud.google.com/agent-registry/search-agents-and-tools) for
+	// more details. Allowed operators: `=`, `:`, `NOT`, `AND`, `OR`, and `()`.
+	// Searchable fields: | Field | `=` | `:` | `*` | Keyword Search |
+	// |---------------------------|-----|-----|-----|----------------| | skillId |
+	// Yes | Yes | Yes | Included | | name | No | Yes | Yes | Included | |
+	// displayName | No | Yes | Yes | Included | | description | No | Yes | No |
+	// Included | | frontmatter.name | No | Yes | No | Included | |
+	// frontmatter.description | No | Yes | No | Included | |
+	// frontmatter.compatibility | No | Yes | No | Included | | frontmatter.license
+	// | No | Yes | No | Included | Examples: *
+	// `skillId="urn:skill:projects-1234:locations:global:private-important-skill"
+	// to find the skill with the specified skill ID. * `name:important` to find
+	// skills whose name contains `important` as a word. * `displayName:works*` to
+	// find skills whose display name contains words that start with `works`.
+	SearchString string `json:"searchString,omitempty"`
+	// SearchType: Optional. The type of search.
+	//
+	// Possible values:
+	//   "SEARCH_TYPE_UNSPECIFIED" - Invalid search type.
+	//   "KEYWORD" - Search for a keyword across all searchable fields.
+	//   "SEMANTIC" - Search based on the meaning and intent of a natural language
+	// query.
+	SearchType string `json:"searchType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchSkillsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchSkillsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchSkillsResponse: Response listing searched Skills.
 type SearchSkillsResponse struct {
 	// NextPageToken: Query page offset continuation token.

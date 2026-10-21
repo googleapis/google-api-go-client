@@ -1816,18 +1816,18 @@ func (c *ProjectsAppsEventsListCall) FilterVersionDisplayNames(filterVersionDisp
 // FilterExpression sets the optional parameter "filterExpression": Filters
 // events by custom keys
 // (https://firebase.google.com/docs/crashlytics/customize-crash-reports#add-keys).
-// Supported forms: * Equality: `custom_keys.level = "vip" or
-// `custom_keys.level:"vip" * Presence: `custom_keys.level:*` * OR across
-// values of one key: `custom_keys.level = "vip" OR custom_keys.level =
-// "enterprise" * AND across different keys: `custom_keys.level = "vip" AND
-// custom_keys.region = "us" Keys are case-sensitive. Keys and values
-// containing spaces must be double-quoted, for example `custom_keys."app
-// state" = "background". OR across different keys, repeating a key within an
-// AND, NOT, and comparators other than `=` and `:` are rejected with
-// INVALID_ARGUMENT. Wildcards are not supported in values; use
-// `custom_keys.:*` to match events that set a key to any value. This filter
-// expression applies in addition to the `filter` field above. The syntax is a
-// subset of AIP-160 (https://google.aip.dev/160).
+// Supported forms: * Equality: `custom_keys.level = "vip" * Has:
+// `custom_keys.level:"vip" (matches the same events as equality) * Presence:
+// `custom_keys.level:*` * OR across values of one key: `custom_keys.level =
+// "vip" OR custom_keys.level = "enterprise" * AND across different keys:
+// `custom_keys.level = "vip" AND custom_keys.region = "us" Keys are
+// case-sensitive. Keys and values containing spaces must be double-quoted, for
+// example `custom_keys."app state" = "background". OR across different keys,
+// repeating a key within an AND, NOT, and comparators other than `=` and `:`
+// are rejected with INVALID_ARGUMENT. Wildcards are not supported in values;
+// use `custom_keys.:*` to match events that set a key to any value. This
+// filter expression applies in addition to the `filter` field above. The
+// syntax is a subset of AIP-160 (https://google.aip.dev/160).
 func (c *ProjectsAppsEventsListCall) FilterExpression(filterExpression string) *ProjectsAppsEventsListCall {
 	c.urlParams_.Set("filterExpression", filterExpression)
 	return c
@@ -2843,6 +2843,28 @@ func (c *ProjectsAppsReportsGetCall) FilterOperatingSystemDisplayNames(filterOpe
 // (build_version)" e.g. "1.2.3 (456)".
 func (c *ProjectsAppsReportsGetCall) FilterVersionDisplayNames(filterVersionDisplayNames ...string) *ProjectsAppsReportsGetCall {
 	c.urlParams_.SetMulti("filter.version.displayNames", append([]string{}, filterVersionDisplayNames...))
+	return c
+}
+
+// FilterExpression sets the optional parameter "filterExpression": Filters the
+// events counted in the report by custom keys. Not all reports support this
+// filter. It is currently only supported for web apps, for the `webMetrics`,
+// `topBrowsers`, `topOperatingSystems`, `topVersions`, and `topCustomKeys`
+// reports. Requests for other apps or reports that set this field are rejected
+// with INVALID_ARGUMENT. Supported forms: * Equality: `custom_keys.level =
+// "vip" * Has: `custom_keys.level:"vip" (matches the same events as
+// equality) * Presence: `custom_keys.level:*` * OR across values of one key:
+// `custom_keys.level = "vip" OR custom_keys.level = "enterprise" * AND across
+// different keys: `custom_keys.level = "vip" AND custom_keys.region = "us"
+// Keys are case-sensitive. Keys and values containing spaces must be
+// double-quoted, for example `custom_keys."app state" = "background". OR
+// across different keys, repeating a key within an AND, NOT, and comparators
+// other than `=` and `:` are rejected with INVALID_ARGUMENT. Wildcards are not
+// supported in values; use `custom_keys.:*` to match events that set a key to
+// any value. This filter expression applies in addition to the `filter` field
+// above. The syntax is a subset of AIP-160 (https://google.aip.dev/160).
+func (c *ProjectsAppsReportsGetCall) FilterExpression(filterExpression string) *ProjectsAppsReportsGetCall {
+	c.urlParams_.Set("filterExpression", filterExpression)
 	return c
 }
 

@@ -502,7 +502,7 @@ type ProjectsLocationsWasmPluginsVersionsService struct {
 // AgentConnectivityTemplate: AgentConnectivityTemplate represents a reusable
 // network configuration.
 type AgentConnectivityTemplate struct {
-	// AccessPath: Required. Immutable. The path of the access. Maps roughly to
+	// AccessPath: Optional. Immutable. The path of the access. Maps roughly to
 	// ingress/egress, though we keep CLIENT_TO_AGENT and AGENT_TO_ANYWHERE as
 	// carryovers from Agent Gateway's original resource model. The path is
 	// immutable once set. Exactly one path can be set.
@@ -532,7 +532,7 @@ type AgentConnectivityTemplate struct {
 	AgentCompute string `json:"agentCompute,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DeploymentModel: Required. The deployment model for the gateway.
+	// DeploymentModel: Optional. The deployment model for the gateway.
 	//
 	// Possible values:
 	//   "DEPLOYMENT_MODEL_UNSPECIFIED" - Unspecified deployment model.

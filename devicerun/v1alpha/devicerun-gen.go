@@ -401,7 +401,7 @@ type AndroidInstrumentationTest struct {
 	OrchestratorVersion string `json:"orchestratorVersion,omitempty"`
 	// SmartSharding: Optional. Smart sharding strategy to split the job into
 	// multiple shards based on the test methods and their execution time.
-	SmartSharding *AndroidInstrumentationTestSmartSharding `json:"smartSharding,omitempty"`
+	SmartSharding *SmartSharding `json:"smartSharding,omitempty"`
 	// TestInstallable: Required. The test package to install and run the test.
 	TestInstallable *AndroidInstallable `json:"testInstallable,omitempty"`
 	// TestRunnerClass: Optional. Full class name of the test runner class. The
@@ -423,7 +423,7 @@ type AndroidInstrumentationTest struct {
 	TestTargets []string `json:"testTargets,omitempty"`
 	// UniformSharding: Optional. Uniform sharding strategy to split the job into
 	// multiple shards with equal number of test methods.
-	UniformSharding *AndroidInstrumentationTestUniformSharding `json:"uniformSharding,omitempty"`
+	UniformSharding *UniformSharding `json:"uniformSharding,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalTestOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -439,82 +439,6 @@ type AndroidInstrumentationTest struct {
 
 func (s AndroidInstrumentationTest) MarshalJSON() ([]byte, error) {
 	type NoMethod AndroidInstrumentationTest
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// AndroidInstrumentationTestSmartSharding: The smart sharding strategy to
-// split the job into multiple shards based on the test methods and their
-// recorded execution time.
-type AndroidInstrumentationTestSmartSharding struct {
-	// MaxShardCount: Optional. The maximum number of shards to create. If unset or
-	// less than 1, system-defined max limits are used. This limit takes precedence
-	// if the targeted_shard_duration cannot be satisfied. Limits: - For physical
-	// devices, the number of shards must be <= 20. - For virtual devices, the
-	// number of shards must be <= 200.
-	MaxShardCount int64 `json:"maxShardCount,omitempty"`
-	// TargetedShardDuration: Required. The targeted duration of each shard.
-	// Limits: - Must be at least 2 minutes. - Must be at most 3 hours. Shard
-	// duration is not guaranteed because smart sharding uses test case history and
-	// default durations which may not be accurate. Durations are calculated based
-	// on the following inputs: - Timing records from previous runs of the same
-	// test case. - For new test cases, the average duration of other known test
-	// cases. - A system-chosen, default duration if there are no previous timing
-	// records available. Because the actual shard duration can exceed the targeted
-	// shard duration, we recommend that you set the targeted value at least 5
-	// minutes less than the maximum allowed instrumentation timeout. This approach
-	// avoids cancelling the shard before all tests can finish.
-	TargetedShardDuration string `json:"targetedShardDuration,omitempty"`
-	// TimingRecord: Required. The timing record file to use for smart sharding. If
-	// the file does not exist, smart sharding will use default test time (30s) for
-	// each test method to shard the job into multiple shards. This file will be
-	// overwritten with the latest timing record after the job is completed.
-	TimingRecord *InputFile `json:"timingRecord,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaxShardCount") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaxShardCount") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AndroidInstrumentationTestSmartSharding) MarshalJSON() ([]byte, error) {
-	type NoMethod AndroidInstrumentationTestSmartSharding
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// AndroidInstrumentationTestUniformSharding: Uniformly shards test cases given
-// a total number of shards. It will be translated to `-e numShard` and `-e
-// shardIndex` AndroidJUnitRunner arguments. With uniform sharding enabled,
-// specifying either of these sharding arguments via `environment_variables` is
-// invalid. Based on the sharding mechanism AndroidJUnitRunner uses, there is
-// no guarantee that test cases will be distributed uniformly across all
-// shards.
-type AndroidInstrumentationTestUniformSharding struct {
-	// ShardCount: Required. The total number of shards to create. This must always
-	// be a positive number that is no greater than the total number of test cases.
-	// Limits: - For physical devices, the number of shards must be <= 20. - For
-	// virtual devices, the number of shards must be <= 200.
-	ShardCount int64 `json:"shardCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ShardCount") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ShardCount") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s AndroidInstrumentationTestUniformSharding) MarshalJSON() ([]byte, error) {
-	type NoMethod AndroidInstrumentationTestUniformSharding
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1836,9 +1760,15 @@ func (s IosSwitchLocaleDeviceAction) MarshalJSON() ([]byte, error) {
 
 // IosXcTest: The configuration of an iOS XCTest.
 type IosXcTest struct {
+	// SmartSharding: Optional. Smart sharding strategy to split the job into
+	// multiple shards based on the test methods and their execution time.
+	SmartSharding *SmartSharding `json:"smartSharding,omitempty"`
 	// TestsZip: Required. The .zip containing the .xctestrun file and the contents
 	// of the DerivedData/Build/Products directory.
 	TestsZip *InputFile `json:"testsZip,omitempty"`
+	// UniformSharding: Optional. Uniform sharding strategy to split the job into
+	// multiple shards with equal number of test methods.
+	UniformSharding *UniformSharding `json:"uniformSharding,omitempty"`
 	// XcTestTimeout: Optional. The timeout of the test. Default value: 5 min.
 	// Range: [1 min, 3 hours].
 	XcTestTimeout string `json:"xcTestTimeout,omitempty"`
@@ -1849,13 +1779,13 @@ type IosXcTest struct {
 	// Xctestrun: Optional. An .xctestrun file that will override the .xctestrun
 	// file in the tests zip.
 	Xctestrun *InputFile `json:"xctestrun,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TestsZip") to
+	// ForceSendFields is a list of field names (e.g. "SmartSharding") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TestsZip") to include in API
+	// NullFields is a list of field names (e.g. "SmartSharding") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2523,6 +2453,50 @@ func (s SessionReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SmartSharding: The smart sharding strategy to split the job into multiple
+// shards based on the test methods and their recorded execution time.
+type SmartSharding struct {
+	// MaxShardCount: Optional. The maximum number of shards to create. If unset or
+	// less than 1, system-defined max limits are used. This limit takes precedence
+	// if the targeted_shard_duration cannot be satisfied. Limits: - For physical
+	// devices, the number of shards must be <= 20. - For virtual devices, the
+	// number of shards must be <= 200.
+	MaxShardCount int64 `json:"maxShardCount,omitempty"`
+	// TargetedShardDuration: Required. The targeted duration of each shard.
+	// Limits: - Must be at least 2 minutes. - Must be at most 3 hours. Shard
+	// duration is not guaranteed because smart sharding uses test case history and
+	// default durations which may not be accurate. Durations are calculated based
+	// on the following inputs: - Timing records from previous runs of the same
+	// test case. - For new test cases, the average duration of other known test
+	// cases. - A system-chosen, default duration if there are no previous timing
+	// records available. Because the actual shard duration can exceed the targeted
+	// shard duration, we recommend that you set the targeted value at least 5
+	// minutes less than the maximum allowed test timeout. This approach avoids
+	// cancelling the shard before all tests can finish.
+	TargetedShardDuration string `json:"targetedShardDuration,omitempty"`
+	// TimingRecord: Required. The timing record file to use for smart sharding. If
+	// the file does not exist, smart sharding will use default test time (30s) for
+	// each test method to shard the job into multiple shards. This file will be
+	// overwritten with the latest timing record after the job is completed.
+	TimingRecord *InputFile `json:"timingRecord,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxShardCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxShardCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SmartSharding) MarshalJSON() ([]byte, error) {
+	type NoMethod SmartSharding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Status: The status of a session/job/execution.
 type Status struct {
 	// ProgressMessages: Output only. Human-readable, detailed descriptions of the
@@ -2555,6 +2529,36 @@ type Status struct {
 
 func (s Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UniformSharding: Uniformly shards test cases given a total number of shards.
+// For Android instrumentation tests, it will be translated to `-e numShard`
+// and `-e shardIndex` AndroidJUnitRunner arguments. With uniform sharding
+// enabled, specifying either of these sharding arguments via
+// `environment_variables` is invalid. There is no guarantee that test cases
+// will be distributed uniformly across all shards.
+type UniformSharding struct {
+	// ShardCount: Required. The total number of shards to create. This must always
+	// be a positive number that is no greater than the total number of test cases.
+	// Limits: - For physical devices, the number of shards must be <= 20. - For
+	// virtual devices, the number of shards must be <= 200.
+	ShardCount int64 `json:"shardCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ShardCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ShardCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UniformSharding) MarshalJSON() ([]byte, error) {
+	type NoMethod UniformSharding
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

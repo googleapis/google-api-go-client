@@ -1593,6 +1593,9 @@ type GoogleCloudAiplatformV1beta1GenerateContentRequest struct {
 	// using the Model Armor service. If supplied, safety_settings must not be
 	// supplied.
 	ModelArmorConfig *GoogleCloudAiplatformV1beta1ModelArmorConfig `json:"modelArmorConfig,omitempty"`
+	// OutputConfig: Optional. Configuration for persisting output assets to
+	// external storage.
+	OutputConfig *GoogleCloudAiplatformV1beta1GenerateContentRequestOutputConfig `json:"outputConfig,omitempty"`
 	// SafetySettings: Optional. Per request settings for blocking unsafe content.
 	// Enforced on GenerateContentResponse.candidates.
 	SafetySettings []*GoogleCloudAiplatformV1beta1SafetySetting `json:"safetySettings,omitempty"`
@@ -1623,6 +1626,33 @@ type GoogleCloudAiplatformV1beta1GenerateContentRequest struct {
 
 func (s GoogleCloudAiplatformV1beta1GenerateContentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1beta1GenerateContentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1beta1GenerateContentRequestOutputConfig:
+// Configuration for persisting output assets to external storage.
+type GoogleCloudAiplatformV1beta1GenerateContentRequestOutputConfig struct {
+	// OutputUriPrefix: Optional. The Cloud Storage URI prefix or directory where
+	// generated media assets should be written (e.g. `gs://my-bucket/prefix/`).
+	// Supported URI schemes: `gs://`. When set, media bytes are written directly
+	// to this location and returned as `FileData` with a `file_uri` instead of raw
+	// inline bytes.
+	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputUriPrefix") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1beta1GenerateContentRequestOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1beta1GenerateContentRequestOutputConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

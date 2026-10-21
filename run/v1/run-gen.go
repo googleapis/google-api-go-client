@@ -2118,6 +2118,18 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
 	// status updates.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
+	// RankedMachineSeries: Optional. Ranked list (earlier items have higher
+	// priority) of Machine Series to consider when provisioning Worker VMs. A
+	// concrete machine type will be selected based on machine availability in the
+	// given region. This field must be empty for the Build to be eligible to be
+	// paired with a pre-provisioned worker VM.
+	//
+	// Possible values:
+	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.
+	//   "MACHINE_SERIES_E" - Cost-optimized machines such as E2.
+	//   "MACHINE_SERIES_N" - General-purpose machines such as N4.
+	//   "MACHINE_SERIES_C" - Performance-optimized machines such as C4.
+	RankedMachineSeries []string `json:"rankedMachineSeries,omitempty"`
 	// RequestedVerifyOption: Requested verifiability options.
 	//
 	// Possible values:

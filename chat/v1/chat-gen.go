@@ -1291,6 +1291,8 @@ type CardWithId struct {
 	// CardId: Required if the message contains multiple cards. A unique identifier
 	// for a card in a message.
 	CardId string `json:"cardId,omitempty"`
+	// OwnerUser: Output only. The app that owns the card.
+	OwnerUser *User `json:"ownerUser,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Card") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -6503,6 +6505,39 @@ type ReactionDeletedEventData struct {
 func (s ReactionDeletedEventData) MarshalJSON() ([]byte, error) {
 	type NoMethod ReactionDeletedEventData
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceMessageCardsRequest: Request message for ReplaceMessageCards API
+// method.
+type ReplaceMessageCardsRequest struct {
+	// CardsV2: Optional. An array of cards
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/cards)
+	// to be included in the message. These cards will replace the existing cards
+	// of the message. If empty, the original cards included in the message will be
+	// cleared.
+	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CardsV2") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CardsV2") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReplaceMessageCardsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceMessageCardsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceMessageCardsResponse: Response message for ReplaceMessageCards API.
+type ReplaceMessageCardsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // RichLinkMetadata: A rich link to a resource. Rich links can be associated
@@ -12541,6 +12576,119 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messages.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type SpacesMessagesReplaceCardsCall struct {
+	s                          *Service
+	name                       string
+	replacemessagecardsrequest *ReplaceMessageCardsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// ReplaceCards: Replaces the cards included in a message. A Chat app can only
+// replace cards on a human-created message if the message already contains
+// cards, and the cards were created by the app. If the app replaces the cards
+// with an empty list, the cards are removed. After removing the cards, the app
+// cannot add cards back to the message. Requires app authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.bot`
+//
+//   - name: The resource name of the message. Format:
+//     `spaces/{space}/messages/{message}`.
+func (r *SpacesMessagesService) ReplaceCards(name string, replacemessagecardsrequest *ReplaceMessageCardsRequest) *SpacesMessagesReplaceCardsCall {
+	c := &SpacesMessagesReplaceCardsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.replacemessagecardsrequest = replacemessagecardsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagesReplaceCardsCall) Fields(s ...googleapi.Field) *SpacesMessagesReplaceCardsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagesReplaceCardsCall) Context(ctx context.Context) *SpacesMessagesReplaceCardsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagesReplaceCardsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagesReplaceCardsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.replacemessagecardsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:replaceCards")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messages.replaceCards", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messages.replaceCards" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReplaceMessageCardsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SpacesMessagesReplaceCardsCall) Do(opts ...googleapi.CallOption) (*ReplaceMessageCardsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ReplaceMessageCardsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messages.replaceCards", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

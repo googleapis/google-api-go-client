@@ -2148,6 +2148,38 @@ func (s Link) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAddOnAttachmentStudentSubmissionsResponse: Response when listing student
+// submissions for an add-on attachment.
+type ListAddOnAttachmentStudentSubmissionsResponse struct {
+	// AddOnAttachmentStudentSubmissions: Add-on attachment student submissions
+	// that match the request.
+	AddOnAttachmentStudentSubmissions []*AddOnAttachmentStudentSubmission `json:"addOnAttachmentStudentSubmissions,omitempty"`
+	// NextPageToken: A token, which can be sent as `pageToken` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AddOnAttachmentStudentSubmissions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "AddOnAttachmentStudentSubmissions") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAddOnAttachmentStudentSubmissionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAddOnAttachmentStudentSubmissionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListAddOnAttachmentsResponse: Response when listing add-on attachments.
 type ListAddOnAttachmentsResponse struct {
 	// AddOnAttachments: Attachments under the given post.
@@ -8400,6 +8432,169 @@ func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsGetCall) Do(opts ...
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.studentSubmissions.get", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall struct {
+	s            *Service
+	courseId     string
+	itemId       string
+	attachmentId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of student submissions that the requester is permitted
+// to view. This method returns the following error codes: *
+// `PERMISSION_DENIED` for access errors. * `INVALID_ARGUMENT` if the request
+// is malformed. * `NOT_FOUND` if one of the identified resources does not
+// exist.
+//
+//   - attachmentId: Identifier of the add-on attachment.
+//   - courseId: Identifier of the course.
+//   - itemId: Identifier of the `CourseWork` under which the attachment is
+//     attached.
+func (r *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsService) List(courseId string, itemId string, attachmentId string) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall {
+	c := &CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.courseId = courseId
+	c.itemId = itemId
+	c.attachmentId = attachmentId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// submissions to return. Zero or unspecified indicates that the server may
+// assign a maximum. The server may return fewer than the specified number of
+// results.
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) PageSize(pageSize int64) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAddOnAttachmentStudentSubmissions` call. Provide this
+// to retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListAddOnAttachmentStudentSubmissions` must match the call that
+// provided the page token.
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) PageToken(pageToken string) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) Fields(s ...googleapi.Field) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) IfNoneMatch(entityTag string) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) Context(ctx context.Context) *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/courses/{courseId}/courseWork/{itemId}/addOnAttachments/{attachmentId}/studentSubmissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"courseId":     c.courseId,
+		"itemId":       c.itemId,
+		"attachmentId": c.attachmentId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.studentSubmissions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "classroom.courses.courseWork.addOnAttachments.studentSubmissions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAddOnAttachmentStudentSubmissionsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) Do(opts ...googleapi.CallOption) (*ListAddOnAttachmentStudentSubmissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAddOnAttachmentStudentSubmissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "classroom.courses.courseWork.addOnAttachments.studentSubmissions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CoursesCourseWorkAddOnAttachmentsStudentSubmissionsListCall) Pages(ctx context.Context, f func(*ListAddOnAttachmentStudentSubmissionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type CoursesCourseWorkAddOnAttachmentsStudentSubmissionsPatchCall struct {

@@ -10644,11 +10644,11 @@ func (r *CustomersEnrollmentTokensService) List(parent string) *CustomersEnrollm
 }
 
 // Filter sets the optional parameter "filter": Filter to apply to list
-// results. The following fields can be used in the filter: * device_type
-// (currently only 'CHROME_BROWSER' is supported) * token_state (supported
-// values: 'ACTIVE', 'EXPIRED', 'REVOKED') * org_unit_path The full path of the
-// org unit, such as /Montreal/Sales. * org_unit_id The obfuscated id of the
-// org unit, not the full path.
+// results. The following fields can be used in the filter: * `device_type`
+// (currently only "CHROME_BROWSER" is supported) * `token_state` (supported
+// values: "ACTIVE", "EXPIRED", "REVOKED") * `org_unit_path` The full
+// path of the org unit, such as `/Montreal/Sales`. * `org_unit_id` The
+// obfuscated id of the org unit, not the full path.
 func (c *CustomersEnrollmentTokensListCall) Filter(filter string) *CustomersEnrollmentTokensListCall {
 	c.urlParams_.Set("filter", filter)
 	return c

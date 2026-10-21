@@ -1674,24 +1674,39 @@ func (s ChannelContentDetails) MarshalJSON() ([]byte, error) {
 
 type ChannelContentDetailsRelatedPlaylists struct {
 	// Favorites: The ID of the playlist that contains the channel"s favorite
-	// videos. Use the playlistItems.insert and playlistItems.delete to add or
-	// remove items from that list.
+	// videos. Use the `playlistItems.insert`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/insert)
+	// and `playlistItems.delete`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/delete)
+	// to add or remove items from that list.
 	Favorites string `json:"favorites,omitempty"`
 	// Likes: The ID of the playlist that contains the channel"s liked videos. Use
-	// the playlistItems.insert and playlistItems.delete to add or remove items
-	// from that list.
+	// the `playlistItems.insert`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/insert)
+	// and `playlistItems.delete`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/delete)
+	// to add or remove items from that list.
 	Likes string `json:"likes,omitempty"`
 	// Uploads: The ID of the playlist that contains the channel"s uploaded videos.
-	// Use the videos.insert method to upload new videos and the videos.delete
+	// Use the `videos.insert`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/videos/insert)
+	// method to upload new videos and the `videos.delete`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/videos/delete)
 	// method to delete previously uploaded videos.
 	Uploads string `json:"uploads,omitempty"`
 	// WatchHistory: The ID of the playlist that contains the channel"s watch
-	// history. Use the playlistItems.insert and playlistItems.delete to add or
-	// remove items from that list.
+	// history. Use the `playlistItems.insert`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/insert)
+	// and `playlistItems.delete`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/delete)
+	// to add or remove items from that list.
 	WatchHistory string `json:"watchHistory,omitempty"`
 	// WatchLater: The ID of the playlist that contains the channel"s watch later
-	// playlist. Use the playlistItems.insert and playlistItems.delete to add or
-	// remove items from that list.
+	// playlist. Use the `playlistItems.insert`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/insert)
+	// and `playlistItems.delete`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/delete)
+	// to add or remove items from that list.
 	WatchLater string `json:"watchLater,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Favorites") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4381,8 +4396,9 @@ type LiveBroadcastContentDetails struct {
 	// set specific region availability or block specific regions It is optional -
 	// if not set, it is not enforced.
 	AvailabilityConfig *AvailabilityConfig `json:"availabilityConfig,omitempty"`
-	// BoundStreamId: This value uniquely identifies the live stream bound to the
-	// broadcast.
+	// BoundStreamId: This value uniquely identifies the `live stream`
+	// (https://developers.google.com/youtube/data/live/reference/rest/v3/liveStreams)
+	// bound to the broadcast.
 	BoundStreamId string `json:"boundStreamId,omitempty"`
 	// BoundStreamLastUpdateTimeMs: The date and time that the live stream
 	// referenced by boundStreamId was last updated.
@@ -4439,9 +4455,10 @@ type LiveBroadcastContentDetails struct {
 	LatencyPreference string `json:"latencyPreference,omitempty"`
 	// Mesh: The mesh for projecting the video if projection is mesh. The mesh
 	// value must be a UTF-8 string containing the base-64 encoding of 3D mesh data
-	// that follows the Spherical Video V2 RFC specification for an mshp box,
-	// excluding the box size and type but including the following four reserved
-	// zero bytes for the version and flags.
+	// that follows the Spherical Video V2 RFC specification
+	// (https://github.com/google/spatial-media/blob/master/docs/spherical-video-v2-rfc.md)
+	// for an mshp box, excluding the box size and type but including the following
+	// four reserved zero bytes for the version and flags.
 	Mesh string `json:"mesh,omitempty"`
 	// MonitorStream: The monitorStream object contains information about the
 	// monitor stream, which the broadcaster can use to review the event content
@@ -4465,11 +4482,13 @@ type LiveBroadcastContentDetails struct {
 	// playback.
 	RecordFromStart bool `json:"recordFromStart,omitempty"`
 	// StartWithSlate: This setting indicates whether the broadcast should
-	// automatically begin with an in-stream slate when you update the broadcast's
-	// status to live. After updating the status, you then need to send a
-	// liveCuepoints.insert request that sets the cuepoint's eventState to end to
-	// remove the in-stream slate and make your broadcast stream visible to
-	// viewers.
+	// automatically begin with an in-stream slate
+	// (https://developers.google.com/youtube/data/live/getting-started#Displaying_Slates)
+	// when you update the broadcast's status to live. After updating the status,
+	// you then need to send a `liveCuepoints.insert`
+	// (https://developers.google.com/youtube/data/live/reference/rest/v3/liveCuepoints/insert)
+	// request that sets the cuepoint's eventState to end to remove the in-stream
+	// slate and make your broadcast stream visible to viewers.
 	StartWithSlate bool `json:"startWithSlate,omitempty"`
 	// StereoLayout: The 3D stereo layout of this broadcast. This defaults to mono.
 	//
@@ -4568,13 +4587,17 @@ type LiveBroadcastSnippet struct {
 	// ActualStartTime: The date and time that the broadcast actually started. This
 	// information is only available once the broadcast's state is live.
 	ActualStartTime string `json:"actualStartTime,omitempty"`
-	// CategoryId: The YouTube video category associated with the video broadcast.
+	// CategoryId: The YouTube video category
+	// (https://developers.google.com/youtube/data/reference/rest/v3/videoCategories/list)
+	// associated with the video broadcast.
 	CategoryId string `json:"categoryId,omitempty"`
 	// ChannelId: The ID that YouTube uses to uniquely identify the channel that is
 	// publishing the broadcast.
 	ChannelId string `json:"channelId,omitempty"`
 	// Description: The broadcast's description. As with the title, you can set
-	// this field by modifying the broadcast resource or by setting the description
+	// this field by modifying the broadcast resource or by setting the
+	// `description`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/videos#snippet.description)
 	// field of the corresponding video resource.
 	Description string `json:"description,omitempty"`
 	// IsDefaultBroadcast: Indicates whether this broadcast is the default
@@ -4597,7 +4620,9 @@ type LiveBroadcastSnippet struct {
 	Thumbnails *ThumbnailDetails `json:"thumbnails,omitempty"`
 	// Title: The broadcast's title. Note that the broadcast represents exactly one
 	// YouTube video. You can set this field by modifying the broadcast resource or
-	// by setting the title field of the corresponding video resource.
+	// by setting the `title`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/videos#snippet.title)
+	// field of the corresponding video resource.
 	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActualEndTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4650,7 +4675,9 @@ func (s LiveBroadcastStatistics) MarshalJSON() ([]byte, error) {
 // LiveBroadcastStatus: Live broadcast state.
 type LiveBroadcastStatus struct {
 	// LifeCycleStatus: The broadcast's status. The status can be updated using the
-	// API's liveBroadcasts.transition method.
+	// API's `liveBroadcasts.transition`
+	// (https://developers.google.com/youtube/data/live/reference/rest/v3/liveBroadcasts/transition)
+	// method.
 	//
 	// Possible values:
 	//   "lifeCycleStatusUnspecified" - No value or the value is unknown.
@@ -4680,8 +4707,9 @@ type LiveBroadcastStatus struct {
 	// PrivacyStatus: The broadcast's privacy status. Note that the broadcast
 	// represents exactly one YouTube video, so the privacy settings are identical
 	// to those supported for videos. In addition, you can set this field by
-	// modifying the broadcast resource or by setting the privacyStatus field of
-	// the corresponding video resource.
+	// modifying the broadcast resource or by setting the `privacyStatus`
+	// (https://developers.google.com/youtube/data/reference/rest/v3/videos#status.privacyStatus)
+	// field of the corresponding video resource.
 	//
 	// Possible values:
 	//   "public"
@@ -5619,13 +5647,15 @@ type LiveStreamContentDetails struct {
 	// the same stream for many different broadcasts if those broadcasts occur at
 	// different times. If you set this value to false, then the stream will not be
 	// reusable, which means that it can only be bound to one broadcast.
-	// Non-reusable streams differ from reusable streams in the following ways: - A
-	// non-reusable stream can only be bound to one broadcast. - A non-reusable
-	// stream might be deleted by an automated process after the broadcast ends. -
-	// The liveStreams.list method does not list non-reusable streams if you call
-	// the method and set the mine parameter to true. The only way to use that
-	// method to retrieve the resource for a non-reusable stream is to use the id
-	// parameter to identify the stream.
+	// Non-reusable streams differ from reusable streams in the following ways: * A
+	// non-reusable stream can only be bound to one broadcast. * A non-reusable
+	// stream might be deleted by an automated process after the broadcast ends. *
+	// The `liveStreams.list`
+	// (https://developers.google.com/youtube/data/live/reference/rest/v3/liveStreams/list)
+	// method does not list non-reusable streams if you call the method and set the
+	// mine parameter to true. The only way to use that method to retrieve the
+	// resource for a non-reusable stream is to use the id parameter to identify
+	// the stream.
 	IsReusable bool `json:"isReusable,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ClosedCaptionsIngestionUrl")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -6093,8 +6123,10 @@ func (s MembershipsLevelSnippet) MarshalJSON() ([]byte, error) {
 
 // MonitorStreamInfo: Settings and Info of the monitor stream
 type MonitorStreamInfo struct {
-	// BroadcastStreamDelayMs: If you have set the enableMonitorStream property to
-	// true, then this property determines the length of the live broadcast delay.
+	// BroadcastStreamDelayMs: If you have set the `enableMonitorStream`
+	// (https://developers.google.com/youtube/data/live/reference/rest/v3/liveBroadcasts#contentDetails.monitorStream.enableMonitorStream)
+	// property to true, then this property determines the length of the live
+	// broadcast delay.
 	BroadcastStreamDelayMs int64 `json:"broadcastStreamDelayMs,omitempty"`
 	// EmbedHtml: HTML code that embeds a player that plays the monitor stream.
 	EmbedHtml string `json:"embedHtml,omitempty"`
@@ -6156,14 +6188,21 @@ func (s PageInfo) MarshalJSON() ([]byte, error) {
 // the number of playlists that each user creates. By default, playlists are
 // publicly visible to other users, but playlists can be public or private.
 // YouTube also uses playlists to identify special collections of videos for a
-// channel, such as: - uploaded videos - favorite videos - positively rated
-// (liked) videos - watch history - watch later To be more specific, these
+// channel, such as: * uploaded videos * favorite videos * positively rated
+// (liked) videos * watch history * watch later To be more specific, these
 // lists are associated with a channel, which is a collection of a person,
 // group, or company's videos, playlists, and other YouTube information. You
-// can retrieve the playlist IDs for each of these lists from the channel
-// resource for a given channel. You can then use the playlistItems.list method
-// to retrieve any of those lists. You can also add or remove items from those
-// lists by calling the playlistItems.insert and playlistItems.delete methods.
+// can retrieve the playlist IDs for each of these lists from the `channel
+// resource`
+// (https://developers.google.com/youtube/data/reference/rest/v3/channels) for
+// a given channel. You can then use the `playlistItems.list`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/list)
+// method to retrieve any of those lists. You can also add or remove items from
+// those lists by calling the `playlistItems.insert`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/insert)
+// and `playlistItems.delete`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/delete)
+// methods.
 type Playlist struct {
 	// ContentDetails: The contentDetails object contains information like video
 	// count.
@@ -6294,14 +6333,20 @@ func (s PlaylistImageListResponse) MarshalJSON() ([]byte, error) {
 // the playlistImage resource contains details about the included resource that
 // pertain specifically to how that resource is used in that playlist. YouTube
 // uses playlists to identify special collections of videos for a channel, such
-// as: - uploaded videos - favorite videos - positively rated (liked) videos -
+// as: * uploaded videos * favorite videos * positively rated (liked) videos *
 // watch history To be more specific, these lists are associated with a
 // channel, which is a collection of a person, group, or company's videos,
 // playlists, and other YouTube information. You can retrieve the playlist IDs
-// for each of these lists from the channel resource for a given channel. You
-// can then use the playlistImages.list method to retrieve image data for any
-// of those playlists. You can also add or remove images from those lists by
-// calling the playlistImages.insert and playlistImages.delete methods.
+// for each of these lists from the `channel resource`
+// (https://developers.google.com/youtube/data/reference/rest/v3/channels) for
+// a given channel. You can then use the `playlistImages.list`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistImages/list)
+// method to retrieve image data for any of those playlists. You can also add
+// or remove images from those lists by calling the `playlistImages.insert`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistImages/insert)
+// and `playlistImages.delete`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistImages/delete)
+// methods.
 type PlaylistImageSnippet struct {
 	// Height: The image height.
 	Height int64 `json:"height,omitempty"`
@@ -6337,16 +6382,22 @@ func (s PlaylistImageSnippet) MarshalJSON() ([]byte, error) {
 // resource contains details about the included resource that pertain
 // specifically to how that resource is used in that playlist. YouTube uses
 // playlists to identify special collections of videos for a channel, such as:
-// - uploaded videos - favorite videos - positively rated (liked) videos -
-// watch history - watch later To be more specific, these lists are associated
+// * uploaded videos * favorite videos * positively rated (liked) videos *
+// watch history * watch later To be more specific, these lists are associated
 // with a channel, which is a collection of a person, group, or company's
 // videos, playlists, and other YouTube information. You can retrieve the
-// playlist IDs for each of these lists from the channel resource for a given
-// channel. You can then use the playlistItems.list method to retrieve any of
-// those lists. You can also add or remove items from those lists by calling
-// the playlistItems.insert and playlistItems.delete methods. For example, if a
-// user gives a positive rating to a video, you would insert that video into
-// the liked videos playlist for that user's channel.
+// playlist IDs for each of these lists from the `channel resource`
+// (https://developers.google.com/youtube/data/reference/rest/v3/channels) for
+// a given channel. You can then use the `playlistItems.list`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/list)
+// method to retrieve any of those lists. You can also add or remove items from
+// those lists by calling the `playlistItems.insert`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/insert)
+// and `playlistItems.delete`
+// (https://developers.google.com/youtube/data/reference/rest/v3/playlistItems/delete)
+// methods. For example, if a user gives a positive rating to a video, you
+// would insert that video into the liked videos playlist for that user's
+// channel.
 type PlaylistItem struct {
 	// ContentDetails: The contentDetails object is included in the resource if the
 	// included item is a YouTube video. The object contains additional information
@@ -6401,8 +6452,9 @@ type PlaylistItemContentDetails struct {
 	// context of the playlist.) The default value is 0.
 	StartAt string `json:"startAt,omitempty"`
 	// VideoId: The ID that YouTube uses to uniquely identify a video. To retrieve
-	// the video resource, set the id query parameter to this value in your API
-	// request.
+	// the `video` resource
+	// (https://developers.google.com/youtube/data/reference/rest/v3/videos/list),
+	// set the id query parameter to this value in your API request.
 	VideoId string `json:"videoId,omitempty"`
 	// VideoPublishedAt: The date and time that the video was published to YouTube.
 	VideoPublishedAt string `json:"videoPublishedAt,omitempty"`
@@ -7579,7 +7631,7 @@ type Video struct {
 	// video. This data can only be retrieved by the video owner.
 	Suggestions *VideoSuggestions `json:"suggestions,omitempty"`
 	// TopicDetails: The topicDetails object encapsulates information about
-	// Freebase topics associated with the video.
+	// Freebase (http://www.freebase.com) topics associated with the video.
 	TopicDetails *VideoTopicDetails `json:"topicDetails,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -8536,7 +8588,9 @@ func (s VideoRecordingDetails) MarshalJSON() ([]byte, error) {
 // VideoSnippet: Basic details about a video, including title, description,
 // uploader, thumbnails and category.
 type VideoSnippet struct {
-	// CategoryId: The YouTube video category associated with the video.
+	// CategoryId: The YouTube video category
+	// (https://developers.google.com/youtube/data/reference/rest/v3/videoCategories/list)
+	// associated with the video.
 	CategoryId string `json:"categoryId,omitempty"`
 	// ChannelId: The ID that YouTube uses to uniquely identify the channel that
 	// the video was uploaded to.
@@ -10140,21 +10194,22 @@ func (c *ChannelBannersInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *ChannelBannersInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *ChannelBannersInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -10428,21 +10483,22 @@ func (c *ChannelSectionsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwne
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *ChannelSectionsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *ChannelSectionsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -12348,21 +12404,22 @@ func (c *LiveBroadcastsBindCall) OnBehalfOfContentOwner(onBehalfOfContentOwner s
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveBroadcastsBindCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsBindCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -12486,21 +12543,22 @@ func (c *LiveBroadcastsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveBroadcastsDeleteCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsDeleteCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -12599,21 +12657,22 @@ func (c *LiveBroadcastsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveBroadcastsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -12740,21 +12799,22 @@ func (c *LiveBroadcastsInsertCuepointCall) OnBehalfOfContentOwner(onBehalfOfCont
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveBroadcastsInsertCuepointCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsInsertCuepointCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -12938,21 +12998,22 @@ func (c *LiveBroadcastsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner s
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveBroadcastsListCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsListCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -13118,21 +13179,22 @@ func (c *LiveBroadcastsTransitionCall) OnBehalfOfContentOwner(onBehalfOfContentO
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveBroadcastsTransitionCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsTransitionCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -13263,21 +13325,22 @@ func (c *LiveBroadcastsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveBroadcastsUpdateCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveBroadcastsUpdateCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -14336,21 +14399,22 @@ func (c *LiveStreamsDeleteCall) OnBehalfOfContentOwner(onBehalfOfContentOwner st
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveStreamsDeleteCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveStreamsDeleteCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -14449,21 +14513,22 @@ func (c *LiveStreamsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner st
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveStreamsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveStreamsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -14609,21 +14674,22 @@ func (c *LiveStreamsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveStreamsListCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveStreamsListCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -14791,21 +14857,22 @@ func (c *LiveStreamsUpdateCall) OnBehalfOfContentOwner(onBehalfOfContentOwner st
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *LiveStreamsUpdateCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *LiveStreamsUpdateCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -15302,21 +15369,22 @@ func (c *PlaylistImagesInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *PlaylistImagesInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *PlaylistImagesInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -15512,21 +15580,22 @@ func (c *PlaylistImagesListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner s
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *PlaylistImagesListCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *PlaylistImagesListCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -16489,21 +16558,22 @@ func (c *PlaylistsInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner stri
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *PlaylistsInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *PlaylistsInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -16666,21 +16736,22 @@ func (c *PlaylistsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *PlaylistsListCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *PlaylistsListCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -17659,21 +17730,22 @@ func (c *SubscriptionsListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner st
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *SubscriptionsListCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *SubscriptionsListCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -19452,21 +19524,22 @@ func (c *VideosInsertCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string)
 
 // OnBehalfOfContentOwnerChannel sets the optional parameter
 // "onBehalfOfContentOwnerChannel": This parameter can only be used in a
-// properly authorized request. *Note:* This parameter is intended exclusively
-// for YouTube content partners. The *onBehalfOfContentOwnerChannel* parameter
-// specifies the YouTube channel ID of the channel to which a video is being
-// added. This parameter is required when a request specifies a value for the
-// onBehalfOfContentOwner parameter, and it can only be used in conjunction
-// with that parameter. In addition, the request must be authorized using a CMS
-// account that is linked to the content owner that the onBehalfOfContentOwner
-// parameter specifies. Finally, the channel that the
-// onBehalfOfContentOwnerChannel parameter value specifies must be linked to
-// the content owner that the onBehalfOfContentOwner parameter specifies. This
-// parameter is intended for YouTube content partners that own and manage many
-// different YouTube channels. It allows content owners to authenticate once
-// and perform actions on behalf of the channel specified in the parameter
-// value, without having to provide authentication credentials for each
-// separate channel.
+// properly authorized request
+// (https://developers.google.com/youtube/data/guides/authentication). *Note:*
+// This parameter is intended exclusively for YouTube content partners. The
+// *onBehalfOfContentOwnerChannel* parameter specifies the YouTube channel ID
+// of the channel to which a video is being added. This parameter is required
+// when a request specifies a value for the onBehalfOfContentOwner parameter,
+// and it can only be used in conjunction with that parameter. In addition, the
+// request must be authorized using a CMS account that is linked to the content
+// owner that the onBehalfOfContentOwner parameter specifies. Finally, the
+// channel that the onBehalfOfContentOwnerChannel parameter value specifies
+// must be linked to the content owner that the onBehalfOfContentOwner
+// parameter specifies. This parameter is intended for YouTube content partners
+// that own and manage many different YouTube channels. It allows content
+// owners to authenticate once and perform actions on behalf of the channel
+// specified in the parameter value, without having to provide authentication
+// credentials for each separate channel.
 func (c *VideosInsertCall) OnBehalfOfContentOwnerChannel(onBehalfOfContentOwnerChannel string) *VideosInsertCall {
 	c.urlParams_.Set("onBehalfOfContentOwnerChannel", onBehalfOfContentOwnerChannel)
 	return c
@@ -19651,9 +19724,12 @@ func (r *VideosService) List(part []string) *VideosListCall {
 // Possible values:
 //
 //	"chartUnspecified"
-//	"mostPopular" - Return the most popular videos for the specified content
+//	"mostPopular" - Return the most popular videos for the specified [content
 //
-// region and video category.
+// region](https://developers.google.com/youtube/data/reference/rest/v3/videos/l
+// ist#regionCode) and [video
+// category](https://developers.google.com/youtube/data/reference/rest/v3/videos
+// /list#videoCategoryId).
 func (c *VideosListCall) Chart(chart string) *VideosListCall {
 	c.urlParams_.Set("chart", chart)
 	return c
@@ -19691,8 +19767,13 @@ func (c *VideosListCall) MaxHeight(maxHeight int64) *VideosListCall {
 // MaxResults sets the optional parameter "maxResults": The *maxResults*
 // parameter specifies the maximum number of items that should be returned in
 // the result set. *Note:* This parameter is supported for use in conjunction
-// with the myRating and chart parameters, but it is not supported for use in
-// conjunction with the id parameter.
+// with the `myRating`
+// (https://developers.google.com/youtube/data/reference/rest/v3/videos/list#myRating)
+// and `chart`
+// (https://developers.google.com/youtube/data/reference/rest/v3/videos/list#chart)
+// parameters, but it is not supported for use in conjunction with the `id`
+// (https://developers.google.com/youtube/data/reference/rest/v3/videos/list#id)
+// parameter.
 func (c *VideosListCall) MaxResults(maxResults int64) *VideosListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -19739,8 +19820,13 @@ func (c *VideosListCall) OnBehalfOfContentOwner(onBehalfOfContentOwner string) *
 // identifies a specific page in the result set that should be returned. In an
 // API response, the nextPageToken and prevPageToken properties identify other
 // pages that could be retrieved. *Note:* This parameter is supported for use
-// in conjunction with the myRating and chart parameters, but it is not
-// supported for use in conjunction with the id parameter.
+// in conjunction with the `myRating`
+// (https://developers.google.com/youtube/data/reference/rest/v3/videos/list#myRating)
+// and `chart`
+// (https://developers.google.com/youtube/data/reference/rest/v3/videos/list#chart)
+// parameters, but it is not supported for use in conjunction with the `id`
+// (https://developers.google.com/youtube/data/reference/rest/v3/videos/list#id)
+// parameter.
 func (c *VideosListCall) PageToken(pageToken string) *VideosListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c

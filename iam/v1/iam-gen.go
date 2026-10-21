@@ -3927,6 +3927,21 @@ type WorkforcePoolProvider struct {
 	// permanently deleted after approximately 30 days. You can restore a
 	// soft-deleted provider using UndeleteWorkforcePoolProvider.
 	State string `json:"state,omitempty"`
+	// VendorType: Optional. The vendor type of the third-party identity provider.
+	//
+	// Possible values:
+	//   "VENDOR_TYPE_UNSPECIFIED" - Default value, no vendor specified, backfilled
+	// to existing providers.
+	//   "ENTRA_ID" - Microsoft Entra ID
+	//   "OKTA" - Okta
+	//   "PING_FEDERATE" - Ping Federate
+	//   "ADFS" - Microsoft Active Directory Federation Services
+	//   "KEYCLOAK" - Keycloak
+	//   "FORGE_ROCK" - ForgeRock
+	//   "JUMP_CLOUD" - JumpCloud
+	//   "ONE_LOGIN" - OneLogin
+	//   "GENERIC" - Other Generic Identity Providers
+	VendorType string `json:"vendorType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

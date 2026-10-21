@@ -299,6 +299,7 @@ type AlloyDbSettings struct {
 	//   "POSTGRES_16" - The database version is Postgres 16.
 	//   "POSTGRES_17" - The database version is Postgres 17.
 	//   "POSTGRES_18" - The database version is Postgres 18.
+	//   "POSTGRES_19" - The database version is Postgres 19.
 	DatabaseVersion string `json:"databaseVersion,omitempty"`
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the data disks and other persistent data resources of a cluster with
@@ -4988,15 +4989,19 @@ func (s PrivateServiceConnectConnectivity) MarshalJSON() ([]byte, error) {
 // PromoteMigrationJobRequest: Request message for 'PromoteMigrationJob'
 // request.
 type PromoteMigrationJobRequest struct {
+	// Failback: Optional. If true, the promote operation will perform a failback
+	// promote from destination back to source (only supported when the migration
+	// job is in FAILBACK phase).
+	Failback bool `json:"failback,omitempty"`
 	// ObjectsFilter: Optional. The object filter to apply to the migration job.
 	ObjectsFilter *MigrationJobObjectsConfig `json:"objectsFilter,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ObjectsFilter") to
+	// ForceSendFields is a list of field names (e.g. "Failback") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ObjectsFilter") to include in API
+	// NullFields is a list of field names (e.g. "Failback") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -6383,7 +6388,8 @@ type SslConfig struct {
 	ClientKey string `json:"clientKey,omitempty"`
 	// SslFlags: Optional. SSL flags used for establishing SSL connection to the
 	// source database. Only source specific flags are supported. An object
-	// containing a list of "key": "value" pairs. Example: {
+	// containing a list of "key": "value" pairs. Examples: {
+	// "server_certificate_dn": "CN=server.com,OU=RDS,O=Amazon.com,C=US"} or {
 	// "server_certificate_hostname": "server.com"}.
 	SslFlags map[string]string `json:"sslFlags,omitempty"`
 	// Type: Optional. The ssl config type according to 'client_key',

@@ -1335,7 +1335,7 @@ func (s AssistantConfirmationResponse) MarshalJSON() ([]byte, error) {
 }
 
 // AssistantSuggestion: A single personalized onboarding suggestion chip for
-// the AI assistant's zero state.
+// Arc's zero state.
 type AssistantSuggestion struct {
 	// CandidateType: Rule-table candidate type in kebab-case (e.g.
 	// "resume-pending-review"), for metrics.
@@ -4427,7 +4427,17 @@ type GuardrailContentFilter struct {
 	// in the text is surrounded by word delimiters. Banned phrases can also
 	// contain word delimiters.
 	//   "REGEXP_MATCH" - Content is matched using regular expression syntax.
+	//   "SENSITIVE_WORDS" - Content is matched against a system-managed list of
+	// sensitive words and phrases. Attaching a guardrail with this match type to
+	// an app or agent replaces the default sensitive words filter for the affected
+	// agents; disable the guardrail to opt out of the default filter.
 	MatchType string `json:"matchType,omitempty"`
+	// SensitiveWordsExemptions: Optional. Entries of the sensitive words list that
+	// this guardrail allows. Only valid when match_type is SENSITIVE_WORDS. Each
+	// value must equal a list entry (case-insensitive, surrounding whitespace
+	// ignored); other values have no effect. Applies to this guardrail only. At
+	// most 1000 entries of up to 256 characters each.
+	SensitiveWordsExemptions []string `json:"sensitiveWordsExemptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BannedContents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4477,7 +4487,9 @@ type GuardrailLlmPolicy struct {
 	// input and agent response. Applying this policy scope will introduce
 	// additional latency before the agent can respond.
 	PolicyScope string `json:"policyScope,omitempty"`
-	// Prompt: Required. Policy prompt.
+	// Prompt: Required. Policy prompt. Supports session variable placeholders
+	// (`{var}`) as well as `{agent_system_instruction}` to inject the agent's
+	// resolved system instructions.
 	Prompt string `json:"prompt,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowShortUtterance") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4880,9 +4892,9 @@ func (s InstagramCredentials) MarshalJSON() ([]byte, error) {
 type LanguageSettings struct {
 	// DefaultLanguageCode: Optional. The default language code of the app.
 	DefaultLanguageCode string `json:"defaultLanguageCode,omitempty"`
-	// EnableMultilingualSupport: Optional. Enables multilingual support. If true,
-	// agents in the app will use pre-built instructions to improve handling of
-	// multilingual input.
+	// EnableMultilingualSupport: Optional. Enables multilingual support. If
+	// `true`, agents in the app will use pre-built instructions to improve
+	// handling of multilingual input.
 	EnableMultilingualSupport bool `json:"enableMultilingualSupport,omitempty"`
 	// FallbackAction: Optional. Deprecated: This feature is no longer supported.
 	// Use `enable_multilingual_support` instead to improve handling of
@@ -6456,6 +6468,14 @@ type LoggingSettings struct {
 	// RedactionConfig: Optional. Configuration for how sensitive data should be
 	// redacted.
 	RedactionConfig *RedactionConfig `json:"redactionConfig,omitempty"`
+	// RequiredRecordingConsent: Optional. Whether the app has to say what may be
+	// recorded before anything is kept. When true, a session starts with recording
+	// off and stays off until the client sends SessionInput.recording_control,
+	// which then decides every turn from that point on. This covers audio
+	// recording as well as conversation history, BigQuery export and Cloud
+	// Logging. When `false`, the default, the settings above decide on their own
+	// and the client does not have to send anything.
+	RequiredRecordingConsent bool `json:"requiredRecordingConsent,omitempty"`
 	// UnredactedAudioRecordingConfig: Optional. Configures an additional recording
 	// of unredacted audio. This can be used to maintain a raw audio copy when
 	// audio redaction is enabled, typically for auditing or monitoring purposes.
@@ -7256,7 +7276,7 @@ type RedactionConfig struct {
 	// `projects/{project}/locations/{location}/deidentifyTemplates/{deidentify_temp
 	// late}`
 	DeidentifyTemplate string `json:"deidentifyTemplate,omitempty"`
-	// EnableRedaction: Optional. If true, redaction will be applied in various
+	// EnableRedaction: Optional. If `true`, redaction will be applied in various
 	// logging scenarios, including conversation history, Cloud Logging and audio
 	// recording.
 	EnableRedaction bool `json:"enableRedaction,omitempty"`
@@ -7753,10 +7773,14 @@ type SessionConfig struct {
 	// Format:
 	// `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
 	Deployment string `json:"deployment,omitempty"`
-	// EnableTextStreaming: Optional. Whether to enable streaming text outputs from
-	// the model. By default, text outputs from the model are collected before
-	// sending to the client. NOTE: This is only supported for text (non-voice)
-	// sessions via StreamRunSession or BidiRunSession.
+	// EnableTextStreaming: Optional. Whether to stream text output from the model
+	// to the client incrementally as it is generated. Defaults to `false`. * When
+	// disabled, the model's text output is buffered, and each text output sent to
+	// the client is a complete sentence. Clients can render each text output on a
+	// new line. * When enabled, each text output may contain only part of a
+	// sentence. Clients should concatenate consecutive text outputs to render the
+	// complete response. NOTE: This is only supported for text (non-voice)
+	// sessions using StreamRunSession or BidiRunSession.
 	EnableTextStreaming bool `json:"enableTextStreaming,omitempty"`
 	// EntryAgent: Optional. The entry agent to handle the session. If not
 	// specified, the session will be handled by the root agent of the app. Format:
@@ -7771,6 +7795,13 @@ type SessionConfig struct {
 	// explicitly populate this field. However, client can optionally override the
 	// historical contexts to force the session start from certain state.
 	HistoricalContexts []*Message `json:"historicalContexts,omitempty"`
+	// IncludeLlmThoughtSummary: Optional. Whether to include LLM thought summaries
+	// in the session outputs.
+	IncludeLlmThoughtSummary bool `json:"includeLlmThoughtSummary,omitempty"`
+	// IncludeProgressUpdate: Optional. Whether to include intermediate processing
+	// update to the client. If enabled, the update will be sent back in
+	// SessionOutput.progress.
+	IncludeProgressUpdate bool `json:"includeProgressUpdate,omitempty"`
 	// InputAudioConfig: Optional. Configuration for processing the input audio.
 	InputAudioConfig *InputAudioConfig `json:"inputAudioConfig,omitempty"`
 	// OutputAudioConfig: Optional. Configuration for generating the output audio.
@@ -7855,6 +7886,28 @@ type SessionInput struct {
 	Event *Event `json:"event,omitempty"`
 	// Image: Optional. Image data from the end user.
 	Image *Image `json:"image,omitempty"`
+	// RecordingControl: Optional. Whether the conversation may be recorded and
+	// logged from here on. Use this when the app, rather than the agent, decides
+	// what may be kept: for example when the end user has to consent to being
+	// recorded before anything about the call can be stored. The value stays in
+	// effect until the client sends a different one, so it only needs to be sent
+	// when the answer changes. Whatever is in effect when a turn completes decides
+	// that turn, both whether its audio reaches the recording bucket and whether
+	// its transcript reaches conversation history, BigQuery and Cloud Logging. It
+	// covers the agent's side of the turn as well as the end user's. Turns that
+	// complete before the client first sends this are recorded according to the
+	// app's logging settings, as though the field did not exist. If more than one
+	// input in the same request sets it, the last one wins.
+	//
+	// Possible values:
+	//   "RECORDING_CONTROL_UNSPECIFIED" - The app is not controlling recording.
+	// The app's logging settings decide, as they do for every session that never
+	// sets this field.
+	//   "RECORDING_ENABLED" - The conversation may be recorded and logged from
+	// here on.
+	//   "RECORDING_DISABLED" - The conversation may not be recorded or logged from
+	// here on.
+	RecordingControl string `json:"recordingControl,omitempty"`
 	// Text: Optional. Text data from the end user.
 	Text string `json:"text,omitempty"`
 	// ToolResponses: Optional. Execution results for the tool calls from the
@@ -9995,10 +10048,10 @@ type ProjectsLocationsAppsGenerateOnboardingSuggestionsCall struct {
 }
 
 // GenerateOnboardingSuggestions: Generates personalized onboarding suggestions
-// for the AI assistant zero state: classifies the requesting user (new /
-// exploring / returning) from their assistant-session history in the app and
-// returns suggestion chips (resume a session, continue work, or start
-// something new) to render before any message is sent.
+// for the Arc zero state: classifies the requesting user (new / exploring /
+// returning) from their assistant-session history in the app and returns
+// suggestion chips (resume a session, continue work, or start something new)
+// to render before any message is sent.
 //
 //   - name: The app whose zero state is being rendered. Format:
 //     `projects/{project}/locations/{location}/apps/{app}`.
@@ -11523,7 +11576,7 @@ type ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall struct {
 	header_                      http.Header
 }
 
-// StreamChatAiAssistant: Runs the Chat AI assistant agent for the specified
+// StreamChatAiAssistant: Runs Arc, the AI assistant, for the specified
 // assistant session in a streaming fashion.
 //
 //   - name: The assistant session to be used to run the assistant. Format:

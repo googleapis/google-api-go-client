@@ -951,6 +951,9 @@ func (s ModelVersion) MarshalJSON() ([]byte, error) {
 type Scope3FlightEmissions struct {
 	// Flight: Identifier. Matches the flight identifiers in the request.
 	Flight *Scope3FlightSegment `json:"flight,omitempty"`
+	// ModelVersion: Optional. The model version under which the emissions were
+	// computed.
+	ModelVersion *ModelVersion `json:"modelVersion,omitempty"`
 	// Source: Optional. The source of the emissions data.
 	//
 	// Possible values:

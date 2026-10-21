@@ -1659,8 +1659,8 @@ type DailyRollUpDataPointsRequest struct {
 	// rather than an error.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
-	// unspecified, at most 1440 data points will be returned. The maximum page
-	// size is 10000; values above that will be truncated accordingly.
+	// unspecified, at most 90 data points will be returned. The maximum page size
+	// is 10000; values above that will be truncated accordingly.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. The next_page_token from a previous request, if any.
 	// All other request fields need to be the same as in the initial request when

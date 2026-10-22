@@ -209,8 +209,8 @@ type ProjectsRegistrationsTopicSubscriptionsService struct {
 	s *Service
 }
 
-// AndroidBackgroundSyncMessage: A Background Sync message that is sent to an
-// Android device.
+// AndroidBackgroundSyncMessage: A Background Sync message that is sent to
+// Android devices.
 type AndroidBackgroundSyncMessage struct {
 }
 
@@ -303,7 +303,8 @@ func (s AndroidConfig) MarshalJSON() ([]byte, error) {
 // AndroidConfig message and will replace it in the v2 API.
 type AndroidConfigV2 struct {
 	// BackgroundSync: Optional. Non-urgent background sync message to send to
-	// android devices.
+	// Android devices. Delivery of these messages may be delayed or batched to
+	// optimize for battery.
 	BackgroundSync *AndroidBackgroundSyncMessage `json:"backgroundSync,omitempty"`
 	// BandwidthConstrainedOk: Optional. If set to true, messages will be allowed
 	// to be delivered to the app while the device is in bandwidth constrained
@@ -325,8 +326,9 @@ type AndroidConfigV2 struct {
 	// FcmOptions: Options for features provided by the FCM SDK for Android. If
 	// present, it will override google.firebase.fcm.v1.Message.fcm_options.
 	FcmOptions *AndroidFcmOptions `json:"fcmOptions,omitempty"`
-	// RemoteNotification: Optional. User-facing notification to send to android
-	// devices.
+	// RemoteNotification: Optional. User-facing notification to send to Android
+	// devices. These messages are delivered immediately and are not delayed by
+	// battery optimizations.
 	RemoteNotification *AndroidRemoteNotification `json:"remoteNotification,omitempty"`
 	// RestrictedPackageName: Package name of the application where the
 	// registration token must match in order to receive the message.
@@ -653,9 +655,8 @@ type AndroidNotificationV2 struct {
 	// `(tag, id)` is already being shown, the new notification replaces the
 	// existing one in the notification drawer.
 	Id int64 `json:"id,omitempty"`
-	// Image: Contains the URL of an image that is going to be displayed in a
-	// notification. If present, it will override
-	// google.firebase.fcm.v1.Notification.image.
+	// Image: An HTTPS URL of an image to display in the notification. If present,
+	// it overrides google.firebase.fcm.v1.Notification.image.
 	Image string `json:"image,omitempty"`
 	// LightSettings: Settings to control the notification's LED blinking rate and
 	// color if LED is available on the device. The total blinking time is
@@ -784,8 +785,8 @@ func (s AndroidNotificationV2) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AndroidRemoteNotification: A Remote Notification message that is sent to an
-// Android device.
+// AndroidRemoteNotification: A Remote Notification message that is sent to
+// Android devices.
 type AndroidRemoteNotification struct {
 	// MutableContent: Optional. If set to true, the notification content can be
 	// updated by the app after the notification is received on the device.

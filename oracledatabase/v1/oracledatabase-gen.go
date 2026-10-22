@@ -175,6 +175,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.CloudExadataInfrastructures = NewProjectsLocationsCloudExadataInfrastructuresService(s)
 	rs.CloudVmClusters = NewProjectsLocationsCloudVmClustersService(s)
 	rs.DatabaseCharacterSets = NewProjectsLocationsDatabaseCharacterSetsService(s)
+	rs.DatabaseConnections = NewProjectsLocationsDatabaseConnectionsService(s)
 	rs.Databases = NewProjectsLocationsDatabasesService(s)
 	rs.DbSystemInitialStorageSizes = NewProjectsLocationsDbSystemInitialStorageSizesService(s)
 	rs.DbSystemShapes = NewProjectsLocationsDbSystemShapesService(s)
@@ -213,6 +214,8 @@ type ProjectsLocationsService struct {
 	CloudVmClusters *ProjectsLocationsCloudVmClustersService
 
 	DatabaseCharacterSets *ProjectsLocationsDatabaseCharacterSetsService
+
+	DatabaseConnections *ProjectsLocationsDatabaseConnectionsService
 
 	Databases *ProjectsLocationsDatabasesService
 
@@ -337,6 +340,15 @@ func NewProjectsLocationsDatabaseCharacterSetsService(s *Service) *ProjectsLocat
 }
 
 type ProjectsLocationsDatabaseCharacterSetsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDatabaseConnectionsService(s *Service) *ProjectsLocationsDatabaseConnectionsService {
+	rs := &ProjectsLocationsDatabaseConnectionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDatabaseConnectionsService struct {
 	s *Service
 }
 
@@ -510,6 +522,7 @@ type ProjectsLocationsGoldengateDeploymentsService struct {
 
 func NewProjectsLocationsOdbNetworksService(s *Service) *ProjectsLocationsOdbNetworksService {
 	rs := &ProjectsLocationsOdbNetworksService{s: s}
+	rs.OdbDnsZones = NewProjectsLocationsOdbNetworksOdbDnsZonesService(s)
 	rs.OdbSubnets = NewProjectsLocationsOdbNetworksOdbSubnetsService(s)
 	return rs
 }
@@ -517,7 +530,18 @@ func NewProjectsLocationsOdbNetworksService(s *Service) *ProjectsLocationsOdbNet
 type ProjectsLocationsOdbNetworksService struct {
 	s *Service
 
+	OdbDnsZones *ProjectsLocationsOdbNetworksOdbDnsZonesService
+
 	OdbSubnets *ProjectsLocationsOdbNetworksOdbSubnetsService
+}
+
+func NewProjectsLocationsOdbNetworksOdbDnsZonesService(s *Service) *ProjectsLocationsOdbNetworksOdbDnsZonesService {
+	rs := &ProjectsLocationsOdbNetworksOdbDnsZonesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsOdbNetworksOdbDnsZonesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsOdbNetworksOdbSubnetsService(s *Service) *ProjectsLocationsOdbNetworksOdbSubnetsService {
@@ -1859,6 +1883,11 @@ type CloudVmCluster struct {
 	// Network: Optional. Immutable. The name of the VPC network. Format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
+	// OdbDnsZone: Optional. Immutable. The name of the OdbDnsZone for using custom
+	// domain name for the VM Cluster. Format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones
+	// /{odb_dns_zone}
+	OdbDnsZone string `json:"odbDnsZone,omitempty"`
 	// OdbNetwork: Optional. Immutable. The name of the OdbNetwork associated with
 	// the VM Cluster. Format:
 	// projects/{project}/locations/{location}/odbNetworks/{odb_network} It is
@@ -2055,6 +2084,31 @@ func (s *CloudVmClusterProperties) UnmarshalJSON(data []byte) error {
 	s.DataStorageSizeTb = float64(s1.DataStorageSizeTb)
 	s.OcpuCount = float64(s1.OcpuCount)
 	return nil
+}
+
+// Column: Contains the name and datatype of a column in a SQL Result.
+type Column struct {
+	// Name: Required. Name of the column.
+	Name string `json:"name,omitempty"`
+	// Type: Required. Database-specific type name (e.g., "VARCHAR2(255)",
+	// "NUMBER", "DATE", "CLOB")
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Column) MarshalJSON() ([]byte, error) {
+	type NoMethod Column
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ConfigureExascaleCloudExadataInfrastructureRequest: The request for
@@ -2324,6 +2378,77 @@ type DatabaseCharacterSet struct {
 
 func (s DatabaseCharacterSet) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseCharacterSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseConnection: Represents DatabaseConnection resource.
+type DatabaseConnection struct {
+	// ConnectionString: Required. Immutable. Oracle Easy Connect or TNS connection
+	// string. Example: "your-db-host.example.com:1521/YOUR_SERVICE_NAME"
+	ConnectionString string `json:"connectionString,omitempty"`
+	// CreateTime: Output only. The create time of the resource.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. Immutable. User-friendly display name for the
+	// connection.
+	DisplayName string `json:"displayName,omitempty"`
+	// Labels: Optional. Optional: Labels as key-value pairs to organize the
+	// resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// LifecycleDetails: Output only. Additional information about the current
+	// state of the connection.
+	LifecycleDetails string `json:"lifecycleDetails,omitempty"`
+	// Name: Identifier. The resource name of the DatabaseConnection. Format:
+	// projects/{project}/locations/{location}/databaseConnections/{database_connect
+	// ion}
+	Name string `json:"name,omitempty"`
+	// OdbNetwork: Optional. Immutable. For Oracle Database@Google cloud resources.
+	// Format: projects/{project}/locations/{location}/odbNetworks/{odbNetwork}
+	OdbNetwork string `json:"odbNetwork,omitempty"`
+	// PasswordSecretVersion: Optional. The resource name of the GCP Secret Manager
+	// secret version containing the password for the specified username. Format:
+	// projects/{project}/secrets/{secret_id}/versions/{version_id} The service's
+	// Per-Product Per-Project Service Account (P4SA) must have the
+	// 'secretmanager.secretAccessor' permission on this secret.
+	PasswordSecretVersion string `json:"passwordSecretVersion,omitempty"`
+	// State: Output only. The current state of the connection.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default unspecified value.
+	//   "CREATING" - Indicates that the resource is in a creating state.
+	//   "ACTIVE" - Indicates that the resource is in an active state.
+	//   "FAILED" - Indicates that the resource is in a failed state.
+	//   "DELETING" - Indicates that the resource is in a deleting state.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The update time of the resource.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// Username: Optional. Immutable. The default database username to use for
+	// connections.
+	Username string `json:"username,omitempty"`
+	// WalletSecretVersion: Optional. Optional: The resource name of the GCP Secret
+	// Manager secret version containing base64 encoded content of the Oracle
+	// Wallet ZIP file required for mTLS/TLS connections. Format:
+	// projects/{project}/secrets/{secret_id}/versions/{version_id} The service's
+	// Per-Product Per-Project Service Account (P4SA) must have the
+	// 'secretmanager.secretAccessor' permission on this secret.
+	WalletSecretVersion string `json:"walletSecretVersion,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ConnectionString") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConnectionString") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DatabaseConnection) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseConnection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3675,6 +3800,106 @@ type ExascaleDbStorageVaultProperties struct {
 
 func (s ExascaleDbStorageVaultProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod ExascaleDbStorageVaultProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteSqlMetadata: Any additional metadata information regarding the
+// execution of the SQL
+type ExecuteSqlMetadata struct {
+	// ExecutionDuration: The time duration taken to execute the sql statement.
+	ExecutionDuration string `json:"executionDuration,omitempty"`
+	// Message: Message related to SQL execution. This field can be used to convey
+	// size limit related message.
+	Message string `json:"message,omitempty"`
+	// PartialResult: Set to true if SQL returned a result set larger than the
+	// acceptable response size limits and the result was truncated.
+	PartialResult bool `json:"partialResult,omitempty"`
+	// Status: Output only. Status of SQL execution.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Default value. Not returned by the service.
+	//   "OK" - No error during SQL execution i.e. All SQL statements ran to
+	// completion. The "message" will be empty.
+	//   "PARTIAL" - Same as OK, except indicates that only partial results were
+	// returned. The "message" field will contain details on why results were
+	// truncated. `partial_result` is true if and only if `status` is `PARTIAL`.
+	//   "ERROR" - The database returned an error while executing the SQL
+	// statement. `message` contains the error text returned by Oracle.
+	// `sql_results` is empty. The statement runs in autocommit mode; which changes
+	// are committed or rolled back follows Oracle Database behavior.
+	// Authentication failures, database availability errors, network errors, and
+	// timeouts are returned as API errors (AIP-193), not as ERROR.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionDuration") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteSqlMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteSqlMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteSqlRequest: The request for `DatabaseConnection.ExecuteSql`.
+type ExecuteSqlRequest struct {
+	// Params: Optional. Optional: Bind variables (parameters) to be used with the
+	// SQL statement. Supports named bind variables (e.g., :dept_id, :status in
+	// Oracle SQL) or positional parameters (:1, :2).
+	Params []*SqlParameter `json:"params,omitempty"`
+	// SqlStatement: Required. The SQL statement to execute.
+	SqlStatement string `json:"sqlStatement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Params") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Params") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteSqlRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteSqlRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteSqlResponse: Execute a SQL statement response.
+type ExecuteSqlResponse struct {
+	// Metadata: Any additional metadata information regarding the execution of the
+	// sql statement.
+	Metadata *ExecuteSqlMetadata `json:"metadata,omitempty"`
+	// SqlResults: SqlResult represents the results for the execution of sql
+	// statements.
+	SqlResults []*SqlResult `json:"sqlResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteSqlResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteSqlResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6794,6 +7019,37 @@ func (s ListDatabaseCharacterSetsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListDatabaseConnectionsResponse: The response for `DatabaseConnection.List`.
+type ListDatabaseConnectionsResponse struct {
+	// DatabaseConnections: The list of DatabaseConnections.
+	DatabaseConnections []*DatabaseConnection `json:"databaseConnections,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "DatabaseConnections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DatabaseConnections") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListDatabaseConnectionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDatabaseConnectionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListDatabasesResponse: The response for `Database.List`.
 type ListDatabasesResponse struct {
 	// Databases: The list of Databases.
@@ -7394,6 +7650,37 @@ func (s ListMinorVersionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListOdbDnsZonesResponse: The response for `OdbDnsZone.List`.
+type ListOdbDnsZonesResponse struct {
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// OdbDnsZones: The list of OdbDnsZones.
+	OdbDnsZones []*OdbDnsZone `json:"odbDnsZones,omitempty"`
+	// Unreachable: Unreachable locations when listing resources across all
+	// locations using wildcard location '-'.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListOdbDnsZonesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListOdbDnsZonesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListOdbNetworksResponse: The response for `OdbNetwork.List`.
 type ListOdbNetworksResponse struct {
 	// NextPageToken: A token identifying a page of results the server should
@@ -7751,6 +8038,50 @@ func (s NessieIcebergCatalog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OdbDnsZone: Represents OdbDnsZone resource.
+type OdbDnsZone struct {
+	// CreateTime: Output only. The date and time that the OdbDnsZone was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Domain: Required. The DNS suffix for the zone. Ex: abc.example.com.
+	Domain string `json:"domain,omitempty"`
+	// Labels: Optional. Labels or tags associated with the resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. The name of the OdbDnsZone resource in the following
+	// format:
+	// projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZones
+	// /{odb_dns_zone}
+	Name string `json:"name,omitempty"`
+	// State: Output only. State of the OdbDnsZone.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default unspecified value.
+	//   "PROVISIONING" - Indicates that the resource is in a provisioning state.
+	//   "AVAILABLE" - Indicates that the resource is in an available state.
+	//   "INACTIVE" - Indicates that the resource is available but inactive.
+	//   "TERMINATING" - Indicates that the resource is in a terminating state.
+	//   "FAILED" - Indicates that the resource is in a failed state.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OdbDnsZone) MarshalJSON() ([]byte, error) {
+	type NoMethod OdbDnsZone
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OdbNetwork: Represents OdbNetwork resource.
 type OdbNetwork struct {
 	// CreateTime: Output only. The date and time that the OdbNetwork was created.
@@ -7770,6 +8101,16 @@ type OdbNetwork struct {
 	// Network: Required. The name of the VPC network in the following format:
 	// projects/{project}/global/networks/{network}
 	Network string `json:"network,omitempty"`
+	// Reconciling: Output only. Indicates whether the OdbNetwork is currently
+	// reconciling changes.
+	Reconciling bool `json:"reconciling,omitempty"`
+	// ServiceConnectivityConfig: Optional. Configuration to enable the service
+	// (Oracledatabase@Google Cloud) to establish connectivity to the database.
+	// This should be specified if you intend to associate this OdbNetwork with a
+	// DatabaseConnection resource to `ExecuteSQL` on the database, or to create a
+	// ServiceIntegration with the Database. Please don't specify it otherwise to
+	// avoid complicating the network setup.
+	ServiceConnectivityConfig *ServiceConnectivityConfig `json:"serviceConnectivityConfig,omitempty"`
 	// State: Output only. State of the ODB Network.
 	//
 	// Possible values:
@@ -8162,6 +8503,33 @@ func (s PolarisIcebergCatalog) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PscInterfaceConfig: Configuration for a Private Service Connect (PSC)
+// interface used by Oracledatabase@Google Cloud to establish private
+// connectivity to the database.
+type PscInterfaceConfig struct {
+	// NetworkAttachment: Optional. The resource name of the Network Attachment
+	// that Oracledatabase@Google Cloud will use to establish private connectivity
+	// to the database via a Private Service Connect Interface (PSC-I). Format:
+	// projects/{project}/regions/{region}/networkAttachments/{network_attachment}
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NetworkAttachment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NetworkAttachment") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PscInterfaceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInterfaceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RefreshAutonomousDatabaseRequest: Request message for
 // RefreshAutonomousDatabase method.
 type RefreshAutonomousDatabaseRequest struct {
@@ -8272,6 +8640,28 @@ func (s RestoreAutonomousDatabaseRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Row: A single row from a sql result.
+type Row struct {
+	// Values: List of values in a row of sql result.
+	Values []*Value `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Row) MarshalJSON() ([]byte, error) {
+	type NoMethod Row
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ScheduledOperationDetails: Details of scheduled operation.
 // https://docs.oracle.com/en-us/iaas/api/#/en/database/20160918/datatypes/ScheduledOperationDetails
 type ScheduledOperationDetails struct {
@@ -8306,6 +8696,34 @@ type ScheduledOperationDetails struct {
 
 func (s ScheduledOperationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduledOperationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ServiceConnectivityConfig: Configuration to enable the service
+// (Oracledatabase@Google Cloud) to establish connectivity to the database.
+// This should be specified if you intend to associate this OdbNetwork with a
+// DatabaseConnection resource to `ExecuteSQL` on the database, or to create a
+// ServiceIntegration with the Database. Please don't specify it otherwise to
+// avoid complicating the network setup.
+type ServiceConnectivityConfig struct {
+	// PscInterfaceConfig: Optional. Configuration for Private Service Connect
+	// (PSC) interface.
+	PscInterfaceConfig *PscInterfaceConfig `json:"pscInterfaceConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PscInterfaceConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PscInterfaceConfig") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceConnectivityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceConnectivityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8390,6 +8808,66 @@ type SourceConfig struct {
 
 func (s SourceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SourceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlParameter: Represents a bind variable (parameter) for SQL execution.
+type SqlParameter struct {
+	// Name: Optional. The name of the SQL bind parameter (excluding the leading
+	// colon, e.g. "id"). If omitted, parameters bind positionally based on their
+	// order in the list.
+	Name string `json:"name,omitempty"`
+	// TypeName: Optional. Optional: Datatype hint for the parameter (e.g.,
+	// "VARCHAR2", "NUMBER", "DATE", "TIMESTAMP"). If omitted, the Oracle driver
+	// will infer the type from the value string.
+	TypeName string `json:"typeName,omitempty"`
+	// Value: Required. Use protobuf.Value so clients can pass ints, bools, and
+	// strings natively.
+	Value interface{} `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlParameter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SqlResult: SqlResult represents the result for the execution of a sql
+// statement.
+type SqlResult struct {
+	// AffectedRowCount: Optional. The number of rows affected by DML statements
+	// (e.g., INSERT, UPDATE, DELETE, MERGE). Unset or 0 for SELECT / DDL
+	// statements.
+	AffectedRowCount int64 `json:"affectedRowCount,omitempty,string"`
+	// Columns: List of columns included in the result, including data type.
+	Columns []*Column `json:"columns,omitempty"`
+	// Rows: Rows returned by the SQL statement.
+	Rows []*Row `json:"rows,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AffectedRowCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AffectedRowCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SqlResult) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8527,6 +9005,39 @@ func (s TestConnectionAssignmentError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TestDatabaseConnectionRequest: Request message for
+// `DatabaseConnection.TestDatabaseConnection`.
+type TestDatabaseConnectionRequest struct {
+}
+
+// TestDatabaseConnectionResponse: Response message for
+// `DatabaseConnection.TestDatabaseConnection`.
+type TestDatabaseConnectionResponse struct {
+	// ErrorMessage: Error message if the test connection failed.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// Success: Whether the test connection was successful.
+	Success bool `json:"success,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TestDatabaseConnectionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod TestDatabaseConnectionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TestGoldengateConnectionAssignmentRequest: Request message for
 // TestGoldengateConnectionAssignment.
 type TestGoldengateConnectionAssignmentRequest struct {
@@ -8651,6 +9162,31 @@ type TimeZone struct {
 
 func (s TimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeZone
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Value: A single value in a row from a sql result.
+type Value struct {
+	// NullValue: Set to true if the cell value is NULL.
+	NullValue bool `json:"nullValue,omitempty"`
+	// Value: The cell value represented in string format. Timestamps should be
+	// converted using RFC3339Nano format.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NullValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NullValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Value) MarshalJSON() ([]byte, error) {
+	type NoMethod Value
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12850,6 +13386,854 @@ func (c *ProjectsLocationsDatabaseCharacterSetsListCall) Pages(ctx context.Conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsDatabaseConnectionsCreateCall struct {
+	s                  *Service
+	parent             string
+	databaseconnection *DatabaseConnection
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Create: Creates a new DatabaseConnection in a given project and location.
+//
+//   - parent: The parent value for the DatabaseConnection in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDatabaseConnectionsService) Create(parent string, databaseconnection *DatabaseConnection) *ProjectsLocationsDatabaseConnectionsCreateCall {
+	c := &ProjectsLocationsDatabaseConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.databaseconnection = databaseconnection
+	return c
+}
+
+// DatabaseConnectionId sets the optional parameter "databaseConnectionId":
+// Required. The ID of the DatabaseConnection to create. This value is
+// restricted to (^a-z ([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63
+// characters in length. The value must start with a letter and end with a
+// letter or a number.
+func (c *ProjectsLocationsDatabaseConnectionsCreateCall) DatabaseConnectionId(databaseConnectionId string) *ProjectsLocationsDatabaseConnectionsCreateCall {
+	c.urlParams_.Set("databaseConnectionId", databaseConnectionId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDatabaseConnectionsCreateCall) RequestId(requestId string) *ProjectsLocationsDatabaseConnectionsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabaseConnectionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabaseConnectionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabaseConnectionsCreateCall) Context(ctx context.Context) *ProjectsLocationsDatabaseConnectionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabaseConnectionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabaseConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.databaseconnection)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databaseConnections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databaseConnections.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatabaseConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatabaseConnectionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single DatabaseConnection.
+//
+//   - name: The name of the resource in the following format:
+//     projects/{project}/locations/{location}/databaseConnections/{database_conne
+//     ction}.
+func (r *ProjectsLocationsDatabaseConnectionsService) Delete(name string) *ProjectsLocationsDatabaseConnectionsDeleteCall {
+	c := &ProjectsLocationsDatabaseConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDatabaseConnectionsDeleteCall) RequestId(requestId string) *ProjectsLocationsDatabaseConnectionsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabaseConnectionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabaseConnectionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabaseConnectionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDatabaseConnectionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabaseConnectionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabaseConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databaseConnections.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatabaseConnectionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatabaseConnectionsExecuteSqlCall struct {
+	s                 *Service
+	name              string
+	executesqlrequest *ExecuteSqlRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// ExecuteSql: Executes a SQL statement on a DatabaseConnection.
+//
+//   - name: The name of the DatabaseConnection in the following format:
+//     projects/{project}/locations/{location}/databaseConnections/{database_conne
+//     ction}.
+func (r *ProjectsLocationsDatabaseConnectionsService) ExecuteSql(name string, executesqlrequest *ExecuteSqlRequest) *ProjectsLocationsDatabaseConnectionsExecuteSqlCall {
+	c := &ProjectsLocationsDatabaseConnectionsExecuteSqlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.executesqlrequest = executesqlrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabaseConnectionsExecuteSqlCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabaseConnectionsExecuteSqlCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabaseConnectionsExecuteSqlCall) Context(ctx context.Context) *ProjectsLocationsDatabaseConnectionsExecuteSqlCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabaseConnectionsExecuteSqlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabaseConnectionsExecuteSqlCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.executesqlrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:executeSql")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.executeSql", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databaseConnections.executeSql" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExecuteSqlResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDatabaseConnectionsExecuteSqlCall) Do(opts ...googleapi.CallOption) (*ExecuteSqlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExecuteSqlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.executeSql", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatabaseConnectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single DatabaseConnection.
+//
+//   - name: The name of the DatabaseConnection in the following format:
+//     projects/{project}/locations/{location}/databaseConnections/{database_conne
+//     ction}.
+func (r *ProjectsLocationsDatabaseConnectionsService) Get(name string) *ProjectsLocationsDatabaseConnectionsGetCall {
+	c := &ProjectsLocationsDatabaseConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabaseConnectionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabaseConnectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatabaseConnectionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatabaseConnectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabaseConnectionsGetCall) Context(ctx context.Context) *ProjectsLocationsDatabaseConnectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabaseConnectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabaseConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databaseConnections.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DatabaseConnection.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDatabaseConnectionsGetCall) Do(opts ...googleapi.CallOption) (*DatabaseConnection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DatabaseConnection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatabaseConnectionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists DatabaseConnections in a given project and location.
+//
+//   - parent: The parent value for the DatabaseConnection in the following
+//     format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsDatabaseConnectionsService) List(parent string) *ProjectsLocationsDatabaseConnectionsListCall {
+	c := &ProjectsLocationsDatabaseConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) Filter(filter string) *ProjectsLocationsDatabaseConnectionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) OrderBy(orderBy string) *ProjectsLocationsDatabaseConnectionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 DatabaseConnections will be returned.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) PageSize(pageSize int64) *ProjectsLocationsDatabaseConnectionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) PageToken(pageToken string) *ProjectsLocationsDatabaseConnectionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabaseConnectionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatabaseConnectionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) Context(ctx context.Context) *ProjectsLocationsDatabaseConnectionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabaseConnectionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/databaseConnections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databaseConnections.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDatabaseConnectionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListDatabaseConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDatabaseConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDatabaseConnectionsListCall) Pages(ctx context.Context, f func(*ListDatabaseConnectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsDatabaseConnectionsPatchCall struct {
+	s                  *Service
+	name               string
+	databaseconnection *DatabaseConnection
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Patch: Updates the parameters of a single DatabaseConnection.
+//
+//   - name: Identifier. The resource name of the DatabaseConnection. Format:
+//     projects/{project}/locations/{location}/databaseConnections/{database_conne
+//     ction}.
+func (r *ProjectsLocationsDatabaseConnectionsService) Patch(name string, databaseconnection *DatabaseConnection) *ProjectsLocationsDatabaseConnectionsPatchCall {
+	c := &ProjectsLocationsDatabaseConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.databaseconnection = databaseconnection
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDatabaseConnectionsPatchCall) RequestId(requestId string) *ProjectsLocationsDatabaseConnectionsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the DatabaseConnection should be updated. A field specified in the
+// mask is overwritten. If a mask isn't provided then all the fields in the
+// DatabaseConnection are overwritten.
+func (c *ProjectsLocationsDatabaseConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDatabaseConnectionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabaseConnectionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabaseConnectionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabaseConnectionsPatchCall) Context(ctx context.Context) *ProjectsLocationsDatabaseConnectionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabaseConnectionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabaseConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.databaseconnection)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databaseConnections.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatabaseConnectionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatabaseConnectionsTestCall struct {
+	s                             *Service
+	name                          string
+	testdatabaseconnectionrequest *TestDatabaseConnectionRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Test: Tests connectivity of a DatabaseConnection.
+//
+//   - name: The name of the DatabaseConnection to test. Format:
+//     projects/{project}/locations/{location}/databaseConnections/{database_conne
+//     ction}.
+func (r *ProjectsLocationsDatabaseConnectionsService) Test(name string, testdatabaseconnectionrequest *TestDatabaseConnectionRequest) *ProjectsLocationsDatabaseConnectionsTestCall {
+	c := &ProjectsLocationsDatabaseConnectionsTestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.testdatabaseconnectionrequest = testdatabaseconnectionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatabaseConnectionsTestCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatabaseConnectionsTestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatabaseConnectionsTestCall) Context(ctx context.Context) *ProjectsLocationsDatabaseConnectionsTestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatabaseConnectionsTestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatabaseConnectionsTestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.testdatabaseconnectionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:test")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.test", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.databaseConnections.test" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestDatabaseConnectionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatabaseConnectionsTestCall) Do(opts ...googleapi.CallOption) (*TestDatabaseConnectionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestDatabaseConnectionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.databaseConnections.test", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsDatabasesGetCall struct {
@@ -19604,6 +20988,643 @@ func (c *ProjectsLocationsOdbNetworksListCall) Do(opts ...googleapi.CallOption) 
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOdbNetworksListCall) Pages(ctx context.Context, f func(*ListOdbNetworksResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsOdbNetworksPatchCall struct {
+	s          *Service
+	name       string
+	odbnetwork *OdbNetwork
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the `labels` and `service_connectivity_config` of a single
+// OdbNetwork.
+//
+//   - name: Identifier. The name of the OdbNetwork resource in the following
+//     format: projects/{project}/locations/{region}/odbNetworks/{odb_network}.
+func (r *ProjectsLocationsOdbNetworksService) Patch(name string, odbnetwork *OdbNetwork) *ProjectsLocationsOdbNetworksPatchCall {
+	c := &ProjectsLocationsOdbNetworksPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.odbnetwork = odbnetwork
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsOdbNetworksPatchCall) RequestId(requestId string) *ProjectsLocationsOdbNetworksPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": A mask specifying which
+// fields in the OdbNetwork should be updated. A field specified in the mask is
+// updated. If a mask isn't provided, the service treats this as an implied
+// field mask equivalent to all fields that are populated (have a non-empty
+// value). To clear or unset a field, the field must be explicitly specified in
+// the `update_mask`.
+func (c *ProjectsLocationsOdbNetworksPatchCall) UpdateMask(updateMask string) *ProjectsLocationsOdbNetworksPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksPatchCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.odbnetwork)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall struct {
+	s          *Service
+	parent     string
+	odbdnszone *OdbDnsZone
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new ODB DNS Zone in a given ODB Network.
+//
+//   - parent: The parent value for the OdbDnsZone in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+func (r *ProjectsLocationsOdbNetworksOdbDnsZonesService) Create(parent string, odbdnszone *OdbDnsZone) *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall {
+	c := &ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.odbdnszone = odbdnszone
+	return c
+}
+
+// OdbDnsZoneId sets the optional parameter "odbDnsZoneId": Required. The ID of
+// the OdbDnsZone to create. This value is restricted to (^a-z
+// ([a-z0-9-]{0,61}[a-z0-9])?$) and must be a maximum of 63 characters in
+// length. The value must start with a letter and end with a letter or a
+// number.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall) OdbDnsZoneId(odbDnsZoneId string) *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall {
+	c.urlParams_.Set("odbDnsZoneId", odbDnsZoneId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall) RequestId(requestId string) *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.odbdnszone)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/odbDnsZones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbDnsZones.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbDnsZones.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbDnsZones.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single ODB DNS Zone.
+//
+//   - name: The name of the resource in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZon
+//     es/{odb_dns_zone}.
+func (r *ProjectsLocationsOdbNetworksOdbDnsZonesService) Delete(name string) *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall {
+	c := &ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional ID to
+// identify the request. This value is used to identify duplicate requests. If
+// you make a request with the same request ID and the original request is
+// still in progress or completed, the server ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
+// request ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall) RequestId(requestId string) *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbDnsZones.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbDnsZones.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbDnsZones.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksOdbDnsZonesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single ODB DNS Zone.
+//
+//   - name: The name of the OdbDnsZone in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}/odbDnsZon
+//     es/{odb_dns_zone}.
+func (r *ProjectsLocationsOdbNetworksOdbDnsZonesService) Get(name string) *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall {
+	c := &ProjectsLocationsOdbNetworksOdbDnsZonesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbDnsZones.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbDnsZones.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OdbDnsZone.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesGetCall) Do(opts ...googleapi.CallOption) (*OdbDnsZone, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OdbDnsZone{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbDnsZones.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsOdbNetworksOdbDnsZonesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the ODB DNS Zones in a given ODB Network.
+//
+//   - parent: The parent value for the OdbDnsZone in the following format:
+//     projects/{project}/locations/{location}/odbNetworks/{odb_network}.
+func (r *ProjectsLocationsOdbNetworksOdbDnsZonesService) List(parent string) *ProjectsLocationsOdbNetworksOdbDnsZonesListCall {
+	c := &ProjectsLocationsOdbNetworksOdbDnsZonesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression for filtering the
+// results of the request.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) Filter(filter string) *ProjectsLocationsOdbNetworksOdbDnsZonesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression for ordering
+// the results of the request.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) OrderBy(orderBy string) *ProjectsLocationsOdbNetworksOdbDnsZonesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of items
+// to return. If unspecified, at most 50 OdbDnsZones will be returned. The
+// maximum value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) PageSize(pageSize int64) *ProjectsLocationsOdbNetworksOdbDnsZonesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) PageToken(pageToken string) *ProjectsLocationsOdbNetworksOdbDnsZonesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOdbNetworksOdbDnsZonesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOdbNetworksOdbDnsZonesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) Context(ctx context.Context) *ProjectsLocationsOdbNetworksOdbDnsZonesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/odbDnsZones")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbDnsZones.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "oracledatabase.projects.locations.odbNetworks.odbDnsZones.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOdbDnsZonesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) Do(opts ...googleapi.CallOption) (*ListOdbDnsZonesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListOdbDnsZonesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "oracledatabase.projects.locations.odbNetworks.odbDnsZones.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsOdbNetworksOdbDnsZonesListCall) Pages(ctx context.Context, f func(*ListOdbDnsZonesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

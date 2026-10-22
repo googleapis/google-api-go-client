@@ -6,7 +6,7 @@
 
 // Package deepreview provides access to the Deep Review API.
 //
-// For product documentation, see: https://research.google/
+// For product documentation, see: https://research.google/deepreview
 //
 // # Library status
 //

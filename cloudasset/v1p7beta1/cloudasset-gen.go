@@ -1151,7 +1151,7 @@ type GoogleIdentityAccesscontextmanagerV1AccessLevel struct {
 	// characters or `_`. Its maximum length is 50 characters. After you create an
 	// `AccessLevel`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
-	// Title: Human readable title. Must be unique within the Policy.
+	// Title: Human-readable title. Must be unique within the policy.
 	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Basic") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1180,7 +1180,7 @@ func (s GoogleIdentityAccesscontextmanagerV1AccessLevel) MarshalJSON() ([]byte, 
 type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// Etag: Output only. An opaque identifier for the current version of the
 	// `AccessPolicy`. This will always be a strongly validated etag, meaning that
-	// two Access Policies will be identical if and only if their etags are
+	// two access policies will be identical if and only if their etags are
 	// identical. Clients should not expect this to be in any specific format.
 	Etag string `json:"etag,omitempty"`
 	// Name: Output only. Identifier. Resource name of the `AccessPolicy`. Format:
@@ -1196,13 +1196,13 @@ type GoogleIdentityAccesscontextmanagerV1AccessPolicy struct {
 	// ServicePerimeter can only restrict projects within `folders/123`. -
 	// ServicePerimeter within policy A can only reference access levels defined
 	// within policy A. - Only one policy can include a given scope; thus,
-	// attempting to create a second policy which includes `folders/123` will
-	// result in an error. If no scopes are provided, then any resource within the
+	// attempting to create a second policy that includes `folders/123` will result
+	// in an error. If no scopes are provided, then any resource within the
 	// organization can be restricted. Scopes cannot be modified after a policy is
 	// created. Policies can only have a single scope. Format: list of
 	// `folders/{folder_number}` or `projects/{project_number}`
 	Scopes []string `json:"scopes,omitempty"`
-	// Title: Required. Human readable title. Does not affect behavior.
+	// Title: Required. Human-readable title. Does not affect behavior.
 	Title string `json:"title,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1282,10 +1282,10 @@ func (s GoogleIdentityAccesscontextmanagerV1ApiOperation) MarshalJSON() ([]byte,
 // `AccessLevel` using a set of recommended features.
 type GoogleIdentityAccesscontextmanagerV1BasicLevel struct {
 	// CombiningFunction: How the `conditions` list should be combined to determine
-	// if a request is granted this `AccessLevel`. If AND is used, each `Condition`
-	// in `conditions` must be satisfied for the `AccessLevel` to be applied. If OR
-	// is used, at least one `Condition` in `conditions` must be satisfied for the
-	// `AccessLevel` to be applied. Default behavior is AND.
+	// if a request is granted this `AccessLevel`. If `AND` is used, each
+	// `Condition` in `conditions` must be satisfied for the `AccessLevel` to be
+	// applied. If `OR` is used, at least one `Condition` in `conditions` must be
+	// satisfied for the `AccessLevel` to be applied. Default behavior is `AND`.
 	//
 	// Possible values:
 	//   "AND" - All `Conditions` must be true for the `BasicLevel` to be true.
@@ -1313,40 +1313,41 @@ func (s GoogleIdentityAccesscontextmanagerV1BasicLevel) MarshalJSON() ([]byte, e
 }
 
 // GoogleIdentityAccesscontextmanagerV1Condition: A condition necessary for an
-// `AccessLevel` to be granted. The Condition is an AND over its fields. So a
-// Condition is true if: 1) the request IP is from one of the listed
-// subnetworks AND 2) the originating device complies with the listed device
-// policy AND 3) all listed access levels are granted AND 4) the request was
-// sent at a time allowed by the DateTimeRestriction.
+// `AccessLevel` to be granted. The `Condition` is an AND over its fields. A
+// `Condition` is true if: 1) the request IP is from one of the listed
+// subnetworks, AND 2) the originating device complies with the listed device
+// policy, AND 3) all listed access levels are granted, AND 4) the request was
+// sent at a time allowed by the `DateTimeRestriction`.
 type GoogleIdentityAccesscontextmanagerV1Condition struct {
-	// DevicePolicy: Device specific restrictions, all restrictions must hold for
-	// the Condition to be true. If not specified, all devices are allowed.
+	// DevicePolicy: Device-specific restrictions. All restrictions must hold for
+	// the `Condition` to be true. If not specified, all devices are allowed.
 	DevicePolicy *GoogleIdentityAccesscontextmanagerV1DevicePolicy `json:"devicePolicy,omitempty"`
 	// IpSubnetworks: CIDR block IP subnetwork specification. May be IPv4 or IPv6.
 	// Note that for a CIDR IP address block, the specified IP address portion must
-	// be properly truncated (i.e. all the host bits must be zero) or the input is
-	// considered malformed. For example, "192.0.2.0/24" is accepted but
-	// "192.0.2.1/24" is not. Similarly, for IPv6, "2001:db8::/32" is accepted
-	// whereas "2001:db8::1/32" is not. The originating IP of a request must be in
-	// one of the listed subnets in order for this Condition to be true. If empty,
-	// all IP addresses are allowed.
+	// be properly truncated (that is, all the host bits must be zero) or the input
+	// is considered malformed. For example, "192.0.2.0/24" is accepted, but
+	// "192.0.2.1/24" is not. Similarly, for IPv6, "2001:db8::/32" is accepted,
+	// whereas "2001:db8::1/32" is not. The originating IP of a request must be
+	// in one of the listed subnets in order for this `Condition` to be true. If
+	// empty, all IP addresses are allowed.
 	IpSubnetworks []string `json:"ipSubnetworks,omitempty"`
 	// Members: The request must be made by one of the provided user or service
 	// accounts. Groups are not supported. Syntax: `user:{emailid}`
 	// `serviceAccount:{emailid}` If not specified, a request may come from any
 	// user.
 	Members []string `json:"members,omitempty"`
-	// Negate: Whether to negate the Condition. If true, the Condition becomes a
-	// NAND over its non-empty fields. Any non-empty field criteria evaluating to
-	// false will result in the Condition to be satisfied. Defaults to false.
+	// Negate: Whether to negate the `Condition`. If `true`, the `Condition`
+	// becomes a NAND over its non-empty fields. Any non-empty field criteria
+	// evaluating to `false` will result in the `Condition` being satisfied.
+	// Defaults to `false`.
 	Negate bool `json:"negate,omitempty"`
 	// Regions: The request must originate from one of the provided
 	// countries/regions. Must be valid ISO 3166-1 alpha-2 codes.
 	Regions []string `json:"regions,omitempty"`
 	// RequiredAccessLevels: A list of other access levels defined in the same
-	// `Policy`, referenced by resource name. Referencing an `AccessLevel` which
+	// `Policy`, referenced by resource name. Referencing an `AccessLevel` that
 	// does not exist is an error. All access levels listed must be granted for the
-	// Condition to be true. Example:
+	// `Condition` to be true. Example:
 	// "accessPolicies/MY_POLICY/accessLevels/LEVEL_NAME"
 	RequiredAccessLevels []string `json:"requiredAccessLevels,omitempty"`
 	// VpcNetworkSources: The request must originate from one of the provided VPC
@@ -1397,17 +1398,17 @@ func (s GoogleIdentityAccesscontextmanagerV1CustomLevel) MarshalJSON() ([]byte, 
 }
 
 // GoogleIdentityAccesscontextmanagerV1DevicePolicy: `DevicePolicy` specifies
-// device specific restrictions necessary to acquire a given access level. A
+// device-specific restrictions necessary to acquire a given access level. A
 // `DevicePolicy` specifies requirements for requests from devices to be
-// granted access levels, it does not do any enforcement on the device.
+// granted access levels; it does not do any enforcement on the device.
 // `DevicePolicy` acts as an AND over all specified fields, and each repeated
 // field is an OR over its elements. Any unset fields are ignored. For example,
-// if the proto is { os_type : DESKTOP_WINDOWS, os_type : DESKTOP_LINUX,
-// encryption_status: ENCRYPTED}, then the DevicePolicy will be true for
+// if the proto is `{ os_type : DESKTOP_WINDOWS, os_type : DESKTOP_LINUX,
+// encryption_status: ENCRYPTED}`, then the `DevicePolicy` will be true for
 // requests originating from encrypted Linux desktops and encrypted Windows
 // desktops.
 type GoogleIdentityAccesscontextmanagerV1DevicePolicy struct {
-	// AllowedDeviceManagementLevels: Allowed device management levels, an empty
+	// AllowedDeviceManagementLevels: Allowed device management levels. An empty
 	// list allows all management levels.
 	//
 	// Possible values:
@@ -1420,8 +1421,8 @@ type GoogleIdentityAccesscontextmanagerV1DevicePolicy struct {
 	// monitoring and the ability to directly manage the device (such as remote
 	// wiping). This can be enabled through the Android Enterprise Platform.
 	AllowedDeviceManagementLevels []string `json:"allowedDeviceManagementLevels,omitempty"`
-	// AllowedEncryptionStatuses: Allowed encryptions statuses, an empty list
-	// allows all statuses.
+	// AllowedEncryptionStatuses: Allowed encryption statuses. An empty list allows
+	// all statuses.
 	//
 	// Possible values:
 	//   "ENCRYPTION_UNSPECIFIED" - The encryption status of the device is not
@@ -1431,16 +1432,16 @@ type GoogleIdentityAccesscontextmanagerV1DevicePolicy struct {
 	// unencrypted.
 	//   "ENCRYPTED" - The device is encrypted.
 	AllowedEncryptionStatuses []string `json:"allowedEncryptionStatuses,omitempty"`
-	// OsConstraints: Allowed OS versions, an empty list allows all types and all
+	// OsConstraints: Allowed OS versions. An empty list allows all types and all
 	// versions.
 	OsConstraints []*GoogleIdentityAccesscontextmanagerV1OsConstraint `json:"osConstraints,omitempty"`
 	// RequireAdminApproval: Whether the device needs to be approved by the
 	// customer admin.
 	RequireAdminApproval bool `json:"requireAdminApproval,omitempty"`
-	// RequireCorpOwned: Whether the device needs to be corp owned.
+	// RequireCorpOwned: Whether the device needs to be corp-owned.
 	RequireCorpOwned bool `json:"requireCorpOwned,omitempty"`
 	// RequireScreenlock: Whether or not screenlock is required for the
-	// DevicePolicy to be true. Defaults to `false`.
+	// `DevicePolicy` to be true. Defaults to `false`.
 	RequireScreenlock bool `json:"requireScreenlock,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedDeviceManagementLevels") to unconditionally include in API requests.
@@ -1461,7 +1462,7 @@ func (s GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte,
 }
 
 // GoogleIdentityAccesscontextmanagerV1EgressFrom: Defines the conditions under
-// which an EgressPolicy matches a request. Conditions based on information
+// which an EgressPolicy matches a request. Conditions are based on information
 // about the source of the request. Note that if the destination of the request
 // is also protected by a ServicePerimeter, then that ServicePerimeter must
 // have an IngressPolicy which allows access in order for this request to
@@ -1487,7 +1488,7 @@ type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// the perimeter.
 	IdentityType string `json:"identityType,omitempty"`
 	// SourceRestriction: Whether to enforce traffic restrictions based on
-	// `sources` field. If the `sources` fields is non-empty, then this field must
+	// `sources` field. If the `sources` field is not empty, then this field must
 	// be set to `SOURCE_RESTRICTION_ENABLED`.
 	//
 	// Possible values:
@@ -1529,8 +1530,8 @@ func (s GoogleIdentityAccesscontextmanagerV1EgressFrom) MarshalJSON() ([]byte, e
 // ServicePerimeter to access a defined set of projects outside the perimeter
 // in certain contexts (e.g. to read data from a Cloud Storage bucket or query
 // against a BigQuery dataset). EgressPolicies are concerned with the
-// *resources* that a request relates as well as the API services and API
-// actions being used. They do not related to the direction of data movement.
+// *resources* that a request relates to, as well as the API services and API
+// actions being used. They do not relate to the direction of data movement.
 // More detailed documentation for this concept can be found in the
 // descriptions of EgressFrom and EgressTo.
 type GoogleIdentityAccesscontextmanagerV1EgressPolicy struct {
@@ -1541,7 +1542,7 @@ type GoogleIdentityAccesscontextmanagerV1EgressPolicy struct {
 	// resources that cause this EgressPolicy to apply.
 	EgressTo *GoogleIdentityAccesscontextmanagerV1EgressTo `json:"egressTo,omitempty"`
 	// Title: Optional. Human-readable title for the egress rule. The title must be
-	// unique within the perimeter and can not exceed 100 characters. Within the
+	// unique within the perimeter and cannot exceed 100 characters. Within the
 	// access policy, the combined length of all rule titles must not exceed
 	// 240,000 characters.
 	Title string `json:"title,omitempty"`
@@ -1583,9 +1584,9 @@ type GoogleIdentityAccesscontextmanagerV1EgressSource struct {
 	PscEndpoint *GoogleIdentityAccesscontextmanagerV1PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource from the service perimeter that you want
 	// to allow to access data outside the perimeter. This field supports projects,
-	// folders, and organizations in the form `projects/`, `folders/`, and
-	// `organizations/`. You can't use `*` in this field to allow all Google Cloud
-	// resources.
+	// folders, and organizations in the form `projects/{project_number}`,
+	// `folders/{folder_id}`, and `organizations/{organization_id}`. You can't use
+	// `*` in this field to allow all Google Cloud resources.
 	Resource string `json:"resource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1616,25 +1617,26 @@ func (s GoogleIdentityAccesscontextmanagerV1EgressSource) MarshalJSON() ([]byte,
 type GoogleIdentityAccesscontextmanagerV1EgressTo struct {
 	// ExternalResources: A list of external resources that are allowed to be
 	// accessed. Only AWS and Azure resources are supported. For Amazon S3, the
-	// supported formats are s3://BUCKET_NAME, s3a://BUCKET_NAME, and
-	// s3n://BUCKET_NAME. For Azure Storage, the supported format is
-	// azure://myaccount.blob.core.windows.net/CONTAINER_NAME. A request matches if
-	// it contains an external resource in this list (Example: s3://bucket/path).
-	// Currently '*' is not allowed.
+	// supported formats are `s3://BUCKET_NAME`, `s3a://BUCKET_NAME`, and
+	// `s3n://BUCKET_NAME`. For Azure Storage, the supported format is
+	// `azure://myaccount.blob.core.windows.net/CONTAINER_NAME`. A request matches
+	// if it contains an external resource in this list (Example:
+	// `s3://bucket/path`). Currently `'*'` is not allowed.
 	ExternalResources []string `json:"externalResources,omitempty"`
 	// Operations: A list of ApiOperations allowed to be performed by the sources
 	// specified in the corresponding EgressFrom. A request matches if it uses an
 	// operation/service in this list.
 	Operations []*GoogleIdentityAccesscontextmanagerV1ApiOperation `json:"operations,omitempty"`
 	// Resources: A list of resources, currently projects, folders, and
-	// organizations in the form `projects/`, `folders/`, and `organizations/`,
-	// that are allowed to be accessed by sources defined in the corresponding
-	// EgressFrom. A request matches if it contains a resource in this list. If `*`
-	// is specified for `resources`, then this EgressTo rule will authorize access
-	// to all resources outside the perimeter.
+	// organizations in the form `projects/{project_number}`,
+	// `folders/{folder_id}`, and `organizations/{organization_id}`, that are
+	// allowed to be accessed by sources defined in the corresponding EgressFrom. A
+	// request matches if it contains a resource in this list. If `*` is specified
+	// for `resources`, then this EgressTo rule will authorize access to all
+	// resources outside the perimeter.
 	Resources []string `json:"resources,omitempty"`
 	// Roles: IAM roles that represent the set of operations that the sources
-	// specified in the corresponding EgressFrom. are allowed to perform in this
+	// specified in the corresponding EgressFrom are allowed to perform in this
 	// ServicePerimeter.
 	Roles []string `json:"roles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalResources") to
@@ -1718,7 +1720,7 @@ type GoogleIdentityAccesscontextmanagerV1IngressPolicy struct {
 	// destination that cause this IngressPolicy to apply.
 	IngressTo *GoogleIdentityAccesscontextmanagerV1IngressTo `json:"ingressTo,omitempty"`
 	// Title: Optional. Human-readable title for the ingress rule. The title must
-	// be unique within the perimeter and can not exceed 100 characters. Within the
+	// be unique within the perimeter and cannot exceed 100 characters. Within the
 	// access policy, the combined length of all rule titles must not exceed
 	// 240,000 characters.
 	Title string `json:"title,omitempty"`
@@ -1743,7 +1745,7 @@ func (s GoogleIdentityAccesscontextmanagerV1IngressPolicy) MarshalJSON() ([]byte
 // GoogleIdentityAccesscontextmanagerV1IngressSource: The source that
 // IngressPolicy authorizes access from.
 type GoogleIdentityAccesscontextmanagerV1IngressSource struct {
-	// AccessLevel: An AccessLevel resource name that allow resources within the
+	// AccessLevel: An AccessLevel resource name that allows resources within the
 	// ServicePerimeters to be accessed from the internet. AccessLevels listed must
 	// be in the same policy as this ServicePerimeter. Referencing a nonexistent
 	// AccessLevel will cause an error. If no AccessLevel names are listed,
@@ -1798,7 +1800,7 @@ type GoogleIdentityAccesscontextmanagerV1IngressTo struct {
 	// `folders/{folder_id}`, and `organizations/{organization_id}`, protected by
 	// this ServicePerimeter that are allowed to be accessed by sources defined in
 	// the corresponding IngressFrom. If a single `*` is specified, then access to
-	// all resources inside the perimeter are allowed.
+	// all resources inside the perimeter is allowed.
 	Resources []string `json:"resources,omitempty"`
 	// Roles: IAM roles that represent the set of operations that the sources
 	// specified in the corresponding IngressFrom are allowed to perform in this
@@ -1894,8 +1896,8 @@ type GoogleIdentityAccesscontextmanagerV1OsConstraint struct {
 	//   "IOS" - An iOS operating system.
 	OsType string `json:"osType,omitempty"`
 	// RequireVerifiedChromeOs: Only allows requests from devices with a verified
-	// Chrome OS. Verifications includes requirements that the device is
-	// enterprise-managed, conformant to domain policies, and the caller has
+	// Chrome OS. Verification includes requirements that the device is
+	// enterprise-managed, conforms to domain policies, and the caller has
 	// permission to call the API targeted by the request.
 	RequireVerifiedChromeOs bool `json:"requireVerifiedChromeOs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MinimumVersion") to
@@ -1948,8 +1950,8 @@ type GoogleIdentityAccesscontextmanagerV1ServicePattern struct {
 	// Modifiers: Modifiers to apply to the requests that match the URL pattern.
 	Modifiers []*GoogleIdentityAccesscontextmanagerV1Modifier `json:"modifiers,omitempty"`
 	// Pattern: URL pattern to allow. Only patterns of ".googleapis.com/*",
-	// "www.googleapis.com//*" and "*.appspot.com/* forms are supported, where
-	// should be an alphanumeric name.
+	// "www.googleapis.com//*", and "*.appspot.com/*" forms are supported,
+	// where `` should be an alphanumeric name.
 	Pattern string `json:"pattern,omitempty"`
 	// Service: Supported service to allow.
 	Service string `json:"service,omitempty"`
@@ -1998,9 +2000,9 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// cannot change its `name`.
 	Name string `json:"name,omitempty"`
 	// PerimeterType: Perimeter type indicator. A single project or VPC network is
-	// allowed to be a member of single regular perimeter, but multiple service
-	// perimeter bridges. A project cannot be a included in a perimeter bridge
-	// without being included in regular perimeter. For perimeter bridges, the
+	// allowed to be a member of a single regular perimeter, but multiple service
+	// perimeter bridges. A project cannot be included in a perimeter bridge
+	// without being included in a regular perimeter. For perimeter bridges, the
 	// restricted service list as well as access level lists must be empty.
 	//
 	// Possible values:
@@ -2009,12 +2011,12 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 	// Spec: Proposed (or dry run) ServicePerimeter configuration. This
-	// configuration allows to specify and test ServicePerimeter configuration
+	// configuration allows you to specify and test ServicePerimeter configuration
 	// without enforcing actual access restrictions. Only allowed to be set when
-	// the "use_explicit_dry_run_spec" flag is set.
+	// the `use_explicit_dry_run_spec` flag is set.
 	Spec *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig `json:"spec,omitempty"`
 	// Status: Current ServicePerimeter configuration. Specifies sets of resources,
-	// restricted services and access levels that determine perimeter content and
+	// restricted services, and access levels that determine perimeter content and
 	// boundaries.
 	Status *GoogleIdentityAccesscontextmanagerV1ServicePerimeterConfig `json:"status,omitempty"`
 	// Title: Human readable title. Must be unique within the Policy.
@@ -2027,7 +2029,7 @@ type GoogleIdentityAccesscontextmanagerV1ServicePerimeter struct {
 	// of the Service Perimeter. This allows the user to test changes to the
 	// enforced config ("status") without actually enforcing them. This testing is
 	// done through analyzing the differences between currently enforced and
-	// suggested restrictions. use_explicit_dry_run_spec must bet set to True if
+	// suggested restrictions. `use_explicit_dry_run_spec` must be set to `true` if
 	// any of the fields in the spec are set to non-default values.
 	UseExplicitDryRunSpec bool `json:"useExplicitDryRunSpec,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -2109,12 +2111,12 @@ type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
 	// accessed from VPC networks in the service perimeter.
 	AllowedServicePatterns []*GoogleIdentityAccesscontextmanagerV1ServicePattern `json:"allowedServicePatterns,omitempty"`
 	// AllowedServices: The list of APIs usable within the Service Perimeter. Must
-	// be empty unless 'enable_restriction' is True. You can specify a list of
-	// individual services, as well as include the 'RESTRICTED-SERVICES' value,
+	// be empty unless `enable_restriction` is `true`. You can specify a list of
+	// individual services, as well as include the `'RESTRICTED-SERVICES'` value,
 	// which automatically includes all of the services protected by the perimeter.
 	AllowedServices []string `json:"allowedServices,omitempty"`
 	// EnableRestriction: Whether to restrict API calls within the Service
-	// Perimeter to the list of APIs specified in 'allowed_services'.
+	// Perimeter to the list of APIs specified in `allowed_services`.
 	EnableRestriction bool `json:"enableRestriction,omitempty"`
 	// ServicePatternsEnforcementScopes: Defines the enforcement scopes of service
 	// patterns.
@@ -2125,7 +2127,7 @@ type GoogleIdentityAccesscontextmanagerV1VpcAccessibleServices struct {
 	//   "GOOGLE_APIS_VIA_PRIVATE_PATH" - Enables VPC Accessible Services
 	// enforcement for all APIs (including unsupported APIs) for Private Google
 	// Access configured with Private VIP and Private Service Connect Endpoint for
-	// Global Google APIs that uses 'all-apis' bundle.
+	// Global Google APIs that use the `'all-apis'` bundle.
 	ServicePatternsEnforcementScopes []string `json:"servicePatternsEnforcementScopes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedServicePatterns") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2169,7 +2171,7 @@ func (s GoogleIdentityAccesscontextmanagerV1VpcNetworkSource) MarshalJSON() ([]b
 }
 
 // GoogleIdentityAccesscontextmanagerV1VpcSubNetwork: Sub-segment ranges inside
-// of a VPC Network.
+// of a VPC network.
 type GoogleIdentityAccesscontextmanagerV1VpcSubNetwork struct {
 	// Network: Required. Network name. If the network is not part of the
 	// organization, the `compute.network.get` permission must be granted to the
@@ -2181,8 +2183,8 @@ type GoogleIdentityAccesscontextmanagerV1VpcSubNetwork struct {
 	// VpcIpSubnetworks: CIDR block IP subnetwork specification. The IP address
 	// must be an IPv4 address and can be a public or private IP address. Note that
 	// for a CIDR IP address block, the specified IP address portion must be
-	// properly truncated (i.e. all the host bits must be zero) or the input is
-	// considered malformed. For example, "192.0.2.0/24" is accepted but
+	// properly truncated (that is, all the host bits must be zero) or the input is
+	// considered malformed. For example, "192.0.2.0/24" is accepted, but
 	// "192.0.2.1/24" is not. If empty, all IP addresses are allowed.
 	VpcIpSubnetworks []string `json:"vpcIpSubnetworks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally

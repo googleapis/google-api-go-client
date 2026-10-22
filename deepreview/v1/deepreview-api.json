@@ -12,9 +12,9 @@
   "baseUrl": "https://deepreview.googleapis.com/",
   "batchPath": "batch",
   "canonicalName": "DeepReview",
-  "description": "Deep Review API for automated conference-quality scientific paper reviews.",
+  "description": "Deep Review API for automated, in-depth document reviews.",
   "discoveryVersion": "v1",
-  "documentationLink": "https://research.google/",
+  "documentationLink": "https://research.google/deepreview",
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -537,7 +537,7 @@
       }
     }
   },
-  "revision": "20261016",
+  "revision": "20261019",
   "rootUrl": "https://deepreview.googleapis.com/",
   "schemas": {
     "AnchoredReviewComment": {

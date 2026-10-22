@@ -321,6 +321,35 @@ type ProjectsLocationsWorkerPoolsRevisionsService struct {
 	s *Service
 }
 
+// GoogleCloudRunV2AmbientNetworking: Configuration for Ambient Networking.
+type GoogleCloudRunV2AmbientNetworking struct {
+	// AmbientScope: The ambient networking scope of the instance.
+	//
+	// Possible values:
+	//   "AMBIENT_SCOPE_UNSPECIFIED" - Unspecified.
+	//   "AMBIENT_SCOPE_REGIONAL" - Regional ambient networking.
+	//   "AMBIENT_SCOPE_GLOBAL" - Global ambient networking.
+	AmbientScope string `json:"ambientScope,omitempty"`
+	// Enabled: Optional. Whether ambient networking is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AmbientScope") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AmbientScope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2AmbientNetworking) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2AmbientNetworking
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2BinaryAuthorization: Settings for Binary Authorization
 // feature.
 type GoogleCloudRunV2BinaryAuthorization struct {
@@ -2386,6 +2415,9 @@ func (s GoogleCloudRunV2ResourceRequirements) MarshalJSON() ([]byte, error) {
 // configuration. A Revision references a container image. Revisions are only
 // created by updates to its parent Service.
 type GoogleCloudRunV2Revision struct {
+	// AmbientNetworking: Output only. The ambient networking configuration for
+	// this revision.
+	AmbientNetworking *GoogleCloudRunV2AmbientNetworking `json:"ambientNetworking,omitempty"`
 	// Annotations: Output only. Unstructured key value map that may be set by
 	// external tools to store and arbitrary metadata. They are not queryable and
 	// should be preserved when modifying objects.
@@ -2545,15 +2577,15 @@ type GoogleCloudRunV2Revision struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "AmbientNetworking") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AmbientNetworking") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2645,6 +2677,9 @@ func (s GoogleCloudRunV2RevisionScalingStatus) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2RevisionTemplate: RevisionTemplate describes the data a
 // revision should have when created from a template.
 type GoogleCloudRunV2RevisionTemplate struct {
+	// AmbientNetworking: Optional. The ambient networking configuration for this
+	// revision.
+	AmbientNetworking *GoogleCloudRunV2AmbientNetworking `json:"ambientNetworking,omitempty"`
 	// Annotations: Optional. Unstructured key value map that may be set by
 	// external tools to store and arbitrary metadata. They are not queryable and
 	// should be preserved when modifying objects. Cloud Run API v2 does not
@@ -2735,15 +2770,15 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
 	// WorkloadIdentityConfig: Optional. The Revision's workload identity settings.
 	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "AmbientNetworking") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AmbientNetworking") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4736,6 +4771,18 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
 	// status updates.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
+	// RankedMachineSeries: Optional. Ranked list (earlier items have higher
+	// priority) of Machine Series to consider when provisioning Worker VMs. A
+	// concrete machine type will be selected based on machine availability in the
+	// given region. This field must be empty for the Build to be eligible to be
+	// paired with a pre-provisioned worker VM.
+	//
+	// Possible values:
+	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.
+	//   "MACHINE_SERIES_E" - Cost-optimized machines such as E2.
+	//   "MACHINE_SERIES_N" - General-purpose machines such as N4.
+	//   "MACHINE_SERIES_C" - Performance-optimized machines such as C4.
+	RankedMachineSeries []string `json:"rankedMachineSeries,omitempty"`
 	// RequestedVerifyOption: Requested verifiability options.
 	//
 	// Possible values:

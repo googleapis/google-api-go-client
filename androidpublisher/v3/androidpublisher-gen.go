@@ -5496,11 +5496,8 @@ type InAppProduct struct {
 	// DefaultPrice: Default price. Cannot be zero, as in-app products are never
 	// free. Always in the developer's Checkout merchant currency.
 	DefaultPrice *Price `json:"defaultPrice,omitempty"`
-	// GracePeriod: Grace period of the subscription, specified in ISO 8601 format.
-	// Allows developers to give their subscribers a grace period when the payment
-	// for the new recurrence period is declined. Acceptable values are P0D (zero
-	// days), P3D (three days), P7D (seven days), P14D (14 days), and P30D (30
-	// days).
+	// GracePeriod: Deprecated: Subscriptions are no longer supported in the
+	// InAppProducts API. Use the Subscriptions API instead.
 	GracePeriod string `json:"gracePeriod,omitempty"`
 	// Listings: List of localized title and description data. Map key is the
 	// language of the localized data, as defined by BCP-47, e.g. "en-US".
@@ -5518,7 +5515,8 @@ type InAppProduct struct {
 	// Possible values:
 	//   "purchaseTypeUnspecified" - Unspecified purchase type.
 	//   "managedUser" - The default product type - one time purchase.
-	//   "subscription" - In-app product with a recurring period.
+	//   "subscription" - Deprecated: Subscriptions are no longer supported in the
+	// InAppProducts API. Use the Subscriptions API instead.
 	PurchaseType string `json:"purchaseType,omitempty"`
 	// Sku: Stock-keeping-unit (SKU) of the product, unique within an app.
 	Sku string `json:"sku,omitempty"`
@@ -5530,15 +5528,15 @@ type InAppProduct struct {
 	//   "inactive" - The product is not published and therefore inactive in the
 	// store.
 	Status string `json:"status,omitempty"`
-	// SubscriptionPeriod: Subscription period, specified in ISO 8601 format.
-	// Acceptable values are P1W (one week), P1M (one month), P3M (three months),
-	// P6M (six months), and P1Y (one year).
+	// SubscriptionPeriod: Deprecated: Subscriptions are no longer supported in the
+	// InAppProducts API. Use the Subscriptions API instead.
 	SubscriptionPeriod string `json:"subscriptionPeriod,omitempty"`
-	// SubscriptionTaxesAndComplianceSettings: Details about taxes and legal
-	// compliance. Only applicable to subscription products.
+	// SubscriptionTaxesAndComplianceSettings: Deprecated: Subscriptions are no
+	// longer supported in the InAppProducts API. Use the Subscriptions API
+	// instead.
 	SubscriptionTaxesAndComplianceSettings *SubscriptionTaxAndComplianceSettings `json:"subscriptionTaxesAndComplianceSettings,omitempty"`
-	// TrialPeriod: Trial period, specified in ISO 8601 format. Acceptable values
-	// are anything between P7D (seven days) and P999D (999 days).
+	// TrialPeriod: Deprecated: Subscriptions are no longer supported in the
+	// InAppProducts API. Use the Subscriptions API instead.
 	TrialPeriod string `json:"trialPeriod,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -5563,7 +5561,8 @@ func (s InAppProduct) MarshalJSON() ([]byte, error) {
 
 // InAppProductListing: Store listing of a single in-app product.
 type InAppProductListing struct {
-	// Benefits: Localized entitlement benefits for a subscription.
+	// Benefits: Deprecated: Subscriptions are no longer supported in the
+	// InAppProducts API. Use the Subscriptions API instead.
 	Benefits []string `json:"benefits,omitempty"`
 	// Description: Description for the store listing.
 	Description string `json:"description,omitempty"`

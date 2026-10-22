@@ -3053,9 +3053,9 @@ type DeviceConnectivityManagement struct {
 	// on Android 8 and above. A NonComplianceDetail with API_LEVEL is reported on
 	// fully managed devices if the Android version is less than 8.
 	BluetoothSharing string `json:"bluetoothSharing,omitempty"`
-	// ConfigureWifi: Controls Wi-Fi configuring privileges. Based on the option
-	// set, user will have either full or limited or no control in configuring
-	// Wi-Fi networks.
+	// ConfigureWifi: Optional. Controls Wi-Fi configuring privileges. Based on the
+	// option set, user will have either full or limited or no control in
+	// configuring Wi-Fi networks.
 	//
 	// Possible values:
 	//   "CONFIGURE_WIFI_UNSPECIFIED" - Unspecified. Defaults to
@@ -3092,8 +3092,8 @@ type DeviceConnectivityManagement struct {
 	PreferentialNetworkServiceSettings *PreferentialNetworkServiceSettings `json:"preferentialNetworkServiceSettings,omitempty"`
 	// PrivateDnsSettings: Optional. The global private DNS settings.
 	PrivateDnsSettings *PrivateDnsSettings `json:"privateDnsSettings,omitempty"`
-	// TetheringSettings: Controls tethering settings. Based on the value set, the
-	// user is partially or fully disallowed from using different forms of
+	// TetheringSettings: Optional. Controls tethering settings. Based on the value
+	// set, the user is partially or fully disallowed from using different forms of
 	// tethering.
 	//
 	// Possible values:
@@ -3112,8 +3112,8 @@ type DeviceConnectivityManagement struct {
 	// fully managed devices and work profile on company-owned devices, on all
 	// supported android versions. The setting tetheringConfigDisabled is ignored.
 	TetheringSettings string `json:"tetheringSettings,omitempty"`
-	// UsbDataAccess: Controls what files and/or data can be transferred via USB.
-	// Supported only on company-owned devices.
+	// UsbDataAccess: Optional. Controls what files and/or data can be transferred
+	// via USB. Supported only on company-owned devices.
 	//
 	// Possible values:
 	//   "USB_DATA_ACCESS_UNSPECIFIED" - Unspecified. Defaults to
@@ -3131,8 +3131,8 @@ type DeviceConnectivityManagement struct {
 	// with DEVICE_INCOMPATIBLE is reported if the device does not have USB HAL 1.3
 	// or above. usbFileTransferDisabled is ignored.
 	UsbDataAccess string `json:"usbDataAccess,omitempty"`
-	// WifiDirectSettings: Controls configuring and using Wi-Fi direct settings.
-	// Supported on company-owned devices running Android 13 and above.
+	// WifiDirectSettings: Optional. Controls configuring and using Wi-Fi direct
+	// settings. Supported on company-owned devices running Android 13 and above.
 	//
 	// Possible values:
 	//   "WIFI_DIRECT_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
@@ -3144,9 +3144,10 @@ type DeviceConnectivityManagement struct {
 	WifiDirectSettings string `json:"wifiDirectSettings,omitempty"`
 	// WifiRoamingPolicy: Optional. Wi-Fi roaming policy.
 	WifiRoamingPolicy *WifiRoamingPolicy `json:"wifiRoamingPolicy,omitempty"`
-	// WifiSsidPolicy: Restrictions on which Wi-Fi SSIDs the device can connect to.
-	// Note that this does not affect which networks can be configured on the
-	// device. Supported on company-owned devices running Android 13 and above.
+	// WifiSsidPolicy: Optional. Restrictions on which Wi-Fi SSIDs the device can
+	// connect to. Note that this does not affect which networks can be configured
+	// on the device. Supported on company-owned devices running Android 13 and
+	// above.
 	WifiSsidPolicy *WifiSsidPolicy `json:"wifiSsidPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApnPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5685,6 +5686,9 @@ type NonComplianceDetail struct {
 	//   "PRIVATE_DNS_HOST_NOT_SERVING" - The specified host for private DNS is a
 	// valid hostname but was found to not be a private DNS server.
 	// nonComplianceReason is set to INVALID_VALUE.
+	//   "USER_NOT_UNLOCKED" - The user's device is not unlocked (in direct boot
+	// mode), preventing the application of the policy. nonComplianceReason is set
+	// to PENDING.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6629,11 +6633,12 @@ type Policy struct {
 	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
-	// DeviceConnectivityManagement: Covers controls for device connectivity such
-	// as Wi-Fi, USB data access, keyboard/mouse connections, and more.
+	// DeviceConnectivityManagement: Optional. Covers controls for device
+	// connectivity such as Wi-Fi, USB data access, keyboard/mouse connections, and
+	// more.
 	DeviceConnectivityManagement *DeviceConnectivityManagement `json:"deviceConnectivityManagement,omitempty"`
-	// DeviceOwnerLockScreenInfo: The device owner information to be shown on the
-	// lock screen.
+	// DeviceOwnerLockScreenInfo: Optional. The device owner information to be
+	// shown on the lock screen.
 	DeviceOwnerLockScreenInfo *UserFacingMessage `json:"deviceOwnerLockScreenInfo,omitempty"`
 	// DeviceRadioState: Optional. Covers controls for radio state such as Wi-Fi,
 	// bluetooth, and more.
@@ -6960,7 +6965,9 @@ type Policy struct {
 	// called Mainline updates) are automatically downloaded and require a device
 	// reboot to be installed. Refer to the mainline section in Manage system
 	// updates (https://developer.android.com/work/dpc/system-updates#mainline) for
-	// further details.
+	// further details.If this policy is set, it takes precedence over
+	// unifiedUpdatePolicy for OEM OS updates. For more information, see
+	// unifiedUpdatePolicy.
 	SystemUpdate *SystemUpdate `json:"systemUpdate,omitempty"`
 	// TetheringConfigDisabled: Whether configuring tethering and portable hotspots
 	// is disabled. If tetheringSettings is set to anything other than
@@ -9004,7 +9011,7 @@ func (s WifiSsid) MarshalJSON() ([]byte, error) {
 // Note that this does not affect which networks can be configured on the
 // device. Supported on company-owned devices running Android 13 and above.
 type WifiSsidPolicy struct {
-	// WifiSsidPolicyType: Type of the Wi-Fi SSID policy to be applied.
+	// WifiSsidPolicyType: Optional. Type of the Wi-Fi SSID policy to be applied.
 	//
 	// Possible values:
 	//   "WIFI_SSID_POLICY_TYPE_UNSPECIFIED" - Defaults to WIFI_SSID_DENYLIST.

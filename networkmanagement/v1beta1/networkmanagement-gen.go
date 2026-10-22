@@ -2099,7 +2099,7 @@ type GkeNetworkPolicySkippedInfo struct {
 	// is stateful in both GKE Dataplane V2 (eBPF) and legacy (iptables)
 	// implementations.
 	//   "NETWORK_POLICY_ANALYSIS_UNSUPPORTED" - Network Policy evaluation is
-	// currently not supported for clusters with FQDN Network Policies enabled.
+	// currently not supported for Pods selected by an FQDN Network Policy.
 	Reason string `json:"reason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2818,7 +2818,8 @@ type NatInfo struct {
 	// RouterUri: URI of the Cloud Router. Only valid when type is CLOUD_NAT.
 	// Format: `projects/{project_id}/regions/{region}/routers/{router_id}`
 	RouterUri string `json:"routerUri,omitempty"`
-	// RuleNumber: The number of the NAT rule that was matched.
+	// RuleNumber: The number of the NAT rule that was matched. Only valid when
+	// `type` is CLOUD_NAT.
 	RuleNumber int64 `json:"ruleNumber,omitempty"`
 	// Type: Type of NAT.
 	//
@@ -6074,7 +6075,7 @@ type ProjectsLocationsGlobalConnectivityTestsCreateCall struct {
 // resources in the network, or you don't have read permissions to the network
 // configurations of listed projects), then the reachability result returns a
 // value of `UNKNOWN`. If the endpoint specifications in `ConnectivityTest` are
-// incomplete, the reachability result returns a value of AMBIGUOUS. For more
+// incomplete, the reachability result returns a value of `AMBIGUOUS`. For more
 // information, see the Connectivity Test documentation.
 //
 //   - parent: The parent resource of the Connectivity Test to create:
@@ -6702,7 +6703,7 @@ type ProjectsLocationsGlobalConnectivityTestsPatchCall struct {
 // the endpoint specifications in `ConnectivityTest` are invalid (for example,
 // they contain non-existent resources in the network, or the user does not
 // have read permissions to the network configurations of listed projects),
-// then the reachability result returns a value of UNKNOWN. If the endpoint
+// then the reachability result returns a value of `UNKNOWN`. If the endpoint
 // specifications in `ConnectivityTest` are incomplete, the reachability result
 // returns a value of `AMBIGUOUS`. See the documentation in `ConnectivityTest`
 // for more details.

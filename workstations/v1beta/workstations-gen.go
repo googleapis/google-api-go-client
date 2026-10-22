@@ -688,18 +688,26 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 
 // GatewayConfig: Configuration options for Cluster HTTP Gateway.
 type GatewayConfig struct {
+	// DirectAccessPorts: Optional. Specifies VM ports that can be accessed using
+	// the standard `$HOSTNAME:$PORT` format in addition to the service's default
+	// `$PORT-$HOSTNAME` format. See [Access HTTP Servers Running on Workstations]
+	// (https://docs.cloud.google.com/workstations/docs/access-http-servers-running-on-workstations).
+	// Note: This only controls the routing URL format. Network-level access is
+	// still controlled by `allowed_ports` on WorkstationConfig. All
+	// `allowed_ports` remain accessible via the default `$PORT-$HOSTNAME` format.
+	DirectAccessPorts []int64 `json:"directAccessPorts,omitempty"`
 	// Http2Enabled: Optional. Whether HTTP/2 is enabled for this workstation
 	// cluster. Defaults to false.
 	Http2Enabled bool `json:"http2Enabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Http2Enabled") to
+	// ForceSendFields is a list of field names (e.g. "DirectAccessPorts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Http2Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DirectAccessPorts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

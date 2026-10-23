@@ -8150,6 +8150,7 @@ type GoogleCloudDialogflowV2Message struct {
 	//   "AUTOMATED_AGENT"
 	//   "END_USER"
 	ParticipantRole   string                                          `json:"participantRole,omitempty"`
+	ResponseMessages  []*GoogleCloudDialogflowV2ResponseMessage       `json:"responseMessages,omitempty"`
 	SendTime          string                                          `json:"sendTime,omitempty"`
 	SentimentAnalysis *GoogleCloudDialogflowV2SentimentAnalysisResult `json:"sentimentAnalysis,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
@@ -8264,6 +8265,137 @@ func (s *GoogleCloudDialogflowV2QueryResult) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+type GoogleCloudDialogflowV2ResponseMessage struct {
+	EndInteraction        *GoogleCloudDialogflowV2ResponseMessageEndInteraction        `json:"endInteraction,omitempty"`
+	LiveAgentHandoff      *GoogleCloudDialogflowV2ResponseMessageLiveAgentHandoff      `json:"liveAgentHandoff,omitempty"`
+	MixedAudio            *GoogleCloudDialogflowV2ResponseMessageMixedAudio            `json:"mixedAudio,omitempty"`
+	Payload               googleapi.RawMessage                                         `json:"payload,omitempty"`
+	TelephonyTransferCall *GoogleCloudDialogflowV2ResponseMessageTelephonyTransferCall `json:"telephonyTransferCall,omitempty"`
+	Text                  *GoogleCloudDialogflowV2ResponseMessageText                  `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndInteraction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndInteraction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ResponseMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ResponseMessage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2ResponseMessageEndInteraction struct {
+}
+
+type GoogleCloudDialogflowV2ResponseMessageLiveAgentHandoff struct {
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ResponseMessageLiveAgentHandoff) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ResponseMessageLiveAgentHandoff
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2ResponseMessageMixedAudio struct {
+	Segments []*GoogleCloudDialogflowV2ResponseMessageMixedAudioSegment `json:"segments,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Segments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Segments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ResponseMessageMixedAudio) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ResponseMessageMixedAudio
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2ResponseMessageMixedAudioSegment struct {
+	AllowPlaybackInterruption bool   `json:"allowPlaybackInterruption,omitempty"`
+	Audio                     string `json:"audio,omitempty"`
+	Uri                       string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowPlaybackInterruption")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowPlaybackInterruption") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ResponseMessageMixedAudioSegment) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ResponseMessageMixedAudioSegment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2ResponseMessageTelephonyTransferCall struct {
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	SipUri      string `json:"sipUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PhoneNumber") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PhoneNumber") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ResponseMessageTelephonyTransferCall) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ResponseMessageTelephonyTransferCall
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDialogflowV2ResponseMessageText struct {
+	Text []string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2ResponseMessageText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2ResponseMessageText
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowV2SearchEntryPoint struct {
 	RenderedContent string `json:"renderedContent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RenderedContent") to
@@ -8345,6 +8477,7 @@ func (s *GoogleCloudDialogflowV2Sentiment) UnmarshalJSON(data []byte) error {
 
 type GoogleCloudDialogflowV2SentimentAnalysisResult struct {
 	QueryTextSentiment *GoogleCloudDialogflowV2Sentiment `json:"queryTextSentiment,omitempty"`
+	Status             *GoogleRpcStatus                  `json:"status,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "QueryTextSentiment") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9970,7 +10103,10 @@ type GoogleCloudDialogflowV2beta1CesToolSpec struct {
 	//   "CONFIRMATION_REQUIREMENT_UNSPECIFIED"
 	//   "REQUIRED"
 	//   "NOT_REQUIRED"
-	ConfirmationRequirement string `json:"confirmationRequirement,omitempty"`
+	ConfirmationRequirement string                                           `json:"confirmationRequirement,omitempty"`
+	ParameterOverrides      []*GoogleCloudDialogflowV2beta1ParameterOverride `json:"parameterOverrides,omitempty"`
+	ProactiveEnabled        bool                                             `json:"proactiveEnabled,omitempty"`
+	ReactiveEnabled         bool                                             `json:"reactiveEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CesTool") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -15036,6 +15172,28 @@ func (s GoogleCloudDialogflowV2beta1OutputAudioConfig) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudDialogflowV2beta1ParameterOverride struct {
+	ContextReferenceKey string `json:"contextReferenceKey,omitempty"`
+	FieldPath           string `json:"fieldPath,omitempty"`
+	ParameterName       string `json:"parameterName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextReferenceKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextReferenceKey") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDialogflowV2beta1ParameterOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2beta1ParameterOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudDialogflowV2beta1Participant struct {
 	// Possible values:
 	//   "AGENT_DESKTOP_SOURCE_UNSPECIFIED"
@@ -15962,6 +16120,7 @@ func (s GoogleCloudDialogflowV2beta1SentimentAnalysisRequestConfig) MarshalJSON(
 
 type GoogleCloudDialogflowV2beta1SentimentAnalysisResult struct {
 	QueryTextSentiment *GoogleCloudDialogflowV2beta1Sentiment `json:"queryTextSentiment,omitempty"`
+	Status             *GoogleRpcStatus                       `json:"status,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "QueryTextSentiment") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -18095,9 +18254,12 @@ type GoogleCloudDialogflowV2beta1ToolsetTool struct {
 	//   "CONFIRMATION_REQUIREMENT_UNSPECIFIED"
 	//   "REQUIRED"
 	//   "NOT_REQUIRED"
-	ConfirmationRequirement string `json:"confirmationRequirement,omitempty"`
-	OperationId             string `json:"operationId,omitempty"`
-	Toolset                 string `json:"toolset,omitempty"`
+	ConfirmationRequirement string                                           `json:"confirmationRequirement,omitempty"`
+	OperationId             string                                           `json:"operationId,omitempty"`
+	ParameterOverrides      []*GoogleCloudDialogflowV2beta1ParameterOverride `json:"parameterOverrides,omitempty"`
+	ProactiveEnabled        bool                                             `json:"proactiveEnabled,omitempty"`
+	ReactiveEnabled         bool                                             `json:"reactiveEnabled,omitempty"`
+	Toolset                 string                                           `json:"toolset,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConfirmationRequirement") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

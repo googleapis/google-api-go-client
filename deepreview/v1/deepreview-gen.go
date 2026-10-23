@@ -122,6 +122,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	s.Documents = NewDocumentsService(s)
 	s.Media = NewMediaService(s)
 	s.Operations = NewOperationsService(s)
+	s.V1 = NewV1Service(s)
 	if endpoint != "" {
 		s.BasePath = endpoint
 	}
@@ -151,6 +152,8 @@ type Service struct {
 	Media *MediaService
 
 	Operations *OperationsService
+
+	V1 *V1Service
 }
 
 func (s *Service) userAgent() string {
@@ -220,6 +223,15 @@ func NewOperationsDocumentsReviewsService(s *Service) *OperationsDocumentsReview
 }
 
 type OperationsDocumentsReviewsService struct {
+	s *Service
+}
+
+func NewV1Service(s *Service) *V1Service {
+	rs := &V1Service{s: s}
+	return rs
+}
+
+type V1Service struct {
 	s *Service
 }
 
@@ -1125,6 +1137,49 @@ type TextQuoteSelector struct {
 
 func (s TextQuoteSelector) MarshalJSON() ([]byte, error) {
 	type NoMethod TextQuoteSelector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserQuota: Singleton resource representing the authenticated caller's review
+// quota limits and sliding-window usage.
+type UserQuota struct {
+	// CustomLimitEnabled: Output only. Whether a custom per-user quota override is
+	// active for this user.
+	CustomLimitEnabled bool `json:"customLimitEnabled,omitempty"`
+	// MaxReviewCountPerWeek: Output only. Maximum free-tier reviews allowed per
+	// rolling 7-day window.
+	MaxReviewCountPerWeek int64 `json:"maxReviewCountPerWeek,omitempty"`
+	// Name: Identifier. Resource name of the singleton user quota (`userQuota`).
+	Name string `json:"name,omitempty"`
+	// NextAvailableTime: Output only. Timestamp when the next review quota slot
+	// becomes available if `remaining_review_count` is 0; unset when quota is
+	// currently available.
+	NextAvailableTime string `json:"nextAvailableTime,omitempty"`
+	// RemainingReviewCount: Output only. Remaining free-tier reviews available in
+	// the current rolling 7-day window (`max(0, max_review_count_per_week -
+	// used_review_count)`).
+	RemainingReviewCount int64 `json:"remainingReviewCount,omitempty"`
+	// UsedReviewCount: Output only. Number of free-tier reviews used in the past 7
+	// days.
+	UsedReviewCount int64 `json:"usedReviewCount,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CustomLimitEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomLimitEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserQuota) MarshalJSON() ([]byte, error) {
+	type NoMethod UserQuota
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2682,5 +2737,116 @@ func (c *OperationsDocumentsReviewsGetCall) Do(opts ...googleapi.CallOption) (*O
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "deepreview.operations.documents.reviews.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type V1GetUserQuotaCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetUserQuota: Retrieves the review quota limits and sliding-window usage for
+// the authenticated caller.
+//
+//   - name: The resource name of the singleton user quota to retrieve. Format:
+//     `userQuota`.
+func (r *V1Service) GetUserQuota(name string) *V1GetUserQuotaCall {
+	c := &V1GetUserQuotaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *V1GetUserQuotaCall) Fields(s ...googleapi.Field) *V1GetUserQuotaCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *V1GetUserQuotaCall) IfNoneMatch(entityTag string) *V1GetUserQuotaCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *V1GetUserQuotaCall) Context(ctx context.Context) *V1GetUserQuotaCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *V1GetUserQuotaCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *V1GetUserQuotaCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "deepreview.getUserQuota", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "deepreview.getUserQuota" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserQuota.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *V1GetUserQuotaCall) Do(opts ...googleapi.CallOption) (*UserQuota, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UserQuota{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "deepreview.getUserQuota", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

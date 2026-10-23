@@ -675,16 +675,16 @@ type ApigatewayGateway struct {
 	// actually served with, which the service resolves at creation from
 	// `streaming_mode`, the referenced API Config, and the platform default at the
 	// time. Read this rather than `streaming_mode` to determine whether a gateway
-	// supports response streaming.
+	// supports streaming.
 	//
 	// Possible values:
-	//   "EFFECTIVE_STREAMING_MODE_UNSPECIFIED" - The service has not resolved a
-	// mode. Every gateway returned by `GetGateway` and `ListGateways` carries a
-	// resolved mode, so this value should not be returned under normal
-	// circumstances.
-	//   "EFFECTIVE_STREAMING_MODE_DISABLED" - The gateway does not support
-	// response streaming.
-	//   "EFFECTIVE_STREAMING_MODE_ENABLED" - The gateway supports response
+	//   "EFFECTIVE_STREAMING_MODE_UNSPECIFIED" - Indicates that the service has
+	// not resolved a mode. Every gateway returned by `GetGateway` and
+	// `ListGateways` carries a resolved mode, so this value should not be returned
+	// under normal circumstances.
+	//   "EFFECTIVE_STREAMING_MODE_DISABLED" - Indicates that the gateway does not
+	// support streaming.
+	//   "EFFECTIVE_STREAMING_MODE_ENABLED" - Indicates that the gateway supports
 	// streaming.
 	EffectiveStreamingMode string `json:"effectiveStreamingMode,omitempty"`
 	// Labels: Optional. Resource labels to represent user-provided metadata. Refer
@@ -704,17 +704,28 @@ type ApigatewayGateway struct {
 	//   "DELETING" - Gateway is being deleted.
 	//   "UPDATING" - Gateway is being updated.
 	State string `json:"state,omitempty"`
-	// StreamingMode: Optional. Immutable. Requests response streaming for a new
-	// gateway. An attempt to change it on update is rejected. If unset, the
-	// service selects the mode. This field records only what was requested and is
-	// never modified by the service; read `effective_streaming_mode` for the mode
-	// the gateway is served with.
+	// StreamingMode: Optional. Immutable. Requests streaming for a new gateway. An
+	// attempt to change it on update is rejected. If unset, the service selects
+	// the mode. This field records only what was requested and is never modified
+	// by the service; read `effective_streaming_mode` for the mode the gateway is
+	// served with.
 	//
 	// Possible values:
-	//   "STREAMING_MODE_UNSPECIFIED" - The service selects the streaming mode.
-	//   "STREAMING_MODE_ENABLED" - Streaming is enabled. The gateway supports
-	// response streaming: server-sent events, HTTP chunked transfer, WebSockets,
-	// and gRPC/HTTP2 bidirectional streaming.
+	//   "STREAMING_MODE_UNSPECIFIED" - Lets the service select the streaming mode.
+	//   "STREAMING_MODE_ENABLED" - Enables streaming. The gateway supports
+	// Server-Sent Events (SSE), HTTP/2 streaming, HTTP chunked transfer,
+	// WebSockets, and gRPC bidirectional streaming. The API config's backend
+	// `deadline` field governs how long a request (unary or streaming) may run.
+	// Enabling streaming on a gateway does not change how the `deadline` field
+	// behaves on an SSE or chunked-transfer path. The deadline remains a
+	// wall-clock bound on the complete response, so a stream is cut once the
+	// deadline elapses regardless of how much data it is sending. The default is
+	// 15 seconds and the maximum is 3,600 seconds. On gRPC streaming and
+	// WebSockets, `deadline` bounds the gap between messages instead: default 300
+	// seconds; set `deadline` to change it, up to 3,600 seconds. On WebSockets, a
+	// `deadline` of less than 300 seconds is ignored and a 300-second minimum
+	// applies. The maximum total request duration is always 3,600 seconds, not
+	// configurable.
 	StreamingMode string `json:"streamingMode,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`

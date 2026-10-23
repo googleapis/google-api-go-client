@@ -6434,6 +6434,8 @@ type ServiceMeshCondition struct {
 	// cluster.
 	//   "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE" - Gateway pods per cluster
 	// limit exceeded.
+	//   "MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART" - Cluster contains
+	// workloads that will require manual restart during modernization.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
@@ -6447,6 +6449,9 @@ type ServiceMeshCondition struct {
 	// the new implementation.
 	//   "MODERNIZATION_ROLLING_BACK_CLUSTER" - Rollback is in progress for
 	// modernization of a cluster.
+	//   "MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART" - Modernization of a
+	// cluster is awaiting manual restart of workloads. The customer must restart
+	// these workloads to complete modernization.
 	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
 	// fleet.
 	//   "MODERNIZATION_MANUAL" - Fleet is opted out from automated modernization.
@@ -6461,6 +6466,9 @@ type ServiceMeshCondition struct {
 	// modernization of all clusters in a fleet.
 	//   "MODERNIZATION_MODERNIZED" - Modernization of all the fleet's clusters is
 	// complete. Soaking before finalizing the modernization.
+	//   "MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER" - Fleet modernization must be
+	// Customer-Triggered, and cannot be Google-driven. Specific details may be
+	// reported via another fleet/cluster condition.
 	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
 	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
 	// modernization.
@@ -6664,6 +6672,8 @@ type ServiceMeshFeatureCondition struct {
 	// cluster.
 	//   "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE" - Gateway pods per cluster
 	// limit exceeded.
+	//   "MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART" - Cluster contains
+	// workloads that will require manual restart during modernization.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
@@ -6677,6 +6687,9 @@ type ServiceMeshFeatureCondition struct {
 	// the new implementation.
 	//   "MODERNIZATION_ROLLING_BACK_CLUSTER" - Rollback is in progress for
 	// modernization of a cluster.
+	//   "MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART" - Modernization of a
+	// cluster is awaiting manual restart of workloads. The customer must restart
+	// these workloads to complete modernization.
 	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
 	// fleet.
 	//   "MODERNIZATION_MANUAL" - Fleet is opted out from automated modernization.
@@ -6691,6 +6704,9 @@ type ServiceMeshFeatureCondition struct {
 	// modernization of all clusters in a fleet.
 	//   "MODERNIZATION_MODERNIZED" - Modernization of all clusters in the fleet is
 	// complete. Soaking before finalizing the modernization.
+	//   "MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER" - Fleet modernization must be
+	// Customer-Triggered, and cannot be Google-driven. Specific details may be
+	// reported via another fleet/cluster condition.
 	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
 	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
 	// modernization.

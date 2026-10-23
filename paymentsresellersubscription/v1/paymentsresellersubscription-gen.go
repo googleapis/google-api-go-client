@@ -446,8 +446,9 @@ func (s EntitleSubscriptionIntent) MarshalJSON() ([]byte, error) {
 // provisioned subscription to an end user. The end user identity is inferred
 // from the request OAuth context.
 type EntitleSubscriptionRequest struct {
-	// LineItemEntitlementDetails: Optional. The line items to be entitled. If
-	// unspecified, all line items will be entitled.
+	// LineItemEntitlementDetails: Optional. Deprecated: This field is no longer
+	// supported. All line items are entitled automatically. Optional. The line
+	// items to be entitled. If unspecified, all line items will be entitled.
 	LineItemEntitlementDetails []*EntitleSubscriptionRequestLineItemEntitlementDetails `json:"lineItemEntitlementDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LineItemEntitlementDetails")
 	// to unconditionally include in API requests. By default, fields with empty or

@@ -205,6 +205,7 @@ type EffectiveTagsService struct {
 
 func NewFoldersService(s *Service) *FoldersService {
 	rs := &FoldersService{s: s}
+	rs.Boundaries = NewFoldersBoundariesService(s)
 	rs.Capabilities = NewFoldersCapabilitiesService(s)
 	rs.CapabilityConfigs = NewFoldersCapabilityConfigsService(s)
 	return rs
@@ -213,9 +214,20 @@ func NewFoldersService(s *Service) *FoldersService {
 type FoldersService struct {
 	s *Service
 
+	Boundaries *FoldersBoundariesService
+
 	Capabilities *FoldersCapabilitiesService
 
 	CapabilityConfigs *FoldersCapabilityConfigsService
+}
+
+func NewFoldersBoundariesService(s *Service) *FoldersBoundariesService {
+	rs := &FoldersBoundariesService{s: s}
+	return rs
+}
+
+type FoldersBoundariesService struct {
+	s *Service
 }
 
 func NewFoldersCapabilitiesService(s *Service) *FoldersCapabilitiesService {
@@ -289,6 +301,7 @@ type OperationsService struct {
 
 func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs := &OrganizationsService{s: s}
+	rs.Boundaries = NewOrganizationsBoundariesService(s)
 	rs.CapabilityConfigs = NewOrganizationsCapabilityConfigsService(s)
 	return rs
 }
@@ -296,7 +309,18 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 type OrganizationsService struct {
 	s *Service
 
+	Boundaries *OrganizationsBoundariesService
+
 	CapabilityConfigs *OrganizationsCapabilityConfigsService
+}
+
+func NewOrganizationsBoundariesService(s *Service) *OrganizationsBoundariesService {
+	rs := &OrganizationsBoundariesService{s: s}
+	return rs
+}
+
+type OrganizationsBoundariesService struct {
+	s *Service
 }
 
 func NewOrganizationsCapabilityConfigsService(s *Service) *OrganizationsCapabilityConfigsService {
@@ -549,6 +573,107 @@ type Binding struct {
 
 func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Boundary: A Boundary is a collection of projects defined by a filtering
+// criteria on an organization or a folder.
+type Boundary struct {
+	// CreateTime: Output only. The creation time of the Boundary.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. Human-readable display name of the Boundary. When
+	// present it must be between 4 to 30 characters. Allowed characters are:
+	// lowercase and uppercase letters, numbers, hyphen, single-quote,
+	// double-quote, space, and exclamation point. Example: `My Production
+	// Boundary`
+	DisplayName string `json:"displayName,omitempty"`
+	// Etag: This checksum is computed by the server based on the value of other
+	// fields, and may be sent on update and delete requests to ensure the client
+	// has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// ManagementProject: Output only. The Management Project of the
+	// CapabilityConfig this Boundary is associated with. Will be empty if the
+	// Boundary is not associated with any CapabilityConfig. Format:
+	// `projects/{project_number}` Example: `projects/123456789012`
+	ManagementProject string `json:"managementProject,omitempty"`
+	// Name: Identifier. The unique resource name of the Boundary. Format: -
+	// `organizations/{organization_id}/boundaries/{boundary_id}` -
+	// `folders/{folder_id}/boundaries/{boundary_id}` Example:
+	// `folders/123456789/boundaries/my-boundary`
+	Name string `json:"name,omitempty"`
+	// ResourceFilter: Optional. The filter defining the criteria for descendant
+	// projects to be included in the Boundary. Descendant projects are dynamically
+	// included in the Boundary based on this filter.
+	ResourceFilter *ResourceFilter `json:"resourceFilter,omitempty"`
+	// State: Output only. The lifecycle state of the Boundary.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "CREATING" - Boundary is being created.
+	//   "ACTIVE" - Boundary is operational, and the management project is fully
+	// active.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The most recent time this Boundary was modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Boundary) MarshalJSON() ([]byte, error) {
+	type NoMethod Boundary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BoundaryConfig: A BoundaryConfig defines the common configurations regarding
+// Boundaries defined under a parent CRM node (Folder or Organization), such as
+// the partitioning tag key.
+type BoundaryConfig struct {
+	// Etag: This checksum is computed by the server based on the value of other
+	// fields, and may be sent on update requests to ensure the client has an
+	// up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The unique resource name of the BoundaryConfig. Format: -
+	// `organizations/{organization}/boundaryConfig` -
+	// `folders/{folder}/boundaryConfig` Example:
+	// `folders/123456789/boundaryConfig`
+	Name string `json:"name,omitempty"`
+	// TagKey: Optional. The namespaced name of the tag key. Format:
+	// `{parent_id}/{tag_key_short_name}` Example: `123456789012/env` (where
+	// 123456789012 is the organization ID).
+	TagKey string `json:"tagKey,omitempty"`
+	// UpdateTime: Output only. The most recent time this BoundaryConfig was
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BoundaryConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BoundaryConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1287,6 +1412,43 @@ func (s Lien) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListBoundariesResponse: A page of the response received from the
+// ListBoundaries method. A paginated response where more pages are available
+// has `next_page_token` set. This token can be used in a subsequent request to
+// retrieve the next page. NOTE: A response may contain fewer elements than the
+// request `page_size` and still have a `next_page_token`.
+type ListBoundariesResponse struct {
+	// Boundaries: The list of Boundaries under the parent. This list can be
+	// paginated.
+	Boundaries []*Boundary `json:"boundaries,omitempty"`
+	// NextPageToken: Pagination token. If the result set is too large to fit in a
+	// single response, this token is returned. It encodes the position of the
+	// current result cursor. Feeding this value into a new list request with the
+	// `page_token` parameter gives the next page of the results. When
+	// `next_page_token` is not filled in, there is no next page and the list
+	// returned is the last page in the result set.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Boundaries") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Boundaries") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBoundariesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBoundariesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListCapabilityConfigsResponse: A page of the response received from the
 // ListCapabilityConfigs method. A paginated response where more pages are
 // available has `next_page_token` set. This token can be used in a subsequent
@@ -1965,6 +2127,29 @@ func (s ProjectCreationStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourceFilter: Filter to define the criteria for including projects in the
+// Boundary.
+type ResourceFilter struct {
+	// TagFilter: A tag based filter. A project must match it to be included.
+	TagFilter *TagFilter `json:"tagFilter,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TagFilter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TagFilter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourceFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourceFilter
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchFoldersResponse: The response message for searching folders.
 type SearchFoldersResponse struct {
 	// Folders: A possibly paginated folder search results. the specified parent
@@ -2206,6 +2391,36 @@ type TagBindingCollection struct {
 
 func (s TagBindingCollection) MarshalJSON() ([]byte, error) {
 	type NoMethod TagBindingCollection
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TagFilter: Matches projects based on a specific tag key and a specific tag
+// value.
+type TagFilter struct {
+	// TagKey: Required. Immutable. The namespaced name of the tag key. Format:
+	// `{parent_id}/{tag_key_short_name}` Example: `123456789012/env` (where
+	// 123456789012 is the organization ID).
+	TagKey string `json:"tagKey,omitempty"`
+	// TagValue: Required. The allowed value for the tag key. A project matches
+	// this tag filter if its effective tag value for the given `tag_key` matches
+	// this value. Format: short name of the tag value. Example: `production` or
+	// `staging`.
+	TagValue string `json:"tagValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TagKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TagKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TagFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod TagFilter
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2974,6 +3189,119 @@ func (c *FoldersGetCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersGetBoundaryConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetBoundaryConfig: Retrieves the BoundaryConfig identified by the specified
+// `name` (for example, `folders/123456789/boundaryConfig`).
+//
+//   - name: The name of the BoundaryConfig to retrieve. Format:
+//     `organizations/{organization}/boundaryConfig` or
+//     `folders/{folder}/boundaryConfig` Example:
+//     `folders/123456789/boundaryConfig`.
+func (r *FoldersService) GetBoundaryConfig(name string) *FoldersGetBoundaryConfigCall {
+	c := &FoldersGetBoundaryConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersGetBoundaryConfigCall) Fields(s ...googleapi.Field) *FoldersGetBoundaryConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersGetBoundaryConfigCall) IfNoneMatch(entityTag string) *FoldersGetBoundaryConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersGetBoundaryConfigCall) Context(ctx context.Context) *FoldersGetBoundaryConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersGetBoundaryConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersGetBoundaryConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.getBoundaryConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.getBoundaryConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BoundaryConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersGetBoundaryConfigCall) Do(opts ...googleapi.CallOption) (*BoundaryConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BoundaryConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.getBoundaryConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -3977,6 +4305,714 @@ func (c *FoldersUndeleteCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.undelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersUpdateBoundaryConfigCall struct {
+	s              *Service
+	name           string
+	boundaryconfig *BoundaryConfig
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// UpdateBoundaryConfig: Updates the BoundaryConfig identified by the specified
+// `name` (for example, `folders/123456789/boundaryConfig`).
+//
+// - name: Identifier. The unique resource name of the BoundaryConfig. Format:
+//   - `organizations/{organization}/boundaryConfig` -
+//     `folders/{folder}/boundaryConfig` Example:
+//     `folders/123456789/boundaryConfig`.
+func (r *FoldersService) UpdateBoundaryConfig(name string, boundaryconfig *BoundaryConfig) *FoldersUpdateBoundaryConfigCall {
+	c := &FoldersUpdateBoundaryConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.boundaryconfig = boundaryconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *FoldersUpdateBoundaryConfigCall) UpdateMask(updateMask string) *FoldersUpdateBoundaryConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersUpdateBoundaryConfigCall) Fields(s ...googleapi.Field) *FoldersUpdateBoundaryConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersUpdateBoundaryConfigCall) Context(ctx context.Context) *FoldersUpdateBoundaryConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersUpdateBoundaryConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersUpdateBoundaryConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.boundaryconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.updateBoundaryConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.updateBoundaryConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersUpdateBoundaryConfigCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.updateBoundaryConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersBoundariesCreateCall struct {
+	s          *Service
+	parent     string
+	boundary   *Boundary
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a Boundary under a parent Folder or Organization. Creating a
+// Boundary triggers the creation of a Management Project if one is not
+// supplied.
+//
+//   - parent: The parent resource under which the Boundary will be created.
+//     Format: `organizations/{organization_id}` or `folders/{folder_id}`.
+func (r *FoldersBoundariesService) Create(parent string, boundary *Boundary) *FoldersBoundariesCreateCall {
+	c := &FoldersBoundariesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.boundary = boundary
+	return c
+}
+
+// BoundaryId sets the optional parameter "boundaryId": Required. The
+// user-assigned ID for the Boundary, which will become the final component of
+// the Boundary's resource name. Must be unique within the parent resource. It
+// must be 6 to 30 lowercase ASCII letters, digits, or hyphens. It must start
+// with a letter. Trailing hyphens are prohibited. Example: `my-boundary-123`
+func (c *FoldersBoundariesCreateCall) BoundaryId(boundaryId string) *FoldersBoundariesCreateCall {
+	c.urlParams_.Set("boundaryId", boundaryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersBoundariesCreateCall) Fields(s ...googleapi.Field) *FoldersBoundariesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersBoundariesCreateCall) Context(ctx context.Context) *FoldersBoundariesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersBoundariesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersBoundariesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.boundary)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/boundaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.boundaries.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersBoundariesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersBoundariesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the Boundary identified by the specified `name` (for
+// example, `folders/123456789/boundaries/my-boundary`).
+//
+//   - name: The name of the Boundary to delete. Format:
+//     `organizations/{organization_id}/boundaries/{boundary_id}` or
+//     `folders/{folder_id}/boundaries/{boundary_id}`.
+func (r *FoldersBoundariesService) Delete(name string) *FoldersBoundariesDeleteCall {
+	c := &FoldersBoundariesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersBoundariesDeleteCall) Fields(s ...googleapi.Field) *FoldersBoundariesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersBoundariesDeleteCall) Context(ctx context.Context) *FoldersBoundariesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersBoundariesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersBoundariesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.boundaries.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersBoundariesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersBoundariesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the Boundary identified by the specified `name` (for example,
+// `folders/123456789/boundaries/my-boundary`).
+//
+//   - name: The name of the Boundary to retrieve. Format:
+//     `organizations/{organization_id}/boundaries/{boundary_id}` or
+//     `folders/{folder_id}/boundaries/{boundary_id}` Example:
+//     `folders/123456789/boundaries/my-boundary`.
+func (r *FoldersBoundariesService) Get(name string) *FoldersBoundariesGetCall {
+	c := &FoldersBoundariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersBoundariesGetCall) Fields(s ...googleapi.Field) *FoldersBoundariesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersBoundariesGetCall) IfNoneMatch(entityTag string) *FoldersBoundariesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersBoundariesGetCall) Context(ctx context.Context) *FoldersBoundariesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersBoundariesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersBoundariesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.boundaries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Boundary.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersBoundariesGetCall) Do(opts ...googleapi.CallOption) (*Boundary, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Boundary{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FoldersBoundariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Boundaries that are direct children of the specified
+// organization or folder resource.
+//
+//   - parent: The name of the parent resource whose Boundaries are being listed.
+//     Format: `organizations/{organization_id}` or `folders/{folder_id}`.
+func (r *FoldersBoundariesService) List(parent string) *FoldersBoundariesListCall {
+	c := &FoldersBoundariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Boundaries to return in the response. The service may return fewer
+// Boundaries than requested. If unspecified, at most 100 Boundaries will be
+// returned. The maximum value is 100; values above 100 will be coerced to 100.
+func (c *FoldersBoundariesListCall) PageSize(pageSize int64) *FoldersBoundariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// received from a previous call to `ListBoundaries` that indicates from where
+// listing should continue. Provide this to retrieve the subsequent page.
+func (c *FoldersBoundariesListCall) PageToken(pageToken string) *FoldersBoundariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersBoundariesListCall) Fields(s ...googleapi.Field) *FoldersBoundariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FoldersBoundariesListCall) IfNoneMatch(entityTag string) *FoldersBoundariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersBoundariesListCall) Context(ctx context.Context) *FoldersBoundariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersBoundariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersBoundariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/boundaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.boundaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBoundariesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FoldersBoundariesListCall) Do(opts ...googleapi.CallOption) (*ListBoundariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBoundariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersBoundariesListCall) Pages(ctx context.Context, f func(*ListBoundariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FoldersBoundariesPatchCall struct {
+	s          *Service
+	name       string
+	boundary   *Boundary
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the `display_name` and `resource_filter.tag_filter.tag_value`
+// of the Boundary identified by the specified `name` (for example,
+// `folders/123456789/boundaries/my-boundary`).
+//
+//   - name: Identifier. The unique resource name of the Boundary. Format: -
+//     `organizations/{organization_id}/boundaries/{boundary_id}` -
+//     `folders/{folder_id}/boundaries/{boundary_id}` Example:
+//     `folders/123456789/boundaries/my-boundary`.
+func (r *FoldersBoundariesService) Patch(name string, boundary *Boundary) *FoldersBoundariesPatchCall {
+	c := &FoldersBoundariesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.boundary = boundary
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *FoldersBoundariesPatchCall) UpdateMask(updateMask string) *FoldersBoundariesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FoldersBoundariesPatchCall) Fields(s ...googleapi.Field) *FoldersBoundariesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FoldersBoundariesPatchCall) Context(ctx context.Context) *FoldersBoundariesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FoldersBoundariesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersBoundariesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.boundary)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.folders.boundaries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FoldersBoundariesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.folders.boundaries.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -5837,6 +6873,119 @@ func (c *OrganizationsGetCall) Do(opts ...googleapi.CallOption) (*Organization, 
 	return ret, nil
 }
 
+type OrganizationsGetBoundaryConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetBoundaryConfig: Retrieves the BoundaryConfig identified by the specified
+// `name` (for example, `folders/123456789/boundaryConfig`).
+//
+//   - name: The name of the BoundaryConfig to retrieve. Format:
+//     `organizations/{organization}/boundaryConfig` or
+//     `folders/{folder}/boundaryConfig` Example:
+//     `folders/123456789/boundaryConfig`.
+func (r *OrganizationsService) GetBoundaryConfig(name string) *OrganizationsGetBoundaryConfigCall {
+	c := &OrganizationsGetBoundaryConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsGetBoundaryConfigCall) Fields(s ...googleapi.Field) *OrganizationsGetBoundaryConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsGetBoundaryConfigCall) IfNoneMatch(entityTag string) *OrganizationsGetBoundaryConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsGetBoundaryConfigCall) Context(ctx context.Context) *OrganizationsGetBoundaryConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsGetBoundaryConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetBoundaryConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.getBoundaryConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.getBoundaryConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BoundaryConfig.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsGetBoundaryConfigCall) Do(opts ...googleapi.CallOption) (*BoundaryConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BoundaryConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.getBoundaryConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationsGetIamPolicyCall struct {
 	s                   *Service
 	resource            string
@@ -6324,6 +7473,714 @@ func (c *OrganizationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.testIamPermissions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsUpdateBoundaryConfigCall struct {
+	s              *Service
+	name           string
+	boundaryconfig *BoundaryConfig
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// UpdateBoundaryConfig: Updates the BoundaryConfig identified by the specified
+// `name` (for example, `folders/123456789/boundaryConfig`).
+//
+// - name: Identifier. The unique resource name of the BoundaryConfig. Format:
+//   - `organizations/{organization}/boundaryConfig` -
+//     `folders/{folder}/boundaryConfig` Example:
+//     `folders/123456789/boundaryConfig`.
+func (r *OrganizationsService) UpdateBoundaryConfig(name string, boundaryconfig *BoundaryConfig) *OrganizationsUpdateBoundaryConfigCall {
+	c := &OrganizationsUpdateBoundaryConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.boundaryconfig = boundaryconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *OrganizationsUpdateBoundaryConfigCall) UpdateMask(updateMask string) *OrganizationsUpdateBoundaryConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsUpdateBoundaryConfigCall) Fields(s ...googleapi.Field) *OrganizationsUpdateBoundaryConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsUpdateBoundaryConfigCall) Context(ctx context.Context) *OrganizationsUpdateBoundaryConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsUpdateBoundaryConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsUpdateBoundaryConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.boundaryconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.updateBoundaryConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.updateBoundaryConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsUpdateBoundaryConfigCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.updateBoundaryConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsBoundariesCreateCall struct {
+	s          *Service
+	parent     string
+	boundary   *Boundary
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a Boundary under a parent Folder or Organization. Creating a
+// Boundary triggers the creation of a Management Project if one is not
+// supplied.
+//
+//   - parent: The parent resource under which the Boundary will be created.
+//     Format: `organizations/{organization_id}` or `folders/{folder_id}`.
+func (r *OrganizationsBoundariesService) Create(parent string, boundary *Boundary) *OrganizationsBoundariesCreateCall {
+	c := &OrganizationsBoundariesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.boundary = boundary
+	return c
+}
+
+// BoundaryId sets the optional parameter "boundaryId": Required. The
+// user-assigned ID for the Boundary, which will become the final component of
+// the Boundary's resource name. Must be unique within the parent resource. It
+// must be 6 to 30 lowercase ASCII letters, digits, or hyphens. It must start
+// with a letter. Trailing hyphens are prohibited. Example: `my-boundary-123`
+func (c *OrganizationsBoundariesCreateCall) BoundaryId(boundaryId string) *OrganizationsBoundariesCreateCall {
+	c.urlParams_.Set("boundaryId", boundaryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsBoundariesCreateCall) Fields(s ...googleapi.Field) *OrganizationsBoundariesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsBoundariesCreateCall) Context(ctx context.Context) *OrganizationsBoundariesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsBoundariesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsBoundariesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.boundary)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/boundaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.boundaries.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsBoundariesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsBoundariesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the Boundary identified by the specified `name` (for
+// example, `folders/123456789/boundaries/my-boundary`).
+//
+//   - name: The name of the Boundary to delete. Format:
+//     `organizations/{organization_id}/boundaries/{boundary_id}` or
+//     `folders/{folder_id}/boundaries/{boundary_id}`.
+func (r *OrganizationsBoundariesService) Delete(name string) *OrganizationsBoundariesDeleteCall {
+	c := &OrganizationsBoundariesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsBoundariesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsBoundariesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsBoundariesDeleteCall) Context(ctx context.Context) *OrganizationsBoundariesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsBoundariesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsBoundariesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.boundaries.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsBoundariesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsBoundariesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the Boundary identified by the specified `name` (for example,
+// `folders/123456789/boundaries/my-boundary`).
+//
+//   - name: The name of the Boundary to retrieve. Format:
+//     `organizations/{organization_id}/boundaries/{boundary_id}` or
+//     `folders/{folder_id}/boundaries/{boundary_id}` Example:
+//     `folders/123456789/boundaries/my-boundary`.
+func (r *OrganizationsBoundariesService) Get(name string) *OrganizationsBoundariesGetCall {
+	c := &OrganizationsBoundariesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsBoundariesGetCall) Fields(s ...googleapi.Field) *OrganizationsBoundariesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsBoundariesGetCall) IfNoneMatch(entityTag string) *OrganizationsBoundariesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsBoundariesGetCall) Context(ctx context.Context) *OrganizationsBoundariesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsBoundariesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsBoundariesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.boundaries.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Boundary.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsBoundariesGetCall) Do(opts ...googleapi.CallOption) (*Boundary, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Boundary{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsBoundariesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Boundaries that are direct children of the specified
+// organization or folder resource.
+//
+//   - parent: The name of the parent resource whose Boundaries are being listed.
+//     Format: `organizations/{organization_id}` or `folders/{folder_id}`.
+func (r *OrganizationsBoundariesService) List(parent string) *OrganizationsBoundariesListCall {
+	c := &OrganizationsBoundariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Boundaries to return in the response. The service may return fewer
+// Boundaries than requested. If unspecified, at most 100 Boundaries will be
+// returned. The maximum value is 100; values above 100 will be coerced to 100.
+func (c *OrganizationsBoundariesListCall) PageSize(pageSize int64) *OrganizationsBoundariesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A pagination token
+// received from a previous call to `ListBoundaries` that indicates from where
+// listing should continue. Provide this to retrieve the subsequent page.
+func (c *OrganizationsBoundariesListCall) PageToken(pageToken string) *OrganizationsBoundariesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsBoundariesListCall) Fields(s ...googleapi.Field) *OrganizationsBoundariesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsBoundariesListCall) IfNoneMatch(entityTag string) *OrganizationsBoundariesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsBoundariesListCall) Context(ctx context.Context) *OrganizationsBoundariesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsBoundariesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsBoundariesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+parent}/boundaries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.boundaries.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBoundariesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsBoundariesListCall) Do(opts ...googleapi.CallOption) (*ListBoundariesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBoundariesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsBoundariesListCall) Pages(ctx context.Context, f func(*ListBoundariesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationsBoundariesPatchCall struct {
+	s          *Service
+	name       string
+	boundary   *Boundary
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the `display_name` and `resource_filter.tag_filter.tag_value`
+// of the Boundary identified by the specified `name` (for example,
+// `folders/123456789/boundaries/my-boundary`).
+//
+//   - name: Identifier. The unique resource name of the Boundary. Format: -
+//     `organizations/{organization_id}/boundaries/{boundary_id}` -
+//     `folders/{folder_id}/boundaries/{boundary_id}` Example:
+//     `folders/123456789/boundaries/my-boundary`.
+func (r *OrganizationsBoundariesService) Patch(name string, boundary *Boundary) *OrganizationsBoundariesPatchCall {
+	c := &OrganizationsBoundariesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.boundary = boundary
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *OrganizationsBoundariesPatchCall) UpdateMask(updateMask string) *OrganizationsBoundariesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsBoundariesPatchCall) Fields(s ...googleapi.Field) *OrganizationsBoundariesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsBoundariesPatchCall) Context(ctx context.Context) *OrganizationsBoundariesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsBoundariesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsBoundariesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.boundary)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudresourcemanager.organizations.boundaries.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationsBoundariesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "cloudresourcemanager.organizations.boundaries.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

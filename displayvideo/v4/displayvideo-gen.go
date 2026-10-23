@@ -18709,6 +18709,10 @@ type VideoPerformanceAd struct {
 	// ActionButtonLabels: Optional. The list of text assets shown on the
 	// call-to-action button. Must be set if headlines is set.
 	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
+	// BusinessName: Optional. The business name shown on the ad. This setting is
+	// required unless a default value is set at the advertiser level. If left
+	// unset, the default value will be applied.
+	BusinessName string `json:"businessName,omitempty"`
 	// CompanionBanners: Optional. The list of companion banners used by this ad.
 	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
 	// CustomParameters: Optional. The custom parameters and accompanying values to
@@ -18733,6 +18737,10 @@ type VideoPerformanceAd struct {
 	// Headlines: Optional. The list of headlines shown on the call-to-action
 	// banner.
 	Headlines []string `json:"headlines,omitempty"`
+	// Logo: Optional. The logo image used by this ad. This setting is required
+	// unless a default value is set at the advertiser level. If left unset, the
+	// default value will be applied.
+	Logo *ImageAsset `json:"logo,omitempty"`
 	// LongHeadlines: Optional. The list of long headlines shown on the
 	// call-to-action banner. Must be set unless the parent line item's
 	// lineItemType is `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE`, in
@@ -41972,7 +41980,8 @@ type TargetingTypesTargetingOptionsGetCall struct {
 //   - targetingOptionId: The ID of the of targeting option to retrieve.
 //   - targetingType: The type of targeting option to retrieve. Accepted values
 //     are: * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AGE_RANGE` *
-//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
+//     `TARGETING_TYPE_AUCTION_PACKAGE` * `TARGETING_TYPE_GENDER` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
 //     `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_PARENTAL_STATUS`
 //   - `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
 //     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_DEVICE_TYPE`
@@ -42106,7 +42115,8 @@ type TargetingTypesTargetingOptionsListCall struct {
 //
 //   - targetingType: The type of targeting option to be listed. Accepted values
 //     are: * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AGE_RANGE` *
-//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
+//     `TARGETING_TYPE_AUCTION_PACKAGE` * `TARGETING_TYPE_GENDER` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
 //     `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_PARENTAL_STATUS`
 //   - `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
 //     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_DEVICE_TYPE`

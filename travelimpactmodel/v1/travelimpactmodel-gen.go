@@ -1027,9 +1027,10 @@ type Scope3FlightSegment struct {
 	// origin and destination airports. Otherwise, we will use the distance-based
 	// emissions model if the flight distance is provided.
 	Destination string `json:"destination,omitempty"`
-	// DistanceKm: Optional. Distance in kilometers, e.g. `2423`, from [1, 2.5e16)
-	// km. This is used to match a flight to distance-based emissions when origin
-	// and destination are not provided or there are no matching typical flights.
+	// DistanceKm: Optional. Distance in kilometers, e.g. `2423`, from [`1`,
+	// `1e12`) km. This is used to match a flight to distance-based emissions when
+	// origin and destination are not provided or there are no matching typical
+	// flights.
 	DistanceKm int64 `json:"distanceKm,omitempty,string"`
 	// FlightNumber: Optional. Up to 4-digit flight number
 	// (https://en.wikipedia.org/wiki/Flight_number), e.g. `71`, from [1, 9999].

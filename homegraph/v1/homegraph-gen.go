@@ -684,6 +684,39 @@ func (s HomeTraitUpdates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// JsonTrait: Dynamic JSON trait state payload conforming to
+// `json_trait_schema.md`. Used for Category 2 (vendor Matter clusters) and
+// Category 3 (non-Matter capabilities) traits across all wire and internal
+// paths, and for Category 1 traits on external JSON-only wire paths (e.g.,
+// `Query` with `JSON_TRAIT_ONLY`).
+type JsonTrait struct {
+	// Data: Optional. Trait attribute map conforming to the trait's registered
+	// JSON Schema.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+	// Id: Required. Canonical symbolic trait ID per `json_trait_schema.md`: -
+	// Standard Matter (Cat 1): `matter.` (e.g., `matter.thermostat`) - Google /
+	// vendor Matter (Cat 1/2): `matter..` (e.g., `matter.google.`,
+	// `matter.eve.utility`) - Non-Matter (Cat 3, any provider incl. Google):
+	// `ghp..` (e.g., `ghp.acme.warranty`, `ghp.google.`)
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s JsonTrait) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonTrait
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type MediaUrlsStruct struct {
 	// DashManifestUrl: URL for a dash manifest for playback
 	DashManifestUrl string `json:"dashManifestUrl,omitempty"`
@@ -1296,6 +1329,8 @@ type TraitData struct {
 	// CommitTime: Other metadata for the trait. The time the client update was
 	// committed in the server.
 	CommitTime string `json:"commitTime,omitempty"`
+	// JsonTrait: Contains the dynamic JSON trait payload.
+	JsonTrait *JsonTrait `json:"jsonTrait,omitempty"`
 	// ProviderUpdateTime: The custom timestamp supplied by the provider during a
 	// ReportStateAndNotification update (if provided). This field is returned as
 	// part of the `QueryResponse`.

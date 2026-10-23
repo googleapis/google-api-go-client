@@ -18337,6 +18337,2516 @@ func (c *FirewallsUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, erro
 	return ret, nil
 }
 
+type FolderGlobalVmExtensionPoliciesAggregatedListCall struct {
+	s            *Service
+	folder       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AggregatedList: Retrieves the list of all folder level VM Extension Policy
+// resources
+// available to the specified folder.
+//
+// To prevent failure, it's recommended that you set the
+// `returnPartialSuccess` parameter to `true`.
+//
+// - folder: Folder ID for this request.
+func (r *FolderGlobalVmExtensionPoliciesService) AggregatedList(folder string) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c := &FolderGlobalVmExtensionPoliciesAggregatedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) Filter(filter string) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// IncludeAllScopes sets the optional parameter "includeAllScopes": Indicates
+// whether every visible scope for each scope type (zone, region,
+// global) should be included in the response. For new resource types
+// added
+// after this field, the flag has no effect as new resource types will
+// always
+// include every visible scope for each scope type in response. For
+// resource
+// types which predate this field, if this flag is omitted or false,
+// only
+// scopes of the scope types where the resource type is expected to be
+// found
+// will be included.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) IncludeAllScopes(includeAllScopes bool) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("includeAllScopes", fmt.Sprint(includeAllScopes))
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) MaxResults(maxResults int64) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) OrderBy(orderBy string) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) PageToken(pageToken string) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ServiceProjectNumber sets the optional parameter "serviceProjectNumber": The
+// Shared VPC service project id or service project number for which
+// aggregated list request is invoked for subnetworks list-usable api.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) ServiceProjectNumber(serviceProjectNumber int64) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("serviceProjectNumber", fmt.Sprint(serviceProjectNumber))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) Fields(s ...googleapi.Field) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) IfNoneMatch(entityTag string) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) Context(ctx context.Context) *FolderGlobalVmExtensionPoliciesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/aggregated/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.aggregatedList", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderGlobalVmExtensionPolicies.aggregatedList" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FolderVmExtensionPolicyAggregatedListResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) Do(opts ...googleapi.CallOption) (*FolderVmExtensionPolicyAggregatedListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FolderVmExtensionPolicyAggregatedListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.aggregatedList", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FolderGlobalVmExtensionPoliciesAggregatedListCall) Pages(ctx context.Context, f func(*FolderVmExtensionPolicyAggregatedListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FolderGlobalVmExtensionPoliciesDeleteCall struct {
+	s                                                   *Service
+	folder                                              string
+	globalVmExtensionPolicy                             string
+	globalvmextensionpolicyrolloutoperationrolloutinput *GlobalVmExtensionPolicyRolloutOperationRolloutInput
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// Delete: Purge scoped resources (zonal policies) from a folder level
+// global
+// VM extension policy, and then delete the global VM extension policy.
+// Purge
+// of the scoped resources is a pre-condition of the global VM extension
+// policy deletion. The deletion of the global VM extension policy
+// happens
+// after the purge rollout is done, so it's not a part of the LRO. It's
+// an
+// automatic process that triggers in the backend.
+//
+//   - folder: Folder ID for this request.
+//   - globalVmExtensionPolicy: Name of the global VM extension policy to purge
+//     scoped resources for.
+func (r *FolderGlobalVmExtensionPoliciesService) Delete(folder string, globalVmExtensionPolicy string, globalvmextensionpolicyrolloutoperationrolloutinput *GlobalVmExtensionPolicyRolloutOperationRolloutInput) *FolderGlobalVmExtensionPoliciesDeleteCall {
+	c := &FolderGlobalVmExtensionPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.globalVmExtensionPolicy = globalVmExtensionPolicy
+	c.globalvmextensionpolicyrolloutoperationrolloutinput = globalvmextensionpolicyrolloutoperationrolloutinput
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *FolderGlobalVmExtensionPoliciesDeleteCall) RequestId(requestId string) *FolderGlobalVmExtensionPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderGlobalVmExtensionPoliciesDeleteCall) Fields(s ...googleapi.Field) *FolderGlobalVmExtensionPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderGlobalVmExtensionPoliciesDeleteCall) Context(ctx context.Context) *FolderGlobalVmExtensionPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderGlobalVmExtensionPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderGlobalVmExtensionPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.globalvmextensionpolicyrolloutoperationrolloutinput)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/vmExtensionPolicies/{globalVmExtensionPolicy}/delete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":                  c.folder,
+		"globalVmExtensionPolicy": c.globalVmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.delete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderGlobalVmExtensionPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FolderGlobalVmExtensionPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderGlobalVmExtensionPoliciesGetCall struct {
+	s                       *Service
+	folder                  string
+	globalVmExtensionPolicy string
+	urlParams_              gensupport.URLParams
+	ifNoneMatch_            string
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Get: Gets details of a folder level GlobalVmExtensionPolicy.
+//
+//   - folder: Folder ID for this request.
+//   - globalVmExtensionPolicy: Name of the GlobalVmExtensionPolicy resource to
+//     return.
+func (r *FolderGlobalVmExtensionPoliciesService) Get(folder string, globalVmExtensionPolicy string) *FolderGlobalVmExtensionPoliciesGetCall {
+	c := &FolderGlobalVmExtensionPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.globalVmExtensionPolicy = globalVmExtensionPolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderGlobalVmExtensionPoliciesGetCall) Fields(s ...googleapi.Field) *FolderGlobalVmExtensionPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderGlobalVmExtensionPoliciesGetCall) IfNoneMatch(entityTag string) *FolderGlobalVmExtensionPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderGlobalVmExtensionPoliciesGetCall) Context(ctx context.Context) *FolderGlobalVmExtensionPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderGlobalVmExtensionPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderGlobalVmExtensionPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/vmExtensionPolicies/{globalVmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":                  c.folder,
+		"globalVmExtensionPolicy": c.globalVmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderGlobalVmExtensionPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalVmExtensionPolicy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FolderGlobalVmExtensionPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GlobalVmExtensionPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalVmExtensionPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderGlobalVmExtensionPoliciesGetVmExtensionCall struct {
+	s             *Service
+	folder        string
+	extensionName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// GetVmExtension: Retrieves details of a specific VM extension.
+//
+// - extensionName: Name of the VM extension for this request.
+// - folder: Folder ID for this request.
+func (r *FolderGlobalVmExtensionPoliciesService) GetVmExtension(folder string, extensionName string) *FolderGlobalVmExtensionPoliciesGetVmExtensionCall {
+	c := &FolderGlobalVmExtensionPoliciesGetVmExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.extensionName = extensionName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderGlobalVmExtensionPoliciesGetVmExtensionCall) Fields(s ...googleapi.Field) *FolderGlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderGlobalVmExtensionPoliciesGetVmExtensionCall) IfNoneMatch(entityTag string) *FolderGlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderGlobalVmExtensionPoliciesGetVmExtensionCall) Context(ctx context.Context) *FolderGlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderGlobalVmExtensionPoliciesGetVmExtensionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderGlobalVmExtensionPoliciesGetVmExtensionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/vmExtensions/{extensionName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":        c.folder,
+		"extensionName": c.extensionName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.getVmExtension", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderGlobalVmExtensionPolicies.getVmExtension" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalVmExtension.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FolderGlobalVmExtensionPoliciesGetVmExtensionCall) Do(opts ...googleapi.CallOption) (*GlobalVmExtension, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalVmExtension{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.getVmExtension", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderGlobalVmExtensionPoliciesInsertCall struct {
+	s                       *Service
+	folder                  string
+	globalvmextensionpolicy *GlobalVmExtensionPolicy
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Insert: Creates a new folder level GlobalVmExtensionPolicy.
+//
+// - folder: Folder ID for this request.
+func (r *FolderGlobalVmExtensionPoliciesService) Insert(folder string, globalvmextensionpolicy *GlobalVmExtensionPolicy) *FolderGlobalVmExtensionPoliciesInsertCall {
+	c := &FolderGlobalVmExtensionPoliciesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.globalvmextensionpolicy = globalvmextensionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *FolderGlobalVmExtensionPoliciesInsertCall) RequestId(requestId string) *FolderGlobalVmExtensionPoliciesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderGlobalVmExtensionPoliciesInsertCall) Fields(s ...googleapi.Field) *FolderGlobalVmExtensionPoliciesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderGlobalVmExtensionPoliciesInsertCall) Context(ctx context.Context) *FolderGlobalVmExtensionPoliciesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderGlobalVmExtensionPoliciesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderGlobalVmExtensionPoliciesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.globalvmextensionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderGlobalVmExtensionPolicies.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FolderGlobalVmExtensionPoliciesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderGlobalVmExtensionPoliciesListCall struct {
+	s            *Service
+	folder       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists folder level GlobalVmExtensionPolicies.
+//
+// - folder: Folder ID for this request.
+func (r *FolderGlobalVmExtensionPoliciesService) List(folder string) *FolderGlobalVmExtensionPoliciesListCall {
+	c := &FolderGlobalVmExtensionPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *FolderGlobalVmExtensionPoliciesListCall) Filter(filter string) *FolderGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *FolderGlobalVmExtensionPoliciesListCall) MaxResults(maxResults int64) *FolderGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *FolderGlobalVmExtensionPoliciesListCall) OrderBy(orderBy string) *FolderGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *FolderGlobalVmExtensionPoliciesListCall) PageToken(pageToken string) *FolderGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderGlobalVmExtensionPoliciesListCall) Fields(s ...googleapi.Field) *FolderGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderGlobalVmExtensionPoliciesListCall) IfNoneMatch(entityTag string) *FolderGlobalVmExtensionPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderGlobalVmExtensionPoliciesListCall) Context(ctx context.Context) *FolderGlobalVmExtensionPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderGlobalVmExtensionPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderGlobalVmExtensionPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderGlobalVmExtensionPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalVmExtensionPolicyList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FolderGlobalVmExtensionPoliciesListCall) Do(opts ...googleapi.CallOption) (*GlobalVmExtensionPolicyList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalVmExtensionPolicyList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FolderGlobalVmExtensionPoliciesListCall) Pages(ctx context.Context, f func(*GlobalVmExtensionPolicyList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FolderGlobalVmExtensionPoliciesListVmExtensionsCall struct {
+	s            *Service
+	folder       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListVmExtensions: Lists all VM extensions within a folder.
+// This is a read-only API.
+//
+// - folder: Folder ID for this request.
+func (r *FolderGlobalVmExtensionPoliciesService) ListVmExtensions(folder string) *FolderGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c := &FolderGlobalVmExtensionPoliciesListVmExtensionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) Filter(filter string) *FolderGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) MaxResults(maxResults int64) *FolderGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) OrderBy(orderBy string) *FolderGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) PageToken(pageToken string) *FolderGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) Fields(s ...googleapi.Field) *FolderGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) IfNoneMatch(entityTag string) *FolderGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) Context(ctx context.Context) *FolderGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/vmExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.listVmExtensions", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderGlobalVmExtensionPolicies.listVmExtensions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalListVmExtensionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) Do(opts ...googleapi.CallOption) (*GlobalListVmExtensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalListVmExtensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.listVmExtensions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FolderGlobalVmExtensionPoliciesListVmExtensionsCall) Pages(ctx context.Context, f func(*GlobalListVmExtensionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FolderGlobalVmExtensionPoliciesUpdateCall struct {
+	s                       *Service
+	folder                  string
+	globalVmExtensionPolicy string
+	globalvmextensionpolicy *GlobalVmExtensionPolicy
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Update: Updates a folder level GlobalVmExtensionPolicy.
+//
+// - folder: Folder ID for this request.
+// - globalVmExtensionPolicy: Name of the global VM extension policy to update.
+func (r *FolderGlobalVmExtensionPoliciesService) Update(folder string, globalVmExtensionPolicy string, globalvmextensionpolicy *GlobalVmExtensionPolicy) *FolderGlobalVmExtensionPoliciesUpdateCall {
+	c := &FolderGlobalVmExtensionPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.globalVmExtensionPolicy = globalVmExtensionPolicy
+	c.globalvmextensionpolicy = globalvmextensionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *FolderGlobalVmExtensionPoliciesUpdateCall) RequestId(requestId string) *FolderGlobalVmExtensionPoliciesUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderGlobalVmExtensionPoliciesUpdateCall) Fields(s ...googleapi.Field) *FolderGlobalVmExtensionPoliciesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderGlobalVmExtensionPoliciesUpdateCall) Context(ctx context.Context) *FolderGlobalVmExtensionPoliciesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderGlobalVmExtensionPoliciesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderGlobalVmExtensionPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.globalvmextensionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/vmExtensionPolicies/{globalVmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":                  c.folder,
+		"globalVmExtensionPolicy": c.globalVmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderGlobalVmExtensionPolicies.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FolderGlobalVmExtensionPoliciesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderGlobalVmExtensionPolicies.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderZoneVmExtensionPoliciesDeleteCall struct {
+	s                 *Service
+	folder            string
+	zone              string
+	vmExtensionPolicy string
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Delete: Deletes a specified zone VM extension policy within a folder.
+//
+// - folder: Folder ID for this request.
+// - vmExtensionPolicy: Name of the zone VM extension policy to delete.
+// - zone: Name of the zone for this request.
+func (r *FolderZoneVmExtensionPoliciesService) Delete(folder string, zone string, vmExtensionPolicy string) *FolderZoneVmExtensionPoliciesDeleteCall {
+	c := &FolderZoneVmExtensionPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.zone = zone
+	c.vmExtensionPolicy = vmExtensionPolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *FolderZoneVmExtensionPoliciesDeleteCall) RequestId(requestId string) *FolderZoneVmExtensionPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderZoneVmExtensionPoliciesDeleteCall) Fields(s ...googleapi.Field) *FolderZoneVmExtensionPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderZoneVmExtensionPoliciesDeleteCall) Context(ctx context.Context) *FolderZoneVmExtensionPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderZoneVmExtensionPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderZoneVmExtensionPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":            c.folder,
+		"zone":              c.zone,
+		"vmExtensionPolicy": c.vmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderZoneVmExtensionPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FolderZoneVmExtensionPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderZoneVmExtensionPoliciesGetCall struct {
+	s                 *Service
+	folder            string
+	zone              string
+	vmExtensionPolicy string
+	urlParams_        gensupport.URLParams
+	ifNoneMatch_      string
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Get: Retrieves details of a specific zone VM extension policy within a
+// folder.
+//
+// - folder: Folder ID for this request.
+// - vmExtensionPolicy: Name of the VM extension policy resource to return.
+// - zone: Name of the zone for this request.
+func (r *FolderZoneVmExtensionPoliciesService) Get(folder string, zone string, vmExtensionPolicy string) *FolderZoneVmExtensionPoliciesGetCall {
+	c := &FolderZoneVmExtensionPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.zone = zone
+	c.vmExtensionPolicy = vmExtensionPolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderZoneVmExtensionPoliciesGetCall) Fields(s ...googleapi.Field) *FolderZoneVmExtensionPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderZoneVmExtensionPoliciesGetCall) IfNoneMatch(entityTag string) *FolderZoneVmExtensionPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderZoneVmExtensionPoliciesGetCall) Context(ctx context.Context) *FolderZoneVmExtensionPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderZoneVmExtensionPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderZoneVmExtensionPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":            c.folder,
+		"zone":              c.zone,
+		"vmExtensionPolicy": c.vmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderZoneVmExtensionPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *VmExtensionPolicy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FolderZoneVmExtensionPoliciesGetCall) Do(opts ...googleapi.CallOption) (*VmExtensionPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VmExtensionPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderZoneVmExtensionPoliciesGetVmExtensionCall struct {
+	s             *Service
+	folder        string
+	zone          string
+	extensionName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// GetVmExtension: Retrieves details of a specific VM extension within a
+// folder.
+//
+// - extensionName: Name of the VM extension for this request.
+// - folder: Folder ID for this request.
+// - zone: Name of the zone for this request.
+func (r *FolderZoneVmExtensionPoliciesService) GetVmExtension(folder string, zone string, extensionName string) *FolderZoneVmExtensionPoliciesGetVmExtensionCall {
+	c := &FolderZoneVmExtensionPoliciesGetVmExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.zone = zone
+	c.extensionName = extensionName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderZoneVmExtensionPoliciesGetVmExtensionCall) Fields(s ...googleapi.Field) *FolderZoneVmExtensionPoliciesGetVmExtensionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderZoneVmExtensionPoliciesGetVmExtensionCall) IfNoneMatch(entityTag string) *FolderZoneVmExtensionPoliciesGetVmExtensionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderZoneVmExtensionPoliciesGetVmExtensionCall) Context(ctx context.Context) *FolderZoneVmExtensionPoliciesGetVmExtensionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderZoneVmExtensionPoliciesGetVmExtensionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderZoneVmExtensionPoliciesGetVmExtensionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/zones/{zone}/vmExtensions/{extensionName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":        c.folder,
+		"zone":          c.zone,
+		"extensionName": c.extensionName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.getVmExtension", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderZoneVmExtensionPolicies.getVmExtension" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *VmExtension.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FolderZoneVmExtensionPoliciesGetVmExtensionCall) Do(opts ...googleapi.CallOption) (*VmExtension, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VmExtension{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.getVmExtension", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderZoneVmExtensionPoliciesInsertCall struct {
+	s                 *Service
+	folder            string
+	zone              string
+	vmextensionpolicy *VmExtensionPolicy
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Insert: Creates a new zone-level VM extension policy within a folder.
+//
+// - folder: Folder ID for this request.
+// - zone: Name of the zone for this request.
+func (r *FolderZoneVmExtensionPoliciesService) Insert(folder string, zone string, vmextensionpolicy *VmExtensionPolicy) *FolderZoneVmExtensionPoliciesInsertCall {
+	c := &FolderZoneVmExtensionPoliciesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.zone = zone
+	c.vmextensionpolicy = vmextensionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *FolderZoneVmExtensionPoliciesInsertCall) RequestId(requestId string) *FolderZoneVmExtensionPoliciesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderZoneVmExtensionPoliciesInsertCall) Fields(s ...googleapi.Field) *FolderZoneVmExtensionPoliciesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderZoneVmExtensionPoliciesInsertCall) Context(ctx context.Context) *FolderZoneVmExtensionPoliciesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderZoneVmExtensionPoliciesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderZoneVmExtensionPoliciesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.vmextensionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/zones/{zone}/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+		"zone":   c.zone,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderZoneVmExtensionPolicies.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FolderZoneVmExtensionPoliciesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type FolderZoneVmExtensionPoliciesListCall struct {
+	s            *Service
+	folder       string
+	zone         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all VM extension policies within a specific zone for a folder.
+//
+// - folder: Folder ID for this request.
+// - zone: Name of the zone for this request.
+func (r *FolderZoneVmExtensionPoliciesService) List(folder string, zone string) *FolderZoneVmExtensionPoliciesListCall {
+	c := &FolderZoneVmExtensionPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *FolderZoneVmExtensionPoliciesListCall) Filter(filter string) *FolderZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *FolderZoneVmExtensionPoliciesListCall) MaxResults(maxResults int64) *FolderZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *FolderZoneVmExtensionPoliciesListCall) OrderBy(orderBy string) *FolderZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *FolderZoneVmExtensionPoliciesListCall) PageToken(pageToken string) *FolderZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderZoneVmExtensionPoliciesListCall) Fields(s ...googleapi.Field) *FolderZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderZoneVmExtensionPoliciesListCall) IfNoneMatch(entityTag string) *FolderZoneVmExtensionPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderZoneVmExtensionPoliciesListCall) Context(ctx context.Context) *FolderZoneVmExtensionPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderZoneVmExtensionPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderZoneVmExtensionPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/zones/{zone}/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+		"zone":   c.zone,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderZoneVmExtensionPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *VmExtensionPolicyList.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *FolderZoneVmExtensionPoliciesListCall) Do(opts ...googleapi.CallOption) (*VmExtensionPolicyList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VmExtensionPolicyList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FolderZoneVmExtensionPoliciesListCall) Pages(ctx context.Context, f func(*VmExtensionPolicyList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FolderZoneVmExtensionPoliciesListVmExtensionsCall struct {
+	s            *Service
+	folder       string
+	zone         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListVmExtensions: Lists all VM extensions within a specific zone for a
+// folder.
+// This is a read-only API.
+//
+// - folder: Folder ID for this request.
+// - zone: Name of the zone for this request.
+func (r *FolderZoneVmExtensionPoliciesService) ListVmExtensions(folder string, zone string) *FolderZoneVmExtensionPoliciesListVmExtensionsCall {
+	c := &FolderZoneVmExtensionPoliciesListVmExtensionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) Filter(filter string) *FolderZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) MaxResults(maxResults int64) *FolderZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) OrderBy(orderBy string) *FolderZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) PageToken(pageToken string) *FolderZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) Fields(s ...googleapi.Field) *FolderZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) IfNoneMatch(entityTag string) *FolderZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) Context(ctx context.Context) *FolderZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/zones/{zone}/vmExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+		"zone":   c.zone,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.listVmExtensions", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderZoneVmExtensionPolicies.listVmExtensions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListVmExtensionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) Do(opts ...googleapi.CallOption) (*ListVmExtensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListVmExtensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.listVmExtensions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FolderZoneVmExtensionPoliciesListVmExtensionsCall) Pages(ctx context.Context, f func(*ListVmExtensionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type FolderZoneVmExtensionPoliciesUpdateCall struct {
+	s                 *Service
+	folder            string
+	zone              string
+	vmExtensionPolicy string
+	vmextensionpolicy *VmExtensionPolicy
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Update: Modifies an existing zone VM extension policy within a folder.
+//
+// - folder: Folder ID for this request.
+// - vmExtensionPolicy: Name of the zone VM extension policy to update.
+// - zone: Name of the zone for this request.
+func (r *FolderZoneVmExtensionPoliciesService) Update(folder string, zone string, vmExtensionPolicy string, vmextensionpolicy *VmExtensionPolicy) *FolderZoneVmExtensionPoliciesUpdateCall {
+	c := &FolderZoneVmExtensionPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.zone = zone
+	c.vmExtensionPolicy = vmExtensionPolicy
+	c.vmextensionpolicy = vmextensionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *FolderZoneVmExtensionPoliciesUpdateCall) RequestId(requestId string) *FolderZoneVmExtensionPoliciesUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *FolderZoneVmExtensionPoliciesUpdateCall) Fields(s ...googleapi.Field) *FolderZoneVmExtensionPoliciesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *FolderZoneVmExtensionPoliciesUpdateCall) Context(ctx context.Context) *FolderZoneVmExtensionPoliciesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *FolderZoneVmExtensionPoliciesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FolderZoneVmExtensionPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.vmextensionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":            c.folder,
+		"zone":              c.zone,
+		"vmExtensionPolicy": c.vmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.folderZoneVmExtensionPolicies.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *FolderZoneVmExtensionPoliciesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.folderZoneVmExtensionPolicies.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ForwardingRulesAggregatedListCall struct {
 	s            *Service
 	project      string
@@ -21783,6 +24293,364 @@ func (c *GlobalAddressesTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.globalAddresses.testIamPermissions", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type GlobalFolderOperationsGetCall struct {
+	s            *Service
+	folder       string
+	operation    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the specified Operations resource.
+//
+// - folder: Folder ID for this request.
+// - operation: Name of the Operations resource to return.
+func (r *GlobalFolderOperationsService) Get(folder string, operation string) *GlobalFolderOperationsGetCall {
+	c := &GlobalFolderOperationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	c.operation = operation
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *GlobalFolderOperationsGetCall) Fields(s ...googleapi.Field) *GlobalFolderOperationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GlobalFolderOperationsGetCall) IfNoneMatch(entityTag string) *GlobalFolderOperationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *GlobalFolderOperationsGetCall) Context(ctx context.Context) *GlobalFolderOperationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *GlobalFolderOperationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GlobalFolderOperationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/operations/{operation}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder":    c.folder,
+		"operation": c.operation,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.globalFolderOperations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.globalFolderOperations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *GlobalFolderOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.globalFolderOperations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type GlobalFolderOperationsListCall struct {
+	s            *Service
+	folder       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Retrieves a list of Operation resources contained within the
+// specified
+// folder.
+//
+// - folder: Folder ID for this request.
+func (r *GlobalFolderOperationsService) List(folder string) *GlobalFolderOperationsListCall {
+	c := &GlobalFolderOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.folder = folder
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *GlobalFolderOperationsListCall) Filter(filter string) *GlobalFolderOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *GlobalFolderOperationsListCall) MaxResults(maxResults int64) *GlobalFolderOperationsListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *GlobalFolderOperationsListCall) OrderBy(orderBy string) *GlobalFolderOperationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *GlobalFolderOperationsListCall) PageToken(pageToken string) *GlobalFolderOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *GlobalFolderOperationsListCall) Fields(s ...googleapi.Field) *GlobalFolderOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GlobalFolderOperationsListCall) IfNoneMatch(entityTag string) *GlobalFolderOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *GlobalFolderOperationsListCall) Context(ctx context.Context) *GlobalFolderOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *GlobalFolderOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GlobalFolderOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+folder}/global/operations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"folder": c.folder,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.globalFolderOperations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.globalFolderOperations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OperationList.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *GlobalFolderOperationsListCall) Do(opts ...googleapi.CallOption) (*OperationList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OperationList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.globalFolderOperations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *GlobalFolderOperationsListCall) Pages(ctx context.Context, f func(*OperationList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type GlobalForwardingRulesDeleteCall struct {
@@ -26712,6 +29580,120 @@ func (c *GlobalVmExtensionPoliciesGetCall) Do(opts ...googleapi.CallOption) (*Gl
 	return ret, nil
 }
 
+type GlobalVmExtensionPoliciesGetVmExtensionCall struct {
+	s             *Service
+	project       string
+	extensionName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// GetVmExtension: Retrieves details of a specific VM extension.
+//
+// - extensionName: Name of the VM extension for this request.
+// - project: Project ID for this request.
+func (r *GlobalVmExtensionPoliciesService) GetVmExtension(project string, extensionName string) *GlobalVmExtensionPoliciesGetVmExtensionCall {
+	c := &GlobalVmExtensionPoliciesGetVmExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.extensionName = extensionName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *GlobalVmExtensionPoliciesGetVmExtensionCall) Fields(s ...googleapi.Field) *GlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GlobalVmExtensionPoliciesGetVmExtensionCall) IfNoneMatch(entityTag string) *GlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *GlobalVmExtensionPoliciesGetVmExtensionCall) Context(ctx context.Context) *GlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *GlobalVmExtensionPoliciesGetVmExtensionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GlobalVmExtensionPoliciesGetVmExtensionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/vmExtensions/{extensionName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":       c.project,
+		"extensionName": c.extensionName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.globalVmExtensionPolicies.getVmExtension", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.globalVmExtensionPolicies.getVmExtension" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalVmExtension.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *GlobalVmExtensionPoliciesGetVmExtensionCall) Do(opts ...googleapi.CallOption) (*GlobalVmExtension, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalVmExtension{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.globalVmExtensionPolicies.getVmExtension", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type GlobalVmExtensionPoliciesInsertCall struct {
 	s                       *Service
 	project                 string
@@ -27064,6 +30046,252 @@ func (c *GlobalVmExtensionPoliciesListCall) Do(opts ...googleapi.CallOption) (*G
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *GlobalVmExtensionPoliciesListCall) Pages(ctx context.Context, f func(*GlobalVmExtensionPolicyList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type GlobalVmExtensionPoliciesListVmExtensionsCall struct {
+	s            *Service
+	project      string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListVmExtensions: Lists all VM extensions within a specific zone for a
+// project.
+// This is a read-only API.
+//
+// - project: Project ID for this request.
+func (r *GlobalVmExtensionPoliciesService) ListVmExtensions(project string) *GlobalVmExtensionPoliciesListVmExtensionsCall {
+	c := &GlobalVmExtensionPoliciesListVmExtensionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) Filter(filter string) *GlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) MaxResults(maxResults int64) *GlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) OrderBy(orderBy string) *GlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) PageToken(pageToken string) *GlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) Fields(s ...googleapi.Field) *GlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) IfNoneMatch(entityTag string) *GlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) Context(ctx context.Context) *GlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/vmExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.globalVmExtensionPolicies.listVmExtensions", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.globalVmExtensionPolicies.listVmExtensions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalListVmExtensionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) Do(opts ...googleapi.CallOption) (*GlobalListVmExtensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalListVmExtensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.globalVmExtensionPolicies.listVmExtensions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *GlobalVmExtensionPoliciesListVmExtensionsCall) Pages(ctx context.Context, f func(*GlobalListVmExtensionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -48603,153 +51831,6 @@ func (c *InstancesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*Tes
 	return ret, nil
 }
 
-type InstancesTroubleshootCall struct {
-	s          *Service
-	project    string
-	zone       string
-	instance   string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Troubleshoot: Initiates diagnostic troubleshooting on the specified
-// instance.
-// This operation cannot be cancelled.
-//
-// - instance: Name of the instance scoping this request.
-// - project: Project ID for this request.
-// - zone: The name of the zone for this request.
-func (r *InstancesService) Troubleshoot(project string, zone string, instance string) *InstancesTroubleshootCall {
-	c := &InstancesTroubleshootCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.zone = zone
-	c.instance = instance
-	return c
-}
-
-// ParamsEndTime sets the optional parameter "params.endTime": Input only.
-// Timestamp representing the end of the troubleshooting window
-// in RFC3339
-// text format. If omitted, defaults to 'now'.
-func (c *InstancesTroubleshootCall) ParamsEndTime(paramsEndTime string) *InstancesTroubleshootCall {
-	c.urlParams_.Set("params.endTime", paramsEndTime)
-	return c
-}
-
-// ParamsStartTime sets the optional parameter "params.startTime": Input only.
-// Timestamp representing the beginning of the troubleshooting window
-// in RFC3339
-// text format. If omitted, defaults to the last 12 hours.
-func (c *InstancesTroubleshootCall) ParamsStartTime(paramsStartTime string) *InstancesTroubleshootCall {
-	c.urlParams_.Set("params.startTime", paramsStartTime)
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so
-// that if you must retry your request, the server will know to ignore
-// the
-// request if it has already been completed.
-//
-// For example, consider a situation where you make an initial request and
-// the request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This
-// prevents clients from accidentally creating duplicate commitments.
-//
-// The request ID must be
-// a valid UUID with the exception that zero UUID is not
-// supported
-// (00000000-0000-0000-0000-000000000000).
-func (c *InstancesTroubleshootCall) RequestId(requestId string) *InstancesTroubleshootCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *InstancesTroubleshootCall) Fields(s ...googleapi.Field) *InstancesTroubleshootCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *InstancesTroubleshootCall) Context(ctx context.Context) *InstancesTroubleshootCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *InstancesTroubleshootCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *InstancesTroubleshootCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/zones/{zone}/instances/{instance}/troubleshoot")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":  c.project,
-		"zone":     c.zone,
-		"instance": c.instance,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.instances.troubleshoot", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.instances.troubleshoot" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *InstancesTroubleshootCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.instances.troubleshoot", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type InstancesUpdateCall struct {
 	s          *Service
 	project    string
@@ -48799,6 +51880,10 @@ func (c *InstancesUpdateCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesUp
 //	"NO_EFFECT" - No changes can be made to the instance.
 //	"REFRESH" - The instance will not restart.
 //	"RESTART" - The instance will restart, potentially on a different host.
+//	"RESTART_IN_PLACE" - The instance will restart on the same host. Data on
+//
+// all local SSDs
+// will be preserved.
 func (c *InstancesUpdateCall) MinimalAction(minimalAction string) *InstancesUpdateCall {
 	c.urlParams_.Set("minimalAction", minimalAction)
 	return c
@@ -48818,6 +51903,10 @@ func (c *InstancesUpdateCall) MinimalAction(minimalAction string) *InstancesUpda
 //	"NO_EFFECT" - No changes can be made to the instance.
 //	"REFRESH" - The instance will not restart.
 //	"RESTART" - The instance will restart, potentially on a different host.
+//	"RESTART_IN_PLACE" - The instance will restart on the same host. Data on
+//
+// all local SSDs
+// will be preserved.
 func (c *InstancesUpdateCall) MostDisruptiveAllowedAction(mostDisruptiveAllowedAction string) *InstancesUpdateCall {
 	c.urlParams_.Set("mostDisruptiveAllowedAction", mostDisruptiveAllowedAction)
 	return c
@@ -70062,6 +73151,138 @@ func (c *NetworksSwitchToCustomModeCall) Do(opts ...googleapi.CallOption) (*Oper
 	return ret, nil
 }
 
+type NetworksUpdateNetworkProfileCall struct {
+	s                                   *Service
+	project                             string
+	network                             string
+	networksupdatenetworkprofilerequest *NetworksUpdateNetworkProfileRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// UpdateNetworkProfile: Updates the network profile of the specified
+// network.
+// Currently only the following operations are supported:
+//   - Removing a Regionally Bound Network Profile
+//
+// - network: Name of the network resource to update the network profile for.
+// - project: Project ID for this request.
+func (r *NetworksService) UpdateNetworkProfile(project string, network string, networksupdatenetworkprofilerequest *NetworksUpdateNetworkProfileRequest) *NetworksUpdateNetworkProfileCall {
+	c := &NetworksUpdateNetworkProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.network = network
+	c.networksupdatenetworkprofilerequest = networksupdatenetworkprofilerequest
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *NetworksUpdateNetworkProfileCall) RequestId(requestId string) *NetworksUpdateNetworkProfileCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *NetworksUpdateNetworkProfileCall) Fields(s ...googleapi.Field) *NetworksUpdateNetworkProfileCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *NetworksUpdateNetworkProfileCall) Context(ctx context.Context) *NetworksUpdateNetworkProfileCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *NetworksUpdateNetworkProfileCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *NetworksUpdateNetworkProfileCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.networksupdatenetworkprofilerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/networks/{network}/updateNetworkProfile")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project": c.project,
+		"network": c.network,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.networks.updateNetworkProfile", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.networks.updateNetworkProfile" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *NetworksUpdateNetworkProfileCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.networks.updateNetworkProfile", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type NetworksUpdatePeeringCall struct {
 	s                            *Service
 	project                      string
@@ -74385,6 +77606,1392 @@ func (c *NodeTypesListCall) Pages(ctx context.Context, f func(*NodeTypeList) err
 	}
 }
 
+type OrganizationGlobalVmExtensionPoliciesAggregatedListCall struct {
+	s            *Service
+	organization string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AggregatedList: Retrieves the list of all organization level VM Extension
+// Policy resources
+// available to the specified organization.
+//
+// To prevent failure, it's recommended that you set the
+// `returnPartialSuccess` parameter to `true`.
+//
+// - organization: Organization ID for this request.
+func (r *OrganizationGlobalVmExtensionPoliciesService) AggregatedList(organization string) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c := &OrganizationGlobalVmExtensionPoliciesAggregatedListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) Filter(filter string) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// IncludeAllScopes sets the optional parameter "includeAllScopes": Indicates
+// whether every visible scope for each scope type (zone, region,
+// global) should be included in the response. For new resource types
+// added
+// after this field, the flag has no effect as new resource types will
+// always
+// include every visible scope for each scope type in response. For
+// resource
+// types which predate this field, if this flag is omitted or false,
+// only
+// scopes of the scope types where the resource type is expected to be
+// found
+// will be included.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) IncludeAllScopes(includeAllScopes bool) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("includeAllScopes", fmt.Sprint(includeAllScopes))
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) MaxResults(maxResults int64) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) OrderBy(orderBy string) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) PageToken(pageToken string) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ServiceProjectNumber sets the optional parameter "serviceProjectNumber": The
+// Shared VPC service project id or service project number for which
+// aggregated list request is invoked for subnetworks list-usable api.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) ServiceProjectNumber(serviceProjectNumber int64) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("serviceProjectNumber", fmt.Sprint(serviceProjectNumber))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) Fields(s ...googleapi.Field) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) IfNoneMatch(entityTag string) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) Context(ctx context.Context) *OrganizationGlobalVmExtensionPoliciesAggregatedListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/aggregated/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.aggregatedList", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationGlobalVmExtensionPolicies.aggregatedList" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *OrganizationVmExtensionPolicyAggregatedListResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) Do(opts ...googleapi.CallOption) (*OrganizationVmExtensionPolicyAggregatedListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &OrganizationVmExtensionPolicyAggregatedListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.aggregatedList", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationGlobalVmExtensionPoliciesAggregatedListCall) Pages(ctx context.Context, f func(*OrganizationVmExtensionPolicyAggregatedListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationGlobalVmExtensionPoliciesDeleteCall struct {
+	s                                                   *Service
+	organization                                        string
+	globalVmExtensionPolicy                             string
+	globalvmextensionpolicyrolloutoperationrolloutinput *GlobalVmExtensionPolicyRolloutOperationRolloutInput
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// Delete: Purge scoped resources (zonal policies) from an organization level
+// global
+// VM extension policy, and then delete the global VM extension policy.
+// Purge
+// of the scoped resources is a pre-condition of the global VM extension
+// policy deletion. The deletion of the global VM extension policy
+// happens
+// after the purge rollout is done, so it's not a part of the LRO. It's
+// an
+// automatic process that triggers in the backend.
+//
+//   - globalVmExtensionPolicy: Name of the global VM extension policy to purge
+//     scoped resources for.
+//   - organization: Organization ID for this request.
+func (r *OrganizationGlobalVmExtensionPoliciesService) Delete(organization string, globalVmExtensionPolicy string, globalvmextensionpolicyrolloutoperationrolloutinput *GlobalVmExtensionPolicyRolloutOperationRolloutInput) *OrganizationGlobalVmExtensionPoliciesDeleteCall {
+	c := &OrganizationGlobalVmExtensionPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.globalVmExtensionPolicy = globalVmExtensionPolicy
+	c.globalvmextensionpolicyrolloutoperationrolloutinput = globalvmextensionpolicyrolloutoperationrolloutinput
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationGlobalVmExtensionPoliciesDeleteCall) RequestId(requestId string) *OrganizationGlobalVmExtensionPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationGlobalVmExtensionPoliciesDeleteCall) Fields(s ...googleapi.Field) *OrganizationGlobalVmExtensionPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationGlobalVmExtensionPoliciesDeleteCall) Context(ctx context.Context) *OrganizationGlobalVmExtensionPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationGlobalVmExtensionPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationGlobalVmExtensionPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.globalvmextensionpolicyrolloutoperationrolloutinput)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/global/vmExtensionPolicies/{globalVmExtensionPolicy}/delete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization":            c.organization,
+		"globalVmExtensionPolicy": c.globalVmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.delete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationGlobalVmExtensionPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationGlobalVmExtensionPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationGlobalVmExtensionPoliciesGetCall struct {
+	s                       *Service
+	organization            string
+	globalVmExtensionPolicy string
+	urlParams_              gensupport.URLParams
+	ifNoneMatch_            string
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Get: Gets details of an organization level GlobalVmExtensionPolicy.
+//
+//   - globalVmExtensionPolicy: Name of the GlobalVmExtensionPolicy resource to
+//     return.
+//   - organization: Organization ID for this request.
+func (r *OrganizationGlobalVmExtensionPoliciesService) Get(organization string, globalVmExtensionPolicy string) *OrganizationGlobalVmExtensionPoliciesGetCall {
+	c := &OrganizationGlobalVmExtensionPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.globalVmExtensionPolicy = globalVmExtensionPolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationGlobalVmExtensionPoliciesGetCall) Fields(s ...googleapi.Field) *OrganizationGlobalVmExtensionPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationGlobalVmExtensionPoliciesGetCall) IfNoneMatch(entityTag string) *OrganizationGlobalVmExtensionPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationGlobalVmExtensionPoliciesGetCall) Context(ctx context.Context) *OrganizationGlobalVmExtensionPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationGlobalVmExtensionPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationGlobalVmExtensionPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/global/vmExtensionPolicies/{globalVmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization":            c.organization,
+		"globalVmExtensionPolicy": c.globalVmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationGlobalVmExtensionPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalVmExtensionPolicy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationGlobalVmExtensionPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GlobalVmExtensionPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalVmExtensionPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall struct {
+	s             *Service
+	organization  string
+	extensionName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// GetVmExtension: Retrieves details of a specific VM extension.
+//
+// - extensionName: Name of the VM extension for this request.
+// - organization: Organization ID for this request.
+func (r *OrganizationGlobalVmExtensionPoliciesService) GetVmExtension(organization string, extensionName string) *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall {
+	c := &OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.extensionName = extensionName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall) Fields(s ...googleapi.Field) *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall) IfNoneMatch(entityTag string) *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall) Context(ctx context.Context) *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/global/vmExtensions/{extensionName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization":  c.organization,
+		"extensionName": c.extensionName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.getVmExtension", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationGlobalVmExtensionPolicies.getVmExtension" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalVmExtension.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationGlobalVmExtensionPoliciesGetVmExtensionCall) Do(opts ...googleapi.CallOption) (*GlobalVmExtension, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalVmExtension{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.getVmExtension", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationGlobalVmExtensionPoliciesInsertCall struct {
+	s                       *Service
+	organization            string
+	globalvmextensionpolicy *GlobalVmExtensionPolicy
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Insert: Creates a new organization level GlobalVmExtensionPolicy.
+//
+// - organization: Organization ID for this request.
+func (r *OrganizationGlobalVmExtensionPoliciesService) Insert(organization string, globalvmextensionpolicy *GlobalVmExtensionPolicy) *OrganizationGlobalVmExtensionPoliciesInsertCall {
+	c := &OrganizationGlobalVmExtensionPoliciesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.globalvmextensionpolicy = globalvmextensionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationGlobalVmExtensionPoliciesInsertCall) RequestId(requestId string) *OrganizationGlobalVmExtensionPoliciesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationGlobalVmExtensionPoliciesInsertCall) Fields(s ...googleapi.Field) *OrganizationGlobalVmExtensionPoliciesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationGlobalVmExtensionPoliciesInsertCall) Context(ctx context.Context) *OrganizationGlobalVmExtensionPoliciesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationGlobalVmExtensionPoliciesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationGlobalVmExtensionPoliciesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.globalvmextensionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/global/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationGlobalVmExtensionPolicies.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationGlobalVmExtensionPoliciesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationGlobalVmExtensionPoliciesListCall struct {
+	s            *Service
+	organization string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists organization level GlobalVmExtensionPolicies.
+//
+// - organization: Organization ID for this request.
+func (r *OrganizationGlobalVmExtensionPoliciesService) List(organization string) *OrganizationGlobalVmExtensionPoliciesListCall {
+	c := &OrganizationGlobalVmExtensionPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) Filter(filter string) *OrganizationGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) MaxResults(maxResults int64) *OrganizationGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) OrderBy(orderBy string) *OrganizationGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) PageToken(pageToken string) *OrganizationGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) Fields(s ...googleapi.Field) *OrganizationGlobalVmExtensionPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) IfNoneMatch(entityTag string) *OrganizationGlobalVmExtensionPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) Context(ctx context.Context) *OrganizationGlobalVmExtensionPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/global/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationGlobalVmExtensionPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalVmExtensionPolicyList.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) Do(opts ...googleapi.CallOption) (*GlobalVmExtensionPolicyList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalVmExtensionPolicyList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationGlobalVmExtensionPoliciesListCall) Pages(ctx context.Context, f func(*GlobalVmExtensionPolicyList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall struct {
+	s            *Service
+	organization string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListVmExtensions: Lists all VM extensions within an organization.
+// This is a read-only API.
+//
+// - organization: Organization ID for this request.
+func (r *OrganizationGlobalVmExtensionPoliciesService) ListVmExtensions(organization string) *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c := &OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) Filter(filter string) *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) MaxResults(maxResults int64) *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) OrderBy(orderBy string) *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) PageToken(pageToken string) *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) Fields(s ...googleapi.Field) *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) IfNoneMatch(entityTag string) *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) Context(ctx context.Context) *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/global/vmExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.listVmExtensions", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationGlobalVmExtensionPolicies.listVmExtensions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GlobalListVmExtensionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) Do(opts ...googleapi.CallOption) (*GlobalListVmExtensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GlobalListVmExtensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.listVmExtensions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationGlobalVmExtensionPoliciesListVmExtensionsCall) Pages(ctx context.Context, f func(*GlobalListVmExtensionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationGlobalVmExtensionPoliciesUpdateCall struct {
+	s                       *Service
+	organization            string
+	globalVmExtensionPolicy string
+	globalvmextensionpolicy *GlobalVmExtensionPolicy
+	urlParams_              gensupport.URLParams
+	ctx_                    context.Context
+	header_                 http.Header
+}
+
+// Update: Updates an organization level GlobalVmExtensionPolicy.
+//
+// - globalVmExtensionPolicy: Name of the global VM extension policy to update.
+// - organization: Organization ID for this request.
+func (r *OrganizationGlobalVmExtensionPoliciesService) Update(organization string, globalVmExtensionPolicy string, globalvmextensionpolicy *GlobalVmExtensionPolicy) *OrganizationGlobalVmExtensionPoliciesUpdateCall {
+	c := &OrganizationGlobalVmExtensionPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.globalVmExtensionPolicy = globalVmExtensionPolicy
+	c.globalvmextensionpolicy = globalvmextensionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationGlobalVmExtensionPoliciesUpdateCall) RequestId(requestId string) *OrganizationGlobalVmExtensionPoliciesUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationGlobalVmExtensionPoliciesUpdateCall) Fields(s ...googleapi.Field) *OrganizationGlobalVmExtensionPoliciesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationGlobalVmExtensionPoliciesUpdateCall) Context(ctx context.Context) *OrganizationGlobalVmExtensionPoliciesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationGlobalVmExtensionPoliciesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationGlobalVmExtensionPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.globalvmextensionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/global/vmExtensionPolicies/{globalVmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization":            c.organization,
+		"globalVmExtensionPolicy": c.globalVmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationGlobalVmExtensionPolicies.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationGlobalVmExtensionPoliciesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationGlobalVmExtensionPolicies.update", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type OrganizationSecurityPoliciesAddAssociationCall struct {
 	s                         *Service
 	securityPolicy            string
@@ -76689,6 +81296,1133 @@ func (c *OrganizationSecurityPoliciesRemoveRuleCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationSecurityPolicies.removeRule", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationZoneVmExtensionPoliciesDeleteCall struct {
+	s                 *Service
+	organization      string
+	zone              string
+	vmExtensionPolicy string
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Delete: Deletes a specified zone VM extension policy within an organization.
+//
+// - organization: Organization ID for this request.
+// - vmExtensionPolicy: Name of the zone VM extension policy to delete.
+// - zone: Name of the zone for this request.
+func (r *OrganizationZoneVmExtensionPoliciesService) Delete(organization string, zone string, vmExtensionPolicy string) *OrganizationZoneVmExtensionPoliciesDeleteCall {
+	c := &OrganizationZoneVmExtensionPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.zone = zone
+	c.vmExtensionPolicy = vmExtensionPolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationZoneVmExtensionPoliciesDeleteCall) RequestId(requestId string) *OrganizationZoneVmExtensionPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationZoneVmExtensionPoliciesDeleteCall) Fields(s ...googleapi.Field) *OrganizationZoneVmExtensionPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationZoneVmExtensionPoliciesDeleteCall) Context(ctx context.Context) *OrganizationZoneVmExtensionPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationZoneVmExtensionPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationZoneVmExtensionPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization":      c.organization,
+		"zone":              c.zone,
+		"vmExtensionPolicy": c.vmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationZoneVmExtensionPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationZoneVmExtensionPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationZoneVmExtensionPoliciesGetCall struct {
+	s                 *Service
+	organization      string
+	zone              string
+	vmExtensionPolicy string
+	urlParams_        gensupport.URLParams
+	ifNoneMatch_      string
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Get: Retrieves details of a specific zone VM extension policy within
+// an
+// organization.
+//
+// - organization: Organization ID for this request.
+// - vmExtensionPolicy: Name of the VM extension policy resource to return.
+// - zone: Name of the zone for this request.
+func (r *OrganizationZoneVmExtensionPoliciesService) Get(organization string, zone string, vmExtensionPolicy string) *OrganizationZoneVmExtensionPoliciesGetCall {
+	c := &OrganizationZoneVmExtensionPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.zone = zone
+	c.vmExtensionPolicy = vmExtensionPolicy
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationZoneVmExtensionPoliciesGetCall) Fields(s ...googleapi.Field) *OrganizationZoneVmExtensionPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationZoneVmExtensionPoliciesGetCall) IfNoneMatch(entityTag string) *OrganizationZoneVmExtensionPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationZoneVmExtensionPoliciesGetCall) Context(ctx context.Context) *OrganizationZoneVmExtensionPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationZoneVmExtensionPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationZoneVmExtensionPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization":      c.organization,
+		"zone":              c.zone,
+		"vmExtensionPolicy": c.vmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationZoneVmExtensionPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *VmExtensionPolicy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationZoneVmExtensionPoliciesGetCall) Do(opts ...googleapi.CallOption) (*VmExtensionPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VmExtensionPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationZoneVmExtensionPoliciesGetVmExtensionCall struct {
+	s             *Service
+	organization  string
+	zone          string
+	extensionName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// GetVmExtension: Retrieves details of a specific VM extension within an
+// organization.
+//
+// - extensionName: Name of the VM extension for this request.
+// - organization: Organization ID for this request.
+// - zone: Name of the zone for this request.
+func (r *OrganizationZoneVmExtensionPoliciesService) GetVmExtension(organization string, zone string, extensionName string) *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall {
+	c := &OrganizationZoneVmExtensionPoliciesGetVmExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.zone = zone
+	c.extensionName = extensionName
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall) Fields(s ...googleapi.Field) *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall) IfNoneMatch(entityTag string) *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall) Context(ctx context.Context) *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/zones/{zone}/vmExtensions/{extensionName}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization":  c.organization,
+		"zone":          c.zone,
+		"extensionName": c.extensionName,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.getVmExtension", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationZoneVmExtensionPolicies.getVmExtension" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *VmExtension.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationZoneVmExtensionPoliciesGetVmExtensionCall) Do(opts ...googleapi.CallOption) (*VmExtension, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VmExtension{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.getVmExtension", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationZoneVmExtensionPoliciesInsertCall struct {
+	s                 *Service
+	organization      string
+	zone              string
+	vmextensionpolicy *VmExtensionPolicy
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Insert: Creates a new zone-level VM extension policy within an organization.
+//
+// - organization: Organization ID for this request.
+// - zone: Name of the zone for this request.
+func (r *OrganizationZoneVmExtensionPoliciesService) Insert(organization string, zone string, vmextensionpolicy *VmExtensionPolicy) *OrganizationZoneVmExtensionPoliciesInsertCall {
+	c := &OrganizationZoneVmExtensionPoliciesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.zone = zone
+	c.vmextensionpolicy = vmextensionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationZoneVmExtensionPoliciesInsertCall) RequestId(requestId string) *OrganizationZoneVmExtensionPoliciesInsertCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationZoneVmExtensionPoliciesInsertCall) Fields(s ...googleapi.Field) *OrganizationZoneVmExtensionPoliciesInsertCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationZoneVmExtensionPoliciesInsertCall) Context(ctx context.Context) *OrganizationZoneVmExtensionPoliciesInsertCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationZoneVmExtensionPoliciesInsertCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationZoneVmExtensionPoliciesInsertCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.vmextensionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/zones/{zone}/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+		"zone":         c.zone,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationZoneVmExtensionPolicies.insert" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationZoneVmExtensionPoliciesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationZoneVmExtensionPoliciesListCall struct {
+	s            *Service
+	organization string
+	zone         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all VM extension policies within a specific zone for an
+// organization.
+//
+// - organization: Organization ID for this request.
+// - zone: Name of the zone for this request.
+func (r *OrganizationZoneVmExtensionPoliciesService) List(organization string, zone string) *OrganizationZoneVmExtensionPoliciesListCall {
+	c := &OrganizationZoneVmExtensionPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) Filter(filter string) *OrganizationZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *OrganizationZoneVmExtensionPoliciesListCall) MaxResults(maxResults int64) *OrganizationZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) OrderBy(orderBy string) *OrganizationZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) PageToken(pageToken string) *OrganizationZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) Fields(s ...googleapi.Field) *OrganizationZoneVmExtensionPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) IfNoneMatch(entityTag string) *OrganizationZoneVmExtensionPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) Context(ctx context.Context) *OrganizationZoneVmExtensionPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationZoneVmExtensionPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/zones/{zone}/vmExtensionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+		"zone":         c.zone,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationZoneVmExtensionPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *VmExtensionPolicyList.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) Do(opts ...googleapi.CallOption) (*VmExtensionPolicyList, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &VmExtensionPolicyList{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationZoneVmExtensionPoliciesListCall) Pages(ctx context.Context, f func(*VmExtensionPolicyList) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationZoneVmExtensionPoliciesListVmExtensionsCall struct {
+	s            *Service
+	organization string
+	zone         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListVmExtensions: Lists all VM extensions within a specific zone for an
+// organization.
+// This is a read-only API.
+//
+// - organization: Organization ID for this request.
+// - zone: Name of the zone for this request.
+func (r *OrganizationZoneVmExtensionPoliciesService) ListVmExtensions(organization string, zone string) *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall {
+	c := &OrganizationZoneVmExtensionPoliciesListVmExtensionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.zone = zone
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. Most
+// Compute resources support two types of filter expressions:
+// expressions that support regular expressions and expressions that follow
+// API improvement proposal AIP-160.
+// These two types of filter expressions cannot be mixed in one request.
+//
+// If you want to use AIP-160, your expression must specify the field name,
+// an
+// operator, and the value that you want to use for filtering. The value
+// must be a string, a number, or a boolean. The operator
+// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
+//
+// For example, if you are filtering Compute Engine instances, you can
+// exclude instances named `example-instance` by specifying
+// `name != example-instance`.
+//
+// The `:*` comparison can be used to test whether a key has been defined.
+// For example, to find all objects with `owner` label
+// use:
+// ```
+// labels.owner:*
+// ```
+//
+// You can also filter nested fields. For example, you could
+// specify
+// `scheduling.automaticRestart = false` to include instances only
+// if they are not scheduled for automatic restarts. You can use filtering
+// on nested fields to filter based onresource labels.
+//
+// To filter on multiple expressions, provide each separate expression
+// within
+// parentheses. For example:
+// ```
+// (scheduling.automaticRestart = true)
+// (cpuPlatform = "Intel Skylake")
+// ```
+// By default, each expression is an `AND` expression. However, you
+// can include `AND` and `OR` expressions explicitly.
+// For example:
+// ```
+// (cpuPlatform = "Intel Skylake") OR
+// (cpuPlatform = "Intel Broadwell") AND
+// (scheduling.automaticRestart = true)
+// ```
+//
+// If you want to use a regular expression, use the `eq` (equal) or `ne`
+// (not equal) operator against a single un-parenthesized expression with
+// or
+// without quotes or against multiple parenthesized expressions.
+// Examples:
+//
+// `fieldname eq unquoted literal`
+// `fieldname eq 'single quoted literal'`
+// `fieldname eq "double quoted literal"
+// `(fieldname1 eq literal) (fieldname2 ne "literal")`
+//
+// The literal value is interpreted as a regular expression using GoogleRE2
+// library syntax.
+// The literal value must match the entire field.
+//
+// For example, to filter for instances that do not end with name
+// "instance",
+// you would use `name ne .*instance`.
+//
+// You cannot combine constraints on multiple fields using regular
+// expressions.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) Filter(filter string) *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": The maximum number of
+// results per page that should be returned.
+// If the number of available results is larger than `maxResults`,
+// Compute Engine returns a `nextPageToken` that can be used to get
+// the next page of results in subsequent list requests. Acceptable values
+// are
+// `0` to `500`, inclusive. (Default: `500`)
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) MaxResults(maxResults int64) *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, results
+// are returned in alphanumerical order based on the resource name.
+//
+// You can also sort results in descending order based on the
+// creation
+// timestamp using `orderBy="creationTimestamp desc". This sorts
+// results based on the `creationTimestamp` field in
+// reverse chronological order (newest result first). Use this to
+// sort
+// resources like operations so that the newest operation is returned
+// first.
+//
+// Currently, only sorting by `name` or
+// `creationTimestamp desc` is supported.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) OrderBy(orderBy string) *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Specifies a page token to
+// use. Set `pageToken` to the
+// `nextPageToken` returned by a previous list request to get
+// the next page of results.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) PageToken(pageToken string) *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) Fields(s ...googleapi.Field) *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) IfNoneMatch(entityTag string) *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) Context(ctx context.Context) *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/zones/{zone}/vmExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization": c.organization,
+		"zone":         c.zone,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.listVmExtensions", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationZoneVmExtensionPolicies.listVmExtensions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListVmExtensionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) Do(opts ...googleapi.CallOption) (*ListVmExtensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListVmExtensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.listVmExtensions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationZoneVmExtensionPoliciesListVmExtensionsCall) Pages(ctx context.Context, f func(*ListVmExtensionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type OrganizationZoneVmExtensionPoliciesUpdateCall struct {
+	s                 *Service
+	organization      string
+	zone              string
+	vmExtensionPolicy string
+	vmextensionpolicy *VmExtensionPolicy
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Update: Modifies an existing zone VM extension policy within an
+// organization.
+//
+// - organization: Organization ID for this request.
+// - vmExtensionPolicy: Name of the zone VM extension policy to update.
+// - zone: Name of the zone for this request.
+func (r *OrganizationZoneVmExtensionPoliciesService) Update(organization string, zone string, vmExtensionPolicy string, vmextensionpolicy *VmExtensionPolicy) *OrganizationZoneVmExtensionPoliciesUpdateCall {
+	c := &OrganizationZoneVmExtensionPoliciesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.organization = organization
+	c.zone = zone
+	c.vmExtensionPolicy = vmExtensionPolicy
+	c.vmextensionpolicy = vmextensionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so
+// that if you must retry your request, the server will know to ignore
+// the
+// request if it has already been completed.
+//
+// For example, consider a situation where you make an initial request and
+// the request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This
+// prevents clients from accidentally creating duplicate commitments.
+//
+// The request ID must be
+// a valid UUID with the exception that zero UUID is not
+// supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *OrganizationZoneVmExtensionPoliciesUpdateCall) RequestId(requestId string) *OrganizationZoneVmExtensionPoliciesUpdateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationZoneVmExtensionPoliciesUpdateCall) Fields(s ...googleapi.Field) *OrganizationZoneVmExtensionPoliciesUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationZoneVmExtensionPoliciesUpdateCall) Context(ctx context.Context) *OrganizationZoneVmExtensionPoliciesUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationZoneVmExtensionPoliciesUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationZoneVmExtensionPoliciesUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.vmextensionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+organization}/zones/{zone}/vmExtensionPolicies/{vmExtensionPolicy}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"organization":      c.organization,
+		"zone":              c.zone,
+		"vmExtensionPolicy": c.vmExtensionPolicy,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.update", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "compute.organizationZoneVmExtensionPolicies.update" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *OrganizationZoneVmExtensionPoliciesUpdateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.organizationZoneVmExtensionPolicies.update", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -80453,996 +86187,5 @@ func (c *ProjectsSetUsageExportBucketCall) Do(opts ...googleapi.CallOption) (*Op
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.projects.setUsageExportBucket", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type PublicAdvertisedPrefixesAnnounceCall struct {
-	s                      *Service
-	project                string
-	publicAdvertisedPrefix string
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Announce: Announces the specified PublicAdvertisedPrefix
-//
-//   - project: Project ID for this request.
-//   - publicAdvertisedPrefix: The name of the public advertised prefix. It
-//     should comply with RFC1035.
-func (r *PublicAdvertisedPrefixesService) Announce(project string, publicAdvertisedPrefix string) *PublicAdvertisedPrefixesAnnounceCall {
-	c := &PublicAdvertisedPrefixesAnnounceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.publicAdvertisedPrefix = publicAdvertisedPrefix
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so
-// that if you must retry your request, the server will know to ignore
-// the
-// request if it has already been completed.
-//
-// For example, consider a situation where you make an initial request and
-// the request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This
-// prevents clients from accidentally creating duplicate commitments.
-//
-// The request ID must be
-// a valid UUID with the exception that zero UUID is not
-// supported
-// (00000000-0000-0000-0000-000000000000).
-func (c *PublicAdvertisedPrefixesAnnounceCall) RequestId(requestId string) *PublicAdvertisedPrefixesAnnounceCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PublicAdvertisedPrefixesAnnounceCall) Fields(s ...googleapi.Field) *PublicAdvertisedPrefixesAnnounceCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PublicAdvertisedPrefixesAnnounceCall) Context(ctx context.Context) *PublicAdvertisedPrefixesAnnounceCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PublicAdvertisedPrefixesAnnounceCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PublicAdvertisedPrefixesAnnounceCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/publicAdvertisedPrefixes/{publicAdvertisedPrefix}/announce")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":                c.project,
-		"publicAdvertisedPrefix": c.publicAdvertisedPrefix,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.announce", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.publicAdvertisedPrefixes.announce" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PublicAdvertisedPrefixesAnnounceCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.announce", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type PublicAdvertisedPrefixesDeleteCall struct {
-	s                      *Service
-	project                string
-	publicAdvertisedPrefix string
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Delete: Deletes the specified PublicAdvertisedPrefix
-//
-//   - project: Project ID for this request.
-//   - publicAdvertisedPrefix: Name of the PublicAdvertisedPrefix resource to
-//     delete.
-func (r *PublicAdvertisedPrefixesService) Delete(project string, publicAdvertisedPrefix string) *PublicAdvertisedPrefixesDeleteCall {
-	c := &PublicAdvertisedPrefixesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.publicAdvertisedPrefix = publicAdvertisedPrefix
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so
-// that if you must retry your request, the server will know to ignore
-// the
-// request if it has already been completed.
-//
-// For example, consider a situation where you make an initial request and
-// the request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This
-// prevents clients from accidentally creating duplicate commitments.
-//
-// The request ID must be
-// a valid UUID with the exception that zero UUID is not
-// supported
-// (00000000-0000-0000-0000-000000000000).
-func (c *PublicAdvertisedPrefixesDeleteCall) RequestId(requestId string) *PublicAdvertisedPrefixesDeleteCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PublicAdvertisedPrefixesDeleteCall) Fields(s ...googleapi.Field) *PublicAdvertisedPrefixesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PublicAdvertisedPrefixesDeleteCall) Context(ctx context.Context) *PublicAdvertisedPrefixesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PublicAdvertisedPrefixesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PublicAdvertisedPrefixesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/publicAdvertisedPrefixes/{publicAdvertisedPrefix}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":                c.project,
-		"publicAdvertisedPrefix": c.publicAdvertisedPrefix,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.publicAdvertisedPrefixes.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PublicAdvertisedPrefixesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type PublicAdvertisedPrefixesGetCall struct {
-	s                      *Service
-	project                string
-	publicAdvertisedPrefix string
-	urlParams_             gensupport.URLParams
-	ifNoneMatch_           string
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Get: Returns the specified PublicAdvertisedPrefix resource.
-//
-//   - project: Project ID for this request.
-//   - publicAdvertisedPrefix: Name of the PublicAdvertisedPrefix resource to
-//     return.
-func (r *PublicAdvertisedPrefixesService) Get(project string, publicAdvertisedPrefix string) *PublicAdvertisedPrefixesGetCall {
-	c := &PublicAdvertisedPrefixesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.publicAdvertisedPrefix = publicAdvertisedPrefix
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PublicAdvertisedPrefixesGetCall) Fields(s ...googleapi.Field) *PublicAdvertisedPrefixesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *PublicAdvertisedPrefixesGetCall) IfNoneMatch(entityTag string) *PublicAdvertisedPrefixesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PublicAdvertisedPrefixesGetCall) Context(ctx context.Context) *PublicAdvertisedPrefixesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PublicAdvertisedPrefixesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PublicAdvertisedPrefixesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/publicAdvertisedPrefixes/{publicAdvertisedPrefix}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":                c.project,
-		"publicAdvertisedPrefix": c.publicAdvertisedPrefix,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.publicAdvertisedPrefixes.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *PublicAdvertisedPrefix.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *PublicAdvertisedPrefixesGetCall) Do(opts ...googleapi.CallOption) (*PublicAdvertisedPrefix, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &PublicAdvertisedPrefix{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type PublicAdvertisedPrefixesInsertCall struct {
-	s                      *Service
-	project                string
-	publicadvertisedprefix *PublicAdvertisedPrefix
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Insert: Creates a PublicAdvertisedPrefix in the specified project
-// using the parameters that are included in the request.
-//
-// - project: Project ID for this request.
-func (r *PublicAdvertisedPrefixesService) Insert(project string, publicadvertisedprefix *PublicAdvertisedPrefix) *PublicAdvertisedPrefixesInsertCall {
-	c := &PublicAdvertisedPrefixesInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.publicadvertisedprefix = publicadvertisedprefix
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so
-// that if you must retry your request, the server will know to ignore
-// the
-// request if it has already been completed.
-//
-// For example, consider a situation where you make an initial request and
-// the request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This
-// prevents clients from accidentally creating duplicate commitments.
-//
-// The request ID must be
-// a valid UUID with the exception that zero UUID is not
-// supported
-// (00000000-0000-0000-0000-000000000000).
-func (c *PublicAdvertisedPrefixesInsertCall) RequestId(requestId string) *PublicAdvertisedPrefixesInsertCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PublicAdvertisedPrefixesInsertCall) Fields(s ...googleapi.Field) *PublicAdvertisedPrefixesInsertCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PublicAdvertisedPrefixesInsertCall) Context(ctx context.Context) *PublicAdvertisedPrefixesInsertCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PublicAdvertisedPrefixesInsertCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PublicAdvertisedPrefixesInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.publicadvertisedprefix)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/publicAdvertisedPrefixes")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.insert", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.publicAdvertisedPrefixes.insert" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PublicAdvertisedPrefixesInsertCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.insert", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type PublicAdvertisedPrefixesListCall struct {
-	s            *Service
-	project      string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists the PublicAdvertisedPrefixes for a project.
-//
-// - project: Project ID for this request.
-func (r *PublicAdvertisedPrefixesService) List(project string) *PublicAdvertisedPrefixesListCall {
-	c := &PublicAdvertisedPrefixesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	return c
-}
-
-// Filter sets the optional parameter "filter": A filter expression that
-// filters resources listed in the response. Most
-// Compute resources support two types of filter expressions:
-// expressions that support regular expressions and expressions that follow
-// API improvement proposal AIP-160.
-// These two types of filter expressions cannot be mixed in one request.
-//
-// If you want to use AIP-160, your expression must specify the field name,
-// an
-// operator, and the value that you want to use for filtering. The value
-// must be a string, a number, or a boolean. The operator
-// must be either `=`, `!=`, `>`, `<`, `<=`, `>=` or `:`.
-//
-// For example, if you are filtering Compute Engine instances, you can
-// exclude instances named `example-instance` by specifying
-// `name != example-instance`.
-//
-// The `:*` comparison can be used to test whether a key has been defined.
-// For example, to find all objects with `owner` label
-// use:
-// ```
-// labels.owner:*
-// ```
-//
-// You can also filter nested fields. For example, you could
-// specify
-// `scheduling.automaticRestart = false` to include instances only
-// if they are not scheduled for automatic restarts. You can use filtering
-// on nested fields to filter based onresource labels.
-//
-// To filter on multiple expressions, provide each separate expression
-// within
-// parentheses. For example:
-// ```
-// (scheduling.automaticRestart = true)
-// (cpuPlatform = "Intel Skylake")
-// ```
-// By default, each expression is an `AND` expression. However, you
-// can include `AND` and `OR` expressions explicitly.
-// For example:
-// ```
-// (cpuPlatform = "Intel Skylake") OR
-// (cpuPlatform = "Intel Broadwell") AND
-// (scheduling.automaticRestart = true)
-// ```
-//
-// If you want to use a regular expression, use the `eq` (equal) or `ne`
-// (not equal) operator against a single un-parenthesized expression with
-// or
-// without quotes or against multiple parenthesized expressions.
-// Examples:
-//
-// `fieldname eq unquoted literal`
-// `fieldname eq 'single quoted literal'`
-// `fieldname eq "double quoted literal"
-// `(fieldname1 eq literal) (fieldname2 ne "literal")`
-//
-// The literal value is interpreted as a regular expression using GoogleRE2
-// library syntax.
-// The literal value must match the entire field.
-//
-// For example, to filter for instances that do not end with name
-// "instance",
-// you would use `name ne .*instance`.
-//
-// You cannot combine constraints on multiple fields using regular
-// expressions.
-func (c *PublicAdvertisedPrefixesListCall) Filter(filter string) *PublicAdvertisedPrefixesListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// MaxResults sets the optional parameter "maxResults": The maximum number of
-// results per page that should be returned.
-// If the number of available results is larger than `maxResults`,
-// Compute Engine returns a `nextPageToken` that can be used to get
-// the next page of results in subsequent list requests. Acceptable values
-// are
-// `0` to `500`, inclusive. (Default: `500`)
-func (c *PublicAdvertisedPrefixesListCall) MaxResults(maxResults int64) *PublicAdvertisedPrefixesListCall {
-	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Sorts list results by a
-// certain order. By default, results
-// are returned in alphanumerical order based on the resource name.
-//
-// You can also sort results in descending order based on the
-// creation
-// timestamp using `orderBy="creationTimestamp desc". This sorts
-// results based on the `creationTimestamp` field in
-// reverse chronological order (newest result first). Use this to
-// sort
-// resources like operations so that the newest operation is returned
-// first.
-//
-// Currently, only sorting by `name` or
-// `creationTimestamp desc` is supported.
-func (c *PublicAdvertisedPrefixesListCall) OrderBy(orderBy string) *PublicAdvertisedPrefixesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": Specifies a page token to
-// use. Set `pageToken` to the
-// `nextPageToken` returned by a previous list request to get
-// the next page of results.
-func (c *PublicAdvertisedPrefixesListCall) PageToken(pageToken string) *PublicAdvertisedPrefixesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PublicAdvertisedPrefixesListCall) Fields(s ...googleapi.Field) *PublicAdvertisedPrefixesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *PublicAdvertisedPrefixesListCall) IfNoneMatch(entityTag string) *PublicAdvertisedPrefixesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PublicAdvertisedPrefixesListCall) Context(ctx context.Context) *PublicAdvertisedPrefixesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PublicAdvertisedPrefixesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PublicAdvertisedPrefixesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/publicAdvertisedPrefixes")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project": c.project,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.list", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.publicAdvertisedPrefixes.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *PublicAdvertisedPrefixList.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *PublicAdvertisedPrefixesListCall) Do(opts ...googleapi.CallOption) (*PublicAdvertisedPrefixList, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &PublicAdvertisedPrefixList{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.list", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *PublicAdvertisedPrefixesListCall) Pages(ctx context.Context, f func(*PublicAdvertisedPrefixList) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-type PublicAdvertisedPrefixesPatchCall struct {
-	s                      *Service
-	project                string
-	publicAdvertisedPrefix string
-	publicadvertisedprefix *PublicAdvertisedPrefix
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Patch: Patches the specified Router resource with the data included in
-// the
-// request. This method supportsPATCH
-// semantics and usesJSON merge
-// patch format and processing rules.
-//
-//   - project: Project ID for this request.
-//   - publicAdvertisedPrefix: Name of the PublicAdvertisedPrefix resource to
-//     patch.
-func (r *PublicAdvertisedPrefixesService) Patch(project string, publicAdvertisedPrefix string, publicadvertisedprefix *PublicAdvertisedPrefix) *PublicAdvertisedPrefixesPatchCall {
-	c := &PublicAdvertisedPrefixesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.publicAdvertisedPrefix = publicAdvertisedPrefix
-	c.publicadvertisedprefix = publicadvertisedprefix
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so
-// that if you must retry your request, the server will know to ignore
-// the
-// request if it has already been completed.
-//
-// For example, consider a situation where you make an initial request and
-// the request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This
-// prevents clients from accidentally creating duplicate commitments.
-//
-// The request ID must be
-// a valid UUID with the exception that zero UUID is not
-// supported
-// (00000000-0000-0000-0000-000000000000).
-func (c *PublicAdvertisedPrefixesPatchCall) RequestId(requestId string) *PublicAdvertisedPrefixesPatchCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PublicAdvertisedPrefixesPatchCall) Fields(s ...googleapi.Field) *PublicAdvertisedPrefixesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PublicAdvertisedPrefixesPatchCall) Context(ctx context.Context) *PublicAdvertisedPrefixesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PublicAdvertisedPrefixesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PublicAdvertisedPrefixesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_, "x-goog-api-version", "2026-10-01-preview")
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.publicadvertisedprefix)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/publicAdvertisedPrefixes/{publicAdvertisedPrefix}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":                c.project,
-		"publicAdvertisedPrefix": c.publicAdvertisedPrefix,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.publicAdvertisedPrefixes.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PublicAdvertisedPrefixesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type PublicAdvertisedPrefixesWithdrawCall struct {
-	s                      *Service
-	project                string
-	publicAdvertisedPrefix string
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Withdraw: Withdraws the specified PublicAdvertisedPrefix
-//
-//   - project: Project ID for this request.
-//   - publicAdvertisedPrefix: The name of the public advertised prefix. It
-//     should comply with RFC1035.
-func (r *PublicAdvertisedPrefixesService) Withdraw(project string, publicAdvertisedPrefix string) *PublicAdvertisedPrefixesWithdrawCall {
-	c := &PublicAdvertisedPrefixesWithdrawCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.project = project
-	c.publicAdvertisedPrefix = publicAdvertisedPrefix
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so
-// that if you must retry your request, the server will know to ignore
-// the
-// request if it has already been completed.
-//
-// For example, consider a situation where you make an initial request and
-// the request times out. If you make the request again with the same
-// request ID, the server can check if original operation with the same
-// request ID was received, and if so, will ignore the second request.
-// This
-// prevents clients from accidentally creating duplicate commitments.
-//
-// The request ID must be
-// a valid UUID with the exception that zero UUID is not
-// supported
-// (00000000-0000-0000-0000-000000000000).
-func (c *PublicAdvertisedPrefixesWithdrawCall) RequestId(requestId string) *PublicAdvertisedPrefixesWithdrawCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *PublicAdvertisedPrefixesWithdrawCall) Fields(s ...googleapi.Field) *PublicAdvertisedPrefixesWithdrawCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *PublicAdvertisedPrefixesWithdrawCall) Context(ctx context.Context) *PublicAdvertisedPrefixesWithdrawCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *PublicAdvertisedPrefixesWithdrawCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *PublicAdvertisedPrefixesWithdrawCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_, "x-goog-api-version", "2026-10-01-preview")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{project}/global/publicAdvertisedPrefixes/{publicAdvertisedPrefix}/withdraw")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"project":                c.project,
-		"publicAdvertisedPrefix": c.publicAdvertisedPrefix,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.withdraw", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "compute.publicAdvertisedPrefixes.withdraw" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *PublicAdvertisedPrefixesWithdrawCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Operation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "compute.publicAdvertisedPrefixes.withdraw", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

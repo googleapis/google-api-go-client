@@ -8987,6 +8987,9 @@ type BackendServiceHAPolicy struct {
 	//    Advertisement(RA) packet (IPv6).  Google Cloud immediately but
 	//    temporarily associates the forwarding rule IP address with that VM, and
 	//    both new and in-flight packets are quickly delivered to that VM.
+	//    - HA_CONTROLLER: The Backend Service is managed by a High Availability
+	//    Controller. Failover and leader election are exclusively managed by the
+	//    HA Controller service.
 	//
 	//
 	//
@@ -10857,8 +10860,15 @@ func (s BulkInsertDiskResource) MarshalJSON() ([]byte, error) {
 type BulkInsertInstanceResource struct {
 	// Count: The maximum number of instances to create.
 	Count int64 `json:"count,omitempty,string"`
-	// InstanceFlexibilityPolicy: A flexible specification of machine type of
-	// instances to create.
+	// InstanceFlexibilityPolicy: A specification of alternative machine types to
+	// use when creating
+	// instances. A single bulkInsert request can create instances with
+	// multiple
+	// different machine types based on capacity and quota availability. This
+	// field is supported only for regional bulkInsert requests. For
+	// more
+	// information, see About
+	// instance flexibility for VMs created in bulk.
 	InstanceFlexibilityPolicy *InstanceFlexibilityPolicy `json:"instanceFlexibilityPolicy,omitempty"`
 	// InstanceProperties: The instance properties defining the VM instances to be
 	// created. Required
@@ -11109,7 +11119,11 @@ type CacheInvalidationRule struct {
 	ContentType string `json:"contentType,omitempty"`
 	// Host: If set, this invalidation rule will only apply to requests with a
 	// Host
-	// header matching host.
+	// header matching host. This field also accepts wildcards (*) to replace
+	// the
+	// leftmost (or first) label of a hostname. For example, *.example.com
+	// will
+	// match www.example.com, but not sub1.dev.example.com.
 	Host string `json:"host,omitempty"`
 	// HttpStatus: If set, this invalidation rule will only apply to responses with
 	// the
@@ -12557,6 +12571,8 @@ type Commitment struct {
 	//   "COMPUTE_OPTIMIZED_C3D"
 	//   "COMPUTE_OPTIMIZED_H3"
 	//   "COMPUTE_OPTIMIZED_H4D"
+	//   "COMPUTE_OPTIMIZED_H4D_3TB" - CUD bucket for COMPUTE_OPTIMIZED_H4D_3TB
+	// machines.
 	//   "GENERAL_PURPOSE"
 	//   "GENERAL_PURPOSE_C4"
 	//   "GENERAL_PURPOSE_C4A"
@@ -30765,16 +30781,9 @@ func (s InstanceConsumptionInfo) MarshalJSON() ([]byte, error) {
 // InstanceFlexibilityPolicy: A flexible specification of machine types for
 // instances to create.
 type InstanceFlexibilityPolicy struct {
-	// InstanceSelections: Specification of alternative, flexible instance
-	// subsets.
-	// One of them will be selected to create the instances
-	// based on various criteria, like:
-	// - ranks,
-	// - location policy,
-	// - current capacity,
-	// - available reservations (you can specify affinity in
-	// InstanceProperties),
-	// - SWAN/GOOSE limitations.
+	// InstanceSelections: Specifies named instance selections that define
+	// properties for instances
+	// created in bulk.
 	// Key is an arbitrary, unique RFC1035 string that identifies the
 	// instance
 	// selection.
@@ -70778,6 +70787,13 @@ type RouterBgpPeer struct {
 	// Ipv6NexthopAddress: IPv6 address of the interface inside Google Cloud
 	// Platform.
 	Ipv6NexthopAddress string `json:"ipv6NexthopAddress,omitempty"`
+	// LinkedCustomHardware: The linked custom hardware resource.
+	// The URI of the custom hardware link attachment
+	// is where you will establish the BGP session from the Cloud Router.
+	// This link attachment must reside in the same subnetwork as the
+	// associated
+	// router interface.
+	LinkedCustomHardware string `json:"linkedCustomHardware,omitempty"`
 	// ManagementType: Output only. [Output Only] The resource that configures and
 	// manages this BGP peer.
 	//
@@ -71814,6 +71830,11 @@ type RouterStatusBgpPeerStatus struct {
 	Ipv4NexthopAddress string `json:"ipv4NexthopAddress,omitempty"`
 	// Ipv6NexthopAddress: Output only. IPv6 address of the local BGP interface.
 	Ipv6NexthopAddress string `json:"ipv6NexthopAddress,omitempty"`
+	// LinkedCustomHardware: Output only. The URI of the linked custom hardware
+	// resource,
+	// CustomHardwareLinkAttachment. This CustomHardwareLinkAttachment resource
+	// is the one that will establish the BGP session from the Cloud Router.
+	LinkedCustomHardware string `json:"linkedCustomHardware,omitempty"`
 	// LinkedVpnTunnel: Output only. URL of the VPN tunnel that this BGP peer
 	// controls.
 	LinkedVpnTunnel string `json:"linkedVpnTunnel,omitempty"`
@@ -73233,8 +73254,11 @@ type Scheduling struct {
 	//   "STANDARD" - Standard provisioning with user controlled runtime, no
 	// discounts.
 	ProvisioningModel string `json:"provisioningModel,omitempty"`
-	// SkipGuestOsShutdown: Default is false and there will be 120 seconds between
-	// GCE ACPI G2 Soft
+	// SkipGuestOsShutdown: Defines whether GCE ACPI G2 Soft
+	// Off signal should be skipped during shutdown operation of VM.
+	//
+	// Default is false, meaning there will be 120 seconds between GCE ACPI G2
+	// Soft
 	// Off and ACPI G3 Mechanical
 	// Off for Standard VMs and 30 seconds for Spot VMs.
 	SkipGuestOsShutdown bool `json:"skipGuestOsShutdown,omitempty"`
@@ -92601,7 +92625,9 @@ func (s VpnTunnelAggregatedListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type VpnTunnelCipherSuite struct {
+	// Phase1: Cipher algorithms for IKE phase 1.
 	Phase1 *VpnTunnelPhase1Algorithms `json:"phase1,omitempty"`
+	// Phase2: Cipher algorithms for IKE phase 2.
 	Phase2 *VpnTunnelPhase2Algorithms `json:"phase2,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Phase1") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -92838,10 +92864,14 @@ func (s VpnTunnelParams) MarshalJSON() ([]byte, error) {
 }
 
 type VpnTunnelPhase1Algorithms struct {
-	Dh         []string `json:"dh,omitempty"`
+	// Dh: Diffie-Hellman groups for IKE phase 1.
+	Dh []string `json:"dh,omitempty"`
+	// Encryption: Encryption algorithms for IKE phase 1.
 	Encryption []string `json:"encryption,omitempty"`
-	Integrity  []string `json:"integrity,omitempty"`
-	Prf        []string `json:"prf,omitempty"`
+	// Integrity: Integrity algorithms for IKE phase 1.
+	Integrity []string `json:"integrity,omitempty"`
+	// Prf: Pseudo-random functions (PRF) for IKE phase 1.
+	Prf []string `json:"prf,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dh") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -92861,9 +92891,12 @@ func (s VpnTunnelPhase1Algorithms) MarshalJSON() ([]byte, error) {
 }
 
 type VpnTunnelPhase2Algorithms struct {
+	// Encryption: Encryption algorithms for IKE phase 2.
 	Encryption []string `json:"encryption,omitempty"`
-	Integrity  []string `json:"integrity,omitempty"`
-	Pfs        []string `json:"pfs,omitempty"`
+	// Integrity: Integrity algorithms for IKE phase 2.
+	Integrity []string `json:"integrity,omitempty"`
+	// Pfs: Perfect Forward Secrecy (PFS) groups for IKE phase 2.
+	Pfs []string `json:"pfs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Encryption") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -93763,6 +93796,11 @@ func (s WireProperties) MarshalJSON() ([]byte, error) {
 type WorkloadIdentityConfig struct {
 	Identity                   string `json:"identity,omitempty"`
 	IdentityCertificateEnabled bool   `json:"identityCertificateEnabled,omitempty"`
+	// Possible values:
+	//   "AGENT_IDENTITY"
+	//   "IDENTITY_TYPE_UNSPECIFIED"
+	//   "SERVICE_ACCOUNT"
+	IdentityType string `json:"identityType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Identity") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

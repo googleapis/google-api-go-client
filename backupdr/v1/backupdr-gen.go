@@ -250,6 +250,8 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.AppliedAutoProtectionPolicies = NewProjectsLocationsAppliedAutoProtectionPoliciesService(s)
+	rs.AutoProtectionPolicies = NewProjectsLocationsAutoProtectionPoliciesService(s)
 	rs.BackupPlanAssociations = NewProjectsLocationsBackupPlanAssociationsService(s)
 	rs.BackupPlans = NewProjectsLocationsBackupPlansService(s)
 	rs.BackupVaults = NewProjectsLocationsBackupVaultsService(s)
@@ -264,6 +266,10 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	AppliedAutoProtectionPolicies *ProjectsLocationsAppliedAutoProtectionPoliciesService
+
+	AutoProtectionPolicies *ProjectsLocationsAutoProtectionPoliciesService
 
 	BackupPlanAssociations *ProjectsLocationsBackupPlanAssociationsService
 
@@ -282,6 +288,48 @@ type ProjectsLocationsService struct {
 	ServiceConfig *ProjectsLocationsServiceConfigService
 
 	Trial *ProjectsLocationsTrialService
+}
+
+func NewProjectsLocationsAppliedAutoProtectionPoliciesService(s *Service) *ProjectsLocationsAppliedAutoProtectionPoliciesService {
+	rs := &ProjectsLocationsAppliedAutoProtectionPoliciesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAppliedAutoProtectionPoliciesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAutoProtectionPoliciesService(s *Service) *ProjectsLocationsAutoProtectionPoliciesService {
+	rs := &ProjectsLocationsAutoProtectionPoliciesService{s: s}
+	rs.Bindings = NewProjectsLocationsAutoProtectionPoliciesBindingsService(s)
+	return rs
+}
+
+type ProjectsLocationsAutoProtectionPoliciesService struct {
+	s *Service
+
+	Bindings *ProjectsLocationsAutoProtectionPoliciesBindingsService
+}
+
+func NewProjectsLocationsAutoProtectionPoliciesBindingsService(s *Service) *ProjectsLocationsAutoProtectionPoliciesBindingsService {
+	rs := &ProjectsLocationsAutoProtectionPoliciesBindingsService{s: s}
+	rs.MatchingResources = NewProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesService(s)
+	return rs
+}
+
+type ProjectsLocationsAutoProtectionPoliciesBindingsService struct {
+	s *Service
+
+	MatchingResources *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesService
+}
+
+func NewProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesService(s *Service) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesService {
+	rs := &ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsBackupPlanAssociationsService(s *Service) *ProjectsLocationsBackupPlanAssociationsService {
@@ -753,6 +801,62 @@ func (s AlloyDbPitrWindow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AppliedAutoProtectionPolicy: AppliedAutoProtectionPolicy is a read-only view
+// of AutoProtectionPolicy and AutoProtectionPolicyBinding resources that apply
+// to a given workload project.
+type AppliedAutoProtectionPolicy struct {
+	// BackupPlanDetails: Output only. The set of backup plan configurations,
+	// mirroring the backup_plan_details from the source AutoProtectionPolicy. Each
+	// element specifies a backup plan for a given resource type.
+	BackupPlanDetails []*BackupPlanDetail `json:"backupPlanDetails,omitempty"`
+	// BindingEvaluationSummary: Output only. The summary of the last policy
+	// application when the job has run.
+	BindingEvaluationSummary *BindingEvaluationSummary `json:"bindingEvaluationSummary,omitempty"`
+	// CreateTime: Output only. Timestamp indicating when the binding was last
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Criteria: Output only. The criteria resources must meet for this rule to
+	// apply. From AutoProtectionPolicy.criteria.
+	Criteria *Criteria `json:"criteria,omitempty"`
+	// Name: Identifier. Canonical resource name. Format:
+	// projects/{workload-project-number}/locations/{location}/appliedAutoProtection
+	// Policies/{id}.
+	Name string `json:"name,omitempty"`
+	// SourceBinding: Output only. The full resource name of the
+	// AutoProtectionPolicyBinding that applies the source policy to a scope
+	// including this workload project. e.g.,
+	// projects/{admin-project}/locations/{location}/autoProtectionPolicies/{policy_
+	// id}/autoProtectionPolicyBindings/{binding_id}.
+	SourceBinding string `json:"sourceBinding,omitempty"`
+	// Status: Output only. The status of the applied auto protection policy.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State is not specified.
+	//   "CREATING" - The policy is in the process of being applied.
+	//   "ACTIVE" - The policy has been applied and is active.
+	//   "DELETION_INITIATED" - The policy is in the process of being removed.
+	Status string `json:"status,omitempty"`
+	// UpdateTime: Output only. Timestamp indicating when the binding was last
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlanDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlanDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppliedAutoProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AppliedAutoProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AttachedDisk: An instance-attached disk resource.
 type AttachedDisk struct {
 	// AutoDelete: Optional. Specifies whether the disk will be auto-deleted when
@@ -924,6 +1028,163 @@ type AuditLogConfig struct {
 
 func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoProtectionDetails: AutoProtectionDetails contains the protection details
+// of a resource from the current binding's perspective.
+type AutoProtectionDetails struct {
+	// BackupPlanAssociation: Output only. Resource name of backup plan association
+	// linked to the resource, if any. Format:
+	// projects/{project}/locations/{location}/backupPlanAssociations/{backupPlanAss
+	// ociationId}
+	BackupPlanAssociation string `json:"backupPlanAssociation,omitempty"`
+	// DataSource: Output only. Resource name of the datasource linked to the
+	// resource, if any. Format:
+	// projects/{project}/locations/{location}/backupVaults/{backupVaultId}/dataSour
+	// ces/{dataSourceId}
+	DataSource string `json:"dataSource,omitempty"`
+	// Error: Output only. Error during last sync for protection/unprotection, if
+	// any.
+	Error *Status `json:"error,omitempty"`
+	// State: Output only. Protection state of the resource from the current
+	// binding's perspective. Output only.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State unspecified.
+	//   "PROTECTED" - Resource is protected.
+	//   "PROTECTION_FAILED" - Resource protection failed.
+	//   "UNPROTECTING" - Resource is being unprotected.
+	//   "UNPROTECTION_FAILED" - Resource unprotection failed.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlanAssociation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlanAssociation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoProtectionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoProtectionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoProtectionPolicy: An AutoprotectionPolicy is a policy resource designed
+// to automate backup management, moving from manual per-resource protection to
+// a bulk approach. The policy dynamically discovers and applies a specified
+// backup plan to all eligible resources that match its defined scope and
+// criteria.
+type AutoProtectionPolicy struct {
+	// BackupPlanDetails: Required. The backup plan details for matching resources.
+	BackupPlanDetails []*BackupPlanDetail `json:"backupPlanDetails,omitempty"`
+	// BindingSummary: Output only. Summary of total count of different containers
+	// covered through this policy.
+	BindingSummary *BindingSummary `json:"bindingSummary,omitempty"`
+	// CreateTime: Output only. The timestamp when the policy was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Criteria: Required. The criteria for matching resources.
+	Criteria *Criteria `json:"criteria,omitempty"`
+	// Description: Optional. A description of the policy.
+	Description string `json:"description,omitempty"`
+	// Etag: Output only. The etag for the policy. If this is provided on update,
+	// it must match the server's etag.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The resource name of the AutoProtectionPolicy. Format:
+	// `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protect
+	// ion_policy}`
+	Name string `json:"name,omitempty"`
+	// PolicyEvaluationSummary: Output only. Summary of last policy evaluation when
+	// job was run per workload type.
+	PolicyEvaluationSummary *PolicyEvaluationSummary `json:"policyEvaluationSummary,omitempty"`
+	// State: Output only. The current state of the AutoProtectionPolicy.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the policy is unspecified.
+	//   "CREATING" - The policy is being created.
+	//   "ACTIVE" - The policy is active and protecting matching resources.
+	//   "UPDATING" - The policy is being updated.
+	//   "DELETING" - The policy is being deleted.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp when the policy was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlanDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlanDetails") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoProtectionPolicyBinding: An AutoProtectionPolicyBinding (APPA) acts as
+// the bridge between an AutoProtectionPolicy and the scope (Project) where the
+// policy should be applied.
+type AutoProtectionPolicyBinding struct {
+	// BindingEvaluationSummary: Output only. Summaries of the last policy
+	// application when the job has run, with one entry per resource type specified
+	// in the AutoProtectionPolicy.
+	BindingEvaluationSummary *BindingEvaluationSummary `json:"bindingEvaluationSummary,omitempty"`
+	// CreateTime: Output only. The timestamp when the binding was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A description of the binding.
+	Description string `json:"description,omitempty"`
+	// Etag: Optional. Output only. The etag for the binding. If this is provided
+	// on update, it must match the server's etag.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The resource name of the AutoProtectionPolicyBinding.
+	// Format:
+	// `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protect
+	// ion_policy}/bindings/{binding}`
+	Name string `json:"name,omitempty"`
+	// Scope: Required. Immutable. Resource Id of target container on which policy
+	// will be applied. Format: projects/{project_id}
+	Scope string `json:"scope,omitempty"`
+	// State: Output only. The current state of the AutoProtectionPolicyBinding.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the binding is unspecified.
+	//   "CREATING" - The binding is being created.
+	//   "ACTIVE" - The binding is active.
+	//   "DELETION_INITIATED" - The binding deletion is initiated.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp when the binding was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BindingEvaluationSummary")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BindingEvaluationSummary") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoProtectionPolicyBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoProtectionPolicyBinding
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1556,6 +1817,11 @@ type BackupPlanAssociation struct {
 	// AlloydbClusterBackupPlanAssociationProperties: Output only. AlloyDB
 	// cluster's backup plan association properties.
 	AlloydbClusterBackupPlanAssociationProperties *AlloyDBClusterBackupPlanAssociationProperties `json:"alloydbClusterBackupPlanAssociationProperties,omitempty"`
+	// AutoProtectionPolicyBinding: Output only. The resource name of the
+	// `AutoProtectionPolicyBinding` that manages this association, if any. Format:
+	// `projects/{project}/locations/{location}/autoProtectionPolicies/{policy}/bind
+	// ings/{binding}`.
+	AutoProtectionPolicyBinding string `json:"autoProtectionPolicyBinding,omitempty"`
 	// BackupPlan: Required. Resource name of backup plan which needs to be applied
 	// on workload. Format:
 	// projects/{project}/locations/{location}/backupPlans/{backupPlanId}
@@ -1634,6 +1900,35 @@ type BackupPlanAssociation struct {
 
 func (s BackupPlanAssociation) MarshalJSON() ([]byte, error) {
 	type NoMethod BackupPlanAssociation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BackupPlanDetail: BackupPlanDetail defines configuration of protection.
+type BackupPlanDetail struct {
+	// BackupPlan: Required. The resource name of the BackupPlan to apply to
+	// resources that match the policy's criteria. This backup plan must be in the
+	// same location as AutoProtectionPolicy. Format:
+	// projects/{project}/locations/{location}/backupPlans/{backupPlanId}
+	BackupPlan string `json:"backupPlan,omitempty"`
+	// ResourceType: Required. The type of resource that this policy will
+	// automatically protect. Allowed values are, `compute.googleapis.com/Instance`
+	// and `compute.googleapis.com/Disk` are supported.
+	ResourceType string `json:"resourceType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackupPlan") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackupPlan") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BackupPlanDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod BackupPlanDetail
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1961,6 +2256,103 @@ type Binding struct {
 
 func (s Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BindingEvaluationSummary: BindingEvaluationSummary contains the summary of
+// the last run of job that applies policy to matching resources for a given
+// binding.
+type BindingEvaluationSummary struct {
+	// FailedResourceCount: Output only. The number of matching resources whose
+	// protection failed during job run.
+	FailedResourceCount int64 `json:"failedResourceCount,omitempty,string"`
+	// MatchingResourceCount: Output only. The number of resources that currently
+	// match the policy's criteria.
+	MatchingResourceCount int64 `json:"matchingResourceCount,omitempty,string"`
+	// ProtectedResourceCount: Output only. The number of matching resources that
+	// are successfully protected.
+	ProtectedResourceCount int64 `json:"protectedResourceCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FailedResourceCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailedResourceCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BindingEvaluationSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod BindingEvaluationSummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BindingMatchingResource: BindingMatchingResource contains the details of a
+// resource that matches the criteria of a binding.
+type BindingMatchingResource struct {
+	// AutoProtectionDetails: Output only. The auto protection details of the
+	// resource from the current binding's perspective.
+	AutoProtectionDetails *AutoProtectionDetails `json:"autoProtectionDetails,omitempty"`
+	// LastEvaluationTime: Output only. The timestamp when the resource was last
+	// evaluated for protection.
+	LastEvaluationTime string `json:"lastEvaluationTime,omitempty"`
+	// Name: Identifier. The resource name of the `BindingMatchingResource`.
+	// Format:
+	// `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protect
+	// ion_policy}/bindings/{binding}/matchingResources/{matching_resource}`
+	Name string `json:"name,omitempty"`
+	// Resource: Required. Immutable. Resource name of the workload that matches
+	// the criteria of the binding. The format can be either a relative resource
+	// name (e.g., `projects/my-project/zones/us-central1-a/instances/my-instance`)
+	// or a schemeless full resource name (e.g.,
+	// `//compute.googleapis.com/projects/my-project/zones/us-central1-a/instances/m
+	// y-instance`).
+	Resource string `json:"resource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AutoProtectionDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoProtectionDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BindingMatchingResource) MarshalJSON() ([]byte, error) {
+	type NoMethod BindingMatchingResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BindingSummary: BindingSummary contains count of different containers
+// covered through this policy.
+type BindingSummary struct {
+	// ProjectCount: Output only. Total count of Projects protected with this
+	// policy.
+	ProjectCount int64 `json:"projectCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ProjectCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ProjectCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BindingSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod BindingSummary
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2445,6 +2837,29 @@ type ConfidentialInstanceConfig struct {
 
 func (s ConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfidentialInstanceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Criteria: Criteria specifies a set of criteria for matching resources.
+type Criteria struct {
+	// MatchingConditions: Required. A list of matching conditions that a resource
+	// must meet to be protected by the policy.
+	MatchingConditions []*MatchingCondition `json:"matchingConditions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MatchingConditions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MatchingConditions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Criteria) MarshalJSON() ([]byte, error) {
+	type NoMethod Criteria
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3669,6 +4084,11 @@ func (s GCPBackupPlanInfo) MarshalJSON() ([]byte, error) {
 // for Google Cloud resources. All Google Cloud resources regardless of type
 // are protected with backup plan associations.
 type GcpBackupConfig struct {
+	// AutoProtectionPolicyBinding: Output only. The resource name of the
+	// `AutoProtectionPolicyBinding` that manages this datasource, if any. Format:
+	// `projects/{project}/locations/{location}/autoProtectionPolicies/{policy}/bind
+	// ings/{binding}`.
+	AutoProtectionPolicyBinding string `json:"autoProtectionPolicyBinding,omitempty"`
 	// BackupPlan: The name of the backup plan.
 	BackupPlan string `json:"backupPlan,omitempty"`
 	// BackupPlanAssociation: The name of the backup plan association.
@@ -3683,15 +4103,15 @@ type GcpBackupConfig struct {
 	// BackupPlanRules: The names of the backup plan rules which point to this
 	// backupvault
 	BackupPlanRules []string `json:"backupPlanRules,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BackupPlan") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "AutoProtectionPolicyBinding") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BackupPlan") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoProtectionPolicyBinding") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3949,6 +4369,11 @@ func (s InitiateBackupResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InitiateDeleteAutoProtectionPolicyBindingRequest: Request message for
+// initiating delete of an AutoProtectionPolicyBinding.
+type InitiateDeleteAutoProtectionPolicyBindingRequest struct {
+}
+
 // InstanceParams: Additional instance params.
 type InstanceParams struct {
 	// ResourceManagerTags: Optional. Resource manager tags to be bound to the
@@ -3969,6 +4394,35 @@ type InstanceParams struct {
 
 func (s InstanceParams) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// KeyValuePair: KeyValuePair defines a key-value pair for matching resource
+// labels.
+type KeyValuePair struct {
+	// Key: Required. The key of the label to match. This must be in the format
+	// `{label_key}`. The key must match the regex Format:`\p{Ll}\p{Lo}{0,62}`.
+	Key string `json:"key,omitempty"`
+	// Values: Required. The values of the label to match. There will be explicit
+	// “OR” between values of array. Each value must be in the format
+	// `{label_value}`. The value must match the regex Format:
+	// `[\\p{Ll}\\p{Lo}\\p{N}_-]{1,63}`.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s KeyValuePair) MarshalJSON() ([]byte, error) {
+	type NoMethod KeyValuePair
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4002,6 +4456,102 @@ type LabelKeyValPair struct {
 
 func (s LabelKeyValPair) MarshalJSON() ([]byte, error) {
 	type NoMethod LabelKeyValPair
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAppliedAutoProtectionPoliciesResponse: Response message for
+// ListAppliedAutoProtectionPolicies.
+type ListAppliedAutoProtectionPoliciesResponse struct {
+	// AppliedAutoProtectionPolicies: A list of the AppliedAutoProtectionPolicy
+	// resources found.
+	AppliedAutoProtectionPolicies []*AppliedAutoProtectionPolicy `json:"appliedAutoProtectionPolicies,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached. For
+	// example, "projects/my-project/locations/us-east1"].
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AppliedAutoProtectionPolicies") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AppliedAutoProtectionPolicies")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAppliedAutoProtectionPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAppliedAutoProtectionPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAutoProtectionPoliciesResponse: Response message for
+// ListAutoProtectionPolicies.
+type ListAutoProtectionPoliciesResponse struct {
+	// AutoProtectionPolicies: A list of the AutoProtectionPolicy resources found.
+	AutoProtectionPolicies []*AutoProtectionPolicy `json:"autoProtectionPolicies,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AutoProtectionPolicies") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoProtectionPolicies") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAutoProtectionPoliciesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAutoProtectionPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAutoProtectionPolicyBindingsResponse: Response message for
+// ListAutoProtectionPolicyBindings.
+type ListAutoProtectionPolicyBindingsResponse struct {
+	// AutoProtectionPolicyBindings: A list of the AutoProtectionPolicyBindings
+	// resources found.
+	AutoProtectionPolicyBindings []*AutoProtectionPolicyBinding `json:"autoProtectionPolicyBindings,omitempty"`
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "AutoProtectionPolicyBindings") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AutoProtectionPolicyBindings") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAutoProtectionPolicyBindingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAutoProtectionPolicyBindingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4182,6 +4732,37 @@ type ListBackupsResponse struct {
 
 func (s ListBackupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBackupsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListBindingMatchingResourcesResponse: The response message for getting a
+// list of `BindingMatchingResources`.
+type ListBindingMatchingResourcesResponse struct {
+	// MatchingResources: The list of `BindingMatchingResources` in the
+	// project,location for the specified binding.
+	MatchingResources []*BindingMatchingResource `json:"matchingResources,omitempty"`
+	// NextPageToken: A token which may be sent as page_token in a subsequent
+	// `ListBindingMatchingResources` call to retrieve the next page of results. If
+	// this field is omitted or empty, then there are no more results to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MatchingResources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MatchingResources") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListBindingMatchingResourcesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBindingMatchingResourcesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4564,6 +5145,30 @@ type ManagementURI struct {
 
 func (s ManagementURI) MarshalJSON() ([]byte, error) {
 	type NoMethod ManagementURI
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MatchingCondition: MatchingCondition specifies a set of conditions for
+// matching resources.
+type MatchingCondition struct {
+	// LabelCondition: Optional. A condition that matches resources based on their
+	// labels. For MVP, this is limited to a single label match.
+	LabelCondition *KeyValuePair `json:"labelCondition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LabelCondition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LabelCondition") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MatchingCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod MatchingCondition
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5029,6 +5634,36 @@ type Policy struct {
 
 func (s Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PolicyEvaluationSummary: PolicyEvaluationSummary contains the summary of the
+// last run of job that applies policy to matching resources.
+type PolicyEvaluationSummary struct {
+	// FailedResourceCount: Output only. The number of matching resources whose
+	// protection failed during job run.
+	FailedResourceCount int64 `json:"failedResourceCount,omitempty,string"`
+	// MatchingResourceCount: Output only. The number of resources that currently
+	// match the policy's criteria.
+	MatchingResourceCount int64 `json:"matchingResourceCount,omitempty,string"`
+	// ProtectedResourceCount: Output only. The number of matching resources that
+	// are successfully protected.
+	ProtectedResourceCount int64 `json:"protectedResourceCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "FailedResourceCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FailedResourceCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PolicyEvaluationSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyEvaluationSummary
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6662,6 +7297,1555 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+type ProjectsLocationsAppliedAutoProtectionPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists AppliedAutoProtectionPolicies in a given project and location.
+//
+//   - parent: The project and location for which to retrieve the list of applied
+//     policies. Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsAppliedAutoProtectionPoliciesService) List(parent string) *ProjectsLocationsAppliedAutoProtectionPoliciesListCall {
+	c := &ProjectsLocationsAppliedAutoProtectionPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) Filter(filter string) *ProjectsLocationsAppliedAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression that sorts the
+// results in the response.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) OrderBy(orderBy string) *ProjectsLocationsAppliedAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// applied policies to return in a single page. The maximum value is 1000;
+// values above 1000 will be coerced to 1000. If unspecified or set to 0, a
+// default page size of 500 will be used.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsAppliedAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAppliedAutoProtectionPolicies` call.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsAppliedAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppliedAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAppliedAutoProtectionPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) Context(ctx context.Context) *ProjectsLocationsAppliedAutoProtectionPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/appliedAutoProtectionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.appliedAutoProtectionPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.appliedAutoProtectionPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAppliedAutoProtectionPoliciesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListAppliedAutoProtectionPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAppliedAutoProtectionPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.appliedAutoProtectionPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAppliedAutoProtectionPoliciesListCall) Pages(ctx context.Context, f func(*ListAppliedAutoProtectionPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAutoProtectionPoliciesCreateCall struct {
+	s                    *Service
+	parent               string
+	autoprotectionpolicy *AutoProtectionPolicy
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Create: Creates a new AutoProtectionPolicy in a given project and location.
+//
+//   - parent: The parent resource where this policy will be created. Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsAutoProtectionPoliciesService) Create(parent string, autoprotectionpolicy *AutoProtectionPolicy) *ProjectsLocationsAutoProtectionPoliciesCreateCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.autoprotectionpolicy = autoprotectionpolicy
+	return c
+}
+
+// AutoProtectionPolicyId sets the optional parameter "autoProtectionPolicyId":
+// Required. The ID to use for the policy. This will become the final component
+// of the policy's resource name.
+func (c *ProjectsLocationsAutoProtectionPoliciesCreateCall) AutoProtectionPolicyId(autoProtectionPolicyId string) *ProjectsLocationsAutoProtectionPoliciesCreateCall {
+	c.urlParams_.Set("autoProtectionPolicyId", autoProtectionPolicyId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesCreateCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.autoprotectionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autoProtectionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoProtectionPoliciesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single AutoProtectionPolicy.
+//
+//   - name: The name of the policy to delete. Format:
+//     projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protec
+//     tion_policy}.
+func (r *ProjectsLocationsAutoProtectionPoliciesService) Delete(name string) *ProjectsLocationsAutoProtectionPoliciesDeleteCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The current etag of the
+// autoprotectionpolicy. If an etag is provided and does not match the current
+// etag of the connection, deletion will be blocked.
+func (c *ProjectsLocationsAutoProtectionPoliciesDeleteCall) Etag(etag string) *ProjectsLocationsAutoProtectionPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesDeleteCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoProtectionPoliciesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single AutoProtectionPolicy.
+//
+//   - name: The name of the policy to retrieve. Format:
+//     projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protec
+//     tion_policy}.
+func (r *ProjectsLocationsAutoProtectionPoliciesService) Get(name string) *ProjectsLocationsAutoProtectionPoliciesGetCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutoProtectionPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutoProtectionPoliciesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesGetCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutoProtectionPolicy.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesGetCall) Do(opts ...googleapi.CallOption) (*AutoProtectionPolicy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutoProtectionPolicy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoProtectionPoliciesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists AutoProtectionPolicies for a given project and location.
+//
+//   - parent: The project and location for which to retrieve the list of
+//     policies. Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsAutoProtectionPoliciesService) List(parent string) *ProjectsLocationsAutoProtectionPoliciesListCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. The following fields are
+// filterable:
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) Filter(filter string) *ProjectsLocationsAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression that sorts the
+// results in the response. The following fields are sortable:
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) OrderBy(orderBy string) *ProjectsLocationsAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// policies to return in a single page. If unspecified, a server-default value
+// will be used.
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) PageSize(pageSize int64) *ProjectsLocationsAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAutoProtectionPolicies` call. Provide this to retrieve
+// the subsequent page.
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) PageToken(pageToken string) *ProjectsLocationsAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutoProtectionPoliciesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/autoProtectionPolicies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAutoProtectionPoliciesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) Do(opts ...googleapi.CallOption) (*ListAutoProtectionPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAutoProtectionPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAutoProtectionPoliciesListCall) Pages(ctx context.Context, f func(*ListAutoProtectionPoliciesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAutoProtectionPoliciesPatchCall struct {
+	s                    *Service
+	name                 string
+	autoprotectionpolicy *AutoProtectionPolicy
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Patch: Updates the parameters of a single AutoProtectionPolicy.
+//
+//   - name: Identifier. The resource name of the AutoProtectionPolicy. Format:
+//     `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_prote
+//     ction_policy}`.
+func (r *ProjectsLocationsAutoProtectionPoliciesService) Patch(name string, autoprotectionpolicy *AutoProtectionPolicy) *ProjectsLocationsAutoProtectionPoliciesPatchCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.autoprotectionpolicy = autoprotectionpolicy
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the AutoProtectionPolicy resource by
+// the update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsAutoProtectionPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAutoProtectionPoliciesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesPatchCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.autoprotectionpolicy)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall struct {
+	s                           *Service
+	parent                      string
+	autoprotectionpolicybinding *AutoProtectionPolicyBinding
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Create: Creates a new AutoProtectionPolicyBinding in a given project and
+// location.
+//
+//   - parent: The parent resource where this binding will be created. Format:
+//     projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protec
+//     tion_policy}.
+func (r *ProjectsLocationsAutoProtectionPoliciesBindingsService) Create(parent string, autoprotectionpolicybinding *AutoProtectionPolicyBinding) *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.autoprotectionpolicybinding = autoprotectionpolicybinding
+	return c
+}
+
+// AutoProtectionPolicyBindingId sets the optional parameter
+// "autoProtectionPolicyBindingId": Required. The ID to use for the binding.
+// This will become the final component of the binding's resource name.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall) AutoProtectionPolicyBindingId(autoProtectionPolicyBindingId string) *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall {
+	c.urlParams_.Set("autoProtectionPolicyBindingId", autoProtectionPolicyBindingId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.autoprotectionpolicybinding)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/bindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.bindings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoProtectionPoliciesBindingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns the auto protection policy binding read from the CCFE tables.
+//
+//   - name: The name of the binding to retrieve. Format:
+//     projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protec
+//     tion_policy}/bindings/{binding}.
+func (r *ProjectsLocationsAutoProtectionPoliciesBindingsService) Get(name string) *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.bindings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AutoProtectionPolicyBinding.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsGetCall) Do(opts ...googleapi.CallOption) (*AutoProtectionPolicyBinding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AutoProtectionPolicyBinding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall struct {
+	s                                                *Service
+	name                                             string
+	initiatedeleteautoprotectionpolicybindingrequest *InitiateDeleteAutoProtectionPolicyBindingRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// InitiateDelete: Initiates delete for AutoProtectionPolicy Binding
+//
+//   - name: The name of the binding to delete. Format:
+//     projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protec
+//     tion_policy}/bindings/{binding}.
+func (r *ProjectsLocationsAutoProtectionPoliciesBindingsService) InitiateDelete(name string, initiatedeleteautoprotectionpolicybindingrequest *InitiateDeleteAutoProtectionPolicyBindingRequest) *ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.initiatedeleteautoprotectionpolicybindingrequest = initiatedeleteautoprotectionpolicybindingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.initiatedeleteautoprotectionpolicybindingrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:initiateDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.initiateDelete", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.bindings.initiateDelete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsInitiateDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.initiateDelete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoProtectionPoliciesBindingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns the auto protection policy bindings read from the CCFE tables.
+//
+//   - parent: The project and location for which to retrieve the list of
+//     policies. Format: projects/{project}/locations/{location}.
+func (r *ProjectsLocationsAutoProtectionPoliciesBindingsService) List(parent string) *ProjectsLocationsAutoProtectionPoliciesBindingsListCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters resources listed in the response. The following fields are
+// filterable:
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) Filter(filter string) *ProjectsLocationsAutoProtectionPoliciesBindingsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": An expression that sorts the
+// results in the response. The following fields are sortable:
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) OrderBy(orderBy string) *ProjectsLocationsAutoProtectionPoliciesBindingsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// policies to return in a single page is 500. If unspecified, a server-default
+// value will be used.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) PageSize(pageSize int64) *ProjectsLocationsAutoProtectionPoliciesBindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAutoProtectionPolicies` call. Provide this to retrieve
+// the subsequent page.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) PageToken(pageToken string) *ProjectsLocationsAutoProtectionPoliciesBindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesBindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutoProtectionPoliciesBindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesBindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/bindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.bindings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAutoProtectionPolicyBindingsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) Do(opts ...googleapi.CallOption) (*ListAutoProtectionPolicyBindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAutoProtectionPolicyBindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsListCall) Pages(ctx context.Context, f func(*ListAutoProtectionPolicyBindingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Binding Matching Resource.
+//
+//   - name: The name of the matching resource to retrieve. Format:
+//     projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protec
+//     tion_policy}/bindings/{binding}/matchingResources/{matching_resource}.
+func (r *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesService) Get(name string) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.matchingResources.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.bindings.matchingResources.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *BindingMatchingResource.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesGetCall) Do(opts ...googleapi.CallOption) (*BindingMatchingResource, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BindingMatchingResource{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.matchingResources.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Binding Matching Resources for a given
+// AutoProtectionPolicyBinding.
+//
+//   - parent: The project, location, auto protection policy and binding for
+//     which to retrieve `BindingMatchingResources` information. Format:
+//     `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_prote
+//     ction_policy}/bindings/{binding}`. In Google Cloud Backup and DR,
+//     locations map to Google Cloud regions, for example **us-central1**.
+func (r *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesService) List(parent string) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall {
+	c := &ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Field match expression used to
+// filter the results.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) Filter(filter string) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort the
+// results.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) OrderBy(orderBy string) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// `BindingMatchingResources` to return in a single response. The default page
+// size is 100 and maximum page size is 200. Note that the response may include
+// a partial list and a caller should only rely on the response's
+// next_page_token to determine if there are more instances left to be queried.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) PageSize(pageSize int64) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// next_page_token received from a previous `ListBindingMatchingResources`
+// call. Provide this to retrieve the subsequent page in a multi-page list of
+// results. When paginating, all other parameters provided to
+// `ListBindingMatchingResources` must match the call that provided the page
+// token.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) PageToken(pageToken string) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) Context(ctx context.Context) *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/matchingResources")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.matchingResources.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "backupdr.projects.locations.autoProtectionPolicies.bindings.matchingResources.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBindingMatchingResourcesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) Do(opts ...googleapi.CallOption) (*ListBindingMatchingResourcesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBindingMatchingResourcesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "backupdr.projects.locations.autoProtectionPolicies.bindings.matchingResources.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsMatchingResourcesListCall) Pages(ctx context.Context, f func(*ListBindingMatchingResourcesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsBackupPlanAssociationsCreateCall struct {
 	s                     *Service
 	parent                string
@@ -6807,6 +8991,18 @@ type ProjectsLocationsBackupPlanAssociationsDeleteCall struct {
 func (r *ProjectsLocationsBackupPlanAssociationsService) Delete(name string) *ProjectsLocationsBackupPlanAssociationsDeleteCall {
 	c := &ProjectsLocationsBackupPlanAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// AutoProtectionPolicyBinding sets the optional parameter
+// "autoProtectionPolicyBinding": This field is exclusively used by Backup and
+// DR's auto-protection feature. The resource name of the
+// `AutoProtectionPolicyBinding` that triggered the deletion of this
+// association. Format:
+// `projects/{project}/locations/{location}/autoProtectionPolicies/{policy}/bind
+// ings/{binding}`.
+func (c *ProjectsLocationsBackupPlanAssociationsDeleteCall) AutoProtectionPolicyBinding(autoProtectionPolicyBinding string) *ProjectsLocationsBackupPlanAssociationsDeleteCall {
+	c.urlParams_.Set("autoProtectionPolicyBinding", autoProtectionPolicyBinding)
 	return c
 }
 

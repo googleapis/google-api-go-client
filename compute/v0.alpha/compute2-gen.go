@@ -56371,6 +56371,10 @@ func (c *InstancesUpdateCall) DiscardLocalSsd(discardLocalSsd bool) *InstancesUp
 //	"NO_EFFECT" - No changes can be made to the instance.
 //	"REFRESH" - The instance will not restart.
 //	"RESTART" - The instance will restart, potentially on a different host.
+//	"RESTART_IN_PLACE" - The instance will restart on the same host. Data on
+//
+// all local SSDs
+// will be preserved.
 func (c *InstancesUpdateCall) MinimalAction(minimalAction string) *InstancesUpdateCall {
 	c.urlParams_.Set("minimalAction", minimalAction)
 	return c
@@ -56390,6 +56394,10 @@ func (c *InstancesUpdateCall) MinimalAction(minimalAction string) *InstancesUpda
 //	"NO_EFFECT" - No changes can be made to the instance.
 //	"REFRESH" - The instance will not restart.
 //	"RESTART" - The instance will restart, potentially on a different host.
+//	"RESTART_IN_PLACE" - The instance will restart on the same host. Data on
+//
+// all local SSDs
+// will be preserved.
 func (c *InstancesUpdateCall) MostDisruptiveAllowedAction(mostDisruptiveAllowedAction string) *InstancesUpdateCall {
 	c.urlParams_.Set("mostDisruptiveAllowedAction", mostDisruptiveAllowedAction)
 	return c

@@ -9452,15 +9452,14 @@ func (c *CustomersChromeBrowsersListCall) Filter(filter string) *CustomersChrome
 
 // OrderBy sets the optional parameter "orderBy": The fields used to specify
 // the ordering of the results. The supported fields are: *
-// `browser_permanent_id` * `last_sync` * `annotated_user` *
+// `browser_permanent_id` * `last_policy_fetch_time` * `annotated_user` *
 // `annotated_location` * `annotated_asset_id` * `annotated_notes` *
-// `org_unit_path` * `os_version` * `enrollment_date` * `extension_count` *
-// `policy_count` * `last_signed_in_user` * `machine_name` *
+// `org_unit_path` * `os_version` * `last_registration_time` *
+// `extension_count` * `policy_count` * `last_device_user` * `machine_name` *
 // `browser_version_channel` * `os_platform_version` * `last_activity_time` *
 // `browser_version` By default, sorting is in ascending order, to specify
 // descending order for a field, a suffix ` desc` should be added to the field
-// name. The default ordering is the descending order of
-// `last_status_report_time`.
+// name. The default ordering is the ascending order of `browser_permanent_id`.
 func (c *CustomersChromeBrowsersListCall) OrderBy(orderBy string) *CustomersChromeBrowsersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

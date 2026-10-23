@@ -1598,8 +1598,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnonRssAndSwapMemoryUsageMetricSet
 	// magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. * Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// most 1000 rows will be returned. The maximum value is 10000; values above
+	// 10000 will be coerced to 10000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. * A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -1734,8 +1734,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryAnrRateMetricSetRequest struct {
 	// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100,000; values above
-	// 100,000 will be coerced to 100,000.
+	// most 1000 rows will be returned. The maximum value is 10,000; values above
+	// 10,000 will be coerced to 10,000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -1865,8 +1865,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryBitmapMemoryUsageMetricSetRequest 
 	// 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// most 1000 rows will be returned. The maximum value is 10000; values above
+	// 10000 will be coerced to 10000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -2004,8 +2004,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryCrashRateMetricSetRequest struct {
 	// magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100,000; values above
-	// 100,000 will be coerced to 100,000.
+	// most 1000 rows will be returned. The maximum value is 10,000; values above
+	// 10,000 will be coerced to 10,000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -2133,8 +2133,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryErrorCountMetricSetRequest struct 
 	// however it may be an approximation.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// most 1000 rows will be returned. The maximum value is 10000; values above
+	// 10000 will be coerced to 10000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -2248,8 +2248,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryExcessiveWakeupRateMetricSetReques
 	// value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// most 1000 rows will be returned. The maximum value is 10000; values above
+	// 10000 will be coerced to 10000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -2376,8 +2376,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryLmkRateMetricSetRequest struct {
 	// 100, 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100,000; values above
-	// 100,000 will be coerced to 100,000.
+	// most 1000 rows will be returned. The maximum value is 10,000; values above
+	// 10,000 will be coerced to 10,000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -2517,8 +2517,8 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowRenderingRateMetricSetRequest 
 	// 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// most 1000 rows will be returned. The maximum value is 10000; values above
+	// 10000 will be coerced to 10000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -2642,8 +2642,8 @@ type GooglePlayDeveloperReportingV1alpha1QuerySlowStartRateMetricSetRequest stru
 	// on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// most 1000 rows will be returned. The maximum value is 10000; values above
+	// 10000 will be coerced to 10000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters
@@ -2769,8 +2769,8 @@ type GooglePlayDeveloperReportingV1alpha1QueryStuckBackgroundWakelockRateMetricS
 	// 1,000 or 1,000,000, depending on the magnitude of the value.
 	Metrics []string `json:"metrics,omitempty"`
 	// PageSize: Optional. Maximum size of the returned data. If unspecified, at
-	// most 1000 rows will be returned. The maximum value is 100000; values above
-	// 100000 will be coerced to 100000.
+	// most 1000 rows will be returned. The maximum value is 10000; values above
+	// 10000 will be coerced to 10000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional. A page token, received from a previous call. Provide
 	// this to retrieve the subsequent page. When paginating, all other parameters

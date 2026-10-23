@@ -2049,8 +2049,11 @@ func (s Headers) MarshalJSON() ([]byte, error) {
 // online store URL verification
 // (//support.google.com/merchants/answer/176793).
 type Homepage struct {
-	// Claimed: Output only. Whether the homepage is claimed. See
-	// https://support.google.com/merchants/answer/176793.
+	// Claimed: Output only. Whether the homepage is claimed. See About online
+	// store URL verification (https://support.google.com/merchants/answer/176793).
+	// This field is also `true` if the account inherits the claim from its
+	// advanced account, or if the account is exempted from claiming, even when the
+	// homepage isn't claimed directly on the account.
 	Claimed bool `json:"claimed,omitempty"`
 	// Name: Identifier. The resource name of the store's homepage. Format:
 	// `accounts/{account}/homepage`
@@ -7843,7 +7846,12 @@ type AccountsHomepageUnclaimCall struct {
 }
 
 // Unclaim: Unclaims a store's homepage. Executing this method requires admin
-// access.
+// access. This method only removes a claim made directly on the account. If
+// the account inherits the claim from its advanced account (for example, from
+// an advanced account that is exempted from claiming), the homepage stays
+// claimed: the method returns a successful response and `claimed` remains
+// `true`. If the account itself is exempted from claiming, the method returns
+// a `FAILED_PRECONDITION` error.
 //
 //   - name: The name of the homepage to unclaim. Format:
 //     `accounts/{account}/homepage`.

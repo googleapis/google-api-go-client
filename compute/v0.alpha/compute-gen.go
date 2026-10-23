@@ -2139,6 +2139,13 @@ type AcceleratorPodController struct {
 	// ManagementInterfaces: Map of management interfaces. Keys must be valid
 	// RFC1035 names and at most
 	// 63 characters long.
+	// For TYPE_NVLINK_SWITCH_MONITORING interfaces, keys must match the
+	// pattern
+	// "gnmi-nvswitch-[0-8]" (e.g., "gnmi-nvswitch-0" through
+	// "gnmi-nvswitch-8").
+	// For TYPE_NVLINK_SWITCH_DEBUG interfaces, keys must match the
+	// pattern
+	// "gnoi-nvswitch-[0-8]" (e.g., "gnoi-nvswitch-0" through "gnoi-nvswitch-8").
 	ManagementInterfaces map[string]ManagementInterface `json:"managementInterfaces,omitempty"`
 	// Name: Required. The name of the resource, provided by the client when
 	// initially creating
@@ -9775,6 +9782,9 @@ type BackendServiceHAPolicy struct {
 	//    Advertisement(RA) packet (IPv6).  Google Cloud immediately but
 	//    temporarily associates the forwarding rule IP address with that VM, and
 	//    both new and in-flight packets are quickly delivered to that VM.
+	//    - HA_CONTROLLER: The Backend Service is managed by a High Availability
+	//    Controller. Failover and leader election are exclusively managed by the
+	//    HA Controller service.
 	//
 	//
 	//
@@ -11701,8 +11711,15 @@ func (s BulkInsertDiskResource) MarshalJSON() ([]byte, error) {
 type BulkInsertInstanceResource struct {
 	// Count: The maximum number of instances to create.
 	Count int64 `json:"count,omitempty,string"`
-	// InstanceFlexibilityPolicy: A flexible specification of machine type of
-	// instances to create.
+	// InstanceFlexibilityPolicy: A specification of alternative machine types to
+	// use when creating
+	// instances. A single bulkInsert request can create instances with
+	// multiple
+	// different machine types based on capacity and quota availability. This
+	// field is supported only for regional bulkInsert requests. For
+	// more
+	// information, see About
+	// instance flexibility for VMs created in bulk.
 	InstanceFlexibilityPolicy *InstanceFlexibilityPolicy `json:"instanceFlexibilityPolicy,omitempty"`
 	// InstanceProperties: The instance properties defining the VM instances to be
 	// created. Required
@@ -11953,7 +11970,11 @@ type CacheInvalidationRule struct {
 	ContentType string `json:"contentType,omitempty"`
 	// Host: If set, this invalidation rule will only apply to requests with a
 	// Host
-	// header matching host.
+	// header matching host. This field also accepts wildcards (*) to replace
+	// the
+	// leftmost (or first) label of a hostname. For example, *.example.com
+	// will
+	// match www.example.com, but not sub1.dev.example.com.
 	Host string `json:"host,omitempty"`
 	// HttpStatus: If set, this invalidation rule will only apply to responses with
 	// the
@@ -13606,6 +13627,8 @@ type Commitment struct {
 	//   "COMPUTE_OPTIMIZED_C3D"
 	//   "COMPUTE_OPTIMIZED_H3"
 	//   "COMPUTE_OPTIMIZED_H4D"
+	//   "COMPUTE_OPTIMIZED_H4D_3TB" - CUD bucket for COMPUTE_OPTIMIZED_H4D_3TB
+	// machines.
 	//   "GENERAL_PURPOSE"
 	//   "GENERAL_PURPOSE_C4"
 	//   "GENERAL_PURPOSE_C4A"
@@ -13623,8 +13646,10 @@ type Commitment struct {
 	//   "MEMORY_OPTIMIZED"
 	//   "MEMORY_OPTIMIZED_M3"
 	//   "MEMORY_OPTIMIZED_M4"
-	//   "MEMORY_OPTIMIZED_M4N"
-	//   "MEMORY_OPTIMIZED_M4N_6TB"
+	//   "MEMORY_OPTIMIZED_M4N" - CUD bucket for M4N machines with less than 6TB of
+	// memory.
+	//   "MEMORY_OPTIMIZED_M4N_6TB" - CUD bucket for M4N machines with 6TB of
+	// memory.
 	//   "MEMORY_OPTIMIZED_M4_6TB"
 	//   "MEMORY_OPTIMIZED_X4"
 	//   "MEMORY_OPTIMIZED_X4_1440_24T" - CUD bucket for X4 machine with 1440 vCPUs
@@ -34227,16 +34252,9 @@ func (s InstanceConsumptionInfo) MarshalJSON() ([]byte, error) {
 // InstanceFlexibilityPolicy: A flexible specification of machine types for
 // instances to create.
 type InstanceFlexibilityPolicy struct {
-	// InstanceSelections: Specification of alternative, flexible instance
-	// subsets.
-	// One of them will be selected to create the instances
-	// based on various criteria, like:
-	// - ranks,
-	// - location policy,
-	// - current capacity,
-	// - available reservations (you can specify affinity in
-	// InstanceProperties),
-	// - SWAN/GOOSE limitations.
+	// InstanceSelections: Specifies named instance selections that define
+	// properties for instances
+	// created in bulk.
 	// Key is an arbitrary, unique RFC1035 string that identifies the
 	// instance
 	// selection.
@@ -51681,6 +51699,8 @@ type ManagementInterface struct {
 	//
 	// Possible values:
 	//   "TYPE_NVLINK_PARTITION_MANAGEMENT"
+	//   "TYPE_NVLINK_SWITCH_DEBUG" - Management interface for NVLink switch
+	// debugging via gNOI.
 	//   "TYPE_NVLINK_SWITCH_MONITORING"
 	//   "TYPE_UNSPECIFIED"
 	Type string `json:"type,omitempty"`
@@ -81034,8 +81054,11 @@ type Scheduling struct {
 	// for
 	// Standard VMs and 30s for Spot/Preemptible VMs.
 	ShutdownTimeout *Duration `json:"shutdownTimeout,omitempty"`
-	// SkipGuestOsShutdown: Default is false and there will be 120 seconds between
-	// GCE ACPI G2 Soft
+	// SkipGuestOsShutdown: Defines whether GCE ACPI G2 Soft
+	// Off signal should be skipped during shutdown operation of VM.
+	//
+	// Default is false, meaning there will be 120 seconds between GCE ACPI G2
+	// Soft
 	// Off and ACPI G3 Mechanical
 	// Off for Standard VMs and 30 seconds for Spot VMs.
 	SkipGuestOsShutdown bool `json:"skipGuestOsShutdown,omitempty"`
@@ -101309,7 +101332,9 @@ func (s VpnTunnelAggregatedListWarningData) MarshalJSON() ([]byte, error) {
 }
 
 type VpnTunnelCipherSuite struct {
+	// Phase1: Cipher algorithms for IKE phase 1.
 	Phase1 *VpnTunnelPhase1Algorithms `json:"phase1,omitempty"`
+	// Phase2: Cipher algorithms for IKE phase 2.
 	Phase2 *VpnTunnelPhase2Algorithms `json:"phase2,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Phase1") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -101546,10 +101571,14 @@ func (s VpnTunnelParams) MarshalJSON() ([]byte, error) {
 }
 
 type VpnTunnelPhase1Algorithms struct {
-	Dh         []string `json:"dh,omitempty"`
+	// Dh: Diffie-Hellman groups for IKE phase 1.
+	Dh []string `json:"dh,omitempty"`
+	// Encryption: Encryption algorithms for IKE phase 1.
 	Encryption []string `json:"encryption,omitempty"`
-	Integrity  []string `json:"integrity,omitempty"`
-	Prf        []string `json:"prf,omitempty"`
+	// Integrity: Integrity algorithms for IKE phase 1.
+	Integrity []string `json:"integrity,omitempty"`
+	// Prf: Pseudo-random functions (PRF) for IKE phase 1.
+	Prf []string `json:"prf,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Dh") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -101569,9 +101598,12 @@ func (s VpnTunnelPhase1Algorithms) MarshalJSON() ([]byte, error) {
 }
 
 type VpnTunnelPhase2Algorithms struct {
+	// Encryption: Encryption algorithms for IKE phase 2.
 	Encryption []string `json:"encryption,omitempty"`
-	Integrity  []string `json:"integrity,omitempty"`
-	Pfs        []string `json:"pfs,omitempty"`
+	// Integrity: Integrity algorithms for IKE phase 2.
+	Integrity []string `json:"integrity,omitempty"`
+	// Pfs: Perfect Forward Secrecy (PFS) groups for IKE phase 2.
+	Pfs []string `json:"pfs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Encryption") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

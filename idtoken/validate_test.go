@@ -285,6 +285,96 @@ func createES256JWT(t *testing.T) (string, ecdsa.PublicKey) {
 	return token.String(), privateKey.PublicKey
 }
 
+// TestValidateES256_ShortSignature confirms that a JWT whose ES256 signature
+// segment decodes to fewer than es256KeySize*2 bytes is rejected with an
+// error rather than causing an unrecovered panic.
+func TestValidateES256_ShortSignature(t *testing.T) {
+	token := commonToken(t, "ES256")
+	token.signature = base64.RawURLEncoding.EncodeToString([]byte{0x01, 0x02, 0x03})
+	idToken := token.String()
+
+	client := &http.Client{
+		Transport: RoundTripFn(func(req *http.Request) *http.Response {
+			cr := certResponse{
+				Keys: []jwk{
+					{
+						Kid: keyID,
+						X:   base64.RawURLEncoding.EncodeToString([]byte{0x01}),
+						Y:   base64.RawURLEncoding.EncodeToString([]byte{0x01}),
+					},
+				},
+			}
+			b, err := json.Marshal(&cr)
+			if err != nil {
+				t.Fatalf("unable to marshal response: %v", err)
+			}
+			return &http.Response{
+				StatusCode: 200,
+				Body:       io.NopCloser(bytes.NewReader(b)),
+				Header:     make(http.Header),
+			}
+		}),
+	}
+	oldNow := now
+	defer func() { now = oldNow }()
+	now = beforeExp
+
+	v, err := NewValidator(context.Background(), option.WithHTTPClient(client))
+	if err != nil {
+		t.Fatalf("NewValidator(...) = %q, want nil", err)
+	}
+
+	_, err = v.Validate(context.Background(), idToken, testAudience)
+	if err == nil {
+		t.Fatalf("Validate(ctx, %s, %s) = nil, want error for short ES256 signature", idToken, testAudience)
+	}
+}
+
+// TestValidateES256_OverlongSignature confirms that an oversized ES256
+// signature is also rejected, rather than being silently truncated.
+func TestValidateES256_OverlongSignature(t *testing.T) {
+	token := commonToken(t, "ES256")
+	overlong := make([]byte, es256KeySize*2+1)
+	token.signature = base64.RawURLEncoding.EncodeToString(overlong)
+	idToken := token.String()
+
+	client := &http.Client{
+		Transport: RoundTripFn(func(req *http.Request) *http.Response {
+			cr := certResponse{
+				Keys: []jwk{
+					{
+						Kid: keyID,
+						X:   base64.RawURLEncoding.EncodeToString([]byte{0x01}),
+						Y:   base64.RawURLEncoding.EncodeToString([]byte{0x01}),
+					},
+				},
+			}
+			b, err := json.Marshal(&cr)
+			if err != nil {
+				t.Fatalf("unable to marshal response: %v", err)
+			}
+			return &http.Response{
+				StatusCode: 200,
+				Body:       io.NopCloser(bytes.NewReader(b)),
+				Header:     make(http.Header),
+			}
+		}),
+	}
+	oldNow := now
+	defer func() { now = oldNow }()
+	now = beforeExp
+
+	v, err := NewValidator(context.Background(), option.WithHTTPClient(client))
+	if err != nil {
+		t.Fatalf("NewValidator(...) = %q, want nil", err)
+	}
+
+	_, err = v.Validate(context.Background(), idToken, testAudience)
+	if err == nil {
+		t.Fatalf("Validate(ctx, %s, %s) = nil, want error for overlong ES256 signature", idToken, testAudience)
+	}
+}
+
 func createRS256JWT(t *testing.T) (string, rsa.PublicKey) {
 	t.Helper()
 	token := commonToken(t, "RS256")

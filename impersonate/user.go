@@ -20,12 +20,13 @@ import (
 
 // user provides an auth flow for domain-wide delegation, setting
 // CredentialsConfig.Subject to be the impersonated user.
-func user(ctx context.Context, c CredentialsConfig, client *http.Client, lifetime time.Duration, isStaticToken bool) (oauth2.TokenSource, error) {
+func user(ctx context.Context, c CredentialsConfig, client *http.Client, lifetime time.Duration, isStaticToken bool, ud string) (oauth2.TokenSource, error) {
 	u := userTokenSource{
 		client:          client,
 		targetPrincipal: c.TargetPrincipal,
 		subject:         c.Subject,
 		lifetime:        lifetime,
+		universeDomain:  ud,
 	}
 	u.delegates = make([]string, len(c.Delegates))
 	for i, v := range c.Delegates {
@@ -80,6 +81,7 @@ type userTokenSource struct {
 	scopes          []string
 	lifetime        time.Duration
 	delegates       []string
+	universeDomain  string
 }
 
 func (u userTokenSource) Token() (*oauth2.Token, error) {
@@ -97,7 +99,7 @@ func (u userTokenSource) signJWT() (string, error) {
 		Iss:   u.targetPrincipal,
 		Scope: strings.Join(u.scopes, " "),
 		Sub:   u.subject,
-		Aud:   fmt.Sprintf("%s/token", oauth2Endpoint),
+		Aud:   fmt.Sprintf("%s/token", oauth2Endpoint(u.universeDomain)),
 		Iat:   now.Unix(),
 		Exp:   exp.Unix(),
 	}
@@ -114,7 +116,7 @@ func (u userTokenSource) signJWT() (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("impersonate: unable to marshal request: %v", err)
 	}
-	reqURL := fmt.Sprintf("%s/v1/%s:signJwt", iamCredentailsEndpoint, formatIAMServiceAccountName(u.targetPrincipal))
+	reqURL := fmt.Sprintf("%s/v1/%s:signJwt", iamCredentialsEndpoint(u.universeDomain), formatIAMServiceAccountName(u.targetPrincipal))
 	req, err := http.NewRequest("POST", reqURL, bytes.NewReader(bodyBytes))
 	if err != nil {
 		return "", fmt.Errorf("impersonate: unable to create request: %v", err)
@@ -145,7 +147,7 @@ func (u userTokenSource) exchangeToken(signedJWT string) (*oauth2.Token, error) 
 	v.Set("grant_type", "assertion")
 	v.Set("assertion_type", "http://oauth.net/grant_type/jwt/1.0/bearer")
 	v.Set("assertion", signedJWT)
-	rawResp, err := u.client.PostForm(fmt.Sprintf("%s/token", oauth2Endpoint), v)
+	rawResp, err := u.client.PostForm(fmt.Sprintf("%s/token", oauth2Endpoint(u.universeDomain)), v)
 	if err != nil {
 		return nil, fmt.Errorf("impersonate: unable to exchange token: %v", err)
 	}

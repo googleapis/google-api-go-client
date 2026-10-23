@@ -22,8 +22,6 @@ import (
 )
 
 var (
-	iamCredentailsEndpoint                      = "https://iamcredentials.googleapis.com"
-	oauth2Endpoint                              = "https://oauth2.googleapis.com"
 	errMissingTargetPrincipal                   = errors.New("impersonate: a target service account must be provided")
 	errMissingScopes                            = errors.New("impersonate: scopes must be provided")
 	errLifetimeOverMax                          = errors.New("impersonate: max lifetime is 12 hours")
@@ -55,11 +53,33 @@ type CredentialsConfig struct {
 	Subject string
 }
 
+// iamCredentialsEndpoint returns the IAM Credentials API endpoint for the
+// given universe domain.
+func iamCredentialsEndpoint(universeDomain string) string {
+	return "https://iamcredentials." + universeDomain
+}
+
+// oauth2Endpoint returns the OAuth 2.0 authorization server endpoint for the
+// given universe domain.
+func oauth2Endpoint(universeDomain string) string {
+	return "https://oauth2." + universeDomain
+}
+
+// universeDomain returns the universe domain configured in opts, or the Google
+// default universe domain if opts do not configure one.
+func universeDomain(opts []option.ClientOption) string {
+	var ds internal.DialSettings
+	for _, opt := range opts {
+		opt.Apply(&ds)
+	}
+	return ds.GetUniverseDomain()
+}
+
 // defaultClientOptions ensures the base credentials will work with the IAM
 // Credentials API if no scope or audience is set by the user.
-func defaultClientOptions() []option.ClientOption {
+func defaultClientOptions(ud string) []option.ClientOption {
 	return []option.ClientOption{
-		internaloption.WithDefaultAudience("https://iamcredentials.googleapis.com/"),
+		internaloption.WithDefaultAudience(iamCredentialsEndpoint(ud) + "/"),
 		internaloption.WithDefaultScopes("https://www.googleapis.com/auth/cloud-platform"),
 	}
 }
@@ -88,7 +108,8 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 		isStaticToken = true
 	}
 
-	clientOpts := append(defaultClientOptions(), opts...)
+	ud := universeDomain(opts)
+	clientOpts := append(defaultClientOptions(ud), opts...)
 	client, _, err := htransport.NewClient(ctx, clientOpts...)
 	if err != nil {
 		return nil, err
@@ -103,13 +124,14 @@ func CredentialsTokenSource(ctx context.Context, config CredentialsConfig, opts 
 		if !settings.IsUniverseDomainGDU() {
 			return nil, errUniverseNotSupportedDomainWideDelegation
 		}
-		return user(ctx, config, client, lifetime, isStaticToken)
+		return user(ctx, config, client, lifetime, isStaticToken, ud)
 	}
 
 	its := impersonatedTokenSource{
 		client:          client,
 		targetPrincipal: config.TargetPrincipal,
 		lifetime:        fmt.Sprintf("%.fs", lifetime.Seconds()),
+		universeDomain:  ud,
 	}
 	for _, v := range config.Delegates {
 		its.delegates = append(its.delegates, formatIAMServiceAccountName(v))
@@ -161,6 +183,7 @@ type impersonatedTokenSource struct {
 	lifetime        string
 	scopes          []string
 	delegates       []string
+	universeDomain  string
 }
 
 // Token returns an impersonated Token.
@@ -174,7 +197,7 @@ func (i impersonatedTokenSource) Token() (*oauth2.Token, error) {
 	if err != nil {
 		return nil, fmt.Errorf("impersonate: unable to marshal request: %v", err)
 	}
-	url := fmt.Sprintf("%s/v1/%s:generateAccessToken", iamCredentailsEndpoint, formatIAMServiceAccountName(i.targetPrincipal))
+	url := fmt.Sprintf("%s/v1/%s:generateAccessToken", iamCredentialsEndpoint(i.universeDomain), formatIAMServiceAccountName(i.targetPrincipal))
 	req, err := http.NewRequest("POST", url, bytes.NewReader(b))
 	if err != nil {
 		return nil, fmt.Errorf("impersonate: unable to create request: %v", err)

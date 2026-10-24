@@ -2859,7 +2859,8 @@ type CatalogAppView struct {
 	// AppSubcategory: The subcategory of the app e.g. "GAME_ACTION".
 	AppSubcategory string `json:"appSubcategory,omitempty"`
 	// DeliveryToken: The token used for delivery of the app with the Google Play
-	// Inline Install API.
+	// Inline Install API. The token is unique per Play app and per third-party app
+	// store combination and has a limited validity period of 7 days.
 	DeliveryToken string `json:"deliveryToken,omitempty"`
 	// DeveloperDetails: The developer details of the app.
 	DeveloperDetails *DeveloperDetails `json:"developerDetails,omitempty"`
@@ -7238,13 +7239,13 @@ type OneTimeProductOfferRegionalPricingAndAvailabilityConfig struct {
 	// RegionCode: Required. Region code this configuration applies to, as defined
 	// by ISO 3166-2, e.g., "US".
 	RegionCode string `json:"regionCode,omitempty"`
-	// RelativeDiscount: The fraction of the purchase option price that the user
-	// pays for this offer. For example, if the purchase option price for this
-	// region is $12, then a 50% discount would correspond to a price of $6. The
-	// discount must be specified as a fraction strictly larger than 0 and strictly
-	// smaller than 1. The resulting price will be rounded to the nearest billable
-	// unit (e.g. cents for USD). The relative discount is considered invalid if
-	// the discounted price ends up being smaller than the minimum price allowed in
+	// RelativeDiscount: The percentage discount subtracted from the purchase
+	// option price, specified as a fraction strictly larger than `0` and strictly
+	// smaller than `1`. For example, a value of `0.8` represents an 80% discount,
+	// meaning that if the purchase option price is $100, the offer price will be
+	// $20. The resulting price will be rounded to the nearest billable unit (e.g.
+	// cents for USD). The relative discount is considered invalid if the
+	// discounted price ends up being smaller than the minimum price allowed in
 	// this region.
 	RelativeDiscount float64 `json:"relativeDiscount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AbsoluteDiscount") to
@@ -7815,12 +7816,11 @@ func (s OtherRegionsSubscriptionOfferConfig) MarshalJSON() ([]byte, error) {
 // locations Play may launch in for a single offer phase.
 type OtherRegionsSubscriptionOfferPhaseConfig struct {
 	// AbsoluteDiscounts: The absolute amount of money subtracted from the base
-	// plan price prorated over the phase duration that the user pays for this
-	// offer phase. For example, if the base plan price for this region is $12 for
-	// a period of 1 year, then a $1 absolute discount for a phase of a duration of
-	// 3 months would correspond to a price of $2. The resulting price may not be
-	// smaller than the minimum price allowed for any new locations Play may launch
-	// in.
+	// plan price prorated over the phase duration. For example, if the base plan
+	// price for this region is $12 for a period of 1 year, then a $1 absolute
+	// discount for a phase of a duration of 3 months would correspond to a price
+	// of $2. The resulting price may not be smaller than the minimum price allowed
+	// for any new locations Play may launch in.
 	AbsoluteDiscounts *OtherRegionsSubscriptionOfferPhasePrices `json:"absoluteDiscounts,omitempty"`
 	// Free: Set to specify this offer is free to obtain.
 	Free *OtherRegionsSubscriptionOfferPhaseFreePriceOverride `json:"free,omitempty"`
@@ -7828,13 +7828,12 @@ type OtherRegionsSubscriptionOfferPhaseConfig struct {
 	// The price must not be smaller than the minimum price allowed for any new
 	// locations Play may launch in.
 	OtherRegionsPrices *OtherRegionsSubscriptionOfferPhasePrices `json:"otherRegionsPrices,omitempty"`
-	// RelativeDiscount: The fraction of the base plan price prorated over the
-	// phase duration that the user pays for this offer phase. For example, if the
-	// base plan price for this region is $12 for a period of 1 year, then a 50%
-	// discount for a phase of a duration of 3 months would correspond to a price
-	// of $1.50. The discount must be specified as a fraction strictly larger than
-	// 0 and strictly smaller than 1. The resulting price will be rounded to the
-	// nearest billable unit (e.g. cents for USD). The relative discount is
+	// RelativeDiscount: The percentage discount subtracted from the base plan
+	// price prorated over the phase duration, specified as a fraction strictly
+	// larger than `0` and strictly smaller than `1`. For example, a value of `0.8`
+	// represents an 80% discount, meaning that if the prorated base plan price is
+	// $100, the offer price will be $20. The resulting price will be rounded to
+	// the nearest billable unit (e.g. cents for USD). The relative discount is
 	// considered invalid if the discounted price ends up being smaller than the
 	// minimum price allowed in any new locations Play may launch in.
 	RelativeDiscount float64 `json:"relativeDiscount,omitempty"`
@@ -9201,11 +9200,11 @@ func (s RegionalSubscriptionOfferConfig) MarshalJSON() ([]byte, error) {
 // subscription offer in a single region.
 type RegionalSubscriptionOfferPhaseConfig struct {
 	// AbsoluteDiscount: The absolute amount of money subtracted from the base plan
-	// price prorated over the phase duration that the user pays for this offer
-	// phase. For example, if the base plan price for this region is $12 for a
-	// period of 1 year, then a $1 absolute discount for a phase of a duration of 3
-	// months would correspond to a price of $2. The resulting price may not be
-	// smaller than the minimum price allowed for this region.
+	// price prorated over the phase duration. For example, if the base plan price
+	// for this region is $12 for a period of 1 year, then a $1 absolute discount
+	// for a phase of a duration of 3 months would correspond to a price of $2. The
+	// resulting price may not be smaller than the minimum price allowed for this
+	// region.
 	AbsoluteDiscount *Money `json:"absoluteDiscount,omitempty"`
 	// Free: Set to specify this offer is free to obtain.
 	Free *RegionalSubscriptionOfferPhaseFreePriceOverride `json:"free,omitempty"`
@@ -9214,13 +9213,12 @@ type RegionalSubscriptionOfferPhaseConfig struct {
 	Price *Money `json:"price,omitempty"`
 	// RegionCode: Required. Immutable. The region to which this config applies.
 	RegionCode string `json:"regionCode,omitempty"`
-	// RelativeDiscount: The fraction of the base plan price prorated over the
-	// phase duration that the user pays for this offer phase. For example, if the
-	// base plan price for this region is $12 for a period of 1 year, then a 50%
-	// discount for a phase of a duration of 3 months would correspond to a price
-	// of $1.50. The discount must be specified as a fraction strictly larger than
-	// 0 and strictly smaller than 1. The resulting price will be rounded to the
-	// nearest billable unit (e.g. cents for USD). The relative discount is
+	// RelativeDiscount: The percentage discount subtracted from the base plan
+	// price prorated over the phase duration, specified as a fraction strictly
+	// larger than `0` and strictly smaller than `1`. For example, a value of `0.8`
+	// represents an 80% discount, meaning that if the prorated base plan price is
+	// $100, the offer price will be $20. The resulting price will be rounded to
+	// the nearest billable unit (e.g. cents for USD). The relative discount is
 	// considered invalid if the discounted price ends up being smaller than the
 	// minimum price allowed in this region.
 	RelativeDiscount float64 `json:"relativeDiscount,omitempty"`

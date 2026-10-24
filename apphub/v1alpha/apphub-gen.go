@@ -276,6 +276,11 @@ type ProjectsLocationsServiceProjectAttachmentsService struct {
 // supports application level IAM permission to align with governance
 // requirements.
 type Application struct {
+	// ApplicationProperties: Output only. Properties of an underlying cloud
+	// resource that can comprise an Application.
+	ApplicationProperties *ApplicationProperties `json:"applicationProperties,omitempty"`
+	// ApplicationType: Output only. Application type.
+	ApplicationType *ApplicationType `json:"applicationType,omitempty"`
 	// Attributes: Optional. Consumer provided attributes.
 	Attributes *Attributes `json:"attributes,omitempty"`
 	// CreateTime: Output only. Create time.
@@ -309,21 +314,72 @@ type Application struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Attributes") to
+	// ForceSendFields is a list of field names (e.g. "ApplicationProperties") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Attributes") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ApplicationProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s Application) MarshalJSON() ([]byte, error) {
 	type NoMethod Application
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApplicationProperties: Additional system properties of an Application.
+type ApplicationProperties struct {
+	// ExtendedMetadata: Output only. Additional metadata specific to the App Hub
+	// application. The key is a string that identifies the type of metadata and
+	// the value is the metadata contents specific to that type. Key format:
+	// `apphub.googleapis.com/{metadataType}`
+	ExtendedMetadata map[string]ExtendedMetadata `json:"extendedMetadata,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExtendedMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExtendedMetadata") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApplicationProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApplicationType: Application type.
+type ApplicationType struct {
+	// Type: The type of the application.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "AI_APPLICATION" - AI Application type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApplicationType) MarshalJSON() ([]byte, error) {
+	type NoMethod ApplicationType
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

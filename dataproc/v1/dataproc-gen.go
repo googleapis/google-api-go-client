@@ -7716,6 +7716,7 @@ type SoftwareConfig struct {
 	// Possible values:
 	//   "COMPONENT_UNSPECIFIED" - Unspecified component. Specifying this will
 	// cause Cluster creation to fail.
+	//   "ALLOYDB_CONNECTOR" - The AlloyDB Connector.
 	//   "ANACONDA" - The Anaconda component is no longer supported or applicable
 	// to supported Dataproc on Compute Engine image versions
 	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-version-clusters#supported-dataproc-image-versions).

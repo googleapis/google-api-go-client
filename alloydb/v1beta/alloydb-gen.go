@@ -658,6 +658,32 @@ func (s BackupSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CertificateAuthorityInfo: Certificate Authority (CA) information for the
+// cluster.
+type CertificateAuthorityInfo struct {
+	// RootCaCert: Output only. The PEM-encoded root CA certificate of the cluster.
+	// Save this to a file (conventionally `root.crt`) and point the PostgreSQL
+	// client at it to authenticate by connecting with `sslmode=verify-full` or
+	// `sslmode=verify-ca`.
+	RootCaCert string `json:"rootCaCert,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RootCaCert") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RootCaCert") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CertificateAuthorityInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateAuthorityInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ClientConnectionConfig: Client connection configuration
 type ClientConnectionConfig struct {
 	// RequireConnectors: Optional. Configuration to enforce connectors only (ex:
@@ -765,6 +791,9 @@ type Cluster struct {
 	// BackupdrInfo: Output only. Output only information about BackupDR protection
 	// for this cluster.
 	BackupdrInfo *BackupDrInfo `json:"backupdrInfo,omitempty"`
+	// CertificateAuthorityInfo: Output only. Certificate Authority (CA)
+	// information for the cluster.
+	CertificateAuthorityInfo *CertificateAuthorityInfo `json:"certificateAuthorityInfo,omitempty"`
 	// CloudsqlBackupRunSource: Output only. Cluster created from CloudSQL
 	// snapshot.
 	CloudsqlBackupRunSource *CloudSQLBackupRunSource `json:"cloudsqlBackupRunSource,omitempty"`
@@ -2165,6 +2194,8 @@ type Instance struct {
 	Name string `json:"name,omitempty"`
 	// NetworkConfig: Optional. Instance-level network configuration.
 	NetworkConfig *InstanceNetworkConfig `json:"networkConfig,omitempty"`
+	// NetworkInfo: Output only. Instance-level network information.
+	NetworkInfo *InstanceNetworkInfo `json:"networkInfo,omitempty"`
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
@@ -2290,6 +2321,8 @@ type InstanceNetworkConfig struct {
 	// is specified in the form: //
 	// `projects/{project_number}/global/networks/{network_id}`.
 	Network string `json:"network,omitempty"`
+	// PublicDnsEnabled: Optional. Whether Public DNS is enabled for the instance.
+	PublicDnsEnabled bool `json:"publicDnsEnabled,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllocatedIpRangeOverride")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2305,6 +2338,30 @@ type InstanceNetworkConfig struct {
 
 func (s InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceNetworkConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceNetworkInfo: Output-only metadata related to instance-level network
+// information.
+type InstanceNetworkInfo struct {
+	// PublicDnsName: Output only. The DNS name of the instance for public
+	// connectivity.
+	PublicDnsName string `json:"publicDnsName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PublicDnsName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PublicDnsName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceNetworkInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceNetworkInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

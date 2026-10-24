@@ -446,6 +446,16 @@ func (s GoogleIdentityStsV1AccessBoundaryRule) MarshalJSON() ([]byte, error) {
 
 // GoogleIdentityStsV1ExchangeTokenRequest: Request message for ExchangeToken.
 type GoogleIdentityStsV1ExchangeTokenRequest struct {
+	// ActorToken: Optional. A security token that represents the identity of the
+	// acting party. Typically, this is the party that is authorized to use the
+	// requested security token and act on behalf of the subject.
+	ActorToken string `json:"actorToken,omitempty"`
+	// ActorTokenType: Optional. An identifier that indicates the type of the
+	// security token in the `actor_token` parameter. Required when the
+	// `actor_token` parameter is set. Supported values are
+	// `urn:ietf:params:oauth:token-type:jwt`,
+	// `urn:ietf:params:oauth:token-type:id_token`.
+	ActorTokenType string `json:"actorTokenType,omitempty"`
 	// Audience: The full resource name of the identity provider; for example:
 	// `//iam.googleapis.com/projects//locations/global/workloadIdentityPools//provi
 	// ders/` for workload identity pool providers, or
@@ -577,13 +587,13 @@ type GoogleIdentityStsV1ExchangeTokenRequest struct {
 	// `urn:ietf:params:oauth:token-type:mtls`, and
 	// `urn:ietf:params:oauth:token-type:saml2`.
 	SubjectTokenType string `json:"subjectTokenType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Audience") to
+	// ForceSendFields is a list of field names (e.g. "ActorToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Audience") to include in API
+	// NullFields is a list of field names (e.g. "ActorToken") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

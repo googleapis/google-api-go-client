@@ -2808,6 +2808,9 @@ type GoogleCloudDataplexV1DataDocumentationSpec struct {
 	// CatalogPublishingEnabled: Optional. Whether to publish result to Dataplex
 	// Catalog.
 	CatalogPublishingEnabled bool `json:"catalogPublishingEnabled,omitempty"`
+	// CustomInstructions: Optional. Custom instructions for generating data
+	// documentation. The maximum length is 2,048 characters.
+	CustomInstructions string `json:"customInstructions,omitempty"`
 	// GenerationScopes: Optional. Specifies which components of the data
 	// documentation to generate. Any component that is required to generate the
 	// specified components will also be generated. If no generation scope is

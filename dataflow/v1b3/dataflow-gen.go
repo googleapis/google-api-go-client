@@ -9289,6 +9289,23 @@ func (r *ProjectsJobsService) Aggregated(projectId string) *ProjectsJobsAggregat
 	return c
 }
 
+// CreateTimeRangeEndTime sets the optional parameter
+// "createTimeRange.endTime": Exclusive end of the interval. If specified, a
+// Timestamp matching this interval will have to be before the end.
+func (c *ProjectsJobsAggregatedCall) CreateTimeRangeEndTime(createTimeRangeEndTime string) *ProjectsJobsAggregatedCall {
+	c.urlParams_.Set("createTimeRange.endTime", createTimeRangeEndTime)
+	return c
+}
+
+// CreateTimeRangeStartTime sets the optional parameter
+// "createTimeRange.startTime": Inclusive start of the interval. If specified,
+// a Timestamp matching this interval will have to be the same or after the
+// start.
+func (c *ProjectsJobsAggregatedCall) CreateTimeRangeStartTime(createTimeRangeStartTime string) *ProjectsJobsAggregatedCall {
+	c.urlParams_.Set("createTimeRange.startTime", createTimeRangeStartTime)
+	return c
+}
+
 // Filter sets the optional parameter "filter": The kind of filter to use.
 //
 // Possible values:
@@ -9348,6 +9365,23 @@ func (c *ProjectsJobsAggregatedCall) PageToken(pageToken string) *ProjectsJobsAg
 // "regionalFanoutRequested":
 func (c *ProjectsJobsAggregatedCall) RegionalFanoutRequested(regionalFanoutRequested bool) *ProjectsJobsAggregatedCall {
 	c.urlParams_.Set("regionalFanoutRequested", fmt.Sprint(regionalFanoutRequested))
+	return c
+}
+
+// TerminationTimeRangeEndTime sets the optional parameter
+// "terminationTimeRange.endTime": Exclusive end of the interval. If specified,
+// a Timestamp matching this interval will have to be before the end.
+func (c *ProjectsJobsAggregatedCall) TerminationTimeRangeEndTime(terminationTimeRangeEndTime string) *ProjectsJobsAggregatedCall {
+	c.urlParams_.Set("terminationTimeRange.endTime", terminationTimeRangeEndTime)
+	return c
+}
+
+// TerminationTimeRangeStartTime sets the optional parameter
+// "terminationTimeRange.startTime": Inclusive start of the interval. If
+// specified, a Timestamp matching this interval will have to be the same or
+// after the start.
+func (c *ProjectsJobsAggregatedCall) TerminationTimeRangeStartTime(terminationTimeRangeStartTime string) *ProjectsJobsAggregatedCall {
+	c.urlParams_.Set("terminationTimeRange.startTime", terminationTimeRangeStartTime)
 	return c
 }
 
@@ -9974,6 +10008,23 @@ func (r *ProjectsJobsService) List(projectId string) *ProjectsJobsListCall {
 	return c
 }
 
+// CreateTimeRangeEndTime sets the optional parameter
+// "createTimeRange.endTime": Exclusive end of the interval. If specified, a
+// Timestamp matching this interval will have to be before the end.
+func (c *ProjectsJobsListCall) CreateTimeRangeEndTime(createTimeRangeEndTime string) *ProjectsJobsListCall {
+	c.urlParams_.Set("createTimeRange.endTime", createTimeRangeEndTime)
+	return c
+}
+
+// CreateTimeRangeStartTime sets the optional parameter
+// "createTimeRange.startTime": Inclusive start of the interval. If specified,
+// a Timestamp matching this interval will have to be the same or after the
+// start.
+func (c *ProjectsJobsListCall) CreateTimeRangeStartTime(createTimeRangeStartTime string) *ProjectsJobsListCall {
+	c.urlParams_.Set("createTimeRange.startTime", createTimeRangeStartTime)
+	return c
+}
+
 // Filter sets the optional parameter "filter": The kind of filter to use.
 //
 // Possible values:
@@ -10033,6 +10084,23 @@ func (c *ProjectsJobsListCall) PageToken(pageToken string) *ProjectsJobsListCall
 // "regionalFanoutRequested":
 func (c *ProjectsJobsListCall) RegionalFanoutRequested(regionalFanoutRequested bool) *ProjectsJobsListCall {
 	c.urlParams_.Set("regionalFanoutRequested", fmt.Sprint(regionalFanoutRequested))
+	return c
+}
+
+// TerminationTimeRangeEndTime sets the optional parameter
+// "terminationTimeRange.endTime": Exclusive end of the interval. If specified,
+// a Timestamp matching this interval will have to be before the end.
+func (c *ProjectsJobsListCall) TerminationTimeRangeEndTime(terminationTimeRangeEndTime string) *ProjectsJobsListCall {
+	c.urlParams_.Set("terminationTimeRange.endTime", terminationTimeRangeEndTime)
+	return c
+}
+
+// TerminationTimeRangeStartTime sets the optional parameter
+// "terminationTimeRange.startTime": Inclusive start of the interval. If
+// specified, a Timestamp matching this interval will have to be the same or
+// after the start.
+func (c *ProjectsJobsListCall) TerminationTimeRangeStartTime(terminationTimeRangeStartTime string) *ProjectsJobsListCall {
+	c.urlParams_.Set("terminationTimeRange.startTime", terminationTimeRangeStartTime)
 	return c
 }
 
@@ -12509,6 +12577,23 @@ func (r *ProjectsLocationsJobsService) List(projectId string, location string) *
 	return c
 }
 
+// CreateTimeRangeEndTime sets the optional parameter
+// "createTimeRange.endTime": Exclusive end of the interval. If specified, a
+// Timestamp matching this interval will have to be before the end.
+func (c *ProjectsLocationsJobsListCall) CreateTimeRangeEndTime(createTimeRangeEndTime string) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("createTimeRange.endTime", createTimeRangeEndTime)
+	return c
+}
+
+// CreateTimeRangeStartTime sets the optional parameter
+// "createTimeRange.startTime": Inclusive start of the interval. If specified,
+// a Timestamp matching this interval will have to be the same or after the
+// start.
+func (c *ProjectsLocationsJobsListCall) CreateTimeRangeStartTime(createTimeRangeStartTime string) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("createTimeRange.startTime", createTimeRangeStartTime)
+	return c
+}
+
 // Filter sets the optional parameter "filter": The kind of filter to use.
 //
 // Possible values:
@@ -12560,6 +12645,23 @@ func (c *ProjectsLocationsJobsListCall) PageToken(pageToken string) *ProjectsLoc
 // "regionalFanoutRequested":
 func (c *ProjectsLocationsJobsListCall) RegionalFanoutRequested(regionalFanoutRequested bool) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("regionalFanoutRequested", fmt.Sprint(regionalFanoutRequested))
+	return c
+}
+
+// TerminationTimeRangeEndTime sets the optional parameter
+// "terminationTimeRange.endTime": Exclusive end of the interval. If specified,
+// a Timestamp matching this interval will have to be before the end.
+func (c *ProjectsLocationsJobsListCall) TerminationTimeRangeEndTime(terminationTimeRangeEndTime string) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("terminationTimeRange.endTime", terminationTimeRangeEndTime)
+	return c
+}
+
+// TerminationTimeRangeStartTime sets the optional parameter
+// "terminationTimeRange.startTime": Inclusive start of the interval. If
+// specified, a Timestamp matching this interval will have to be the same or
+// after the start.
+func (c *ProjectsLocationsJobsListCall) TerminationTimeRangeStartTime(terminationTimeRangeStartTime string) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("terminationTimeRange.startTime", terminationTimeRangeStartTime)
 	return c
 }
 

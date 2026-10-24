@@ -394,6 +394,9 @@ type AlertDocument struct {
 	// CollectionTime: Output only. Time when the origin source collected the
 	// intel.
 	CollectionTime string `json:"collectionTime,omitempty"`
+	// CommunicationContext: Output only. Platform identifiers of the message,
+	// thread and channel.
+	CommunicationContext *CommunicationContext `json:"communicationContext,omitempty"`
 	// Content: Output only. The content of the document.
 	Content string `json:"content,omitempty"`
 	// CreateTime: Output only. The timestamp of the original external publication
@@ -562,6 +565,8 @@ type CommunicationContext struct {
 	ChannelPath string `json:"channelPath,omitempty"`
 	// ChannelUrl: Optional. URL of the communication channel.
 	ChannelUrl string `json:"channelUrl,omitempty"`
+	// MessageId: Optional. Message or post identifier on the originating platform.
+	MessageId string `json:"messageId,omitempty"`
 	// ServiceName: Optional. Service from the collection event origin (e.g. forum
 	// or chat service name).
 	ServiceName string `json:"serviceName,omitempty"`

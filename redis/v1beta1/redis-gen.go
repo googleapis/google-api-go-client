@@ -1386,8 +1386,8 @@ func (s ClusterPersistenceConfig) MarshalJSON() ([]byte, error) {
 
 // ClusterWeeklyMaintenanceWindow: Time window specified for weekly operations.
 type ClusterWeeklyMaintenanceWindow struct {
-	// Day: Optional. Allows to define schedule that runs specified day of the
-	// week.
+	// Day: Optional. The day of the week for the maintenance window. This field is
+	// required. You can't use `DAY_OF_WEEK_UNSPECIFIED`.
 	//
 	// Possible values:
 	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
@@ -1399,7 +1399,8 @@ type ClusterWeeklyMaintenanceWindow struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	Day string `json:"day,omitempty"`
-	// StartTime: Optional. Start time of the window in UTC.
+	// StartTime: Optional. The start time of the maintenance window in UTC. When
+	// you specify a maintenance window, `start_time` is required.
 	StartTime *TimeOfDay `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5364,6 +5365,9 @@ func (s WeeklyMaintenanceWindow) MarshalJSON() ([]byte, error) {
 // ZoneDistributionConfig: Zone distribution config for allocation of cluster
 // resources.
 type ZoneDistributionConfig struct {
+	// ActiveZones: Output only. The exact list of zones where the cluster
+	// currently has active VMs.
+	ActiveZones []string `json:"activeZones,omitempty"`
 	// Mode: Optional. The mode of zone distribution. Defaults to MULTI_ZONE, when
 	// not specified.
 	//
@@ -5382,15 +5386,15 @@ type ZoneDistributionConfig struct {
 	// Cluster allocates resources. This flag isn't applicable for single-zone
 	// clusters.
 	Zones []string `json:"zones,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "ActiveZones") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Mode") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "ActiveZones") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

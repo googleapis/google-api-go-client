@@ -1165,6 +1165,72 @@ type ProjectsOperationsService struct {
 	s *Service
 }
 
+// ApiservingMcpMcpToolVisibility: Profile describing the visibility
+// restriction of an MCP tool. Key:
+// "google.com/tool.profiles/visibility.restriction"
+type ApiservingMcpMcpToolVisibility struct {
+	// FieldVisibility: A list of field-level visibility restrictions.
+	FieldVisibility []*ApiservingMcpMcpToolVisibilityFieldVisibility `json:"fieldVisibility,omitempty"`
+	// VisibilityEnforcementStrategy: The strategy used to enforce visibility
+	// restrictions. DO NOT USE. This field is not yet implemented.
+	//
+	// Possible values:
+	//   "VISIBILITY_ENFORCEMENT_STRATEGY_UNSPECIFIED" - Default. Equivalent to
+	// COMBINE.
+	//   "COMBINE" - The principal must satisfy both API-level tool-level)
+	// visibility restrictions.
+	//   "OVERRIDE" - Bypasses the API-level visibility restrictions check; access
+	// is determined solely by the tool-level visibility restrictions.
+	VisibilityEnforcementStrategy string `json:"visibilityEnforcementStrategy,omitempty"`
+	// VisibilityRestriction: The visibility restriction labels for the tool itself
+	// (e.g., "PRODUCER_DEFINED_PREVIEW"). Multiple labels can be provided as a
+	// comma-separated string.
+	VisibilityRestriction string `json:"visibilityRestriction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldVisibility") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldVisibility") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolVisibility
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApiservingMcpMcpToolVisibilityFieldVisibility: Visibility rules for
+// individual tool parameters (fields). This allows producers to hide specific
+// fields in tools/list and tools/call.
+type ApiservingMcpMcpToolVisibilityFieldVisibility struct {
+	// Restriction: The visibility restriction labels for this field
+	// (comma-separated).
+	Restriction string `json:"restriction,omitempty"`
+	// Selector: The name of the parameter in the input_schema or output_schema.
+	Selector string `json:"selector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Restriction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Restriction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolVisibilityFieldVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolVisibilityFieldVisibility
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleApiDistribution: `Distribution` contains summary statistics for a
 // population of values. It optionally contains a histogram representing the
 // distribution of those values across a set of buckets. The summary statistics
@@ -2220,15 +2286,16 @@ type GoogleCloudDiscoveryengineV1Assistant struct {
 	// DisplayName: Required. The assistant display name. It must be a UTF-8
 	// encoded string with a length limit of 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// EnabledTools: Optional. Note: not implemented yet. Use enabled_actions
-	// instead. The enabled tools on this assistant. The keys are connector name,
-	// for example
-	// "projects/{projectId}/locations/{locationId}/collections/{collectionId}/datac
-	// onnector The values consist of admin enabled tools towards the connector
-	// instance. Admin can selectively enable multiple tools on any of the
-	// connector instances that they created in the project. For example
-	// {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2,
-	// "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
+	// EnabledTools: Optional. The enabled tools on this assistant. The keys are
+	// data connector resource names, in the format
+	// `projects/{project}/locations/{location}/collections/{collection}/dataConnect
+	// or`. The values are the tools that the admin enabled on that connector.
+	// Admins can selectively enable tools on any of the connectors that they
+	// created in the project. For example: ``` {
+	// "projects/my-project/locations/global/collections/jira1/dataConnector": {
+	// "toolInfo": [ { "toolName": "create_jira_issue", "toolDisplayName": "Create
+	// Jira issue" }, { "toolName": "update_jira_issue", "toolDisplayName": "Update
+	// Jira issue" } ] } } ```
 	EnabledTools map[string]GoogleCloudDiscoveryengineV1AssistantToolList `json:"enabledTools,omitempty"`
 	// GenerationConfig: Optional. Configuration for the generation of the
 	// assistant response.
@@ -4965,7 +5032,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications` * `code-extraction`
+	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
+	// * `license-tier-badge`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -9600,8 +9668,9 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResul
 	// assist call was skipped due to a policy violation. It contains results from
 	// those filters that blocked the processing of the query.
 	PolicyResults []*GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult `json:"policyResults,omitempty"`
-	// Verdict: Final verdict of the customer policy enforcement. If only one
-	// policy blocked the processing, the verdict is BLOCK.
+	// Verdict: Final verdict of the customer policy enforcement. If at least one
+	// policy blocked the processing, the verdict is BLOCK. If no policy blocked
+	// the processing but at least one flagged it, the verdict is FLAG.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Unknown value.
@@ -13059,7 +13128,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications` * `code-extraction`
+	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
+	// * `license-tier-badge`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -21480,8 +21550,9 @@ type GoogleCloudDiscoveryengineV1betaAssistAnswerCustomerPolicyEnforcementResult
 	// assist call was skipped due to a policy violation. It contains results from
 	// those filters that blocked the processing of the query.
 	PolicyResults []*GoogleCloudDiscoveryengineV1betaAssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult `json:"policyResults,omitempty"`
-	// Verdict: Final verdict of the customer policy enforcement. If only one
-	// policy blocked the processing, the verdict is BLOCK.
+	// Verdict: Final verdict of the customer policy enforcement. If at least one
+	// policy blocked the processing, the verdict is BLOCK. If no policy blocked
+	// the processing but at least one flagged it, the verdict is FLAG.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Unknown value.
@@ -21671,15 +21742,16 @@ type GoogleCloudDiscoveryengineV1betaAssistant struct {
 	// DisplayName: Required. The assistant display name. It must be a UTF-8
 	// encoded string with a length limit of 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// EnabledTools: Optional. Note: not implemented yet. Use enabled_actions
-	// instead. The enabled tools on this assistant. The keys are connector name,
-	// for example
-	// "projects/{projectId}/locations/{locationId}/collections/{collectionId}/datac
-	// onnector The values consist of admin enabled tools towards the connector
-	// instance. Admin can selectively enable multiple tools on any of the
-	// connector instances that they created in the project. For example
-	// {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2,
-	// "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
+	// EnabledTools: Optional. The enabled tools on this assistant. The keys are
+	// data connector resource names, in the format
+	// `projects/{project}/locations/{location}/collections/{collection}/dataConnect
+	// or`. The values are the tools that the admin enabled on that connector.
+	// Admins can selectively enable tools on any of the connectors that they
+	// created in the project. For example: ``` {
+	// "projects/my-project/locations/global/collections/jira1/dataConnector": {
+	// "toolInfo": [ { "toolName": "create_jira_issue", "toolDisplayName": "Create
+	// Jira issue" }, { "toolName": "update_jira_issue", "toolDisplayName": "Update
+	// Jira issue" } ] } } ```
 	EnabledTools map[string]GoogleCloudDiscoveryengineV1betaAssistantToolList `json:"enabledTools,omitempty"`
 	// GenerationConfig: Optional. Configuration for the generation of the
 	// assistant response.
@@ -25831,7 +25903,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
 	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
 	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications` * `code-extraction`
+	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
+	// * `license-tier-badge`
 	Features map[string]string `json:"features,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
@@ -26528,8 +26601,7 @@ func (s GoogleCloudDiscoveryengineV1betaFactChunk) MarshalJSON() ([]byte, error)
 // GoogleCloudDiscoveryengineV1betaFeedback: Information about the user
 // feedback. This information will be used for logging and metrics purpose.
 type GoogleCloudDiscoveryengineV1betaFeedback struct {
-	// Comment: Optional. The additional user comment of the feedback if user gives
-	// a thumb down.
+	// Comment: Optional. The additional user comment of the feedback.
 	Comment string `json:"comment,omitempty"`
 	// ComponentVersion: Optional. The version of the component that this report is
 	// being sent from.
@@ -26552,9 +26624,8 @@ type GoogleCloudDiscoveryengineV1betaFeedback struct {
 	//   "GOOGLE_AGENTSPACE_DESKTOP" - Feedback source is Google AgentSpace Desktop
 	// app.
 	FeedbackSource string `json:"feedbackSource,omitempty"`
-	// FeedbackType: Required. Indicate whether the user gives a positive or
-	// negative feedback. If the user gives a negative feedback, there might be
-	// more feedback details.
+	// FeedbackType: Required. Indicates whether the user gives a positive or
+	// negative feedback.
 	//
 	// Possible values:
 	//   "FEEDBACK_TYPE_UNSPECIFIED" - Unspecified feedback type.
@@ -26564,7 +26635,10 @@ type GoogleCloudDiscoveryengineV1betaFeedback struct {
 	// LlmModelVersion: The version of the LLM model that was used to generate the
 	// response.
 	LlmModelVersion string `json:"llmModelVersion,omitempty"`
-	// Reasons: Optional. The reason if user gives a thumb down.
+	// ModelArmorDisputeInfo: Optional. Optional Model Armor false-positive dispute
+	// metadata attached to feedback.
+	ModelArmorDisputeInfo *GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo `json:"modelArmorDisputeInfo,omitempty"`
+	// Reasons: Optional. The reasons why the user gives feedback.
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Unspecified reason.
@@ -26580,6 +26654,10 @@ type GoogleCloudDiscoveryengineV1betaFeedback struct {
 	// inaccurate, incomplete, poorly formatted).
 	//   "CANVAS_EXPORT_FAILED" - Exporting the generated canvas failed (e.g.
 	// download or external export action did not complete successfully).
+	//   "RELEVANT" - The response is relevant.
+	//   "COMPREHENSIVE" - The response is comprehensive.
+	//   "GOOD_CITATION" - The response is well-associated with the query.
+	//   "ACCURATE" - The response is accurate.
 	Reasons []string `json:"reasons,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -26642,6 +26720,37 @@ type GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo: Information
+// submitted when a user disputes a Model Armor `BLOCK` or `FLAG` verdict.
+type GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo struct {
+	// ExpectedLabel: Optional. The expected-label reason chip selected by the user
+	// (for example, "Everyday question" or "Legitimate work-related query").
+	ExpectedLabel string `json:"expectedLabel,omitempty"`
+	// SanitizationResultJson: Optional. The raw Model Armor `SanitizationResult`,
+	// serialized as JSON.
+	SanitizationResultJson string `json:"sanitizationResultJson,omitempty"`
+	// TemplateName: Optional. Resource name of the Model Armor template that
+	// produced the sanitization result, in the format
+	// `projects/{project}/locations/{location}/templates/{id}`.
+	TemplateName string `json:"templateName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpectedLabel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpectedLabel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -29381,6 +29490,9 @@ type GoogleCloudDiscoveryengineV1betaProvisionProjectRequest struct {
 	// would like to give consent to. Acceptable version is `2022-11-23`, and this
 	// may change over time.
 	DataUseTermsVersion string `json:"dataUseTermsVersion,omitempty"`
+	// IdpConfig: Optional. The identity provider for this location. When provided,
+	// the location's AclConfig is set from it as part of provisioning.
+	IdpConfig *GoogleCloudDiscoveryengineV1betaIdpConfig `json:"idpConfig,omitempty"`
 	// SaasParams: Optional. Parameters for Agentspace.
 	SaasParams *GoogleCloudDiscoveryengineV1betaProvisionProjectRequestSaasParams `json:"saasParams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceptDataUseTerms") to

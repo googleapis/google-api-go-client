@@ -1288,7 +1288,8 @@ type BasicChartSpec struct {
 	// chart, with values laid out as percentages of each other.
 	StackedType string `json:"stackedType,omitempty"`
 	// ThreeDimensional: True to make the chart 3D. Applies to Bar and Column
-	// charts.
+	// charts. Setting it on a Combo chart is allowed but has no effect; setting it
+	// on any other chart type returns an error.
 	ThreeDimensional bool `json:"threeDimensional,omitempty"`
 	// TotalDataLabel: Controls whether to display additional data labels on
 	// stacked charts which sum the total value of all stacked values at each value

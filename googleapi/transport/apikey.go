@@ -46,7 +46,14 @@ func (t *APIKey) RoundTrip(req *http.Request) (*http.Response, error) {
 	if redirectedCrossDomain(req) {
 		return rt.RoundTrip(req)
 	}
+	// Per the RoundTripper contract the caller's request stays untouched,
+	// including the URL it points to: the key is added to a copy, so it never
+	// reaches an error message that prints the caller's URL.
 	newReq := *req
+	if req.URL != nil {
+		newURL := *req.URL
+		newReq.URL = &newURL
+	}
 	args := newReq.URL.Query()
 	args.Set("key", t.Key)
 	newReq.URL.RawQuery = args.Encode()

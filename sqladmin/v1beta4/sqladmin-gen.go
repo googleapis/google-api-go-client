@@ -6886,10 +6886,10 @@ func (s SqlWorkloadCapturesStartRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SqlWorkloadCapturesStopReplayRequest: Request to stop executing a captured
-// workload on a replay instance.
+// SqlWorkloadCapturesStopReplayRequest: Request to stop an active workload
+// replay on a target Cloud SQL replay instance.
 type SqlWorkloadCapturesStopReplayRequest struct {
-	// StopWorkloadReplayContext: Required. Contains details about the stop
+	// StopWorkloadReplayContext: Optional. Contains details about the stop
 	// workload replay operation.
 	StopWorkloadReplayContext *StopWorkloadReplayContext `json:"stopWorkloadReplayContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "StopWorkloadReplayContext")
@@ -7247,37 +7247,9 @@ func (s StopWorkloadCaptureContext) MarshalJSON() ([]byte, error) {
 }
 
 // StopWorkloadReplayContext: The context for the `StopWorkloadReplay`
-// operation, which contains details about stopping the execution of a captured
-// workload (recorded read and write SQL queries) on a replay instance.
+// operation, which represents an operation that stops an active workload
+// replay on a target Cloud SQL replay instance.
 type StopWorkloadReplayContext struct {
-	// ReplayInstance: Required. The name of the Cloud SQL instance where the
-	// captured workload (SQL queries) is being executed, excluding the project ID
-	// (for example, `my-replay-instance`). The instance name must start with a
-	// lowercase letter and contain only lowercase letters, numbers, and hyphens.
-	// The combined length of `project-ID:instance-name` must be 98 characters or
-	// less.
-	ReplayInstance string `json:"replayInstance,omitempty"`
-	// WorkloadId: Output only. The ID of the workload to stop executing on the
-	// replay instance. Each workload capture generates a unique ID in the format
-	// `workload-` (for example, `workload-1786046400`). Use this ID to stop
-	// executing the recorded SQL queries.
-	WorkloadId string `json:"workloadId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ReplayInstance") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ReplayInstance") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s StopWorkloadReplayContext) MarshalJSON() ([]byte, error) {
-	type NoMethod StopWorkloadReplayContext
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // SwitchoverBlueGreenDeploymentRequest: Request message for switching over a
@@ -17733,24 +17705,23 @@ type WorkloadCapturesStopReplayCall struct {
 	s                                    *Service
 	project                              string
 	instance                             string
-	workloadId                           string
 	sqlworkloadcapturesstopreplayrequest *SqlWorkloadCapturesStopReplayRequest
 	urlParams_                           gensupport.URLParams
 	ctx_                                 context.Context
 	header_                              http.Header
 }
 
-// StopReplay: Stops executing a captured workload on the separate Cloud SQL
+// StopReplay: Stops an active workload replay on the target Cloud SQL replay
 // instance.
 //
-// - instance: Cloud SQL instance ID. This does not include the project ID.
-// - project: Project ID of the project that contains the instance.
-// - workloadId: The ID of the workload to replay.
-func (r *WorkloadCapturesService) StopReplay(project string, instance string, workloadId string, sqlworkloadcapturesstopreplayrequest *SqlWorkloadCapturesStopReplayRequest) *WorkloadCapturesStopReplayCall {
+//   - instance: Cloud SQL instance ID of the target replay instance. This does
+//     not include the project ID.
+//   - project: Project ID of the project that contains the target replay
+//     instance.
+func (r *WorkloadCapturesService) StopReplay(project string, instance string, sqlworkloadcapturesstopreplayrequest *SqlWorkloadCapturesStopReplayRequest) *WorkloadCapturesStopReplayCall {
 	c := &WorkloadCapturesStopReplayCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.project = project
 	c.instance = instance
-	c.workloadId = workloadId
 	c.sqlworkloadcapturesstopreplayrequest = sqlworkloadcapturesstopreplayrequest
 	return c
 }
@@ -17786,7 +17757,7 @@ func (c *WorkloadCapturesStopReplayCall) doRequest(alt string) (*http.Response, 
 	}
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/workloadCaptures/{workloadId}:stopReplay")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "sql/v1beta4/projects/{project}/instances/{instance}/workloadCaptures:stopReplay")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -17794,9 +17765,8 @@ func (c *WorkloadCapturesStopReplayCall) doRequest(alt string) (*http.Response, 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"project":    c.project,
-		"instance":   c.instance,
-		"workloadId": c.workloadId,
+		"project":  c.project,
+		"instance": c.instance,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "sql.workloadCaptures.stopReplay", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)

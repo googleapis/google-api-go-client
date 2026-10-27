@@ -192,6 +192,7 @@ func NewProjectsLocationsService(s *APIService) *ProjectsLocationsService {
 	rs.AiApplications = NewProjectsLocationsAiApplicationsService(s)
 	rs.Bindings = NewProjectsLocationsBindingsService(s)
 	rs.Endpoints = NewProjectsLocationsEndpointsService(s)
+	rs.Findings = NewProjectsLocationsFindingsService(s)
 	rs.McpServers = NewProjectsLocationsMcpServersService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Publishers = NewProjectsLocationsPublishersService(s)
@@ -210,6 +211,8 @@ type ProjectsLocationsService struct {
 	Bindings *ProjectsLocationsBindingsService
 
 	Endpoints *ProjectsLocationsEndpointsService
+
+	Findings *ProjectsLocationsFindingsService
 
 	McpServers *ProjectsLocationsMcpServersService
 
@@ -291,6 +294,15 @@ func NewProjectsLocationsEndpointsService(s *APIService) *ProjectsLocationsEndpo
 }
 
 type ProjectsLocationsEndpointsService struct {
+	s *APIService
+}
+
+func NewProjectsLocationsFindingsService(s *APIService) *ProjectsLocationsFindingsService {
+	rs := &ProjectsLocationsFindingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFindingsService struct {
 	s *APIService
 }
 
@@ -1050,6 +1062,91 @@ func (s FetchAvailableBindingsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// File: File location of the finding.
+type File struct {
+	// LineNumber: Optional. Line number (1-based), or 0 if whole File / unknown.
+	LineNumber int64 `json:"lineNumber,omitempty,string"`
+	// Path: Optional. Relative path of the file containing the finding.
+	Path string `json:"path,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LineNumber") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LineNumber") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s File) MarshalJSON() ([]byte, error) {
+	type NoMethod File
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Finding: Represents a security Finding.
+type Finding struct {
+	// Category: Optional. Category of the finding.
+	Category string `json:"category,omitempty"`
+	// CreateTime: Output only. Create time.
+	CreateTime string `json:"createTime,omitempty"`
+	// Detail: Optional. Detailed description of the finding.
+	Detail string `json:"detail,omitempty"`
+	// Files: Optional. File associated with the finding.
+	Files []*File `json:"files,omitempty"`
+	// FindingClass: Optional. Class of the finding.
+	//
+	// Possible values:
+	//   "FINDING_CLASS_UNSPECIFIED" - Unspecified finding class.
+	//   "VULNERABILITY" - Describes a potential weakness in software that
+	// increases risk to Confidentiality & Integrity & Availability.
+	//   "OBSERVATION" - Describes a security observation that is for informational
+	// purposes.
+	//   "SECRET" - Describes a potential security risk due to plaintext
+	// credentials, keys, or tokens being exposed in an asset or workload.
+	FindingClass string `json:"findingClass,omitempty"`
+	// Name: Identifier. Resource name of the Finding. Format:
+	// `projects/{project}/locations/{location}/findings/{finding}`.
+	Name string `json:"name,omitempty"`
+	// Resource: Optional. The resource that the finding is associated with.
+	Resource string `json:"resource,omitempty"`
+	// Severity: Optional. Severity of the finding.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - This value is used for findings when a source
+	// doesn't write a severity value.
+	//   "SEVERITY_CRITICAL" - Critical severity.
+	//   "SEVERITY_HIGH" - High severity.
+	//   "SEVERITY_MEDIUM" - Medium severity.
+	//   "SEVERITY_LOW" - Low severity.
+	Severity string `json:"severity,omitempty"`
+	// Uid: Output only. Universally unique identifier (UUID4) for the Finding.
+	Uid string `json:"uid,omitempty"`
+	// UpdateTime: Output only. Update time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Finding) MarshalJSON() ([]byte, error) {
+	type NoMethod Finding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Frontmatter: Structured metadata attributes extracted from the package's
 // local SKILL.md frontmatter.
 type Frontmatter struct {
@@ -1692,6 +1789,34 @@ func (s ListEndpointsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListFindingsResponse: Message for response to listing Findings.
+type ListFindingsResponse struct {
+	// Findings: The list of Findings.
+	Findings []*Finding `json:"findings,omitempty"`
+	// NextPageToken: A token identifying a page of results the server should
+	// return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Findings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Findings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListFindingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListFindingsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
 	// Locations: A list of locations that matches the specified filter in the
@@ -2179,6 +2304,74 @@ func (s Publisher) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ScanResult: Scan result of the skill revision.
+type ScanResult struct {
+	// ErrorMessage: Output only. The error message if the scan failed.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+	// Findings: Output only. The finding resource names for the skill revision.
+	Findings []string `json:"findings,omitempty"`
+	// ScanState: Output only. The state of the vulnerability check.
+	//
+	// Possible values:
+	//   "SCAN_STATE_UNSPECIFIED" - Should not be used.
+	//   "FAILED" - The underlying scanning system failed to execute the scan.
+	//   "UNSUPPORTED_FORMAT" - The uploaded artifact format is unsupported by the
+	// scanning system.
+	//   "SUCCEEDED" - The scan has completed successfully.
+	//   "DISABLED" - The scan was disabled.
+	//   "RUNNING" - The scan is running.
+	ScanState string `json:"scanState,omitempty"`
+	// ScanTime: Output only. The time when the scan was completed.
+	ScanTime string `json:"scanTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScanResult) MarshalJSON() ([]byte, error) {
+	type NoMethod ScanResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ScanningConfig: Configuration for scanning of the skill.
+type ScanningConfig struct {
+	// Policy: Optional. The security scanning policy.
+	//
+	// Possible values:
+	//   "POLICY_UNSPECIFIED" - Default value. Inherits system default
+	// (ENABLED_BLOCKING).
+	//   "DISABLED" - Bypasses scanning.
+	//   "ENABLED_BLOCKING" - Scans the skill package and blocks download if
+	// security or safety issues are found.
+	//   "ENABLED_NONBLOCKING" - Scans the skill package in audit mode without
+	// blocking downloads.
+	Policy string `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScanningConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ScanningConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchAgentsRequest: Message for searching Agents
 type SearchAgentsRequest struct {
 	// PageSize: Optional. The maximum number of search results to return per page.
@@ -2530,6 +2723,8 @@ type Skill struct {
 	// logical `skill_id` (e.g., Publisher `google` authorizes the `google-*`
 	// prefix).
 	Publisher string `json:"publisher,omitempty"`
+	// ScanningConfig: Optional. Optional. Scanning configuration for the skill.
+	ScanningConfig *ScanningConfig `json:"scanningConfig,omitempty"`
 	// SkillId: Output only. A stable, globally unique logical identifier for the
 	// skill. It is securely constructed by the backend by combining the associated
 	// `publisher`'s verified namespace and the skill's resource ID to enforce
@@ -2612,6 +2807,8 @@ type SkillRevision struct {
 	// Name: Identifier. Resource name of the SkillRevision. Format:
 	// `projects/{project}/locations/{location}/skills/{skill}/revisions/{revision}`
 	Name string `json:"name,omitempty"`
+	// ScanResult: Output only. Scan result of the skill revision.
+	ScanResult *ScanResult `json:"scanResult,omitempty"`
 	// Sha256Hash: Output only. Cryptographic SHA-256 integrity and deduplication
 	// digest of the payload zip.
 	Sha256Hash string `json:"sha256Hash,omitempty"`
@@ -5895,6 +6092,276 @@ func (c *ProjectsLocationsEndpointsListCall) Do(opts ...googleapi.CallOption) (*
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsEndpointsListCall) Pages(ctx context.Context, f func(*ListEndpointsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsFindingsGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single Finding.
+//
+//   - name: The name of the Finding to retrieve. Format:
+//     `projects/{project}/locations/{location}/findings/{finding}`.
+func (r *ProjectsLocationsFindingsService) Get(name string) *ProjectsLocationsFindingsGetCall {
+	c := &ProjectsLocationsFindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFindingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFindingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFindingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFindingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFindingsGetCall) Context(ctx context.Context) *ProjectsLocationsFindingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFindingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFindingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.findings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentregistry.projects.locations.findings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Finding.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsFindingsGetCall) Do(opts ...googleapi.CallOption) (*Finding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Finding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.findings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFindingsListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Findings in a given project and location.
+//
+//   - parent: Parent value for ListFindingsRequest. Format:
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsFindingsService) List(parent string) *ProjectsLocationsFindingsListCall {
+	c := &ProjectsLocationsFindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsFindingsListCall) Filter(filter string) *ProjectsLocationsFindingsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Hint for how to order the
+// results
+func (c *ProjectsLocationsFindingsListCall) OrderBy(orderBy string) *ProjectsLocationsFindingsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsFindingsListCall) PageSize(pageSize int64) *ProjectsLocationsFindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results the server should return.
+func (c *ProjectsLocationsFindingsListCall) PageToken(pageToken string) *ProjectsLocationsFindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFindingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFindingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFindingsListCall) Context(ctx context.Context) *ProjectsLocationsFindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/findings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.findings.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentregistry.projects.locations.findings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListFindingsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsFindingsListCall) Do(opts ...googleapi.CallOption) (*ListFindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListFindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.findings.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFindingsListCall) Pages(ctx context.Context, f func(*ListFindingsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

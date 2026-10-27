@@ -2264,7 +2264,7 @@ type GoogleIamV3PolicyBinding struct {
 	// Possible values:
 	//   "POLICY_KIND_UNSPECIFIED" - Unspecified policy kind; Not a valid state
 	//   "PRINCIPAL_ACCESS_BOUNDARY" - Principal access boundary policy kind
-	//   "ACCESS" - Access policy kind.
+	//   "ACCESS" - Unified Access Policy kind.
 	PolicyKind string `json:"policyKind,omitempty"`
 	// PolicyUid: Output only. The globally unique ID of the policy to be bound.
 	PolicyUid string `json:"policyUid,omitempty"`
@@ -2317,8 +2317,8 @@ type GoogleIamV3PolicyBindingTarget struct {
 	// `//iam.googleapis.com/projects/PROJECT_NUMBER/locations/LOCATION/workloadIden
 	// tityPools/WORKLOAD_POOL_ID`
 	PrincipalSet string `json:"principalSet,omitempty"`
-	// Resource: Immutable. The full resource name that's used for access policy
-	// bindings. Examples: * Organization:
+	// Resource: Immutable. The full resource name that's used for Unified Access
+	// Policy bindings. Examples: * Organization:
 	// `//cloudresourcemanager.googleapis.com/organizations/ORGANIZATION_ID` *
 	// Folder: `//cloudresourcemanager.googleapis.com/folders/FOLDER_ID` * Project:
 	// * `//cloudresourcemanager.googleapis.com/projects/PROJECT_NUMBER` *

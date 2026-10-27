@@ -169,6 +169,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Announcements = NewProjectsLocationsAnnouncementsService(s)
+	rs.CapacityAllocations = NewProjectsLocationsCapacityAllocationsService(s)
 	rs.Datastores = NewProjectsLocationsDatastoresService(s)
 	rs.DnsBindPermission = NewProjectsLocationsDnsBindPermissionService(s)
 	rs.NetworkPeerings = NewProjectsLocationsNetworkPeeringsService(s)
@@ -185,6 +186,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Announcements *ProjectsLocationsAnnouncementsService
+
+	CapacityAllocations *ProjectsLocationsCapacityAllocationsService
 
 	Datastores *ProjectsLocationsDatastoresService
 
@@ -211,6 +214,15 @@ func NewProjectsLocationsAnnouncementsService(s *Service) *ProjectsLocationsAnno
 }
 
 type ProjectsLocationsAnnouncementsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsCapacityAllocationsService(s *Service) *ProjectsLocationsCapacityAllocationsService {
+	rs := &ProjectsLocationsCapacityAllocationsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCapacityAllocationsService struct {
 	s *Service
 }
 
@@ -779,6 +791,42 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CapacityAllocation: Represents a capacity allocation. Capacity allocation is
+// zonal.
+type CapacityAllocation struct {
+	// AllocatedCapacityCount: Output only. The allocated capacity for the capacity
+	// allocation.
+	AllocatedCapacityCount int64 `json:"allocatedCapacityCount,omitempty"`
+	// ConsumedCapacityCount: Output only. The consumed capacity for the capacity
+	// allocation.
+	ConsumedCapacityCount int64 `json:"consumedCapacityCount,omitempty"`
+	// MachineFamily: Output only. The machine family of the capacity allocation.
+	MachineFamily string `json:"machineFamily,omitempty"`
+	// Name: Output only. Identifier. The resource name of the capacity allocation.
+	// The last segment of the name is the placement group name. For example:
+	// `projects/my-project/locations/us-central1-a/capacityAllocations/pg-123`
+	Name string `json:"name,omitempty"`
+	// PrivateClouds: Output only. The private cloud names using the capacity
+	// allocation.
+	PrivateClouds []string `json:"privateClouds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllocatedCapacityCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllocatedCapacityCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CapacityAllocation) MarshalJSON() ([]byte, error) {
+	type NoMethod CapacityAllocation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Cluster: A cluster in a private cloud.
 type Cluster struct {
 	// AutoscalingSettings: Optional. Configuration of the autoscaling applied to
@@ -802,6 +850,13 @@ type Cluster struct {
 	// where the key is canonical identifier of the node type (corresponds to the
 	// `NodeType`).
 	NodeTypeConfigs map[string]NodeTypeConfig `json:"nodeTypeConfigs,omitempty"`
+	// PlacementGroup: Optional. The identifier of the placement group for cluster
+	// nodes. A placement group is an internal Google identifier for a group of
+	// resources that are physically located within the same fault domain. If
+	// provided, nodes for this cluster are placed within the specified placement
+	// group. If this field is omitted, the system selects an appropriate placement
+	// group.
+	PlacementGroup string `json:"placementGroup,omitempty"`
 	// State: Output only. State of the resource.
 	//
 	// Possible values:
@@ -1670,6 +1725,38 @@ func (s ListAnnouncementsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListCapacityAllocationsResponse: Response message for
+// VmwareEngine.ListCapacityAllocations
+type ListCapacityAllocationsResponse struct {
+	// CapacityAllocations: A list of capacity allocations.
+	CapacityAllocations []*CapacityAllocation `json:"capacityAllocations,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached when making
+	// an aggregated query using wildcards.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CapacityAllocations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CapacityAllocations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListCapacityAllocationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCapacityAllocationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListClustersResponse: Response message for VmwareEngine.ListClusters
 type ListClustersResponse struct {
 	// Clusters: A list of private cloud clusters.
@@ -2427,6 +2514,13 @@ type ManagementCluster struct {
 	// where the key is canonical identifier of the node type (corresponds to the
 	// `NodeType`).
 	NodeTypeConfigs map[string]NodeTypeConfig `json:"nodeTypeConfigs,omitempty"`
+	// PlacementGroup: Optional. The identifier of the placement group for
+	// management cluster nodes. A placement group is an internal Google identifier
+	// for a group of resources that are physically located within the same fault
+	// domain. If provided, nodes for this cluster are placed within the specified
+	// placement group. If this field is omitted, the system selects an appropriate
+	// placement group.
+	PlacementGroup string `json:"placementGroup,omitempty"`
 	// StretchedClusterConfig: Optional. Configuration of a stretched cluster.
 	// Required for STRETCHED private clouds.
 	StretchedClusterConfig *StretchedClusterConfig `json:"stretchedClusterConfig,omitempty"`
@@ -3782,12 +3876,26 @@ type StretchedClusterConfig struct {
 	// `projects/{project}/locations/europe-west3-a` or `europe-west3-a`, where
 	// `{project}` can either be a project number or a project ID.
 	PreferredLocation string `json:"preferredLocation,omitempty"`
+	// PreferredLocationPlacementGroup: Optional. The identifier of the placement
+	// group for preferred location cluster nodes. A placement group is an internal
+	// Google identifier for a group of resources that are physically located
+	// within the same fault domain. If provided, nodes for this cluster are placed
+	// within the specified placement group. If this field is omitted, the system
+	// selects an appropriate placement group.
+	PreferredLocationPlacementGroup string `json:"preferredLocationPlacementGroup,omitempty"`
 	// SecondaryLocation: Required. Additional zone for a higher level of
 	// availability and load balancing. Specify the resource name or ID of a zone
 	// that belongs to the region of the private cloud. For example:
 	// `projects/{project}/locations/europe-west3-b` or `europe-west3-b`, where
 	// `{project}` can either be a project number or a project ID.
 	SecondaryLocation string `json:"secondaryLocation,omitempty"`
+	// SecondaryLocationPlacementGroup: Optional. The identifier of the placement
+	// group for secondary location cluster nodes. A placement group is an internal
+	// Google identifier for a group of resources that are physically located
+	// within the same fault domain. If provided, nodes for this cluster are placed
+	// within the specified placement group. If this field is omitted, the system
+	// selects an appropriate placement group.
+	SecondaryLocationPlacementGroup string `json:"secondaryLocationPlacementGroup,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PreferredLocation") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5106,6 +5214,193 @@ func (c *ProjectsLocationsAnnouncementsListCall) Do(opts ...googleapi.CallOption
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsAnnouncementsListCall) Pages(ctx context.Context, f func(*ListAnnouncementsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsCapacityAllocationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `CapacityAllocation` resources in a given project and location.
+//
+//   - parent: The resource name of the location to query for capacity
+//     allocations. Resource names are schemeless URIs that follow the
+//     conventions in https://cloud.google.com/apis/design/resource_names. For
+//     example: `projects/my-project/locations/us-central1-a`.
+func (r *ProjectsLocationsCapacityAllocationsService) List(parent string) *ProjectsLocationsCapacityAllocationsListCall {
+	c := &ProjectsLocationsCapacityAllocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// matches resources returned in the response. The expression must specify the
+// field name, a comparison operator, and the value that you want to use for
+// filtering. The value must be a string or a number. The comparison operator
+// must be `=`, `!=`, `>`, `>=`, `<`, or `<=`. The has operator `:` is also
+// supported. Supported fields include `name`, `display_name` (or
+// `placement_group`), `machine_family`, `allocated_capacity_count`,
+// `consumed_capacity_count`, and `connected_placement_group` (using `=`). For
+// example, if you are filtering a list of capacity allocations, you can
+// exclude the ones named `example-capacity-allocation` by specifying `name !=
+// "example-capacity-allocation". You can also filter on other fields, such as
+// machine family ("ve1", "ve2", or "ve3") or connected placement group:
+// ``` machine_family = "ve1" connected_placement_group =
+// "example-placement-group" ``` To filter on multiple expressions, provide
+// each separate expression within parentheses. For example: ```
+// (machine_family = "ve1") (allocated_capacity_count > 10) ``` By default,
+// each expression is an `AND` expression. However, you can include `AND`,
+// `OR`, and `NOT` expressions explicitly. For example: ``` ((machine_family =
+// "ve1") AND (allocated_capacity_count > 10)) OR (consumed_capacity_count > 0)
+// ```
+func (c *ProjectsLocationsCapacityAllocationsListCall) Filter(filter string) *ProjectsLocationsCapacityAllocationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Sorts list results by a
+// certain order. By default, returned results are ordered by `name` in
+// ascending order. You can also sort results in descending order based on the
+// `name` value using `orderBy="name desc". Currently, only ordering by `name`
+// is supported.
+func (c *ProjectsLocationsCapacityAllocationsListCall) OrderBy(orderBy string) *ProjectsLocationsCapacityAllocationsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// capacity allocations to return in one page. The service may return fewer
+// than this value. The maximum value is coerced to 1000. The default value of
+// this field is 500.
+func (c *ProjectsLocationsCapacityAllocationsListCall) PageSize(pageSize int64) *ProjectsLocationsCapacityAllocationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListCapacityAllocations` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListCapacityAllocations` must match the call that provided the page token.
+func (c *ProjectsLocationsCapacityAllocationsListCall) PageToken(pageToken string) *ProjectsLocationsCapacityAllocationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCapacityAllocationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCapacityAllocationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCapacityAllocationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCapacityAllocationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCapacityAllocationsListCall) Context(ctx context.Context) *ProjectsLocationsCapacityAllocationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCapacityAllocationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCapacityAllocationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/capacityAllocations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.capacityAllocations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmwareengine.projects.locations.capacityAllocations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListCapacityAllocationsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCapacityAllocationsListCall) Do(opts ...googleapi.CallOption) (*ListCapacityAllocationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCapacityAllocationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "vmwareengine.projects.locations.capacityAllocations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCapacityAllocationsListCall) Pages(ctx context.Context, f func(*ListCapacityAllocationsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

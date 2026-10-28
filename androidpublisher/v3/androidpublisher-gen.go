@@ -1835,7 +1835,7 @@ type BasePriceOfferPhase struct {
 // BatchDeleteOneTimeProductOffersRequest: Request message for
 // BatchDeleteOneTimeProductOffers.
 type BatchDeleteOneTimeProductOffersRequest struct {
-	// Requests: Required. A list of update requests of up to 100 elements. All
+	// Requests: Required. A list of delete requests of up to 100 elements. All
 	// requests must correspond to different offers.
 	Requests []*DeleteOneTimeProductOfferRequest `json:"requests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Requests") to
@@ -1931,7 +1931,7 @@ func (s BatchGetOneTimeProductOffersRequest) MarshalJSON() ([]byte, error) {
 // BatchGetOneTimeProductOffersResponse: Response message for the
 // BatchGetOneTimeProductOffers endpoint.
 type BatchGetOneTimeProductOffersResponse struct {
-	// OneTimeProductOffers: The list of updated one-time product offers, in the
+	// OneTimeProductOffers: The list of requested one-time product offers, in the
 	// same order as the request.
 	OneTimeProductOffers []*OneTimeProductOffer `json:"oneTimeProductOffers,omitempty"`
 
@@ -7189,8 +7189,8 @@ type OneTimeProductOffer struct {
 	//   "CANCELLED" - This state is specific to pre-orders. The offer is cancelled
 	// and not available to users. All pending orders related to this offer were
 	// cancelled.
-	//   "INACTIVE" - This state is specific to discounted offers. The offer is no
-	// longer available to users.
+	//   "INACTIVE" - This state is specific to discounted and game reward offers.
+	// The offer is no longer available to users.
 	State string `json:"state,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -11704,7 +11704,7 @@ type UpdateOneTimeProductOfferStateRequest struct {
 	CancelOneTimeProductOfferRequest *CancelOneTimeProductOfferRequest `json:"cancelOneTimeProductOfferRequest,omitempty"`
 	// DeactivateOneTimeProductOfferRequest: Deactivates an offer. Once
 	// deactivated, the offer is no longer available to users. This state
-	// transition is specific to discounted offers.
+	// transition is specific to discounted and game reward offers.
 	DeactivateOneTimeProductOfferRequest *DeactivateOneTimeProductOfferRequest `json:"deactivateOneTimeProductOfferRequest,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "ActivateOneTimeProductOfferRequest") to unconditionally include in API
@@ -21842,7 +21842,7 @@ type MonetizationOnetimeproductsBatchDeleteCall struct {
 //
 //   - packageName: The parent app (package name) for which the one-time products
 //     should be deleted. Must be equal to the package_name field on all the
-//     OneTimeProduct resources.
+//     requests.
 func (r *MonetizationOnetimeproductsService) BatchDelete(packageName string, batchdeleteonetimeproductsrequest *BatchDeleteOneTimeProductsRequest) *MonetizationOnetimeproductsBatchDeleteCall {
 	c := &MonetizationOnetimeproductsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -21922,7 +21922,7 @@ type MonetizationOnetimeproductsBatchGetCall struct {
 // BatchGet: Reads one or more one-time products.
 //
 //   - packageName: The parent app (package name) for which the products should
-//     be retrieved. Must be equal to the package_name field on all requests.
+//     be retrieved.
 func (r *MonetizationOnetimeproductsService) BatchGet(packageName string) *MonetizationOnetimeproductsBatchGetCall {
 	c := &MonetizationOnetimeproductsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -22996,13 +22996,12 @@ type MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall struct {
 // BatchDelete: Deletes one or more one-time product offers.
 //
 //   - packageName: The parent app (package name) of the offers to delete. Must
-//     be equal to the package_name field on all the OneTimeProductOffer
-//     resources.
+//     be equal to the package_name field on all the requests.
 //   - productId: The product ID of the parent one-time product, if all offers to
 //     delete belong to the same product. If this request spans multiple one-time
 //     products, set this field to "-".
 //   - purchaseOptionId: The parent purchase option (ID) for which the offers
-//     should be deleted. May be specified as '-' to update offers from multiple
+//     should be deleted. May be specified as '-' to delete offers from multiple
 //     purchase options.
 func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) BatchDelete(packageName string, productId string, purchaseOptionId string, batchdeleteonetimeproductoffersrequest *BatchDeleteOneTimeProductOffersRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall {
 	c := &MonetizationOnetimeproductsPurchaseOptionsOffersBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -23088,15 +23087,14 @@ type MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall struct {
 
 // BatchGet: Reads one or more one-time product offers.
 //
-//   - packageName: The parent app (package name) of the updated offers. Must be
-//     equal to the package_name field on all the updated OneTimeProductOffer
-//     resources.
-//   - productId: The product ID of the parent one-time product, if all updated
-//     offers belong to the same product. If this request spans multiple one-time
+//   - packageName: The parent app (package name) of the offers to retrieve. Must
+//     be equal to the package_name field on all the requests.
+//   - productId: The product ID of the parent one-time product, if all offers
+//     belong to the same product. If this request spans multiple one-time
 //     products, set this field to "-".
 //   - purchaseOptionId: The parent purchase option (ID) for which the offers
-//     should be updated. May be specified as '-' to update offers from multiple
-//     purchase options.
+//     should be retrieved. May be specified as '-' to retrieve offers from
+//     multiple purchase options.
 func (r *MonetizationOnetimeproductsPurchaseOptionsOffersService) BatchGet(packageName string, productId string, purchaseOptionId string, batchgetonetimeproductoffersrequest *BatchGetOneTimeProductOffersRequest) *MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall {
 	c := &MonetizationOnetimeproductsPurchaseOptionsOffersBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
@@ -23700,9 +23698,9 @@ func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) PageSize(page
 }
 
 // PageToken sets the optional parameter "pageToken": A page token, received
-// from a previous `ListOneTimeProductsOffers` call. Provide this to retrieve
+// from a previous `ListOneTimeProductOffers` call. Provide this to retrieve
 // the subsequent page. When paginating, product_id, package_name and
-// purchase_option_id provided to `ListOneTimeProductsOffersRequest` must match
+// purchase_option_id provided to `ListOneTimeProductOffersRequest` must match
 // the call that provided the page token.
 func (c *MonetizationOnetimeproductsPurchaseOptionsOffersListCall) PageToken(pageToken string) *MonetizationOnetimeproductsPurchaseOptionsOffersListCall {
 	c.urlParams_.Set("pageToken", pageToken)

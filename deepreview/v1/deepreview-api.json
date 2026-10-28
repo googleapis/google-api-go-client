@@ -2,6 +2,9 @@
   "auth": {
     "oauth2": {
       "scopes": {
+        "https://www.googleapis.com/auth/cloud-platform": {
+          "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
+        },
         "https://www.googleapis.com/auth/drive.file": {
           "description": "See, edit, create, and delete only the specific Google Drive files you use with this app"
         }
@@ -139,6 +142,36 @@
             "$ref": "Empty"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
+            "https://www.googleapis.com/auth/drive.file"
+          ]
+        },
+        "estimateReviewCost": {
+          "description": "Estimates what a review of a document would cost on the caller's Gemini API key. The estimate comes from what past reviews with the same model and depth cost, adjusted to this document's size and repriced at the Gemini API's current list prices. It covers one review attempt that runs to completion, and doesn't include retries after errors.",
+          "flatPath": "v1/documents/{documentsId}:estimateReviewCost",
+          "httpMethod": "POST",
+          "id": "deepreview.documents.estimateReviewCost",
+          "parameterOrder": [
+            "document"
+          ],
+          "parameters": {
+            "document": {
+              "description": "Required. The document to review. Format: `documents/{document}`",
+              "location": "path",
+              "pattern": "^documents/[^/]+$",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "v1/{+document}:estimateReviewCost",
+          "request": {
+            "$ref": "EstimateReviewCostRequest"
+          },
+          "response": {
+            "$ref": "EstimateReviewCostResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ]
         },
@@ -164,6 +197,7 @@
             "$ref": "Document"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ]
         },
@@ -201,6 +235,7 @@
             "$ref": "ListDocumentsResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ]
         }
@@ -243,6 +278,7 @@
                 "$ref": "Operation"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/drive.file"
               ]
             },
@@ -268,6 +304,7 @@
                 "$ref": "Review"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/drive.file"
               ]
             },
@@ -314,6 +351,7 @@
                 "$ref": "ListReviewsResponse"
               },
               "scopes": [
+                "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/drive.file"
               ]
             }
@@ -345,6 +383,7 @@
             "$ref": "DownloadDocumentResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ],
           "supportsMediaDownload": true,
@@ -392,6 +431,7 @@
             "$ref": "Document"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ],
           "supportsMediaUpload": true
@@ -425,6 +465,7 @@
             "$ref": "Empty"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ]
         },
@@ -450,6 +491,7 @@
             "$ref": "Empty"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ]
         },
@@ -496,6 +538,7 @@
             "$ref": "ListOperationsResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ]
         }
@@ -527,6 +570,7 @@
                     "$ref": "Operation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
                     "https://www.googleapis.com/auth/drive.file"
                   ]
                 }
@@ -560,13 +604,14 @@
             "$ref": "UserQuota"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/cloud-platform",
             "https://www.googleapis.com/auth/drive.file"
           ]
         }
       }
     }
   },
-  "revision": "20261020",
+  "revision": "20261027",
   "rootUrl": "https://deepreview.googleapis.com/",
   "schemas": {
     "AnchoredReviewComment": {
@@ -994,6 +1039,41 @@
       "properties": {},
       "type": "object"
     },
+    "EstimateReviewCostRequest": {
+      "description": "Request message for estimating what a review would cost.",
+      "id": "EstimateReviewCostRequest",
+      "properties": {
+        "review": {
+          "$ref": "Review",
+          "description": "Required. The review to estimate, as it would be passed to `CreateReview`. Only its `run_config` is read, and `run_config.gemini_api_key` is ignored."
+        }
+      },
+      "type": "object"
+    },
+    "EstimateReviewCostResponse": {
+      "description": "Response message for estimating what a review would cost. When the cost can't be estimated, for example because too few past reviews used the same model and depth, the costs are unset and `past_review_count` is 0.",
+      "id": "EstimateReviewCostResponse",
+      "properties": {
+        "highCost": {
+          "$ref": "Money",
+          "description": "The 95th percentile of what comparable past reviews would cost for this document."
+        },
+        "lowCost": {
+          "$ref": "Money",
+          "description": "The 20th percentile of what comparable past reviews would cost for this document."
+        },
+        "medianCost": {
+          "$ref": "Money",
+          "description": "The median of what comparable past reviews would cost for this document."
+        },
+        "pastReviewCount": {
+          "description": "Number of past reviews the estimate is based on.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "FieldComparison": {
       "description": "Per-field comparison result between extracted and retrieved metadata.",
       "id": "FieldComparison",
@@ -1090,6 +1170,27 @@
             "$ref": "Review"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "Money": {
+      "description": "Represents an amount of money with its currency type.",
+      "id": "Money",
+      "properties": {
+        "currencyCode": {
+          "description": "The three-letter currency code defined in ISO 4217.",
+          "type": "string"
+        },
+        "nanos": {
+          "description": "Number of nano (10^-9) units of the amount. The value must be between -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos` must be positive or zero. If `units` is zero, `nanos` can be positive, zero, or negative. If `units` is negative, `nanos` must be negative or zero. For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "units": {
+          "description": "The whole units of the amount. For example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"

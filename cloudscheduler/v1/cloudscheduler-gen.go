@@ -875,8 +875,8 @@ type PauseJobRequest struct {
 // least one attribute. Note that client libraries represent this object
 // differently depending on the language. See the corresponding client library
 // documentation (https://cloud.google.com/pubsub/docs/reference/libraries) for
-// more information. See [quotas and limits]
-// (https://cloud.google.com/pubsub/quotas) for more information about message
+// more information. See quotas and limits (
+// https://cloud.google.com/pubsub/quotas) for more information about message
 // limits.
 type PubsubMessage struct {
 	// Attributes: Optional. Attributes for this message. If this field is empty,

@@ -1395,6 +1395,71 @@ func (s ChatSpaceLinkData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Citation: Citations are inline references that can provide users more
+// detailed information about the inline reference. Corresponding inline
+// citations should be present in the message text in a markup format of
+// `{text}`. Citations are only supported when the message's `markup_syntax` is
+// set to `MARKDOWN`. Unreferenced citations in `Elements.citations` (those
+// without a matching “ tag in the message text) are ignored and do not cause
+// the message to be rejected.
+type Citation struct {
+	// CitedSources: Optional. A list of sources that are relevant to the citation.
+	// Sources are displayed in the citation hover card.
+	CitedSources []*CitedSource `json:"citedSources,omitempty"`
+	// Id: Required. The ID of the citation. This ID is defined by the app creating
+	// the citation and must match the `data-id` attribute of the `` tag in the
+	// message text. Must contain only ASCII letters and numbers, and less than 63
+	// characters.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CitedSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CitedSources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Citation) MarshalJSON() ([]byte, error) {
+	type NoMethod Citation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CitedSource: A reference to a source of information.
+type CitedSource struct {
+	// Footer: Optional. Additional information to show alongside the snippet in
+	// the form of a footer.
+	Footer *Footer `json:"footer,omitempty"`
+	// Snippet: Optional. Snippet containing information directly from the source.
+	Snippet *Snippet `json:"snippet,omitempty"`
+	// Title: Required. The plaintext title of the `CitedSource`. Does not support
+	// markdown format.
+	Title string `json:"title,omitempty"`
+	// Uri: Required. The URI pointing to the resource referenced by this
+	// `CitedSource`.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Footer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Footer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CitedSource) MarshalJSON() ([]byte, error) {
+	type NoMethod CitedSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Color: Represents a color in the RGBA color space. This representation is
 // designed for simplicity of conversion to and from color representations in
 // various languages over compactness. For example, the fields of this
@@ -2160,6 +2225,64 @@ func (s DriveLinkData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Elements: Elements are additional message components, including inline
+// `citations` (where each citation is associated with a specific portion of
+// the message text) and `cited_sources` (which are general references used to
+// generate the response and are not directly linked to specific segments of
+// the text). Both `citations` and `cited_sources` can be provided as input
+// when creating or updating a message and are populated on output when reading
+// a message.
+type Elements struct {
+	// Citations: Optional. A list of inline citations referenced within the
+	// message text (via `` tags) that render as interactive hover cards.
+	Citations []*Citation `json:"citations,omitempty"`
+	// CitedSources: Optional. A list of sources to be displayed under the message
+	// as footer links. These are not referenced inline. For inline references, use
+	// `citations`.
+	CitedSources []*CitedSource `json:"citedSources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Citations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Citations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Elements) MarshalJSON() ([]byte, error) {
+	type NoMethod Elements
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ElementsImage: An object encapsulating different ways of representing an
+// image. Currently supported representations: * An image fetched from a URI.
+// Additional representations might be supported in the future.
+type ElementsImage struct {
+	// ImageUri: Required. The URI of the image. Must be a publicly accessible URI
+	// so that Chat can fetch and display it.
+	ImageUri string `json:"imageUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ElementsImage) MarshalJSON() ([]byte, error) {
+	type NoMethod ElementsImage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Emoji: An emoji that is used as a reaction to a message.
 type Emoji struct {
 	// CustomEmoji: A custom emoji.
@@ -2245,6 +2368,29 @@ type FindGroupChatsResponse struct {
 
 func (s FindGroupChatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FindGroupChatsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Footer: A footer for a source, used for attribution.
+type Footer struct {
+	// Text: Optional. The plaintext to display in the footer. Does not support
+	// markdown format.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Footer) MarshalJSON() ([]byte, error) {
+	type NoMethod Footer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5733,6 +5879,18 @@ type Message struct {
 	// DeletionMetadata: Output only. Information about a deleted message. A
 	// message is deleted when `delete_time` is set.
 	DeletionMetadata *DeletionMetadata `json:"deletionMetadata,omitempty"`
+	// Elements: Optional. Additional message components, including inline
+	// `citations` (where each citation is associated with a specific portion of
+	// the message text) and `cited_sources` (which are general references used to
+	// generate the response and are not directly linked to specific segments of
+	// the text). On input, provide `elements` when creating or updating a message.
+	// On output, both `citations` and `cited_sources` are populated when reading a
+	// message that contains them. Callers can read structured citation metadata
+	// from `elements`, while `formatted_text` also includes inline citation tags
+	// or source links depending on `markup_syntax`. These differ from
+	// `annotations`, which are output-only and offer supplementary information
+	// tied to message fragments or the entire message text.
+	Elements *Elements `json:"elements,omitempty"`
 	// EmojiReactionSummaries: Output only. The list of emoji reaction summaries on
 	// the message.
 	EmojiReactionSummaries []*EmojiReactionSummary `json:"emojiReactionSummaries,omitempty"`
@@ -7073,6 +7231,36 @@ type SlashCommandMetadata struct {
 
 func (s SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SlashCommandMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Snippet: A snippet object representing an excerpt from a larger corpus.
+type Snippet struct {
+	// ImagePreview: Optional. Image preview of the snippet provided as an input
+	// when creating the citation.
+	ImagePreview *ElementsImage `json:"imagePreview,omitempty"`
+	// Text: Optional. A short plaintext excerpt directly from the corpus that is
+	// rendered in the citation hover card or source preview. When footer sources
+	// are automatically populated from inline `citations` (because
+	// `Elements.cited_sources` is not set), snippets are omitted from the
+	// deduplicated footer sources. Does not support markdown format, and must not
+	// exceed 1,000 characters.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImagePreview") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImagePreview") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Snippet) MarshalJSON() ([]byte, error) {
+	type NoMethod Snippet
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

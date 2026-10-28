@@ -9084,6 +9084,29 @@ func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInst
 	return c
 }
 
+// CloudDeploymentType sets the optional parameter "cloudDeploymentType": The
+// deployment type for Cloud Monitoring Points.
+//
+// Possible values:
+//
+//	"CLOUD_DEPLOYMENT_TYPE_UNSPECIFIED" - Default value. If unspecified,
+//
+// defaults to `TERRAFORM` for `GCE_VM`, `BICEP` for `AZURE_VM`, and
+// `CLOUD_FORMATION` for `AWS_EC2`.
+//
+//	"TERRAFORM" - Deploys using Terraform.
+//	"CLOUD_FORMATION" - Deploys using AWS Cloud Formation. Supported only for
+//
+// `AWS_EC2` deployments.
+//
+//	"BICEP" - Deploys using Azure Bicep. Supported only for `AZURE_VM`
+//
+// deployments.
+func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) CloudDeploymentType(cloudDeploymentType string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {
+	c.urlParams_.Set("cloudDeploymentType", cloudDeploymentType)
+	return c
+}
+
 // Hostname sets the optional parameter "hostname": Required. The hostname of
 // the MonitoringPoint, e.g. "test-vm"
 func (c *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall) Hostname(hostname string) *ProjectsLocationsNetworkMonitoringProvidersMonitoringPointsDownloadInstallScriptCall {

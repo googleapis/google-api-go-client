@@ -1312,7 +1312,28 @@ type ProductPerformanceView struct {
 	//   "MARKETING_METHOD_ENUM_UNSPECIFIED" - Not specified.
 	//   "ORGANIC" - Organic marketing.
 	//   "ADS" - Ads-based marketing.
+	//   "AFFILIATE" - [YouTube Shopping Affiliate
+	// marketing](https://support.google.com/merchants/answer/14815513).
 	MarketingMethod string `json:"marketingMethod,omitempty"`
+	// Network: Network to which metrics apply. Segment.
+	//
+	// Possible values:
+	//   "NETWORK_ENUM_UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - The value is unknown in this version.
+	//   "SEARCH" - Google search.
+	//   "SEARCH_PARTNERS" - Search partners.
+	//   "CONTENT" - Display Network.
+	//   "MIXED" - Cross-network.
+	//   "YOUTUBE" - YouTube
+	//   "GOOGLE_TV" - Google TV
+	//   "GOOGLE_OWNED_CHANNELS" - This network is used for Google Owned channels
+	// such as Discover feed, Gmail, YouTube. Demand Gen stats are attributed to
+	// more granular network types such as GMAIL, DISCOVER, MAPS, YOUTUBE; this
+	// value is only used for historical data.
+	//   "GMAIL" - Gmail
+	//   "DISCOVER" - Discover Feed
+	//   "MAPS" - Maps
+	Network string `json:"network,omitempty"`
 	// OfferId: Merchant-provided id of the product. Segment.
 	OfferId string `json:"offerId,omitempty"`
 	// ProductTypeL1: Product type (1st level)

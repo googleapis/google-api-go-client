@@ -564,12 +564,14 @@ func (s *EveUtilityTrait) UnmarshalJSON(data []byte) error {
 
 // EventData: Contains the details for a single event.
 type EventData struct {
-	// Event: Required. The actual event payload.
+	// Event: Optional. The actual event payload.
 	Event googleapi.RawMessage `json:"event,omitempty"`
 	// EventId: Required. The unique event ID from the device provider.
 	EventId string `json:"eventId,omitempty"`
 	// EventTime: Required. The timestamp of the event.
 	EventTime string `json:"eventTime,omitempty"`
+	// JsonTraitEvent: Optional. Contains the dynamic JSON trait event payload.
+	JsonTraitEvent *JsonTraitEvent `json:"jsonTraitEvent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Event") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -592,7 +594,7 @@ func (s EventData) MarshalJSON() ([]byte, error) {
 type Events struct {
 	// ComponentId: Optional. The ID of the provider component if the events are
 	// associated with a specific component. Optional for WHDM events, required for
-	// UDDM events.
+	// UDDM and JSON events.
 	ComponentId string `json:"componentId,omitempty"`
 	// Events: Required. List of events associated with the component.
 	Events []*EventData `json:"events,omitempty"`
@@ -638,7 +640,8 @@ func (s HomeEvents) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// HomeTraitPayload: Container for UDDM trait data associated with a device.
+// HomeTraitPayload: Container for UDDM or JSON trait data associated with a
+// device.
 type HomeTraitPayload struct {
 	// RootComponent: The root component of the device as reported by the provider.
 	RootComponent *Component `json:"rootComponent,omitempty"`
@@ -714,6 +717,33 @@ type JsonTrait struct {
 
 func (s JsonTrait) MarshalJSON() ([]byte, error) {
 	type NoMethod JsonTrait
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// JsonTraitEvent: Dynamic JSON event payload conforming to
+// `json_trait_schema.md`.
+type JsonTraitEvent struct {
+	// Data: Optional. Event payload fields conforming to the event's registered
+	// JSON Schema.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+	// Id: Required. Fully qualified event ID: `.` (e.g.,
+	// `matter.doorLock.lockOperation`, `ghp.acme.warranty.claimUpdated`).
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s JsonTraitEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonTraitEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -807,17 +837,20 @@ type QueryRequest struct {
 	// DeviceView: Optional. Specifies the type of device data to be returned in
 	// the response. This allows callers to request traditional Smart Home traits,
 	// Unified Device Data Model (UDDM) traits, or both. If unspecified, defaults
-	// to SMART_HOME_TRAIT_ONLY.
+	// to `SMART_HOME_TRAIT_ONLY`.
 	//
 	// Possible values:
 	//   "DEVICE_VIEW_UNSPECIFIED" - Default value. Equivalent to
-	// SMART_HOME_TRAIT_ONLY.
+	// `SMART_HOME_TRAIT_ONLY`.
 	//   "SMART_HOME_TRAIT_ONLY" - Return only standard Smart Home traits in the
 	// `devices` map.
 	//   "HOME_TRAIT_ONLY" - Return only Unified Device Data Model (UDDM) traits in
 	// the `home_trait_payload` map.
 	//   "HOME_TRAIT_AND_SMART_HOME_TRAIT" - Return both standard Smart Home traits
 	// and UDDM traits.
+	//   "JSON_TRAIT_ONLY" - Return all component traits in `JsonTrait` format
+	// (`TraitData.json_trait` in `home_trait_payload`), converting persisted UDDM
+	// traits to `JsonTrait` on read.
 	DeviceView string `json:"deviceView,omitempty"`
 	// IncludeDeviceMetadata: Optional. If true, the response will include device
 	// metadata in the device_metadata field.
@@ -933,8 +966,9 @@ type QueryResponsePayload struct {
 	// device states.
 	Devices map[string]googleapi.RawMessage `json:"devices,omitempty"`
 	// HomeTraitPayload: Map of device IDs to their Unified Device Data Model
-	// (UDDM) trait payloads. This field is populated when `device_view` is set to
-	// HOME_TRAIT_ONLY or HOME_TRAIT_AND_SMART_HOME_TRAIT.
+	// (UDDM) or JSON trait payloads. This field is populated when `device_view` is
+	// set to `HOME_TRAIT_ONLY`, `HOME_TRAIT_AND_SMART_HOME_TRAIT`, or
+	// `JSON_TRAIT_ONLY`.
 	HomeTraitPayload map[string]HomeTraitPayload `json:"homeTraitPayload,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeviceMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or

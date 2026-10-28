@@ -3755,7 +3755,10 @@ type EsimCommandStatus struct {
 	//   "SUCCESS" - The eSIM operation was successfully performed on the device.
 	//   "IN_PROGRESS" - The eSIM operation is in progress.
 	//   "PENDING_USER_ACTION" - The user needs to take an action for the eSIM
-	// operation to proceed.
+	// operation to proceed. When ADD_ESIM is issued, this can happen when the
+	// device requires user consent to install or activate the eSIM, or when the
+	// eSIM profile requires a confirmation code that was not provided in
+	// confirmation_code.
 	//   "ERROR_SETUP_IN_PROGRESS" - The eSIM operation cannot be executed when
 	// setup is in progress.
 	//   "ERROR_USER_DENIED" - The user has denied the eSIM operation.
@@ -3915,6 +3918,40 @@ type ExternalData struct {
 
 func (s ExternalData) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtraCapabilities: Extra capabilities for a role.
+type ExtraCapabilities struct {
+	// LocalDeviceWipeCommand: Optional. Controls whether the companion app can
+	// perform local device wipe
+	// (https://developers.google.com/android/management/sdk-local-commands) using
+	// AMAPI SDK
+	// (https://developers.google.com/android/management/sdk-integration).
+	//
+	// Possible values:
+	//   "LOCAL_DEVICE_WIPE_COMMAND_UNSPECIFIED" - Unspecified. Defaults to
+	// LOCAL_DEVICE_WIPE_COMMAND_DISALLOWED.
+	//   "LOCAL_DEVICE_WIPE_COMMAND_DISALLOWED" - The app is not allowed to perform
+	// local device wipe.
+	//   "LOCAL_DEVICE_WIPE_COMMAND_ALLOWED" - The app is allowed to perform local
+	// device wipe. Only the COMPANION_APP role type can use this field.
+	LocalDeviceWipeCommand string `json:"localDeviceWipeCommand,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LocalDeviceWipeCommand") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LocalDeviceWipeCommand") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtraCapabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtraCapabilities
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4436,8 +4473,9 @@ type InternalErrorDetails struct {
 	//   "ERROR_ADDRESS_MISSING" - See EuiccManager.ERROR_ADDRESS_MISSING
 	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_ADDRESS_MISSING)
 	// for details.
-	//   "ERROR_INVALID_CONFIRMATION_CODE" - See
-	// EuiccManager.ERROR_INVALID_CONFIRMATION_CODE
+	//   "ERROR_INVALID_CONFIRMATION_CODE" - The confirmation code is invalid. When
+	// ADD_ESIM is issued, this is reported when the carrier rejects the provided
+	// confirmation_code. See EuiccManager.ERROR_INVALID_CONFIRMATION_CODE
 	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_INVALID_CONFIRMATION_CODE)
 	// for details.
 	//   "ERROR_CERTIFICATE_ERROR" - See EuiccManager.ERROR_CERTIFICATE_ERROR
@@ -7629,6 +7667,9 @@ func (s RequestDeviceInfoStatus) MarshalJSON() ([]byte, error) {
 
 // Role: Role an app can have.
 type Role struct {
+	// ExtraCapabilities: Optional. Extra capabilities configured specifically for
+	// this role. Not all role types support or utilize extra capabilities.
+	ExtraCapabilities *ExtraCapabilities `json:"extraCapabilities,omitempty"`
 	// RoleType: Required. The type of the role an app can have.
 	//
 	// Possible values:
@@ -7668,15 +7709,15 @@ type Role struct {
 	// Android 11 and above, the user control is disallowed and userControlSettings
 	// cannot be set to USER_CONTROL_ALLOWED for the app with this role.
 	RoleType string `json:"roleType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RoleType") to
+	// ForceSendFields is a list of field names (e.g. "ExtraCapabilities") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RoleType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExtraCapabilities") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

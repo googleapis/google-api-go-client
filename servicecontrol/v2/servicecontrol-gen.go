@@ -576,6 +576,11 @@ type CallerAgent struct {
 	//   "SELF" - Acts under its own authority.
 	//   "ON_BEHALF_OF" - Acts on behalf of another authority.
 	Authority string `json:"authority,omitempty"`
+	// Id: The agent identifier of the caller agent. This is a globally unique,
+	// immutable name in Uniform Resource Name (URN) format. Example:
+	// 'urn:agent:projects-123456789:projects:123456789:locations:us-central1:aiplat
+	// form:reasoningEngines:987654321'
+	Id string `json:"id,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Authority") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

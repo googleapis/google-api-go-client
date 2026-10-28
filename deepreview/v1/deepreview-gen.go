@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	deepreviewService, err := deepreview.NewService(ctx, option.WithScopes(deepreview.DriveFileScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -98,6 +103,10 @@ const mtlsBasePath = "https://deepreview.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
+	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
 	// See, edit, create, and delete only the specific Google Drive files you use
 	// with this app
 	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
@@ -106,6 +115,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/drive.file",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -659,6 +669,68 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EstimateReviewCostRequest: Request message for estimating what a review
+// would cost.
+type EstimateReviewCostRequest struct {
+	// Review: Required. The review to estimate, as it would be passed to
+	// `CreateReview`. Only its `run_config` is read, and
+	// `run_config.gemini_api_key` is ignored.
+	Review *Review `json:"review,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Review") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Review") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EstimateReviewCostRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EstimateReviewCostRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EstimateReviewCostResponse: Response message for estimating what a review
+// would cost. When the cost can't be estimated, for example because too few
+// past reviews used the same model and depth, the costs are unset and
+// `past_review_count` is 0.
+type EstimateReviewCostResponse struct {
+	// HighCost: The 95th percentile of what comparable past reviews would cost for
+	// this document.
+	HighCost *Money `json:"highCost,omitempty"`
+	// LowCost: The 20th percentile of what comparable past reviews would cost for
+	// this document.
+	LowCost *Money `json:"lowCost,omitempty"`
+	// MedianCost: The median of what comparable past reviews would cost for this
+	// document.
+	MedianCost *Money `json:"medianCost,omitempty"`
+	// PastReviewCount: Number of past reviews the estimate is based on.
+	PastReviewCount int64 `json:"pastReviewCount,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "HighCost") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HighCost") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EstimateReviewCostResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod EstimateReviewCostResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FieldComparison: Per-field comparison result between extracted and retrieved
 // metadata.
 type FieldComparison struct {
@@ -799,6 +871,37 @@ type ListReviewsResponse struct {
 
 func (s ListReviewsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReviewsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Money: Represents an amount of money with its currency type.
+type Money struct {
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be between
+	// -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos`
+	// must be positive or zero. If `units` is zero, `nanos` can be positive, zero,
+	// or negative. If `units` is negative, `nanos` must be negative or zero. For
+	// example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Units: The whole units of the amount. For example if `currencyCode` is
+	// "USD", then 1 unit is one US dollar.
+	Units int64 `json:"units,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Money) MarshalJSON() ([]byte, error) {
+	type NoMethod Money
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1292,6 +1395,114 @@ func (c *DocumentsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "deepreview.documents.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type DocumentsEstimateReviewCostCall struct {
+	s                         *Service
+	document                  string
+	estimatereviewcostrequest *EstimateReviewCostRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// EstimateReviewCost: Estimates what a review of a document would cost on the
+// caller's Gemini API key. The estimate comes from what past reviews with the
+// same model and depth cost, adjusted to this document's size and repriced at
+// the Gemini API's current list prices. It covers one review attempt that runs
+// to completion, and doesn't include retries after errors.
+//
+// - document: The document to review. Format: `documents/{document}`.
+func (r *DocumentsService) EstimateReviewCost(document string, estimatereviewcostrequest *EstimateReviewCostRequest) *DocumentsEstimateReviewCostCall {
+	c := &DocumentsEstimateReviewCostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.document = document
+	c.estimatereviewcostrequest = estimatereviewcostrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *DocumentsEstimateReviewCostCall) Fields(s ...googleapi.Field) *DocumentsEstimateReviewCostCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *DocumentsEstimateReviewCostCall) Context(ctx context.Context) *DocumentsEstimateReviewCostCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *DocumentsEstimateReviewCostCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DocumentsEstimateReviewCostCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.estimatereviewcostrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+document}:estimateReviewCost")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"document": c.document,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "deepreview.documents.estimateReviewCost", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "deepreview.documents.estimateReviewCost" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *EstimateReviewCostResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *DocumentsEstimateReviewCostCall) Do(opts ...googleapi.CallOption) (*EstimateReviewCostResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EstimateReviewCostResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "deepreview.documents.estimateReviewCost", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

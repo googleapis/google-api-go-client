@@ -1371,6 +1371,126 @@ func (s *ExploitPredictionScoringSystem) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Exploitability: Exploitability information for a vulnerability. This data
+// can be used across multiple sources, including, but not limited to a
+// top-level vulnerability, a package occurrence, or a package file location.
+type Exploitability struct {
+	// Signals: Individual exploitability signals from various sources.
+	Signals []*ExploitabilitySignal `json:"signals,omitempty"`
+	// Summary: Rollup summary of the exploitability signals.
+	Summary *ExploitabilitySummary `json:"summary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Signals") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Signals") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Exploitability) MarshalJSON() ([]byte, error) {
+	type NoMethod Exploitability
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExploitabilitySignal: A single exploitability signal from a specific source
+// (e.g., an upstream advisory, a customer VEX document, or an internal build
+// analysis).
+type ExploitabilitySignal struct {
+	// Rationale: Human-readable explanation of this signal.
+	Rationale string `json:"rationale,omitempty"`
+	// Source: Identifier of the signal source.
+	Source string `json:"source,omitempty"`
+	// VexJustification: Justification for why the vulnerability is not
+	// exploitable.
+	//
+	// Possible values:
+	//   "JUSTIFICATION_TYPE_UNSPECIFIED" - JUSTIFICATION_TYPE_UNSPECIFIED.
+	//   "COMPONENT_NOT_PRESENT" - The vulnerable component is not present in the
+	// product.
+	//   "VULNERABLE_CODE_NOT_PRESENT" - The vulnerable code is not present.
+	// Typically this case occurs when source code is configured or built in a way
+	// that excludes the vulnerable code.
+	//   "VULNERABLE_CODE_NOT_IN_EXECUTE_PATH" - The vulnerable code can not be
+	// executed. Typically this case occurs when the product includes the
+	// vulnerable code but does not call or use the vulnerable code.
+	//   "VULNERABLE_CODE_CANNOT_BE_CONTROLLED_BY_ADVERSARY" - The vulnerable code
+	// cannot be controlled by an attacker to exploit the vulnerability.
+	//   "INLINE_MITIGATIONS_ALREADY_EXIST" - The product includes built-in
+	// protections or features that prevent exploitation of the vulnerability.
+	// These built-in protections cannot be subverted by the attacker and cannot be
+	// configured or disabled by the user. These mitigations completely prevent
+	// exploitation based on known attack vectors.
+	VexJustification string `json:"vexJustification,omitempty"`
+	// VexStatus: The VEX status asserted by this signal.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state is specified.
+	//   "AFFECTED" - This product is known to be affected by this vulnerability.
+	//   "NOT_AFFECTED" - This product is known to be not affected by this
+	// vulnerability.
+	//   "FIXED" - This product contains a fix for this vulnerability.
+	//   "UNDER_INVESTIGATION" - It is not known yet whether these versions are or
+	// are not affected by the vulnerability. However, it is still under
+	// investigation.
+	VexStatus string `json:"vexStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rationale") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rationale") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExploitabilitySignal) MarshalJSON() ([]byte, error) {
+	type NoMethod ExploitabilitySignal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExploitabilitySummary: Rollup summary of exploitability across signals.
+type ExploitabilitySummary struct {
+	// Rationale: Human-readable explanation of the summary.
+	Rationale string `json:"rationale,omitempty"`
+	// VexStatus: The rolled-up VEX status. Usually, this should result in an
+	// AFFECTED or NOT_AFFECTED vex status.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state is specified.
+	//   "AFFECTED" - This product is known to be affected by this vulnerability.
+	//   "NOT_AFFECTED" - This product is known to be not affected by this
+	// vulnerability.
+	//   "FIXED" - This product contains a fix for this vulnerability.
+	//   "UNDER_INVESTIGATION" - It is not known yet whether these versions are or
+	// are not affected by the vulnerability. However, it is still under
+	// investigation.
+	VexStatus string `json:"vexStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rationale") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rationale") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExploitabilitySummary) MarshalJSON() ([]byte, error) {
+	type NoMethod ExploitabilitySummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type File struct {
 	Digest map[string]string `json:"digest,omitempty"`
 	Name   string            `json:"name,omitempty"`
@@ -2781,6 +2901,9 @@ type PackageIssue struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
+	// Exploitability: Output only. Exploitability signals and summary for this
+	// package issue.
+	Exploitability *Exploitability `json:"exploitability,omitempty"`
 	// FileLocation: The location at which this package was found.
 	FileLocation []*GrafeasV1FileLocation `json:"fileLocation,omitempty"`
 	// FixAvailable: Output only. Whether a fix is available for this package.
@@ -4049,6 +4172,9 @@ type VulnerabilityOccurrence struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
+	// Exploitability: Output only. Rollup of exploitability across all
+	// PackageIssues in this occurrence.
+	Exploitability *Exploitability `json:"exploitability,omitempty"`
 	// ExtraDetails: Occurrence-specific extra details about the vulnerability.
 	ExtraDetails string `json:"extraDetails,omitempty"`
 	// FixAvailable: Output only. Whether at least one of the affected packages has

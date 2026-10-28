@@ -1643,6 +1643,40 @@ func (s AdBlockingConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AdditionalAsset: Additional assets for a creative.
+type AdditionalAsset struct {
+	// CallToActions: Optional. Call to actions for the creative.
+	CallToActions []string `json:"callToActions,omitempty"`
+	// CoverImages: Optional. Cover images for the creative.
+	CoverImages []*CreativeAsset `json:"coverImages,omitempty"`
+	// Descriptions: Optional. Descriptions for the creative.
+	Descriptions []string `json:"descriptions,omitempty"`
+	// DisplayUrl: Optional. Display URL for the creative.
+	DisplayUrl string `json:"displayUrl,omitempty"`
+	// Headlines: Optional. Headlines for the creative.
+	Headlines []string `json:"headlines,omitempty"`
+	// LongDescriptions: Optional. Long descriptions for the creative.
+	LongDescriptions []string `json:"longDescriptions,omitempty"`
+	// LongHeadlines: Optional. Long headlines for the creative.
+	LongHeadlines []string `json:"longHeadlines,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CallToActions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CallToActions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdditionalAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod AdditionalAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AdsListResponse: Ad List Response
 type AdsListResponse struct {
 	// Ads: Ad collection.
@@ -3692,6 +3726,10 @@ type Creative struct {
 	// look or functionality of a creative. Applicable to the following creative
 	// types: all RICH_MEDIA, and all VPAID.
 	AdTagKeys []string `json:"adTagKeys,omitempty"`
+	// AdditionalAsset: Optional. Additional asset for the creative. This field
+	// captures additional assets that are associated with the creative and used in
+	// the context of the social/native and YouTube platforms.
+	AdditionalAsset *AdditionalAsset `json:"additionalAsset,omitempty"`
 	// AdditionalSizes: Additional sizes associated with a responsive creative.
 	// When inserting or updating a creative either the size ID field or size width
 	// and height fields can be used. Applicable to DISPLAY creatives when the
@@ -4459,6 +4497,12 @@ type CreativeAsset struct {
 	//   "ALTERNATE_VIDEO"
 	//   "PARENT_AUDIO"
 	//   "TRANSCODED_AUDIO"
+	//   "COVER_IMAGE" - Cover image.
+	//   "HEADLINE" - Headline.
+	//   "LONG_HEADLINE" - Long headline.
+	//   "DESCRIPTION" - Description.
+	//   "LONG_DESCRIPTION" - Long description.
+	//   "CALL_TO_ACTION" - Call to action.
 	Role string `json:"role,omitempty"`
 	// Size: Size associated with this creative asset. This is a required field
 	// when applicable; however for IMAGE and FLASH_INPAGE, creatives if left

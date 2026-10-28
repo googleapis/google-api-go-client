@@ -386,7 +386,8 @@ func (s TaskLinks) MarshalJSON() ([]byte, error) {
 type TaskList struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-	// Id: Task list identifier.
+	// Id: Task list identifier. In requests, the authenticated user's default task
+	// list can also be referred to as "@default".
 	Id string `json:"id,omitempty"`
 	// Kind: Output only. Type of the resource. This is always "tasks#taskList".
 	Kind string `json:"kind,omitempty"`
@@ -490,9 +491,10 @@ type TasklistsDeleteCall struct {
 
 // Delete: Deletes the authenticated user's specified task list. If the list
 // contains assigned tasks, both the assigned tasks and the original tasks in
-// the assignment surface (Docs, Chat Spaces) are deleted.
+// the assignment surface (Docs, Chat Spaces) are deleted. The user's default
+// task list cannot be deleted.
 //
-// - tasklist: Task list identifier.
+// - tasklist: Task list identifier. The default task list cannot be deleted.
 func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
 	c := &TasklistsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -566,7 +568,8 @@ type TasklistsGetCall struct {
 
 // Get: Returns the authenticated user's specified task list.
 //
-// - tasklist: Task list identifier.
+//   - tasklist: Task list identifier. Use "@default" to get the authenticated
+//     user's default task list.
 func (r *TasklistsService) Get(tasklistid string) *TasklistsGetCall {
 	c := &TasklistsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklistid = tasklistid
@@ -777,7 +780,7 @@ func (r *TasklistsService) List() *TasklistsListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number of task
-// lists returned on one page.  The default is 1000 (max allowed: 1000).
+// lists returned on one page. The default is 1000 (max allowed: 1000).
 func (c *TasklistsListCall) MaxResults(maxResults int64) *TasklistsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1396,6 +1399,17 @@ func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 	return c
 }
 
+// Hidden sets the optional parameter "hidden": Flag indicating whether the
+// task is created as 'hidden', as if it had been completed and then cleared
+// from the task list (see the "clear" method). Hidden tasks are not returned
+// by default when retrieving all tasks for a task list (see showHidden). Only
+// completed tasks can be created as hidden, and they can not be nested or
+// positioned, so parent and previous must be empty.
+func (c *TasksInsertCall) Hidden(hidden bool) *TasksInsertCall {
+	c.urlParams_.Set("hidden", fmt.Sprint(hidden))
+	return c
+}
+
 // Parent sets the optional parameter "parent": Parent task identifier. If the
 // task is created at the top level, this parameter is omitted. An assigned
 // task cannot be a parent task, nor can it have a parent. Setting the parent
@@ -1518,7 +1532,7 @@ func (r *TasksService) List(tasklistid string) *TasksListCall {
 }
 
 // CompletedMax sets the optional parameter "completedMax": Upper bound for a
-// task's completion date (as a RFC 3339 timestamp) to filter by.  The default
+// task's completion date (as a RFC 3339 timestamp) to filter by. The default
 // is not to filter by completion date.
 func (c *TasksListCall) CompletedMax(completedMax string) *TasksListCall {
 	c.urlParams_.Set("completedMax", completedMax)
@@ -1526,7 +1540,7 @@ func (c *TasksListCall) CompletedMax(completedMax string) *TasksListCall {
 }
 
 // CompletedMin sets the optional parameter "completedMin": Lower bound for a
-// task's completion date (as a RFC 3339 timestamp) to filter by.  The default
+// task's completion date (as a RFC 3339 timestamp) to filter by. The default
 // is not to filter by completion date.
 func (c *TasksListCall) CompletedMin(completedMin string) *TasksListCall {
 	c.urlParams_.Set("completedMin", completedMin)
@@ -1534,23 +1548,23 @@ func (c *TasksListCall) CompletedMin(completedMin string) *TasksListCall {
 }
 
 // DueMax sets the optional parameter "dueMax": Upper bound for a task's due
-// date (as a RFC 3339 timestamp) to filter by.  The default is not to filter
-// by due date.
+// date (as a RFC 3339 timestamp) to filter by. The default is not to filter by
+// due date.
 func (c *TasksListCall) DueMax(dueMax string) *TasksListCall {
 	c.urlParams_.Set("dueMax", dueMax)
 	return c
 }
 
 // DueMin sets the optional parameter "dueMin": Lower bound for a task's due
-// date (as a RFC 3339 timestamp) to filter by.  The default is not to filter
-// by due date.
+// date (as a RFC 3339 timestamp) to filter by. The default is not to filter by
+// due date.
 func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
 	c.urlParams_.Set("dueMin", dueMin)
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number of tasks
-// returned on one page.  The default is 20 (max allowed: 100).
+// returned on one page. The default is 20 (max allowed: 100).
 func (c *TasksListCall) MaxResults(maxResults int64) *TasksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -1564,8 +1578,8 @@ func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 }
 
 // ShowAssigned sets the optional parameter "showAssigned": Flag indicating
-// whether tasks assigned to the current user are returned in the result.
-// Optional. The default is False.
+// whether tasks assigned to the current user are returned in the result. The
+// default is False.
 func (c *TasksListCall) ShowAssigned(showAssigned bool) *TasksListCall {
 	c.urlParams_.Set("showAssigned", fmt.Sprint(showAssigned))
 	return c
@@ -1574,28 +1588,28 @@ func (c *TasksListCall) ShowAssigned(showAssigned bool) *TasksListCall {
 // ShowCompleted sets the optional parameter "showCompleted": Flag indicating
 // whether completed tasks are returned in the result. Note that showHidden
 // must also be True to show tasks completed in first party clients, such as
-// the web UI and Google's mobile apps.  The default is True.
+// the web UI and Google's mobile apps. The default is True.
 func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
 	c.urlParams_.Set("showCompleted", fmt.Sprint(showCompleted))
 	return c
 }
 
 // ShowDeleted sets the optional parameter "showDeleted": Flag indicating
-// whether deleted tasks are returned in the result.  The default is False.
+// whether deleted tasks are returned in the result. The default is False.
 func (c *TasksListCall) ShowDeleted(showDeleted bool) *TasksListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
 // ShowHidden sets the optional parameter "showHidden": Flag indicating whether
-// hidden tasks are returned in the result.  The default is False.
+// hidden tasks are returned in the result. The default is False.
 func (c *TasksListCall) ShowHidden(showHidden bool) *TasksListCall {
 	c.urlParams_.Set("showHidden", fmt.Sprint(showHidden))
 	return c
 }
 
 // UpdatedMin sets the optional parameter "updatedMin": Lower bound for a
-// task's last modification time (as a RFC 3339 timestamp) to filter by.  The
+// task's last modification time (as a RFC 3339 timestamp) to filter by. The
 // default is not to filter by last modification time.
 func (c *TasksListCall) UpdatedMin(updatedMin string) *TasksListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)

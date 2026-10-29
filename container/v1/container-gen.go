@@ -557,6 +557,8 @@ type AddonsConfig struct {
 	SlurmOperatorConfig *SlurmOperatorConfig `json:"slurmOperatorConfig,omitempty"`
 	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
 	StatefulHaConfig *StatefulHAConfig `json:"statefulHaConfig,omitempty"`
+	// WizSensorConfig: Optional. Configuration for the Wiz Sensor add-on.
+	WizSensorConfig *WizSensorConfig `json:"wizSensorConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentSandboxConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -665,6 +667,29 @@ type AgentSandboxConfig struct {
 
 func (s AgentSandboxConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AgentSandboxConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AmbientNetworkingConfig: AmbientNetworkingConfig contains the desired config
+// of Ambient Networking on this cluster.
+type AmbientNetworkingConfig struct {
+	// Enabled: Optional. If true, enable ambient networking for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AmbientNetworkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AmbientNetworkingConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -963,6 +988,39 @@ type AutoprovisioningNodePoolDefaults struct {
 
 func (s AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoprovisioningNodePoolDefaults
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AutoprovisioningRestrictionConfig: AutoprovisioningRestrictionConfig
+// configures restrictions related to autoprovisioning settings.
+type AutoprovisioningRestrictionConfig struct {
+	// AuthorizedServiceAccounts: Optional. Contains the list of service accounts
+	// allowed for autoprovisioned node pools / Custom ComputeClasses.
+	AuthorizedServiceAccounts []string `json:"authorizedServiceAccounts,omitempty"`
+	// ServiceAccountPermissionCheck: Optional. Controls whether service account
+	// validation checks are enforced for autoprovisioning.
+	//
+	// Possible values:
+	//   "PERMISSION_CHECK_MODE_UNSPECIFIED" - Default value. Permission check mode
+	// is unspecified.
+	//   "DISABLED" - Service account permission check is disabled.
+	//   "ENABLED" - Service account permission check is enabled.
+	ServiceAccountPermissionCheck string `json:"serviceAccountPermissionCheck,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AuthorizedServiceAccounts")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AuthorizedServiceAccounts") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AutoprovisioningRestrictionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoprovisioningRestrictionConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1804,6 +1862,9 @@ type ClusterAutoscaling struct {
 	// AutoprovisioningNodePoolDefaults: AutoprovisioningNodePoolDefaults contains
 	// defaults for a node pool created by NAP.
 	AutoprovisioningNodePoolDefaults *AutoprovisioningNodePoolDefaults `json:"autoprovisioningNodePoolDefaults,omitempty"`
+	// AutoprovisioningRestrictionConfig: Optional. Configures restrictions related
+	// to autoprovisioning settings.
+	AutoprovisioningRestrictionConfig *AutoprovisioningRestrictionConfig `json:"autoprovisioningRestrictionConfig,omitempty"`
 	// AutoscalingProfile: Defines autoscaling behaviour.
 	//
 	// Possible values:
@@ -1910,6 +1971,9 @@ type ClusterUpdate struct {
 	// DesiredAddonsConfig: Configurations for the various addons available to run
 	// in the cluster.
 	DesiredAddonsConfig *AddonsConfig `json:"desiredAddonsConfig,omitempty"`
+	// DesiredAmbientNetworkingConfig: Optional. The desired ambient networking
+	// configuration.
+	DesiredAmbientNetworkingConfig *AmbientNetworkingConfig `json:"desiredAmbientNetworkingConfig,omitempty"`
 	// DesiredAnonymousAuthenticationConfig: Configuration for limiting anonymous
 	// access to all endpoints except the health checks.
 	DesiredAnonymousAuthenticationConfig *AnonymousAuthenticationConfig `json:"desiredAnonymousAuthenticationConfig,omitempty"`
@@ -1956,6 +2020,10 @@ type ClusterUpdate struct {
 	// features. See the [GKE Dataplane V2
 	// documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/datapla
 	// ne-v2) for more.
+	//   "MIGRATE_TO_ADVANCED_DATAPATH" - Cluster has some existing nodes but new
+	// nodes should use ADVANCED_DATAPATH.
+	//   "MIGRATE_TO_LEGACY_DATAPATH" - Cluster has some existing nodes but new
+	// nodes should use LEGACY_DATAPATH.
 	DesiredDatapathProvider string `json:"desiredDatapathProvider,omitempty"`
 	// DesiredDefaultEnablePrivateNodes: Override the default setting of whether
 	// future created nodes have private IP addresses only, namely
@@ -3375,6 +3443,9 @@ func (s EphemeralLocalSsdProfile) MarshalJSON() ([]byte, error) {
 type EphemeralStorageLocalSsdConfig struct {
 	// DataCacheCount: Number of local SSDs to use for GKE Data Cache.
 	DataCacheCount int64 `json:"dataCacheCount,omitempty"`
+	// EphemeralCapacityGb: Capacity set aside for Ephemeral Storage if using mixed
+	// Local SSD modes. The remaining capacity is Raw Block.
+	EphemeralCapacityGb int64 `json:"ephemeralCapacityGb,omitempty,string"`
 	// LocalSsdCount: Number of local SSDs to use to back ephemeral storage. Uses
 	// NVMe interfaces. A zero (or unset) value has different meanings depending on
 	// machine type being used: 1. For pre-Gen3 machines, which support flexible
@@ -3761,7 +3832,13 @@ type GPUDriverInstallationConfig struct {
 	// manual installation
 	//   "DEFAULT" - "Default" GPU driver in COS and Ubuntu.
 	//   "LATEST" - "Latest" GPU driver in COS.
+	//   "SPECIFIC" - "Specific" GPU driver in COS. If used, the specific_version
+	// field must be also set.
 	GpuDriverVersion string `json:"gpuDriverVersion,omitempty"`
+	// SpecificVersion: Optional. The specific version of the GPU driver to
+	// install. Use this field only with gpu_driver_version set to SPECIFIC.
+	// Otherwise, an error will be returned.
+	SpecificVersion string `json:"specificVersion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GpuDriverVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5561,6 +5638,9 @@ func (s MonitoringConfig) MarshalJSON() ([]byte, error) {
 // NetworkConfig: NetworkConfig reports the relative names of network &
 // subnetwork.
 type NetworkConfig struct {
+	// AmbientNetworkingConfig: Optional. Contains the desired config of Ambient
+	// Networking mode on this cluster.
+	AmbientNetworkingConfig *AmbientNetworkingConfig `json:"ambientNetworkingConfig,omitempty"`
 	// DatapathProvider: The desired datapath provider for this cluster. By
 	// default, uses the IPTables-based kube-proxy implementation.
 	//
@@ -5571,6 +5651,10 @@ type NetworkConfig struct {
 	// features. See the [GKE Dataplane V2
 	// documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/datapla
 	// ne-v2) for more.
+	//   "MIGRATE_TO_ADVANCED_DATAPATH" - Cluster has some existing nodes but new
+	// nodes should use ADVANCED_DATAPATH.
+	//   "MIGRATE_TO_LEGACY_DATAPATH" - Cluster has some existing nodes but new
+	// nodes should use LEGACY_DATAPATH.
 	DatapathProvider string `json:"datapathProvider,omitempty"`
 	// DataplaneV2Config: Optional. DataplaneV2Config specifies the DPv2
 	// configuration.
@@ -5645,15 +5729,15 @@ type NetworkConfig struct {
 	// is connected. Example:
 	// projects/my-project/regions/us-central1/subnetworks/my-subnet
 	Subnetwork string `json:"subnetwork,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatapathProvider") to
+	// ForceSendFields is a list of field names (e.g. "AmbientNetworkingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatapathProvider") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AmbientNetworkingConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -6215,6 +6299,17 @@ type NodeKubeletConfig struct {
 	// to avoid disk pressure caused by log files. The default value is 10Mi if
 	// unspecified.
 	ContainerLogMaxSize string `json:"containerLogMaxSize,omitempty"`
+	// ContainerLogMaxWorkers: Optional. Defines the maximum number of concurrent
+	// workers to rotate container log files. See
+	// https://kubernetes.io/docs/concepts/cluster-administration/logging/#log-rotation
+	// The value must be an integer between 1 and 10, inclusive. The default value
+	// is 1 if unspecified.
+	ContainerLogMaxWorkers int64 `json:"containerLogMaxWorkers,omitempty"`
+	// ContainerLogMonitorInterval: Optional. Specifies the interval at which the
+	// container logs are monitored for performing the log rotate operation. The
+	// value must be a positive interval between 3s and 300s, inclusive. The
+	// default value is "10s" if unspecified.
+	ContainerLogMonitorInterval string `json:"containerLogMonitorInterval,omitempty"`
 	// CpuCfsQuota: Enable CPU CFS quota enforcement for containers that specify
 	// CPU limits. This option is enabled by default which makes kubelet use CFS
 	// quota (https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt) to
@@ -6309,6 +6404,10 @@ type NodeKubeletConfig struct {
 	// ReservedResourcesConfig: Optional. Controls the reserved resources on the
 	// node. Only included if any fields are specified.
 	ReservedResourcesConfig *ReservedResourcesConfig `json:"reservedResourcesConfig,omitempty"`
+	// ReservedSystemCpus: Optional. The reserved_system_cpus option specifies the
+	// CPU list reserved for the host system services. Format: a list of CPU IDs
+	// (e.g. "0-3", "0,1") that can be parsed as a cpuset.
+	ReservedSystemCpus string `json:"reservedSystemCpus,omitempty"`
 	// ShutdownGracePeriodCriticalPodsSeconds: Optional.
 	// shutdown_grace_period_critical_pods_seconds is the maximum allowed grace
 	// period (in seconds) used to terminate critical pods during a node shutdown.
@@ -6430,6 +6529,20 @@ type NodeNetworkConfig struct {
 	// `ip_allocation_policy.use_ip_aliases` is true. This field cannot be changed
 	// after the node pool has been created.
 	CreatePodRange bool `json:"createPodRange,omitempty"`
+	// DatapathProvider: The datapath provider for this node pool.
+	//
+	// Possible values:
+	//   "DATAPATH_PROVIDER_UNSPECIFIED" - Default value.
+	//   "LEGACY_DATAPATH" - Use the IPTables implementation based on kube-proxy.
+	//   "ADVANCED_DATAPATH" - Use the eBPF based GKE Dataplane V2 with additional
+	// features. See the [GKE Dataplane V2
+	// documentation](https://cloud.google.com/kubernetes-engine/docs/how-to/datapla
+	// ne-v2) for more.
+	//   "MIGRATE_TO_ADVANCED_DATAPATH" - Cluster has some existing nodes but new
+	// nodes should use ADVANCED_DATAPATH.
+	//   "MIGRATE_TO_LEGACY_DATAPATH" - Cluster has some existing nodes but new
+	// nodes should use LEGACY_DATAPATH.
+	DatapathProvider string `json:"datapathProvider,omitempty"`
 	// EnablePrivateNodes: Whether nodes have internal IP addresses only. If
 	// enable_private_nodes is not specified, then the value is derived from
 	// Cluster.NetworkConfig.default_enable_private_nodes
@@ -8498,7 +8611,10 @@ type SecurityPostureConfig struct {
 	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
 	// Applies the Security Posture off cluster Enterprise level features.
 	Mode string `json:"mode,omitempty"`
-	// VulnerabilityMode: Sets which mode to use for vulnerability scanning.
+	// VulnerabilityMode: Deprecated: Vulnerability scanning is no longer
+	// supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Sets which mode to use for vulnerability scanning.
 	//
 	// Possible values:
 	//   "VULNERABILITY_MODE_UNSPECIFIED" - Default value not specified.
@@ -8507,8 +8623,11 @@ type SecurityPostureConfig struct {
 	// longer supported. For more details, see
 	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
 	// Applies basic vulnerability scanning on the cluster.
-	//   "VULNERABILITY_ENTERPRISE" - Applies the Security Posture's vulnerability
-	// on cluster Enterprise level features.
+	//   "VULNERABILITY_ENTERPRISE" - Deprecated: Advanced vulnerability scanning
+	// is no longer supported. For more details, see
+	// https://cloud.google.com/kubernetes-engine/docs/deprecations/posture-management-deprecation.
+	// Applies the Security Posture's vulnerability on cluster Enterprise level
+	// features.
 	VulnerabilityMode string `json:"vulnerabilityMode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9879,6 +9998,15 @@ type UpdateNodePoolRequest struct {
 	// update. Specified in the format
 	// `projects/*/locations/*/clusters/*/nodePools/*`.
 	Name string `json:"name,omitempty"`
+	// NodeConfigUpdateMode: Optional. Option to specify the rollout strategy to
+	// apply node pool configuration updates. If unspecified, standard rolling
+	// update strategy with VM recreation is used as the default behavior.
+	//
+	// Possible values:
+	//   "NODE_CONFIG_UPDATE_MODE_UNSPECIFIED" - Unspecified.
+	//   "LIVE_UPDATE_WITHOUT_DRAIN" - Node updates are applied in-place on the
+	// running VM without VM recreation and without draining workloads/pods.
+	NodeConfigUpdateMode string `json:"nodeConfigUpdateMode,omitempty"`
 	// NodeDrainConfig: The desired node drain configuration for nodes in the node
 	// pool.
 	NodeDrainConfig *NodeDrainConfig `json:"nodeDrainConfig,omitempty"`
@@ -10449,6 +10577,47 @@ type WindowsNodeConfig struct {
 
 func (s WindowsNodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsNodeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WizSensorConfig: Configuration for the Wiz Sensor add-on.
+type WizSensorConfig struct {
+	// ApiKeySecretUri: Optional. The GCP Secret Manager URI for the Wiz API key
+	// secret. Format:
+	// "projects/{project_id}/secrets/{secret_name}/versions/{version}" or Format:
+	// "projects/{project_id}/locations/{location_id}/secrets/{secret_name}/versions
+	// /{version}"
+	ApiKeySecretUri string `json:"apiKeySecretUri,omitempty"`
+	// Enabled: Optional. Whether the Wiz Sensor add-on is enabled for this
+	// cluster.
+	Enabled bool `json:"enabled,omitempty"`
+	// ProxySecretUri: Optional. The GCP Secret Manager URI for the Wiz proxy
+	// configuration. Format:
+	// "projects/{project_id}/secrets/{secret_name}/versions/{version}" or Format:
+	// "projects/{project_id}/locations/{location_id}/secrets/{secret_name}/versions
+	// /{version}"
+	ProxySecretUri string `json:"proxySecretUri,omitempty"`
+	// RegistrySecretUri: Optional. The GCP Secret Manager URI for the Wiz registry
+	// secret. Format:
+	// "projects/{project_id}/secrets/{secret_name}/versions/{version}" or Format:
+	// "projects/{project_id}/locations/{location_id}/secrets/{secret_name}/versions
+	// /{version}"
+	RegistrySecretUri string `json:"registrySecretUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiKeySecretUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiKeySecretUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WizSensorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WizSensorConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

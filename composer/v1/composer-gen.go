@@ -1126,6 +1126,9 @@ type ImageVersion struct {
 	// CreationDisabled: Whether it is impossible to create an environment with the
 	// image version.
 	CreationDisabled bool `json:"creationDisabled,omitempty"`
+	// DevModeSupported: Whether it is possible to create an environment in the
+	// `DEVELOPMENT` mode with the image version.
+	DevModeSupported bool `json:"devModeSupported,omitempty"`
 	// ImageVersionId: The string identifier of the ImageVersion, in the form:
 	// "composer-x.y.z-airflow-a.b.c"
 	ImageVersionId string `json:"imageVersionId,omitempty"`

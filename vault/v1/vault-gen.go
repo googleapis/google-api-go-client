@@ -428,8 +428,8 @@ type CalendarExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
-	//   "XML" - Export as XML. Only available for Gemini.
-	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
+	//   "XML" - Export as XML. Only available for Gemini app.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workspace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -602,7 +602,7 @@ type CorpusQuery struct {
 	// DriveQuery: Service-specific options for Drive holds. If set, **CorpusType**
 	// must be **DRIVE**.
 	DriveQuery *HeldDriveQuery `json:"driveQuery,omitempty"`
-	// GeminiQuery: Service-specific options for Gemini holds. If set,
+	// GeminiQuery: Service-specific options for Gemini app holds. If set,
 	// **CorpusType** must be **GEMINI**.
 	GeminiQuery *HeldGeminiQuery `json:"geminiQuery,omitempty"`
 	// GroupsQuery: Service-specific options for Groups holds. If set,
@@ -922,7 +922,9 @@ type ExportOptions struct {
 	CalendarOptions *CalendarExportOptions `json:"calendarOptions,omitempty"`
 	// DriveOptions: Options for Drive exports.
 	DriveOptions *DriveExportOptions `json:"driveOptions,omitempty"`
-	// GeminiOptions: Option available for Gemini export.
+	// GeminiInWorkspaceOptions: Option available for Gemini in Workspace export.
+	GeminiInWorkspaceOptions *GeminiInWorkspaceExportOptions `json:"geminiInWorkspaceOptions,omitempty"`
+	// GeminiOptions: Option available for Gemini app export.
 	GeminiOptions *GeminiExportOptions `json:"geminiOptions,omitempty"`
 	// GroupsOptions: Options for Groups exports.
 	GroupsOptions *GroupsExportOptions `json:"groupsOptions,omitempty"`
@@ -985,7 +987,7 @@ func (s ExportStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GeminiExportOptions: The options for Gemini exports.
+// GeminiExportOptions: The options for Gemini app exports.
 type GeminiExportOptions struct {
 	// ExportFormat: The file format for exported messages.
 	//
@@ -996,8 +998,8 @@ type GeminiExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
-	//   "XML" - Export as XML. Only available for Gemini.
-	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
+	//   "XML" - Export as XML. Only available for Gemini app.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workspace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1017,7 +1019,43 @@ func (s GeminiExportOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GeminiOptions: Additional options for Gemini search
+// GeminiInWorkspaceExportOptions: The options for Gemini in Workspace exports.
+type GeminiInWorkspaceExportOptions struct {
+	// ExportFormat: The file format for exported messages.
+	//
+	// Possible values:
+	//   "EXPORT_FORMAT_UNSPECIFIED" - No export format specified.
+	//   "MBOX" - Export as MBOX. Only available for Gmail, Groups, Hangouts and
+	// Voice.
+	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
+	// and Calendar.
+	//   "ICS" - Export as ICS. Only available for Calendar.
+	//   "XML" - Export as XML. Only available for Gemini app.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workspace.
+	ExportFormat string `json:"exportFormat,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExportFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GeminiInWorkspaceExportOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GeminiInWorkspaceExportOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GeminiInWorkspaceOptions: Additional options for Gemini in Workspace search
+type GeminiInWorkspaceOptions struct {
+}
+
+// GeminiOptions: Additional options for Gemini app search
 type GeminiOptions struct {
 }
 
@@ -1067,8 +1105,8 @@ type GroupsExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
-	//   "XML" - Export as XML. Only available for Gemini.
-	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
+	//   "XML" - Export as XML. Only available for Gemini app.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workspace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1099,8 +1137,8 @@ type HangoutsChatExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
-	//   "XML" - Export as XML. Only available for Gemini.
-	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
+	//   "XML" - Export as XML. Only available for Gemini app.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workspace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1238,7 +1276,7 @@ func (s HeldDriveQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// HeldGeminiQuery: Options for Gemini holds.
+// HeldGeminiQuery: Options for Gemini app holds.
 type HeldGeminiQuery struct {
 }
 
@@ -1403,7 +1441,8 @@ type Hold struct {
 	// classic Hangouts.
 	//   "VOICE" - Google Voice.
 	//   "CALENDAR" - Calendar.
-	//   "GEMINI" - Gemini.
+	//   "GEMINI" - Gemini app.
+	//   "GEMINI_IN_WORKSPACE" - Gemini in Workspace.
 	Corpus string `json:"corpus,omitempty"`
 	// HoldId: The unique immutable ID of the hold. Assigned during creation.
 	HoldId string `json:"holdId,omitempty"`
@@ -1655,8 +1694,8 @@ type MailExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
-	//   "XML" - Export as XML. Only available for Gemini.
-	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
+	//   "XML" - Export as XML. Only available for Gemini app.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workspace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ExportLinkedDriveFiles: Optional. To enable exporting linked Drive files,
 	// set to **true**.
@@ -1898,7 +1937,8 @@ type Query struct {
 	// classic Hangouts.
 	//   "VOICE" - Google Voice.
 	//   "CALENDAR" - Calendar.
-	//   "GEMINI" - Gemini.
+	//   "GEMINI" - Gemini app.
+	//   "GEMINI_IN_WORKSPACE" - Gemini in Workspace.
 	Corpus string `json:"corpus,omitempty"`
 	// DataScope: The data source to search.
 	//
@@ -1916,7 +1956,9 @@ type Query struct {
 	// EndTime: The end time for the search query. Specify in GMT. The value is
 	// rounded to 12 AM on the specified date.
 	EndTime string `json:"endTime,omitempty"`
-	// GeminiOptions: Set Gemini search-specific options.
+	// GeminiInWorkspaceOptions: Set Gemini in Workspace search-specific options.
+	GeminiInWorkspaceOptions *GeminiInWorkspaceOptions `json:"geminiInWorkspaceOptions,omitempty"`
+	// GeminiOptions: Set Gemini app search-specific options.
 	GeminiOptions *GeminiOptions `json:"geminiOptions,omitempty"`
 	// HangoutsChatInfo: Required when **SearchMethod** is **ROOM**. (read-only)
 	HangoutsChatInfo *HangoutsChatInfo `json:"hangoutsChatInfo,omitempty"`
@@ -2302,8 +2344,8 @@ type VoiceExportOptions struct {
 	//   "PST" - Export as PST. Only available for Gmail, Groups, Hangouts, Voice
 	// and Calendar.
 	//   "ICS" - Export as ICS. Only available for Calendar.
-	//   "XML" - Export as XML. Only available for Gemini.
-	//   "JSON" - Export as JSON. Only available for Gemini in Workpace.
+	//   "XML" - Export as XML. Only available for Gemini app.
+	//   "JSON" - Export as JSON. Only available for Gemini in Workspace.
 	ExportFormat string `json:"exportFormat,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportFormat") to
 	// unconditionally include in API requests. By default, fields with empty or

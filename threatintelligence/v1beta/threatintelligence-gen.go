@@ -2881,9 +2881,13 @@ func (s *TechnologyWatchListAlertThreshold) UnmarshalJSON(data []byte) error {
 type TechnologyWatchListConfig struct {
 	// AlertThreshold: Optional. Alert thresholds to effectively reduce noise.
 	AlertThreshold *TechnologyWatchListAlertThreshold `json:"alertThreshold,omitempty"`
-	// Technologies: Optional. List of vendor, technology or cpe fingerprint.
-	// example: Microsoft office 360 Apache Server 3.5
-	// cpe:2.3:a:microsoft:outlook:*:*:*:*:*:*:*:*
+	// Technologies: Optional. List of technologies to watch, one per entry, in the
+	// form ` [version]`, using the vendor and product names from the Google Threat
+	// Intelligence products and fixes section. example: `microsoft outlook`
+	// `apache http_server 2.4.54` CPE strings such as
+	// `cpe:2.3:a:microsoft:outlook:*:*:*:*:*:*:*:*` are only parsed through the
+	// Google Threat Intelligence interface and are not available through the API.
+	// Send the vendor and product pair instead.
 	Technologies []string `json:"technologies,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlertThreshold") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3031,8 +3035,9 @@ type VulnerabilityMatch struct {
 	//   "VPN_ACCESS" - VPN access vector.
 	//   "WIFI_ACCESS" - WiFi access vector.
 	ExploitationVectors []string `json:"exploitationVectors,omitempty"`
-	// MatchedTechnologies: Optional. The specific technologies from the configured
-	// watchlist that triggered the match. Ex: "Apache Struts".
+	// MatchedTechnologies: Optional. The entries from the configured watchlist
+	// that triggered the match, exactly as written in
+	// `TechnologyWatchListConfig.technologies`. Ex: `apache http_server 2.4.54`.
 	MatchedTechnologies []string `json:"matchedTechnologies,omitempty"`
 	// Priority: Optional. The priority level of the vulnerability data. Ex: "P1".
 	//
@@ -3063,8 +3068,9 @@ type VulnerabilityMatch struct {
 	//   "UNRATED" - The vulnerability has been assessed, but a specific risk
 	// rating could not be determined or assigned.
 	RiskRating string `json:"riskRating,omitempty"`
-	// Technologies: Required. All technologies affected by the vulnerability. Ex:
-	// "Apache Struts".
+	// Technologies: Required. All technologies affected by the vulnerability,
+	// using the vendor and product names of its affected products, optionally
+	// followed by a version. Ex: `Apache Struts 2.2.3`.
 	Technologies []string `json:"technologies,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Associations") to
 	// unconditionally include in API requests. By default, fields with empty or

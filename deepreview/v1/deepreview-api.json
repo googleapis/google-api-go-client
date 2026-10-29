@@ -111,7 +111,7 @@
     "documents": {
       "methods": {
         "delete": {
-          "description": "Deletes a document and all associated reviews and stored blobs.",
+          "description": "Deletes a document and its stored content. If `force` is set to `true`, any associated reviews are also deleted.",
           "flatPath": "v1/documents/{documentsId}",
           "httpMethod": "DELETE",
           "id": "deepreview.documents.delete",
@@ -120,17 +120,17 @@
           ],
           "parameters": {
             "allowMissing": {
-              "description": "Optional. If set to true, and the document is not found, the request succeeds.",
+              "description": "Optional. If set to `true`, and the document is not found, the request succeeds.",
               "location": "query",
               "type": "boolean"
             },
             "force": {
-              "description": "Optional. If set to true, any child resources (e.g. review resources) are also deleted.",
+              "description": "Optional. If set to `true`, any child resources (e.g. review resources) are also deleted. If `false` and the document has existing reviews, the request fails with `FAILED_PRECONDITION`.",
               "location": "query",
               "type": "boolean"
             },
             "name": {
-              "description": "Required. The resource name of the document to delete. Format: `documents/{document}`",
+              "description": "Required. The resource name of the document to delete.",
               "location": "path",
               "pattern": "^documents/[^/]+$",
               "required": true,
@@ -156,7 +156,7 @@
           ],
           "parameters": {
             "document": {
-              "description": "Required. The document to review. Format: `documents/{document}`",
+              "description": "Required. The document to review.",
               "location": "path",
               "pattern": "^documents/[^/]+$",
               "required": true,
@@ -176,7 +176,7 @@
           ]
         },
         "get": {
-          "description": "Retrieves document metadata and review history.",
+          "description": "Retrieves document metadata. The returned document includes its `latest_review_summary` when a review exists.",
           "flatPath": "v1/documents/{documentsId}",
           "httpMethod": "GET",
           "id": "deepreview.documents.get",
@@ -185,7 +185,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. The resource name of the document to retrieve. Format: `documents/{document}`",
+              "description": "Required. The resource name of the document to retrieve.",
               "location": "path",
               "pattern": "^documents/[^/]+$",
               "required": true,
@@ -202,24 +202,24 @@
           ]
         },
         "list": {
-          "description": "Lists documents for the authenticated caller with cursor pagination.",
+          "description": "Lists documents for the authenticated caller with cursor pagination. Each returned document includes its `latest_review_summary` when a review exists.",
           "flatPath": "v1/documents",
           "httpMethod": "GET",
           "id": "deepreview.documents.list",
           "parameterOrder": [],
           "parameters": {
             "filter": {
-              "description": "Optional. Supported AIP-160 filter expressions (e.g., `display_name = \"...\"`).",
+              "description": "Optional. Custom filter expressions are not currently supported; non-empty values return INVALID_ARGUMENT.",
               "location": "query",
               "type": "string"
             },
             "orderBy": {
-              "description": "Optional. Supported AIP-132 order_by field.",
+              "description": "Optional. Custom order_by expressions are not currently supported; non-empty values return INVALID_ARGUMENT.",
               "location": "query",
               "type": "string"
             },
             "pageSize": {
-              "description": "Optional. The maximum number of documents to return in a single page. The server may return fewer than this value. If unspecified, at most 50 documents will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+              "description": "Optional. The maximum number of documents to return in a single page. The server may return fewer than this value. If unspecified, at most 50 documents will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
               "format": "int32",
               "location": "query",
               "type": "integer"
@@ -244,7 +244,7 @@
         "reviews": {
           "methods": {
             "create": {
-              "description": "Creates and initiates an asynchronous multi-agent review for a document.",
+              "description": "Creates and initiates an asynchronous multi-agent review for a document. Returns a google.longrunning.Operation. When the operation completes, the `response` field contains a `Review` and the `metadata` field contains `CreateReviewMetadata`.",
               "flatPath": "v1/documents/{documentsId}/reviews",
               "httpMethod": "POST",
               "id": "deepreview.documents.reviews.create",
@@ -253,7 +253,7 @@
               ],
               "parameters": {
                 "parent": {
-                  "description": "Required. The parent Document resource name where this review will be created. Format: `documents/{document}`",
+                  "description": "Required. The parent Document resource name where this review will be created.",
                   "location": "path",
                   "pattern": "^documents/[^/]+$",
                   "required": true,
@@ -292,7 +292,7 @@
               ],
               "parameters": {
                 "name": {
-                  "description": "Required. The resource name of the review to retrieve. Format: `documents/{document}/reviews/{review}`",
+                  "description": "Required. The resource name of the review to retrieve.",
                   "location": "path",
                   "pattern": "^documents/[^/]+/reviews/[^/]+$",
                   "required": true,
@@ -318,17 +318,17 @@
               ],
               "parameters": {
                 "filter": {
-                  "description": "Optional. Supported AIP-160 filter expressions.",
+                  "description": "Optional. Custom filter expressions are not currently supported; non-empty values return INVALID_ARGUMENT.",
                   "location": "query",
                   "type": "string"
                 },
                 "orderBy": {
-                  "description": "Optional. Supported AIP-132 order_by field.",
+                  "description": "Optional. Custom order_by expressions are not currently supported; non-empty values return INVALID_ARGUMENT.",
                   "location": "query",
                   "type": "string"
                 },
                 "pageSize": {
-                  "description": "Optional. The maximum number of reviews to return in a single page. The server may return fewer than this value. If unspecified, at most 50 reviews will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                  "description": "Optional. The maximum number of reviews to return in a single page. The server may return fewer than this value. If unspecified, at most 50 reviews will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
@@ -339,7 +339,7 @@
                   "type": "string"
                 },
                 "parent": {
-                  "description": "Required. The parent Document resource name. Format: `documents/{document}`",
+                  "description": "Required. The parent Document resource name.",
                   "location": "path",
                   "pattern": "^documents/[^/]+$",
                   "required": true,
@@ -362,7 +362,7 @@
     "media": {
       "methods": {
         "download": {
-          "description": "Downloads the original document content (PDF binary) via Scotty media streaming (AIP-136 custom method).",
+          "description": "Downloads the original document content (PDF binary) using media streaming. Pass `alt=media` as a query parameter to stream the binary PDF bytes. Without `alt=media`, a JSON response is returned.",
           "flatPath": "v1/documents/{documentsId}:download",
           "httpMethod": "GET",
           "id": "deepreview.media.download",
@@ -371,7 +371,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. The resource name of the document to download. Format: `documents/{document}`",
+              "description": "Required. The resource name of the document to download.",
               "location": "path",
               "pattern": "^documents/[^/]+$",
               "required": true,
@@ -390,7 +390,7 @@
           "useMediaDownloadService": true
         },
         "upload": {
-          "description": "Creates a new Document resource and ingests the manuscript via Scotty or Google Drive.",
+          "description": "Creates a new Document resource and ingests the manuscript using media upload or Google Drive.",
           "flatPath": "v1/documents",
           "httpMethod": "POST",
           "id": "deepreview.media.upload",
@@ -439,110 +439,6 @@
       }
     },
     "operations": {
-      "methods": {
-        "cancel": {
-          "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of `1`, corresponding to `Code.CANCELLED`.",
-          "flatPath": "v1/operations/{operationsId}:cancel",
-          "httpMethod": "POST",
-          "id": "deepreview.operations.cancel",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "name": {
-              "description": "The name of the operation resource to be cancelled.",
-              "location": "path",
-              "pattern": "^operations/.*$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/{+name}:cancel",
-          "request": {
-            "$ref": "CancelOperationRequest"
-          },
-          "response": {
-            "$ref": "Empty"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/drive.file"
-          ]
-        },
-        "delete": {
-          "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns `google.rpc.Code.UNIMPLEMENTED`.",
-          "flatPath": "v1/operations/{operationsId}",
-          "httpMethod": "DELETE",
-          "id": "deepreview.operations.delete",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "name": {
-              "description": "The name of the operation resource to be deleted.",
-              "location": "path",
-              "pattern": "^operations/.*$",
-              "required": true,
-              "type": "string"
-            }
-          },
-          "path": "v1/{+name}",
-          "response": {
-            "$ref": "Empty"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/drive.file"
-          ]
-        },
-        "list": {
-          "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns `UNIMPLEMENTED`.",
-          "flatPath": "v1/operations",
-          "httpMethod": "GET",
-          "id": "deepreview.operations.list",
-          "parameterOrder": [
-            "name"
-          ],
-          "parameters": {
-            "filter": {
-              "description": "The standard list filter.",
-              "location": "query",
-              "type": "string"
-            },
-            "name": {
-              "description": "The name of the operation's parent resource.",
-              "location": "path",
-              "pattern": "^operations$",
-              "required": true,
-              "type": "string"
-            },
-            "pageSize": {
-              "description": "The standard list page size.",
-              "format": "int32",
-              "location": "query",
-              "type": "integer"
-            },
-            "pageToken": {
-              "description": "The standard list page token.",
-              "location": "query",
-              "type": "string"
-            },
-            "returnPartialSuccess": {
-              "description": "When set to `true`, operations that are reachable are returned as normal, and those that are unreachable are returned in the ListOperationsResponse.unreachable field. This can only be `true` when reading across collections. For example, when `parent` is set to `\"projects/example/locations/-\"`. This field is not supported by default and will result in an `UNIMPLEMENTED` error if set unless explicitly documented otherwise in service or product specific documentation.",
-              "location": "query",
-              "type": "boolean"
-            }
-          },
-          "path": "v1/{+name}",
-          "response": {
-            "$ref": "ListOperationsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform",
-            "https://www.googleapis.com/auth/drive.file"
-          ]
-        }
-      },
       "resources": {
         "documents": {
           "resources": {
@@ -592,7 +488,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Required. The resource name of the singleton user quota to retrieve. Format: `userQuota`",
+              "description": "Required. The resource name of the singleton user quota to retrieve.",
               "location": "path",
               "pattern": "^userQuota$",
               "required": true,
@@ -611,7 +507,7 @@
       }
     }
   },
-  "revision": "20261027",
+  "revision": "20261028",
   "rootUrl": "https://deepreview.googleapis.com/",
   "schemas": {
     "AnchoredReviewComment": {
@@ -685,12 +581,6 @@
           "type": "string"
         }
       },
-      "type": "object"
-    },
-    "CancelOperationRequest": {
-      "description": "The request message for Operations.CancelOperation.",
-      "id": "CancelOperationRequest",
-      "properties": {},
       "type": "object"
     },
     "CitationMetadata": {
@@ -795,7 +685,7 @@
             "Reference metadata matches scholarly database record.",
             "Minor discrepancy (e.g., publication year off by 1 or venue variation).",
             "Major discrepancy in authors, year, or venue.",
-            "Reference verified via Google Search grounding.",
+            "Reference verified using Google Search grounding.",
             "Reference not found in scholarly databases and unverified by search.",
             "Reference flagged as likely hallucinated by Google Search grounding.",
             "Non-paper entry (e.g., software package or URL) skipped during lookup."
@@ -833,7 +723,7 @@
             "Reference metadata matches scholarly database record.",
             "Minor discrepancy (e.g., publication year off by 1 or venue variation).",
             "Major discrepancy in authors, year, or venue.",
-            "Reference verified via Google Search grounding.",
+            "Reference verified using Google Search grounding.",
             "Reference not found in scholarly databases and unverified by search.",
             "Reference flagged as likely hallucinated by Google Search grounding.",
             "Non-paper entry (e.g., software package or URL) skipped during lookup."
@@ -928,7 +818,7 @@
           "type": "boolean"
         },
         "model": {
-          "description": "Optional. The Gemini model name/version to use (e.g., \"gemini-1.5-pro\", \"gemini-2.0-flash\").",
+          "description": "Optional. The Gemini model identifier to use for the review. If omitted, the server uses its default model. Unsupported values return INVALID_ARGUMENT.",
           "type": "string"
         },
         "topology": {
@@ -941,7 +831,7 @@
             "LOW"
           ],
           "enumDescriptions": [
-            "Default unspecified topology. The backend defaults to standard high quality.",
+            "Default unspecified topology. The server uses its default topology (`MID`).",
             "Extra high quality topology with exhaustive evaluation passes.",
             "Standard high quality conference review topology.",
             "Medium quality topology balancing review latency and depth.",
@@ -957,7 +847,7 @@
       "type": "object"
     },
     "Document": {
-      "description": "Document Resource Model representing an uploaded document for review. Documents are immutable post-creation; to review a new version, create a new Document.",
+      "description": "A document uploaded for automated review. Documents are immutable post-creation; to review a new version, create a new Document.",
       "id": "Document",
       "properties": {
         "createTime": {
@@ -976,7 +866,7 @@
         },
         "latestReviewSummary": {
           "$ref": "ReviewSummary",
-          "description": "Output only. Summary of the most recent review run for this document, if any.",
+          "description": "Output only. Summary of the most recent review run for this document, if any. Populated by `GetDocument` and `ListDocuments`; unset on the document returned by `CreateDocument`, which has no reviews yet.",
           "readOnly": true
         },
         "name": {
@@ -987,7 +877,7 @@
       "type": "object"
     },
     "DocumentLocation": {
-      "description": "Polymorphic location targeting either a PDF page region/quote or text lines.",
+      "description": "A location targeting either a PDF page region/quote or text lines in the document.",
       "id": "DocumentLocation",
       "properties": {
         "pdf": {
@@ -1004,7 +894,7 @@
       "type": "object"
     },
     "DownloadDocumentResponse": {
-      "description": "Response message for downloading a Document's raw content via Scotty media.",
+      "description": "Response message for downloading a Document's raw content using media download.",
       "id": "DownloadDocumentResponse",
       "properties": {},
       "type": "object"
@@ -1027,7 +917,7 @@
           "type": "boolean"
         },
         "revisionId": {
-          "description": "Optional. Input only. Immutable. Specific revision ID to import (defaults to latest head revision).",
+          "description": "Optional. Input only. Immutable. Importing a specific revision is not currently supported; non-empty values return INVALID_ARGUMENT.",
           "type": "string"
         }
       },
@@ -1045,7 +935,7 @@
       "properties": {
         "review": {
           "$ref": "Review",
-          "description": "Required. The review to estimate, as it would be passed to `CreateReview`. Only its `run_config` is read, and `run_config.gemini_api_key` is ignored."
+          "description": "Required. The review to estimate, as it would be passed to `CreateReview`. Only its `run_config` is read, and `gemini_api_key` is ignored."
         }
       },
       "type": "object"
@@ -1127,31 +1017,6 @@
         "nextPageToken": {
           "description": "A token to retrieve the next page of results, or empty if no further pages exist.",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "ListOperationsResponse": {
-      "description": "The response message for Operations.ListOperations.",
-      "id": "ListOperationsResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "The standard List next-page token.",
-          "type": "string"
-        },
-        "operations": {
-          "description": "A list of operations that matches the specified filter in the request.",
-          "items": {
-            "$ref": "Operation"
-          },
-          "type": "array"
-        },
-        "unreachable": {
-          "description": "Unordered list. Unreachable resources. Populated when the request sets `ListOperationsRequest.return_partial_success` and reads across collections. For example, when attempting to list all resources across all supported locations.",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
         }
       },
       "type": "object"
@@ -1313,7 +1178,7 @@
       "type": "object"
     },
     "Review": {
-      "description": "Review Sub-Resource Model representing an evaluation run of a document.",
+      "description": "An evaluation run of a document.",
       "id": "Review",
       "properties": {
         "createTime": {
@@ -1386,7 +1251,7 @@
           "type": "string"
         },
         "review": {
-          "description": "Output only. Resource name of the Review. Format: `documents/{document}/reviews/{review}`",
+          "description": "Output only. Resource name of the Review.",
           "readOnly": true,
           "type": "string"
         },
@@ -1476,7 +1341,7 @@
       "type": "object"
     },
     "TextQuoteSelector": {
-      "description": "W3C Web Annotation TextQuoteSelector for resilient text anchoring (https://www.w3.org/TR/annotation-model/#text-quote-selector).",
+      "description": "W3C Web Annotation TextQuoteSelector for resilient text anchoring (see https://www.w3.org/TR/annotation-model/#text-quote-selector for details).",
       "id": "TextQuoteSelector",
       "properties": {
         "exact": {

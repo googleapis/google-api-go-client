@@ -808,8 +808,8 @@ type CloudStorage struct {
 	// format.
 	AvroFormat *AvroFormat `json:"avroFormat,omitempty"`
 	// Bucket: Optional. Cloud Storage bucket. The bucket name must be without any
-	// prefix like "gs://". See the [bucket naming requirements]
-	// (https://cloud.google.com/storage/docs/buckets#naming).
+	// prefix like "gs://". See the bucket naming requirements (
+	// https://cloud.google.com/storage/docs/buckets#naming).
 	Bucket string `json:"bucket,omitempty"`
 	// MatchGlob: Optional. Glob pattern used to match objects that will be
 	// ingested. If unset, all objects will be ingested. See the supported patterns
@@ -2025,8 +2025,8 @@ func (s PubsubClientTelemetry) MarshalJSON() ([]byte, error) {
 // least one attribute. Note that client libraries represent this object
 // differently depending on the language. See the corresponding client library
 // documentation (https://cloud.google.com/pubsub/docs/reference/libraries) for
-// more information. See [quotas and limits]
-// (https://cloud.google.com/pubsub/quotas) for more information about message
+// more information. See quotas and limits (
+// https://cloud.google.com/pubsub/quotas) for more information about message
 // limits.
 type PubsubMessage struct {
 	// Attributes: Optional. Attributes for this message. If this field is empty,
@@ -2165,8 +2165,8 @@ type PushConfig struct {
 	// message.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 	// PubsubWrapper: Optional. When set, the payload to the push endpoint is in
-	// the form of the JSON representation of a PubsubMessage
-	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
+	// the form of the JSON representation of a PubsubMessage (
+	// https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
 	PubsubWrapper *PubsubWrapper `json:"pubsubWrapper,omitempty"`
 	// PushEndpoint: Optional. A URL locating the endpoint to which messages should
 	// be pushed. For example, a Webhook endpoint might use
@@ -2461,8 +2461,8 @@ type Snapshot struct {
 	// will expire in 4 days. The service will refuse to create a snapshot that
 	// would expire in less than 1 hour after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Labels: Optional. See [Creating and managing labels]
-	// (https://cloud.google.com/pubsub/docs/labels).
+	// Labels: Optional. See Creating and managing labels (
+	// https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Optional. The name of the snapshot.
 	Name string `json:"name,omitempty"`
@@ -2594,8 +2594,8 @@ type Subscription struct {
 	// messages. If true, then messages are not expunged from the subscription's
 	// backlog, even if they are acknowledged, until they fall out of the
 	// `message_retention_duration` window. This must be true if you would like to
-	// [`Seek` to a timestamp]
-	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time) in the
+	// `Seek` to a timestamp (
+	// https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time) in the
 	// past to replay previously-acknowledged messages.
 	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
 	// RetryPolicy: Optional. A policy that specifies how Pub/Sub retries message
@@ -2743,8 +2743,8 @@ type Topic struct {
 	// used to protect access to messages published on this topic. The expected
 	// format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// Labels: Optional. See [Creating and managing labels]
-	// (https://cloud.google.com/pubsub/docs/labels).
+	// Labels: Optional. See Creating and managing labels (
+	// https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 	// MessageRetentionDuration: Optional. Indicates the minimum duration to retain
 	// a message after it is published to the topic. If this field is set, messages
@@ -4542,8 +4542,8 @@ type ProjectsSnapshotsCreateCall struct {
 // `FAILED_PRECONDITION` is returned. See also the `Snapshot.expire_time`
 // field. If the name is not provided in the request, the server will assign a
 // random name for this snapshot on the same project as the subscription,
-// conforming to the [resource name format]
-// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
+// conforming to the resource name format (
+// https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
 // generated name is populated in the returned Snapshot object. Note that for
 // REST API requests, you must specify a name in the request.
 //
@@ -4652,8 +4652,8 @@ type ProjectsSnapshotsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes an existing snapshot. Snapshots are used in [Seek]
-// (https://cloud.google.com/pubsub/docs/replay-overview) operations, which
+// Delete: Removes an existing snapshot. Snapshots are used in Seek (
+// https://cloud.google.com/pubsub/docs/replay-overview) operations, which
 // allow you to manage message acknowledgments in bulk. That is, you can set
 // the acknowledgment state of messages in an existing subscription to the
 // state captured by a snapshot. When the snapshot is deleted, all messages
@@ -5588,14 +5588,13 @@ type ProjectsSubscriptionsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a subscription to a given topic. See the [resource name
-// rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
-// If the subscription already exists, returns `ALREADY_EXISTS`. If the
-// corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not
-// provided in the request, the server will assign a random name for this
-// subscription on the same project as the topic, conforming to the [resource
-// name format]
-// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
+// Create: Creates a subscription to a given topic. See the resource name rules
+// ( https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). If the
+// subscription already exists, returns `ALREADY_EXISTS`. If the corresponding
+// topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the
+// request, the server will assign a random name for this subscription on the
+// same project as the topic, conforming to the resource name format (
+// https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
 // generated name is populated in the returned Subscription object. Note that
 // for REST API requests, you must specify a name in the request.
 //
@@ -6727,8 +6726,8 @@ type ProjectsSubscriptionsSeekCall struct {
 }
 
 // Seek: Seeks an existing subscription to a point in time or to a given
-// snapshot, whichever is provided in the request. Snapshots are used in [Seek]
-// (https://cloud.google.com/pubsub/docs/replay-overview) operations, which
+// snapshot, whichever is provided in the request. Snapshots are used in Seek (
+// https://cloud.google.com/pubsub/docs/replay-overview) operations, which
 // allow you to manage message acknowledgments in bulk. That is, you can set
 // the acknowledgment state of messages in an existing subscription to the
 // state captured by a snapshot. Note that both the subscription and the
@@ -7053,8 +7052,8 @@ type ProjectsTopicsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates the given topic with the given name. See the [resource name
-// rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+// Create: Creates the given topic with the given name. See the resource name
+// rules ( https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
 //
 //   - name: Identifier. The name of the topic. It must have the format
 //     "projects/{project}/topics/{topic}". `{topic}` must start with a letter,

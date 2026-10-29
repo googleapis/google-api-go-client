@@ -2101,9 +2101,7 @@ func (s DeprecatedEvent) MarshalJSON() ([]byte, error) {
 
 // Dialog: Wrapper around the card body of the dialog.
 type Dialog struct {
-	// Body: Input only. Body of the dialog, which is rendered in a modal. Google
-	// Chat apps don't support the following card entities: `DateTimePicker`,
-	// `OnChangeAction`.
+	// Body: Input only. Body of the dialog, which is rendered in a modal.
 	Body *GoogleAppsCardV1Card `json:"body,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2931,14 +2929,14 @@ func (s GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Carousel: A carousel, also known as a slider, rotates and
-// displays a list of widgets in a slideshow format, with buttons navigating to
-// the previous or next widget. For example, this is a JSON representation of a
-// carousel that contains three text paragraph widgets. ``` { "carouselCards":
-// [ { "widgets": [ { "textParagraph": { "text": "First text paragraph in
-// carousel", } } ] }, { "widgets": [ { "textParagraph": { "text": "Second text
-// paragraph in carousel", } } ] }, { "widgets": [ { "textParagraph": { "text":
-// "Third text paragraph in carousel", } } ] } ] } ``` Google Chat apps
+// GoogleAppsCardV1Carousel: Rotates and displays a list of carousel cards in a
+// slideshow format, with buttons navigating to the previous or next card. For
+// example, this is a JSON representation of a carousel that contains three
+// text paragraph widgets. ``` { "carouselCards": [ { "widgets": [ {
+// "textParagraph": { "text": "First text paragraph in carousel" } } ] }, {
+// "widgets": [ { "textParagraph": { "text": "Second text paragraph in
+// carousel" } } ] }, { "widgets": [ { "textParagraph": { "text": "Third text
+// paragraph in carousel" } } ] } ] } ``` Google Chat apps
 // (https://developers.google.com/workspace/chat):
 type GoogleAppsCardV1Carousel struct {
 	// CarouselCards: A list of cards included in the carousel.
@@ -3000,11 +2998,11 @@ type GoogleAppsCardV1Chip struct {
 	// Disabled: Whether the chip is in an inactive state and ignores user actions.
 	// Defaults to `false`.
 	Disabled bool `json:"disabled,omitempty"`
-	// Enabled: Whether the chip is in an active state and responds to user
-	// actions. Defaults to `true`. Deprecated. Use `disabled` instead.
+	// Enabled: Deprecated: Use `disabled` instead. Whether the chip is in an
+	// active state and responds to user actions.
 	Enabled bool `json:"enabled,omitempty"`
-	// Icon: The icon image. If both `icon` and `text` are set, then the icon
-	// appears before the text.
+	// Icon: The icon image. If both `icon` and `label` are set, then the icon
+	// appears before the label.
 	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
 	// Label: The text displayed inside the chip.
 	Label string `json:"label,omitempty"`
@@ -3317,7 +3315,9 @@ type GoogleAppsCardV1DateTimePicker struct {
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 	// TimezoneOffsetDate: The number representing the time zone offset from UTC,
 	// in minutes. If set, the `value_ms_epoch` is displayed in the specified time
-	// zone. If unset, the value defaults to the user's time zone setting.
+	// zone. If unset, the value defaults to the user's time zone setting. Note:
+	// This field is in minutes, whereas user interaction event payloads typically
+	// provide time zone offsets in milliseconds (divide by `60000` to convert).
 	TimezoneOffsetDate int64 `json:"timezoneOffsetDate,omitempty"`
 	// Type: Whether the widget supports inputting a date, a time, or the date and
 	// time.
@@ -3382,8 +3382,10 @@ type GoogleAppsCardV1DecoratedText struct {
 	EndIcon *GoogleAppsCardV1Icon `json:"endIcon,omitempty"`
 	// Icon: Deprecated in favor of `startIcon`.
 	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
-	// OnClick: This action is triggered when users click `topLabel` or
-	// `bottomLabel`.
+	// OnClick: This action is triggered when users click anywhere on the
+	// `DecoratedText` widget (including `text`, `top_label`, `bottom_label`, and
+	// icons), except when clicking a separate interactive control (`button` or
+	// `switch_control`).
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 	// StartIcon: The icon displayed in front of the text.
 	StartIcon *GoogleAppsCardV1Icon `json:"startIcon,omitempty"`
@@ -3561,8 +3563,8 @@ type GoogleAppsCardV1Grid struct {
 	// Items: The items to display in the grid.
 	Items []*GoogleAppsCardV1GridItem `json:"items,omitempty"`
 	// OnClick: This callback is reused by each individual grid item, but with the
-	// item's identifier and index in the items list added to the callback's
-	// parameters.
+	// item's identifier added to the callback's parameters (under the key
+	// "grid_item_identifier").
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 	// Title: The text that displays in the grid header.
 	Title string `json:"title,omitempty"`
@@ -4618,15 +4620,16 @@ type GoogleAppsCardV1Widget struct {
 	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
 	// "openLink": { "url": "https://example.com/calendar" } } } ] } ```
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
-	// Carousel: A carousel contains a collection of nested widgets. For example,
-	// this is a JSON representation of a carousel that contains two text
-	// paragraphs. ``` { "widgets": [ { "textParagraph": { "text": "First text
-	// paragraph in the carousel." } }, { "textParagraph": { "text": "Second text
-	// paragraph in the carousel." } } ] } ```
+	// Carousel: Contains a collection of `CarouselCard` items, each of which
+	// contains nested widgets. For example, this is a JSON representation of a
+	// carousel that contains two carousel cards, each with a text paragraph: ``` {
+	// "carouselCards": [ { "widgets": [ { "textParagraph": { "text": "First text
+	// paragraph in the carousel." } } ] }, { "widgets": [ { "textParagraph": {
+	// "text": "Second text paragraph in the carousel." } } ] } ] } ```
 	Carousel *GoogleAppsCardV1Carousel `json:"carousel,omitempty"`
 	// ChipList: A list of chips. For example, the following JSON creates two
 	// chips. The first is a text chip and the second is an icon chip that opens a
-	// link: ``` "chipList": { "chips": [ { "text": "Edit", "disabled": true, }, {
+	// link: ``` "chipList": { "chips": [ { "label": "Edit", "disabled": true }, {
 	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
 	// "openLink": { "url": "https://example.com/calendar" } } } ] } ```
 	ChipList *GoogleAppsCardV1ChipList `json:"chipList,omitempty"`

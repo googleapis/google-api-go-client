@@ -827,7 +827,8 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 
 // Scope: Message describing Scope object
 type Scope struct {
-	// LogScope: Required. The full resource name of the `LogScope`. For example:
+	// LogScope: Required. The full resource name of the
+	// `logging.googleapis.com/LogScope`. For example:
 	// //logging.googleapis.com/projects/myproject/locations/global/logScopes/my-log
 	// -scope
 	LogScope string `json:"logScope,omitempty"`
@@ -836,7 +837,8 @@ type Scope struct {
 	// field must be set to `global`. The `{scope}` field must be set to
 	// `_Default`.
 	Name string `json:"name,omitempty"`
-	// TraceScope: Required. The resource name of the `TraceScope`. For example:
+	// TraceScope: Required. The unqualified resource name of the
+	// `cloudtrace.googleapis.com/TraceScope`. For example:
 	// projects/myproject/locations/global/traceScopes/my-trace-scope
 	TraceScope string `json:"traceScope,omitempty"`
 	// UpdateTime: Output only. Update timestamp. Note: The Update timestamp for

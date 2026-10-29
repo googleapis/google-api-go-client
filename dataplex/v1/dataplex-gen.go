@@ -2558,25 +2558,85 @@ func (s GoogleCloudDataplexV1DataDiscoverySpecStorageConfigJsonOptions) MarshalJ
 // GoogleCloudDataplexV1DataDocumentationResult: The output of a
 // DataDocumentation scan.
 type GoogleCloudDataplexV1DataDocumentationResult struct {
+	// DataProductResult: Output only. Insights for a data product.
+	DataProductResult *GoogleCloudDataplexV1DataDocumentationResultDataProductResult `json:"dataProductResult,omitempty"`
 	// DatasetResult: Output only. Insights for a Dataset resource.
 	DatasetResult *GoogleCloudDataplexV1DataDocumentationResultDatasetResult `json:"datasetResult,omitempty"`
 	// TableResult: Output only. Insights for a Table resource.
 	TableResult *GoogleCloudDataplexV1DataDocumentationResultTableResult `json:"tableResult,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DatasetResult") to
+	// ForceSendFields is a list of field names (e.g. "DataProductResult") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DatasetResult") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DataProductResult") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDataplexV1DataDocumentationResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataDocumentationResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDocumentationResultDataProductResult: Generated
+// metadata about a data product.
+type GoogleCloudDataplexV1DataDocumentationResultDataProductResult struct {
+	// AssetDescriptions: Output only. Unordered list. Generated descriptions for
+	// assets in the data product. Note that some assets may not have a generated
+	// description. Such assets will not be included in this list.
+	AssetDescriptions []*GoogleCloudDataplexV1DataDocumentationResultDataProductResultAssetDescription `json:"assetDescriptions,omitempty"`
+	// Overview: Output only. A detailed description for the data product.
+	Overview string `json:"overview,omitempty"`
+	// Queries: Output only. Unordered list. Sample SQL queries for the data
+	// product.
+	Queries []*GoogleCloudDataplexV1DataDocumentationResultQuery `json:"queries,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssetDescriptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssetDescriptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDocumentationResultDataProductResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDocumentationResultDataProductResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataDocumentationResultDataProductResultAssetDescription
+// : Description for an asset in the data product.
+type GoogleCloudDataplexV1DataDocumentationResultDataProductResultAssetDescription struct {
+	// Overview: Output only. A generated description for the asset.
+	Overview string `json:"overview,omitempty"`
+	// Resource: Output only. The service-qualified full resource name of the
+	// asset. Example:
+	// //bigquery.googleapis.com/projects/PROJECT_ID/datasets/DATASET_ID/tables/TABL
+	// E_ID
+	Resource string `json:"resource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Overview") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Overview") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDataplexV1DataDocumentationResultDataProductResultAssetDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataDocumentationResultDataProductResultAssetDescription
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6372,6 +6432,10 @@ type GoogleCloudDataplexV1Entry struct {
 	// CreateTime: Output only. The time when the entry was created in Dataplex
 	// Universal Catalog.
 	CreateTime string `json:"createTime,omitempty"`
+	// EntryGroupType: Output only. The type of the EntryGroup that this entry
+	// belongs to. The default value is an empty string. Recognised values include:
+	// * context-set: EntryGroup containing context set data assets.
+	EntryGroupType string `json:"entryGroupType,omitempty"`
 	// EntrySource: Optional. Information related to the source system of the data
 	// resource that is represented by the entry.
 	EntrySource *GoogleCloudDataplexV1EntrySource `json:"entrySource,omitempty"`
@@ -6454,6 +6518,10 @@ type GoogleCloudDataplexV1EntryGroup struct {
 	// from Data Catalog service. The resource can only be updated from Dataplex
 	// API.
 	TransferStatus string `json:"transferStatus,omitempty"`
+	// Type: Optional. Immutable. The type of this EntryGroup. The default value is
+	// an empty string. Recognised values include: * context-set: EntryGroup
+	// containing context set data assets.
+	Type string `json:"type,omitempty"`
 	// Uid: Output only. System generated globally unique ID for the EntryGroup. If
 	// you delete and recreate the EntryGroup with the same name, this ID will be
 	// different.

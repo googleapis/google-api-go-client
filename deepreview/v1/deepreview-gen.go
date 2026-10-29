@@ -316,10 +316,6 @@ func (s Author) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CancelOperationRequest: The request message for Operations.CancelOperation.
-type CancelOperationRequest struct {
-}
-
 // CitationMetadata: Structured bibliographic metadata for an extracted or
 // retrieved work.
 type CitationMetadata struct {
@@ -385,7 +381,7 @@ type CitationReport struct {
 	//   "MINOR_MISMATCH" - Minor discrepancy (e.g., publication year off by 1 or
 	// venue variation).
 	//   "MAJOR_MISMATCH" - Major discrepancy in authors, year, or venue.
-	//   "VERIFIED_BY_SEARCH" - Reference verified via Google Search grounding.
+	//   "VERIFIED_BY_SEARCH" - Reference verified using Google Search grounding.
 	//   "NOT_FOUND" - Reference not found in scholarly databases and unverified by
 	// search.
 	//   "HALLUCINATED" - Reference flagged as likely hallucinated by Google Search
@@ -408,7 +404,7 @@ type CitationReport struct {
 	//   "MINOR_MISMATCH" - Minor discrepancy (e.g., publication year off by 1 or
 	// venue variation).
 	//   "MAJOR_MISMATCH" - Major discrepancy in authors, year, or venue.
-	//   "VERIFIED_BY_SEARCH" - Reference verified via Google Search grounding.
+	//   "VERIFIED_BY_SEARCH" - Reference verified using Google Search grounding.
 	//   "NOT_FOUND" - Reference not found in scholarly databases and unverified by
 	// search.
 	//   "HALLUCINATED" - Reference flagged as likely hallucinated by Google Search
@@ -517,14 +513,15 @@ type DeepReviewRunConfig struct {
 	// GeminiApiKeySet: Output only. Indicates whether a developer
 	// Bring-Your-Own-Key Gemini API key was provided for this review run.
 	GeminiApiKeySet bool `json:"geminiApiKeySet,omitempty"`
-	// Model: Optional. The Gemini model name/version to use (e.g.,
-	// "gemini-1.5-pro", "gemini-2.0-flash").
+	// Model: Optional. The Gemini model identifier to use for the review. If
+	// omitted, the server uses its default model. Unsupported values return
+	// INVALID_ARGUMENT.
 	Model string `json:"model,omitempty"`
 	// Topology: Optional. Review execution topology profile to use.
 	//
 	// Possible values:
-	//   "TOPOLOGY_UNSPECIFIED" - Default unspecified topology. The backend
-	// defaults to standard high quality.
+	//   "TOPOLOGY_UNSPECIFIED" - Default unspecified topology. The server uses its
+	// default topology (`MID`).
 	//   "EXTRA_HIGH" - Extra high quality topology with exhaustive evaluation
 	// passes.
 	//   "HIGH" - Standard high quality conference review topology.
@@ -552,9 +549,8 @@ func (s DeepReviewRunConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Document: Document Resource Model representing an uploaded document for
-// review. Documents are immutable post-creation; to review a new version,
-// create a new Document.
+// Document: A document uploaded for automated review. Documents are immutable
+// post-creation; to review a new version, create a new Document.
 type Document struct {
 	// CreateTime: Output only. Timestamp when the document was initially created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -564,7 +560,8 @@ type Document struct {
 	// DriveSource: Optional. Reference to a Google Drive file to import.
 	DriveSource *DriveSource `json:"driveSource,omitempty"`
 	// LatestReviewSummary: Output only. Summary of the most recent review run for
-	// this document, if any.
+	// this document, if any. Populated by `GetDocument` and `ListDocuments`; unset
+	// on the document returned by `CreateDocument`, which has no reviews yet.
 	LatestReviewSummary *ReviewSummary `json:"latestReviewSummary,omitempty"`
 	// Name: Identifier. Resource name in format `documents/{document}`.
 	Name string `json:"name,omitempty"`
@@ -589,8 +586,8 @@ func (s Document) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DocumentLocation: Polymorphic location targeting either a PDF page
-// region/quote or text lines.
+// DocumentLocation: A location targeting either a PDF page region/quote or
+// text lines in the document.
 type DocumentLocation struct {
 	// Pdf: Output only. Location within a rendered PDF document.
 	Pdf *PdfLocation `json:"pdf,omitempty"`
@@ -616,7 +613,7 @@ func (s DocumentLocation) MarshalJSON() ([]byte, error) {
 }
 
 // DownloadDocumentResponse: Response message for downloading a Document's raw
-// content via Scotty media.
+// content using media download.
 type DownloadDocumentResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -639,8 +636,8 @@ type DriveSource struct {
 	// ResourceKeySet: Output only. Indicates whether a resource key was provided
 	// for this Drive source.
 	ResourceKeySet bool `json:"resourceKeySet,omitempty"`
-	// RevisionId: Optional. Input only. Immutable. Specific revision ID to import
-	// (defaults to latest head revision).
+	// RevisionId: Optional. Input only. Immutable. Importing a specific revision
+	// is not currently supported; non-empty values return INVALID_ARGUMENT.
 	RevisionId string `json:"revisionId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -673,8 +670,8 @@ type Empty struct {
 // would cost.
 type EstimateReviewCostRequest struct {
 	// Review: Required. The review to estimate, as it would be passed to
-	// `CreateReview`. Only its `run_config` is read, and
-	// `run_config.gemini_api_key` is ignored.
+	// `CreateReview`. Only its `run_config` is read, and `gemini_api_key` is
+	// ignored.
 	Review *Review `json:"review,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Review") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -810,39 +807,6 @@ type ListDocumentsResponse struct {
 
 func (s ListDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDocumentsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// ListOperationsResponse: The response message for Operations.ListOperations.
-type ListOperationsResponse struct {
-	// NextPageToken: The standard List next-page token.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Operations: A list of operations that matches the specified filter in the
-	// request.
-	Operations []*Operation `json:"operations,omitempty"`
-	// Unreachable: Unordered list. Unreachable resources. Populated when the
-	// request sets `ListOperationsRequest.return_partial_success` and reads across
-	// collections. For example, when attempting to list all resources across all
-	// supported locations.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListOperationsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1060,8 +1024,7 @@ func (s Result) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Review: Review Sub-Resource Model representing an evaluation run of a
-// document.
+// Review: An evaluation run of a document.
 type Review struct {
 	// CreateTime: Output only. Timestamp when this review attempt was initiated.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1115,8 +1078,7 @@ func (s Review) MarshalJSON() ([]byte, error) {
 type ReviewSummary struct {
 	// CreateTime: Output only. Timestamp when this review attempt was initiated.
 	CreateTime string `json:"createTime,omitempty"`
-	// Review: Output only. Resource name of the Review. Format:
-	// `documents/{document}/reviews/{review}`
+	// Review: Output only. Resource name of the Review.
 	Review string `json:"review,omitempty"`
 	// State: Output only. Current review lifecycle state.
 	//
@@ -1214,7 +1176,8 @@ func (s TextLocation) MarshalJSON() ([]byte, error) {
 }
 
 // TextQuoteSelector: W3C Web Annotation TextQuoteSelector for resilient text
-// anchoring (https://www.w3.org/TR/annotation-model/#text-quote-selector).
+// anchoring (see https://www.w3.org/TR/annotation-model/#text-quote-selector
+// for details).
 type TextQuoteSelector struct {
 	// Exact: Output only. Verbatim substring extracted from the document character
 	// stream.
@@ -1294,25 +1257,26 @@ type DocumentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a document and all associated reviews and stored blobs.
+// Delete: Deletes a document and its stored content. If `force` is set to
+// `true`, any associated reviews are also deleted.
 //
-//   - name: The resource name of the document to delete. Format:
-//     `documents/{document}`.
+// - name: The resource name of the document to delete.
 func (r *DocumentsService) Delete(name string) *DocumentsDeleteCall {
 	c := &DocumentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// AllowMissing sets the optional parameter "allowMissing": If set to true, and
-// the document is not found, the request succeeds.
+// AllowMissing sets the optional parameter "allowMissing": If set to `true`,
+// and the document is not found, the request succeeds.
 func (c *DocumentsDeleteCall) AllowMissing(allowMissing bool) *DocumentsDeleteCall {
 	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
 	return c
 }
 
-// Force sets the optional parameter "force": If set to true, any child
-// resources (e.g. review resources) are also deleted.
+// Force sets the optional parameter "force": If set to `true`, any child
+// resources (e.g. review resources) are also deleted. If `false` and the
+// document has existing reviews, the request fails with `FAILED_PRECONDITION`.
 func (c *DocumentsDeleteCall) Force(force bool) *DocumentsDeleteCall {
 	c.urlParams_.Set("force", fmt.Sprint(force))
 	return c
@@ -1413,7 +1377,7 @@ type DocumentsEstimateReviewCostCall struct {
 // the Gemini API's current list prices. It covers one review attempt that runs
 // to completion, and doesn't include retries after errors.
 //
-// - document: The document to review. Format: `documents/{document}`.
+// - document: The document to review.
 func (r *DocumentsService) EstimateReviewCost(document string, estimatereviewcostrequest *EstimateReviewCostRequest) *DocumentsEstimateReviewCostCall {
 	c := &DocumentsEstimateReviewCostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.document = document
@@ -1515,10 +1479,10 @@ type DocumentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves document metadata and review history.
+// Get: Retrieves document metadata. The returned document includes its
+// `latest_review_summary` when a review exists.
 //
-//   - name: The resource name of the document to retrieve. Format:
-//     `documents/{document}`.
+// - name: The resource name of the document to retrieve.
 func (r *DocumentsService) Get(name string) *DocumentsGetCall {
 	c := &DocumentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1625,20 +1589,22 @@ type DocumentsListCall struct {
 }
 
 // List: Lists documents for the authenticated caller with cursor pagination.
+// Each returned document includes its `latest_review_summary` when a review
+// exists.
 func (r *DocumentsService) List() *DocumentsListCall {
 	c := &DocumentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Filter sets the optional parameter "filter": Supported AIP-160 filter
-// expressions (e.g., `display_name = "...").
+// Filter sets the optional parameter "filter": Custom filter expressions are
+// not currently supported; non-empty values return INVALID_ARGUMENT.
 func (c *DocumentsListCall) Filter(filter string) *DocumentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Supported AIP-132 order_by
-// field.
+// OrderBy sets the optional parameter "orderBy": Custom order_by expressions
+// are not currently supported; non-empty values return INVALID_ARGUMENT.
 func (c *DocumentsListCall) OrderBy(orderBy string) *DocumentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -1647,7 +1613,7 @@ func (c *DocumentsListCall) OrderBy(orderBy string) *DocumentsListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // documents to return in a single page. The server may return fewer than this
 // value. If unspecified, at most 50 documents will be returned. The maximum
-// value is 1000; values above 1000 will be coerced to 1000.
+// value is 100; values above 100 will be coerced to 100.
 func (c *DocumentsListCall) PageSize(pageSize int64) *DocumentsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -1780,10 +1746,12 @@ type DocumentsReviewsCreateCall struct {
 }
 
 // Create: Creates and initiates an asynchronous multi-agent review for a
-// document.
+// document. Returns a google.longrunning.Operation. When the operation
+// completes, the `response` field contains a `Review` and the `metadata` field
+// contains `CreateReviewMetadata`.
 //
 //   - parent: The parent Document resource name where this review will be
-//     created. Format: `documents/{document}`.
+//     created.
 func (r *DocumentsReviewsService) Create(parent string, review *Review) *DocumentsReviewsCreateCall {
 	c := &DocumentsReviewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1901,8 +1869,7 @@ type DocumentsReviewsGetCall struct {
 
 // Get: Retrieves a specific review execution result.
 //
-//   - name: The resource name of the review to retrieve. Format:
-//     `documents/{document}/reviews/{review}`.
+// - name: The resource name of the review to retrieve.
 func (r *DocumentsReviewsService) Get(name string) *DocumentsReviewsGetCall {
 	c := &DocumentsReviewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2011,22 +1978,22 @@ type DocumentsReviewsListCall struct {
 
 // List: Lists all review execution runs for a document.
 //
-// - parent: The parent Document resource name. Format: `documents/{document}`.
+// - parent: The parent Document resource name.
 func (r *DocumentsReviewsService) List(parent string) *DocumentsReviewsListCall {
 	c := &DocumentsReviewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Supported AIP-160 filter
-// expressions.
+// Filter sets the optional parameter "filter": Custom filter expressions are
+// not currently supported; non-empty values return INVALID_ARGUMENT.
 func (c *DocumentsReviewsListCall) Filter(filter string) *DocumentsReviewsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Supported AIP-132 order_by
-// field.
+// OrderBy sets the optional parameter "orderBy": Custom order_by expressions
+// are not currently supported; non-empty values return INVALID_ARGUMENT.
 func (c *DocumentsReviewsListCall) OrderBy(orderBy string) *DocumentsReviewsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -2035,7 +2002,7 @@ func (c *DocumentsReviewsListCall) OrderBy(orderBy string) *DocumentsReviewsList
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // reviews to return in a single page. The server may return fewer than this
 // value. If unspecified, at most 50 reviews will be returned. The maximum
-// value is 1000; values above 1000 will be coerced to 1000.
+// value is 100; values above 100 will be coerced to 100.
 func (c *DocumentsReviewsListCall) PageSize(pageSize int64) *DocumentsReviewsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2170,11 +2137,11 @@ type MediaDownloadCall struct {
 	header_      http.Header
 }
 
-// Download: Downloads the original document content (PDF binary) via Scotty
-// media streaming (AIP-136 custom method).
+// Download: Downloads the original document content (PDF binary) using media
+// streaming. Pass `alt=media` as a query parameter to stream the binary PDF
+// bytes. Without `alt=media`, a JSON response is returned.
 //
-//   - name: The resource name of the document to download. Format:
-//     `documents/{document}`.
+// - name: The resource name of the document to download.
 func (r *MediaService) Download(name string) *MediaDownloadCall {
 	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2298,8 +2265,8 @@ type MediaUploadCall struct {
 	header_    http.Header
 }
 
-// Upload: Creates a new Document resource and ingests the manuscript via
-// Scotty or Google Drive.
+// Upload: Creates a new Document resource and ingests the manuscript using
+// media upload or Google Drive.
 func (r *MediaService) Upload(document *Document) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.document = document
@@ -2464,382 +2431,6 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*Document, error) {
 	return ret, nil
 }
 
-type OperationsCancelCall struct {
-	s                      *Service
-	name                   string
-	canceloperationrequest *CancelOperationRequest
-	urlParams_             gensupport.URLParams
-	ctx_                   context.Context
-	header_                http.Header
-}
-
-// Cancel: Starts asynchronous cancellation on a long-running operation. The
-// server makes a best effort to cancel the operation, but success is not
-// guaranteed. If the server doesn't support this method, it returns
-// `google.rpc.Code.UNIMPLEMENTED`. Clients can use Operations.GetOperation or
-// other methods to check whether the cancellation succeeded or whether the
-// operation completed despite cancellation. On successful cancellation, the
-// operation is not deleted; instead, it becomes an operation with an
-// Operation.error value with a google.rpc.Status.code of `1`, corresponding to
-// `Code.CANCELLED`.
-//
-// - name: The name of the operation resource to be cancelled.
-func (r *OperationsService) Cancel(name string, canceloperationrequest *CancelOperationRequest) *OperationsCancelCall {
-	c := &OperationsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.canceloperationrequest = canceloperationrequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *OperationsCancelCall) Fields(s ...googleapi.Field) *OperationsCancelCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *OperationsCancelCall) Context(ctx context.Context) *OperationsCancelCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *OperationsCancelCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.canceloperationrequest)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "deepreview.operations.cancel", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "deepreview.operations.cancel" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "deepreview.operations.cancel", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type OperationsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a long-running operation. This method indicates that the
-// client is no longer interested in the operation result. It does not cancel
-// the operation. If the server doesn't support this method, it returns
-// `google.rpc.Code.UNIMPLEMENTED`.
-//
-// - name: The name of the operation resource to be deleted.
-func (r *OperationsService) Delete(name string) *OperationsDeleteCall {
-	c := &OperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *OperationsDeleteCall) Fields(s ...googleapi.Field) *OperationsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *OperationsDeleteCall) Context(ctx context.Context) *OperationsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *OperationsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "deepreview.operations.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "deepreview.operations.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "deepreview.operations.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type OperationsListCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists operations that match the specified filter in the request. If
-// the server doesn't support this method, it returns `UNIMPLEMENTED`.
-//
-// - name: The name of the operation's parent resource.
-func (r *OperationsService) List(name string) *OperationsListCall {
-	c := &OperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Filter sets the optional parameter "filter": The standard list filter.
-func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The standard list page
-// size.
-func (c *OperationsListCall) PageSize(pageSize int64) *OperationsListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The standard list page
-// token.
-func (c *OperationsListCall) PageToken(pageToken string) *OperationsListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess":
-// When set to `true`, operations that are reachable are returned as normal,
-// and those that are unreachable are returned in the
-// ListOperationsResponse.unreachable field. This can only be `true` when
-// reading across collections. For example, when `parent` is set to
-// "projects/example/locations/-". This field is not supported by default and
-// will result in an `UNIMPLEMENTED` error if set unless explicitly documented
-// otherwise in service or product specific documentation.
-func (c *OperationsListCall) ReturnPartialSuccess(returnPartialSuccess bool) *OperationsListCall {
-	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *OperationsListCall) Fields(s ...googleapi.Field) *OperationsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *OperationsListCall) IfNoneMatch(entityTag string) *OperationsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *OperationsListCall) Context(ctx context.Context) *OperationsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *OperationsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *OperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "deepreview.operations.list", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "deepreview.operations.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListOperationsResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListOperationsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "deepreview.operations.list", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *OperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
 type OperationsDocumentsReviewsGetCall struct {
 	s            *Service
 	name         string
@@ -2963,8 +2554,7 @@ type V1GetUserQuotaCall struct {
 // GetUserQuota: Retrieves the review quota limits and sliding-window usage for
 // the authenticated caller.
 //
-//   - name: The resource name of the singleton user quota to retrieve. Format:
-//     `userQuota`.
+// - name: The resource name of the singleton user quota to retrieve.
 func (r *V1Service) GetUserQuota(name string) *V1GetUserQuotaCall {
 	c := &V1GetUserQuotaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

@@ -402,6 +402,7 @@
             "$ref": "UploadAttachmentResponse"
           },
           "scopes": [
+            "https://www.googleapis.com/auth/chat.bot",
             "https://www.googleapis.com/auth/chat.import",
             "https://www.googleapis.com/auth/chat.messages",
             "https://www.googleapis.com/auth/chat.messages.create"
@@ -1511,6 +1512,7 @@
                     "$ref": "Empty"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/chat.bot",
                     "https://www.googleapis.com/auth/chat.import",
                     "https://www.googleapis.com/auth/chat.messages",
                     "https://www.googleapis.com/auth/chat.messages.reactions"
@@ -2210,7 +2212,7 @@
       }
     }
   },
-  "revision": "20261022",
+  "revision": "20261025",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessPermissionSetting": {
@@ -3190,7 +3192,7 @@
       "properties": {
         "body": {
           "$ref": "GoogleAppsCardV1Card",
-          "description": "Input only. Body of the dialog, which is rendered in a modal. Google Chat apps don't support the following card entities: `DateTimePicker`, `OnChangeAction`."
+          "description": "Input only. Body of the dialog, which is rendered in a modal."
         }
       },
       "type": "object"
@@ -3687,7 +3689,7 @@
       "type": "object"
     },
     "GoogleAppsCardV1Carousel": {
-      "description": "A carousel, also known as a slider, rotates and displays a list of widgets in a slideshow format, with buttons navigating to the previous or next widget. For example, this is a JSON representation of a carousel that contains three text paragraph widgets. ``` { \"carouselCards\": [ { \"widgets\": [ { \"textParagraph\": { \"text\": \"First text paragraph in carousel\", } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Second text paragraph in carousel\", } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Third text paragraph in carousel\", } } ] } ] } ``` [Google Chat apps](https://developers.google.com/workspace/chat):",
+      "description": "Rotates and displays a list of carousel cards in a slideshow format, with buttons navigating to the previous or next card. For example, this is a JSON representation of a carousel that contains three text paragraph widgets. ``` { \"carouselCards\": [ { \"widgets\": [ { \"textParagraph\": { \"text\": \"First text paragraph in carousel\" } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Second text paragraph in carousel\" } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Third text paragraph in carousel\" } } ] } ] } ``` [Google Chat apps](https://developers.google.com/workspace/chat):",
       "id": "GoogleAppsCardV1Carousel",
       "properties": {
         "carouselCards": {
@@ -3735,12 +3737,12 @@
         },
         "enabled": {
           "deprecated": true,
-          "description": "Whether the chip is in an active state and responds to user actions. Defaults to `true`. Deprecated. Use `disabled` instead.",
+          "description": "Deprecated: Use `disabled` instead. Whether the chip is in an active state and responds to user actions.",
           "type": "boolean"
         },
         "icon": {
           "$ref": "GoogleAppsCardV1Icon",
-          "description": "The icon image. If both `icon` and `text` are set, then the icon appears before the text."
+          "description": "The icon image. If both `icon` and `label` are set, then the icon appears before the label."
         },
         "label": {
           "description": "The text displayed inside the chip.",
@@ -3953,7 +3955,7 @@
           "description": "Triggered when the user clicks **Save** or **Clear** from the `DateTimePicker` interface."
         },
         "timezoneOffsetDate": {
-          "description": "The number representing the time zone offset from UTC, in minutes. If set, the `value_ms_epoch` is displayed in the specified time zone. If unset, the value defaults to the user's time zone setting.",
+          "description": "The number representing the time zone offset from UTC, in minutes. If set, the `value_ms_epoch` is displayed in the specified time zone. If unset, the value defaults to the user's time zone setting. Note: This field is in minutes, whereas user interaction event payloads typically provide time zone offsets in milliseconds (divide by `60000` to convert).",
           "format": "int32",
           "type": "integer"
         },
@@ -4010,7 +4012,7 @@
         },
         "onClick": {
           "$ref": "GoogleAppsCardV1OnClick",
-          "description": "This action is triggered when users click `topLabel` or `bottomLabel`."
+          "description": "This action is triggered when users click anywhere on the `DecoratedText` widget (including `text`, `top_label`, `bottom_label`, and icons), except when clicking a separate interactive control (`button` or `switch_control`)."
         },
         "startIcon": {
           "$ref": "GoogleAppsCardV1Icon",
@@ -4155,7 +4157,7 @@
         },
         "onClick": {
           "$ref": "GoogleAppsCardV1OnClick",
-          "description": "This callback is reused by each individual grid item, but with the item's identifier and index in the items list added to the callback's parameters."
+          "description": "This callback is reused by each individual grid item, but with the item's identifier added to the callback's parameters (under the key `\"grid_item_identifier\"`)."
         },
         "title": {
           "description": "The text that displays in the grid header.",
@@ -4833,11 +4835,11 @@
         },
         "carousel": {
           "$ref": "GoogleAppsCardV1Carousel",
-          "description": "A carousel contains a collection of nested widgets. For example, this is a JSON representation of a carousel that contains two text paragraphs. ``` { \"widgets\": [ { \"textParagraph\": { \"text\": \"First text paragraph in the carousel.\" } }, { \"textParagraph\": { \"text\": \"Second text paragraph in the carousel.\" } } ] } ```"
+          "description": "Contains a collection of `CarouselCard` items, each of which contains nested widgets. For example, this is a JSON representation of a carousel that contains two carousel cards, each with a text paragraph: ``` { \"carouselCards\": [ { \"widgets\": [ { \"textParagraph\": { \"text\": \"First text paragraph in the carousel.\" } } ] }, { \"widgets\": [ { \"textParagraph\": { \"text\": \"Second text paragraph in the carousel.\" } } ] } ] } ```"
         },
         "chipList": {
           "$ref": "GoogleAppsCardV1ChipList",
-          "description": "A list of chips. For example, the following JSON creates two chips. The first is a text chip and the second is an icon chip that opens a link: ``` \"chipList\": { \"chips\": [ { \"text\": \"Edit\", \"disabled\": true, }, { \"icon\": { \"knownIcon\": \"INVITE\", \"altText\": \"check calendar\" }, \"onClick\": { \"openLink\": { \"url\": \"https://example.com/calendar\" } } } ] } ```"
+          "description": "A list of chips. For example, the following JSON creates two chips. The first is a text chip and the second is an icon chip that opens a link: ``` \"chipList\": { \"chips\": [ { \"label\": \"Edit\", \"disabled\": true }, { \"icon\": { \"knownIcon\": \"INVITE\", \"altText\": \"check calendar\" }, \"onClick\": { \"openLink\": { \"url\": \"https://example.com/calendar\" } } } ] } ```"
         },
         "columns": {
           "$ref": "GoogleAppsCardV1Columns",

@@ -1679,8 +1679,9 @@ func (c *ProjectsLocationsServersCreateCall) RequestId(requestId string) *Projec
 
 // ServerId sets the optional parameter "serverId": Required. A unique ID for
 // the server. Must start with a lowercase letter, and end with a lowercase
-// letter or number. Can contain lowercase letters, numbers, and hyphens.
-// Maximum length is 30 characters.
+// letter or number. Can contain lowercase letters, numbers, and hyphens. Can't
+// begin with the prefix `goog` or contain the string `google`, including close
+// misspellings such as `g00gle`. Maximum length is 30 characters.
 func (c *ProjectsLocationsServersCreateCall) ServerId(serverId string) *ProjectsLocationsServersCreateCall {
 	c.urlParams_.Set("serverId", serverId)
 	return c

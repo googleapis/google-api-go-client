@@ -758,10 +758,10 @@ type Approval struct {
 	//
 	// Possible values:
 	//   "FILE_CONTENT_CHANGE_BEHAVIOR_UNSPECIFIED" - The behavior is unspecified.
-	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of APPROVED will
-	// be reset to NO_DECISION when the file content changes while the approval has
-	// a Status of IN_PROGRESS. When the approval has a Status of APPROVED and
-	// RESET_APPROVAL is selected, the file is locked.
+	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of `APPROVED` will
+	// be reset to `NO_DECISION` when the file content changes while the approval
+	// has a Status of `IN_PROGRESS`. When the approval has a Status of `APPROVED`
+	// and `RESET_APPROVAL` is selected, the file is locked.
 	//   "NO_APPROVAL_ACTION" - No action is taken when the file content changes.
 	FileContentChangeBehavior string `json:"fileContentChangeBehavior,omitempty"`
 	// Initiator: The user that requested the approval.
@@ -3326,10 +3326,10 @@ type StartApprovalRequest struct {
 	//
 	// Possible values:
 	//   "FILE_CONTENT_CHANGE_BEHAVIOR_UNSPECIFIED" - The behavior is unspecified.
-	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of APPROVED will
-	// be reset to NO_DECISION when the file content changes while the approval has
-	// a Status of IN_PROGRESS. When the approval has a Status of APPROVED and
-	// RESET_APPROVAL is selected, the file is locked.
+	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of `APPROVED` will
+	// be reset to `NO_DECISION` when the file content changes while the approval
+	// has a Status of `IN_PROGRESS`. When the approval has a Status of `APPROVED`
+	// and `RESET_APPROVAL` is selected, the file is locked.
 	//   "NO_APPROVAL_ACTION" - No action is taken when the file content changes.
 	FileContentChangeBehavior string `json:"fileContentChangeBehavior,omitempty"`
 	// LockFile: Optional. Whether to lock the file when starting the approval.

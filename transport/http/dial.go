@@ -36,13 +36,18 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*http.Client, 
 	if err != nil {
 		return nil, "", err
 	}
+	// TODO(cbro): consider injecting the User-Agent even if an explicit HTTP client is provided?
+	if settings.HTTPClient != nil {
+		endpoint, err := internal.GetEndpoint(settings)
+		if err != nil {
+			return nil, "", err
+		}
+		return settings.HTTPClient, endpoint, nil
+	}
+
 	clientCertSource, dialTLSContext, endpoint, err := internal.GetHTTPTransportConfigAndEndpoint(settings)
 	if err != nil {
 		return nil, "", err
-	}
-	// TODO(cbro): consider injecting the User-Agent even if an explicit HTTP client is provided?
-	if settings.HTTPClient != nil {
-		return settings.HTTPClient, endpoint, nil
 	}
 
 	if settings.IsNewAuthLibraryEnabled() {

@@ -84,6 +84,19 @@ func getClientCertificateSourceAndEndpoint(settings *DialSettings) (cert.Source,
 	return clientCertSource, endpoint, nil
 }
 
+// GetEndpoint returns the endpoint for the service without initializing a client
+// certificate source. This is used when a custom HTTP client is provided.
+func GetEndpoint(settings *DialSettings) (string, error) {
+	endpoint, err := getEndpoint(settings, nil)
+	if err != nil {
+		return "", err
+	}
+	if settings.Endpoint == "" && !settings.IsUniverseDomainGDU() && settings.DefaultEndpointTemplate != "" {
+		endpoint = resolvedDefaultEndpoint(settings)
+	}
+	return endpoint, nil
+}
+
 type transportConfig struct {
 	clientCertSource cert.Source // The client certificate source.
 	endpoint         string      // The corresponding endpoint to use based on client certificate source.

@@ -3058,6 +3058,12 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo stru
 	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
+	// StudyArmId: The study arm ID associated with the conversation. Only
+	// applicable to automated agents.
+	StudyArmId string `json:"studyArmId,omitempty"`
+	// StudyId: The study ID associated with the conversation. Only applicable to
+	// automated agents.
+	StudyId string `json:"studyId,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
 	// favor of the `teams` field.
 	Team string `json:"team,omitempty"`
@@ -7906,6 +7912,8 @@ type GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig struct
 	//   "CONVERSATION_OUTCOME_AI_AVERSION" - Classifies whether the customer
 	// demonstrates AI aversion by instantly requesting escalation to a human agent
 	// without attempting to work with the AI agent.
+	//   "CONVERSATION_OUTCOME_ESCALATION_REASON" - Classifies the primary reason
+	// for escalating the conversation to a human agent.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -11564,6 +11572,12 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInf
 	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
+	// StudyArmId: The study arm ID associated with the conversation. Only
+	// applicable to automated agents.
+	StudyArmId string `json:"studyArmId,omitempty"`
+	// StudyId: The study ID associated with the conversation. Only applicable to
+	// automated agents.
+	StudyId string `json:"studyId,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
 	// favor of the `teams` field.
 	Team string `json:"team,omitempty"`
@@ -17772,6 +17786,12 @@ type GoogleCloudContactcenterinsightsV1mainConversationQualityMetadataAgentInfo 
 	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
+	// StudyArmId: The study arm ID associated with the conversation. Only
+	// applicable to automated agents.
+	StudyArmId string `json:"studyArmId,omitempty"`
+	// StudyId: The study ID associated with the conversation. Only applicable to
+	// automated agents.
+	StudyId string `json:"studyId,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
 	// favor of the `teams` field.
 	Team string `json:"team,omitempty"`

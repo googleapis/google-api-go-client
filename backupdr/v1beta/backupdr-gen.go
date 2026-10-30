@@ -1090,13 +1090,15 @@ type AutoProtectionPolicy struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Criteria: Required. The criteria for matching resources.
 	Criteria *Criteria `json:"criteria,omitempty"`
-	// Description: Optional. A description of the policy.
+	// Description: Optional. A description of the policy. The description must be
+	// at most 2048 characters.
 	Description string `json:"description,omitempty"`
 	// Etag: Output only. The etag for the policy. If this is provided on update,
 	// it must match the server's etag, otherwise the request will be rejected with
 	// an ABORTED error.
 	Etag string `json:"etag,omitempty"`
-	// Name: Identifier. The resource name of the AutoprotectionPolicy. Format:
+	// Name: Output only. Identifier. The resource name of the
+	// AutoprotectionPolicy. Format:
 	// `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protect
 	// ion_policy}`
 	Name string `json:"name,omitempty"`
@@ -1145,13 +1147,14 @@ type AutoProtectionPolicyBinding struct {
 	BindingEvaluationSummary *BindingEvaluationSummary `json:"bindingEvaluationSummary,omitempty"`
 	// CreateTime: Output only. The timestamp when the binding was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. A description of the binding.
+	// Description: Optional. A description of the binding. The description must be
+	// at most 2048 characters.
 	Description string `json:"description,omitempty"`
 	// Etag: Optional. Output only. The etag for the binding. If this is provided
 	// on update, it must match the server's etag.
 	Etag string `json:"etag,omitempty"`
-	// Name: Identifier. The resource name of the AutoProtectionPolicyBinding.
-	// Format:
+	// Name: Output only. Identifier. The resource name of the
+	// AutoProtectionPolicyBinding. Format:
 	// `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protect
 	// ion_policy}/bindings/{binding}`
 	Name string `json:"name,omitempty"`
@@ -4313,6 +4316,33 @@ func (s InitiateBackupResponse) MarshalJSON() ([]byte, error) {
 // InitiateDeleteAutoProtectionPolicyBindingRequest: Request message for
 // initiating delete of an AutoProtectionPolicyBinding.
 type InitiateDeleteAutoProtectionPolicyBindingRequest struct {
+	// Etag: Optional. The current etag of the AutoProtectionPolicyBinding. If an
+	// etag is provided and does not match the current etag of the binding,
+	// deletion will be blocked and an ABORTED error will be returned.
+	Etag string `json:"etag,omitempty"`
+	// RequestId: Optional. An optional request ID to identify requests. Specify a
+	// unique request ID so that if you must retry your request, the server will
+	// know to ignore the request if it has already been completed. The server will
+	// guarantee that for at least 60 minutes since the first request. The request
+	// ID must be a valid UUID with the exception that zero UUID is not supported
+	// (00000000-0000-0000-0000-000000000000).
+	RequestId string `json:"requestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InitiateDeleteAutoProtectionPolicyBindingRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InitiateDeleteAutoProtectionPolicyBindingRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstanceParams: Additional instance params.
@@ -7370,9 +7400,22 @@ func (r *ProjectsLocationsAutoProtectionPoliciesService) Create(parent string, a
 
 // AutoProtectionPolicyId sets the optional parameter "autoProtectionPolicyId":
 // Required. The ID to use for the policy. This will become the final component
-// of the policy's resource name.
+// of the policy's resource name. This value must start with a lowercase letter
+// followed by up to 62 lowercase letters, numbers, or hyphens, and cannot end
+// with a hyphen.
 func (c *ProjectsLocationsAutoProtectionPoliciesCreateCall) AutoProtectionPolicyId(autoProtectionPolicyId string) *ProjectsLocationsAutoProtectionPoliciesCreateCall {
 	c.urlParams_.Set("autoProtectionPolicyId", autoProtectionPolicyId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAutoProtectionPoliciesCreateCall) RequestId(requestId string) *ProjectsLocationsAutoProtectionPoliciesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -7484,6 +7527,17 @@ func (r *ProjectsLocationsAutoProtectionPoliciesService) Delete(name string) *Pr
 // etag of the connection, the request will be rejected with an ABORTED error.
 func (c *ProjectsLocationsAutoProtectionPoliciesDeleteCall) Etag(etag string) *ProjectsLocationsAutoProtectionPoliciesDeleteCall {
 	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAutoProtectionPoliciesDeleteCall) RequestId(requestId string) *ProjectsLocationsAutoProtectionPoliciesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -7853,13 +7907,25 @@ type ProjectsLocationsAutoProtectionPoliciesPatchCall struct {
 
 // Patch: Updates the parameters of a single AutoProtectionPolicy.
 //
-//   - name: Identifier. The resource name of the AutoprotectionPolicy. Format:
+//   - name: Output only. Identifier. The resource name of the
+//     AutoprotectionPolicy. Format:
 //     `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_prote
 //     ction_policy}`.
 func (r *ProjectsLocationsAutoProtectionPoliciesService) Patch(name string, autoprotectionpolicy *AutoProtectionPolicy) *ProjectsLocationsAutoProtectionPoliciesPatchCall {
 	c := &ProjectsLocationsAutoProtectionPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.autoprotectionpolicy = autoprotectionpolicy
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAutoProtectionPoliciesPatchCall) RequestId(requestId string) *ProjectsLocationsAutoProtectionPoliciesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -7982,9 +8048,22 @@ func (r *ProjectsLocationsAutoProtectionPoliciesBindingsService) Create(parent s
 
 // AutoProtectionPolicyBindingId sets the optional parameter
 // "autoProtectionPolicyBindingId": Required. The ID to use for the binding.
-// This will become the final component of the binding's resource name.
+// This will become the final component of the binding's resource name. This
+// value must start with a lowercase letter followed by up to 62 lowercase
+// letters, numbers, or hyphens, and cannot end with a hyphen.
 func (c *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall) AutoProtectionPolicyBindingId(autoProtectionPolicyBindingId string) *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall {
 	c.urlParams_.Set("autoProtectionPolicyBindingId", autoProtectionPolicyBindingId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server will know to ignore the request if it has already
+// been completed. The server will guarantee that for at least 60 minutes since
+// the first request. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall) RequestId(requestId string) *ProjectsLocationsAutoProtectionPoliciesBindingsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 

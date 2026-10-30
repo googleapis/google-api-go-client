@@ -1222,7 +1222,7 @@ type GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client struct {
 	//   "ATTRIBUTES_TYPE_UNSPECIFIED" - No AttributesType specified.
 	//   "AZURE_AD_GROUPS_MAIL" - Used to get the user's group claims from the
 	// Microsoft Entra ID identity provider using the configuration provided in
-	// ExtraAttributesOAuth2Client. The `mail` property of the
+	// `ExtraAttributesOAuth2Client`. The `mail` property of the
 	// `microsoft.graph.group` object is used for claim mapping. See
 	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties
 	// for more details on `microsoft.graph.group` properties. The group mail
@@ -1231,7 +1231,7 @@ type GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client struct {
 	// SAML: `assertion.attributes.groups`
 	//   "AZURE_AD_GROUPS_ID" - Used to get the user's group claims from the
 	// Microsoft Entra ID identity provider using the configuration provided in
-	// ExtraAttributesOAuth2Client. The `id` property of the
+	// `ExtraAttributesOAuth2Client`. The `id` property of the
 	// `microsoft.graph.group` object is used for claim mapping. See
 	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties
 	// for more details on `microsoft.graph.group` properties. The group IDs of the
@@ -1240,7 +1240,7 @@ type GoogleIamAdminV1WorkforcePoolProviderExtraAttributesOAuth2Client struct {
 	// `assertion.attributes.groups`
 	//   "AZURE_AD_GROUPS_DISPLAY_NAME" - Used to get the user's group claims from
 	// the Microsoft Entra ID identity provider using the configuration provided in
-	// ExtraAttributesOAuth2Client. The `displayName` property of the
+	// `ExtraAttributesOAuth2Client`. The `displayName` property of the
 	// `microsoft.graph.group` object is used for claim mapping. See
 	// https://learn.microsoft.com/en-us/graph/api/resources/group?view=graph-rest-1.0#properties
 	// for more details on `microsoft.graph.group` properties. The display names of
@@ -2808,7 +2808,7 @@ type QueryGrantableRolesRequest struct {
 	// will be named `//cloudresourcemanager.googleapis.com/projects/my-project`.
 	FullResourceName string `json:"fullResourceName,omitempty"`
 	// PageSize: Optional limit on the number of roles to include in the response.
-	// The default is 300, and the maximum is 2,000.
+	// The default is 300, and the maximum is 3,000.
 	PageSize int64 `json:"pageSize,omitempty"`
 	// PageToken: Optional pagination token returned in an earlier
 	// QueryGrantableRolesResponse.

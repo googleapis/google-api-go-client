@@ -5948,6 +5948,48 @@ func (s OsStartupEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Outcome: Determines how to proceed with the update.
+type Outcome struct {
+	// OutcomeType: Optional. Determines how to proceed with the update.
+	//
+	// Possible values:
+	//   "OUTCOME_TYPE_UNSPECIFIED" - Do not use this value.
+	//   "FORCE" - The action for which the policy is being evaluated (depending on
+	// the stages), such as downloading the update or rebooting the device, happens
+	// immediately. Positivity requirement: Any rule which uses this can't use any
+	// of the following: * METERED_NETWORK * NOT_IDLE * NOT_CHARGING *
+	// BATTERY_LEVEL_LOW
+	//   "USER_PROMPT" - Action should not be taken without the user's consent, but
+	// the user has a way of proceeding with the update and is prompted to do so.
+	// Supported only for OS_UPDATE_WITHOUT_API_LEVEL_CHANGE and
+	// OS_UPDATE_WITH_API_LEVEL_CHANGE. For SINGLE_APP, GOOGLE_SYSTEM_SERVICES, and
+	// GOOGLE_PLAY_SYSTEM_UPDATE, the default update behavior applies, as if no
+	// rule matched.
+	//   "BLOCK" - The update is not downloaded and not installed. For updates on
+	// Google Play, this only affects automatic updates, but does not prevent the
+	// user from manually updating. For OEM system updates, this prevents both
+	// manual and automatic updates. Positivity requirement: Any rule which uses
+	// this cannot use any of the following: * UNMETERED_NETWORK * IDLE * CHARGING
+	// * BATTERY_LEVEL_NOT_LOW
+	OutcomeType string `json:"outcomeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutcomeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutcomeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Outcome) MarshalJSON() ([]byte, error) {
+	type NoMethod Outcome
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PackageNameList: A list of package names.
 type PackageNameList struct {
 	// PackageNames: A list of package names.
@@ -7011,6 +7053,15 @@ type Policy struct {
 	// is disabled. If tetheringSettings is set to anything other than
 	// TETHERING_SETTINGS_UNSPECIFIED, this setting is ignored.
 	TetheringConfigDisabled bool `json:"tetheringConfigDisabled,omitempty"`
+	// UnifiedUpdatePolicy: Optional. The Unified Update Control policy, for
+	// controlling updates of software components on the device. Supported only on
+	// company-owned devices.The targets OS_UPDATE_WITH_API_LEVEL_CHANGE and
+	// OS_UPDATE_WITHOUT_API_LEVEL_CHANGE are supported only on devices where the
+	// OEM has integrated with Unified Update Controls, and are ignored otherwise.
+	// If systemUpdate is set, then that policy takes precedence and the targets
+	// OS_UPDATE_WITH_API_LEVEL_CHANGE and OS_UPDATE_WITHOUT_API_LEVEL_CHANGE are
+	// ignored here.
+	UnifiedUpdatePolicy *UnifiedUpdatePolicy `json:"unifiedUpdatePolicy,omitempty"`
 	// UninstallAppsDisabled: Whether user uninstallation of applications is
 	// disabled. This prevents apps from being uninstalled, even those removed
 	// using applications
@@ -7217,6 +7268,76 @@ func (s *PowerManagementEvent) UnmarshalJSON(data []byte) error {
 	}
 	s.BatteryLevel = float64(s1.BatteryLevel)
 	return nil
+}
+
+// Predicate: A predicate is something that can be evaluated on a device at any
+// point of time, to return true or false. This is the conjunction (logical
+// AND) of all the individual conditions defined here. An empty Predicate
+// always evaluates to true.
+type Predicate struct {
+	// DateLowerBound: Optional. A lower bound on the current date, in the device
+	// time zone. If not set, always evaluates to true.
+	DateLowerBound *Date `json:"dateLowerBound,omitempty"`
+	// DateUpperBound: Optional. An upper bound on the current date, in the device
+	// time zone. If not set, always evaluates to true.
+	DateUpperBound *Date `json:"dateUpperBound,omitempty"`
+	// DaysOfWeek: Optional. Evaluates to true if this list is empty or if the
+	// current day of the week in the device's local time is in this list.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
+	// TimeOfDayLowerBound: Optional. A lower bound on the current time of the day,
+	// evaluated as hh:00:00 in the device time zone. Must specify only the hour
+	// (0-23). The policy will be rejected if minutes, seconds, or nanos are set.
+	// If not set, always evaluates to true.
+	TimeOfDayLowerBound *TimeOfDay `json:"timeOfDayLowerBound,omitempty"`
+	// TimeOfDayUpperBound: Optional. An upper bound on the current time of the
+	// day, evaluated as hh:00:00 in the device time zone. Must specify only the
+	// hour (0-23). The policy will be rejected if minutes, seconds, or nanos are
+	// set. If not set, always evaluates to true.The window closes at the specified
+	// hour (for example, a lower bound of 14 and an upper bound of 15 covers 14:00
+	// to 15:00). When both bounds are set in the same rule, timeOfDayUpperBound
+	// must be strictly greater than timeOfDayLowerBound for the window to match;
+	// if timeOfDayUpperBound is less than or equal to timeOfDayLowerBound, the
+	// predicate evaluates to false. Setting timeOfDayUpperBound to 0 (00:00)
+	// evaluates to false for the entire day. To extend a window to the end of the
+	// day (24:00), omit timeOfDayUpperBound. To define an overnight window
+	// spanning midnight, use two rules: an evening rule with only
+	// timeOfDayLowerBound set and a morning rule with only timeOfDayUpperBound set
+	// (targeting the following day if daysOfWeek is set).
+	TimeOfDayUpperBound *TimeOfDay `json:"timeOfDayUpperBound,omitempty"`
+	// UpdateAgeLowerBound: Optional. A lower bound on the amount of time for which
+	// the update (that is, the specific build or version) has been available to
+	// the device. This must be a multiple of 24 hours.
+	UpdateAgeLowerBound string `json:"updateAgeLowerBound,omitempty"`
+	// UpdateAgeUpperBound: Optional. An upper bound on the amount of time for
+	// which the update has been available. If not set or set to zero, always
+	// evaluates to true. This must be a multiple of 24 hours.
+	UpdateAgeUpperBound string `json:"updateAgeUpperBound,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateLowerBound") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateLowerBound") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Predicate) MarshalJSON() ([]byte, error) {
+	type NoMethod Predicate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PreferentialNetworkServiceConfig: Individual preferential network service
@@ -7727,6 +7848,61 @@ func (s Role) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Rule: A rule as a part of the Unified Update Control policy. See rules for
+// how this is used.
+type Rule struct {
+	// Id: Required. An EMM-defined identifier for this rule, of length at most 64
+	// characters. This must not be empty. Within a UnifiedUpdatePolicy, different
+	// rules must have different ids.
+	Id string `json:"id,omitempty"`
+	// Outcome: Optional. Determines how to proceed with the update.
+	Outcome *Outcome `json:"outcome,omitempty"`
+	// Predicate: Optional. The predicate of the rule, which can evaluate to true
+	// or false. See rules for how this is used. If not set, the predicate always
+	// evaluates to true.
+	Predicate *Predicate `json:"predicate,omitempty"`
+	// Stages: Optional. The stages at which the rule is evaluated. If this list is
+	// empty, the rule is evaluated at all stages. Specifying stages is supported
+	// only for OS_UPDATE_WITHOUT_API_LEVEL_CHANGE and
+	// OS_UPDATE_WITH_API_LEVEL_CHANGE. For SINGLE_APP, GOOGLE_SYSTEM_SERVICES, and
+	// GOOGLE_PLAY_SYSTEM_UPDATE, this field is ignored and the rule is evaluated
+	// at all stages.
+	//
+	// Possible values:
+	//   "STAGE_UNSPECIFIED" - This must not be used.
+	//   "STAGE_DOWNLOAD" - The policy is evaluated for the download of the update.
+	//   "STAGE_APPLY" - The policy is evaluated before taking an action which
+	// causes the update to be applied. This is best-effort, and the update may be
+	// applied regardless. For example, some updates such as apps and services
+	// installed by Google Play get automatically applied immediately after
+	// download. Some updates which need a reboot to apply may get applied as a
+	// result of a user-initiated reboot, regardless of policy. If an update needs
+	// a reboot to apply, policy is evaluated before the system triggers an
+	// automatic reboot for the purpose of applying the update.
+	Stages []string `json:"stages,omitempty"`
+	// Targets: Required. Targets that this rule applies to. This can have multiple
+	// targets here for convenience, and that is equivalent to having multiple
+	// rules in sequence each having one target, in the same order in which targets
+	// are listed here. This list must not be empty and must not have duplicates.
+	Targets []*Target `json:"targets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Rule) MarshalJSON() ([]byte, error) {
+	type NoMethod Rule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ScreenBrightnessSettings: Controls for the screen brightness settings.
 type ScreenBrightnessSettings struct {
 	// ScreenBrightness: Optional. The screen brightness between 1 and 255 where 1
@@ -8056,6 +8232,29 @@ type SignupUrl struct {
 
 func (s SignupUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod SignupUrl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SingleApp: Details of an app on Google System services.
+type SingleApp struct {
+	// PackageName: Required. The package name of the app. This can only be an app
+	// which is a part of GOOGLE_SYSTEM_SERVICES.
+	PackageName string `json:"packageName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PackageName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PackageName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SingleApp) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleApp
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8455,6 +8654,45 @@ func (s SystemUpdateInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Target: A software component that can be updated.
+type Target struct {
+	// SingleApp: Details of an app on Google System services.
+	SingleApp *SingleApp `json:"singleApp,omitempty"`
+	// TargetType: Required. The type of software component that can be updated.
+	//
+	// Possible values:
+	//   "TARGET_TYPE_UNSPECIFIED" - This must not be used.
+	//   "SINGLE_APP" - An app on Google System services. singleApp must be set.
+	// This can be used only to control an app which is a part of
+	// GOOGLE_SYSTEM_SERVICES.
+	//   "GOOGLE_SYSTEM_SERVICES" - Google system services
+	// (https://support.google.com/product-documentation/answer/14343500) updated
+	// from Google Play, such as WebView.
+	//   "GOOGLE_PLAY_SYSTEM_UPDATE" - Google Play System Updates. See
+	// https://source.android.com/docs/core/ota/modular-system .
+	//   "OS_UPDATE_WITHOUT_API_LEVEL_CHANGE" - An OS update issued by the OEM
+	// which does not change the API level of the device.
+	//   "OS_UPDATE_WITH_API_LEVEL_CHANGE" - An OS update issued by the OEM which
+	// changes the API level of the device.
+	TargetType string `json:"targetType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SingleApp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SingleApp") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Target) MarshalJSON() ([]byte, error) {
+	type NoMethod Target
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TelephonyInfo: Telephony information associated with a given SIM card on the
 // device. This is supported for all SIM cards on fully managed devices on
 // Android 6 and above. In addition, this is supported for admin-added eSIMs on
@@ -8527,6 +8765,73 @@ type TermsAndConditions struct {
 
 func (s TermsAndConditions) MarshalJSON() ([]byte, error) {
 	type NoMethod TermsAndConditions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TimeOfDay: Represents a time of day. The date and time zone are either not
+// significant or are specified elsewhere. An API may choose to allow leap
+// seconds. Related types are google.type.Date and google.protobuf.Timestamp.
+type TimeOfDay struct {
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UnifiedUpdatePolicy: The Unified Update Control policy, for controlling
+// updates of software components on the device (see Target). Supported only on
+// company-owned devices.
+type UnifiedUpdatePolicy struct {
+	// Rules: Optional. When the policy is evaluated for a given target, all rules
+	// which refer to that target are evaluated in sequence. The first rule for
+	// which the predicate evaluates to true is considered, and its outcome is
+	// used. If no rule matches, the default update behavior applies. In other
+	// words, this behaves like a chained if-else statement.However, if an update
+	// has been available for more than a certain amount of time, any outcome of
+	// BLOCK is automatically changed to the default update behavior. At most 100
+	// rules are allowed.
+	Rules []*Rule `json:"rules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rules") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rules") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnifiedUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod UnifiedUpdatePolicy
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

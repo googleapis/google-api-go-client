@@ -1580,39 +1580,51 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 // widget.
 type CommonEventObject struct {
 	// FormInputs: A map containing the current values of the widgets in the
-	// displayed card. The map keys are the string IDs assigned with each widget.
-	// The structure of the map value object is dependent on the widget type:
-	// **Note**: The following examples are formatted for Apps Script's V8 runtime.
-	// If you're using Rhino runtime, you must add `[""]` after the value. For
-	// example, instead of
+	// displayed card. The map keys are the string `name` values assigned to each
+	// input widget (such as `TextInput.name`, `SelectionInput.name`,
+	// `DateTimePicker.name`, or `DecoratedText.SwitchControl.name`). The structure
+	// of the map value object is dependent on the widget type: **Note**: The
+	// following examples are formatted for Apps Script's V8 runtime. If you're
+	// using Rhino runtime, you must add `[""]` after the value. For example,
+	// instead of
 	// `e.commonEventObject.formInputs.employeeName.stringInputs.value[0]`, format
 	// the event object as
 	// `e.commonEventObject.formInputs.employeeName[""].stringInputs.value[0]`. To
 	// learn more about runtimes in Apps Script, see the V8 Runtime Overview
 	// (https://developers.google.com/apps-script/guides/v8-runtime). *
-	// Single-valued widgets (for example, a text box): a list of strings (only one
-	// element). **Example**: for a text input widget with `employeeName` as its
-	// ID, access the text input value with:
+	// Single-valued widgets (for example, a `TextInput` widget, or a
+	// `SelectionInput` widget of type `DROPDOWN` or `RADIO_BUTTON`): a
+	// `StringInputs` object containing a single-element list (or an empty list if
+	// no selection is made). **Example**: for a text input widget with
+	// `employeeName` as its `name`, access the text input value with:
 	// `e.commonEventObject.formInputs.employeeName.stringInputs.value[0]`. *
-	// Multi-valued widgets (for example, checkbox groups): a list of strings.
-	// **Example**: for a multi-value widget with `participants` as its ID, access
-	// the value array with:
-	// `e.commonEventObject.formInputs.participants.stringInputs.value`. * **A
-	// date-time picker**: a `DateTimeInput object`
+	// Multi-valued widgets (for example, a `SelectionInput` widget of type
+	// `CHECK_BOX`, `SWITCH`, or `MULTI_SELECT`): a `StringInputs` object
+	// containing the list of selected item `value` strings. **Example**: for a
+	// multi-value widget with `participants` as its `name`, access the value array
+	// with: `e.commonEventObject.formInputs.participants.stringInputs.value`. *
+	// **A `DecoratedText.SwitchControl` widget**: a `StringInputs` object. When
+	// `selected` is `true`, `stringInputs.value` contains the switch's `value`
+	// field (or "" if `value` was not specified; if multiple switches share the
+	// same `name`, each selected switch's `value` is included in the list). When
+	// `selected` is `false`, the switch's `value` is omitted from
+	// `stringInputs.value`. * **A date-time picker
+	// (`DateTimePickerType.DATE_AND_TIME`)**: a `DateTimeInput object`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#date-time-input).
-	// **Example**: For a picker with an ID of `myDTPicker`, access the
+	// **Example**: For a picker with a `name` of `myDTPicker`, access the
 	// `DateTimeInput`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#date-time-input)
 	// object using `e.commonEventObject.formInputs.myDTPicker.dateTimeInput`. *
-	// **A date-only picker**: a `DateInput object`
+	// **A date-only picker (`DateTimePickerType.DATE_ONLY`)**: a `DateInput
+	// object`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#date-input).
-	// **Example**: For a picker with an ID of `myDatePicker`, access the
+	// **Example**: For a picker with a `name` of `myDatePicker`, access the
 	// `DateInput`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#date-input)
 	// object using `e.commonEventObject.formInputs.myDatePicker.dateInput`. * **A
-	// time-only picker**: a `TimeInput object`
+	// time-only picker (`DateTimePickerType.TIME_ONLY`)**: a `TimeInput object`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#time-input).
-	// **Example**: For a picker with an ID of `myTimePicker`, access the
+	// **Example**: For a picker with a `name` of `myTimePicker`, access the
 	// `TimeInput`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#time-input)
 	// object using `e.commonEventObject.formInputs.myTimePicker.timeInput`.
@@ -2741,7 +2753,7 @@ func (s GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // } ] } ```
 type GoogleAppsCardV1Card struct {
 	// CardActions: The card's actions. Actions are added to the card's toolbar
-	// menu. Google Workspace add-ons
+	// menu. Supports up to 10 `CardAction` items. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons): For example, the
 	// following JSON constructs a card action menu with `Settings` and `Send
 	// Feedback` options: ``` "card_actions": [ { "actionLabel": "Settings",
@@ -4090,7 +4102,8 @@ type GoogleAppsCardV1Section struct {
 	// default. The `uncollapsibleWidgetsCount` is taken into account only when
 	// `collapsible` is `true`.
 	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
-	// Widgets: All the widgets in the section. Must contain at least one widget.
+	// Widgets: All the widgets in the section. Must contain at least one widget. A
+	// card supports up to 100 widgets across all sections.
 	Widgets []*GoogleAppsCardV1Widget `json:"widgets,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CollapseControl") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4344,16 +4357,22 @@ type GoogleAppsCardV1SwitchControl struct {
 	//   "CHECK_BOX" - A checkbox.
 	ControlType string `json:"controlType,omitempty"`
 	// Name: The name by which the switch widget is identified in a form input
-	// event. For details about working with form inputs, see Receive form data
+	// event (as the key in `CommonEventObject.form_inputs`). For details about
+	// working with form inputs, see Receive form data
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Name string `json:"name,omitempty"`
 	// OnChangeAction: The action to perform when the switch state is changed, such
 	// as what function to run.
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
-	// Selected: When `true`, the switch is selected.
+	// Selected: When `true`, the switch is selected, and its `value` is included
+	// in `CommonEventObject.form_inputs[name].string_inputs.value`.
 	Selected bool `json:"selected,omitempty"`
-	// Value: The value entered by a user, returned as part of a form input event.
-	// For details about working with form inputs, see Receive form data
+	// Value: The value returned in
+	// `CommonEventObject.form_inputs[name].string_inputs` when the switch is
+	// selected (`selected` is `true`). If `selected` is `true` and `value` is
+	// unset, an empty string ("") is returned in `string_inputs.value`. When
+	// `selected` is `false`, this value is omitted from `string_inputs.value`. For
+	// details about working with form inputs, see Receive form data
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ControlType") to

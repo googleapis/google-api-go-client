@@ -258,6 +258,8 @@ func (s BuildingInsights) MarshalJSON() ([]byte, error) {
 // BuildingInsightsDetectedArrays: Information about solar arrays detected on
 // the building.
 type BuildingInsightsDetectedArrays struct {
+	// Arrays: A list of solar arrays detected on the building.
+	Arrays []*BuildingInsightsDetectedArraysSolarArray `json:"arrays,omitempty"`
 	// DetectionStatus: Indicates the detection status of solar arrays for this
 	// building.
 	//
@@ -273,21 +275,48 @@ type BuildingInsightsDetectedArrays struct {
 	// LatestCaptureDate: The date indicating when the latest solar array data was
 	// captured.
 	LatestCaptureDate *Date `json:"latestCaptureDate,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DetectionStatus") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Arrays") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DetectionStatus") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Arrays") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s BuildingInsightsDetectedArrays) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildingInsightsDetectedArrays
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BuildingInsightsDetectedArraysSolarArray: Details of a single detected solar
+// array.
+type BuildingInsightsDetectedArraysSolarArray struct {
+	// PolygonGeojson: A GeoJSON representation of the building area where solar
+	// panels were detected. The GeoJSON data must be in RFC 7946 format and
+	// represent a Polygon for a single contiguous area. The Polygon will be
+	// represented by several loops when it contains holes. Example: { "type":
+	// "Polygon", "coordinates": [ [ [-1, -1], [-1, 0], [0, 0], [-1, -1] ] ] }
+	PolygonGeojson googleapi.RawMessage `json:"polygonGeojson,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PolygonGeojson") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PolygonGeojson") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BuildingInsightsDetectedArraysSolarArray) MarshalJSON() ([]byte, error) {
+	type NoMethod BuildingInsightsDetectedArraysSolarArray
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

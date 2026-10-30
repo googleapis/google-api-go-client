@@ -539,6 +539,11 @@ func (s ExportInstanceRequest) MarshalJSON() ([]byte, error) {
 // artifacts. The metadata.json file in export artifact can be parsed as this
 // message
 type ExportMetadata struct {
+	// EsaMigrationToken: Opaque capability token for O2C Elite System Activity
+	// (ESA) direct dataset migration. It is minted by the exporter together with
+	// the cloned source dataset and presented back to Looker Original when the
+	// import requests access to that dataset.
+	EsaMigrationToken string `json:"esaMigrationToken,omitempty"`
 	// EsaSourceDatasetId: Source BigQuery dataset (formatted as
 	// `project_id:dataset_id`) for O2C Elite System Activity (ESA) direct dataset
 	// migration.
@@ -575,15 +580,15 @@ type ExportMetadata struct {
 	//   "LOOKER_ORIGINAL" - Source of export is Looker Original
 	//   "LOOKER_SELF_HOSTED" - Source of export is Self-Hosted Looker
 	Source string `json:"source,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EsaSourceDatasetId") to
+	// ForceSendFields is a list of field names (e.g. "EsaMigrationToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EsaSourceDatasetId") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EsaMigrationToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

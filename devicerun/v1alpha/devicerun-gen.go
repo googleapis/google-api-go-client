@@ -1683,7 +1683,13 @@ type IosPushFilesDeviceActionFileConfig struct {
 	// BundleId: Required. The bundle ID of the application sandbox.
 	BundleId string `json:"bundleId,omitempty"`
 	// DestinationPath: Required. The destination path relative to the app sandbox,
-	// e.g. "/Documents/file.txt".
+	// e.g. "/Documents/file.txt". It must be in the app's "/Documents" directory
+	// or under "/private/var/mobile/Media/". This is the path of the pushed file,
+	// and missing parent directories are created. If the path is an existing
+	// directory, such as "/Documents", the file is placed in it under the file
+	// name of `source_file`. A trailing "/" does not create a directory:
+	// "/Documents/foo/" pushes the file to "/Documents/foo" unless that directory
+	// already exists.
 	DestinationPath string `json:"destinationPath,omitempty"`
 	// SourceFile: Required. The file to be pushed.
 	SourceFile *InputFile `json:"sourceFile,omitempty"`
@@ -3886,10 +3892,13 @@ func (r *ProjectsLocationsSessionsService) Create(parent string, session *Sessio
 }
 
 // RequestId sets the optional parameter "requestId": A unique identifier for
-// this request. This request is only idempotent if a `request_id` is provided,
-// i.e. if a request with the same `request_id` is received, then the previous
-// result will be returned. The server will guarantee that for at least 60
-// minutes after the first request. The value must be a UUID (e.g.,
+// this request. This request is only idempotent if both `request_id` and
+// `session_id` are provided. If a retry with the same `request_id` and
+// `session_id` is received, then the previous result will be returned. The
+// server will guarantee that for at least 60 minutes after the first request.
+// If `request_id` is provided without `session_id`, the server generates a new
+// `session_id` on each attempt, and retries with the same `request_id` will
+// fail with `INVALID_ARGUMENT`. The value must be a UUID (e.g.,
 // 123e4567-e89b-12d3-a456-426655440000). See github.com/google/uuid for more
 // details.
 func (c *ProjectsLocationsSessionsCreateCall) RequestId(requestId string) *ProjectsLocationsSessionsCreateCall {
@@ -3899,7 +3908,9 @@ func (c *ProjectsLocationsSessionsCreateCall) RequestId(requestId string) *Proje
 
 // SessionId sets the optional parameter "sessionId": The ID to use for the
 // session, which will become the final component of the resource name. If not
-// provided, the server will generate a value for this field. When provided,
+// provided, the server will generate a value for this field. To make the
+// request idempotent when `request_id` is specified, callers must also provide
+// `session_id` so that retries target the same resource name. When provided,
 // this value must be between 4 and 63 characters, and match the following
 // regex: ^a-z{2,61}[a-z0-9]$.
 func (c *ProjectsLocationsSessionsCreateCall) SessionId(sessionId string) *ProjectsLocationsSessionsCreateCall {

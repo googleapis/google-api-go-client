@@ -315,6 +315,59 @@ func (s AccountConnector) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AddGitRepositoryLinkPullRequestCommentRequest: Request message for
+// AddGitRepositoryLinkPullRequestComment.
+type AddGitRepositoryLinkPullRequestCommentRequest struct {
+	// Comment: Required. The comment to add.
+	Comment *PullRequestComment `json:"comment,omitempty"`
+	// PullRequestId: Required. The ID of the Pull Request.
+	PullRequestId string `json:"pullRequestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddGitRepositoryLinkPullRequestCommentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddGitRepositoryLinkPullRequestCommentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AddGitRepositoryLinkPullRequestReviewCommentRequest: Request message for
+// AddGitRepositoryLinkPullRequestReviewComment.
+type AddGitRepositoryLinkPullRequestReviewCommentRequest struct {
+	// Comment: Required. The review comment to add.
+	Comment *PullRequestReviewComment `json:"comment,omitempty"`
+	// CommitId: Optional. The commit SHA to comment on. If not specified, defaults
+	// to the HEAD commit of the Pull Request.
+	CommitId string `json:"commitId,omitempty"`
+	// PullRequestId: Required. The ID of the Pull Request.
+	PullRequestId string `json:"pullRequestId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AddGitRepositoryLinkPullRequestReviewCommentRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddGitRepositoryLinkPullRequestReviewCommentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AppHubService: AppHubService represents the App Hub Service.
 type AppHubService struct {
 	// ApphubService: Required. Output only. Immutable. The name of the App Hub
@@ -586,6 +639,32 @@ func (s BitbucketDataCenterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BlameRange: BlameRange represents blame information for a range of lines.
+type BlameRange struct {
+	// Commit: The commit metadata for this line range.
+	Commit *SCMCommit `json:"commit,omitempty"`
+	// FirstLine: The 1-indexed starting line number of the range (inclusive).
+	FirstLine int64 `json:"firstLine,omitempty"`
+	// LastLine: The 1-indexed ending line number of the range (inclusive).
+	LastLine int64 `json:"lastLine,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Commit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Commit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BlameRange) MarshalJSON() ([]byte, error) {
+	type NoMethod BlameRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
@@ -601,12 +680,12 @@ type Connection struct {
 	// BitbucketDataCenterConfig: Configuration for connections to an instance of
 	// Bitbucket Data Center.
 	BitbucketDataCenterConfig *BitbucketDataCenterConfig `json:"bitbucketDataCenterConfig,omitempty"`
-	// CreateTime: Output only. [Output only] Create timestamp
+	// CreateTime: Output only. Create timestamp.
 	CreateTime string `json:"createTime,omitempty"`
 	// CryptoKeyConfig: Optional. The crypto key configuration. This field is used
 	// by the Customer-Managed Encryption Keys (CMEK) feature.
 	CryptoKeyConfig *CryptoKeyConfig `json:"cryptoKeyConfig,omitempty"`
-	// DeleteTime: Output only. [Output only] Delete timestamp
+	// DeleteTime: Output only. Delete timestamp.
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Disabled: Optional. If disabled is set to true, functionality is disabled
 	// for this connection. Repository based API methods and webhooks processing
@@ -616,8 +695,8 @@ type Connection struct {
 	// of other fields, and may be sent on update and delete requests to ensure the
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// GitProxyConfig: Optional. Configuration for the git proxy feature. Enabling
-	// the git proxy allows clients to perform git operations on the repositories
+	// GitProxyConfig: Optional. Configuration for the Git proxy feature. Enabling
+	// the Git proxy allows clients to perform Git operations on the repositories
 	// linked in the connection. Learn more
 	// (https://docs.cloud.google.com/developer-connect/docs/configure-git-proxy).
 	GitProxyConfig *GitProxyConfig `json:"gitProxyConfig,omitempty"`
@@ -649,7 +728,7 @@ type Connection struct {
 	SecureSourceManagerInstanceConfig *SecureSourceManagerInstanceConfig `json:"secureSourceManagerInstanceConfig,omitempty"`
 	// Uid: Output only. A system-assigned unique identifier for the Connection.
 	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. [Output only] Update timestamp
+	// UpdateTime: Output only. Update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -818,6 +897,32 @@ func (s DeploymentEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DiffGitRepositoryLinkCommitResponse: Response message for
+// DiffGitRepositoryLinkCommit.
+type DiffGitRepositoryLinkCommitResponse struct {
+	// Files: The file diff extracted from the unified diff.
+	Files []*FileDiff `json:"files,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Files") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Files") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiffGitRepositoryLinkCommitResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DiffGitRepositoryLinkCommitResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -942,6 +1047,120 @@ type FetchGitRefsResponse struct {
 
 func (s FetchGitRefsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FetchGitRefsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchGitRepositoryLinkCommitListResponse: Response message for
+// FetchGitRepositoryLinkCommitList.
+type FetchGitRepositoryLinkCommitListResponse struct {
+	// Commits: The list of commit metadata.
+	Commits []*SCMCommit `json:"commits,omitempty"`
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Commits") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Commits") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchGitRepositoryLinkCommitListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchGitRepositoryLinkCommitListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchGitRepositoryLinkCommitResponse: Response message for
+// FetchGitRepositoryLinkCommit.
+type FetchGitRepositoryLinkCommitResponse struct {
+	// Commit: The commit metadata.
+	Commit *SCMCommit `json:"commit,omitempty"`
+	// Files: List of file changes and patch diffs. Omitted when view is `BASIC`.
+	// Patch diffs (`FileDiff.patch`) are only populated when `path_filters` is
+	// specified in the request.
+	Files []*FileDiff `json:"files,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Commit") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Commit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchGitRepositoryLinkCommitResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchGitRepositoryLinkCommitResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchGitRepositoryLinkFileBlameResponse: Response message for
+// FetchGitRepositoryLinkFileBlame.
+type FetchGitRepositoryLinkFileBlameResponse struct {
+	// Ranges: The list of blame ranges for the file.
+	Ranges []*BlameRange `json:"ranges,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Ranges") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Ranges") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchGitRepositoryLinkFileBlameResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchGitRepositoryLinkFileBlameResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FetchGitRepositoryLinkPullRequestListResponse: Response message for
+// FetchGitRepositoryLinkPullRequestList.
+type FetchGitRepositoryLinkPullRequestListResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PullRequests: The list of pull requests.
+	PullRequests []*PullRequest `json:"pullRequests,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FetchGitRepositoryLinkPullRequestListResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod FetchGitRepositoryLinkPullRequestListResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1099,6 +1318,33 @@ type FieldVisibility struct {
 
 func (s FieldVisibility) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldVisibility
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FileDiff: Message for a file diff.
+type FileDiff struct {
+	// Patch: Standard unified diff patch hunk for the file. Only populated when
+	// `path_filters` is specified in the request; otherwise empty.
+	Patch string `json:"patch,omitempty"`
+	// Path: Relative path to the file in the repository.
+	Path string `json:"path,omitempty"`
+	// Status: Status of change: "ADDED", "MODIFIED", "REMOVED", "RENAMED".
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Patch") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Patch") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FileDiff) MarshalJSON() ([]byte, error) {
+	type NoMethod FileDiff
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1385,8 +1631,8 @@ func (s GitLabEnterpriseConfig) MarshalJSON() ([]byte, error) {
 // is named `GitProxyConfig`, but it includes settings for both Git and HTTP
 // proxy.
 type GitProxyConfig struct {
-	// Enabled: Optional. Setting this to true allows the git proxy to be used for
-	// performing git operations on the repositories linked in the connection.
+	// Enabled: Optional. Setting this to true allows the Git proxy to be used for
+	// performing Git operations on the repositories linked in the connection.
 	Enabled bool `json:"enabled,omitempty"`
 	// HttpProxyBaseUri: Output only. The base URI for the HTTP proxy endpoint. Has
 	// the format `https://{generatedID}-c-h-{shortRegion}.developerconnect.dev`
@@ -1418,16 +1664,16 @@ type GitRepositoryLink struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// CloneUri: Required. Git Clone URI.
 	CloneUri string `json:"cloneUri,omitempty"`
-	// CreateTime: Output only. [Output only] Create timestamp
+	// CreateTime: Output only. Create timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// DeleteTime: Output only. [Output only] Delete timestamp
+	// DeleteTime: Output only. Delete timestamp.
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Etag: Optional. This checksum is computed by the server based on the value
 	// of other fields, and may be sent on update and delete requests to ensure the
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 	// GitProxyUri: Output only. URI to access the linked repository through the
-	// Git Proxy. This field is only populated if the git proxy is enabled for the
+	// Git proxy. This field is only populated if the Git proxy is enabled for the
 	// connection.
 	GitProxyUri string `json:"gitProxyUri,omitempty"`
 	// Labels: Optional. Labels as key value pairs
@@ -1441,7 +1687,7 @@ type GitRepositoryLink struct {
 	// Uid: Output only. A system-assigned unique identifier for the
 	// GitRepositoryLink.
 	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. [Output only] Update timestamp
+	// UpdateTime: Output only. Update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// WebhookId: Output only. External ID of the webhook created for the
 	// repository.
@@ -1776,7 +2022,7 @@ func (s ListAccountConnectorsResponse) MarshalJSON() ([]byte, error) {
 
 // ListConnectionsResponse: Message for response to listing Connections
 type ListConnectionsResponse struct {
-	// Connections: The list of Connection
+	// Connections: The list of Connections.
 	Connections []*Connection `json:"connections,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -1835,7 +2081,7 @@ func (s ListDeploymentEventsResponse) MarshalJSON() ([]byte, error) {
 // ListGitRepositoryLinksResponse: Message for response to listing
 // GitRepositoryLinks
 type ListGitRepositoryLinksResponse struct {
-	// GitRepositoryLinks: The list of GitRepositoryLinks
+	// GitRepositoryLinks: The list of GitRepositoryLinks.
 	GitRepositoryLinks []*GitRepositoryLink `json:"gitRepositoryLinks,omitempty"`
 	// NextPageToken: A token identifying a page of results the server should
 	// return.
@@ -2061,6 +2307,43 @@ func (s McpToolVisibility) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ModifyGitRepositoryLinkPullRequestRequest: Message for modifying SCM Pull
+// Request.
+type ModifyGitRepositoryLinkPullRequestRequest struct {
+	// BaseRef: Optional. The target branch to merge into.
+	BaseRef string `json:"baseRef,omitempty"`
+	// Body: Optional. The body description of the Pull Request.
+	Body string `json:"body,omitempty"`
+	// PullRequestId: Required. The SCM-specific pull request identifier (for
+	// example, "45").
+	PullRequestId string `json:"pullRequestId,omitempty"`
+	// State: Optional. The state of the Pull Request.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "OPEN" - The pull request is open.
+	//   "CLOSED" - The pull request is closed.
+	State string `json:"state,omitempty"`
+	// Title: Optional. The title of the Pull Request.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseRef") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseRef") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ModifyGitRepositoryLinkPullRequestRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ModifyGitRepositoryLinkPullRequestRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OAuthCredential: Represents an OAuth token of the account that authorized
 // the Connection, and associated metadata.
 type OAuthCredential struct {
@@ -2087,6 +2370,30 @@ type OAuthCredential struct {
 
 func (s OAuthCredential) MarshalJSON() ([]byte, error) {
 	type NoMethod OAuthCredential
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OpenGitRepositoryLinkPullRequestRequest: Message for opening SCM Pull
+// Request.
+type OpenGitRepositoryLinkPullRequestRequest struct {
+	// PullRequest: Required. The Pull Request details to open. Input fields used:
+	// title, body, head_ref, base_ref.
+	PullRequest *PullRequest `json:"pullRequest,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PullRequest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PullRequest") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OpenGitRepositoryLinkPullRequestRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod OpenGitRepositoryLinkPullRequestRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2384,6 +2691,163 @@ func (s ProxyConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PullRequest: Message representing a SCM Pull Request.
+type PullRequest struct {
+	// Author: Output only. The username of the author.
+	Author string `json:"author,omitempty"`
+	// BaseRef: Required. The target commit SHA of the base branch.
+	BaseRef string `json:"baseRef,omitempty"`
+	// Body: Optional. The body description of the PR.
+	Body string `json:"body,omitempty"`
+	// CloseTime: Output only. When the PR was closed.
+	CloseTime string `json:"closeTime,omitempty"`
+	// CreateTime: Output only. When the PR was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeclineTime: Output only. When the PR was declined. Only set for SCM
+	// providers that support declining pull requests. Never set for GitHub, GitHub
+	// Enterprise, GitLab, or GitLab Enterprise, where a pull request closed
+	// without being merged is `CLOSED`.
+	DeclineTime string `json:"declineTime,omitempty"`
+	// HeadRef: Required. The source commit SHA of the head branch.
+	HeadRef string `json:"headRef,omitempty"`
+	// HtmlUrl: Output only. The HTML URL of the pull request on the SCM provider.
+	HtmlUrl string `json:"htmlUrl,omitempty"`
+	// Id: Required. The ID of the PR.
+	Id string `json:"id,omitempty"`
+	// MergeTime: Output only. When the PR was merged.
+	MergeTime string `json:"mergeTime,omitempty"`
+	// Mergeability: Output only. The mergeability state of the pull request.
+	//
+	// Possible values:
+	//   "MERGEABILITY_UNSPECIFIED" - Mergeability state is unspecified.
+	//   "MERGEABLE" - The pull request can be merged cleanly without Git
+	// conflicts.
+	//   "CONFLICTING" - The pull request has merge conflicts and cannot be merged
+	// cleanly.
+	//   "COMPUTING" - The mergeability state is currently being computed
+	// asynchronously by the upstream SCM provider.
+	Mergeability string `json:"mergeability,omitempty"`
+	// State: Output only. The current state of the PR.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value.
+	//   "OPEN" - The PR is open.
+	//   "CLOSED" - The PR is closed.
+	//   "MERGED" - The PR is merged.
+	//   "DECLINED" - The PR is declined. Only used by SCM providers that support
+	// declining pull requests. Never used for GitHub, GitHub Enterprise, GitLab,
+	// or GitLab Enterprise, where a pull request closed without being merged is
+	// `CLOSED`.
+	State string `json:"state,omitempty"`
+	// Title: Required. The title of the PR.
+	Title string `json:"title,omitempty"`
+	// UpdateTime: Output only. When the PR was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PullRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod PullRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PullRequestComment: Message representing a SCM Pull Request Comment.
+type PullRequestComment struct {
+	// Author: Output only. The username of the author.
+	Author string `json:"author,omitempty"`
+	// Body: Required. The body of the comment.
+	Body string `json:"body,omitempty"`
+	// CreateTime: Output only. When the comment was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Id: Output only. The ID of the comment.
+	Id string `json:"id,omitempty"`
+	// UpdateTime: Output only. When the comment was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PullRequestComment) MarshalJSON() ([]byte, error) {
+	type NoMethod PullRequestComment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PullRequestReviewComment: Message representing a SCM Pull Request Review
+// Comment (inline on diff).
+type PullRequestReviewComment struct {
+	// Author: Output only. The username of the author.
+	Author string `json:"author,omitempty"`
+	// Body: Required. The body of the comment.
+	Body string `json:"body,omitempty"`
+	// CommitId: Output only. The commit SHA the comment was actually applied to.
+	CommitId string `json:"commitId,omitempty"`
+	// CreateTime: Output only. When the comment was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// FirstLine: Optional. The first line of the comment range (inclusive). If not
+	// specified, the comment applies only to the `last_line`.
+	FirstLine int64 `json:"firstLine,omitempty"`
+	// Id: Output only. The ID of the comment.
+	Id string `json:"id,omitempty"`
+	// LastLine: Required. The last line of the comment range (inclusive). If
+	// `first_line` is not specified, the comment applies only to this line.
+	LastLine int64 `json:"lastLine,omitempty"`
+	// Path: Required. The file path to comment on.
+	Path string `json:"path,omitempty"`
+	// Side: Optional. The side of the diff to comment on. Defaults to HEAD.
+	//
+	// Possible values:
+	//   "DIFF_SIDE_UNSPECIFIED" - Default value. This value is unused.
+	//   "BASE" - The side of the diff before changes (deleted or modified lines).
+	//   "HEAD" - The side of the diff after changes (added or modified lines).
+	Side string `json:"side,omitempty"`
+	// UpdateTime: Output only. When the comment was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PullRequestReviewComment) MarshalJSON() ([]byte, error) {
+	type NoMethod PullRequestReviewComment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RuntimeConfig: RuntimeConfig represents the runtimes where the application
 // is deployed.
 type RuntimeConfig struct {
@@ -2422,6 +2886,38 @@ type RuntimeConfig struct {
 
 func (s RuntimeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SCMCommit: SCMCommit represents commit metadata.
+type SCMCommit struct {
+	// Author: The author's display name.
+	Author string `json:"author,omitempty"`
+	// AuthorEmail: The author's email address.
+	AuthorEmail string `json:"authorEmail,omitempty"`
+	// CommitTime: Timestamp when the commit was authored.
+	CommitTime string `json:"commitTime,omitempty"`
+	// Message: Commit message text.
+	Message string `json:"message,omitempty"`
+	// Sha: Full 40-character SCM commit SHA.
+	Sha string `json:"sha,omitempty"`
+	// Url: The SCM provider's HTML URL link for this commit.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SCMCommit) MarshalJSON() ([]byte, error) {
+	type NoMethod SCMCommit
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3501,14 +3997,14 @@ func (r *ProjectsLocationsAccountConnectorsService) List(parent string) *Project
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsAccountConnectorsListCall) Filter(filter string) *ProjectsLocationsAccountConnectorsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsAccountConnectorsListCall) OrderBy(orderBy string) *ProjectsLocationsAccountConnectorsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4394,14 +4890,14 @@ func (r *ProjectsLocationsAccountConnectorsUsersService) List(parent string) *Pr
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsAccountConnectorsUsersListCall) Filter(filter string) *ProjectsLocationsAccountConnectorsUsersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsAccountConnectorsUsersListCall) OrderBy(orderBy string) *ProjectsLocationsAccountConnectorsUsersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4665,9 +5161,9 @@ func (r *ProjectsLocationsConnectionsService) Create(parent string, connection *
 	return c
 }
 
-// ConnectionId sets the optional parameter "connectionId": Required. Id of the
-// requesting object If auto-generating Id server-side, remove this field and
-// connection_id from the method_signature of Create RPC
+// ConnectionId sets the optional parameter "connectionId": Required. The ID to
+// use for the connection, which becomes the final component of the
+// connection's resource name.
 func (c *ProjectsLocationsConnectionsCreateCall) ConnectionId(connectionId string) *ProjectsLocationsConnectionsCreateCall {
 	c.urlParams_.Set("connectionId", connectionId)
 	return c
@@ -5295,14 +5791,14 @@ func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsConnectionsListCall) Filter(filter string) *ProjectsLocationsConnectionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsConnectionsListCall) OrderBy(orderBy string) *ProjectsLocationsConnectionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5689,6 +6185,217 @@ func (c *ProjectsLocationsConnectionsProcessGitHubEnterpriseWebhookCall) Do(opts
 	return ret, nil
 }
 
+type ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall struct {
+	s                                             *Service
+	name                                          string
+	addgitrepositorylinkpullrequestcommentrequest *AddGitRepositoryLinkPullRequestCommentRequest
+	urlParams_                                    gensupport.URLParams
+	ctx_                                          context.Context
+	header_                                       http.Header
+}
+
+// AddPullRequestComment: Add a comment to a Pull Request.
+//
+//   - name: The resource name of the GitRepositoryLink in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) AddPullRequestComment(name string, addgitrepositorylinkpullrequestcommentrequest *AddGitRepositoryLinkPullRequestCommentRequest) *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.addgitrepositorylinkpullrequestcommentrequest = addgitrepositorylinkpullrequestcommentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addgitrepositorylinkpullrequestcommentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:addPullRequestComment")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.addPullRequestComment", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.addPullRequestComment" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PullRequestComment.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestCommentCall) Do(opts ...googleapi.CallOption) (*PullRequestComment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PullRequestComment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.addPullRequestComment", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall struct {
+	s                                                   *Service
+	name                                                string
+	addgitrepositorylinkpullrequestreviewcommentrequest *AddGitRepositoryLinkPullRequestReviewCommentRequest
+	urlParams_                                          gensupport.URLParams
+	ctx_                                                context.Context
+	header_                                             http.Header
+}
+
+// AddPullRequestReviewComment: Add a review comment (inline on diff) to a Pull
+// Request.
+//
+//   - name: The resource name of the GitRepositoryLink in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) AddPullRequestReviewComment(name string, addgitrepositorylinkpullrequestreviewcommentrequest *AddGitRepositoryLinkPullRequestReviewCommentRequest) *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.addgitrepositorylinkpullrequestreviewcommentrequest = addgitrepositorylinkpullrequestreviewcommentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.addgitrepositorylinkpullrequestreviewcommentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:addPullRequestReviewComment")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.addPullRequestReviewComment", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.addPullRequestReviewComment" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PullRequestReviewComment.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksAddPullRequestReviewCommentCall) Do(opts ...googleapi.CallOption) (*PullRequestReviewComment, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PullRequestReviewComment{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.addPullRequestReviewComment", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsConnectionsGitRepositoryLinksCreateCall struct {
 	s                 *Service
 	parent            string
@@ -5958,6 +6665,600 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksDeleteCall) Do(opts ...go
 	return ret, nil
 }
 
+type ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// DiffCommit: Diff commits for a GitRepositoryLink.
+//
+// - name: The resource name of the GitRepositoryLink.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) DiffCommit(name string) *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// BaseSha sets the optional parameter "baseSha": Required. The base commit SHA
+// or ref.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) BaseSha(baseSha string) *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall {
+	c.urlParams_.Set("baseSha", baseSha)
+	return c
+}
+
+// HeadSha sets the optional parameter "headSha": Required. The head commit SHA
+// or ref.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) HeadSha(headSha string) *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall {
+	c.urlParams_.Set("headSha", headSha)
+	return c
+}
+
+// PathFilters sets the optional parameter "pathFilters": Path patterns or
+// exact paths to filter returned files. When `path_filters` is specified,
+// `FileDiff.patch` is populated for all matching files (use `["**"]` to
+// include patches for all changed files). When `path_filters` is omitted or
+// empty, the full list of `FileDiff` is returned without patch diffs
+// (`FileDiff.patch` is empty).
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) PathFilters(pathFilters ...string) *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall {
+	c.urlParams_.SetMulti("pathFilters", append([]string{}, pathFilters...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:diffCommit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.diffCommit", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.diffCommit" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DiffGitRepositoryLinkCommitResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall) Do(opts ...googleapi.CallOption) (*DiffGitRepositoryLinkCommitResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DiffGitRepositoryLinkCommitResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.diffCommit", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchCommit: Fetch Commit details from a Git repository link.
+//
+//   - name: The resource name of the GitRepositoryLink in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) FetchCommit(name string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// CommitSha sets the optional parameter "commitSha": Required. The commit SHA,
+// or symbolic revision (for example, branch name, tag, or Git reference).
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) CommitSha(commitSha string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall {
+	c.urlParams_.Set("commitSha", commitSha)
+	return c
+}
+
+// PathFilters sets the optional parameter "pathFilters": Path patterns or
+// exact paths to filter returned files (only applicable in `FULL` view). When
+// `path_filters` is specified, `FileDiff.patch` is populated for all matching
+// files (use `["**"]` to include patches for all changed files). When
+// `path_filters` is omitted or empty, the full list of `FileDiff` is returned
+// without patch diffs (`FileDiff.patch` is empty).
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) PathFilters(pathFilters ...string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall {
+	c.urlParams_.SetMulti("pathFilters", append([]string{}, pathFilters...))
+	return c
+}
+
+// View sets the optional parameter "view": The level of commit details to
+// return in the response. Defaults to `FULL` if unspecified. In `FULL` view,
+// `files` metadata (paths and statuses) are returned; `path_filters` must also
+// be specified to populate line patch hunks.
+//
+// Possible values:
+//
+//	"COMMIT_VIEW_UNSPECIFIED" - Unspecified, defaults to BASIC.
+//	"BASIC" - Basic view, returns commit metadata but no file diffs.
+//	"FULL" - Full view, returns commit metadata and file diffs.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) View(view string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchCommit")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchCommit", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchCommit" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchGitRepositoryLinkCommitResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitCall) Do(opts ...googleapi.CallOption) (*FetchGitRepositoryLinkCommitResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchGitRepositoryLinkCommitResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchCommit", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchCommitList: Fetch a list of Commits from a Git repository link.
+//
+//   - name: The resource name of the GitRepositoryLink in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) FetchCommitList(name string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results to return
+// in the list. Default is 50. Max is 100.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `FetchGitRepositoryLinkCommitList` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `FetchGitRepositoryLinkCommitList` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Ref sets the optional parameter "ref": The commit SHA, or symbolic revision
+// (for example, branch name, tag, or Git reference) from which to start
+// listing commits.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) Ref(ref string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall {
+	c.urlParams_.Set("ref", ref)
+	return c
+}
+
+// View sets the optional parameter "view": The level of commit details to
+// return in the response. Only `BASIC` is supported; `FULL` returns
+// `INVALID_ARGUMENT`. Defaults to `BASIC` if unspecified. Use
+// `FetchGitRepositoryLinkCommit` to get file diffs for a single commit.
+//
+// Possible values:
+//
+//	"COMMIT_VIEW_UNSPECIFIED" - Unspecified, defaults to BASIC.
+//	"BASIC" - Basic view, returns commit metadata but no file diffs.
+//	"FULL" - Full view, returns commit metadata and file diffs.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) View(view string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchCommitList")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchCommitList", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchCommitList" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchGitRepositoryLinkCommitListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) Do(opts ...googleapi.CallOption) (*FetchGitRepositoryLinkCommitListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchGitRepositoryLinkCommitListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchCommitList", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchCommitListCall) Pages(ctx context.Context, f func(*FetchGitRepositoryLinkCommitListResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchFileBlame: Fetches blame information for a file or line range in a
+// file.
+//
+//   - name: The resource name of the GitRepositoryLink in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) FetchFileBlame(name string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// FirstLine sets the optional parameter "firstLine": The 1-indexed starting
+// line number of the range to blame (inclusive). If not specified, blame
+// begins at line 1.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) FirstLine(firstLine int64) *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall {
+	c.urlParams_.Set("firstLine", fmt.Sprint(firstLine))
+	return c
+}
+
+// LastLine sets the optional parameter "lastLine": The 1-indexed ending line
+// number of the range to blame (inclusive). If not specified, blame extends to
+// the end of the file.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) LastLine(lastLine int64) *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall {
+	c.urlParams_.Set("lastLine", fmt.Sprint(lastLine))
+	return c
+}
+
+// Path sets the optional parameter "path": Required. The file path within the
+// repository.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) Path(path string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall {
+	c.urlParams_.Set("path", path)
+	return c
+}
+
+// Ref sets the optional parameter "ref": Required. The SCM commit SHA, or
+// symbolic revision (for example, branch name, tag) from which to fetch the
+// blame.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) Ref(ref string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall {
+	c.urlParams_.Set("ref", ref)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchFileBlame")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchFileBlame", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchFileBlame" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchGitRepositoryLinkFileBlameResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchFileBlameCall) Do(opts ...googleapi.CallOption) (*FetchGitRepositoryLinkFileBlameResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchGitRepositoryLinkFileBlameResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchFileBlame", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsConnectionsGitRepositoryLinksFetchGitRefsCall struct {
 	s                 *Service
 	gitRepositoryLink string
@@ -6099,6 +7400,286 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchGitRefsCall) Do(opts
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchGitRefsCall) Pages(ctx context.Context, f func(*FetchGitRefsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchPullRequest: Fetch Pull Request details from a Git repository link.
+//
+//   - name: The resource name of the GitRepositoryLink in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) FetchPullRequest(name string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// PullRequestId sets the optional parameter "pullRequestId": Required. The ID
+// of the Pull Request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall) PullRequestId(pullRequestId string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall {
+	c.urlParams_.Set("pullRequestId", pullRequestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchPullRequest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchPullRequest", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchPullRequest" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PullRequest.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestCall) Do(opts ...googleapi.CallOption) (*PullRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PullRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchPullRequest", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchPullRequestList: Fetches a list of Pull Requests from the remote
+// repository.
+//
+//   - name: The GitRepositoryLink resource name in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) FetchPullRequestList(name string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression that
+// filters the pull requests returned in the response. Only a single equality
+// comparison on `state` is supported, for example `state = "OPEN". Supported
+// values are `OPEN`, `CLOSED`, and `MERGED`. `DECLINED` is only supported for
+// SCM providers that support declining pull requests, and returns
+// `INVALID_ARGUMENT` for GitHub, GitHub Enterprise, GitLab, and GitLab
+// Enterprise. Other values or expressions return `INVALID_ARGUMENT`. Defaults
+// to `state = "OPEN" if unspecified.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) Filter(filter string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results to return
+// in the list. Default is 20. Max is 100. A page may contain fewer than
+// `page_size` results even when more results are available; use
+// `next_page_token` to check for more pages.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `FetchGitRepositoryLinkPullRequestList` call. Provide this
+// to retrieve the subsequent page.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:fetchPullRequestList")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchPullRequestList", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchPullRequestList" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *FetchGitRepositoryLinkPullRequestListResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) Do(opts ...googleapi.CallOption) (*FetchGitRepositoryLinkPullRequestListResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FetchGitRepositoryLinkPullRequestListResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.fetchPullRequestList", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksFetchPullRequestListCall) Pages(ctx context.Context, f func(*FetchGitRepositoryLinkPullRequestListResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -6454,14 +8035,14 @@ func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) List(parent stri
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsConnectionsGitRepositoryLinksListCall) Filter(filter string) *ProjectsLocationsConnectionsGitRepositoryLinksListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsConnectionsGitRepositoryLinksListCall) OrderBy(orderBy string) *ProjectsLocationsConnectionsGitRepositoryLinksListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6593,6 +8174,216 @@ func (c *ProjectsLocationsConnectionsGitRepositoryLinksListCall) Pages(ctx conte
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall struct {
+	s                                         *Service
+	name                                      string
+	modifygitrepositorylinkpullrequestrequest *ModifyGitRepositoryLinkPullRequestRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// ModifyPullRequest: Modifies a Pull Request in the remote SCM repository
+// associated with a GitRepositoryLink.
+//
+//   - name: The GitRepositoryLink resource name in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) ModifyPullRequest(name string, modifygitrepositorylinkpullrequestrequest *ModifyGitRepositoryLinkPullRequestRequest) *ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.modifygitrepositorylinkpullrequestrequest = modifygitrepositorylinkpullrequestrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.modifygitrepositorylinkpullrequestrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:modifyPullRequest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.modifyPullRequest", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.modifyPullRequest" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PullRequest.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksModifyPullRequestCall) Do(opts ...googleapi.CallOption) (*PullRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PullRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.modifyPullRequest", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall struct {
+	s                                       *Service
+	name                                    string
+	opengitrepositorylinkpullrequestrequest *OpenGitRepositoryLinkPullRequestRequest
+	urlParams_                              gensupport.URLParams
+	ctx_                                    context.Context
+	header_                                 http.Header
+}
+
+// OpenPullRequest: Opens a Pull Request in the remote SCM repository
+// associated with a GitRepositoryLink.
+//
+//   - name: The GitRepositoryLink resource name in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
+func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) OpenPullRequest(name string, opengitrepositorylinkpullrequestrequest *OpenGitRepositoryLinkPullRequestRequest) *ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall {
+	c := &ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.opengitrepositorylinkpullrequestrequest = opengitrepositorylinkpullrequestrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.opengitrepositorylinkpullrequestrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:openPullRequest")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.openPullRequest", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "developerconnect.projects.locations.connections.gitRepositoryLinks.openPullRequest" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *PullRequest.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGitRepositoryLinksOpenPullRequestCall) Do(opts ...googleapi.CallOption) (*PullRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PullRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "developerconnect.projects.locations.connections.gitRepositoryLinks.openPullRequest", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsConnectionsGitRepositoryLinksProcessBitbucketCloudWebhookCall struct {

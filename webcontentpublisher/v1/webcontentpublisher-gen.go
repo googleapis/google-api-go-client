@@ -859,7 +859,7 @@ type Cta struct {
 	// NewsletterConfig: Optional. Configuration specific to newsletter signup
 	// CTAs. Only populated if type is `NEWSLETTER_SIGNUP`.
 	NewsletterConfig *NewsletterConfig `json:"newsletterConfig,omitempty"`
-	// State: Output only. The current state of this CTA.
+	// State: Optional. The current state of this CTA.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified CTA state.
@@ -928,7 +928,8 @@ type CustomQuestion struct {
 	// CategoryLabel: Optional. Reporting category label sent to Google Analytics
 	// (up to 100 characters).
 	CategoryLabel string `json:"categoryLabel,omitempty"`
-	// DisplayText: Required. The question prompt displayed to readers.
+	// DisplayText: Optional. The question prompt displayed to readers (up to 140
+	// characters).
 	DisplayText string `json:"displayText,omitempty"`
 	// Id: Output only. Server-assigned unique identifier for the custom question.
 	Id string `json:"id,omitempty"`
@@ -1359,6 +1360,8 @@ type SurveyConfig struct {
 	// Questions: Optional. Ordered list of questions presented in the survey (1-3
 	// items when `ACTIVE`; 0-3 when `DRAFT`).
 	Questions []*SurveyQuestion `json:"questions,omitempty"`
+	// ReportUrl: Output only. Link to the Looker Studio dashboard.
+	ReportUrl string `json:"reportUrl,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CustomMessage") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

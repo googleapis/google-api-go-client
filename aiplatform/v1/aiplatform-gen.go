@@ -2334,6 +2334,7 @@ type ProjectsLocationsPipelineJobsOperationsService struct {
 
 func NewProjectsLocationsPublishersService(s *Service) *ProjectsLocationsPublishersService {
 	rs := &ProjectsLocationsPublishersService{s: s}
+	rs.Files = NewProjectsLocationsPublishersFilesService(s)
 	rs.Models = NewProjectsLocationsPublishersModelsService(s)
 	rs.V1 = NewProjectsLocationsPublishersV1Service(s)
 	return rs
@@ -2342,9 +2343,20 @@ func NewProjectsLocationsPublishersService(s *Service) *ProjectsLocationsPublish
 type ProjectsLocationsPublishersService struct {
 	s *Service
 
+	Files *ProjectsLocationsPublishersFilesService
+
 	Models *ProjectsLocationsPublishersModelsService
 
 	V1 *ProjectsLocationsPublishersV1Service
+}
+
+func NewProjectsLocationsPublishersFilesService(s *Service) *ProjectsLocationsPublishersFilesService {
+	rs := &ProjectsLocationsPublishersFilesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsPublishersFilesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsPublishersModelsService(s *Service) *ProjectsLocationsPublishersModelsService {
@@ -3605,6 +3617,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperiments struct {
 	OriginalRequestJson string `json:"originalRequestJson,omitempty"`
 	// OutpaintConfig: Config for Outpainting task.
 	OutpaintConfig *CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfig `json:"outpaintConfig,omitempty"`
+	// PerfEstimationConfig: Optional. Omni Perf 3D estimation configuration.
+	PerfEstimationConfig *CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfig `json:"perfEstimationConfig,omitempty"`
 	// ProEdit: Configuration for Pro Edit.
 	ProEdit *CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig `json:"proEdit,omitempty"`
 	// PromptInputs: Prompt chunks for "ProModel" prompting. If set, the prompt
@@ -3702,6 +3716,35 @@ func (s CloudAiLargeModelsVisionGenerateVideoExperimentsAudioControlConfig) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type CloudAiLargeModelsVisionGenerateVideoExperimentsBoundingBox struct {
+	// Bottom: The bottom coordinate (exclusive) of the bounding box.
+	Bottom int64 `json:"bottom,omitempty"`
+	// FrameIndex: The frame index of the bounding box.
+	FrameIndex int64 `json:"frameIndex,omitempty"`
+	// Left: The left coordinate of the bounding box.
+	Left int64 `json:"left,omitempty"`
+	// Right: The right coordinate (exclusive) of the bounding box.
+	Right int64 `json:"right,omitempty"`
+	// Top: The top coordinate of the bounding box.
+	Top int64 `json:"top,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Bottom") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bottom") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsBoundingBox) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsBoundingBox
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudAiLargeModelsVisionGenerateVideoExperimentsColorAlignmentConfig:
 // Configuration for color alignment.
 type CloudAiLargeModelsVisionGenerateVideoExperimentsColorAlignmentConfig struct {
@@ -3779,7 +3822,7 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsLoraConfigAdapter struct {
 	// path.
 	ResolvedPath string `json:"resolvedPath,omitempty"`
 	// Weight: The blending scale/weight of the LoRA adapter. Must be in the range
-	// (0.0, 1.0]. Default is 1.0.
+	// (0.0, 2.0]. Default is 1.0.
 	Weight float64 `json:"weight,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3923,6 +3966,76 @@ func (s CloudAiLargeModelsVisionGenerateVideoExperimentsOutpaintConfigFrameSourc
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfig:
+// Configuration for Omni Perf 3D estimation.
+type CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfig struct {
+	// ExportUsd: Optional. Whether to export the USD file.
+	ExportUsd bool `json:"exportUsd,omitempty"`
+	// SourceBoundingBox: Required. The bounding box of the object in the source
+	// video.
+	SourceBoundingBox *CloudAiLargeModelsVisionGenerateVideoExperimentsBoundingBox `json:"sourceBoundingBox,omitempty"`
+	// SourceVideo: Required. The source video for the 3D estimation.
+	SourceVideo *CloudAiLargeModelsVisionGenerateVideoRequestVideo `json:"sourceVideo,omitempty"`
+	// TargetCharacterReferences: Optional. The character reference images/videos.
+	TargetCharacterReferences []*CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfigCharacterReference `json:"targetCharacterReferences,omitempty"`
+	// TemporalSmoothness: Optional.
+	TemporalSmoothness float64 `json:"temporalSmoothness,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExportUsd") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExportUsd") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfig
+	var s1 struct {
+		TemporalSmoothness gensupport.JSONFloat64 `json:"temporalSmoothness"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TemporalSmoothness = float64(s1.TemporalSmoothness)
+	return nil
+}
+
+type CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfigCharacterReference struct {
+	// BoundingBox: Required. The bounding box of the character in the reference
+	// image/video.
+	BoundingBox    *CloudAiLargeModelsVisionGenerateVideoExperimentsBoundingBox `json:"boundingBox,omitempty"`
+	ReferenceImage *CloudAiLargeModelsVisionGenerateVideoRequestImage           `json:"referenceImage,omitempty"`
+	ReferenceVideo *CloudAiLargeModelsVisionGenerateVideoRequestVideo           `json:"referenceVideo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoundingBox") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoundingBox") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfigCharacterReference) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfigCharacterReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig: Configuration
 // for Pro Edit.
 type CloudAiLargeModelsVisionGenerateVideoExperimentsProEditConfig struct {
@@ -3988,6 +4101,8 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsSuperResConfig struct {
 	//   "MODE_8K" - Single-pass 8K UDiT.
 	//   "MODE_4K_PRO" - "8K UDiT, downsampled 2x in the decoder.
 	Mode string `json:"mode,omitempty"`
+	// Steps: Number of diffusion denoising steps (1 or 2).
+	Steps int64 `json:"steps,omitempty"`
 	// TileSmoothing: Smooths the seams between the tiles the model upscales
 	// separately.
 	TileSmoothing bool `json:"tileSmoothing,omitempty"`
@@ -9084,6 +9199,10 @@ func (s GoogleCloudAiplatformV1AddTrialMeasurementRequest) MarshalJSON() ([]byte
 // GoogleCloudAiplatformV1Agent: A Vertex agent contains instructions and
 // configurations for the LLM to execute a certain task.
 type GoogleCloudAiplatformV1Agent struct {
+	// AiApplication: Output only. The resource name of the AI Application
+	// provisioned for this agent. Format:
+	// `projects/{project}/locations/{location}/aiApplications/{ai_application}`.
+	AiApplication string `json:"aiApplication,omitempty"`
 	// BaseAgent: Required. Immutable. The base agent for the agent. Supported
 	// values: * `antigravity-preview-05-2026` Immutable: `UpdateAgent` rejects a
 	// change, including clearing it. The kind of agent this is gets derived from
@@ -9132,13 +9251,13 @@ type GoogleCloudAiplatformV1Agent struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BaseAgent") to
+	// ForceSendFields is a list of field names (e.g. "AiApplication") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BaseAgent") to include in API
+	// NullFields is a list of field names (e.g. "AiApplication") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -10819,6 +10938,101 @@ type GoogleCloudAiplatformV1BatchDeletePipelineJobsRequest struct {
 func (s GoogleCloudAiplatformV1BatchDeletePipelineJobsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1BatchDeletePipelineJobsRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1BatchEmbedContentsRequest: Request message for
+// PredictionService.BatchEmbedContents.
+type GoogleCloudAiplatformV1BatchEmbedContentsRequest struct {
+	// Requests: Required. Embed requests for the batch. The model in each of these
+	// requests must either be empty or match the model specified in
+	// `BatchEmbedContentsRequest.model`. All the requests in a batch must have the
+	// same output dimensionality and auto truncation parameters.
+	Requests []*GoogleCloudAiplatformV1EmbedContentRequest `json:"requests,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1BatchEmbedContentsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1BatchEmbedContentsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1BatchEmbedContentsResponse: Response message for
+// PredictionService.BatchEmbedContents.
+type GoogleCloudAiplatformV1BatchEmbedContentsResponse struct {
+	// Embeddings: The embeddings for each request, in the same order as provided
+	// in the batch request.
+	Embeddings []*GoogleCloudAiplatformV1BatchEmbedContentsResponseEmbedding `json:"embeddings,omitempty"`
+	// UsageMetadata: Usage metadata about the response(s).
+	UsageMetadata *GoogleCloudAiplatformV1UsageMetadata `json:"usageMetadata,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Embeddings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Embeddings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1BatchEmbedContentsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1BatchEmbedContentsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1BatchEmbedContentsResponseEmbedding: A list of floats
+// representing an embedding.
+type GoogleCloudAiplatformV1BatchEmbedContentsResponseEmbedding struct {
+	// Values: Embedding vector values.
+	Values []float64 `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1BatchEmbedContentsResponseEmbedding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1BatchEmbedContentsResponseEmbedding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudAiplatformV1BatchEmbedContentsResponseEmbedding) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudAiplatformV1BatchEmbedContentsResponseEmbedding
+	var s1 struct {
+		Values []gensupport.JSONFloat64 `json:"values"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Values = make([]float64, len(s1.Values))
+	for i := range s1.Values {
+		s.Values[i] = float64(s1.Values[i])
+	}
+	return nil
 }
 
 // GoogleCloudAiplatformV1BatchImportEvaluatedAnnotationsRequest: Request
@@ -12554,6 +12768,56 @@ func (s *GoogleCloudAiplatformV1Claim) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleCloudAiplatformV1ClaudeFile: A file that can be referenced by ID from
+// subsequent Claude model requests. The JSON representation of this message
+// matches the Claude Files API File object field-for-field, so that code
+// written against that API parses these responses unchanged.
+type GoogleCloudAiplatformV1ClaudeFile struct {
+	// CreatedAt: Output only. The time at which the file was created.
+	CreatedAt string `json:"created_at,omitempty"`
+	// Downloadable: Output only. Whether the contents of this file can be
+	// retrieved with `DownloadFile`. False for user-uploaded files, true for
+	// tool-generated ones.
+	Downloadable bool `json:"downloadable,omitempty"`
+	// ExpiresAt: Output only. The time at which the file expires and is deleted,
+	// set from the `expires_in_seconds` upload form field. Unset for files that do
+	// not expire, which is serialised as `null`.
+	ExpiresAt string `json:"expires_at,omitempty"`
+	// Filename: Output only. The original name of the uploaded file, taken from
+	// the `Content-Disposition` header on upload. Between 1 and 255 characters.
+	// Control characters and the characters `<>:"|?*\/` are not accepted.
+	Filename string `json:"filename,omitempty"`
+	// Id: Output only. The server-assigned identifier of the file, for example
+	// `file_abc123`. This is the ID to pass in subsequent model requests.
+	Id string `json:"id,omitempty"`
+	// MimeType: Output only. The media type of the file, taken from the
+	// `Content-Type` header of the file part on upload.
+	MimeType string `json:"mime_type,omitempty"`
+	// SizeBytes: Output only. The size of the file in bytes.
+	SizeBytes int64 `json:"size_bytes,omitempty"`
+	// Type: Output only. The object type. Always `file`.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreatedAt") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreatedAt") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ClaudeFile) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ClaudeFile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1ClientConnectionConfig: Configurations (e.g.
 // inference timeout) that are applied on your endpoints.
 type GoogleCloudAiplatformV1ClientConnectionConfig struct {
@@ -14069,6 +14333,11 @@ func (s GoogleCloudAiplatformV1CreateFeaturestoreOperationMetadata) MarshalJSON(
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1CreateFileRequest: Request message for
+// ClaudeFileService.CreateFile.
+type GoogleCloudAiplatformV1CreateFileRequest struct {
+}
+
 // GoogleCloudAiplatformV1CreateIndexEndpointOperationMetadata: Runtime
 // operation information for IndexEndpointService.CreateIndexEndpoint.
 type GoogleCloudAiplatformV1CreateIndexEndpointOperationMetadata struct {
@@ -15571,6 +15840,35 @@ func (s GoogleCloudAiplatformV1DeleteFeatureValuesResponseSelectTimeRangeAndFeat
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudAiplatformV1DeleteFileResponse: Response message for
+// ClaudeFileService.DeleteFile. Returns `{id, type: "file_deleted"}` rather
+// than an empty body, matching the Claude Files API.
+type GoogleCloudAiplatformV1DeleteFileResponse struct {
+	// Id: The ID of the deleted file.
+	Id string `json:"id,omitempty"`
+	// Type: The object type. Always `file_deleted`.
+	Type string `json:"type,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1DeleteFileResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1DeleteFileResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudAiplatformV1DeleteMetadataStoreOperationMetadata: Details of
 // operations that perform MetadataService.DeleteMetadataStore.
 type GoogleCloudAiplatformV1DeleteMetadataStoreOperationMetadata struct {
@@ -16731,6 +17029,13 @@ func (s *GoogleCloudAiplatformV1DoubleArray) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// GoogleCloudAiplatformV1DownloadFileResponse: Response message for
+// ClaudeFileService.DownloadFile.
+type GoogleCloudAiplatformV1DownloadFileResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // GoogleCloudAiplatformV1DynamicRetrievalConfig: Describes the options to
 // customize dynamic retrieval.
 type GoogleCloudAiplatformV1DynamicRetrievalConfig struct {
@@ -16786,6 +17091,10 @@ type GoogleCloudAiplatformV1EmbedContentRequest struct {
 	Content *GoogleCloudAiplatformV1Content `json:"content,omitempty"`
 	// EmbedContentConfig: Optional. Configuration for the EmbedContent request.
 	EmbedContentConfig *GoogleCloudAiplatformV1EmbedContentRequestEmbedContentConfig `json:"embedContentConfig,omitempty"`
+	// Model: Required. The name of the publisher model requested to serve the
+	// prediction. Format:
+	// `projects/{project}/locations/{location}/publishers/*/models/*`
+	Model string `json:"model,omitempty"`
 	// OutputDimensionality: Optional. Deprecated: Please use
 	// EmbedContentConfig.output_dimensionality instead. Reduced dimension for the
 	// output embedding. If set, excessive values in the output embedding are
@@ -24273,6 +24582,10 @@ type GoogleCloudAiplatformV1GenerateContentRequest struct {
 	// this is a repeated field that contains conversation history + latest
 	// request.
 	Contents []*GoogleCloudAiplatformV1Content `json:"contents,omitempty"`
+	// ContinuationToken: Optional. An opaque continuation token used to resume
+	// generation from a previous `GenerateContent` or `StreamGenerateContent`
+	// response that stopped with `finish_reason` set to `CONTINUATION`.
+	ContinuationToken string `json:"continuationToken,omitempty"`
 	// GenerationConfig: Optional. Generation config.
 	GenerationConfig *GoogleCloudAiplatformV1GenerationConfig `json:"generationConfig,omitempty"`
 	// Labels: Optional. The labels with user-defined metadata for the request. It
@@ -24286,6 +24599,9 @@ type GoogleCloudAiplatformV1GenerateContentRequest struct {
 	// using the Model Armor service. If supplied, safety_settings must not be
 	// supplied.
 	ModelArmorConfig *GoogleCloudAiplatformV1ModelArmorConfig `json:"modelArmorConfig,omitempty"`
+	// OutputConfig: Optional. Configuration for persisting output assets to
+	// external storage.
+	OutputConfig *GoogleCloudAiplatformV1GenerateContentRequestOutputConfig `json:"outputConfig,omitempty"`
 	// SafetySettings: Optional. Per request settings for blocking unsafe content.
 	// Enforced on GenerateContentResponse.candidates.
 	SafetySettings []*GoogleCloudAiplatformV1SafetySetting `json:"safetySettings,omitempty"`
@@ -24316,6 +24632,33 @@ type GoogleCloudAiplatformV1GenerateContentRequest struct {
 
 func (s GoogleCloudAiplatformV1GenerateContentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1GenerateContentRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1GenerateContentRequestOutputConfig: Configuration for
+// persisting output assets to external storage.
+type GoogleCloudAiplatformV1GenerateContentRequestOutputConfig struct {
+	// OutputUriPrefix: Optional. The Cloud Storage URI prefix or directory where
+	// generated media assets should be written (e.g. `gs://my-bucket/prefix/`).
+	// Supported URI schemes: `gs://`. When set, media bytes are written directly
+	// to this location and returned as `FileData` with a `file_uri` instead of raw
+	// inline bytes.
+	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutputUriPrefix") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1GenerateContentRequestOutputConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1GenerateContentRequestOutputConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -28672,6 +29015,35 @@ type GoogleCloudAiplatformV1ListFeaturestoresResponse struct {
 
 func (s GoogleCloudAiplatformV1ListFeaturestoresResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudAiplatformV1ListFeaturestoresResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudAiplatformV1ListFilesResponse: Response message for
+// ClaudeFileService.ListFiles.
+type GoogleCloudAiplatformV1ListFilesResponse struct {
+	// Data: The files.
+	Data []*GoogleCloudAiplatformV1ClaudeFile `json:"data,omitempty"`
+	// NextPage: Opaque cursor for the next page. Unset on the last page, and
+	// always unset when `ids` was supplied, since batch fetch is single-page.
+	NextPage string `json:"next_page,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudAiplatformV1ListFilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudAiplatformV1ListFilesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -85837,6 +86209,14 @@ func (r *ProjectsLocationsAgentsService) Create(parent string, googlecloudaiplat
 	c := &ProjectsLocationsAgentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.googlecloudaiplatformv1agent = googlecloudaiplatformv1agent
+	return c
+}
+
+// IdpNonce sets the optional parameter "idpNonce": Optional. One-time
+// cryptographic nonce issued by the trusted IdP provisioning iframe for
+// session and device non-repudiation.
+func (c *ProjectsLocationsAgentsCreateCall) IdpNonce(idpNonce string) *ProjectsLocationsAgentsCreateCall {
+	c.urlParams_.Set("idpNonce", idpNonce)
 	return c
 }
 
@@ -145630,6 +146010,770 @@ func (c *ProjectsLocationsPipelineJobsOperationsWaitCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.pipelineJobs.operations.wait", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPublishersFilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the given file. Returns the deleted file's ID rather than an
+// empty body. See `DeleteFileResponse`.
+//
+//   - name: The name of the file to delete. Format:
+//     `projects/{project}/locations/{location}/publishers/{publisher}/files/{file
+//     }`.
+func (r *ProjectsLocationsPublishersFilesService) Delete(name string) *ProjectsLocationsPublishersFilesDeleteCall {
+	c := &ProjectsLocationsPublishersFilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPublishersFilesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsPublishersFilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPublishersFilesDeleteCall) Context(ctx context.Context) *ProjectsLocationsPublishersFilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPublishersFilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPublishersFilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.publishers.files.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1DeleteFileResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPublishersFilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1DeleteFileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1DeleteFileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPublishersFilesDownloadCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Download: Downloads the contents of the given file. Only files marked
+// `downloadable` can be retrieved this way; user-uploaded files are not
+// downloadable.
+//
+//   - name: The name of the file to download. Format:
+//     `projects/{project}/locations/{location}/publishers/{publisher}/files/{file
+//     }`.
+func (r *ProjectsLocationsPublishersFilesService) Download(name string) *ProjectsLocationsPublishersFilesDownloadCall {
+	c := &ProjectsLocationsPublishersFilesDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPublishersFilesDownloadCall) Fields(s ...googleapi.Field) *ProjectsLocationsPublishersFilesDownloadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPublishersFilesDownloadCall) IfNoneMatch(entityTag string) *ProjectsLocationsPublishersFilesDownloadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do and Download methods.
+func (c *ProjectsLocationsPublishersFilesDownloadCall) Context(ctx context.Context) *ProjectsLocationsPublishersFilesDownloadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPublishersFilesDownloadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPublishersFilesDownloadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/content")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.download", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *ProjectsLocationsPublishersFilesDownloadCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		res.Body.Close()
+		return nil, gensupport.WrapError(err)
+	}
+	return res, nil
+}
+
+// Do executes the "aiplatform.projects.locations.publishers.files.download" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1DownloadFileResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPublishersFilesDownloadCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1DownloadFileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1DownloadFileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.download", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPublishersFilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the metadata for the given file.
+//
+//   - name: The name of the file to get. Format:
+//     `projects/{project}/locations/{location}/publishers/{publisher}/files/{file
+//     }`.
+func (r *ProjectsLocationsPublishersFilesService) Get(name string) *ProjectsLocationsPublishersFilesGetCall {
+	c := &ProjectsLocationsPublishersFilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPublishersFilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsPublishersFilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPublishersFilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsPublishersFilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPublishersFilesGetCall) Context(ctx context.Context) *ProjectsLocationsPublishersFilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPublishersFilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPublishersFilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.publishers.files.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1ClaudeFile.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPublishersFilesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ClaudeFile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ClaudeFile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPublishersFilesListCall struct {
+	s            *Service
+	parent       string
+	publishersId string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the files owned by the requesting project and location. Supports
+// two mutually exclusive modes: paginated listing via an opaque `page` cursor,
+// or batch fetch by `ids`. See `ListFilesRequest`.
+//
+//   - parent: The location to list files under. Format:
+//     `projects/{project}/locations/{location}`.
+//   - publishersId: .
+func (r *ProjectsLocationsPublishersFilesService) List(parent string, publishersId string) *ProjectsLocationsPublishersFilesListCall {
+	c := &ProjectsLocationsPublishersFilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.publishersId = publishersId
+	return c
+}
+
+// Ids sets the optional parameter "ids": Batch fetch: return only these files,
+// up to 100 IDs after de-duplication. Mutually exclusive with both `page` and
+// `limit`. Serialised as a repeated `ids` query parameter, one occurrence per
+// ID.
+func (c *ProjectsLocationsPublishersFilesListCall) Ids(ids ...string) *ProjectsLocationsPublishersFilesListCall {
+	c.urlParams_.SetMulti("ids", append([]string{}, ids...))
+	return c
+}
+
+// Limit sets the optional parameter "limit": The number of files to return per
+// page. Defaults to 20 if unset, maximum 1000. Mutually exclusive with `ids`.
+func (c *ProjectsLocationsPublishersFilesListCall) Limit(limit int64) *ProjectsLocationsPublishersFilesListCall {
+	c.urlParams_.Set("limit", fmt.Sprint(limit))
+	return c
+}
+
+// Page sets the optional parameter "page": Opaque pagination cursor. Pass the
+// previous response's `next_page` to fetch the next page. Mutually exclusive
+// with `ids`.
+func (c *ProjectsLocationsPublishersFilesListCall) Page(page string) *ProjectsLocationsPublishersFilesListCall {
+	c.urlParams_.Set("page", page)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPublishersFilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsPublishersFilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsPublishersFilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsPublishersFilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPublishersFilesListCall) Context(ctx context.Context) *ProjectsLocationsPublishersFilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPublishersFilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPublishersFilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/publishers/{publishersId}/files")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"publishersId": c.publishersId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.publishers.files.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1ListFilesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPublishersFilesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ListFilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1ListFilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPublishersFilesUploadCall struct {
+	s                                        *Service
+	parent                                   string
+	publishersId                             string
+	googlecloudaiplatformv1createfilerequest *GoogleCloudAiplatformV1CreateFileRequest
+	urlParams_                               gensupport.URLParams
+	mediaInfo_                               *gensupport.MediaInfo
+	ctx_                                     context.Context
+	header_                                  http.Header
+}
+
+// Upload: Uploads a file that can be referenced by ID from subsequent Claude
+// model requests.
+//
+//   - parent: The location to create the file under. Format:
+//     `projects/{project}/locations/{location}`.
+//   - publishersId: .
+func (r *ProjectsLocationsPublishersFilesService) Upload(parent string, publishersId string, googlecloudaiplatformv1createfilerequest *GoogleCloudAiplatformV1CreateFileRequest) *ProjectsLocationsPublishersFilesUploadCall {
+	c := &ProjectsLocationsPublishersFilesUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.publishersId = publishersId
+	c.googlecloudaiplatformv1createfilerequest = googlecloudaiplatformv1createfilerequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *ProjectsLocationsPublishersFilesUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsPublishersFilesUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *ProjectsLocationsPublishersFilesUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsPublishersFilesUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *ProjectsLocationsPublishersFilesUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsPublishersFilesUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPublishersFilesUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsPublishersFilesUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *ProjectsLocationsPublishersFilesUploadCall) Context(ctx context.Context) *ProjectsLocationsPublishersFilesUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPublishersFilesUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPublishersFilesUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1createfilerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/publishers/{publishersId}/files")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v1/{+parent}/publishers/{publishersId}/files")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, newBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"parent":       c.parent,
+		"publishersId": c.publishersId,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.upload", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.publishers.files.upload" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1ClaudeFile.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPublishersFilesUploadCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1ClaudeFile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &GoogleCloudAiplatformV1ClaudeFile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.files.upload", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsPublishersModelsBatchEmbedContentsCall struct {
+	s                                                *Service
+	model                                            string
+	googlecloudaiplatformv1batchembedcontentsrequest *GoogleCloudAiplatformV1BatchEmbedContentsRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// BatchEmbedContents: Generates embeddings directly from multiple contents.
+//
+//   - model: The name of the publisher model requested to serve the prediction.
+//     Format:
+//     `projects/{project}/locations/{location}/publishers/{publisher}/models/{mod
+//     el}`.
+func (r *ProjectsLocationsPublishersModelsService) BatchEmbedContents(model string, googlecloudaiplatformv1batchembedcontentsrequest *GoogleCloudAiplatformV1BatchEmbedContentsRequest) *ProjectsLocationsPublishersModelsBatchEmbedContentsCall {
+	c := &ProjectsLocationsPublishersModelsBatchEmbedContentsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.model = model
+	c.googlecloudaiplatformv1batchembedcontentsrequest = googlecloudaiplatformv1batchembedcontentsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsPublishersModelsBatchEmbedContentsCall) Fields(s ...googleapi.Field) *ProjectsLocationsPublishersModelsBatchEmbedContentsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsPublishersModelsBatchEmbedContentsCall) Context(ctx context.Context) *ProjectsLocationsPublishersModelsBatchEmbedContentsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsPublishersModelsBatchEmbedContentsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsPublishersModelsBatchEmbedContentsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudaiplatformv1batchembedcontentsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+model}:batchEmbedContents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"model": c.model,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.models.batchEmbedContents", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "aiplatform.projects.locations.publishers.models.batchEmbedContents" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudAiplatformV1BatchEmbedContentsResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsPublishersModelsBatchEmbedContentsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAiplatformV1BatchEmbedContentsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAiplatformV1BatchEmbedContentsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "aiplatform.projects.locations.publishers.models.batchEmbedContents", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

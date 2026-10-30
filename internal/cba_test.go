@@ -82,6 +82,31 @@ func TestGetEndpoint(t *testing.T) {
 	}
 }
 
+func TestGetEndpoint_Exported(t *testing.T) {
+	settings := &DialSettings{
+		DefaultEndpointTemplate: "https://foo.UNIVERSE_DOMAIN/bar/baz",
+	}
+	got, err := GetEndpoint(settings)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	want := "https://foo.googleapis.com/bar/baz"
+	if got != want {
+		t.Errorf("GetEndpoint() = %q, want %q", got, want)
+	}
+
+	// With explicit endpoint
+	settings.Endpoint = "https://custom.endpoint.com"
+	got, err = GetEndpoint(settings)
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	want = "https://custom.endpoint.com"
+	if got != want {
+		t.Errorf("GetEndpoint() = %q, want %q", got, want)
+	}
+}
+
 func TestGetEndpointWithClientCertSource(t *testing.T) {
 
 	testCases := []struct {

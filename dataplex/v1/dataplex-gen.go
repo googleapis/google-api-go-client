@@ -9107,6 +9107,11 @@ type GoogleCloudDataplexV1RequestBatchMetadataChangeRequest struct {
 	// This payload is intended to be embedded as the change_payload in the
 	// resulting ChangeRequest.
 	ChangePayload *GoogleCloudDataplexV1BatchChangeMetadataRequest `json:"changePayload,omitempty"`
+	// DeferredValidation: Optional. If set to true, defers reference validation
+	// between entries to when the change request is approved and applied.
+	// Structural validation of entries and aspects is still performed at the time
+	// of submission. The default is false.
+	DeferredValidation bool `json:"deferredValidation,omitempty"`
 	// Justification: Optional. Justification for the metadata change request.
 	Justification string `json:"justification,omitempty"`
 	// Labels: Optional. User-defined labels for the metadata change request.

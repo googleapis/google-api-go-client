@@ -780,6 +780,9 @@ type GoogleCloudAiplatformV1beta1Candidate struct {
 	// the per-request token limit, but generation is not yet complete. The model
 	// response can be continued via a subsequent request using the returned
 	// `continuation_token`.
+	//   "TOO_MANY_TOOL_CALLS" - The model made too many tool calls in a single
+	// request, so the server-side tool loop stopped before the model returned a
+	// final answer.
 	FinishReason string `json:"finishReason,omitempty"`
 	// GroundingMetadata: Output only. Metadata returned when grounding is enabled.
 	// It contains the sources used to ground the generated content.

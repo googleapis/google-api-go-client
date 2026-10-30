@@ -305,7 +305,7 @@ type AccessLevel struct {
 	// characters or `_`. Its maximum length is 50 characters. After you create an
 	// `AccessLevel`, you cannot change its `name`.
 	Name string `json:"name,omitempty"`
-	// Title: Human readable title. Must be unique within the Policy.
+	// Title: Human-readable title. Must be unique within the policy.
 	Title string `json:"title,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -337,7 +337,7 @@ func (s AccessLevel) MarshalJSON() ([]byte, error) {
 type AccessPolicy struct {
 	// Etag: Output only. An opaque identifier for the current version of the
 	// `AccessPolicy`. This will always be a strongly validated etag, meaning that
-	// two Access Policies will be identical if and only if their etags are
+	// two access policies will be identical if and only if their etags are
 	// identical. Clients should not expect this to be in any specific format.
 	Etag string `json:"etag,omitempty"`
 	// Name: Output only. Identifier. Resource name of the `AccessPolicy`. Format:
@@ -353,13 +353,13 @@ type AccessPolicy struct {
 	// ServicePerimeter can only restrict projects within `folders/123`. -
 	// ServicePerimeter within policy A can only reference access levels defined
 	// within policy A. - Only one policy can include a given scope; thus,
-	// attempting to create a second policy which includes `folders/123` will
-	// result in an error. If no scopes are provided, then any resource within the
+	// attempting to create a second policy that includes `folders/123` will result
+	// in an error. If no scopes are provided, then any resource within the
 	// organization can be restricted. Scopes cannot be modified after a policy is
 	// created. Policies can only have a single scope. Format: list of
 	// `folders/{folder_number}` or `projects/{project_number}`
 	Scopes []string `json:"scopes,omitempty"`
-	// Title: Required. Human readable title. Does not affect behavior.
+	// Title: Required. Human-readable title. Does not affect behavior.
 	Title string `json:"title,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -382,8 +382,8 @@ func (s AccessPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AccessScope: Access scope represents the client scope, etc. to which the
-// settings will be applied to.
+// AccessScope: Access scope represents the client scope to which the settings
+// are applied.
 type AccessScope struct {
 	// ClientScope: Optional. Client scope for this access scope.
 	ClientScope *ClientScope `json:"clientScope,omitempty"`
@@ -414,7 +414,7 @@ type AccessSettings struct {
 	// "accessPolicies/9522/accessLevels/device_trusted"
 	AccessLevels []string `json:"accessLevels,omitempty"`
 	// SessionSettings: Optional. Session settings applied to user access on a
-	// given AccessScope.
+	// given `AccessScope`.
 	SessionSettings *SessionSettings `json:"sessionSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessLevels") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -592,7 +592,7 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 // authorization policy.
 type AuthorizedOrgsDesc struct {
 	// AssetType: The asset type of this authorized orgs desc. Valid values are
-	// `ASSET_TYPE_DEVICE`, and `ASSET_TYPE_CREDENTIAL_STRENGTH`.
+	// `ASSET_TYPE_DEVICE` and `ASSET_TYPE_CREDENTIAL_STRENGTH`.
 	//
 	// Possible values:
 	//   "ASSET_TYPE_UNSPECIFIED" - No asset type specified.
@@ -608,7 +608,7 @@ type AuthorizedOrgsDesc struct {
 	// field to evaluate the traffic in this organization. For the authorization
 	// relationship to take effect, all of the organizations must authorize and
 	// specify the appropriate relationship direction. For example, if organization
-	// A authorized organization B and C to evaluate its traffic, by specifying
+	// A authorizes organizations B and C to evaluate its traffic by specifying
 	// `AUTHORIZATION_DIRECTION_TO` as the authorization direction, organizations B
 	// and C must specify `AUTHORIZATION_DIRECTION_FROM` as the authorization
 	// direction in their `AuthorizedOrgsDesc` resource.
@@ -633,8 +633,8 @@ type AuthorizedOrgsDesc struct {
 	// alphanumeric characters or `_`. After you create an `AuthorizedOrgsDesc`,
 	// you cannot change its `name`.
 	Name string `json:"name,omitempty"`
-	// Orgs: The list of organization ids in this AuthorizedOrgsDesc. Format:
-	// `organizations/` Example: `organizations/123456`
+	// Orgs: The list of organization IDs in this `AuthorizedOrgsDesc`. Format:
+	// `organizations/{org_number}` Example: `organizations/123456`
 	Orgs []string `json:"orgs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -661,10 +661,10 @@ func (s AuthorizedOrgsDesc) MarshalJSON() ([]byte, error) {
 // features.
 type BasicLevel struct {
 	// CombiningFunction: How the `conditions` list should be combined to determine
-	// if a request is granted this `AccessLevel`. If AND is used, each `Condition`
-	// in `conditions` must be satisfied for the `AccessLevel` to be applied. If OR
-	// is used, at least one `Condition` in `conditions` must be satisfied for the
-	// `AccessLevel` to be applied. Default behavior is AND.
+	// if a request is granted this `AccessLevel`. If `AND` is used, each
+	// `Condition` in `conditions` must be satisfied for the `AccessLevel` to be
+	// applied. If `OR` is used, at least one `Condition` in `conditions` must be
+	// satisfied for the `AccessLevel` to be applied. Default behavior is `AND`.
 	//
 	// Possible values:
 	//   "AND" - All `Conditions` must be true for the `BasicLevel` to be true.
@@ -794,8 +794,8 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// ClientScope: Client scope represents the application, etc. subject to this
-// binding's restrictions.
+// ClientScope: Client scope represents the application, project, or other
+// resource subject to this binding's restrictions.
 type ClientScope struct {
 	// RestrictedClientApplication: Optional. The application that is subject to
 	// this binding's scope.
@@ -875,40 +875,41 @@ func (s CommitServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Condition: A condition necessary for an `AccessLevel` to be granted. The
-// Condition is an AND over its fields. So a Condition is true if: 1) the
-// request IP is from one of the listed subnetworks AND 2) the originating
-// device complies with the listed device policy AND 3) all listed access
-// levels are granted AND 4) the request was sent at a time allowed by the
-// DateTimeRestriction.
+// `Condition` is an AND over its fields. A `Condition` is true if: 1) the
+// request IP is from one of the listed subnetworks, AND 2) the originating
+// device complies with the listed device policy, AND 3) all listed access
+// levels are granted, AND 4) the request was sent at a time allowed by the
+// `DateTimeRestriction`.
 type Condition struct {
-	// DevicePolicy: Device specific restrictions, all restrictions must hold for
-	// the Condition to be true. If not specified, all devices are allowed.
+	// DevicePolicy: Device-specific restrictions. All restrictions must hold for
+	// the `Condition` to be true. If not specified, all devices are allowed.
 	DevicePolicy *DevicePolicy `json:"devicePolicy,omitempty"`
 	// IpSubnetworks: CIDR block IP subnetwork specification. May be IPv4 or IPv6.
 	// Note that for a CIDR IP address block, the specified IP address portion must
-	// be properly truncated (i.e. all the host bits must be zero) or the input is
-	// considered malformed. For example, "192.0.2.0/24" is accepted but
-	// "192.0.2.1/24" is not. Similarly, for IPv6, "2001:db8::/32" is accepted
-	// whereas "2001:db8::1/32" is not. The originating IP of a request must be in
-	// one of the listed subnets in order for this Condition to be true. If empty,
-	// all IP addresses are allowed.
+	// be properly truncated (that is, all the host bits must be zero) or the input
+	// is considered malformed. For example, "192.0.2.0/24" is accepted, but
+	// "192.0.2.1/24" is not. Similarly, for IPv6, "2001:db8::/32" is accepted,
+	// whereas "2001:db8::1/32" is not. The originating IP of a request must be
+	// in one of the listed subnets in order for this `Condition` to be true. If
+	// empty, all IP addresses are allowed.
 	IpSubnetworks []string `json:"ipSubnetworks,omitempty"`
 	// Members: The request must be made by one of the provided user or service
 	// accounts. Groups are not supported. Syntax: `user:{emailid}`
 	// `serviceAccount:{emailid}` If not specified, a request may come from any
 	// user.
 	Members []string `json:"members,omitempty"`
-	// Negate: Whether to negate the Condition. If true, the Condition becomes a
-	// NAND over its non-empty fields. Any non-empty field criteria evaluating to
-	// false will result in the Condition to be satisfied. Defaults to false.
+	// Negate: Whether to negate the `Condition`. If `true`, the `Condition`
+	// becomes a NAND over its non-empty fields. Any non-empty field criteria
+	// evaluating to `false` will result in the `Condition` being satisfied.
+	// Defaults to `false`.
 	Negate bool `json:"negate,omitempty"`
 	// Regions: The request must originate from one of the provided
 	// countries/regions. Must be valid ISO 3166-1 alpha-2 codes.
 	Regions []string `json:"regions,omitempty"`
 	// RequiredAccessLevels: A list of other access levels defined in the same
-	// `Policy`, referenced by resource name. Referencing an `AccessLevel` which
+	// `Policy`, referenced by resource name. Referencing an `AccessLevel` that
 	// does not exist is an error. All access levels listed must be granted for the
-	// Condition to be true. Example:
+	// `Condition` to be true. Example:
 	// "accessPolicies/MY_POLICY/accessLevels/LEVEL_NAME"
 	RequiredAccessLevels []string `json:"requiredAccessLevels,omitempty"`
 	// VpcNetworkSources: The request must originate from one of the provided VPC
@@ -957,17 +958,17 @@ func (s CustomLevel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// DevicePolicy: `DevicePolicy` specifies device specific restrictions
+// DevicePolicy: `DevicePolicy` specifies device-specific restrictions
 // necessary to acquire a given access level. A `DevicePolicy` specifies
-// requirements for requests from devices to be granted access levels, it does
+// requirements for requests from devices to be granted access levels; it does
 // not do any enforcement on the device. `DevicePolicy` acts as an AND over all
 // specified fields, and each repeated field is an OR over its elements. Any
-// unset fields are ignored. For example, if the proto is { os_type :
-// DESKTOP_WINDOWS, os_type : DESKTOP_LINUX, encryption_status: ENCRYPTED},
-// then the DevicePolicy will be true for requests originating from encrypted
+// unset fields are ignored. For example, if the proto is `{ os_type :
+// DESKTOP_WINDOWS, os_type : DESKTOP_LINUX, encryption_status: ENCRYPTED}`,
+// then the `DevicePolicy` will be true for requests originating from encrypted
 // Linux desktops and encrypted Windows desktops.
 type DevicePolicy struct {
-	// AllowedDeviceManagementLevels: Allowed device management levels, an empty
+	// AllowedDeviceManagementLevels: Allowed device management levels. An empty
 	// list allows all management levels.
 	//
 	// Possible values:
@@ -980,8 +981,8 @@ type DevicePolicy struct {
 	// monitoring and the ability to directly manage the device (such as remote
 	// wiping). This can be enabled through the Android Enterprise Platform.
 	AllowedDeviceManagementLevels []string `json:"allowedDeviceManagementLevels,omitempty"`
-	// AllowedEncryptionStatuses: Allowed encryptions statuses, an empty list
-	// allows all statuses.
+	// AllowedEncryptionStatuses: Allowed encryption statuses. An empty list allows
+	// all statuses.
 	//
 	// Possible values:
 	//   "ENCRYPTION_UNSPECIFIED" - The encryption status of the device is not
@@ -991,16 +992,16 @@ type DevicePolicy struct {
 	// unencrypted.
 	//   "ENCRYPTED" - The device is encrypted.
 	AllowedEncryptionStatuses []string `json:"allowedEncryptionStatuses,omitempty"`
-	// OsConstraints: Allowed OS versions, an empty list allows all types and all
+	// OsConstraints: Allowed OS versions. An empty list allows all types and all
 	// versions.
 	OsConstraints []*OsConstraint `json:"osConstraints,omitempty"`
 	// RequireAdminApproval: Whether the device needs to be approved by the
 	// customer admin.
 	RequireAdminApproval bool `json:"requireAdminApproval,omitempty"`
-	// RequireCorpOwned: Whether the device needs to be corp owned.
+	// RequireCorpOwned: Whether the device needs to be corp-owned.
 	RequireCorpOwned bool `json:"requireCorpOwned,omitempty"`
 	// RequireScreenlock: Whether or not screenlock is required for the
-	// DevicePolicy to be true. Defaults to `false`.
+	// `DevicePolicy` to be true. Defaults to `false`.
 	RequireScreenlock bool `json:"requireScreenlock,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AllowedDeviceManagementLevels") to unconditionally include in API requests.
@@ -1021,8 +1022,8 @@ func (s DevicePolicy) MarshalJSON() ([]byte, error) {
 }
 
 // EgressFrom: Defines the conditions under which an EgressPolicy matches a
-// request. Conditions based on information about the source of the request.
-// Note that if the destination of the request is also protected by a
+// request. Conditions are based on information about the source of the
+// request. Note that if the destination of the request is also protected by a
 // ServicePerimeter, then that ServicePerimeter must have an IngressPolicy
 // which allows access in order for this request to succeed.
 type EgressFrom struct {
@@ -1046,7 +1047,7 @@ type EgressFrom struct {
 	// the perimeter.
 	IdentityType string `json:"identityType,omitempty"`
 	// SourceRestriction: Whether to enforce traffic restrictions based on
-	// `sources` field. If the `sources` fields is non-empty, then this field must
+	// `sources` field. If the `sources` field is not empty, then this field must
 	// be set to `SOURCE_RESTRICTION_ENABLED`.
 	//
 	// Possible values:
@@ -1087,10 +1088,10 @@ func (s EgressFrom) MarshalJSON() ([]byte, error) {
 // VMs on networks within the ServicePerimeter to access a defined set of
 // projects outside the perimeter in certain contexts (e.g. to read data from a
 // Cloud Storage bucket or query against a BigQuery dataset). EgressPolicies
-// are concerned with the *resources* that a request relates as well as the API
-// services and API actions being used. They do not related to the direction of
-// data movement. More detailed documentation for this concept can be found in
-// the descriptions of EgressFrom and EgressTo.
+// are concerned with the *resources* that a request relates to, as well as the
+// API services and API actions being used. They do not relate to the direction
+// of data movement. More detailed documentation for this concept can be found
+// in the descriptions of EgressFrom and EgressTo.
 type EgressPolicy struct {
 	// EgressFrom: Defines conditions on the source of a request causing this
 	// EgressPolicy to apply.
@@ -1099,7 +1100,7 @@ type EgressPolicy struct {
 	// resources that cause this EgressPolicy to apply.
 	EgressTo *EgressTo `json:"egressTo,omitempty"`
 	// Title: Optional. Human-readable title for the egress rule. The title must be
-	// unique within the perimeter and can not exceed 100 characters. Within the
+	// unique within the perimeter and cannot exceed 100 characters. Within the
 	// access policy, the combined length of all rule titles must not exceed
 	// 240,000 characters.
 	Title string `json:"title,omitempty"`
@@ -1140,9 +1141,9 @@ type EgressSource struct {
 	PscEndpoint *PrivateServiceConnectEndpoint `json:"pscEndpoint,omitempty"`
 	// Resource: A Google Cloud resource from the service perimeter that you want
 	// to allow to access data outside the perimeter. This field supports projects,
-	// folders, and organizations in the form `projects/`, `folders/`, and
-	// `organizations/`. You can't use `*` in this field to allow all Google Cloud
-	// resources.
+	// folders, and organizations in the form `projects/{project_number}`,
+	// `folders/{folder_id}`, and `organizations/{organization_id}`. You can't use
+	// `*` in this field to allow all Google Cloud resources.
 	Resource string `json:"resource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessLevel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1172,25 +1173,26 @@ func (s EgressSource) MarshalJSON() ([]byte, error) {
 type EgressTo struct {
 	// ExternalResources: A list of external resources that are allowed to be
 	// accessed. Only AWS and Azure resources are supported. For Amazon S3, the
-	// supported formats are s3://BUCKET_NAME, s3a://BUCKET_NAME, and
-	// s3n://BUCKET_NAME. For Azure Storage, the supported format is
-	// azure://myaccount.blob.core.windows.net/CONTAINER_NAME. A request matches if
-	// it contains an external resource in this list (Example: s3://bucket/path).
-	// Currently '*' is not allowed.
+	// supported formats are `s3://BUCKET_NAME`, `s3a://BUCKET_NAME`, and
+	// `s3n://BUCKET_NAME`. For Azure Storage, the supported format is
+	// `azure://myaccount.blob.core.windows.net/CONTAINER_NAME`. A request matches
+	// if it contains an external resource in this list (Example:
+	// `s3://bucket/path`). Currently `'*'` is not allowed.
 	ExternalResources []string `json:"externalResources,omitempty"`
 	// Operations: A list of ApiOperations allowed to be performed by the sources
 	// specified in the corresponding EgressFrom. A request matches if it uses an
 	// operation/service in this list.
 	Operations []*ApiOperation `json:"operations,omitempty"`
 	// Resources: A list of resources, currently projects, folders, and
-	// organizations in the form `projects/`, `folders/`, and `organizations/`,
-	// that are allowed to be accessed by sources defined in the corresponding
-	// EgressFrom. A request matches if it contains a resource in this list. If `*`
-	// is specified for `resources`, then this EgressTo rule will authorize access
-	// to all resources outside the perimeter.
+	// organizations in the form `projects/{project_number}`,
+	// `folders/{folder_id}`, and `organizations/{organization_id}`, that are
+	// allowed to be accessed by sources defined in the corresponding EgressFrom. A
+	// request matches if it contains a resource in this list. If `*` is specified
+	// for `resources`, then this EgressTo rule will authorize access to all
+	// resources outside the perimeter.
 	Resources []string `json:"resources,omitempty"`
 	// Roles: IAM roles that represent the set of operations that the sources
-	// specified in the corresponding EgressFrom. are allowed to perform in this
+	// specified in the corresponding EgressFrom are allowed to perform in this
 	// ServicePerimeter.
 	Roles []string `json:"roles,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalResources") to
@@ -1276,19 +1278,18 @@ type GcpUserAccessBinding struct {
 	// field must have exactly one element. Example:
 	// "accessPolicies/9522/accessLevels/device_trusted"
 	AccessLevels []string `json:"accessLevels,omitempty"`
-	// DryRunAccessLevels: Optional. Dry run access level that will be evaluated
-	// but will not be enforced. The access denial based on dry run policy will be
-	// logged. Only one access level is supported, not multiple. This list must
-	// have exactly one element. Example:
-	// "accessPolicies/9522/accessLevels/device_trusted"
+	// DryRunAccessLevels: Optional. Dry-run access level that is evaluated, but
+	// not enforced. Any access denial based on the dry-run policy is logged. Only
+	// one access level is supported, not multiple. This list must have exactly one
+	// element. Example: "accessPolicies/9522/accessLevels/device_trusted"
 	DryRunAccessLevels []string `json:"dryRunAccessLevels,omitempty"`
-	// GroupKey: Optional. Immutable. Google Group id whose users are subject to
+	// GroupKey: Optional. Immutable. Google Group ID whose users are subject to
 	// this binding's restrictions. See "id" in the [Google Workspace Directory
 	// API's Group Resource]
 	// (https://developers.google.com/admin-sdk/directory/v1/reference/groups#resource).
-	// If a group's email address/alias is changed, this resource will continue to
-	// point at the changed group. This field does not accept group email addresses
-	// or aliases. Example: "01d520gv4vjcrht"
+	// If a group's email address or alias is changed, this resource will continue
+	// to point at the changed group. This field does not accept group email
+	// addresses or aliases. Example: "01d520gv4vjcrht"
 	GroupKey string `json:"groupKey,omitempty"`
 	// Name: Immutable. Assigned by the server during creation. The last segment
 	// has an arbitrary length and has only URI unreserved characters (as defined
@@ -1449,7 +1450,7 @@ type IngressPolicy struct {
 	// destination that cause this IngressPolicy to apply.
 	IngressTo *IngressTo `json:"ingressTo,omitempty"`
 	// Title: Optional. Human-readable title for the ingress rule. The title must
-	// be unique within the perimeter and can not exceed 100 characters. Within the
+	// be unique within the perimeter and cannot exceed 100 characters. Within the
 	// access policy, the combined length of all rule titles must not exceed
 	// 240,000 characters.
 	Title string `json:"title,omitempty"`
@@ -1473,7 +1474,7 @@ func (s IngressPolicy) MarshalJSON() ([]byte, error) {
 
 // IngressSource: The source that IngressPolicy authorizes access from.
 type IngressSource struct {
-	// AccessLevel: An AccessLevel resource name that allow resources within the
+	// AccessLevel: An AccessLevel resource name that allows resources within the
 	// ServicePerimeters to be accessed from the internet. AccessLevels listed must
 	// be in the same policy as this ServicePerimeter. Referencing a nonexistent
 	// AccessLevel will cause an error. If no AccessLevel names are listed,
@@ -1527,7 +1528,7 @@ type IngressTo struct {
 	// `folders/{folder_id}`, and `organizations/{organization_id}`, protected by
 	// this ServicePerimeter that are allowed to be accessed by sources defined in
 	// the corresponding IngressFrom. If a single `*` is specified, then access to
-	// all resources inside the perimeter are allowed.
+	// all resources inside the perimeter is allowed.
 	Resources []string `json:"resources,omitempty"`
 	// Roles: IAM roles that represent the set of operations that the sources
 	// specified in the corresponding IngressFrom are allowed to perform in this
@@ -1786,11 +1787,12 @@ func (s ListSupportedServicesResponse) MarshalJSON() ([]byte, error) {
 // LookupConfiguredServicePerimeterResponse: A configured service perimeter
 // returned by Access Context Manager.
 type LookupConfiguredServicePerimeterResponse struct {
-	// RestrictedResource: The resource (e.g. "projects/123", "folders/456") that
-	// directly owns/is restricted by the enforced perimeter.
+	// RestrictedResource: The resource (for example, `projects/123` or
+	// `folders/456`) that directly owns or is restricted by the enforced
+	// perimeter.
 	RestrictedResource string `json:"restrictedResource,omitempty"`
-	// RestrictedResourceDryRun: The resource (e.g. "projects/123", "folders/456")
-	// that directly owns/is restricted by the dry-run perimeter.
+	// RestrictedResourceDryRun: The resource (for example, `projects/123` or
+	// `folders/456`) that directly owns or is restricted by the dry-run perimeter.
 	RestrictedResourceDryRun string `json:"restrictedResourceDryRun,omitempty"`
 	// ServicePerimeter: Fully qualified name of the configured enforced perimeter.
 	// Format: `accessPolicies/{policy_id}/servicePerimeters/{perimeter_name}` This
@@ -1940,8 +1942,8 @@ type OsConstraint struct {
 	//   "IOS" - An iOS operating system.
 	OsType string `json:"osType,omitempty"`
 	// RequireVerifiedChromeOs: Only allows requests from devices with a verified
-	// Chrome OS. Verifications includes requirements that the device is
-	// enterprise-managed, conformant to domain policies, and the caller has
+	// Chrome OS. Verification includes requirements that the device is
+	// enterprise-managed, conforms to domain policies, and the caller has
 	// permission to call the API targeted by the request.
 	RequireVerifiedChromeOs bool `json:"requireVerifiedChromeOs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MinimumVersion") to
@@ -2075,10 +2077,10 @@ type Principal struct {
 	FederatedPrincipal string `json:"federatedPrincipal,omitempty"`
 	// ServiceAccount: Immutable. Service account email used to assign policies to
 	// a specific service account. If a service account is subject to multiple
-	// policies (e.g., if there is a policy for all service accounts in a project
-	// and a policy for the service account), the closest (i.e. the most specific)
-	// dry-run policy will be used for the dry-run functionality and the closest
-	// enforcement policy will be used for the enforcement.
+	// policies (for example, if there is a policy for all service accounts in a
+	// project and a policy for the service account), the closest (that is, the
+	// most specific) dry-run policy is used for the dry-run functionality and the
+	// closest enforcement policy is used for enforcement.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// ServiceAccountProjectNumber: Immutable. Cloud project number used to assign
 	// policies to all service accounts owned by the project.
@@ -2127,7 +2129,7 @@ func (s PrivateServiceConnectEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Project: A Google Cloud project which contains applications and resources
+// Project: A Google Cloud project that contains applications and resources
 // that users can access.
 type Project struct {
 	// Name: The Google Cloud project resource name. Format:
@@ -2263,16 +2265,17 @@ func (s ReplaceServicePerimetersResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ScopedAccessSettings: A relationship between access settings and its scope.
+// ScopedAccessSettings: A relationship between access settings and their
+// scope.
 type ScopedAccessSettings struct {
-	// ActiveSettings: Optional. Access settings for this scoped access settings.
-	// This field may be empty if dry_run_settings is set.
+	// ActiveSettings: Optional. Access settings for this `ScopedAccessSettings`.
+	// This field may be empty if `dry_run_settings` is set.
 	ActiveSettings *AccessSettings `json:"activeSettings,omitempty"`
-	// DryRunSettings: Optional. Dry-run access settings for this scoped access
-	// settings. This field may be empty if active_settings is set.
+	// DryRunSettings: Optional. Dry-run access settings for this
+	// `ScopedAccessSettings`. This field may be empty if `active_settings` is set.
 	DryRunSettings *AccessSettings `json:"dryRunSettings,omitempty"`
-	// Scope: Optional. Application, etc. to which the access settings will be
-	// applied to. Implicitly, this is the scoped access settings key; as such, it
+	// Scope: Optional. Application or other resource to which the access settings
+	// are applied. Implicitly, this is the scoped access settings key; as such, it
 	// must be unique and non-empty.
 	Scope *AccessScope `json:"scope,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActiveSettings") to
@@ -2298,8 +2301,8 @@ type ServicePattern struct {
 	// Modifiers: Modifiers to apply to the requests that match the URL pattern.
 	Modifiers []*Modifier `json:"modifiers,omitempty"`
 	// Pattern: URL pattern to allow. Only patterns of ".googleapis.com/*",
-	// "www.googleapis.com//*" and "*.appspot.com/* forms are supported, where
-	// should be an alphanumeric name.
+	// "www.googleapis.com//*", and "*.appspot.com/*" forms are supported,
+	// where `` should be an alphanumeric name.
 	Pattern string `json:"pattern,omitempty"`
 	// Service: Supported service to allow.
 	Service string `json:"service,omitempty"`
@@ -2348,9 +2351,9 @@ type ServicePerimeter struct {
 	// cannot change its `name`.
 	Name string `json:"name,omitempty"`
 	// PerimeterType: Perimeter type indicator. A single project or VPC network is
-	// allowed to be a member of single regular perimeter, but multiple service
-	// perimeter bridges. A project cannot be a included in a perimeter bridge
-	// without being included in regular perimeter. For perimeter bridges, the
+	// allowed to be a member of a single regular perimeter, but multiple service
+	// perimeter bridges. A project cannot be included in a perimeter bridge
+	// without being included in a regular perimeter. For perimeter bridges, the
 	// restricted service list as well as access level lists must be empty.
 	//
 	// Possible values:
@@ -2359,12 +2362,12 @@ type ServicePerimeter struct {
 	//   "PERIMETER_TYPE_BRIDGE" - Perimeter Bridge.
 	PerimeterType string `json:"perimeterType,omitempty"`
 	// Spec: Proposed (or dry run) ServicePerimeter configuration. This
-	// configuration allows to specify and test ServicePerimeter configuration
+	// configuration allows you to specify and test ServicePerimeter configuration
 	// without enforcing actual access restrictions. Only allowed to be set when
-	// the "use_explicit_dry_run_spec" flag is set.
+	// the `use_explicit_dry_run_spec` flag is set.
 	Spec *ServicePerimeterConfig `json:"spec,omitempty"`
 	// Status: Current ServicePerimeter configuration. Specifies sets of resources,
-	// restricted services and access levels that determine perimeter content and
+	// restricted services, and access levels that determine perimeter content and
 	// boundaries.
 	Status *ServicePerimeterConfig `json:"status,omitempty"`
 	// Title: Human readable title. Must be unique within the Policy.
@@ -2377,7 +2380,7 @@ type ServicePerimeter struct {
 	// of the Service Perimeter. This allows the user to test changes to the
 	// enforced config ("status") without actually enforcing them. This testing is
 	// done through analyzing the differences between currently enforced and
-	// suggested restrictions. use_explicit_dry_run_spec must bet set to True if
+	// suggested restrictions. `use_explicit_dry_run_spec` must be set to `true` if
 	// any of the fields in the spec are set to non-default values.
 	UseExplicitDryRunSpec bool `json:"useExplicitDryRunSpec,omitempty"`
 
@@ -2454,9 +2457,9 @@ func (s ServicePerimeterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SessionSettings: Stores settings related to Google Cloud Session Length
-// including session duration, the type of challenge (i.e. method) they should
-// face when their session expires, and other related settings.
+// SessionSettings: Stores settings related to Google Cloud Session Length,
+// including session duration, the type of challenge (that is, method) a user
+// faces when their session expires, and other related settings.
 type SessionSettings struct {
 	// MaxInactivity: Optional. How long a user is allowed to take between actions
 	// before a new access token must be issued. Only set for Google Cloud apps.
@@ -2466,32 +2469,32 @@ type SessionSettings struct {
 	// `session_length_enabled` to `false` disregards session limits, which means
 	// that sessions never expire. If `use_oidc_max_age` is `true`, for OIDC apps,
 	// the session length will be the minimum of this field and the OIDC `max_age`
-	// param. If this field is set to zero, `session_length_enabled` must be set to
-	// `false` or left unset.
+	// parameter. If this field is set to zero, `session_length_enabled` must be
+	// set to `false` or left unset.
 	SessionLength string `json:"sessionLength,omitempty"`
 	// SessionLengthEnabled: Optional. This field enables or disables Google Cloud
-	// session length. When false, all fields set above will be disregarded and the
-	// session length is basically infinite. If `session_length` is set to zero,
-	// this field must be set to false.
+	// session length. When `false`, all fields set above are disregarded and the
+	// session length is effectively infinite. If `session_length` is set to zero,
+	// this field must be set to `false`.
 	SessionLengthEnabled bool `json:"sessionLengthEnabled,omitempty"`
-	// SessionReauthMethod: Optional. Session method when user's Google Cloud
-	// session is up.
+	// SessionReauthMethod: Optional. Session challenge method when a user's Google
+	// Cloud session expires.
 	//
 	// Possible values:
-	//   "SESSION_REAUTH_METHOD_UNSPECIFIED" - If method is undefined in the API,
-	// LOGIN will be used by default.
+	//   "SESSION_REAUTH_METHOD_UNSPECIFIED" - If the method is undefined in the
+	// API, `LOGIN` is used by default.
 	//   "LOGIN" - The user will be prompted to perform regular login. Users who
 	// are enrolled for two-step verification and haven't chosen "Remember this
 	// computer" will be prompted for their second factor.
 	//   "SECURITY_KEY" - The user will be prompted to authenticate using their
 	// security key. If no security key has been configured, then authentication
-	// will fallback to LOGIN.
+	// will fall back to `LOGIN`.
 	//   "PASSWORD" - The user will be prompted for their password.
 	SessionReauthMethod string `json:"sessionReauthMethod,omitempty"`
-	// UseOidcMaxAge: Optional. Only useful for OIDC apps. When false, the OIDC
-	// max_age param, if passed in the authentication request will be ignored. When
-	// true, the re-auth period will be the minimum of the session_length field and
-	// the max_age OIDC param.
+	// UseOidcMaxAge: Optional. Only useful for OIDC apps. When `false`, the OIDC
+	// `max_age` parameter, if passed in the authentication request, is ignored.
+	// When `true`, the re-authentication period is the minimum of the
+	// `session_length` field and the `max_age` OIDC parameter.
 	UseOidcMaxAge bool `json:"useOidcMaxAge,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MaxInactivity") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2574,8 +2577,8 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SupportedService: `SupportedService` specifies the VPC Service Controls and
-// its properties.
+// SupportedService: `SupportedService` specifies a service supported by VPC
+// Service Controls and its properties.
 type SupportedService struct {
 	// AvailableOnRestrictedVip: True if the service is available on the restricted
 	// VIP. Services on the restricted VIP typically either support VPC Service
@@ -2597,7 +2600,7 @@ type SupportedService struct {
 	//   "GA" - GA features are open to all developers and are considered stable
 	// and fully qualified for production use.
 	//   "PREVIEW" - PREVIEW indicates a pre-release stage where the product is
-	// functionally complete but undergoing real-world testing.
+	// functionally complete, but undergoing real-world testing.
 	//   "DEPRECATED" - Deprecated features are scheduled to be shut down and
 	// removed.
 	ServiceSupportStage string `json:"serviceSupportStage,omitempty"`
@@ -2636,10 +2639,10 @@ type SupportedService struct {
 	// Platform Subject to the Deprecation
 	// Policy](https://cloud.google.com/terms/deprecation) documentation.
 	SupportStage string `json:"supportStage,omitempty"`
-	// SupportedMethods: The list of the supported methods. This field exists only
-	// in response to GetSupportedService
+	// SupportedMethods: The list of supported methods. This field exists only in
+	// response to GetSupportedService.
 	SupportedMethods []*MethodSelector `json:"supportedMethods,omitempty"`
-	// Title: The name of the supported product, such as 'Cloud Product API'.
+	// Title: The name of the supported product, such as `'Cloud Product API'`.
 	Title string `json:"title,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2721,12 +2724,12 @@ type VpcAccessibleServices struct {
 	// accessed from VPC networks in the service perimeter.
 	AllowedServicePatterns []*ServicePattern `json:"allowedServicePatterns,omitempty"`
 	// AllowedServices: The list of APIs usable within the Service Perimeter. Must
-	// be empty unless 'enable_restriction' is True. You can specify a list of
-	// individual services, as well as include the 'RESTRICTED-SERVICES' value,
+	// be empty unless `enable_restriction` is `true`. You can specify a list of
+	// individual services, as well as include the `'RESTRICTED-SERVICES'` value,
 	// which automatically includes all of the services protected by the perimeter.
 	AllowedServices []string `json:"allowedServices,omitempty"`
 	// EnableRestriction: Whether to restrict API calls within the Service
-	// Perimeter to the list of APIs specified in 'allowed_services'.
+	// Perimeter to the list of APIs specified in `allowed_services`.
 	EnableRestriction bool `json:"enableRestriction,omitempty"`
 	// ServicePatternsEnforcementScopes: Defines the enforcement scopes of service
 	// patterns.
@@ -2737,7 +2740,7 @@ type VpcAccessibleServices struct {
 	//   "GOOGLE_APIS_VIA_PRIVATE_PATH" - Enables VPC Accessible Services
 	// enforcement for all APIs (including unsupported APIs) for Private Google
 	// Access configured with Private VIP and Private Service Connect Endpoint for
-	// Global Google APIs that uses 'all-apis' bundle.
+	// Global Google APIs that use the `'all-apis'` bundle.
 	ServicePatternsEnforcementScopes []string `json:"servicePatternsEnforcementScopes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedServicePatterns") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2779,7 +2782,7 @@ func (s VpcNetworkSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// VpcSubNetwork: Sub-segment ranges inside of a VPC Network.
+// VpcSubNetwork: Sub-segment ranges inside of a VPC network.
 type VpcSubNetwork struct {
 	// Network: Required. Network name. If the network is not part of the
 	// organization, the `compute.network.get` permission must be granted to the
@@ -2791,8 +2794,8 @@ type VpcSubNetwork struct {
 	// VpcIpSubnetworks: CIDR block IP subnetwork specification. The IP address
 	// must be an IPv4 address and can be a public or private IP address. Note that
 	// for a CIDR IP address block, the specified IP address portion must be
-	// properly truncated (i.e. all the host bits must be zero) or the input is
-	// considered malformed. For example, "192.0.2.0/24" is accepted but
+	// properly truncated (that is, all the host bits must be zero) or the input is
+	// considered malformed. For example, "192.0.2.0/24" is accepted, but
 	// "192.0.2.1/24" is not. If empty, all IP addresses are allowed.
 	VpcIpSubnetworks []string `json:"vpcIpSubnetworks,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Network") to unconditionally
@@ -2924,7 +2927,7 @@ type AccessPoliciesDeleteCall struct {
 // long-running operation has a successful status after the access policy is
 // removed from long-lasting storage.
 //
-//   - name: Resource name for the access policy to delete. Format
+//   - name: Resource name for the access policy to delete. Format:
 //     `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesService) Delete(name string) *AccessPoliciesDeleteCall {
 	c := &AccessPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3023,7 +3026,7 @@ type AccessPoliciesGetCall struct {
 
 // Get: Returns an access policy based on the name.
 //
-//   - name: Resource name for the access policy to get. Format
+//   - name: Resource name for the access policy to get. Format:
 //     `accessPolicies/{policy_id}`.
 func (r *AccessPoliciesService) Get(name string) *AccessPoliciesGetCall {
 	c := &AccessPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3935,21 +3938,22 @@ func (r *AccessPoliciesAccessLevelsService) Get(name string) *AccessPoliciesAcce
 
 // AccessLevelFormat sets the optional parameter "accessLevelFormat": Whether
 // to return `BasicLevels` in the Cloud Common Expression Language rather than
-// as `BasicLevels`. Defaults to AS_DEFINED, where Access Levels are returned
+// as `BasicLevels`. Defaults to `AS_DEFINED`, where Access Levels are returned
 // as `BasicLevels` or `CustomLevels` based on how they were created. If set to
-// CEL, all Access Levels are returned as `CustomLevels`. In the CEL case,
+// `CEL`, all Access Levels are returned as `CustomLevels`. In the `CEL` case,
 // `BasicLevels` are translated to equivalent `CustomLevels`.
 //
 // Possible values:
 //
 //	"LEVEL_FORMAT_UNSPECIFIED" - The format was not specified.
-//	"AS_DEFINED" - Uses the format the resource was defined in. BasicLevels
+//	"AS_DEFINED" - Uses the format the resource was defined in. `BasicLevels`
 //
-// are returned as BasicLevels, CustomLevels are returned as CustomLevels.
+// are returned as `BasicLevels`, and `CustomLevels` are returned as
+// `CustomLevels`.
 //
-//	"CEL" - Use Cloud Common Expression Language when returning the resource.
+//	"CEL" - Uses Cloud Common Expression Language when returning the resource.
 //
-// Both BasicLevels and CustomLevels are returned as CustomLevels.
+// Both `BasicLevels` and `CustomLevels` are returned as `CustomLevels`.
 func (c *AccessPoliciesAccessLevelsGetCall) AccessLevelFormat(accessLevelFormat string) *AccessPoliciesAccessLevelsGetCall {
 	c.urlParams_.Set("accessLevelFormat", accessLevelFormat)
 	return c
@@ -4066,20 +4070,21 @@ func (r *AccessPoliciesAccessLevelsService) List(parent string) *AccessPoliciesA
 }
 
 // AccessLevelFormat sets the optional parameter "accessLevelFormat": Whether
-// to return `BasicLevels` in the Cloud Common Expression language, as
+// to return `BasicLevels` in the Cloud Common Expression Language, as
 // `CustomLevels`, rather than as `BasicLevels`. Defaults to returning
 // `AccessLevels` in the format they were defined.
 //
 // Possible values:
 //
 //	"LEVEL_FORMAT_UNSPECIFIED" - The format was not specified.
-//	"AS_DEFINED" - Uses the format the resource was defined in. BasicLevels
+//	"AS_DEFINED" - Uses the format the resource was defined in. `BasicLevels`
 //
-// are returned as BasicLevels, CustomLevels are returned as CustomLevels.
+// are returned as `BasicLevels`, and `CustomLevels` are returned as
+// `CustomLevels`.
 //
-//	"CEL" - Use Cloud Common Expression Language when returning the resource.
+//	"CEL" - Uses Cloud Common Expression Language when returning the resource.
 //
-// Both BasicLevels and CustomLevels are returned as CustomLevels.
+// Both `BasicLevels` and `CustomLevels` are returned as `CustomLevels`.
 func (c *AccessPoliciesAccessLevelsListCall) AccessLevelFormat(accessLevelFormat string) *AccessPoliciesAccessLevelsListCall {
 	c.urlParams_.Set("accessLevelFormat", accessLevelFormat)
 	return c
@@ -4344,8 +4349,8 @@ type AccessPoliciesAccessLevelsReplaceAllCall struct {
 // long-lasting storage. If the replacement contains errors, an error response
 // is returned for the first error encountered. Upon error, the replacement is
 // cancelled, and existing access levels are not affected. The
-// Operation.response field contains ReplaceAccessLevelsResponse. Removing
-// access levels contained in existing service perimeters result in an error.
+// `Operation.response` field contains `ReplaceAccessLevelsResponse`. Removing
+// access levels contained in existing service perimeters results in an error.
 //
 //   - parent: Resource name for the access policy which owns these Access
 //     Levels. Format: `accessPolicies/{policy_id}`.
@@ -4563,8 +4568,8 @@ type AccessPoliciesAuthorizedOrgsDescsCreateCall struct {
 
 // Create: Creates an authorized orgs desc. The long-running operation from
 // this RPC has a successful status after the authorized orgs desc propagates
-// to long-lasting storage. If a authorized orgs desc contains errors, an error
-// response is returned for the first error encountered. The name of this
+// to long-lasting storage. If an authorized orgs desc contains errors, an
+// error response is returned for the first error encountered. The name of this
 // `AuthorizedOrgsDesc` will be assigned during creation.
 //
 //   - parent: Resource name for the access policy which owns this Authorized
@@ -4673,7 +4678,7 @@ type AccessPoliciesAuthorizedOrgsDescsDeleteCall struct {
 // authorized orgs desc is removed from long-lasting storage.
 //
 //   - name: Resource name for the Authorized Orgs Desc. Format:
-//     `accessPolicies/{policy_id}/authorizedOrgsDesc/{authorized_orgs_desc_id}`.
+//     `accessPolicies/{policy_id}/authorizedOrgsDescs/{authorized_orgs_desc_id}`.
 func (r *AccessPoliciesAuthorizedOrgsDescsService) Delete(name string) *AccessPoliciesAuthorizedOrgsDescsDeleteCall {
 	c := &AccessPoliciesAuthorizedOrgsDescsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4772,7 +4777,7 @@ type AccessPoliciesAuthorizedOrgsDescsGetCall struct {
 // Get: Gets an authorized orgs desc based on the resource name.
 //
 //   - name: Resource name for the Authorized Orgs Desc. Format:
-//     `accessPolicies/{policy_id}/authorizedOrgsDescs/{authorized_orgs_descs_id}`.
+//     `accessPolicies/{policy_id}/authorizedOrgsDescs/{authorized_orgs_desc_id}`.
 func (r *AccessPoliciesAuthorizedOrgsDescsService) Get(name string) *AccessPoliciesAuthorizedOrgsDescsGetCall {
 	c := &AccessPoliciesAuthorizedOrgsDescsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5029,10 +5034,11 @@ type AccessPoliciesAuthorizedOrgsDescsPatchCall struct {
 
 // Patch: Updates an authorized orgs desc. The long-running operation from this
 // RPC has a successful status after the authorized orgs desc propagates to
-// long-lasting storage. If a authorized orgs desc contains errors, an error
+// long-lasting storage. If an authorized orgs desc contains errors, an error
 // response is returned for the first error encountered. Only the organization
-// list in `AuthorizedOrgsDesc` can be updated. The name, authorization_type,
-// asset_type and authorization_direction cannot be updated.
+// list in `AuthorizedOrgsDesc` can be updated. The `name`,
+// `authorization_type`, `asset_type`, and `authorization_direction` cannot be
+// updated.
 //
 //   - name: Identifier. Resource name for the `AuthorizedOrgsDesc`. Format:
 //     `accessPolicies/{access_policy}/authorizedOrgsDescs/{authorized_orgs_desc}`
@@ -5154,8 +5160,8 @@ type AccessPoliciesServicePerimetersCommitCall struct {
 // a successful status after the dry-run specifications for all the service
 // perimeters have been committed. If a commit fails, it causes the
 // long-running operation to return an error response and the entire commit
-// operation is cancelled. When successful, the Operation.response field
-// contains CommitServicePerimetersResponse. The `dry_run` and the `spec`
+// operation is cancelled. When successful, the `Operation.response` field
+// contains `CommitServicePerimetersResponse`. The `dry_run` and the `spec`
 // fields are cleared after a successful commit operation.
 //
 //   - parent: Resource name for the parent Access Policy which owns all Service
@@ -5471,7 +5477,7 @@ type AccessPoliciesServicePerimetersGetCall struct {
 // Get: Gets a service perimeter based on the resource name.
 //
 //   - name: Resource name for the Service Perimeter. Format:
-//     `accessPolicies/{policy_id}/servicePerimeters/{service_perimeters_id}`.
+//     `accessPolicies/{policy_id}/servicePerimeters/{service_perimeter_id}`.
 func (r *AccessPoliciesServicePerimetersService) Get(name string) *AccessPoliciesServicePerimetersGetCall {
 	c := &AccessPoliciesServicePerimetersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5913,13 +5919,14 @@ type AccessPoliciesServicePerimetersReplaceAllCall struct {
 	header_                         http.Header
 }
 
-// ReplaceAll: Replace all existing service perimeters in an access policy with
-// the service perimeters provided. This is done atomically. The long-running
-// operation from this RPC has a successful status after all replacements
-// propagate to long-lasting storage. Replacements containing errors result in
-// an error response for the first error encountered. Upon an error,
-// replacements are cancelled and existing service perimeters are not affected.
-// The Operation.response field contains ReplaceServicePerimetersResponse.
+// ReplaceAll: Replaces all existing service perimeters in an access policy
+// with the service perimeters provided. This is done atomically. The
+// long-running operation from this RPC has a successful status after all
+// replacements propagate to long-lasting storage. Replacements containing
+// errors result in an error response for the first error encountered. Upon an
+// error, replacements are cancelled and existing service perimeters are not
+// affected. The `Operation.response` field contains
+// `ReplaceServicePerimetersResponse`.
 //
 //   - parent: Resource name for the access policy which owns these Service
 //     Perimeters. Format: `accessPolicies/{policy_id}`.
@@ -6136,10 +6143,11 @@ type FoldersLookupConfiguredServicePerimeterCall struct {
 }
 
 // LookupConfiguredServicePerimeter: Looks up the configured service perimeter
-// for a given resource Format: ['projects/{projectNumber}',
-// 'folders/{folderNumber}'].
+// for a given resource. Format: `['projects/{projectNumber}',
+// 'folders/{folderNumber}']`.
 //
-// - resource: The Resource to resolve (e.g. "projects/123", "folders/456").
+//   - resource: The resource to resolve (for example, `projects/123` or
+//     `folders/456`).
 func (r *FoldersService) LookupConfiguredServicePerimeter(resource string) *FoldersLookupConfiguredServicePerimeterCall {
 	c := &FoldersLookupConfiguredServicePerimeterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7059,11 +7067,15 @@ func (r *OrganizationsGcpUserAccessBindingsService) List(parent string) *Organiz
 	return c
 }
 
-// Filter sets the optional parameter "filter": The literal filter to apply to
-// the results returned. See https://google.aip.dev/160 for more details.
-// Accepts values: * `principal:group_key` * `principal:service_account` OR
-// `principal:service_account_project_number`. If this field is empty or not
-// one of the above, the default value is "principal:group_key".
+// Filter sets the optional parameter "filter": Filters the results by
+// principal type. Uses the AIP-160 (https://google.aip.dev/160) filter syntax.
+// Only the following filters are supported: * `principal:group_key`: bindings
+// for groups. This is the default when the filter is empty. *
+// `principal:service_account OR principal:service_account_project_number`:
+// bindings for service accounts. * `principal:federated_principal`: bindings
+// for federated principals. Values can be in snake_case or camelCase.
+// Whitespace and the order of `OR` terms don't matter. Any other filter
+// returns an `INVALID_ARGUMENT` error.
 func (c *OrganizationsGcpUserAccessBindingsListCall) Filter(filter string) *OrganizationsGcpUserAccessBindingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7227,22 +7239,24 @@ func (r *OrganizationsGcpUserAccessBindingsService) Patch(name string, gcpuserac
 // Append sets the optional parameter "append": This field controls whether or
 // not certain repeated settings in the update request overwrite or append to
 // existing settings on the binding. If true, then append. Otherwise overwrite.
-// So far, only scoped_access_settings with session_settings supports
-// appending. Global access_levels, access_levels in scoped_access_settings,
-// dry_run_access_levels, and session_settings are not compatible with append
-// functionality, and the request will return an error if append=true when
-// these settings are in the update_mask. The request will also return an error
-// if append=true when "scoped_access_settings" is not set in the update_mask.
+// So far, only `scoped_access_settings` with `session_settings` supports
+// appending. Global `access_levels`, `access_levels` in
+// `scoped_access_settings`, `dry_run_access_levels`, and `session_settings`
+// are not compatible with append functionality, and the request will return an
+// error if `append=true` when these settings are in the `update_mask`. The
+// request will also return an error if `append=true` when
+// "scoped_access_settings" is not set in the `update_mask`.
 func (c *OrganizationsGcpUserAccessBindingsPatchCall) Append(append bool) *OrganizationsGcpUserAccessBindingsPatchCall {
 	c.urlParams_.Set("append", fmt.Sprint(append))
 	return c
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Only the
-// fields specified in this mask are updated. Because name and group_key cannot
-// be changed, update_mask is required and may only contain the following
-// fields: `access_levels`, `dry_run_access_levels`, `session_settings`,
-// `scoped_access_settings`. update_mask { paths: "access_levels" }
+// fields specified in this mask are updated. Because `name` and `group_key`
+// cannot be changed, `update_mask` is required and may only contain the
+// following fields: `access_levels`, `dry_run_access_levels`,
+// `session_settings`, `scoped_access_settings`. update_mask { paths:
+// "access_levels" }
 func (c *OrganizationsGcpUserAccessBindingsPatchCall) UpdateMask(updateMask string) *OrganizationsGcpUserAccessBindingsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7348,7 +7362,7 @@ func (r *PermissionsService) List() *PermissionsListCall {
 }
 
 // PageSize sets the optional parameter "pageSize": This flag specifies the
-// maximum number of services to return per page. Default value is 100.
+// maximum number of permissions to return per page. Default value is 100.
 func (c *PermissionsListCall) PageSize(pageSize int64) *PermissionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -7481,10 +7495,11 @@ type ProjectsLookupConfiguredServicePerimeterCall struct {
 }
 
 // LookupConfiguredServicePerimeter: Looks up the configured service perimeter
-// for a given resource Format: ['projects/{projectNumber}',
-// 'folders/{folderNumber}'].
+// for a given resource. Format: `['projects/{projectNumber}',
+// 'folders/{folderNumber}']`.
 //
-// - resource: The Resource to resolve (e.g. "projects/123", "folders/456").
+//   - resource: The resource to resolve (for example, `projects/123` or
+//     `folders/456`).
 func (r *ProjectsService) LookupConfiguredServicePerimeter(resource string) *ProjectsLookupConfiguredServicePerimeterCall {
 	c := &ProjectsLookupConfiguredServicePerimeterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

@@ -6,7 +6,7 @@
 
 // Package saasservicemgmt provides access to the App Lifecycle Manager API.
 //
-// For product documentation, see: https://cloud.google.com/saas-runtime/docs
+// For product documentation, see: https://docs.cloud.google.com/app-lifecycle-manager
 //
 // # Library status
 //
@@ -525,6 +525,36 @@ func (s Dependency) MarshalJSON() ([]byte, error) {
 // underlying resources represented by a Unit. Can only execute if the Unit is
 // currently provisioned.
 type Deprovision struct {
+}
+
+// DurationLimits: DurationLimits defines the time-related constraints for a
+// UnitOperation's execution. This allows users to control how long an
+// operation can run before being cancelled by the system.
+type DurationLimits struct {
+	// UnitOperationTimeout: Optional. The maximum duration a UnitOperation is
+	// allowed to execute in the RUNNING state. - Minimum value: 60 seconds (1
+	// minute) - Maximum value: 604800 seconds (7 days) If this field is not set,
+	// or if the provided value falls outside the allowed range, the system will
+	// use a default timeout of 10800 seconds (3 hours). Upon exceeding this time
+	// limit, the UnitOperation will be best-effort cancelled, and its state will
+	// be set to FAILED.
+	UnitOperationTimeout string `json:"unitOperationTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UnitOperationTimeout") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UnitOperationTimeout") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DurationLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod DurationLimits
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1962,6 +1992,15 @@ type UnitKind struct {
 	// release will depend on. Dependencies will be automatically provisioned if
 	// not found. Maximum 10.
 	Dependencies []*Dependency `json:"dependencies,omitempty"`
+	// DurationLimits: Optional. Defines the default duration limits for
+	// UnitOperations created from this UnitKind. These settings provide a baseline
+	// for execution time constraints. The limits specified here can be overridden
+	// by more specific settings on an individual UnitOperation resource. See the
+	// DurationLimits message definition for details on the constraints like
+	// minimum, maximum, and system default values for unit_operation_timeout. If
+	// not set, UnitOperations will use the system default duration limits unless
+	// overridden on the UnitOperation.
+	DurationLimits *DurationLimits `json:"durationLimits,omitempty"`
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
@@ -2044,6 +2083,12 @@ type UnitOperation struct {
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Deprovision: Optional. Deprovision operation.
 	Deprovision *Deprovision `json:"deprovision,omitempty"`
+	// DurationLimits: Optional. Defines the duration limits for this specific
+	// UnitOperation instance. These settings override any default duration limits
+	// set on the UnitKind. See the DurationLimits message definition for details
+	// on the constraints like minimum, maximum, and system default values for
+	// unit_operation_timeout.
+	DurationLimits *DurationLimits `json:"durationLimits,omitempty"`
 	// EngineState: Optional. Output only. The engine state for on-going deployment
 	// engine operation(s). This field is opaque for external usage.
 	EngineState string `json:"engineState,omitempty"`

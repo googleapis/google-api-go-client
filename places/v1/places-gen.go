@@ -1164,7 +1164,10 @@ func (s GoogleMapsPlacesV1FuelOptions) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1FuelOptionsFuelPrice: Fuel price information for a given
 // type.
 type GoogleMapsPlacesV1FuelOptionsFuelPrice struct {
-	// Price: The price of the fuel.
+	// Price: The price of the fuel. The price is per US liquid gallon in the
+	// United States, and per liter elsewhere. Prices do not distinguish between
+	// payment methods (cash or credit). When a station offers multiple prices for
+	// the same `FuelType`, the API returns the standard (highest) price.
 	Price *GoogleTypeMoney `json:"price,omitempty"`
 	// Type: The type of fuel.
 	//
@@ -1191,7 +1194,9 @@ type GoogleMapsPlacesV1FuelOptionsFuelPrice struct {
 	//   "BIO_DIESEL" - Bio-diesel.
 	//   "TRUCK_DIESEL" - Truck diesel.
 	Type string `json:"type,omitempty"`
-	// UpdateTime: The time the fuel price was last updated.
+	// UpdateTime: The time the fuel price was last updated. This represents the
+	// time when the specific fuel price offer was last observed or updated by the
+	// data provider.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Price") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

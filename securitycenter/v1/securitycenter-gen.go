@@ -2042,6 +2042,26 @@ func (s CloudLoggingEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type CloudRun struct {
+	Revisions []string `json:"revisions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Revisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Revisions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudRun) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type Compliance struct {
 	Ids      []string `json:"ids,omitempty"`
 	Standard string   `json:"standard,omitempty"`
@@ -3035,6 +3055,7 @@ type Finding struct {
 	CloudArmor                  *CloudArmor                                          `json:"cloudArmor,omitempty"`
 	CloudDlpDataProfile         *CloudDlpDataProfile                                 `json:"cloudDlpDataProfile,omitempty"`
 	CloudDlpInspection          *CloudDlpInspection                                  `json:"cloudDlpInspection,omitempty"`
+	CloudRun                    *CloudRun                                            `json:"cloudRun,omitempty"`
 	ComplianceDetails           *ComplianceDetails                                   `json:"complianceDetails,omitempty"`
 	Compliances                 []*Compliance                                        `json:"compliances,omitempty"`
 	Connections                 []*Connection                                        `json:"connections,omitempty"`
@@ -4967,6 +4988,26 @@ func (s GoogleCloudSecuritycenterV2CloudLoggingEntry) MarshalJSON() ([]byte, err
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudSecuritycenterV2CloudRun struct {
+	Revisions []string `json:"revisions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Revisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Revisions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2CloudRun) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2CloudRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudSecuritycenterV2Compliance struct {
 	Ids      []string `json:"ids,omitempty"`
 	Standard string   `json:"standard,omitempty"`
@@ -5794,6 +5835,7 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	CloudArmor                  *GoogleCloudSecuritycenterV2CloudArmor                   `json:"cloudArmor,omitempty"`
 	CloudDlpDataProfile         *GoogleCloudSecuritycenterV2CloudDlpDataProfile          `json:"cloudDlpDataProfile,omitempty"`
 	CloudDlpInspection          *GoogleCloudSecuritycenterV2CloudDlpInspection           `json:"cloudDlpInspection,omitempty"`
+	CloudRun                    *GoogleCloudSecuritycenterV2CloudRun                     `json:"cloudRun,omitempty"`
 	ComplianceDetails           *GoogleCloudSecuritycenterV2ComplianceDetails            `json:"complianceDetails,omitempty"`
 	Compliances                 []*GoogleCloudSecuritycenterV2Compliance                 `json:"compliances,omitempty"`
 	Connections                 []*GoogleCloudSecuritycenterV2Connection                 `json:"connections,omitempty"`

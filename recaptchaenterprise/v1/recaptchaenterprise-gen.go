@@ -761,10 +761,10 @@ type GoogleCloudRecaptchaenterpriseV1Bot struct {
 	// payhawk - AI_AGENT * duck-duck-go - SEARCH_INDEXER * mediaboard -
 	// CONTENT_SCRAPER * marker-io - AI_AGENT * anchor-browser - AI_AGENT * shopify
 	// - AI_AGENT * stackscope - CONTENT_SCRAPER * manus - AI_AGENT * kernel-sh -
-	// AI_AGENT * zvelo - SEARCH_INDEXER Ensure that your applications can handle
-	// identifier values not explicitly listed here. Deprecated values might take
-	// some time to stop showing up in responses. New values can be pushed so this
-	// list should be taken as non exhaustive.
+	// AI_AGENT * zvelo - SEARCH_INDEXER * meta-muse - AI_AGENT Ensure that your
+	// applications can handle identifier values not explicitly listed here.
+	// Deprecated values might take some time to stop showing up in responses. New
+	// values can be pushed so this list should be taken as non exhaustive.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BotType") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2077,15 +2077,18 @@ type GoogleCloudRecaptchaenterpriseV1ProtectedEndpoint struct {
 	// endpoint. The action name can only contain alphanumeric characters, slashes,
 	// and underscores.
 	Action string `json:"action,omitempty"`
-	// Path: Required. URI path of the API endpoint to protect. Must start with
-	// '/'. Supports glob characters '*' to match a single path segment and '**' to
-	// match multiple path segments. Standalone root catch-alls ('/*' and '/**')
-	// are invalid because it can negatively impact performance to trigger
-	// reCAPTCHA on every single request to your backend. Matching is evaluated
-	// against the URL path only (domain, scheme, and query parameters are
-	// ignored). Examples: - `/login` matches `/login`,
-	// `https://example.com/login`, and `/login?query=1`, but not `/login/step1`. -
-	// `/products/*` matches `/products/123`, but not `/products/123/456`. -
+	// Path: Required. The URI path of the API endpoint to protect. The path is
+	// case-sensitive and must meet the following criteria: * Be unique, start with
+	// `/`, and contain 1 to 200 characters without consecutive slashes (`//`). *
+	// Include at least one non-wildcard segment. For example, cannot be `/`, `/*`,
+	// `/**`, or `/*/`. * Wildcards must occupy complete segments: `*` matches a
+	// single segment. For example, `/api/*/login` or `/api/*` are valid;
+	// `/api/login*` is invalid, and `**` matches multiple segments as the final
+	// segment only. For example, `/api/**` is valid; `/api/**/login` is invalid.
+	// Matching is evaluated against the URL path only. Domain, scheme, and query
+	// parameters are ignored. Examples: * `/login` matches `/login`,
+	// `https://example.com/login`, and `/login?query=1`, but not `/login/step1`. *
+	// `/products/*` matches `/products/123`, but not `/products/123/456`. *
 	// `/content/**` matches `/content/articles/2024/01/01`.
 	Path string `json:"path,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
@@ -2311,6 +2314,9 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	//   "CHALLENGE_TYPE_UNSPECIFIED" - Default unspecified type.
 	//   "CHALLENGE_TYPE_VISUAL" - A visual challenge.
 	//   "CHALLENGE_TYPE_AUDIO" - An audio challenge.
+	//   "CHALLENGE_TYPE_QR_CODE" - A challenge requiring mobile device
+	// verification, completed by scanning a QR code on desktop or clicking a
+	// verification button directly on a mobile device.
 	LastChallengeType string `json:"lastChallengeType,omitempty"`
 	// Reasons: Output only. Reasons contributing to the risk analysis verdict.
 	//

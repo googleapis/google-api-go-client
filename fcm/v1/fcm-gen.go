@@ -236,7 +236,7 @@ type AndroidConfig struct {
 	DirectBootOk bool `json:"directBootOk,omitempty"`
 	// FcmOptions: Options for features provided by the FCM SDK for Android.
 	FcmOptions *AndroidFcmOptions `json:"fcmOptions,omitempty"`
-	// Notification: Notification to send to android devices.
+	// Notification: Notification to send to Android devices.
 	Notification *AndroidNotification `json:"notification,omitempty"`
 	// Priority: Message priority. Can take "normal" and "high" values. For more
 	// information, see Setting the priority of a message
@@ -466,7 +466,7 @@ type AndroidNotification struct {
 	// (https://developer.android.com/training/wearables/notifications/bridger#existing-method-of-preventing-bridging)
 	LocalOnly bool `json:"localOnly,omitempty"`
 	// NotificationCount: Sets the number of items this notification represents.
-	// May be displayed as a badge count for launchers that support badging.See
+	// May be displayed as a badge count for launchers that support badging. See
 	// Notification Badge
 	// (https://developer.android.com/training/notify-user/badges). For example,
 	// this might be useful if you're using just one notification to represent
@@ -590,7 +590,7 @@ func (s AndroidNotification) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AndroidNotificationV2: Notification v2 to send to android devices. This is a
+// AndroidNotificationV2: Notification v2 to send to Android devices. This is a
 // v2 version of the AndroidNotification message and will replace it in the v2
 // API.
 type AndroidNotificationV2 struct {
@@ -650,7 +650,7 @@ type AndroidNotificationV2 struct {
 	Icon string `json:"icon,omitempty"`
 	// Id: Optional. Identifier used to replace existing notifications in the
 	// notification drawer. It is used in conjunction with `tag` to form a unique
-	// identifier `(tag, id`)` within the app. If not specified, each request
+	// identifier `(tag, id)` within the app. If not specified, each request
 	// creates a new notification. If specified and a notification with the same
 	// `(tag, id)` is already being shown, the new notification replaces the
 	// existing one in the notification drawer.
@@ -669,7 +669,7 @@ type AndroidNotificationV2 struct {
 	// (https://developer.android.com/training/wearables/notifications/bridger#existing-method-of-preventing-bridging)
 	LocalOnly bool `json:"localOnly,omitempty"`
 	// NotificationCount: Sets the number of items this notification represents.
-	// May be displayed as a badge count for launchers that support badging.See
+	// May be displayed as a badge count for launchers that support badging. See
 	// Notification Badge
 	// (https://developer.android.com/training/notify-user/badges). For example,
 	// this might be useful if you're using just one notification to represent
@@ -723,7 +723,7 @@ type AndroidNotificationV2 struct {
 	Sticky bool `json:"sticky,omitempty"`
 	// Tag: Identifier used to replace existing notifications in the notification
 	// drawer. It is used in conjunction with `id` to form a unique identifier
-	// `(tag, id`)` within the app. If not specified, each request creates a new
+	// `(tag, id)` within the app. If not specified, each request creates a new
 	// notification. If specified and a notification with the same `(tag, id)` is
 	// already being shown, the new notification replaces the existing one in the
 	// notification drawer.
@@ -791,15 +791,14 @@ type AndroidRemoteNotification struct {
 	// MutableContent: Optional. If set to true, the notification content can be
 	// updated by the app after the notification is received on the device.
 	MutableContent bool `json:"mutableContent,omitempty"`
-	// Notification: Optional. Notification to send to android devices.
+	// Notification: Optional. Notification to send to Android devices.
 	Notification *AndroidNotificationV2 `json:"notification,omitempty"`
-	// UseAsV1DataMessage: Optional. If set to true, this RemoteNotification
-	// message will be delivered to legacy V1 clients as data messages by omitting
-	// the
-	// google.firebase.fcm.v1.Message.android_v2.remote_notification.notification.
-	// This should only be enabled when migration from legacy V1 data messages.
-	// Note that by default (when set to false), RemoteNotification messages are
-	// automatically translated to V1 notification message for legacy clients;
+	// UseAsV1DataMessage: Optional. If set to `true`, this RemoteNotification
+	// message will be delivered to legacy V1 clients as a data message by omitting
+	// the google.firebase.fcm.v1.AndroidRemoteNotification.notification. This
+	// should only be enabled when migrating from legacy V1 data messages. Note
+	// that by default (when set to false), RemoteNotification messages are
+	// automatically translated to V1 notification messages for legacy clients.
 	UseAsV1DataMessage bool `json:"useAsV1DataMessage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MutableContent") to
 	// unconditionally include in API requests. By default, fields with empty or

@@ -415,29 +415,35 @@ type ProjectsLocationsDbFrameworkComplianceSummariesService struct {
 	s *Service
 }
 
-// GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest: Request for
-// acknowledging the violation
+// GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest: Request message
+// for acknowledging a violation.
 type GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest struct {
-	// AcknowledgeType: Optional. Acknowledge type of specified violation.
+	// AcknowledgeType: Optional. The scope of the acknowledgement for the
+	// specified violation. If not specified, `SINGLE_VIOLATION` is used.
 	//
 	// Possible values:
-	//   "ACKNOWLEDGE_TYPE_UNSPECIFIED" - Acknowledge type unspecified.
-	//   "SINGLE_VIOLATION" - Acknowledge only the specific violation.
-	//   "EXISTING_CHILD_RESOURCE_VIOLATIONS" - Acknowledge specified orgPolicy
-	// violation and also associated resource violations.
+	//   "ACKNOWLEDGE_TYPE_UNSPECIFIED" - Default value. The acknowledge type isn't
+	// specified.
+	//   "SINGLE_VIOLATION" - Acknowledges only the specified violation.
+	//   "EXISTING_CHILD_RESOURCE_VIOLATIONS" - Acknowledges the specified
+	// organization policy violation and all of its existing associated resource
+	// violations.
 	AcknowledgeType string `json:"acknowledgeType,omitempty"`
-	// Comment: Required. Business justification explaining the need for violation
-	// acknowledgement
+	// Comment: Required. The business justification for acknowledging the
+	// violation. The comment can't be empty or contain only whitespace characters.
 	Comment string `json:"comment,omitempty"`
-	// NonCompliantOrgPolicy: Optional. This field is deprecated and will be
-	// removed in future version of the API. Name of the OrgPolicy which was
-	// modified with non-compliant change and resulted in this violation. Format:
-	// projects/{project_number}/policies/{constraint_name}
-	// folders/{folder_id}/policies/{constraint_name}
-	// organizations/{organization_id}/policies/{constraint_name}
+	// NonCompliantOrgPolicy: Optional. Deprecated: This field is deprecated and
+	// will be removed in a future version of the API. The service identifies the
+	// violation to acknowledge by `name`, and ignores this field. Don't set this
+	// field. The name of the organization policy that was modified with a
+	// non-compliant change and resulted in this violation. Formats: *
+	// `projects/{project_number}/policies/{constraint_name}` *
+	// `folders/{folder_id}/policies/{constraint_name}` *
+	// `organizations/{organization_id}/policies/{constraint_name}`
 	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
-	// View: Optional. Specifies the violation view (`AssuredWorkloads` or
-	// `DataBoundary`) for acknowledging violations.
+	// View: Optional. The violation view (`VIOLATION_VIEW_ASSURED_WORKLOADS` or
+	// `VIOLATION_VIEW_DATA_BOUNDARY`) that the violation belongs to. If not
+	// specified, `VIOLATION_VIEW_ASSURED_WORKLOADS` is used.
 	//
 	// Possible values:
 	//   "VIOLATION_VIEW_UNSPECIFIED" - Defaults to the ASSURED_WORKLOADS view.
@@ -464,8 +470,8 @@ func (s GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest) MarshalJSON() 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1AcknowledgeViolationResponse: Response for
-// violation acknowledgement
+// GoogleCloudAssuredworkloadsV1AcknowledgeViolationResponse: Response message
+// for acknowledging a violation. This message is empty.
 type GoogleCloudAssuredworkloadsV1AcknowledgeViolationResponse struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -474,7 +480,8 @@ type GoogleCloudAssuredworkloadsV1AcknowledgeViolationResponse struct {
 // GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse:
 // The response message for AggregateDbFrameworkComplianceReport.
 type GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportResponse struct {
-	// AggregatedComplianceReports: The list of aggregated compliance reports.
+	// AggregatedComplianceReports: The daily compliance reports for the requested
+	// time range.
 	AggregatedComplianceReports []*GoogleCloudAssuredworkloadsV1AggregatedComplianceReport `json:"aggregatedComplianceReports,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -497,12 +504,13 @@ func (s GoogleCloudAssuredworkloadsV1AggregateDbFrameworkComplianceReportRespons
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1AggregatedComplianceReport: The aggregated
-// compliance report.
+// GoogleCloudAssuredworkloadsV1AggregatedComplianceReport: A point-in-time
+// compliance report for a framework.
 type GoogleCloudAssuredworkloadsV1AggregatedComplianceReport struct {
-	// ControlAssessmentDetails: The control assessment details of the framework.
+	// ControlAssessmentDetails: The number of passing, failing, and not assessed
+	// controls in the framework at `report_time`.
 	ControlAssessmentDetails *GoogleCloudAssuredworkloadsV1ControlAssessmentDetails `json:"controlAssessmentDetails,omitempty"`
-	// ReportTime: The report time of the aggregated compliance report.
+	// ReportTime: The time that the compliance report represents.
 	ReportTime string `json:"reportTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ControlAssessmentDetails")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1011,8 +1019,8 @@ func (s GoogleCloudAssuredworkloadsV1CreateWorkloadOperationMetadata) MarshalJSO
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1DbControlComplianceSummary: The details for
-// control compliance.
+// GoogleCloudAssuredworkloadsV1DbControlComplianceSummary: A summary of the
+// compliance status of a control in a framework compliance report.
 type GoogleCloudAssuredworkloadsV1DbControlComplianceSummary struct {
 	// CloudControlReports: The list of cloud control reports.
 	CloudControlReports []*GoogleCloudAssuredworkloadsV1CloudControlReport `json:"cloudControlReports,omitempty"`
@@ -1037,7 +1045,11 @@ type GoogleCloudAssuredworkloadsV1DbControlComplianceSummary struct {
 	// IsFakeControl: Whether the control is a fake control. Fake controls are
 	// created and mapped to cloud controls that don't belong to a control group.
 	IsFakeControl bool `json:"isFakeControl,omitempty"`
-	// Name: Identifier. The name of the control compliance summary.
+	// Name: Identifier. The resource name of the control compliance summary.
+	// Format:
+	// `organizations/{organization}/locations/{location}/dbFrameworkComplianceRepor
+	// ts/{db_framework_compliance_report}/dbControlComplianceSummaries/{db_control_
+	// compliance_summary}`
 	Name string `json:"name,omitempty"`
 	// OrgPolicyFindingCount: Output only. Number of organization policy findings
 	// for this control.
@@ -1076,11 +1088,13 @@ func (s GoogleCloudAssuredworkloadsV1DbControlComplianceSummary) MarshalJSON() (
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1DbFindingSummary: The details for a finding.
+// GoogleCloudAssuredworkloadsV1DbFindingSummary: A summary of the active
+// findings for a finding category in a Data Boundary scope.
 type GoogleCloudAssuredworkloadsV1DbFindingSummary struct {
-	// FindingCategory: Output only. The category of the finding.
+	// FindingCategory: Output only. The category of the findings that are
+	// summarized.
 	FindingCategory string `json:"findingCategory,omitempty"`
-	// FindingClass: Output only. The class of the finding.
+	// FindingClass: Output only. The class of the findings.
 	//
 	// Possible values:
 	//   "FINDING_CLASS_UNSPECIFIED" - Default value. This value is unused.
@@ -1101,20 +1115,21 @@ type GoogleCloudAssuredworkloadsV1DbFindingSummary struct {
 	//   "CHOKEPOINT" - A resource or resource group where high risk attack paths
 	// converge, based on attack path simulations (APS).
 	FindingClass string `json:"findingClass,omitempty"`
-	// FindingCount: Output only. The count of the finding.
+	// FindingCount: Output only. The total number of active findings in the
+	// category.
 	FindingCount int64 `json:"findingCount,omitempty,string"`
-	// Name: Identifier. The name of the finding summary.
+	// Name: Identifier. The resource name of the finding summary.
 	Name string `json:"name,omitempty"`
-	// OrganizationPolicyFindingCount: Output only. Number of active organization
-	// policy findings for this category.
+	// OrganizationPolicyFindingCount: Output only. The number of active
+	// organization policy findings in the category.
 	OrganizationPolicyFindingCount int64 `json:"organizationPolicyFindingCount,omitempty,string"`
-	// RelatedFrameworks: Optional. The list of compliance frameworks that the
-	// finding belongs to.
+	// RelatedFrameworks: Optional. The display names of the compliance frameworks
+	// that the findings are related to.
 	RelatedFrameworks []string `json:"relatedFrameworks,omitempty"`
-	// ResourceFindingCount: Output only. Number of active resource findings for
-	// this category.
+	// ResourceFindingCount: Output only. The number of active resource findings in
+	// the category.
 	ResourceFindingCount int64 `json:"resourceFindingCount,omitempty,string"`
-	// Severity: Output only. The severity of the finding.
+	// Severity: Output only. The severity of the findings.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Default value. This value is unused.
@@ -1150,7 +1165,8 @@ type GoogleCloudAssuredworkloadsV1DbFindingSummary struct {
 	// threat is a threat that has obtained minimal access to an environment but
 	// can't access data, execute code, or create resources.
 	Severity string `json:"severity,omitempty"`
-	// UpdateTime: Output only. The last updated time of the finding.
+	// UpdateTime: Output only. The time when the findings in the category were
+	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FindingCategory") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1170,21 +1186,23 @@ func (s GoogleCloudAssuredworkloadsV1DbFindingSummary) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary: The details for a
-// framework compliance summary.
+// GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary: A summary of the
+// compliance status of a framework that's deployed in a Data Boundary scope.
 type GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary struct {
-	// ControlAssessmentDetails: The control assessment details of the framework.
+	// ControlAssessmentDetails: The number of passing, failing, and not assessed
+	// controls in the framework.
 	ControlAssessmentDetails *GoogleCloudAssuredworkloadsV1ControlAssessmentDetails `json:"controlAssessmentDetails,omitempty"`
-	// ControlsPassingTrend: Output only. The trend of controls that are passing
-	// for the given duration.
+	// ControlsPassingTrend: Output only. The trend of passing controls over the
+	// trend duration. This field is only populated when using
+	// `FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_FULL`.
 	ControlsPassingTrend *GoogleCloudAssuredworkloadsV1Trend `json:"controlsPassingTrend,omitempty"`
-	// FindingCount: Output only. The count of the findings generated against the
-	// framework.
+	// FindingCount: Output only. The number of findings that were generated
+	// against the framework. This field is only populated when using
+	// `FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_FULL`.
 	FindingCount int64 `json:"findingCount,omitempty,string"`
-	// Framework: The name of the framework.
+	// Framework: The resource name of the compliance framework.
 	Framework string `json:"framework,omitempty"`
-	// FrameworkCategories: The list of framework categories supported by the
-	// framework.
+	// FrameworkCategories: The categories of the framework.
 	//
 	// Possible values:
 	//   "FRAMEWORK_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
@@ -1194,9 +1212,9 @@ type GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary struct {
 	//   "GOOGLE_BEST_PRACTICES" - A Google's best practices framework.
 	//   "CUSTOM_FRAMEWORK" - A user-created framework.
 	FrameworkCategories []string `json:"frameworkCategories,omitempty"`
-	// FrameworkDisplayName: Optional. The display name for the framework.
+	// FrameworkDisplayName: Optional. The display name of the framework.
 	FrameworkDisplayName string `json:"frameworkDisplayName,omitempty"`
-	// FrameworkType: The type of framework.
+	// FrameworkType: The type of the framework.
 	//
 	// Possible values:
 	//   "FRAMEWORK_TYPE_UNSPECIFIED" - Default value. This value is unused.
@@ -1207,9 +1225,9 @@ type GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary struct {
 	MajorRevisionId int64 `json:"majorRevisionId,omitempty,string"`
 	// MinorRevisionId: The minor revision ID of the framework.
 	MinorRevisionId int64 `json:"minorRevisionId,omitempty,string"`
-	// Name: Identifier. The name of the framework compliance summary.
+	// Name: Identifier. The resource name of the framework compliance summary.
 	Name string `json:"name,omitempty"`
-	// SupportedCloudProviders: The list of cloud providers supported by the
+	// SupportedCloudProviders: The cloud providers that are supported by the
 	// framework.
 	//
 	// Possible values:
@@ -1218,7 +1236,8 @@ type GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary struct {
 	//   "AZURE" - Microsoft Azure.
 	//   "GCP" - Google Cloud.
 	SupportedCloudProviders []string `json:"supportedCloudProviders,omitempty"`
-	// TargetResourceDetails: The target resource details for the framework.
+	// TargetResourceDetails: The details of the target resources (organizations,
+	// folders, or projects) that the framework is deployed on.
 	TargetResourceDetails []*GoogleCloudAssuredworkloadsV1TargetResourceDetails `json:"targetResourceDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ControlAssessmentDetails")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1255,11 +1274,14 @@ type GoogleCloudAssuredworkloadsV1EnableResourceMonitoringResponse struct {
 // GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse: The
 // response message for FetchDbFrameworkComplianceReport.
 type GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse struct {
-	// ControlAssessmentDetails: The control assessment details of the framework.
+	// ControlAssessmentDetails: The number of passing, failing, and not assessed
+	// controls in the framework.
 	ControlAssessmentDetails *GoogleCloudAssuredworkloadsV1ControlAssessmentDetails `json:"controlAssessmentDetails,omitempty"`
-	// Framework: The name of the framework.
+	// Framework: The resource name of the compliance framework. For example,
+	// `organizations/{organization}/locations/{location}/frameworks/{framework_id}`
+	// .
 	Framework string `json:"framework,omitempty"`
-	// FrameworkCategories: The list of framework categories supported.
+	// FrameworkCategories: The categories of the framework.
 	//
 	// Possible values:
 	//   "FRAMEWORK_CATEGORY_UNSPECIFIED" - Default value. This value is unused.
@@ -1271,7 +1293,7 @@ type GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse struc
 	FrameworkCategories []string `json:"frameworkCategories,omitempty"`
 	// FrameworkDescription: The description of the framework.
 	FrameworkDescription string `json:"frameworkDescription,omitempty"`
-	// FrameworkDisplayName: Optional. The display name for the framework.
+	// FrameworkDisplayName: Optional. The display name of the framework.
 	FrameworkDisplayName string `json:"frameworkDisplayName,omitempty"`
 	// FrameworkType: The type of the framework.
 	//
@@ -1285,10 +1307,10 @@ type GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse struc
 	// MinorRevisionId: The latest minor revision ID of the latest major revision
 	// of the framework.
 	MinorRevisionId int64 `json:"minorRevisionId,omitempty,string"`
-	// Name: The name of the framework compliance report.
+	// Name: The resource name of the framework compliance report.
 	Name string `json:"name,omitempty"`
-	// SupportedCloudProviders: The list of cloud providers that are supported by
-	// the framework.
+	// SupportedCloudProviders: The cloud providers that are supported by the
+	// framework.
 	//
 	// Possible values:
 	//   "CLOUD_PROVIDER_UNSPECIFIED" - Default value. This value is unused.
@@ -1296,9 +1318,10 @@ type GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse struc
 	//   "AZURE" - Microsoft Azure.
 	//   "GCP" - Google Cloud.
 	SupportedCloudProviders []string `json:"supportedCloudProviders,omitempty"`
-	// TargetResourceDetails: The target resource details of the framework.
+	// TargetResourceDetails: The details of the target resources (organizations,
+	// folders, or projects) that the framework is deployed on.
 	TargetResourceDetails []*GoogleCloudAssuredworkloadsV1TargetResourceDetails `json:"targetResourceDetails,omitempty"`
-	// UpdateTime: Output only. The last updated time of the report.
+	// UpdateTime: Output only. The time when the report was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1322,11 +1345,13 @@ func (s GoogleCloudAssuredworkloadsV1FetchDbFrameworkComplianceReportResponse) M
 }
 
 // GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse: The
-// response message for ListDBControlComplianceSummaries.
+// response message for ListDbControlComplianceSummaries.
 type GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse struct {
-	// DbControlComplianceSummaries: The list of control compliance details.
+	// DbControlComplianceSummaries: The list of control compliance summaries.
 	DbControlComplianceSummaries []*GoogleCloudAssuredworkloadsV1DbControlComplianceSummary `json:"dbControlComplianceSummaries,omitempty"`
-	// NextPageToken: Output only. The token to retrieve the next page of results.
+	// NextPageToken: Output only. A token that can be sent as `page_token` to
+	// retrieve the next page. If this field is empty, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1352,9 +1377,12 @@ func (s GoogleCloudAssuredworkloadsV1ListDbControlComplianceSummariesResponse) M
 // GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse: The response
 // message for ListDbFindingSummaries.
 type GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse struct {
-	// DbFindingSummaries: List of finding summary by category.
+	// DbFindingSummaries: The list of finding summaries, one for each finding
+	// category.
 	DbFindingSummaries []*GoogleCloudAssuredworkloadsV1DbFindingSummary `json:"dbFindingSummaries,omitempty"`
-	// NextPageToken: Output only. The token to retrieve the next page of results.
+	// NextPageToken: Output only. A token that can be sent as `page_token` to
+	// retrieve the next page. If this field is empty, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1378,11 +1406,13 @@ func (s GoogleCloudAssuredworkloadsV1ListDbFindingSummariesResponse) MarshalJSON
 }
 
 // GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse: The
-// response message for ListDbFrameworkComplianceSummariesResponse.
+// response message for ListDbFrameworkComplianceSummaries.
 type GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse struct {
 	// DbFrameworkComplianceSummaries: The list of framework compliance summaries.
 	DbFrameworkComplianceSummaries []*GoogleCloudAssuredworkloadsV1DbFrameworkComplianceSummary `json:"dbFrameworkComplianceSummaries,omitempty"`
-	// NextPageToken: Output only. The token to retrieve the next page of results.
+	// NextPageToken: Output only. A token that can be sent as `page_token` to
+	// retrieve the next page. If this field is empty, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1406,14 +1436,17 @@ func (s GoogleCloudAssuredworkloadsV1ListDbFrameworkComplianceSummariesResponse)
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1ListViolationsResponse: Response of
-// ListViolations endpoint.
+// GoogleCloudAssuredworkloadsV1ListViolationsResponse: Response message for
+// the `ListViolations` method.
 type GoogleCloudAssuredworkloadsV1ListViolationsResponse struct {
-	// NextPageToken: The next page token. Returns empty if reached the last page.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// TotalSize: The total number of violations.
+	// TotalSize: The total number of violations that match the request, across all
+	// pages. This field might not be populated for all requests; when it's not
+	// populated, its value is `0`.
 	TotalSize int64 `json:"totalSize,omitempty"`
-	// Violations: List of Violations under a Workload.
+	// Violations: The list of violations.
 	Violations []*GoogleCloudAssuredworkloadsV1Violation `json:"violations,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1974,94 +2007,113 @@ func (s GoogleCloudAssuredworkloadsV1UpdateDetails) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1Violation: Workload monitoring Violation.
+// GoogleCloudAssuredworkloadsV1Violation: A compliance violation that's
+// detected by Assured Workloads monitoring. A violation is created when an
+// organization policy or a resource in a workload (or a Data Boundary scope)
+// changes in a way that doesn't comply with the controls of the applicable
+// compliance regime or framework.
 type GoogleCloudAssuredworkloadsV1Violation struct {
-	// Acknowledged: A boolean that indicates if the violation is acknowledged
+	// Acknowledged: Whether the violation has been acknowledged.
 	Acknowledged bool `json:"acknowledged,omitempty"`
-	// AcknowledgementTime: Optional. Timestamp when this violation was
-	// acknowledged first. Check exception_contexts to find the last time the
-	// violation was acknowledged when there are more than one violations. This
-	// field will be absent when acknowledged field is marked as false.
+	// AcknowledgementTime: Optional. The time when the violation was first
+	// acknowledged. To find the most recent time that the violation was
+	// acknowledged, check `exception_contexts`. This field is absent when
+	// `acknowledged` is `false`.
 	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
-	// AffectedFrameworks: Output only. List of compliance frameworks that are
-	// affected by this violation. This field is only populated when using
-	// `VIOLATION_VIEW_DATA_BOUNDARY`. e.g. "FedRAMP High", "NIST 800-53".
+	// AffectedFrameworks: Output only. The IDs of the compliance frameworks that
+	// are affected by this violation. For example, `builtin-fedramp-high`. This
+	// field is only populated when using `VIOLATION_VIEW_DATA_BOUNDARY`.
 	AffectedFrameworks []string `json:"affectedFrameworks,omitempty"`
-	// AssociatedOrgPolicyViolationId: Optional. Output only. Violation Id of the
-	// org-policy violation due to which the resource violation is caused. Empty
-	// for org-policy violations.
+	// AssociatedOrgPolicyViolationId: Optional. Output only. For resource
+	// violations, the ID of the organization policy violation that caused this
+	// resource violation. This field is empty for organization policy violations.
 	AssociatedOrgPolicyViolationId string `json:"associatedOrgPolicyViolationId,omitempty"`
-	// AuditLogLink: Output only. Immutable. Audit Log Link for violated resource
-	// Format:
-	// https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{timeRange}{folder}
+	// AuditLogLink: Output only. Immutable. A link to the Cloud Audit Logs entries
+	// for the violated resource. Format:
+	// `https://console.cloud.google.com/logs/query;query={logName}{protoPayload.res
+	// ourceName}{timeRange}{folder}`
 	AuditLogLink string `json:"auditLogLink,omitempty"`
-	// BeginTime: Output only. Time of the event which triggered the Violation.
+	// BeginTime: Output only. The time of the event that triggered the violation.
 	BeginTime string `json:"beginTime,omitempty"`
-	// Category: Output only. Category under which this violation is mapped. e.g.
-	// Location, Service Usage, Access, Encryption, etc.
+	// Category: Output only. The category that the violation is mapped to. For
+	// example, `Location`, `Service Usage`, `Access`, or `Encryption`.
 	Category string `json:"category,omitempty"`
-	// ChildResourceViolationCount: Optional. Output only. The number of resource
-	// violations for particular org policy violation. This will be 0 in case of
-	// resource violation.
+	// ChildResourceViolationCount: Optional. Output only. For organization policy
+	// violations, the number of resource violations that are associated with this
+	// violation. This field is `0` for resource violations.
 	ChildResourceViolationCount int64 `json:"childResourceViolationCount,omitempty"`
-	// Description: Output only. Description for the Violation. e.g. OrgPolicy
-	// gcp.resourceLocations has non compliant value.
+	// Description: Output only. A description of the violation. For example,
+	// `OrgPolicy gcp.resourceLocations has non compliant value.`
 	Description string `json:"description,omitempty"`
-	// ExceptionAuditLogLink: Output only. Immutable. Audit Log link to find
-	// business justification provided for violation exception. Format:
-	// https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{protoPayload.methodName}{timeRange}{organization}
+	// ExceptionAuditLogLink: Output only. Immutable. A link to the Cloud Audit
+	// Logs entries that contain the business justification that was provided when
+	// the violation was acknowledged. Format:
+	// `https://console.cloud.google.com/logs/query;query={logName}{protoPayload.res
+	// ourceName}{protoPayload.methodName}{timeRange}{organization}`
 	ExceptionAuditLogLink string `json:"exceptionAuditLogLink,omitempty"`
-	// ExceptionContexts: Output only. List of all the exception detail added for
-	// the violation.
+	// ExceptionContexts: Output only. The details of all of the acknowledgements
+	// (exceptions) for the violation.
 	ExceptionContexts []*GoogleCloudAssuredworkloadsV1ViolationExceptionContext `json:"exceptionContexts,omitempty"`
-	// Name: Output only. Immutable. Name of the Violation. Format:
-	// organizations/{organization}/locations/{location}/workloads/{workload_id}/vio
-	// lations/{violations_id}
+	// Name: Output only. Immutable. The resource name of the violation. Format:
+	// `organizations/{organization}/locations/{location}/workloads/{workload_id}/vi
+	// olations/{violations_id}`
 	Name string `json:"name,omitempty"`
-	// NonCompliantOrgPolicy: Output only. Immutable. Name of the OrgPolicy which
-	// was modified with non-compliant change and resulted this violation. Format:
-	// projects/{project_number}/policies/{constraint_name}
-	// folders/{folder_id}/policies/{constraint_name}
-	// organizations/{organization_id}/policies/{constraint_name}
+	// NonCompliantOrgPolicy: Output only. Immutable. The name of the organization
+	// policy that was modified with a non-compliant change and resulted in this
+	// violation. Formats: * `projects/{project_number}/policies/{constraint_name}`
+	// * `folders/{folder_id}/policies/{constraint_name}` *
+	// `organizations/{organization_id}/policies/{constraint_name}`
 	NonCompliantOrgPolicy string `json:"nonCompliantOrgPolicy,omitempty"`
-	// OrgPolicyConstraint: Output only. Immutable. The org-policy-constraint that
-	// was incorrectly changed, which resulted in this violation.
+	// OrgPolicyConstraint: Output only. Immutable. Deprecated: This field is
+	// deprecated and might be removed in a future version of the API. Use
+	// `non_compliant_org_policy` instead, which contains the full resource name of
+	// the organization policy, including the constraint name. The organization
+	// policy constraint that was changed in a non-compliant way, which resulted in
+	// this violation.
 	OrgPolicyConstraint string `json:"orgPolicyConstraint,omitempty"`
-	// ParentProjectNumber: Optional. Output only. Parent project number where
-	// resource is present. Empty for org-policy violations.
+	// ParentProjectNumber: Optional. Output only. For resource violations, the
+	// number of the project that contains the non-compliant resource. This field
+	// is empty for organization policy violations.
 	ParentProjectNumber string `json:"parentProjectNumber,omitempty"`
-	// Remediation: Output only. Compliance violation remediation
+	// Remediation: Output only. The remediation guidance for the violation.
 	Remediation *GoogleCloudAssuredworkloadsV1ViolationRemediation `json:"remediation,omitempty"`
-	// RemediationMarkdown: Output only. Contains the remediation instructions for
-	// the violation in markdown format.
+	// RemediationMarkdown: Output only. The remediation instructions for the
+	// violation, in Markdown format. This field is only populated by
+	// `GetViolation` when using `VIOLATION_VIEW_DATA_BOUNDARY`. When this field
+	// isn't populated, see `remediation` instead.
 	RemediationMarkdown string `json:"remediationMarkdown,omitempty"`
-	// ResolveTime: Output only. Time of the event which fixed the Violation. If
-	// the violation is ACTIVE this will be empty.
+	// ResolveTime: Output only. The time of the event that resolved the violation.
+	// This field is empty if the violation is unresolved.
 	ResolveTime string `json:"resolveTime,omitempty"`
-	// ResourceName: Optional. Output only. Name of the resource like
-	// //storage.googleapis.com/myprojectxyz-testbucket. Empty for org-policy
-	// violations.
+	// ResourceName: Optional. Output only. For resource violations, the full
+	// resource name of the non-compliant resource. For example,
+	// `//storage.googleapis.com/myprojectxyz-testbucket`. This field is empty for
+	// organization policy violations.
 	ResourceName string `json:"resourceName,omitempty"`
-	// ResourceType: Optional. Output only. Type of the resource like
-	// compute.googleapis.com/Disk, etc. Empty for org-policy violations.
+	// ResourceType: Optional. Output only. For resource violations, the type of
+	// the non-compliant resource. For example, `compute.googleapis.com/Disk`. This
+	// field is empty for organization policy violations.
 	ResourceType string `json:"resourceType,omitempty"`
-	// State: Output only. State of the violation
+	// State: Output only. The state of the violation.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "RESOLVED" - Violation is resolved.
-	//   "UNRESOLVED" - Violation is Unresolved
-	//   "EXCEPTION" - Violation is Exception
+	//   "STATE_UNSPECIFIED" - Default value. The state isn't specified.
+	//   "RESOLVED" - The violation is resolved.
+	//   "UNRESOLVED" - The violation is unresolved and hasn't been acknowledged.
+	//   "EXCEPTION" - The violation is unresolved and has been acknowledged as an
+	// exception.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. The last time when the Violation record was
+	// UpdateTime: Output only. The time when the violation record was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// ViolationType: Output only. Type of the violation
+	// ViolationType: Output only. The type of the violation.
 	//
 	// Possible values:
-	//   "VIOLATION_TYPE_UNSPECIFIED" - Unspecified type.
-	//   "ORG_POLICY" - Org Policy Violation.
-	//   "RESOURCE" - Resource Violation.
+	//   "VIOLATION_TYPE_UNSPECIFIED" - Default value. The violation type isn't
+	// specified.
+	//   "ORG_POLICY" - A violation that's caused by a non-compliant change to an
+	// organization policy.
+	//   "RESOURCE" - A violation that's caused by a non-compliant resource.
 	ViolationType string `json:"violationType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2084,15 +2136,15 @@ func (s GoogleCloudAssuredworkloadsV1Violation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1ViolationExceptionContext: Violation exception
-// detail.
+// GoogleCloudAssuredworkloadsV1ViolationExceptionContext: Details about an
+// acknowledgement (exception) of a violation.
 type GoogleCloudAssuredworkloadsV1ViolationExceptionContext struct {
-	// AcknowledgementTime: Timestamp when the violation was acknowledged.
+	// AcknowledgementTime: The time when the violation was acknowledged.
 	AcknowledgementTime string `json:"acknowledgementTime,omitempty"`
-	// Comment: Business justification provided towards the acknowledgement of the
-	// violation.
+	// Comment: The business justification that was provided when the violation was
+	// acknowledged.
 	Comment string `json:"comment,omitempty"`
-	// UserName: Name of the user (or service account) who acknowledged the
+	// UserName: The name of the user (or service account) who acknowledged the
 	// violation.
 	UserName string `json:"userName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcknowledgementTime") to
@@ -2113,32 +2165,36 @@ func (s GoogleCloudAssuredworkloadsV1ViolationExceptionContext) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudAssuredworkloadsV1ViolationRemediation: Represents remediation
-// guidance to resolve compliance violation for AssuredWorkload
+// GoogleCloudAssuredworkloadsV1ViolationRemediation: Remediation guidance to
+// resolve a compliance violation.
 type GoogleCloudAssuredworkloadsV1ViolationRemediation struct {
-	// CompliantValues: Values that can resolve the violation For example: for list
-	// org policy violations, this will either be the list of allowed or denied
-	// values
+	// CompliantValues: The values that can resolve the violation. For example, for
+	// list organization policy violations, this field contains the list of allowed
+	// or denied values.
 	CompliantValues []string `json:"compliantValues,omitempty"`
-	// Instructions: Required. Remediation instructions to resolve violations
+	// Instructions: Required. The instructions to resolve the violation.
 	Instructions *GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions `json:"instructions,omitempty"`
-	// RemediationType: Output only. Reemediation type based on the type of org
-	// policy values violated
+	// RemediationType: Output only. The remediation type, which is based on the
+	// type of organization policy values that were violated.
 	//
 	// Possible values:
-	//   "REMEDIATION_TYPE_UNSPECIFIED" - Unspecified remediation type
-	//   "REMEDIATION_BOOLEAN_ORG_POLICY_VIOLATION" - Remediation type for boolean
-	// org policy
-	//   "REMEDIATION_LIST_ALLOWED_VALUES_ORG_POLICY_VIOLATION" - Remediation type
-	// for list org policy which have allowed values in the monitoring rule
-	//   "REMEDIATION_LIST_DENIED_VALUES_ORG_POLICY_VIOLATION" - Remediation type
-	// for list org policy which have denied values in the monitoring rule
+	//   "REMEDIATION_TYPE_UNSPECIFIED" - Default value. The remediation type isn't
+	// specified.
+	//   "REMEDIATION_BOOLEAN_ORG_POLICY_VIOLATION" - Remediation for a boolean
+	// organization policy violation.
+	//   "REMEDIATION_LIST_ALLOWED_VALUES_ORG_POLICY_VIOLATION" - Remediation for a
+	// list organization policy violation where the monitoring rule specifies
+	// allowed values.
+	//   "REMEDIATION_LIST_DENIED_VALUES_ORG_POLICY_VIOLATION" - Remediation for a
+	// list organization policy violation where the monitoring rule specifies
+	// denied values.
 	//   "REMEDIATION_RESTRICT_CMEK_CRYPTO_KEY_PROJECTS_ORG_POLICY_VIOLATION" -
-	// Remediation type for gcp.restrictCmekCryptoKeyProjects
-	//   "REMEDIATION_RESOURCE_VIOLATION" - Remediation type for resource
+	// Remediation for a `gcp.restrictCmekCryptoKeyProjects` organization policy
 	// violation.
-	//   "REMEDIATION_RESOURCE_VIOLATION_NON_CMEK_SERVICES" - Remediation type for
-	// resource violation due to gcp.restrictNonCmekServices
+	//   "REMEDIATION_RESOURCE_VIOLATION" - Remediation for a resource violation.
+	//   "REMEDIATION_RESOURCE_VIOLATION_NON_CMEK_SERVICES" - Remediation for a
+	// resource violation that's caused by the `gcp.restrictNonCmekServices`
+	// organization policy.
 	RemediationType string `json:"remediationType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CompliantValues") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2159,13 +2215,13 @@ func (s GoogleCloudAssuredworkloadsV1ViolationRemediation) MarshalJSON() ([]byte
 }
 
 // GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions: Instructions
-// to remediate violation
+// to remediate a violation.
 type GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions struct {
-	// ConsoleInstructions: Remediation instructions to resolve violation via cloud
-	// console
+	// ConsoleInstructions: Instructions to resolve the violation by using the
+	// Google Cloud console.
 	ConsoleInstructions *GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole `json:"consoleInstructions,omitempty"`
-	// GcloudInstructions: Remediation instructions to resolve violation via gcloud
-	// cli
+	// GcloudInstructions: Instructions to resolve the violation by using the
+	// gcloud CLI.
 	GcloudInstructions *GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud `json:"gcloudInstructions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConsoleInstructions") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2186,13 +2242,14 @@ func (s GoogleCloudAssuredworkloadsV1ViolationRemediationInstructions) MarshalJS
 }
 
 // GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole:
-// Remediation instructions to resolve violation via cloud console
+// Instructions to remediate a violation by using the Google Cloud console.
 type GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole struct {
-	// AdditionalLinks: Additional urls for more information about steps
+	// AdditionalLinks: Additional URLs with more information about the steps.
 	AdditionalLinks []string `json:"additionalLinks,omitempty"`
-	// ConsoleUris: Link to console page where violations can be resolved
+	// ConsoleUris: Links to the Google Cloud console pages where the violation can
+	// be resolved.
 	ConsoleUris []string `json:"consoleUris,omitempty"`
-	// Steps: Steps to resolve violation via cloud console
+	// Steps: The steps to resolve the violation by using the Google Cloud console.
 	Steps []string `json:"steps,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalLinks") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2213,13 +2270,13 @@ func (s GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsConsole) Ma
 }
 
 // GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud:
-// Remediation instructions to resolve violation via gcloud cli
+// Instructions to remediate a violation by using the Google Cloud CLI.
 type GoogleCloudAssuredworkloadsV1ViolationRemediationInstructionsGcloud struct {
-	// AdditionalLinks: Additional urls for more information about steps
+	// AdditionalLinks: Additional URLs with more information about the steps.
 	AdditionalLinks []string `json:"additionalLinks,omitempty"`
-	// GcloudCommands: Gcloud command to resolve violation
+	// GcloudCommands: The gcloud CLI commands that resolve the violation.
 	GcloudCommands []string `json:"gcloudCommands,omitempty"`
-	// Steps: Steps to resolve violation via gcloud cli
+	// Steps: The steps to resolve the violation by using the gcloud CLI.
 	Steps []string `json:"steps,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdditionalLinks") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2964,19 +3021,25 @@ type FoldersLocationsDbFindingSummariesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the finding summary by category for a given scope.
+// List: Lists summaries of the active findings in a Data Boundary scope (an
+// organization, folder, or project), with one summary for each finding
+// category.
 //
-//   - parent: The parent scope for the framework overview page. Formats: -
-//     projects/{project}/locations/{location} -
-//     folders/{folder}/locations/{location} -
-//     organizations/{organization}/locations/{location}.
+//   - parent: The parent scope to list finding summaries for. Formats: *
+//     `organizations/{organization}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `projects/{project}/locations/{location}`.
 func (r *FoldersLocationsDbFindingSummariesService) List(parent string) *FoldersLocationsDbFindingSummariesListCall {
 	c := &FoldersLocationsDbFindingSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the framework deployments whose findings are summarized. The
+// syntax follows AIP-160 (https://google.aip.dev/160). Supported fields are
+// `framework_deployment`, `framework_name`, and `framework_revision` (the
+// major revision ID of the framework).
 func (c *FoldersLocationsDbFindingSummariesListCall) Filter(filter string) *FoldersLocationsDbFindingSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2991,7 +3054,8 @@ func (c *FoldersLocationsDbFindingSummariesListCall) PageSize(pageSize int64) *F
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *FoldersLocationsDbFindingSummariesListCall) PageToken(pageToken string) *FoldersLocationsDbFindingSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3119,11 +3183,12 @@ type FoldersLocationsDbFrameworkComplianceReportsAggregateCall struct {
 	header_      http.Header
 }
 
-// Aggregate: Gets the aggregated compliance report over time for a given
-// scope.
+// Aggregate: Gets daily compliance reports over a time range for a framework
+// that's deployed in a Data Boundary scope.
 //
-//   - name: The name of the aggregated compliance report over time to retrieve.
-//     Format:
+//   - name: The name of the framework compliance report to aggregate over time.
+//     The report ID is the ID of the compliance framework, for example
+//     `builtin-fedramp-high`. Format:
 //     `organizations/{organization_id}/locations/{location}/dbFrameworkCompliance
 //     Reports/{db_framework_compliance_report}`.
 func (r *FoldersLocationsDbFrameworkComplianceReportsService) Aggregate(name string) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
@@ -3132,7 +3197,11 @@ func (r *FoldersLocationsDbFrameworkComplianceReportsService) Aggregate(name str
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the framework deployments that are included in the report. The
+// syntax follows AIP-160 (https://google.aip.dev/160). Supported fields are
+// `framework_deployment`, `framework_name`, and `framework_revision` (the
+// major revision ID of the framework).
 func (c *FoldersLocationsDbFrameworkComplianceReportsAggregateCall) Filter(filter string) *FoldersLocationsDbFrameworkComplianceReportsAggregateCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3255,9 +3324,20 @@ type FoldersLocationsDbFrameworkComplianceReportsFetchCall struct {
 	header_      http.Header
 }
 
-// Fetch: Fetches the framework compliance report for a given scope.
+// Fetch: Fetches the current compliance report for a framework that's deployed
+// in a Data Boundary scope (an organization, folder, or project). The report
+// includes the number of passing, failing, and not assessed controls in the
+// framework.
 //
-// - name: The name of the framework compliance report to retrieve.
+//   - name: The name of the framework compliance report to retrieve. The report
+//     ID is the ID of the compliance framework, for example
+//     `builtin-fedramp-high`. Formats: *
+//     `organizations/{organization}/locations/{location}/dbFrameworkComplianceRep
+//     orts/{db_framework_compliance_report}` *
+//     `folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fra
+//     mework_compliance_report}` *
+//     `projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_f
+//     ramework_compliance_report}`.
 func (r *FoldersLocationsDbFrameworkComplianceReportsService) Fetch(name string) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
 	c := &FoldersLocationsDbFrameworkComplianceReportsFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3265,12 +3345,15 @@ func (r *FoldersLocationsDbFrameworkComplianceReportsService) Fetch(name string)
 }
 
 // EndTime sets the optional parameter "endTime": The end time of the report.
+// Reserved for future use. Currently, the report always reflects the current
+// compliance state.
 func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) EndTime(endTime string) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. Reserved for future use.
 func (c *FoldersLocationsDbFrameworkComplianceReportsFetchCall) Filter(filter string) *FoldersLocationsDbFrameworkComplianceReportsFetchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3377,22 +3460,31 @@ type FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesLis
 	header_      http.Header
 }
 
-// List: Lists the control compliance summary for a given scope.
+// List: Lists the compliance summaries of the controls in a framework
+// compliance report.
 //
-//   - parent: The parent scope for the framework overview page. Format:
-//     organizations/{organization}/locations/{location}/dbFrameworkComplianceRepo
-//     rts/{db_framework_compliance_report}
-//     folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fram
-//     ework_compliance_report}
-//     projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_fr
-//     amework_compliance_report}.
+//   - parent: The framework compliance report to list control compliance
+//     summaries for. Formats: *
+//     `organizations/{organization}/locations/{location}/dbFrameworkComplianceRep
+//     orts/{db_framework_compliance_report}` *
+//     `folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fra
+//     mework_compliance_report}` *
+//     `projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_f
+//     ramework_compliance_report}`.
 func (r *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService) List(parent string) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c := &FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. The syntax follows AIP-160
+// (https://google.aip.dev/160). Supported fields are `framework_deployment`,
+// `framework_name`, `framework_revision` (the major revision ID of the
+// framework), and `end_time`. The `end_time` field accepts a single equality
+// comparison with an RFC 3339 (https://www.ietf.org/rfc/rfc3339.txt)
+// timestamp, for example `end_time = "2026-01-01T00:00:00Z". Only findings
+// that were updated at or after this time are counted.
 func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Filter(filter string) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3407,7 +3499,8 @@ func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummarie
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageToken(pageToken string) *FoldersLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3535,19 +3628,21 @@ type FoldersLocationsDbFrameworkComplianceSummariesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the framework compliance summary for a given scope.
+// List: Lists the compliance summaries of the frameworks that are deployed in
+// a Data Boundary scope (an organization, folder, or project).
 //
-//   - parent: The parent scope for the framework compliance summary. Format:
-//     organizations/{organization}/locations/{location}
-//     folders/{folder}/locations/{location}
-//     projects/{project}/locations/{location}.
+//   - parent: The parent scope to list framework compliance summaries for.
+//     Formats: * `organizations/{organization}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `projects/{project}/locations/{location}`.
 func (r *FoldersLocationsDbFrameworkComplianceSummariesService) List(parent string) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
 	c := &FoldersLocationsDbFrameworkComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. Reserved for future use.
 func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) Filter(filter string) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3562,15 +3657,16 @@ func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) PageSize(pageSi
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return. Pass the next_page_token
-// value from a previous result.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *FoldersLocationsDbFrameworkComplianceSummariesListCall) PageToken(pageToken string) *FoldersLocationsDbFrameworkComplianceSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": Specifies the level of detail to
-// return in the response.
+// View sets the optional parameter "view": The level of detail to return for
+// each summary. If not specified, `FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_BASIC` is
+// used.
 //
 // Possible values:
 //
@@ -3713,19 +3809,25 @@ type OrganizationsLocationsDbFindingSummariesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the finding summary by category for a given scope.
+// List: Lists summaries of the active findings in a Data Boundary scope (an
+// organization, folder, or project), with one summary for each finding
+// category.
 //
-//   - parent: The parent scope for the framework overview page. Formats: -
-//     projects/{project}/locations/{location} -
-//     folders/{folder}/locations/{location} -
-//     organizations/{organization}/locations/{location}.
+//   - parent: The parent scope to list finding summaries for. Formats: *
+//     `organizations/{organization}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `projects/{project}/locations/{location}`.
 func (r *OrganizationsLocationsDbFindingSummariesService) List(parent string) *OrganizationsLocationsDbFindingSummariesListCall {
 	c := &OrganizationsLocationsDbFindingSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the framework deployments whose findings are summarized. The
+// syntax follows AIP-160 (https://google.aip.dev/160). Supported fields are
+// `framework_deployment`, `framework_name`, and `framework_revision` (the
+// major revision ID of the framework).
 func (c *OrganizationsLocationsDbFindingSummariesListCall) Filter(filter string) *OrganizationsLocationsDbFindingSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3740,7 +3842,8 @@ func (c *OrganizationsLocationsDbFindingSummariesListCall) PageSize(pageSize int
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *OrganizationsLocationsDbFindingSummariesListCall) PageToken(pageToken string) *OrganizationsLocationsDbFindingSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -3868,11 +3971,12 @@ type OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall struct {
 	header_      http.Header
 }
 
-// Aggregate: Gets the aggregated compliance report over time for a given
-// scope.
+// Aggregate: Gets daily compliance reports over a time range for a framework
+// that's deployed in a Data Boundary scope.
 //
-//   - name: The name of the aggregated compliance report over time to retrieve.
-//     Format:
+//   - name: The name of the framework compliance report to aggregate over time.
+//     The report ID is the ID of the compliance framework, for example
+//     `builtin-fedramp-high`. Format:
 //     `organizations/{organization_id}/locations/{location}/dbFrameworkCompliance
 //     Reports/{db_framework_compliance_report}`.
 func (r *OrganizationsLocationsDbFrameworkComplianceReportsService) Aggregate(name string) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
@@ -3881,7 +3985,11 @@ func (r *OrganizationsLocationsDbFrameworkComplianceReportsService) Aggregate(na
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the framework deployments that are included in the report. The
+// syntax follows AIP-160 (https://google.aip.dev/160). Supported fields are
+// `framework_deployment`, `framework_name`, and `framework_revision` (the
+// major revision ID of the framework).
 func (c *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall) Filter(filter string) *OrganizationsLocationsDbFrameworkComplianceReportsAggregateCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4004,9 +4112,20 @@ type OrganizationsLocationsDbFrameworkComplianceReportsFetchCall struct {
 	header_      http.Header
 }
 
-// Fetch: Fetches the framework compliance report for a given scope.
+// Fetch: Fetches the current compliance report for a framework that's deployed
+// in a Data Boundary scope (an organization, folder, or project). The report
+// includes the number of passing, failing, and not assessed controls in the
+// framework.
 //
-// - name: The name of the framework compliance report to retrieve.
+//   - name: The name of the framework compliance report to retrieve. The report
+//     ID is the ID of the compliance framework, for example
+//     `builtin-fedramp-high`. Formats: *
+//     `organizations/{organization}/locations/{location}/dbFrameworkComplianceRep
+//     orts/{db_framework_compliance_report}` *
+//     `folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fra
+//     mework_compliance_report}` *
+//     `projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_f
+//     ramework_compliance_report}`.
 func (r *OrganizationsLocationsDbFrameworkComplianceReportsService) Fetch(name string) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
 	c := &OrganizationsLocationsDbFrameworkComplianceReportsFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4014,12 +4133,15 @@ func (r *OrganizationsLocationsDbFrameworkComplianceReportsService) Fetch(name s
 }
 
 // EndTime sets the optional parameter "endTime": The end time of the report.
+// Reserved for future use. Currently, the report always reflects the current
+// compliance state.
 func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) EndTime(endTime string) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. Reserved for future use.
 func (c *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall) Filter(filter string) *OrganizationsLocationsDbFrameworkComplianceReportsFetchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4126,22 +4248,31 @@ type OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummar
 	header_      http.Header
 }
 
-// List: Lists the control compliance summary for a given scope.
+// List: Lists the compliance summaries of the controls in a framework
+// compliance report.
 //
-//   - parent: The parent scope for the framework overview page. Format:
-//     organizations/{organization}/locations/{location}/dbFrameworkComplianceRepo
-//     rts/{db_framework_compliance_report}
-//     folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fram
-//     ework_compliance_report}
-//     projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_fr
-//     amework_compliance_report}.
+//   - parent: The framework compliance report to list control compliance
+//     summaries for. Formats: *
+//     `organizations/{organization}/locations/{location}/dbFrameworkComplianceRep
+//     orts/{db_framework_compliance_report}` *
+//     `folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fra
+//     mework_compliance_report}` *
+//     `projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_f
+//     ramework_compliance_report}`.
 func (r *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService) List(parent string) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c := &OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. The syntax follows AIP-160
+// (https://google.aip.dev/160). Supported fields are `framework_deployment`,
+// `framework_name`, `framework_revision` (the major revision ID of the
+// framework), and `end_time`. The `end_time` field accepts a single equality
+// comparison with an RFC 3339 (https://www.ietf.org/rfc/rfc3339.txt)
+// timestamp, for example `end_time = "2026-01-01T00:00:00Z". Only findings
+// that were updated at or after this time are counted.
 func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Filter(filter string) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4156,7 +4287,8 @@ func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSu
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageToken(pageToken string) *OrganizationsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4284,19 +4416,21 @@ type OrganizationsLocationsDbFrameworkComplianceSummariesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the framework compliance summary for a given scope.
+// List: Lists the compliance summaries of the frameworks that are deployed in
+// a Data Boundary scope (an organization, folder, or project).
 //
-//   - parent: The parent scope for the framework compliance summary. Format:
-//     organizations/{organization}/locations/{location}
-//     folders/{folder}/locations/{location}
-//     projects/{project}/locations/{location}.
+//   - parent: The parent scope to list framework compliance summaries for.
+//     Formats: * `organizations/{organization}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `projects/{project}/locations/{location}`.
 func (r *OrganizationsLocationsDbFrameworkComplianceSummariesService) List(parent string) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
 	c := &OrganizationsLocationsDbFrameworkComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. Reserved for future use.
 func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) Filter(filter string) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4311,15 +4445,16 @@ func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) PageSize(
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return. Pass the next_page_token
-// value from a previous result.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *OrganizationsLocationsDbFrameworkComplianceSummariesListCall) PageToken(pageToken string) *OrganizationsLocationsDbFrameworkComplianceSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": Specifies the level of detail to
-// return in the response.
+// View sets the optional parameter "view": The level of detail to return for
+// each summary. If not specified, `FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_BASIC` is
+// used.
 //
 // Possible values:
 //
@@ -6202,9 +6337,9 @@ type OrganizationsLocationsWorkloadsViolationsAcknowledgeCall struct {
 // justification. Acknowledgement is a permanent operation and it cannot be
 // reverted.
 //
-//   - name: The resource name of the Violation to acknowledge. Format:
-//     organizations/{organization}/locations/{location}/workloads/{workload}/viol
-//     ations/{violation}.
+//   - name: The resource name of the violation to acknowledge. Format:
+//     `organizations/{organization}/locations/{location}/workloads/{workload}/vio
+//     lations/{violation}`.
 func (r *OrganizationsLocationsWorkloadsViolationsService) Acknowledge(name string, googlecloudassuredworkloadsv1acknowledgeviolationrequest *GoogleCloudAssuredworkloadsV1AcknowledgeViolationRequest) *OrganizationsLocationsWorkloadsViolationsAcknowledgeCall {
 	c := &OrganizationsLocationsWorkloadsViolationsAcknowledgeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6306,20 +6441,22 @@ type OrganizationsLocationsWorkloadsViolationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves Assured Workload Violation based on ID.
+// Get: Retrieves an Assured Workloads violation by its resource name.
 //
-//   - name: The resource name of the Violation to fetch (ie. Violation.name).
-//     Format:
-//     organizations/{organization}/locations/{location}/workloads/{workload}/viol
-//     ations/{violation}.
+//   - name: The resource name of the violation to retrieve (that is, the value
+//     of `Violation.name`). Format:
+//     `organizations/{organization}/locations/{location}/workloads/{workload}/vio
+//     lations/{violation}`.
 func (r *OrganizationsLocationsWorkloadsViolationsService) Get(name string) *OrganizationsLocationsWorkloadsViolationsGetCall {
 	c := &OrganizationsLocationsWorkloadsViolationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// View sets the optional parameter "view": Specifies the violation view
-// (`AssuredWorkloads` or `DataBoundary`) for fetching violations.
+// View sets the optional parameter "view": The violation view
+// (`VIOLATION_VIEW_ASSURED_WORKLOADS` or `VIOLATION_VIEW_DATA_BOUNDARY`) that
+// the violation belongs to. If not specified,
+// `VIOLATION_VIEW_ASSURED_WORKLOADS` is used.
 //
 // Possible values:
 //
@@ -6443,16 +6580,28 @@ type OrganizationsLocationsWorkloadsViolationsListCall struct {
 // a wildcard character instead of workload-id in the parent. Format
 // `organizations/{org_id}/locations/{location}/workloads/-`
 //
-//   - parent: The Workload name. Format
-//     `organizations/{org_id}/locations/{location}/workloads/{workload}`.
+//   - parent: The workload to list violations for. To list violations across all
+//     workloads in an organization, use `-` as the workload ID. When `view` is
+//     `VIOLATION_VIEW_DATA_BOUNDARY`, violations are listed for the entire
+//     organization and location, and the workload ID is ignored. Format:
+//     `organizations/{organization}/locations/{location}/workloads/{workload}`.
 func (r *OrganizationsLocationsWorkloadsViolationsService) List(parent string) *OrganizationsLocationsWorkloadsViolationsListCall {
 	c := &OrganizationsLocationsWorkloadsViolationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": A custom filter for filtering
-// by the Violations properties.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the violations that are returned. The syntax follows AIP-160
+// (https://google.aip.dev/160). Only the equality operator (`=`) is supported,
+// and expressions can be combined with `AND`, `OR`, and `NOT`. When `view` is
+// `VIOLATION_VIEW_DATA_BOUNDARY`, the following fields are supported:
+// `violationId`, `category`, `state` (`UNRESOLVED`, `RESOLVED`, or
+// `EXCEPTION`), `violationType` (`ORG_POLICY` or `RESOURCE`), `resourceType`,
+// `resourceName`, `project`, `associatedOrgPolicyViolationId`,
+// `cloudControlName`, `workloadDisplayName`, and `complianceType` (a framework
+// ID). Example: `state = "UNRESOLVED" AND complianceType =
+// "builtin-fedramp-high"
 func (c *OrganizationsLocationsWorkloadsViolationsListCall) Filter(filter string) *OrganizationsLocationsWorkloadsViolationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6472,28 +6621,40 @@ func (c *OrganizationsLocationsWorkloadsViolationsListCall) IntervalStartTime(in
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Actionable sorting
-// delegation.
+// OrderBy sets the optional parameter "orderBy": A comma-separated list of
+// fields to sort the results by. The default sort order is ascending; to sort
+// in descending order, append ` desc` to the field name. For example,
+// `update_time desc,category`. When `view` is `VIOLATION_VIEW_DATA_BOUNDARY`,
+// the following fields are supported: `begin_time`, `update_time`,
+// `resource_type`, `state`, and `category`. If not specified, results are
+// sorted by `begin_time` in descending order.
 func (c *OrganizationsLocationsWorkloadsViolationsListCall) OrderBy(orderBy string) *OrganizationsLocationsWorkloadsViolationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// violations to return. The service might return fewer violations than this
+// value. If unspecified, at most 100 violations are returned. The maximum
+// value is 1000; values above 1000 are coerced to 1000.
 func (c *OrganizationsLocationsWorkloadsViolationsListCall) PageSize(pageSize int64) *OrganizationsLocationsWorkloadsViolationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token returned from
-// previous request.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListViolations` call. Provide this token to retrieve the
+// subsequent page. When paginating, all other parameters that are provided to
+// `ListViolations` must match the call that provided the page token.
 func (c *OrganizationsLocationsWorkloadsViolationsListCall) PageToken(pageToken string) *OrganizationsLocationsWorkloadsViolationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": Specifies the violation
-// view(AssuredWorkloads or DataBoundary) for fetching violations.
+// View sets the optional parameter "view": The violation view
+// (`VIOLATION_VIEW_ASSURED_WORKLOADS` or `VIOLATION_VIEW_DATA_BOUNDARY`) to
+// list violations for. If not specified, `VIOLATION_VIEW_ASSURED_WORKLOADS` is
+// used.
 //
 // Possible values:
 //
@@ -6632,19 +6793,25 @@ type ProjectsLocationsDbFindingSummariesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the finding summary by category for a given scope.
+// List: Lists summaries of the active findings in a Data Boundary scope (an
+// organization, folder, or project), with one summary for each finding
+// category.
 //
-//   - parent: The parent scope for the framework overview page. Formats: -
-//     projects/{project}/locations/{location} -
-//     folders/{folder}/locations/{location} -
-//     organizations/{organization}/locations/{location}.
+//   - parent: The parent scope to list finding summaries for. Formats: *
+//     `organizations/{organization}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsDbFindingSummariesService) List(parent string) *ProjectsLocationsDbFindingSummariesListCall {
 	c := &ProjectsLocationsDbFindingSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the framework deployments whose findings are summarized. The
+// syntax follows AIP-160 (https://google.aip.dev/160). Supported fields are
+// `framework_deployment`, `framework_name`, and `framework_revision` (the
+// major revision ID of the framework).
 func (c *ProjectsLocationsDbFindingSummariesListCall) Filter(filter string) *ProjectsLocationsDbFindingSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6659,7 +6826,8 @@ func (c *ProjectsLocationsDbFindingSummariesListCall) PageSize(pageSize int64) *
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *ProjectsLocationsDbFindingSummariesListCall) PageToken(pageToken string) *ProjectsLocationsDbFindingSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -6787,11 +6955,12 @@ type ProjectsLocationsDbFrameworkComplianceReportsAggregateCall struct {
 	header_      http.Header
 }
 
-// Aggregate: Gets the aggregated compliance report over time for a given
-// scope.
+// Aggregate: Gets daily compliance reports over a time range for a framework
+// that's deployed in a Data Boundary scope.
 //
-//   - name: The name of the aggregated compliance report over time to retrieve.
-//     Format:
+//   - name: The name of the framework compliance report to aggregate over time.
+//     The report ID is the ID of the compliance framework, for example
+//     `builtin-fedramp-high`. Format:
 //     `organizations/{organization_id}/locations/{location}/dbFrameworkCompliance
 //     Reports/{db_framework_compliance_report}`.
 func (r *ProjectsLocationsDbFrameworkComplianceReportsService) Aggregate(name string) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
@@ -6800,7 +6969,11 @@ func (r *ProjectsLocationsDbFrameworkComplianceReportsService) Aggregate(name st
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the framework deployments that are included in the report. The
+// syntax follows AIP-160 (https://google.aip.dev/160). Supported fields are
+// `framework_deployment`, `framework_name`, and `framework_revision` (the
+// major revision ID of the framework).
 func (c *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall) Filter(filter string) *ProjectsLocationsDbFrameworkComplianceReportsAggregateCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6923,9 +7096,20 @@ type ProjectsLocationsDbFrameworkComplianceReportsFetchCall struct {
 	header_      http.Header
 }
 
-// Fetch: Fetches the framework compliance report for a given scope.
+// Fetch: Fetches the current compliance report for a framework that's deployed
+// in a Data Boundary scope (an organization, folder, or project). The report
+// includes the number of passing, failing, and not assessed controls in the
+// framework.
 //
-// - name: The name of the framework compliance report to retrieve.
+//   - name: The name of the framework compliance report to retrieve. The report
+//     ID is the ID of the compliance framework, for example
+//     `builtin-fedramp-high`. Formats: *
+//     `organizations/{organization}/locations/{location}/dbFrameworkComplianceRep
+//     orts/{db_framework_compliance_report}` *
+//     `folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fra
+//     mework_compliance_report}` *
+//     `projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_f
+//     ramework_compliance_report}`.
 func (r *ProjectsLocationsDbFrameworkComplianceReportsService) Fetch(name string) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
 	c := &ProjectsLocationsDbFrameworkComplianceReportsFetchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6933,12 +7117,15 @@ func (r *ProjectsLocationsDbFrameworkComplianceReportsService) Fetch(name string
 }
 
 // EndTime sets the optional parameter "endTime": The end time of the report.
+// Reserved for future use. Currently, the report always reflects the current
+// compliance state.
 func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) EndTime(endTime string) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. Reserved for future use.
 func (c *ProjectsLocationsDbFrameworkComplianceReportsFetchCall) Filter(filter string) *ProjectsLocationsDbFrameworkComplianceReportsFetchCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7045,22 +7232,31 @@ type ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesLi
 	header_      http.Header
 }
 
-// List: Lists the control compliance summary for a given scope.
+// List: Lists the compliance summaries of the controls in a framework
+// compliance report.
 //
-//   - parent: The parent scope for the framework overview page. Format:
-//     organizations/{organization}/locations/{location}/dbFrameworkComplianceRepo
-//     rts/{db_framework_compliance_report}
-//     folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fram
-//     ework_compliance_report}
-//     projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_fr
-//     amework_compliance_report}.
+//   - parent: The framework compliance report to list control compliance
+//     summaries for. Formats: *
+//     `organizations/{organization}/locations/{location}/dbFrameworkComplianceRep
+//     orts/{db_framework_compliance_report}` *
+//     `folders/{folder}/locations/{location}/dbFrameworkComplianceReports/{db_fra
+//     mework_compliance_report}` *
+//     `projects/{project}/locations/{location}/dbFrameworkComplianceReports/{db_f
+//     ramework_compliance_report}`.
 func (r *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesService) List(parent string) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c := &ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. The syntax follows AIP-160
+// (https://google.aip.dev/160). Supported fields are `framework_deployment`,
+// `framework_name`, `framework_revision` (the major revision ID of the
+// framework), and `end_time`. The `end_time` field accepts a single equality
+// comparison with an RFC 3339 (https://www.ietf.org/rfc/rfc3339.txt)
+// timestamp, for example `end_time = "2026-01-01T00:00:00Z". Only findings
+// that were updated at or after this time are counted.
 func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) Filter(filter string) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7075,7 +7271,8 @@ func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummari
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall) PageToken(pageToken string) *ProjectsLocationsDbFrameworkComplianceReportsDbControlComplianceSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7203,19 +7400,21 @@ type ProjectsLocationsDbFrameworkComplianceSummariesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the framework compliance summary for a given scope.
+// List: Lists the compliance summaries of the frameworks that are deployed in
+// a Data Boundary scope (an organization, folder, or project).
 //
-//   - parent: The parent scope for the framework compliance summary. Format:
-//     organizations/{organization}/locations/{location}
-//     folders/{folder}/locations/{location}
-//     projects/{project}/locations/{location}.
+//   - parent: The parent scope to list framework compliance summaries for.
+//     Formats: * `organizations/{organization}/locations/{location}` *
+//     `folders/{folder}/locations/{location}` *
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsDbFrameworkComplianceSummariesService) List(parent string) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
 	c := &ProjectsLocationsDbFrameworkComplianceSummariesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filtering results.
+// Filter sets the optional parameter "filter": A filter expression that
+// restricts the results. Reserved for future use.
 func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) Filter(filter string) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7230,15 +7429,16 @@ func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) PageSize(pageS
 }
 
 // PageToken sets the optional parameter "pageToken": A token that identifies
-// the page of results that the server should return. Pass the next_page_token
-// value from a previous result.
+// the page of results that the server should return. Pass the
+// `next_page_token` value from a previous result.
 func (c *ProjectsLocationsDbFrameworkComplianceSummariesListCall) PageToken(pageToken string) *ProjectsLocationsDbFrameworkComplianceSummariesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// View sets the optional parameter "view": Specifies the level of detail to
-// return in the response.
+// View sets the optional parameter "view": The level of detail to return for
+// each summary. If not specified, `FRAMEWORK_COMPLIANCE_SUMMARY_VIEW_BASIC` is
+// used.
 //
 // Possible values:
 //

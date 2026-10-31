@@ -6333,7 +6333,7 @@ func (s RolloutMembershipState) MarshalJSON() ([]byte, error) {
 }
 
 // RolloutSequence: RolloutSequence defines the desired order of upgrades. Next
-// ID: 20
+// ID: 22
 type RolloutSequence struct {
 	// AutoUpgradeConfig: Optional. Configuration for automatic upgrades. If this
 	// message is `unset`, the system applies default behavior.

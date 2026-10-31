@@ -1329,7 +1329,7 @@ func (s GoogleCloudRunV2ExportStatusResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRunV2GCSVolumeSource: Represents a volume backed by a Cloud
-// Storage bucket using Cloud Storage FUSE.
+// Storage bucket (mounted via Cloud Storage FUSE or as a block device disk).
 type GoogleCloudRunV2GCSVolumeSource struct {
 	// Bucket: Cloud Storage Bucket name.
 	Bucket string `json:"bucket,omitempty"`
@@ -1660,6 +1660,8 @@ type GoogleCloudRunV2Instance struct {
 	//   "ON_FAILURE" - Restart if the instance terminates with non-zero exit code.
 	//   "NEVER" - Never restart the instance.
 	RestartPolicy string `json:"restartPolicy,omitempty"`
+	// Sandboxes: Optional. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs   bool   `json:"satisfiesPzs,omitempty"`
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -2542,6 +2544,8 @@ type GoogleCloudRunV2Revision struct {
 	// still in progress. See comments in `Service.reconciling` for additional
 	// information on reconciliation process in Cloud Run.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// Sandboxes: Output only. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Scaling: Scaling settings for this revision.
@@ -2748,6 +2752,8 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// Revision: Optional. The unique name for the revision. If this field is
 	// omitted, it will be automatically generated based on the Service name.
 	Revision string `json:"revision,omitempty"`
+	// Sandboxes: Optional. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// Scaling: Optional. Scaling settings for this Revision.
 	Scaling *GoogleCloudRunV2RevisionScaling `json:"scaling,omitempty"`
 	// ServiceAccount: Optional. Email address of the IAM service account
@@ -2815,6 +2821,68 @@ type GoogleCloudRunV2RunJobRequest struct {
 
 func (s GoogleCloudRunV2RunJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2RunJobRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2SandboxConfiguration: Configuration for sandboxes.
+type GoogleCloudRunV2SandboxConfiguration struct {
+	// Templates: Required. Sandbox templates that can be launched through the
+	// `sandbox` CLI.
+	Templates []*GoogleCloudRunV2SandboxTemplate `json:"templates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Templates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Templates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2SandboxConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SandboxConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2SandboxTemplate: Template for a single sandbox.
+type GoogleCloudRunV2SandboxTemplate struct {
+	// Args: Optional. Arguments to the entrypoint. The docker image's CMD is used
+	// if this is not provided.
+	Args []string `json:"args,omitempty"`
+	// Command: Optional. Entrypoint array. Not executed within a shell. The docker
+	// image's ENTRYPOINT is used if this is not provided.
+	Command []string `json:"command,omitempty"`
+	// Env: Optional. List of environment variables to set in the sandbox.
+	Env []*GoogleCloudRunV2EnvVar `json:"env,omitempty"`
+	// Image: Required. Name of the container image in Dockerhub or Artifact
+	// Registry. If the host is not provided, Dockerhub is assumed.
+	Image string `json:"image,omitempty"`
+	// Name: Required. Name of the sandbox specified as a DNS_LABEL (RFC 1123).
+	Name string `json:"name,omitempty"`
+	// VolumeMounts: Optional. Volume to mount into the container's filesystem.
+	VolumeMounts []*GoogleCloudRunV2VolumeMount `json:"volumeMounts,omitempty"`
+	// WorkingDir: Optional. Container's working directory. If not specified, the
+	// container runtime's default will be used, which might be configured in the
+	// container image.
+	WorkingDir string `json:"workingDir,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2SandboxTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SandboxTemplate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3563,6 +3631,8 @@ type GoogleCloudRunV2Task struct {
 	// Retried: Output only. The number of times this Task was retried. Tasks are
 	// retried when they fail up to the maxRetries limit.
 	Retried int64 `json:"retried,omitempty"`
+	// Sandboxes: Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScheduledTime: Output only. Represents time when the task was scheduled to
@@ -3675,6 +3745,8 @@ type GoogleCloudRunV2TaskTemplate struct {
 	MaxRetries int64 `json:"maxRetries,omitempty"`
 	// NodeSelector: Optional. The node selector for the task template.
 	NodeSelector *GoogleCloudRunV2NodeSelector `json:"nodeSelector,omitempty"`
+	// Sandboxes: Optional. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// ServiceAccount: Optional. Email address of the IAM service account
 	// associated with the Task of a Job. The service account represents the
 	// identity of the running task, and determines what permissions the task has.
@@ -4238,6 +4310,8 @@ type GoogleCloudRunV2WorkerPoolRevisionTemplate struct {
 	// Revision: Optional. The unique name for the revision. If this field is
 	// omitted, it will be automatically generated based on the WorkerPool name.
 	Revision string `json:"revision,omitempty"`
+	// Sandboxes: Optional. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// ServiceAccount: Optional. Email address of the IAM service account
 	// associated with the revision of the service. The service account represents
 	// the identity of the running revision, and determines what permissions the

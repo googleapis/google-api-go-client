@@ -1159,6 +1159,18 @@ type BuildOptions struct {
 	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
 	// status updates.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
+	// RankedMachineSeries: Optional. Ranked list (earlier items have higher
+	// priority) of Machine Series to consider when provisioning Worker VMs. A
+	// concrete machine type will be selected based on machine availability in the
+	// given region. This field must be empty for the Build to be eligible to be
+	// paired with a pre-provisioned worker VM.
+	//
+	// Possible values:
+	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.
+	//   "MACHINE_SERIES_E" - Cost-optimized machines such as E2.
+	//   "MACHINE_SERIES_N" - General-purpose machines such as N4.
+	//   "MACHINE_SERIES_C" - Performance-optimized machines such as C4.
+	RankedMachineSeries []string `json:"rankedMachineSeries,omitempty"`
 	// RequestedVerifyOption: Requested verifiability options.
 	//
 	// Possible values:
@@ -4262,6 +4274,17 @@ type WorkerConfig struct {
 	// (https://cloud.google.com/build/docs/private-pools/worker-pool-config-file-schema).
 	// If left blank, Cloud Build will use a sensible default.
 	MachineType string `json:"machineType,omitempty"`
+	// RankedMachineSeries: Optional. Ranked list (earlier items have higher
+	// priority) of Machine Series to consider when provisioning Worker VMs. A
+	// concrete machine type will be selected based on machine availability in the
+	// given region.
+	//
+	// Possible values:
+	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.
+	//   "MACHINE_SERIES_E" - Cost-optimized machines such as E2.
+	//   "MACHINE_SERIES_N" - General-purpose machines such as N4.
+	//   "MACHINE_SERIES_C" - Performance-optimized machines such as C4.
+	RankedMachineSeries []string `json:"rankedMachineSeries,omitempty"`
 	// WorkerRelease: Optional. Option to specify which release or release channel
 	// (rapid|regular|stable) to use to run this build.
 	WorkerRelease string `json:"workerRelease,omitempty"`
@@ -4806,6 +4829,11 @@ type ProjectsBuildsApproveCall struct {
 // Approve: Approves or rejects a pending build. If approved, the returned
 // long-running operation (LRO) will be analogous to the LRO returned from a
 // CreateBuild call. If rejected, the returned LRO will be immediately done.
+// Note: This method only approves or rejects builds in the "global" region
+// when using the legacy resource path
+// projects/{project_id}/builds/{id}:approve. For all regions, use the regional
+// resource path:
+// `projects/{project_id}/locations/{location}/builds/{id}:approve`.
 //
 //   - name: Name of the target build. For example:
 //     "projects/{$project_id}/builds/{$build_id}".
@@ -7211,6 +7239,11 @@ type ProjectsLocationsBuildsApproveCall struct {
 // Approve: Approves or rejects a pending build. If approved, the returned
 // long-running operation (LRO) will be analogous to the LRO returned from a
 // CreateBuild call. If rejected, the returned LRO will be immediately done.
+// Note: This method only approves or rejects builds in the "global" region
+// when using the legacy resource path
+// projects/{project_id}/builds/{id}:approve. For all regions, use the regional
+// resource path:
+// `projects/{project_id}/locations/{location}/builds/{id}:approve`.
 //
 //   - name: Name of the target build. For example:
 //     "projects/{$project_id}/builds/{$build_id}".
@@ -8774,7 +8807,10 @@ type ProjectsLocationsTriggersCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new `BuildTrigger`.
+// Create: Creates a new `BuildTrigger`. Note: This method only creates
+// triggers in the "global" region when using the legacy resource path
+// projects/{project_id}/triggers. For all regions, use the regional resource
+// path: `projects/{project_id}/locations/{location}/triggers`.
 //
 //   - parent: The parent resource where this trigger will be created. Format:
 //     `projects/{project}/locations/{location}`.
@@ -8884,7 +8920,11 @@ type ProjectsLocationsTriggersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a `BuildTrigger` by its project ID and trigger ID.
+// Delete: Deletes a `BuildTrigger` by its project ID and trigger ID. Note:
+// This method only deletes triggers in the "global" region when using the
+// legacy resource path projects/{project_id}/triggers/{trigger_id}. For all
+// regions, use the regional resource path:
+// `projects/{project_id}/locations/{location}/triggers/{trigger_id}`.
 //
 //   - name: The name of the `Trigger` to delete. Format:
 //     `projects/{project}/locations/{location}/triggers/{trigger}`.
@@ -8997,7 +9037,11 @@ type ProjectsLocationsTriggersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns information about a `BuildTrigger`.
+// Get: Returns information about a `BuildTrigger`. Note: This method only gets
+// triggers in the "global" region when using the legacy resource path
+// projects/{project_id}/triggers/{trigger_id}. For all regions, use the
+// regional resource path:
+// `projects/{project_id}/locations/{location}/triggers/{trigger_id}`.
 //
 //   - name: The name of the `Trigger` to retrieve. Format:
 //     `projects/{project}/locations/{location}/triggers/{trigger}`.
@@ -9121,7 +9165,10 @@ type ProjectsLocationsTriggersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists existing `BuildTrigger`s.
+// List: Lists existing `BuildTrigger`s. Note: This method only lists triggers
+// in the "global" region when using the legacy resource path
+// projects/{project_id}/triggers. For all regions, use the regional resource
+// path: `projects/{project_id}/locations/{location}/triggers`.
 //
 //   - parent: The parent of the collection of `Triggers`. Format:
 //     `projects/{project}/locations/{location}`.
@@ -9274,7 +9321,11 @@ type ProjectsLocationsTriggersPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a `BuildTrigger` by its project ID and trigger ID.
+// Patch: Updates a `BuildTrigger` by its project ID and trigger ID. Note: This
+// method only updates triggers in the "global" region when using the legacy
+// resource path projects/{project_id}/triggers/{trigger_id}. For all regions,
+// use the regional resource path:
+// `projects/{project_id}/locations/{location}/triggers/{trigger_id}`.
 //
 //   - resourceName: The `Trigger` name with format:
 //     `projects/{project}/locations/{location}/triggers/{trigger}`, where
@@ -10257,7 +10308,10 @@ type ProjectsTriggersCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a new `BuildTrigger`.
+// Create: Creates a new `BuildTrigger`. Note: This method only creates
+// triggers in the "global" region when using the legacy resource path
+// projects/{project_id}/triggers. For all regions, use the regional resource
+// path: `projects/{project_id}/locations/{location}/triggers`.
 //
 // - projectId: ID of the project for which to configure automatic builds.
 func (r *ProjectsTriggersService) Create(projectId string, buildtrigger *BuildTrigger) *ProjectsTriggersCreateCall {
@@ -10367,7 +10421,11 @@ type ProjectsTriggersDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a `BuildTrigger` by its project ID and trigger ID.
+// Delete: Deletes a `BuildTrigger` by its project ID and trigger ID. Note:
+// This method only deletes triggers in the "global" region when using the
+// legacy resource path projects/{project_id}/triggers/{trigger_id}. For all
+// regions, use the regional resource path:
+// `projects/{project_id}/locations/{location}/triggers/{trigger_id}`.
 //
 // - projectId: ID of the project that owns the trigger.
 // - triggerId: ID of the `BuildTrigger` to delete.
@@ -10476,7 +10534,11 @@ type ProjectsTriggersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns information about a `BuildTrigger`.
+// Get: Returns information about a `BuildTrigger`. Note: This method only gets
+// triggers in the "global" region when using the legacy resource path
+// projects/{project_id}/triggers/{trigger_id}. For all regions, use the
+// regional resource path:
+// `projects/{project_id}/locations/{location}/triggers/{trigger_id}`.
 //
 // - projectId: ID of the project that owns the trigger.
 // - triggerId: Identifier (`id` or `name`) of the `BuildTrigger` to get.
@@ -10596,7 +10658,10 @@ type ProjectsTriggersListCall struct {
 	header_      http.Header
 }
 
-// List: Lists existing `BuildTrigger`s.
+// List: Lists existing `BuildTrigger`s. Note: This method only lists triggers
+// in the "global" region when using the legacy resource path
+// projects/{project_id}/triggers. For all regions, use the regional resource
+// path: `projects/{project_id}/locations/{location}/triggers`.
 //
 // - projectId: ID of the project for which to list BuildTriggers.
 func (r *ProjectsTriggersService) List(projectId string) *ProjectsTriggersListCall {
@@ -10749,7 +10814,11 @@ type ProjectsTriggersPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates a `BuildTrigger` by its project ID and trigger ID.
+// Patch: Updates a `BuildTrigger` by its project ID and trigger ID. Note: This
+// method only updates triggers in the "global" region when using the legacy
+// resource path projects/{project_id}/triggers/{trigger_id}. For all regions,
+// use the regional resource path:
+// `projects/{project_id}/locations/{location}/triggers/{trigger_id}`.
 //
 // - projectId: ID of the project that owns the trigger.
 // - triggerId: ID of the `BuildTrigger` to update.

@@ -3936,6 +3936,9 @@ type InstanceSpec struct {
 	// RestartPolicy: Optional. Restart policy for the Instance. Allowable values
 	// are 'Always', 'OnFailure', or 'Never'.
 	RestartPolicy string `json:"restartPolicy,omitempty"`
+	// Sandboxes: Optional. Sandbox configuration that can be launched through the
+	// `sandbox` CLI.
+	Sandboxes *SandboxConfiguration `json:"sandboxes,omitempty"`
 	// ServiceAccountName: Optional. Email address of the IAM service account
 	// associated with the Instance. The service account represents the identity of
 	// the running container, and determines what permissions the Instance has. If
@@ -5129,6 +5132,9 @@ type RevisionSpec struct {
 	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
 	// RuntimeClassName: Optional. Runtime. Leave unset for default.
 	RuntimeClassName string `json:"runtimeClassName,omitempty"`
+	// Sandboxes: Optional. Sandbox configuration that can be launched through the
+	// `sandbox` CLI.
+	Sandboxes *SandboxConfiguration `json:"sandboxes,omitempty"`
 	// ServiceAccountName: Email address of the IAM service account associated with
 	// the revision of the service. The service account represents the identity of
 	// the running revision, and determines what permissions the revision has. If
@@ -5380,6 +5386,68 @@ type RunJobRequest struct {
 
 func (s RunJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunJobRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SandboxConfiguration: Configuration for sandboxes.
+type SandboxConfiguration struct {
+	// Templates: Required. Sandbox templates that can be launched through the
+	// `sandbox` CLI.
+	Templates []*SandboxTemplate `json:"templates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Templates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Templates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SandboxConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod SandboxConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SandboxTemplate: Template for a single sandbox.
+type SandboxTemplate struct {
+	// Args: Optional. Arguments to the entrypoint. The docker image's CMD is used
+	// if this is not provided.
+	Args []string `json:"args,omitempty"`
+	// Command: Optional. Entrypoint array. Not executed within a shell. The docker
+	// image's ENTRYPOINT is used if this is not provided.
+	Command []string `json:"command,omitempty"`
+	// Env: Optional. List of environment variables to set in the sandbox.
+	Env []*EnvVar `json:"env,omitempty"`
+	// Image: Required. Name of the container image in Dockerhub or Artifact
+	// Registry. If the host is not provided, Dockerhub is assumed.
+	Image string `json:"image,omitempty"`
+	// Name: Required. Name of the sandbox specified as a DNS_LABEL (RFC 1123).
+	Name string `json:"name,omitempty"`
+	// VolumeMounts: Optional. Volume to mount into the container's filesystem.
+	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
+	// WorkingDir: Optional. Container's working directory. If not specified, the
+	// container runtime's default will be used, which might be configured in the
+	// container image.
+	WorkingDir string `json:"workingDir,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SandboxTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod SandboxTemplate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5973,6 +6041,9 @@ type TaskSpec struct {
 	// NodeSelector: Optional. The Node Selector configuration. Map of selector key
 	// to a value which matches a node.
 	NodeSelector map[string]string `json:"nodeSelector,omitempty"`
+	// Sandboxes: Optional. Sandbox configuration that can be launched through the
+	// `sandbox` CLI.
+	Sandboxes *SandboxConfiguration `json:"sandboxes,omitempty"`
 	// ServiceAccountName: Optional. Email address of the IAM service account
 	// associated with the task of a job execution. The service account represents
 	// the identity of the running task, and determines what permissions the task

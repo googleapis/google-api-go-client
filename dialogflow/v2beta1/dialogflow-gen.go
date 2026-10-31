@@ -12829,6 +12829,7 @@ func (s GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest) MarshalJSON
 }
 
 type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
+	AlternativeLanguageCodes []string `json:"alternativeLanguageCodes,omitempty"`
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED"
 	//   "AUDIO_ENCODING_LINEAR_16"
@@ -12863,15 +12864,15 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	SingleUtterance               bool                                         `json:"singleUtterance,omitempty"`
 	SpeechContexts                []*GoogleCloudDialogflowV2beta1SpeechContext `json:"speechContexts,omitempty"`
 	UseGeminiAsr                  bool                                         `json:"useGeminiAsr,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AlternativeLanguageCodes")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AudioEncoding") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AlternativeLanguageCodes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -16480,6 +16481,7 @@ func (s *GoogleCloudDialogflowV2beta1SpeechContext) UnmarshalJSON(data []byte) e
 }
 
 type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
+	AlternativeLanguageCodes []string `json:"alternativeLanguageCodes,omitempty"`
 	// Possible values:
 	//   "AUDIO_ENCODING_UNSPECIFIED"
 	//   "AUDIO_ENCODING_LINEAR_16"
@@ -16506,15 +16508,15 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	SpeechModelVariant         string `json:"speechModelVariant,omitempty"`
 	UseGeminiAsr               bool   `json:"useGeminiAsr,omitempty"`
 	UseTimeoutBasedEndpointing bool   `json:"useTimeoutBasedEndpointing,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "AudioEncoding") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AlternativeLanguageCodes")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AudioEncoding") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AlternativeLanguageCodes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

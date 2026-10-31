@@ -517,6 +517,23 @@ type DeepReviewRunConfig struct {
 	// omitted, the server uses its default model. Unsupported values return
 	// INVALID_ARGUMENT.
 	Model string `json:"model,omitempty"`
+	// ThinkingLevel: Optional. Reasoning effort level for model calls in the
+	// review pipeline. Defaults to `THINKING_LEVEL_MEDIUM` when omitted or
+	// `THINKING_LEVEL_UNSPECIFIED`. Non-`THINKING_LEVEL_MEDIUM` thinking levels
+	// require `gemini_api_key` when calling `CreateReview`; otherwise
+	// `CreateReview` returns `INVALID_ARGUMENT`.
+	//
+	// Possible values:
+	//   "THINKING_LEVEL_UNSPECIFIED" - Default unspecified thinking level. The
+	// server uses its default thinking level (`THINKING_LEVEL_MEDIUM`).
+	//   "THINKING_LEVEL_LOW" - Low reasoning effort for faster turnaround and
+	// lower token cost.
+	//   "THINKING_LEVEL_MEDIUM" - Balanced reasoning effort. Used by default and
+	// for all reviews created without a developer Bring-Your-Own-Key Gemini API
+	// key.
+	//   "THINKING_LEVEL_HIGH" - Maximum reasoning effort for deep mathematical,
+	// theoretical, and logical verification.
+	ThinkingLevel string `json:"thinkingLevel,omitempty"`
 	// Topology: Optional. Review execution topology profile to use.
 	//
 	// Possible values:
@@ -693,8 +710,8 @@ func (s EstimateReviewCostRequest) MarshalJSON() ([]byte, error) {
 
 // EstimateReviewCostResponse: Response message for estimating what a review
 // would cost. When the cost can't be estimated, for example because too few
-// past reviews used the same model and depth, the costs are unset and
-// `past_review_count` is 0.
+// past reviews used the same model, depth, and thinking level, the costs are
+// unset and `past_review_count` is 0.
 type EstimateReviewCostResponse struct {
 	// HighCost: The 95th percentile of what comparable past reviews would cost for
 	// this document.
@@ -1373,9 +1390,9 @@ type DocumentsEstimateReviewCostCall struct {
 
 // EstimateReviewCost: Estimates what a review of a document would cost on the
 // caller's Gemini API key. The estimate comes from what past reviews with the
-// same model and depth cost, adjusted to this document's size and repriced at
-// the Gemini API's current list prices. It covers one review attempt that runs
-// to completion, and doesn't include retries after errors.
+// same model, depth, and thinking level cost, adjusted to this document's size
+// and repriced at the Gemini API's current list prices. It covers one review
+// attempt that runs to completion, and doesn't include retries after errors.
 //
 // - document: The document to review.
 func (r *DocumentsService) EstimateReviewCost(document string, estimatereviewcostrequest *EstimateReviewCostRequest) *DocumentsEstimateReviewCostCall {

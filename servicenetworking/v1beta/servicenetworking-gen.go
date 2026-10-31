@@ -1045,8 +1045,10 @@ func (s CloudSQLConfig) MarshalJSON() ([]byte, error) {
 
 // CommonLanguageSettings: Required information for every language.
 type CommonLanguageSettings struct {
-	// Destinations: The destination where API teams want this client library to be
-	// published.
+	// Destinations: Deprecated: Client libraries are published for all supported
+	// languages by default when a `library_settings` entry is present with a
+	// `version` and `launch_stage`. The destination where API teams want this
+	// client library to be published.
 	//
 	// Possible values:
 	//   "CLIENT_LIBRARY_DESTINATION_UNSPECIFIED" - Client libraries will neither

@@ -1822,6 +1822,31 @@ func (s CryptoHashConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomRegex: Defines a custom regular expression pattern to detect and
+// redact in the image.
+type CustomRegex struct {
+	// GroupIndexes: Optional. The capturing group indexes to redact.
+	GroupIndexes []int64 `json:"groupIndexes,omitempty"`
+	// Pattern: Optional. The regular expression pattern to match.
+	Pattern string `json:"pattern,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupIndexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupIndexes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomRegex
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Dataset: A message representing a health dataset. A health dataset
 // represents a collection of healthcare data pertaining to one or more
 // patients. This may include multiple modalities of healthcare data, such as
@@ -4141,6 +4166,8 @@ func (s Image) MarshalJSON() ([]byte, error) {
 
 // ImageConfig: Specifies how to handle de-identification of image pixels.
 type ImageConfig struct {
+	// CustomRegexes: Optional. Custom regex patterns to redact from the image.
+	CustomRegexes []*CustomRegex `json:"customRegexes,omitempty"`
 	// TextRedactionMode: Optional. Determines how to redact text from image.
 	//
 	// Possible values:
@@ -4153,15 +4180,15 @@ type ImageConfig struct {
 	// ify#default_dicom_infotypes).
 	//   "REDACT_NO_TEXT" - Do not redact text.
 	TextRedactionMode string `json:"textRedactionMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TextRedactionMode") to
+	// ForceSendFields is a list of field names (e.g. "CustomRegexes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TextRedactionMode") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomRegexes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

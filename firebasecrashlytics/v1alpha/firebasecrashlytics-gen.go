@@ -3018,12 +3018,12 @@ func (c *ProjectsAppsReportsGetCall) FilterVersionDisplayNames(filterVersionDisp
 
 // FilterExpression sets the optional parameter "filterExpression": Filters the
 // events counted in the report by custom keys. Not all reports support this
-// filter. It is currently only supported for web apps, for the `webMetrics`,
-// `topBrowsers`, `topOperatingSystems`, `topVersions`, and `topCustomKeys`
-// reports. Requests for other apps or reports that set this field are rejected
-// with INVALID_ARGUMENT. Supported forms: * Equality: `custom_keys.level =
-// "vip" * Has: `custom_keys.level:"vip" (matches the same events as
-// equality) * Presence: `custom_keys.level:*` * OR across values of one key:
+// filter. It is currently only supported for web apps; see the report's
+// `usage` field for whether `filter_expression` is supported. Requests for
+// other apps or unsupported reports that set this field are rejected with
+// `INVALID_ARGUMENT`. Supported forms: * Equality: `custom_keys.level = "vip"
+// * Has: `custom_keys.level:"vip" (matches the same events as equality) *
+// Presence: `custom_keys.level:*` * OR across values of one key:
 // `custom_keys.level = "vip" OR custom_keys.level = "enterprise" * AND across
 // different keys: `custom_keys.level = "vip" AND custom_keys.region = "us"
 // Keys are case-sensitive. Keys and values containing spaces must be

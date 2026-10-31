@@ -531,6 +531,30 @@ func (s Alert) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AlertDetail: The alert data relevant for this alert
+type AlertDetail struct {
+	// FieldName: Audit data key
+	FieldName string `json:"fieldName,omitempty"`
+	// FieldValues: Audit data values
+	FieldValues []*SystemDefinedAlertDataAlertDetailFieldValue `json:"fieldValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlertDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AlertFeedback: A customer feedback about an alert.
 type AlertFeedback struct {
 	// AlertId: Output only. The alert identifier.
@@ -2386,6 +2410,57 @@ type SuspiciousActivitySecurityDetail struct {
 
 func (s SuspiciousActivitySecurityDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod SuspiciousActivitySecurityDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SystemDefinedAlertData: System defined alerts which trigger when an relevant
+// audit event occures.
+type SystemDefinedAlertData struct {
+	// AlertDetails: Details of the conditions which led to alert being created
+	AlertDetails []*AlertDetail `json:"alertDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertDetails") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SystemDefinedAlertData) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemDefinedAlertData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SystemDefinedAlertDataAlertDetailFieldValue: Audit data value
+type SystemDefinedAlertDataAlertDetailFieldValue struct {
+	// BoolValue: Value if the type is boolean
+	BoolValue bool `json:"boolValue,omitempty"`
+	// IntValue: Value if the type is integer
+	IntValue int64 `json:"intValue,omitempty,string"`
+	// StringValue: Value if the type is string
+	StringValue string `json:"stringValue,omitempty"`
+	// TimestampValue: Value is the type is a timestamp
+	TimestampValue string `json:"timestampValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SystemDefinedAlertDataAlertDetailFieldValue) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemDefinedAlertDataAlertDetailFieldValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

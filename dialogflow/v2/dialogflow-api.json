@@ -8940,7 +8940,7 @@
       }
     }
   },
-  "revision": "20261101",
+  "revision": "20261106",
   "rootUrl": "https://dialogflow.googleapis.com/",
   "schemas": {
     "GoogleCloudDialogflowCxV3AdvancedSettings": {
@@ -16823,6 +16823,9 @@
           },
           "type": "array"
         },
+        "profanityFilter": {
+          "type": "boolean"
+        },
         "sampleRateHertz": {
           "format": "int32",
           "type": "integer"
@@ -19788,6 +19791,9 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "profanityFilter": {
+          "type": "boolean"
         },
         "sampleRateHertz": {
           "format": "int32",

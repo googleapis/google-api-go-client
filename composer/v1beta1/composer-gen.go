@@ -871,6 +871,8 @@ type EnvironmentConfig struct {
 	//   "ENVIRONMENT_SIZE_MEDIUM" - The environment size is medium.
 	//   "ENVIRONMENT_SIZE_LARGE" - The environment size is large.
 	//   "ENVIRONMENT_SIZE_EXTRA_LARGE" - The environment size is extra large.
+	//   "ENVIRONMENT_SIZE_X_EXTRA_LARGE" - The environment size is double extra
+	// large.
 	EnvironmentSize string `json:"environmentSize,omitempty"`
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run this
 	// environment.
@@ -914,6 +916,10 @@ type EnvironmentConfig struct {
 	// parameters.
 	//   "HIGH_RESILIENCE" - Enabled High Resilience mode, including Cloud SQL HA.
 	ResilienceMode string `json:"resilienceMode,omitempty"`
+	// ScheduledHibernationConfig: Optional. The configuration for hibernating and
+	// resuming the environment on a schedule. Supported for environments that have
+	// `mode` set to `DEVELOPMENT`.
+	ScheduledHibernationConfig *ScheduledHibernationConfig `json:"scheduledHibernationConfig,omitempty"`
 	// SoftwareConfig: Optional. The configuration settings for software inside the
 	// environment.
 	SoftwareConfig *SoftwareConfig `json:"softwareConfig,omitempty"`
@@ -2029,6 +2035,41 @@ type SaveSnapshotResponse struct {
 
 func (s SaveSnapshotResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SaveSnapshotResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ScheduledHibernationConfig: The configuration for hibernating and resuming
+// the environment on a schedule. Supported for environments in the development
+// mode.
+type ScheduledHibernationConfig struct {
+	// Enabled: Optional. Whether hibernating and resuming the environment on a
+	// schedule is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// HibernationSchedules: Optional. The cron expressions representing the times
+	// when the environment will automatically hibernate, entering the HIBERNATED
+	// state.
+	HibernationSchedules []string `json:"hibernationSchedules,omitempty"`
+	// ResumptionSchedules: Optional. The cron expressions representing the times
+	// when the environment will automatically resume, entering the RUNNING state.
+	ResumptionSchedules []string `json:"resumptionSchedules,omitempty"`
+	// TimeZone: Optional. Time zone that sets the context to interpret the
+	// schedule expressions. Expected format is "UTC+05", "UTC-03", etc.
+	TimeZone string `json:"timeZone,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ScheduledHibernationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduledHibernationConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

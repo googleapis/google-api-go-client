@@ -2863,26 +2863,40 @@ func (s PrewarmPlatform) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PrewarmedArtifact: PrewarmedArtifact represents a streamed artifact. This is
-// not a request message, so field_behavior annotations are not required.
+// PrewarmedArtifact: PrewarmedArtifact represents a streamed artifact.
 type PrewarmedArtifact struct {
+	// CreateTime: Output only. The time the artifact was first prewarmed.
+	CreateTime string `json:"createTime,omitempty"`
+	// ErrorMessage: Output only. The error message if the state is `FAILED`.
+	ErrorMessage string `json:"errorMessage,omitempty"`
 	// ExpirationTime: The expiration time of the prewarmed artifact.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// Location: The location of the prewarmed artifact.
 	Location string `json:"location,omitempty"`
+	// SizeBytes: Output only. The compressed size of the prewarmed artifact in
+	// bytes. This is the size counted against the prewarm storage quota.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+	// State: Output only. The caching state of the prewarmed artifact.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not specified.
+	//   "CACHING" - The artifact is currently being cached.
+	//   "ACTIVE" - The artifact is cached and ready for streaming.
+	//   "FAILED" - Caching the artifact failed. See `error_message` for details.
+	State string `json:"state,omitempty"`
 	// Uri: URL to access the image. Example:
 	// us-west4-docker.pkg.dev/test-project/test-repo/nginx@sha256:e9954c1fc875017be
 	// 1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExpirationTime") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExpirationTime") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

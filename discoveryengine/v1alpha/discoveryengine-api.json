@@ -5447,6 +5447,36 @@
                 },
                 "engines": {
                   "methods": {
+                    "checkFeaturePolicyMembers": {
+                      "description": "Checks members for Engine.feature_policies against the project's directory, as EngineService.UpdateEngine does when it saves them, and saves nothing.",
+                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}:checkFeaturePolicyMembers",
+                      "httpMethod": "POST",
+                      "id": "discoveryengine.projects.locations.collections.engines.checkFeaturePolicyMembers",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The engine resource name. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}`",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+name}:checkFeaturePolicyMembers",
+                      "request": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
+                      ]
+                    },
                     "create": {
                       "description": "Creates an Engine.",
                       "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines",
@@ -13485,6 +13515,117 @@
                     }
                   }
                 },
+                "userAvailabilities": {
+                  "methods": {
+                    "batchUpdate": {
+                      "description": "Updates multiple UserAvailabilitys.",
+                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/userStores/{userStoresId}/userAvailabilities:batchUpdate",
+                      "httpMethod": "POST",
+                      "id": "discoveryengine.projects.locations.userStores.userAvailabilities.batchUpdate",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Required. The parent UserStore resource name, format: `projects/{project}/locations/{location}/userStores/{user_store_id}`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/userStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+parent}/userAvailabilities:batchUpdate",
+                      "request": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
+                      ]
+                    },
+                    "list": {
+                      "description": "Lists the UserAvailabilitys.",
+                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/userStores/{userStoresId}/userAvailabilities",
+                      "httpMethod": "GET",
+                      "id": "discoveryengine.projects.locations.userStores.userAvailabilities.list",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "filter": {
+                          "description": "Optional. Filter for the list request. Supported fields (only `user_principal` is supported for now): * `user_principal` (will be normalized for matching) Examples: * `user_principal = \"user1@example.com\"` to list user availability for `user1@example.com`.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "pageSize": {
+                          "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, defaults to 100. The maximum value is 1000; values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Optional. A page token, received from a previous `ListUserAvailabilities` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListUserAvailabilities` must match the call that provided the page token.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. The parent UserStore resource name, format: `projects/{project}/locations/{location}/userStores/{user_store_id}`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/userStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+parent}/userAvailabilities",
+                      "response": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaListUserAvailabilitiesResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
+                      ]
+                    }
+                  }
+                },
+                "userAvailability": {
+                  "methods": {
+                    "update": {
+                      "description": "Updates a UserAvailability.",
+                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/userStores/{userStoresId}/userAvailability:update",
+                      "httpMethod": "POST",
+                      "id": "discoveryengine.projects.locations.userStores.userAvailability.update",
+                      "parameterOrder": [
+                        "parent"
+                      ],
+                      "parameters": {
+                        "parent": {
+                          "description": "Optional. The parent UserStore resource name, format: `projects/{project}/locations/{location}/userStores/{user_store_id}`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/userStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1alpha/{+parent}/userAvailability:update",
+                      "request": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaUpdateUserAvailabilityRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleCloudDiscoveryengineV1alphaUserAvailability"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
+                      ]
+                    }
+                  }
+                },
                 "userLicenses": {
                   "methods": {
                     "export": {
@@ -13653,7 +13794,7 @@
       }
     }
   },
-  "revision": "20261102",
+  "revision": "20261106",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "ApiservingMcpMcpToolVisibility": {
@@ -16610,6 +16751,13 @@
           "readOnly": true,
           "type": "object"
         },
+        "featurePolicies": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDiscoveryengineV1EngineFeaturePolicy"
+          },
+          "description": "Optional. Per-feature access policies, keyed by feature toggle name (see `features`). A feature with no entry is available to every user when it is on. Only features that support access policies are accepted.",
+          "type": "object"
+        },
         "features": {
           "additionalProperties": {
             "enum": [
@@ -16624,7 +16772,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` * `preview-agents`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` * `preview-agents` * `plugins`",
           "type": "object"
         },
         "globalFeatureToggleState": {
@@ -16815,6 +16963,89 @@
       "properties": {
         "companyName": {
           "description": "The name of the company, business or entity that is associated with the engine. Setting this may help improve LLM related features.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1EngineFeaturePolicy": {
+      "description": "Restricts which users may use a feature that is turned on in `features`.",
+      "id": "GoogleCloudDiscoveryengineV1EngineFeaturePolicy",
+      "properties": {
+        "allowedMembers": {
+          "description": "Optional. Members who may use the feature.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember"
+          },
+          "type": "array"
+        },
+        "defaultAccess": {
+          "description": "Optional. Access for users who match neither list.",
+          "enum": [
+            "DEFAULT_ACCESS_UNSPECIFIED",
+            "ALLOW",
+            "DENY"
+          ],
+          "enumDescriptions": [
+            "Treated as `ALLOW`.",
+            "Users who match neither list may use the feature.",
+            "Users who match neither list may not use the feature."
+          ],
+          "type": "string"
+        },
+        "deniedMembers": {
+          "description": "Optional. Members who may not use the feature. Takes precedence over `allowed_members`.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember": {
+      "description": "A user or group the policy refers to.",
+      "id": "GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember",
+      "properties": {
+        "displayName": {
+          "description": "Optional. Label shown in the console. Never used for evaluation.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Required. Identifier evaluated at serving time. Its format depends on the project's identity provider: * Google identity (`GSUITE`): the group or user email. For groups, the server resolves the email to a group ID on write and returns the email on read. * Workforce Identity Federation (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`. With SCIM this is the SCIM group ID; without SCIM and with the default Microsoft Entra mapping it is the Entra group object ID. * Workforce Identity Federation, users: the user's workforce identity subject.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. Kind of member.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "USER",
+            "GROUP"
+          ],
+          "enumDescriptions": [
+            "Not allowed.",
+            "A single user.",
+            "A group of users."
+          ],
+          "type": "string"
+        },
+        "verification": {
+          "description": "Output only. Result of the server's directory check when the member was saved.",
+          "enum": [
+            "VERIFICATION_UNSPECIFIED",
+            "VERIFIED",
+            "NOT_FOUND",
+            "NOT_VERIFIABLE",
+            "CHECK_FAILED"
+          ],
+          "enumDescriptions": [
+            "Not checked.",
+            "Found in the project's directory.",
+            "Microsoft Graph has no such group. Saved anyway, because a custom `google.groups` mapping can emit IDs that Graph doesn't know.",
+            "The project has no directory to check against.",
+            "The directory lookup failed. Saved anyway."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -22415,6 +22646,34 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesRequest": {
+      "description": "Request message for UserStoreService.BatchUpdateUserAvailabilities method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesRequest",
+      "properties": {
+        "requests": {
+          "description": "Required. The UserAvailabilitys to update. Maximum of 1000 at a time: if more are passed in, returns INVALID_ARGUMENT. Batch is all or nothing; either all updates succeed or none. The `parent` field in each child request must either be empty, or match the `parent` field in the batch request. If there is a mismatch, that will also result in an INVALID_ARGUMENT being returned.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaUpdateUserAvailabilityRequest"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesResponse": {
+      "description": "Response message for UserStoreService.BatchUpdateUserAvailabilities method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesResponse",
+      "properties": {
+        "userAvailabilities": {
+          "description": "The updated UserAvailabilitys.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaUserAvailability"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesMetadata": {
       "description": "Metadata related to the progress of the UserLicenseService.BatchUpdateUserLicenses operation. This will be returned by the google.longrunning.Operation.metadata field.",
       "id": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesMetadata",
@@ -22967,6 +23226,65 @@
         "promptText": {
           "description": "Required. The text of the suggested prompt.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersRequest": {
+      "description": "Request for EngineService.CheckFeaturePolicyMembers method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersRequest",
+      "properties": {
+        "members": {
+          "description": "Required. The members to check, in the form a policy takes them. At least 1 and at most 100. `verification` is ignored.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersResponse": {
+      "description": "Response for EngineService.CheckFeaturePolicyMembers method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersResponse",
+      "properties": {
+        "directorySource": {
+          "description": "Where the project's groups are looked up.",
+          "enum": [
+            "DIRECTORY_SOURCE_UNSPECIFIED",
+            "GOOGLE",
+            "SCIM",
+            "NONE"
+          ],
+          "enumDescriptions": [
+            "The source couldn't be determined; every group is `CHECK_FAILED`.",
+            "Google identity (Workspace or Cloud Identity). Groups are emails.",
+            "Workforce Identity Federation with SCIM groups in the project's workforce pool.",
+            "Workforce Identity Federation without SCIM groups: no directory to check against."
+          ],
+          "type": "string"
+        },
+        "memberChecks": {
+          "description": "One result per requested member, in request order. Members are checked independently, so two emails for the same Google group both pass.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersResponseMemberCheck"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersResponseMemberCheck": {
+      "description": "The result for one requested member.",
+      "id": "GoogleCloudDiscoveryengineV1alphaCheckFeaturePolicyMembersResponseMemberCheck",
+      "properties": {
+        "member": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember",
+          "description": "The member as EngineService.UpdateEngine would save it: `id` normalized, `display_name` taken from the directory when it has one, and `verification` set. Echoes the request's member when `status` is an INVALID_ARGUMENT from the member's format."
+        },
+        "status": {
+          "$ref": "GoogleRpcStatus",
+          "description": "OK when the member is valid and, for a group, in the directory. Otherwise INVALID_ARGUMENT for a malformed member or a group the directory doesn't have, and UNAVAILABLE for a Google group the directory couldn't be asked about. EngineService.UpdateEngine fails on all of these, except that it leaves out an allowed group the directory doesn't have, saves the other members, and lists the group in Engine.feature_policy_rejections."
         }
       },
       "type": "object"
@@ -26445,6 +26763,13 @@
           "readOnly": true,
           "type": "object"
         },
+        "featurePolicies": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy"
+          },
+          "description": "Optional. Per-feature access policies, keyed by feature toggle name (see `features`). A feature with no entry is available to every user when it is on. Only features that support access policies are accepted.",
+          "type": "object"
+        },
         "features": {
           "additionalProperties": {
             "enum": [
@@ -26459,7 +26784,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` * `preview-agents`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` * `preview-agents` * `plugins`",
           "type": "object"
         },
         "globalFeatureToggleState": {
@@ -26659,6 +26984,89 @@
       "properties": {
         "companyName": {
           "description": "The name of the company, business or entity that is associated with the engine. Setting this may help improve LLM related features.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy": {
+      "description": "Restricts which users may use a feature that is turned on in `features`.",
+      "id": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy",
+      "properties": {
+        "allowedMembers": {
+          "description": "Optional. Members who may use the feature.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        },
+        "defaultAccess": {
+          "description": "Optional. Access for users who match neither list.",
+          "enum": [
+            "DEFAULT_ACCESS_UNSPECIFIED",
+            "ALLOW",
+            "DENY"
+          ],
+          "enumDescriptions": [
+            "Treated as `ALLOW`.",
+            "Users who match neither list may use the feature.",
+            "Users who match neither list may not use the feature."
+          ],
+          "type": "string"
+        },
+        "deniedMembers": {
+          "description": "Optional. Members who may not use the feature. Takes precedence over `allowed_members`.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember": {
+      "description": "A user or group the policy refers to.",
+      "id": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember",
+      "properties": {
+        "displayName": {
+          "description": "Optional. Label shown in the console. Never used for evaluation.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Required. Identifier evaluated at serving time. Its format depends on the project's identity provider: * Google identity (`GSUITE`): the group or user email. For groups, the server resolves the email to a group ID on write and returns the email on read. * Workforce Identity Federation (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`. With SCIM this is the SCIM group ID; without SCIM and with the default Microsoft Entra mapping it is the Entra group object ID. * Workforce Identity Federation, users: the user's workforce identity subject.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. Kind of member.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "USER",
+            "GROUP"
+          ],
+          "enumDescriptions": [
+            "Not allowed.",
+            "A single user.",
+            "A group of users."
+          ],
+          "type": "string"
+        },
+        "verification": {
+          "description": "Output only. Result of the server's directory check when the member was saved.",
+          "enum": [
+            "VERIFICATION_UNSPECIFIED",
+            "VERIFIED",
+            "NOT_FOUND",
+            "NOT_VERIFIABLE",
+            "CHECK_FAILED"
+          ],
+          "enumDescriptions": [
+            "Not checked.",
+            "Found in the project's directory.",
+            "Microsoft Graph has no such group. Saved anyway, because a custom `google.groups` mapping can emit IDs that Graph doesn't know.",
+            "The project has no directory to check against.",
+            "The directory lookup failed. Saved anyway."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -29611,6 +30019,24 @@
           "description": "The total number of items matching the request. This will always be populated in the response.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaListUserAvailabilitiesResponse": {
+      "description": "Response message for UserStoreService.ListUserAvailabilities method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaListUserAvailabilitiesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        },
+        "userAvailabilities": {
+          "description": "The UserAvailabilitys matching the request.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaUserAvailability"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -34986,6 +35412,63 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaUpdateUserAvailabilityRequest": {
+      "description": "Request message for UserStoreService.UpdateUserAvailability method. Also nested within BatchUpdateUserAvailabilityRequest for the UserStoreService.BatchUpdateUserAvailability method. `parent` is a required field when this message is used for a single Update, but is optional when used for a BatchUpdate.",
+      "id": "GoogleCloudDiscoveryengineV1alphaUpdateUserAvailabilityRequest",
+      "properties": {
+        "parent": {
+          "description": "Optional. The parent UserStore resource name, format: `projects/{project}/locations/{location}/userStores/{user_store_id}`.",
+          "type": "string"
+        },
+        "updateMask": {
+          "description": "Optional. The list of fields to update. Only 'state' is supported; if unset, defaults to 'state'.",
+          "format": "google-fieldmask",
+          "type": "string"
+        },
+        "userAvailability": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaUserAvailability",
+          "description": "Required. The UserAvailability to update."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaUserAvailability": {
+      "description": "Tracks whether a resource is available for a given user (distinct from whether the user is allowed to use that resource by licensing, etc).",
+      "id": "GoogleCloudDiscoveryengineV1alphaUserAvailability",
+      "properties": {
+        "observeTime": {
+          "deprecated": true,
+          "description": "Optional. Deprecated: use `update_time` only.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "state": {
+          "description": "Optional. Whether the user can currently use the resource. Set by the caller on update. If unspecified, defaults to `ACTIVE`.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ACTIVE",
+            "INACTIVE"
+          ],
+          "enumDescriptions": [
+            "Unspecified state (defaults to active).",
+            "Active state.",
+            "Inactive state."
+          ],
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Output only. Timestamp when the most recent update to `state` was saved.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "userPrincipal": {
+          "description": "Required. Immutable. User principal (IdP subject for Workforce Identity, email for Google sign-in).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaUserEvent": {
       "description": "UserEvent captures all metadata information Discovery Engine API needs to know about how end users interact with your website.",
       "id": "GoogleCloudDiscoveryengineV1alphaUserEvent",
@@ -35760,13 +36243,15 @@
             "COMPLIANCE_LEVEL_UNSPECIFIED",
             "COMPLIANCE_LEVEL_FEDRAMP_HIGH",
             "COMPLIANCE_LEVEL_IL4",
-            "COMPLIANCE_LEVEL_IL5"
+            "COMPLIANCE_LEVEL_IL5",
+            "COMPLIANCE_LEVEL_ITAR"
           ],
           "enumDescriptions": [
             "The project has no Assured Workloads compliance level, or reports one that this API version does not model.",
             "FedRAMP High compliance level.",
             "Impact Level 4 (IL4) compliance level.",
-            "Impact Level 5 (IL5) compliance level."
+            "Impact Level 5 (IL5) compliance level.",
+            "International Traffic in Arms Regulations (ITAR) compliance level."
           ],
           "readOnly": true,
           "type": "string"
@@ -36130,7 +36615,7 @@
             ],
             "type": "string"
           },
-          "description": "Output only. Feature config for the engine to opt in or opt out of features. Supported keys: * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` * `preview-agents`",
+          "description": "Output only. Feature config for the engine to opt in or opt out of features. Supported keys: * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` * `preview-agents` * `plugins`",
           "readOnly": true,
           "type": "object"
         },
@@ -37916,6 +38401,13 @@
           "readOnly": true,
           "type": "object"
         },
+        "featurePolicies": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy"
+          },
+          "description": "Optional. Per-feature access policies, keyed by feature toggle name (see `features`). A feature with no entry is available to every user when it is on. Only features that support access policies are accepted.",
+          "type": "object"
+        },
         "features": {
           "additionalProperties": {
             "enum": [
@@ -37930,7 +38422,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` * `preview-agents`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` * `preview-agents` * `plugins`",
           "type": "object"
         },
         "globalFeatureToggleState": {
@@ -38121,6 +38613,89 @@
       "properties": {
         "companyName": {
           "description": "The name of the company, business or entity that is associated with the engine. Setting this may help improve LLM related features.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy": {
+      "description": "Restricts which users may use a feature that is turned on in `features`.",
+      "id": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy",
+      "properties": {
+        "allowedMembers": {
+          "description": "Optional. Members who may use the feature.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        },
+        "defaultAccess": {
+          "description": "Optional. Access for users who match neither list.",
+          "enum": [
+            "DEFAULT_ACCESS_UNSPECIFIED",
+            "ALLOW",
+            "DENY"
+          ],
+          "enumDescriptions": [
+            "Treated as `ALLOW`.",
+            "Users who match neither list may use the feature.",
+            "Users who match neither list may not use the feature."
+          ],
+          "type": "string"
+        },
+        "deniedMembers": {
+          "description": "Optional. Members who may not use the feature. Takes precedence over `allowed_members`.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember": {
+      "description": "A user or group the policy refers to.",
+      "id": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember",
+      "properties": {
+        "displayName": {
+          "description": "Optional. Label shown in the console. Never used for evaluation.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Required. Identifier evaluated at serving time. Its format depends on the project's identity provider: * Google identity (`GSUITE`): the group or user email. For groups, the server resolves the email to a group ID on write and returns the email on read. * Workforce Identity Federation (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`. With SCIM this is the SCIM group ID; without SCIM and with the default Microsoft Entra mapping it is the Entra group object ID. * Workforce Identity Federation, users: the user's workforce identity subject.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. Kind of member.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "USER",
+            "GROUP"
+          ],
+          "enumDescriptions": [
+            "Not allowed.",
+            "A single user.",
+            "A group of users."
+          ],
+          "type": "string"
+        },
+        "verification": {
+          "description": "Output only. Result of the server's directory check when the member was saved.",
+          "enum": [
+            "VERIFICATION_UNSPECIFIED",
+            "VERIFIED",
+            "NOT_FOUND",
+            "NOT_VERIFIABLE",
+            "CHECK_FAILED"
+          ],
+          "enumDescriptions": [
+            "Not checked.",
+            "Found in the project's directory.",
+            "Microsoft Graph has no such group. Saved anyway, because a custom `google.groups` mapping can emit IDs that Graph doesn't know.",
+            "The project has no directory to check against.",
+            "The directory lookup failed. Saved anyway."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },

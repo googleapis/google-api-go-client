@@ -382,18 +382,18 @@ func (s GoogleFirebaseAppcheckV1betaAppAttestConfig) MarshalJSON() ([]byte, erro
 // token*, which are used to access backend services protected by App Check.
 type GoogleFirebaseAppcheckV1betaAppCheckToken struct {
 	// AttestationToken: The App Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
-	// attested app and GCP project. This token is used to access Google services
-	// protected by App Check. These tokens can also be verified by your own custom
-	// backends
+	// (https://www.rfc-editor.org/info/rfc7519/) containing claims that identify
+	// the attested app and GCP project. This token is used to access Google
+	// services protected by App Check. These tokens can also be verified by your
+	// own custom backends
 	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
 	// the Firebase Admin SDK or third-party libraries.
 	AttestationToken string `json:"attestationToken,omitempty"`
 	// Token: The App Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
-	// attested app and GCP project. This token is used to access Google services
-	// protected by App Check. These tokens can also be verified by your own custom
-	// backends
+	// (https://www.rfc-editor.org/info/rfc7519/) containing claims that identify
+	// the attested app and GCP project. This token is used to access Google
+	// services protected by App Check. These tokens can also be verified by your
+	// own custom backends
 	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
 	// the Firebase Admin SDK or third-party libraries.
 	Token string `json:"token,omitempty"`
@@ -428,8 +428,8 @@ func (s GoogleFirebaseAppcheckV1betaAppCheckToken) MarshalJSON() ([]byte, error)
 // Check.
 type GoogleFirebaseAppcheckV1betaAttestationTokenResponse struct {
 	// AttestationToken: An App Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
-	// attested app and Firebase project. This token is used to access Firebase
+	// (https://www.rfc-editor.org/info/rfc7519/) containing claims that identify
+	// the attested app and Firebase project. This token is used to access Firebase
 	// services protected by App Check.
 	AttestationToken string `json:"attestationToken,omitempty"`
 	// Ttl: The duration from the time this token is minted until its expiration.
@@ -1771,26 +1771,26 @@ func (s GoogleFirebaseAppcheckV1betaPlayIntegrityConfigDeviceIntegrity) MarshalJ
 }
 
 // GoogleFirebaseAppcheckV1betaPublicJwk: A JWK as specified by section 4 of
-// RFC 7517 (https://tools.ietf.org/html/rfc7517#section-4) and section 6.3.1
-// of RFC 7518 (https://tools.ietf.org/html/rfc7518#section-6.3.1).
+// RFC 7517 (https://www.rfc-editor.org/info/rfc7517/#section-4) and section
+// 6.3.1 of RFC 7518 (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1).
 type GoogleFirebaseAppcheckV1betaPublicJwk struct {
 	// Alg: See section 4.4 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.4).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.4).
 	Alg string `json:"alg,omitempty"`
 	// E: See section 6.3.1.2 of RFC 7518
-	// (https://tools.ietf.org/html/rfc7518#section-6.3.1.2).
+	// (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1.2).
 	E string `json:"e,omitempty"`
 	// Kid: See section 4.5 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.5).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.5).
 	Kid string `json:"kid,omitempty"`
 	// Kty: See section 4.1 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.1).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.1).
 	Kty string `json:"kty,omitempty"`
 	// N: See section 6.3.1.1 of RFC 7518
-	// (https://tools.ietf.org/html/rfc7518#section-6.3.1.1).
+	// (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1.1).
 	N string `json:"n,omitempty"`
 	// Use: See section 4.2 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.2).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.2).
 	Use string `json:"use,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Alg") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1813,11 +1813,11 @@ func (s GoogleFirebaseAppcheckV1betaPublicJwk) MarshalJSON() ([]byte, error) {
 // GoogleFirebaseAppcheckV1betaPublicJwkSet: The currently active set of public
 // keys that can be used to verify App Check tokens. This object is a JWK set
 // as specified by section 5 of RFC 7517
-// (https://tools.ietf.org/html/rfc7517#section-5). For security, the response
-// **must not** be cached for longer than six hours.
+// (https://www.rfc-editor.org/info/rfc7517#section-5). For security, the
+// response **must not** be cached for longer than six hours.
 type GoogleFirebaseAppcheckV1betaPublicJwkSet struct {
 	// Keys: The set of public keys. See section 5.1 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-5).
+	// (https://www.rfc-editor.org/info/rfc7517#section-5).
 	Keys []*GoogleFirebaseAppcheckV1betaPublicJwk `json:"keys,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -2447,9 +2447,9 @@ type JwksGetCall struct {
 }
 
 // Get: Returns a public JWK set as specified by RFC 7517
-// (https://tools.ietf.org/html/rfc7517) that can be used to verify App Check
-// tokens. Exactly one of the public keys in the returned set will successfully
-// validate any App Check token that is currently valid.
+// (https://www.rfc-editor.org/info/rfc7517/) that can be used to verify App
+// Check tokens. Exactly one of the public keys in the returned set will
+// successfully validate any App Check token that is currently valid.
 //
 //   - name: The relative resource name to the public JWK set. Must always be
 //     exactly the string `jwks`.

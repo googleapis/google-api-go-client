@@ -2602,8 +2602,9 @@ func (s *ProductInstallment) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ProductMinimumOrderValue: The minimum order value in the cart before the
-// checkout is permitted.
+// ProductMinimumOrderValue: Minimum order value
+// (https://support.google.com/merchants/answer/16989009) in the cart before
+// the checkout is permitted.
 type ProductMinimumOrderValue struct {
 	// Country: Required. The CLDR territory code
 	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
@@ -2620,10 +2621,15 @@ type ProductMinimumOrderValue struct {
 	// `ONLINE_LOCAL` if not configured.
 	//
 	// Possible values:
-	//   "SURFACE_UNSPECIFIED" - Surface is unspecified.
-	//   "ONLINE" - Surface value to indicate online purchases.
-	//   "LOCAL" - Surface value to indicate local purchases.
-	//   "ONLINE_LOCAL" - Surface value to indicate online and local purchases.
+	//   "SURFACE_UNSPECIFIED" - Indicates that the surface is unspecified.
+	// Defaults to `ONLINE_LOCAL`.
+	//   "ONLINE" - Applies exclusively to delivery/shipping orders (all delivery
+	// routes).
+	//   "LOCAL" - Applies exclusively to local in-store pickup (buy online, pickup
+	// in store). See [in-store
+	// pickup](https://support.google.com/merchants/answer/14634021).
+	//   "ONLINE_LOCAL" - Applies to both delivery/shipping and local in-store
+	// pickup.
 	Surface string `json:"surface,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Country") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

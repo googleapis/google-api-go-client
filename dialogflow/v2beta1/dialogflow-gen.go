@@ -12860,6 +12860,7 @@ type GoogleCloudDialogflowV2beta1InputAudioConfig struct {
 	OptOutConformerModelMigration bool                                         `json:"optOutConformerModelMigration,omitempty"`
 	PhraseHints                   []string                                     `json:"phraseHints,omitempty"`
 	PhraseSets                    []string                                     `json:"phraseSets,omitempty"`
+	ProfanityFilter               bool                                         `json:"profanityFilter,omitempty"`
 	SampleRateHertz               int64                                        `json:"sampleRateHertz,omitempty"`
 	SingleUtterance               bool                                         `json:"singleUtterance,omitempty"`
 	SpeechContexts                []*GoogleCloudDialogflowV2beta1SpeechContext `json:"speechContexts,omitempty"`
@@ -16499,6 +16500,7 @@ type GoogleCloudDialogflowV2beta1SpeechToTextConfig struct {
 	LanguageCode                   string                                                         `json:"languageCode,omitempty"`
 	Model                          string                                                         `json:"model,omitempty"`
 	PhraseSets                     []string                                                       `json:"phraseSets,omitempty"`
+	ProfanityFilter                bool                                                           `json:"profanityFilter,omitempty"`
 	SampleRateHertz                int64                                                          `json:"sampleRateHertz,omitempty"`
 	// Possible values:
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED"

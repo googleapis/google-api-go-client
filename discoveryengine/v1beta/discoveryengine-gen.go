@@ -5035,6 +5035,10 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// overrides, this map always contains an entry for every toggle. Clients
 	// should read toggle state from this field.
 	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
+	// FeaturePolicies: Optional. Per-feature access policies, keyed by feature
+	// toggle name (see `features`). A feature with no entry is available to every
+	// user when it is on. Only features that support access policies are accepted.
+	FeaturePolicies map[string]GoogleCloudDiscoveryengineV1EngineFeaturePolicy `json:"featurePolicies,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
@@ -5047,12 +5051,13 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
-	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
-	// * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` *
-	// `preview-agents`
+	// `skill-sharing-without-admin-approval` * `skill-security-scan` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` *
+	// `code-extraction` * `remote-vm` * `license-tier-badge` *
+	// `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents` * `plugins`
 	Features map[string]string `json:"features,omitempty"`
 	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
 	// for the engine.
@@ -5294,6 +5299,90 @@ type GoogleCloudDiscoveryengineV1EngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1EngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1EngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineFeaturePolicy: Restricts which users may
+// use a feature that is turned on in `features`.
+type GoogleCloudDiscoveryengineV1EngineFeaturePolicy struct {
+	// AllowedMembers: Optional. Members who may use the feature.
+	AllowedMembers []*GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember `json:"allowedMembers,omitempty"`
+	// DefaultAccess: Optional. Access for users who match neither list.
+	//
+	// Possible values:
+	//   "DEFAULT_ACCESS_UNSPECIFIED" - Treated as `ALLOW`.
+	//   "ALLOW" - Users who match neither list may use the feature.
+	//   "DENY" - Users who match neither list may not use the feature.
+	DefaultAccess string `json:"defaultAccess,omitempty"`
+	// DeniedMembers: Optional. Members who may not use the feature. Takes
+	// precedence over `allowed_members`.
+	DeniedMembers []*GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember `json:"deniedMembers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedMembers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineFeaturePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineFeaturePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember: A user or group the
+// policy refers to.
+type GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember struct {
+	// DisplayName: Optional. Label shown in the console. Never used for
+	// evaluation.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Required. Identifier evaluated at serving time. Its format depends on
+	// the project's identity provider: * Google identity (`GSUITE`): the group or
+	// user email. For groups, the server resolves the email to a group ID on write
+	// and returns the email on read. * Workforce Identity Federation
+	// (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`.
+	// With SCIM this is the SCIM group ID; without SCIM and with the default
+	// Microsoft Entra mapping it is the Entra group object ID. * Workforce
+	// Identity Federation, users: the user's workforce identity subject.
+	Id string `json:"id,omitempty"`
+	// Type: Required. Kind of member.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not allowed.
+	//   "USER" - A single user.
+	//   "GROUP" - A group of users.
+	Type string `json:"type,omitempty"`
+	// Verification: Output only. Result of the server's directory check when the
+	// member was saved.
+	//
+	// Possible values:
+	//   "VERIFICATION_UNSPECIFIED" - Not checked.
+	//   "VERIFIED" - Found in the project's directory.
+	//   "NOT_FOUND" - Microsoft Graph has no such group. Saved anyway, because a
+	// custom `google.groups` mapping can emit IDs that Graph doesn't know.
+	//   "NOT_VERIFIABLE" - The project has no directory to check against.
+	//   "CHECK_FAILED" - The directory lookup failed. Saved anyway.
+	Verification string `json:"verification,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13180,6 +13269,10 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// overrides, this map always contains an entry for every toggle. Clients
 	// should read toggle state from this field.
 	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
+	// FeaturePolicies: Optional. Per-feature access policies, keyed by feature
+	// toggle name (see `features`). A feature with no entry is available to every
+	// user when it is on. Only features that support access policies are accepted.
+	FeaturePolicies map[string]GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy `json:"featurePolicies,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
@@ -13192,12 +13285,13 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
-	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
-	// * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` *
-	// `preview-agents`
+	// `skill-sharing-without-admin-approval` * `skill-security-scan` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` *
+	// `code-extraction` * `remote-vm` * `license-tier-badge` *
+	// `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents` * `plugins`
 	Features map[string]string `json:"features,omitempty"`
 	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
 	// for the engine.
@@ -13446,6 +13540,90 @@ type GoogleCloudDiscoveryengineV1alphaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy: Restricts which users
+// may use a feature that is turned on in `features`.
+type GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy struct {
+	// AllowedMembers: Optional. Members who may use the feature.
+	AllowedMembers []*GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember `json:"allowedMembers,omitempty"`
+	// DefaultAccess: Optional. Access for users who match neither list.
+	//
+	// Possible values:
+	//   "DEFAULT_ACCESS_UNSPECIFIED" - Treated as `ALLOW`.
+	//   "ALLOW" - Users who match neither list may use the feature.
+	//   "DENY" - Users who match neither list may not use the feature.
+	DefaultAccess string `json:"defaultAccess,omitempty"`
+	// DeniedMembers: Optional. Members who may not use the feature. Takes
+	// precedence over `allowed_members`.
+	DeniedMembers []*GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember `json:"deniedMembers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedMembers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember: A user or group
+// the policy refers to.
+type GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember struct {
+	// DisplayName: Optional. Label shown in the console. Never used for
+	// evaluation.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Required. Identifier evaluated at serving time. Its format depends on
+	// the project's identity provider: * Google identity (`GSUITE`): the group or
+	// user email. For groups, the server resolves the email to a group ID on write
+	// and returns the email on read. * Workforce Identity Federation
+	// (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`.
+	// With SCIM this is the SCIM group ID; without SCIM and with the default
+	// Microsoft Entra mapping it is the Entra group object ID. * Workforce
+	// Identity Federation, users: the user's workforce identity subject.
+	Id string `json:"id,omitempty"`
+	// Type: Required. Kind of member.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not allowed.
+	//   "USER" - A single user.
+	//   "GROUP" - A group of users.
+	Type string `json:"type,omitempty"`
+	// Verification: Output only. Result of the server's directory check when the
+	// member was saved.
+	//
+	// Possible values:
+	//   "VERIFICATION_UNSPECIFIED" - Not checked.
+	//   "VERIFIED" - Found in the project's directory.
+	//   "NOT_FOUND" - Microsoft Graph has no such group. Saved anyway, because a
+	// custom `google.groups` mapping can emit IDs that Graph doesn't know.
+	//   "NOT_VERIFIABLE" - The project has no directory to check against.
+	//   "CHECK_FAILED" - The directory lookup failed. Saved anyway.
+	Verification string `json:"verification,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25994,6 +26172,10 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// overrides, this map always contains an entry for every toggle. Clients
 	// should read toggle state from this field.
 	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
+	// FeaturePolicies: Optional. Per-feature access policies, keyed by feature
+	// toggle name (see `features`). A feature with no entry is available to every
+	// user when it is on. Only features that support access policies are accepted.
+	FeaturePolicies map[string]GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy `json:"featurePolicies,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
@@ -26006,12 +26188,13 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// `disable-onedrive-upload` * `disable-talk-to-content` *
 	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
 	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
-	// `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` *
-	// `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm`
-	// * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` *
-	// `preview-agents`
+	// `skill-sharing-without-admin-approval` * `skill-security-scan` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` *
+	// `code-extraction` * `remote-vm` * `license-tier-badge` *
+	// `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents` * `plugins`
 	Features map[string]string `json:"features,omitempty"`
 	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
 	// for the engine.
@@ -26256,6 +26439,90 @@ type GoogleCloudDiscoveryengineV1betaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy: Restricts which users
+// may use a feature that is turned on in `features`.
+type GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy struct {
+	// AllowedMembers: Optional. Members who may use the feature.
+	AllowedMembers []*GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember `json:"allowedMembers,omitempty"`
+	// DefaultAccess: Optional. Access for users who match neither list.
+	//
+	// Possible values:
+	//   "DEFAULT_ACCESS_UNSPECIFIED" - Treated as `ALLOW`.
+	//   "ALLOW" - Users who match neither list may use the feature.
+	//   "DENY" - Users who match neither list may not use the feature.
+	DefaultAccess string `json:"defaultAccess,omitempty"`
+	// DeniedMembers: Optional. Members who may not use the feature. Takes
+	// precedence over `allowed_members`.
+	DeniedMembers []*GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember `json:"deniedMembers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedMembers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember: A user or group
+// the policy refers to.
+type GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember struct {
+	// DisplayName: Optional. Label shown in the console. Never used for
+	// evaluation.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Required. Identifier evaluated at serving time. Its format depends on
+	// the project's identity provider: * Google identity (`GSUITE`): the group or
+	// user email. For groups, the server resolves the email to a group ID on write
+	// and returns the email on read. * Workforce Identity Federation
+	// (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`.
+	// With SCIM this is the SCIM group ID; without SCIM and with the default
+	// Microsoft Entra mapping it is the Entra group object ID. * Workforce
+	// Identity Federation, users: the user's workforce identity subject.
+	Id string `json:"id,omitempty"`
+	// Type: Required. Kind of member.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not allowed.
+	//   "USER" - A single user.
+	//   "GROUP" - A group of users.
+	Type string `json:"type,omitempty"`
+	// Verification: Output only. Result of the server's directory check when the
+	// member was saved.
+	//
+	// Possible values:
+	//   "VERIFICATION_UNSPECIFIED" - Not checked.
+	//   "VERIFIED" - Found in the project's directory.
+	//   "NOT_FOUND" - Microsoft Graph has no such group. Saved anyway, because a
+	// custom `google.groups` mapping can emit IDs that Graph doesn't know.
+	//   "NOT_VERIFIABLE" - The project has no directory to check against.
+	//   "CHECK_FAILED" - The directory lookup failed. Saved anyway.
+	Verification string `json:"verification,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

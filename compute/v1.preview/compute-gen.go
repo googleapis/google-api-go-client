@@ -4458,6 +4458,8 @@ type AllocationAggregateReservation struct {
 	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P"
 	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_CT5P"
 	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_TPU7X"
+	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_TPU8T"
+	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_TPU8T_METAL"
 	VmFamily string `json:"vmFamily,omitempty"`
 	// WorkloadType: The workload type of the instances that will target this
 	// reservation.
@@ -8569,6 +8571,12 @@ type BackendService struct {
 	// toINTERNAL, or when the load balancing scheme is set toEXTERNAL and haPolicy
 	// fastIpMove is enabled.
 	Network string `json:"network,omitempty"`
+	// NetworkAttachment: Optional. The URL of the network attachment that this
+	// resource
+	// belongs
+	// to.projects/{project}/regions/{region_name}/networkAttachments/{network_attac
+	// hment_name}.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
 	// NetworkPassThroughLbTrafficPolicy: Configures traffic steering properties of
 	// internal passthrough Network
 	// Load Balancers.
@@ -8703,6 +8711,14 @@ type BackendService struct {
 	// Can only be set if load balancing scheme is INTERNAL_SELF_MANAGED.
 	// If set, lists of backends and health checks must be both empty.
 	ServiceBindings []string `json:"serviceBindings,omitempty"`
+	// ServiceClassId: Optional. The service class ID associated with this
+	// resource.
+	// Producer Service's Service class ID for the region of this backend
+	// service. Can only be used with network_attachment. It is not possible to
+	// use on its own; however, network_attachment can be used
+	// without
+	// service_class_id.
+	ServiceClassId string `json:"serviceClassId,omitempty"`
 	// ServiceLbPolicy: URL to networkservices.ServiceLbPolicy resource.
 	//
 	// Can only be set if load balancing scheme is
@@ -20526,6 +20542,12 @@ type ForwardingRule struct {
 	// Google
 	// APIs, a network must be provided.
 	Network string `json:"network,omitempty"`
+	// NetworkAttachment: Optional. The URL of the network attachment that this
+	// resource
+	// belongs
+	// to.projects/{project}/regions/{region_name}/networkAttachments/{network_attac
+	// hment_name}.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
 	// NetworkTier: This signifies the networking tier used for configuring
 	// this load balancer and can only take the following values:PREMIUM,
 	// STANDARD.
@@ -20648,6 +20670,12 @@ type ForwardingRule struct {
 	// SelfLinkWithId: Output only. [Output Only] Server-defined URL for this
 	// resource with the resource id.
 	SelfLinkWithId string `json:"selfLinkWithId,omitempty"`
+	// ServiceClassId: Optional. Producer Service's Service class ID for the region
+	// of this forwarding rule.
+	// Can only be used with network_attachment. It is not possible to use on
+	// its
+	// own; however, network_attachment can be used without service_class_id.
+	ServiceClassId string `json:"serviceClassId,omitempty"`
 	// ServiceDirectoryRegistrations: Service Directory resources to register this
 	// forwarding rule with.
 	// Currently, only supports a single Service Directory resource.
@@ -22713,6 +22741,8 @@ type FutureResourcesSpecAggregateResources struct {
 	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_CT4P"
 	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_CT5P"
 	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_TPU7X"
+	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_TPU8T"
+	//   "VM_FAMILY_CLOUD_TPU_POD_SLICE_TPU8T_METAL"
 	VmFamily string `json:"vmFamily,omitempty"`
 	// WorkloadType: Workload type. Use for TPU reservations.
 	//
@@ -34887,6 +34917,18 @@ func (s InstanceGroupManagerTargetSizePolicy) MarshalJSON() ([]byte, error) {
 }
 
 type InstanceGroupManagerUpdatePolicy struct {
+	// AllowedActions: Actions that are allowed to update instances within MIG.
+	//
+	// Possible values:
+	//   "NONE" - Do not perform any action.
+	//   "REFRESH" - Do not stop the instance.
+	//   "REPLACE" - (Default.) Replace the instance according to the replacement
+	// method
+	// option.
+	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
+	AllowedActions []string `json:"allowedActions,omitempty"`
 	// InstanceRedistributionType: The
 	// instance redistribution policy for regional managed instance groups.
 	// Valid values are:
@@ -34965,6 +35007,8 @@ type InstanceGroupManagerUpdatePolicy struct {
 	// method
 	// option.
 	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
 	MinimalAction string `json:"minimalAction,omitempty"`
 	// MostDisruptiveAllowedAction: Most disruptive action that is allowed to be
 	// taken on an instance.
@@ -34984,6 +35028,8 @@ type InstanceGroupManagerUpdatePolicy struct {
 	// method
 	// option.
 	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
 	MostDisruptiveAllowedAction string `json:"mostDisruptiveAllowedAction,omitempty"`
 	// ReplacementMethod: What action should be used to replace instances.
 	// See minimal_action.REPLACE
@@ -35007,15 +35053,15 @@ type InstanceGroupManagerUpdatePolicy struct {
 	// to all or a subset of existing VMs and also to new VMs that are added
 	// to the group.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InstanceRedistributionType")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AllowedActions") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InstanceRedistributionType") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedActions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -35109,6 +35155,18 @@ type InstanceGroupManagersApplyUpdatesRequest struct {
 	// If the flag is set to true then the instances may not be specified
 	// in the request.
 	AllInstances bool `json:"allInstances,omitempty"`
+	// AllowedActions: Actions that are allowed to update instances within MIG.
+	//
+	// Possible values:
+	//   "NONE" - Do not perform any action.
+	//   "REFRESH" - Do not stop the instance.
+	//   "REPLACE" - (Default.) Replace the instance according to the replacement
+	// method
+	// option.
+	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
+	AllowedActions []string `json:"allowedActions,omitempty"`
 	// Instances: The list of URLs of one or more instances for which you want to
 	// apply
 	// updates. Each URL can be a full URL or a partial URL, such
@@ -35140,6 +35198,8 @@ type InstanceGroupManagersApplyUpdatesRequest struct {
 	// method
 	// option.
 	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
 	MinimalAction string `json:"minimalAction,omitempty"`
 	// MostDisruptiveAllowedAction: The most disruptive action that you want to
 	// perform on each instance during
@@ -35166,6 +35226,8 @@ type InstanceGroupManagersApplyUpdatesRequest struct {
 	// method
 	// option.
 	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
 	MostDisruptiveAllowedAction string `json:"mostDisruptiveAllowedAction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllInstances") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -61858,6 +61920,18 @@ type RegionInstanceGroupManagersApplyUpdatesRequest struct {
 	// If the flag is set to true then the instances may not be specified
 	// in the request.
 	AllInstances bool `json:"allInstances,omitempty"`
+	// AllowedActions: Actions that are allowed to update instances within MIG.
+	//
+	// Possible values:
+	//   "NONE" - Do not perform any action.
+	//   "REFRESH" - Do not stop the instance.
+	//   "REPLACE" - (Default.) Replace the instance according to the replacement
+	// method
+	// option.
+	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
+	AllowedActions []string `json:"allowedActions,omitempty"`
 	// Instances: The list of URLs of one or more instances for which you want to
 	// apply
 	// updates. Each URL can be a full URL or a partial URL, such
@@ -61889,6 +61963,8 @@ type RegionInstanceGroupManagersApplyUpdatesRequest struct {
 	// method
 	// option.
 	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
 	MinimalAction string `json:"minimalAction,omitempty"`
 	// MostDisruptiveAllowedAction: The most disruptive action that you want to
 	// perform on each instance during
@@ -61915,6 +61991,8 @@ type RegionInstanceGroupManagersApplyUpdatesRequest struct {
 	// method
 	// option.
 	//   "RESTART" - Stop the instance and start it again.
+	//   "RESTART_IN_PLACE" - Restart the instance using the same capacity and
+	// preserving local SSDs.
 	MostDisruptiveAllowedAction string `json:"mostDisruptiveAllowedAction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllInstances") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -74283,6 +74361,15 @@ type ServiceAttachment struct {
 	Kind string `json:"kind,omitempty"`
 	// Metadata: Metadata of the service attachment.
 	Metadata map[string]string `json:"metadata,omitempty"`
+	// Mode: Optional. The connection mode of the service attachment.
+	//
+	// Possible values:
+	//   "DIRECT" - The service attachment does not use NAT subnets to create
+	// connections.
+	//   "MODE_UNSPECIFIED" - Default value. The service attachment defaults to NAT
+	// mode.
+	//   "NAT" - The service attachment uses NAT subnets to create connections.
+	Mode string `json:"mode,omitempty"`
 	// Name: Name of the resource. Provided by the client when the resource is
 	// created.
 	// The name must be 1-63 characters long, and comply withRFC1035.

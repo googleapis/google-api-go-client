@@ -1552,6 +1552,16 @@ type GoogleCloudAiplatformV1beta1FunctionResponsePart struct {
 	FileData *GoogleCloudAiplatformV1beta1FunctionResponseFileData `json:"fileData,omitempty"`
 	// InlineData: Inline media bytes.
 	InlineData *GoogleCloudAiplatformV1beta1FunctionResponseBlob `json:"inlineData,omitempty"`
+	// MediaProcessing: Optional. Processes this part's media for understanding.
+	// Only meaningful for video parts (`inline_data` or `file_data` with video
+	// mime). Non-video parts ignore this field.
+	//
+	// Possible values:
+	//   "MEDIA_PROCESSING_UNSPECIFIED" - Defaults to model-specific processing.
+	//   "STATIC" - Fixed-rate frame extraction. All frames placed in context.
+	//   "AGENTIC" - Model-driven dynamic navigation. Recommended for most use
+	// cases.
+	MediaProcessing string `json:"mediaProcessing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileData") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2162,7 +2172,9 @@ type GoogleCloudAiplatformV1beta1GoogleMaps struct {
 	// include the widget context token in the response.
 	EnableWidget bool `json:"enableWidget,omitempty"`
 	// GroundingTypes: Optional. Specifies the types of Google Maps grounding to
-	// enable. Defaults to `places` when unset.
+	// enable. Defaults to `places` when unset, and to `places` and `routing` for
+	// Gemini 4 and later models. When set, only the listed types are enabled; for
+	// example, setting only `places` disables routing.
 	GroundingTypes *GoogleCloudAiplatformV1beta1GoogleMapsGroundingTypes `json:"groundingTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableWidget") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2189,7 +2201,8 @@ type GoogleCloudAiplatformV1beta1GoogleMapsGroundingTypes struct {
 	// default grounding type when no `GroundingTypes` are specified.
 	Places *GoogleCloudAiplatformV1beta1GoogleMapsPlaces `json:"places,omitempty"`
 	// Routing: Optional. Enables grounding with Google Maps Routing APIs
-	// (ComputeRoutes and SearchAlongRoute).
+	// (ComputeRoutes and SearchAlongRoute). Also enabled by default for Gemini 4
+	// and later models when no `GroundingTypes` are specified.
 	Routing *GoogleCloudAiplatformV1beta1GoogleMapsRouting `json:"routing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Places") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2216,7 +2229,8 @@ type GoogleCloudAiplatformV1beta1GoogleMapsPlaces struct {
 }
 
 // GoogleCloudAiplatformV1beta1GoogleMapsRouting: Grounding with Google Maps
-// Routing APIs (ComputeRoutes and SearchAlongRoute).
+// Routing APIs (ComputeRoutes and SearchAlongRoute). Also enabled by default
+// for Gemini 4 and later models when no grounding type is specified.
 type GoogleCloudAiplatformV1beta1GoogleMapsRouting struct {
 }
 

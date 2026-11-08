@@ -9902,7 +9902,7 @@
       }
     }
   },
-  "revision": "20261102",
+  "revision": "20261106",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "A2aV1APIKeySecurityScheme": {
@@ -17056,6 +17056,13 @@
           "readOnly": true,
           "type": "object"
         },
+        "featurePolicies": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDiscoveryengineV1EngineFeaturePolicy"
+          },
+          "description": "Optional. Per-feature access policies, keyed by feature toggle name (see `features`). A feature with no entry is available to every user when it is on. Only features that support access policies are accepted.",
+          "type": "object"
+        },
         "features": {
           "additionalProperties": {
             "enum": [
@@ -17070,7 +17077,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` * `preview-agents`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` * `preview-agents` * `plugins`",
           "type": "object"
         },
         "globalFeatureToggleState": {
@@ -17261,6 +17268,89 @@
       "properties": {
         "companyName": {
           "description": "The name of the company, business or entity that is associated with the engine. Setting this may help improve LLM related features.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1EngineFeaturePolicy": {
+      "description": "Restricts which users may use a feature that is turned on in `features`.",
+      "id": "GoogleCloudDiscoveryengineV1EngineFeaturePolicy",
+      "properties": {
+        "allowedMembers": {
+          "description": "Optional. Members who may use the feature.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember"
+          },
+          "type": "array"
+        },
+        "defaultAccess": {
+          "description": "Optional. Access for users who match neither list.",
+          "enum": [
+            "DEFAULT_ACCESS_UNSPECIFIED",
+            "ALLOW",
+            "DENY"
+          ],
+          "enumDescriptions": [
+            "Treated as `ALLOW`.",
+            "Users who match neither list may use the feature.",
+            "Users who match neither list may not use the feature."
+          ],
+          "type": "string"
+        },
+        "deniedMembers": {
+          "description": "Optional. Members who may not use the feature. Takes precedence over `allowed_members`.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember": {
+      "description": "A user or group the policy refers to.",
+      "id": "GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember",
+      "properties": {
+        "displayName": {
+          "description": "Optional. Label shown in the console. Never used for evaluation.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Required. Identifier evaluated at serving time. Its format depends on the project's identity provider: * Google identity (`GSUITE`): the group or user email. For groups, the server resolves the email to a group ID on write and returns the email on read. * Workforce Identity Federation (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`. With SCIM this is the SCIM group ID; without SCIM and with the default Microsoft Entra mapping it is the Entra group object ID. * Workforce Identity Federation, users: the user's workforce identity subject.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. Kind of member.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "USER",
+            "GROUP"
+          ],
+          "enumDescriptions": [
+            "Not allowed.",
+            "A single user.",
+            "A group of users."
+          ],
+          "type": "string"
+        },
+        "verification": {
+          "description": "Output only. Result of the server's directory check when the member was saved.",
+          "enum": [
+            "VERIFICATION_UNSPECIFIED",
+            "VERIFIED",
+            "NOT_FOUND",
+            "NOT_VERIFIABLE",
+            "CHECK_FAILED"
+          ],
+          "enumDescriptions": [
+            "Not checked.",
+            "Found in the project's directory.",
+            "Microsoft Graph has no such group. Saved anyway, because a custom `google.groups` mapping can emit IDs that Graph doesn't know.",
+            "The project has no directory to check against.",
+            "The directory lookup failed. Saved anyway."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -23283,13 +23373,15 @@
             "COMPLIANCE_LEVEL_UNSPECIFIED",
             "COMPLIANCE_LEVEL_FEDRAMP_HIGH",
             "COMPLIANCE_LEVEL_IL4",
-            "COMPLIANCE_LEVEL_IL5"
+            "COMPLIANCE_LEVEL_IL5",
+            "COMPLIANCE_LEVEL_ITAR"
           ],
           "enumDescriptions": [
             "The project has no Assured Workloads compliance level, or reports one that this API version does not model.",
             "FedRAMP High compliance level.",
             "Impact Level 4 (IL4) compliance level.",
-            "Impact Level 5 (IL5) compliance level."
+            "Impact Level 5 (IL5) compliance level.",
+            "International Traffic in Arms Regulations (ITAR) compliance level."
           ],
           "readOnly": true,
           "type": "string"
@@ -23605,7 +23697,7 @@
             ],
             "type": "string"
           },
-          "description": "Output only. Feature config for the engine to opt in or opt out of features. Supported keys: * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` * `preview-agents`",
+          "description": "Output only. Feature config for the engine to opt in or opt out of features. Supported keys: * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` * `preview-agents` * `plugins`",
           "readOnly": true,
           "type": "object"
         },
@@ -28194,6 +28286,13 @@
           "readOnly": true,
           "type": "object"
         },
+        "featurePolicies": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy"
+          },
+          "description": "Optional. Per-feature access policies, keyed by feature toggle name (see `features`). A feature with no entry is available to every user when it is on. Only features that support access policies are accepted.",
+          "type": "object"
+        },
         "features": {
           "additionalProperties": {
             "enum": [
@@ -28208,7 +28307,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` * `preview-agents`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` * `preview-agents` * `plugins`",
           "type": "object"
         },
         "globalFeatureToggleState": {
@@ -28408,6 +28507,89 @@
       "properties": {
         "companyName": {
           "description": "The name of the company, business or entity that is associated with the engine. Setting this may help improve LLM related features.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy": {
+      "description": "Restricts which users may use a feature that is turned on in `features`.",
+      "id": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy",
+      "properties": {
+        "allowedMembers": {
+          "description": "Optional. Members who may use the feature.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        },
+        "defaultAccess": {
+          "description": "Optional. Access for users who match neither list.",
+          "enum": [
+            "DEFAULT_ACCESS_UNSPECIFIED",
+            "ALLOW",
+            "DENY"
+          ],
+          "enumDescriptions": [
+            "Treated as `ALLOW`.",
+            "Users who match neither list may use the feature.",
+            "Users who match neither list may not use the feature."
+          ],
+          "type": "string"
+        },
+        "deniedMembers": {
+          "description": "Optional. Members who may not use the feature. Takes precedence over `allowed_members`.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember": {
+      "description": "A user or group the policy refers to.",
+      "id": "GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember",
+      "properties": {
+        "displayName": {
+          "description": "Optional. Label shown in the console. Never used for evaluation.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Required. Identifier evaluated at serving time. Its format depends on the project's identity provider: * Google identity (`GSUITE`): the group or user email. For groups, the server resolves the email to a group ID on write and returns the email on read. * Workforce Identity Federation (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`. With SCIM this is the SCIM group ID; without SCIM and with the default Microsoft Entra mapping it is the Entra group object ID. * Workforce Identity Federation, users: the user's workforce identity subject.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. Kind of member.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "USER",
+            "GROUP"
+          ],
+          "enumDescriptions": [
+            "Not allowed.",
+            "A single user.",
+            "A group of users."
+          ],
+          "type": "string"
+        },
+        "verification": {
+          "description": "Output only. Result of the server's directory check when the member was saved.",
+          "enum": [
+            "VERIFICATION_UNSPECIFIED",
+            "VERIFIED",
+            "NOT_FOUND",
+            "NOT_VERIFIABLE",
+            "CHECK_FAILED"
+          ],
+          "enumDescriptions": [
+            "Not checked.",
+            "Found in the project's directory.",
+            "Microsoft Graph has no such group. Saved anyway, because a custom `google.groups` mapping can emit IDs that Graph doesn't know.",
+            "The project has no directory to check against.",
+            "The directory lookup failed. Saved anyway."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -34005,6 +34187,13 @@
           "readOnly": true,
           "type": "object"
         },
+        "featurePolicies": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy"
+          },
+          "description": "Optional. Per-feature access policies, keyed by feature toggle name (see `features`). A feature with no entry is available to every user when it is on. Only features that support access policies are accepted.",
+          "type": "object"
+        },
         "features": {
           "additionalProperties": {
             "enum": [
@@ -34019,7 +34208,7 @@
             ],
             "type": "string"
           },
-          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `agent-marketplace` * `agent-scheduling` * `preview-agents`",
+          "description": "Optional. Feature config for the engine to opt in or opt out of features. Supported keys: * `*`: all features, if it's present, all other feature state settings are ignored. * `agent-gallery` * `no-code-agent-builder` * `prompt-gallery` * `model-selector` * `notebook-lm` * `people-search` * `people-search-org-chart` * `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` * `personalization-memory` * `personalization-suggested-highlights` * `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` * `disable-video-generation` * `music-generation` * `speech-generation` * `disable-onedrive-upload` * `disable-talk-to-content` * `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` * `skill-sharing-without-admin-approval` * `skill-security-scan` * `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` * `single-agent-orchestration` * `multi-agent-orchestration` * `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` * `code-extraction` * `remote-vm` * `license-tier-badge` * `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` * `preview-agents` * `plugins`",
           "type": "object"
         },
         "globalFeatureToggleState": {
@@ -34210,6 +34399,89 @@
       "properties": {
         "companyName": {
           "description": "The name of the company, business or entity that is associated with the engine. Setting this may help improve LLM related features.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy": {
+      "description": "Restricts which users may use a feature that is turned on in `features`.",
+      "id": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy",
+      "properties": {
+        "allowedMembers": {
+          "description": "Optional. Members who may use the feature.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        },
+        "defaultAccess": {
+          "description": "Optional. Access for users who match neither list.",
+          "enum": [
+            "DEFAULT_ACCESS_UNSPECIFIED",
+            "ALLOW",
+            "DENY"
+          ],
+          "enumDescriptions": [
+            "Treated as `ALLOW`.",
+            "Users who match neither list may use the feature.",
+            "Users who match neither list may not use the feature."
+          ],
+          "type": "string"
+        },
+        "deniedMembers": {
+          "description": "Optional. Members who may not use the feature. Takes precedence over `allowed_members`.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember": {
+      "description": "A user or group the policy refers to.",
+      "id": "GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember",
+      "properties": {
+        "displayName": {
+          "description": "Optional. Label shown in the console. Never used for evaluation.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Required. Identifier evaluated at serving time. Its format depends on the project's identity provider: * Google identity (`GSUITE`): the group or user email. For groups, the server resolves the email to a group ID on write and returns the email on read. * Workforce Identity Federation (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`. With SCIM this is the SCIM group ID; without SCIM and with the default Microsoft Entra mapping it is the Entra group object ID. * Workforce Identity Federation, users: the user's workforce identity subject.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Required. Kind of member.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "USER",
+            "GROUP"
+          ],
+          "enumDescriptions": [
+            "Not allowed.",
+            "A single user.",
+            "A group of users."
+          ],
+          "type": "string"
+        },
+        "verification": {
+          "description": "Output only. Result of the server's directory check when the member was saved.",
+          "enum": [
+            "VERIFICATION_UNSPECIFIED",
+            "VERIFIED",
+            "NOT_FOUND",
+            "NOT_VERIFIABLE",
+            "CHECK_FAILED"
+          ],
+          "enumDescriptions": [
+            "Not checked.",
+            "Found in the project's directory.",
+            "Microsoft Graph has no such group. Saved anyway, because a custom `google.groups` mapping can emit IDs that Graph doesn't know.",
+            "The project has no directory to check against.",
+            "The directory lookup failed. Saved anyway."
+          ],
+          "readOnly": true,
           "type": "string"
         }
       },

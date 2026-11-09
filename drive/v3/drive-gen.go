@@ -747,6 +747,9 @@ func (s AppList) MarshalJSON() ([]byte, error) {
 type Approval struct {
 	// ApprovalId: The approval ID.
 	ApprovalId string `json:"approvalId,omitempty"`
+	// ApprovedRevisionId: The revision ID of the file when the approval completed
+	// successfully. This is only set when the approval status is APPROVED.
+	ApprovedRevisionId string `json:"approvedRevisionId,omitempty"`
 	// CompleteTime: The time the approval was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
 	// CreateTime: The time the approval was created.

@@ -675,8 +675,8 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// format `projects/{project}/assessments/{assessment}`.
 	Name string `json:"name,omitempty"`
 	// PhoneFraudAssessment: Output only. Assessment returned when a site key, a
-	// token, and a phone number as `user_id` are provided. SMS defense needs to be
-	// enabled.
+	// token, `user_info.account_id`, and a phone number in `user_info.user_ids`
+	// are provided. SMS defense must be enabled.
 	PhoneFraudAssessment *GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment `json:"phoneFraudAssessment,omitempty"`
 	// PolicyEvaluation: Output only. Provides information about the policy
 	// evaluation for this assessment.
@@ -758,13 +758,15 @@ type GoogleCloudRecaptchaenterpriseV1Bot struct {
 	// bot, formatted in kebab-case. Current example values include the following:
 	// * google-agent - AI_AGENT * browser-base - AI_AGENT * chat-gpt - AI_AGENT *
 	// aws-bedrock - AI_AGENT * cybaa-bot - AI_AGENT * cloudflare - AI_AGENT *
-	// payhawk - AI_AGENT * duck-duck-go - SEARCH_INDEXER * mediaboard -
-	// CONTENT_SCRAPER * marker-io - AI_AGENT * anchor-browser - AI_AGENT * shopify
-	// - AI_AGENT * stackscope - CONTENT_SCRAPER * manus - AI_AGENT * kernel-sh -
-	// AI_AGENT * zvelo - SEARCH_INDEXER * meta-muse - AI_AGENT Ensure that your
-	// applications can handle identifier values not explicitly listed here.
-	// Deprecated values might take some time to stop showing up in responses. New
-	// values can be pushed so this list should be taken as non exhaustive.
+	// payhawk - AI_AGENT * duck-duck-go - AI_AGENT * mediaboard - CONTENT_SCRAPER
+	// * marker-io - AI_AGENT * anchor-browser - AI_AGENT * shopify - AI_AGENT *
+	// stackscope - CONTENT_SCRAPER * manus - AI_AGENT * kernel-sh - AI_AGENT *
+	// zvelo - SEARCH_INDEXER * meta-muse - AI_AGENT * duck-duck-bot -
+	// SEARCH_INDEXER * my-porta - SEARCH_INDEXER * ison-search - SEARCH_INDEXER *
+	// rokt - SEARCH_INDEXER Ensure that your applications can handle identifier
+	// values not explicitly listed here. Deprecated values might take some time to
+	// stop showing up in responses. New values can be pushed so this list should
+	// be taken as non exhaustive.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BotType") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -826,10 +828,10 @@ type GoogleCloudRecaptchaenterpriseV1ChallengeRule struct {
 	// Condition: Optional. A CEL condition that must be met for this rule to
 	// apply. If unspecified, the rule applies unconditionally. The following
 	// fields can be referenced in the condition: * `score` * `user_ip_address` *
-	// `user_asn` * `user_agent` * `verified_bots.name` * `verified_bots.bot_type`
-	// Examples: * `score < 0.5` * `user_ip_address == "123.45.67.89" *
-	// `user_agent.contains("Chrome")` * `score < 0.5 && user_ip_address ==
-	// "123.45.67.89"
+	// `user_asn` * `user_agent` * `region_code` * `verified_bots.name` *
+	// `verified_bots.bot_type` Examples: * `score < 0.5` * `user_ip_address ==
+	// "123.45.67.89" * `user_agent.contains("Chrome")` * `score < 0.5 &&
+	// user_ip_address == "123.45.67.89"
 	Condition string `json:"condition,omitempty"`
 	// NoChallenge: Do not present a challenge to the user.
 	NoChallenge *GoogleCloudRecaptchaenterpriseV1ChallengeRuleNoChallengeOutcome `json:"noChallenge,omitempty"`
@@ -2547,9 +2549,9 @@ func (s *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict) UnmarshalJSON(data
 // GoogleCloudRecaptchaenterpriseV1TestingOptions: Options for user acceptance
 // testing.
 type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
-	// TestingChallenge: Optional. For challenge-based keys only (CHECKBOX,
-	// INVISIBLE), all challenge requests for this site return nocaptcha if
-	// NOCAPTCHA, or an unsolvable challenge if CHALLENGE.
+	// TestingChallenge: Optional. For challenge-based keys only (`CHECKBOX`,
+	// `INVISIBLE`), all challenge requests for this site do not show a challenge
+	// if `NOCAPTCHA`, or show an unsolvable challenge if `UNSOLVABLE_CHALLENGE`.
 	//
 	// Possible values:
 	//   "TESTING_CHALLENGE_UNSPECIFIED" - Perform the normal risk analysis and
@@ -2629,10 +2631,10 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// the browser. Could easily be simulated by an attacker.
 	//   "UNEXPECTED_ACTION" - The action provided at token generation was
 	// different than the `expected_action` in the assessment request. The
-	// comparison is case-insensitive. This reason can only be returned if all of
-	// the following are true: - your `site_key` has the POLICY_BASED_CHALLENGE
-	// integration type - you set an action score threshold higher than 0.0 - you
-	// provided a non-empty `expected_action`
+	// comparison is case-insensitive. This reason can only be returned if an
+	// `expected_action` is provided and either: - your `site_key` is a Universal
+	// key, or - your `site_key` has the `POLICY_BASED_CHALLENGE` integration type
+	// with an action score threshold higher than 0.0
 	//   "KEY_MISMATCH" - The key used to generate the token does not match the
 	// `site_key`.
 	//   "DOMAIN_MISMATCH" - The domain of the page on which the token was
@@ -2890,8 +2892,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataItem) UnmarshalJSON(data
 // account involved in the transaction.
 type GoogleCloudRecaptchaenterpriseV1TransactionDataUser struct {
 	// AccountId: Optional. Unique account identifier for this user. If using
-	// Account defense, this should match the hashed_account_id field. Otherwise, a
-	// unique and persistent identifier for this account.
+	// Account defense, this should match the `user_info.account_id` field.
+	// Otherwise, a unique and persistent identifier for this account.
 	AccountId string `json:"accountId,omitempty"`
 	// CreationMs: Optional. The epoch milliseconds of the user's account creation.
 	CreationMs int64 `json:"creationMs,omitempty,string"`

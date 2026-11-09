@@ -2819,7 +2819,7 @@ type LiensCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a Lien which applies to the resource denoted by the `parent`
+// Create: Creates a Lien which applies to the resource denoted by the `parent`
 // field. Callers of this method will require permission on the `parent`
 // resource. For example, applying to `projects/1234` requires permission
 // `resourcemanager.projects.updateLiens`. NOTE: Some resources may limit the
@@ -2919,7 +2919,7 @@ type LiensDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a Lien by `name`. Callers of this method will require
+// Delete: Deletes a Lien by `name`. Callers of this method will require
 // permission on the `parent` resource. For example, a Lien with a `parent` of
 // `projects/1234` requires permission `resourcemanager.projects.updateLiens`.
 //
@@ -3019,7 +3019,7 @@ type LiensGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve a Lien by `name`. Callers of this method will require
+// Get: Retrieves a Lien by `name`. Callers of this method will require
 // permission on the `parent` resource. For example, a Lien with a `parent` of
 // `projects/1234` requires permission `resourcemanager.projects.get`
 //
@@ -3129,7 +3129,7 @@ type LiensListCall struct {
 	header_      http.Header
 }
 
-// List: List all Liens applied to the `parent` resource. Callers of this
+// List: Lists all Liens applied to the `parent` resource. Callers of this
 // method will require permission on the `parent` resource. For example, a Lien
 // with a `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.get`.

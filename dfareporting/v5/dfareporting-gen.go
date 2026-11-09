@@ -37136,7 +37136,18 @@ type StudioCreativeAssetsInsertCall struct {
 	header_                                       http.Header
 }
 
-// Insert: Inserts a new studio creative asset.
+// Insert: Inserts a new studio creative asset. Requests to upload an asset
+// file must be sent to the upload URI using multipart media upload (or
+// resumable media upload). For multipart uploads
+// (https://developers.google.com/doubleclick-advertisers/upload#multipart)
+// (`uploadType=multipart`), the request uses `multipart/related` and includes
+// two parts: * **Metadata**: A JSON object representing
+// DfareportingStudioCreativeAssetsInsertRequest with `studioAdvertiserId`, and
+// optional `studioAccountId` and `studioCreativeId`. * **Media**: The binary
+// data of the asset file, specifying the `Content-Type` of the asset and a
+// `Content-Disposition` header with `name="media" and `filename="" (for
+// example, `Content-Disposition: form-data; name="media";
+// filename="asset.jpg").
 func (r *StudioCreativeAssetsService) Insert(dfareportingstudiocreativeassetsinsertrequest *DfareportingStudioCreativeAssetsInsertRequest) *StudioCreativeAssetsInsertCall {
 	c := &StudioCreativeAssetsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dfareportingstudiocreativeassetsinsertrequest = dfareportingstudiocreativeassetsinsertrequest

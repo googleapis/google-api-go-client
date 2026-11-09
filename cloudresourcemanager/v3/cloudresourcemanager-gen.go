@@ -3831,7 +3831,7 @@ type FoldersSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search for folders that match specific filter criteria. `search()`
+// Search: Searches for folders that match specific filter criteria. `search()`
 // provides an eventually consistent view of the folders a user has access to
 // which meet the specified filter criteria. This will only return folders on
 // which the caller has the permission `resourcemanager.folders.get`.
@@ -5859,7 +5859,7 @@ type LiensCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a Lien which applies to the resource denoted by the `parent`
+// Create: Creates a Lien which applies to the resource denoted by the `parent`
 // field. Callers of this method will require permission on the `parent`
 // resource. For example, applying to `projects/1234` requires permission
 // `resourcemanager.projects.updateLiens`. NOTE: Some resources may limit the
@@ -5959,7 +5959,7 @@ type LiensDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a Lien by `name`. Callers of this method will require
+// Delete: Deletes a Lien by `name`. Callers of this method will require
 // permission on the `parent` resource. For example, a Lien with a `parent` of
 // `projects/1234` requires permission `resourcemanager.projects.updateLiens`.
 //
@@ -6059,7 +6059,7 @@ type LiensGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve a Lien by `name`. Callers of this method will require
+// Get: Retrieves a Lien by `name`. Callers of this method will require
 // permission on the `parent` resource. For example, a Lien with a `parent` of
 // `projects/1234` requires permission `resourcemanager.projects.get`
 //
@@ -6169,7 +6169,7 @@ type LiensListCall struct {
 	header_      http.Header
 }
 
-// List: List all Liens applied to the `parent` resource. Callers of this
+// List: Lists all Liens applied to the `parent` resource. Callers of this
 // method will require permission on the `parent` resource. For example, a Lien
 // with a `parent` of `projects/1234` requires permission
 // `resourcemanager.projects.get`.
@@ -8803,7 +8803,7 @@ type ProjectsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Request that a new project be created. The result is an `Operation`
+// Create: Requests that a new project be created. The result is an `Operation`
 // which can be used to track the creation process. This process usually takes
 // a few seconds, but can sometimes take much longer. The tracking `Operation`
 // is automatically deleted after a few hours, so there is no need to call
@@ -9123,8 +9123,9 @@ type ProjectsGetIamPolicyCall struct {
 }
 
 // GetIamPolicy: Returns the IAM access control policy for the specified
-// project, in the format `projects/{ProjectIdOrNumber}` e.g. projects/123.
-// Permission is denied if the policy or the resource do not exist.
+// project, in the format `projects/{ProjectIdOrNumber}`, for example,
+// `projects/123`. Permission is denied if the policy or the resource do not
+// exist.
 //
 //   - resource: REQUIRED: The resource for which the policy is being requested.
 //     See Resource names (https://cloud.google.com/apis/design/resource_names)
@@ -9392,7 +9393,7 @@ type ProjectsMoveCall struct {
 	header_            http.Header
 }
 
-// Move: Move a project to another place in your resource hierarchy, under a
+// Move: Moves a project to another place in your resource hierarchy, under a
 // new resource parent. Returns an operation which can be used to track the
 // process of the project move workflow. Upon success, the `Operation.response`
 // field will be populated with the moved project. The caller must have
@@ -9615,8 +9616,8 @@ type ProjectsSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search for projects that the caller has the
-// `resourcemanager.projects.get` permission on, and also satisfy the specified
+// Search: Searches for projects on which the caller has the
+// `resourcemanager.projects.get` permission and that match the specified
 // query. This method returns projects in an unspecified order. This method is
 // eventually consistent with project mutations; this means that a newly
 // created project may not appear in the results or recent updates to an
@@ -9792,11 +9793,11 @@ type ProjectsSetIamPolicyCall struct {
 }
 
 // SetIamPolicy: Sets the IAM access control policy for the specified project,
-// in the format `projects/{ProjectIdOrNumber}` e.g. projects/123. CAUTION:
-// This method will replace the existing policy, and cannot be used to append
-// additional IAM settings. Note: Removing service accounts from policies or
-// changing their roles can render services completely inoperable. It is
-// important to understand how the service account is being used before
+// in the format `projects/{ProjectIdOrNumber}`, for example, `projects/123`.
+// CAUTION: This method will replace the existing policy, and cannot be used to
+// append additional IAM settings. Note: Removing service accounts from
+// policies or changing their roles can render services completely inoperable.
+// It is important to understand how the service account is being used before
 // removing or updating its roles. The following constraints apply when using
 // `setIamPolicy()`: + Project does not support `allUsers` and
 // `allAuthenticatedUsers` as `members` in a `Binding` of a `Policy`. + The
@@ -9923,7 +9924,8 @@ type ProjectsTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the specified
-// project, in the format `projects/{ProjectIdOrNumber}` e.g. projects/123..
+// project, in the format `projects/{ProjectIdOrNumber}`, for example,
+// `projects/123`.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is being
 //     requested. See Resource names

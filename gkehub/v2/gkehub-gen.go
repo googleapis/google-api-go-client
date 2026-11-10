@@ -3296,6 +3296,9 @@ type ServiceMeshCondition struct {
 	// limit exceeded.
 	//   "MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART" - Cluster contains
 	// workloads that will require manual restart during modernization.
+	//   "MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET" - Cluster contains
+	// PodDisruptionBudgets that prevent automated pod eviction during
+	// modernization.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.

@@ -2594,7 +2594,7 @@ type GoogleAppsCardV1BorderStyle struct {
 	// value, where `0` (0/255) represents the absence of color and `1` (255/255)
 	// represents the maximum intensity of the color. For example, the following
 	// sets the color to red at its maximum intensity: ``` "color": { "red": 1,
-	// "green": 0, "blue": 0, } ``` The `alpha` field is unavailable for stroke
+	// "green": 0, "blue": 0 } ``` The `alpha` field is unavailable for stroke
 	// color. If specified, this field is ignored.
 	StrokeColor *Color `json:"strokeColor,omitempty"`
 	// Type: The border type.
@@ -2643,9 +2643,9 @@ type GoogleAppsCardV1Button struct {
 	// must be a float number between 0 and 1 based on the RGB color value, where
 	// `0` (0/255) represents the absence of color and `1` (255/255) represents the
 	// maximum intensity of the color. For example, the following sets the color to
-	// red at its maximum intensity: ``` "color": { "red": 1, "green": 0, "blue":
-	// 0, } ``` The `alpha` field is unavailable for button color. If specified,
-	// this field is ignored.
+	// red at its maximum intensity: ``` "color": { "red": 1, "green": 0, "blue": 0
+	// } ``` The `alpha` field is unavailable for button color. If specified, this
+	// field is ignored.
 	Color *Color `json:"color,omitempty"`
 	// Disabled: If `true`, the button is displayed in an inactive state and
 	// doesn't respond to user actions.
@@ -2758,11 +2758,11 @@ type GoogleAppsCardV1Card struct {
 	// menu. Supports up to 10 `CardAction` items. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons): For example, the
 	// following JSON constructs a card action menu with `Settings` and `Send
-	// Feedback` options: ``` "card_actions": [ { "actionLabel": "Settings",
-	// "onClick": { "action": { "functionName": "goToView", "parameters": [ {
-	// "key": "viewType", "value": "SETTING" } ], "loadIndicator":
-	// "LoadIndicator.SPINNER" } } }, { "actionLabel": "Send Feedback", "onClick":
-	// { "openLink": { "url": "https://example.com/feedback" } } } ] ```
+	// Feedback` options: ``` "cardActions": [ { "actionLabel": "Settings",
+	// "onClick": { "action": { "function": "goToView", "parameters": [ { "key":
+	// "viewType", "value": "SETTING" } ], "loadIndicator": "SPINNER" } } }, {
+	// "actionLabel": "Send Feedback", "onClick": { "openLink": { "url":
+	// "https://example.com/feedback" } } } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
 	// DisplayStyle: In Google Workspace add-ons, sets the display properties of
 	// the `peekCardHeader`. Google Workspace add-ons
@@ -3565,8 +3565,8 @@ func (s GoogleAppsCardV1ExpressionDataCondition) MarshalJSON() ([]byte, error) {
 // "borderStyle": { "type": "STROKE", "cornerRadius": 4 }, "items": [ {
 // "image": { "imageUri": "https://www.example.com/image.png", "cropStyle": {
 // "type": "SQUARE" }, "borderStyle": { "type": "STROKE" } }, "title": "An
-// item", "textAlignment": "CENTER" } ], "onClick": { "openLink": { "url":
-// "https://www.example.com" } } } ```
+// item" } ], "onClick": { "openLink": { "url": "https://www.example.com" } } }
+// ```
 type GoogleAppsCardV1Grid struct {
 	// BorderStyle: The border style to apply to each grid item.
 	BorderStyle *GoogleAppsCardV1BorderStyle `json:"borderStyle,omitempty"`
@@ -3682,7 +3682,7 @@ type GoogleAppsCardV1Icon struct {
 	// MaterialIcon: Display one of the Google Material Icons
 	// (https://fonts.google.com/icons). For example, to display a checkbox icon
 	// (https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048),
-	// use ``` "material_icon": { "name": "check_box" } ``` Google Chat apps
+	// use ``` "materialIcon": { "name": "check_box" } ``` Google Chat apps
 	// (https://developers.google.com/workspace/chat):
 	MaterialIcon *GoogleAppsCardV1MaterialIcon `json:"materialIcon,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
@@ -4637,8 +4637,8 @@ type GoogleAppsCardV1Widget struct {
 	// ButtonList: A list of buttons. For example, the following JSON creates two
 	// buttons. The first is a blue text button and the second is an image button
 	// that opens a link: ``` "buttonList": { "buttons": [ { "text": "Edit",
-	// "color": { "red": 0, "green": 0, "blue": 1, }, "disabled": true, }, {
-	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
+	// "color": { "red": 0, "green": 0, "blue": 1 }, "disabled": true }, { "icon":
+	// { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
 	// "openLink": { "url": "https://example.com/calendar" } } } ] } ```
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
 	// Carousel: Contains a collection of `CarouselCard` items, each of which
@@ -4672,10 +4672,10 @@ type GoogleAppsCardV1Widget struct {
 	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
 	// DecoratedText: Displays a decorated text item. For example, the following
 	// JSON creates a decorated text widget showing email address: ```
-	// "decoratedText": { "icon": { "knownIcon": "EMAIL" }, "topLabel": "Email
+	// "decoratedText": { "startIcon": { "knownIcon": "EMAIL" }, "topLabel": "Email
 	// Address", "text": "sasha@example.com", "bottomLabel": "This is a new Email
 	// address!", "switchControl": { "name": "has_send_welcome_email_to_sasha",
-	// "selected": false, "controlType": "CHECKBOX" } } ```
+	// "selected": false, "controlType": "CHECK_BOX" } } ```
 	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
 	// Divider: Displays a horizontal line divider between widgets. For example,
 	// the following JSON creates a divider: ``` "divider": { } ```
@@ -4694,9 +4694,8 @@ type GoogleAppsCardV1Widget struct {
 	// fine collection of items", "columnCount": 2, "borderStyle": { "type":
 	// "STROKE", "cornerRadius": 4 }, "items": [ { "image": { "imageUri":
 	// "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE" },
-	// "borderStyle": { "type": "STROKE" } }, "title": "An item", "textAlignment":
-	// "CENTER" } ], "onClick": { "openLink": { "url": "https://www.example.com" }
-	// } } ```
+	// "borderStyle": { "type": "STROKE" } }, "title": "An item" } ], "onClick": {
+	// "openLink": { "url": "https://www.example.com" } } } ```
 	Grid *GoogleAppsCardV1Grid `json:"grid,omitempty"`
 	// HorizontalAlignment: Specifies whether widgets align to the left, right, or
 	// center of a column.
@@ -4724,10 +4723,10 @@ type GoogleAppsCardV1Widget struct {
 	// SelectionInput: Displays a selection control that lets users select items.
 	// Selection controls can be checkboxes, radio buttons, switches, or dropdown
 	// menus. For example, the following JSON creates a dropdown menu that lets
-	// users choose a size: ``` "selectionInput": { "name": "size", "label": "Size"
-	// "type": "DROPDOWN", "items": [ { "text": "S", "value": "small", "selected":
-	// false }, { "text": "M", "value": "medium", "selected": true }, { "text":
-	// "L", "value": "large", "selected": false }, { "text": "XL", "value":
+	// users choose a size: ``` "selectionInput": { "name": "size", "label":
+	// "Size", "type": "DROPDOWN", "items": [ { "text": "S", "value": "small",
+	// "selected": false }, { "text": "M", "value": "medium", "selected": true }, {
+	// "text": "L", "value": "large", "selected": false }, { "text": "XL", "value":
 	// "extra_large", "selected": false } ] } ```
 	SelectionInput *GoogleAppsCardV1SelectionInput `json:"selectionInput,omitempty"`
 	// TextInput: Displays a text box that users can type into. For example, the

@@ -1828,6 +1828,14 @@ func (s ListUnitsResponse) MarshalJSON() ([]byte, error) {
 type Location struct {
 	// Name: Optional. Name of location.
 	Name string `json:"name,omitempty"`
+	// Type: Type of location.
+	//
+	// Possible values:
+	//   "LOCATION_TYPE_UNSPECIFIED" - Unspecified location type.
+	//   "CLOUD_GLOBAL" - Cloud global.
+	//   "CLOUD_REGION" - Cloud region.
+	//   "CLOUD_ZONE" - Cloud zone.
+	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2199,6 +2207,15 @@ type RolloutKind struct {
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
+	// LocationType: Optional. The location type of the rollout. Based on the
+	// location type, the rollout will target the corresponding locations.
+	//
+	// Possible values:
+	//   "LOCATION_TYPE_UNSPECIFIED" - Unspecified location type.
+	//   "CLOUD_GLOBAL" - Cloud global.
+	//   "CLOUD_REGION" - Cloud region.
+	//   "CLOUD_ZONE" - Cloud zone.
+	LocationType string `json:"locationType,omitempty"`
 	// Name: Identifier. The resource name (full URI of the resource) following the
 	// standard naming scheme:
 	// "projects/{project}/locations/{location}/rolloutKinds/{rollout_kind_id}"
@@ -2651,6 +2668,10 @@ type Unit struct {
 	// Dependents: Optional. Output only. List of Units that depend on this unit.
 	// Unit can only be deprovisioned if this list is empty. Maximum 1000.
 	Dependents []*UnitDependency `json:"dependents,omitempty"`
+	// DeploymentLocation: Optional. Deployment location of the unit. Deployment
+	// location is used to determine which cloud_zone, prod_zone or prod_region to
+	// use for the unit.
+	DeploymentLocation *Location `json:"deploymentLocation,omitempty"`
 	// Engine: Optional. Output only. Metadata about the underlying actuation
 	// engine instance managing this Unit.
 	Engine *Engine `json:"engine,omitempty"`

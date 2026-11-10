@@ -52781,7 +52781,7 @@
       }
     }
   },
-  "revision": "20261028",
+  "revision": "20261106",
   "rootUrl": "https://compute.googleapis.com/",
   "schemas": {
     "AWSV4Signature": {
@@ -64581,11 +64581,13 @@
         "policyType": {
           "description": "The type of the firewall policy. This field can be one of\nVPC_POLICY, RDMA_ROCE_POLICY or ULL_POLICY.\n\nNote: if not specified then VPC_POLICY will be used.",
           "enum": [
+            "NCC_GATEWAY_POLICY",
             "RDMA_ROCE_POLICY",
             "ULL_POLICY",
             "VPC_POLICY"
           ],
           "enumDescriptions": [
+            "A NCC Gateway firewall policy.",
             "",
             "",
             ""
@@ -78178,6 +78180,10 @@
           "$ref": "ConfidentialInstanceConfig",
           "description": "Specifies the Confidential Instance options.\nNote that for MachineImage, this is not supported yet."
         },
+        "deletionProtection": {
+          "description": "Whether the resource should be protected against deletion.",
+          "type": "boolean"
+        },
         "description": {
           "description": "An optional text description for the instances that are created from these\nproperties.",
           "type": "string"
@@ -90099,11 +90105,13 @@
         "firewallPolicyTypes": {
           "items": {
             "enum": [
+              "NCC_GATEWAY_POLICY",
               "RDMA_ROCE_POLICY",
               "ULL_POLICY",
               "VPC_POLICY"
             ],
             "enumDescriptions": [
+              "A NCC Gateway firewall policy.",
               "",
               "",
               ""

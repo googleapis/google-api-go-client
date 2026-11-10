@@ -6289,6 +6289,9 @@ type RequestOptions struct {
 	// results are biased towards the specified language. The Suggest API uses this
 	// field as a hint to make better third-party autocomplete predictions.
 	LanguageCode string `json:"languageCode,omitempty"`
+	// QueryLanguageCode: Optional. The BCP-47 language code representing the
+	// language of the query.
+	QueryLanguageCode string `json:"queryLanguageCode,omitempty"`
 	// SearchApplicationId: The ID generated when you create a search application
 	// using the admin console (https://support.google.com/a/answer/9043922).
 	SearchApplicationId string `json:"searchApplicationId,omitempty"`
@@ -6921,7 +6924,7 @@ func (s SearchRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchResponse: The search API response. NEXT ID: 20
+// SearchResponse: The search API response. NEXT ID: 21
 type SearchResponse struct {
 	// DebugInfo: Debugging information about the response.
 	DebugInfo *ResponseDebugInfo `json:"debugInfo,omitempty"`
@@ -10933,6 +10936,14 @@ func (c *QuerySourcesListCall) RequestOptionsDebugOptionsEnableDebugging(request
 // field as a hint to make better third-party autocomplete predictions.
 func (c *QuerySourcesListCall) RequestOptionsLanguageCode(requestOptionsLanguageCode string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.languageCode", requestOptionsLanguageCode)
+	return c
+}
+
+// RequestOptionsQueryLanguageCode sets the optional parameter
+// "requestOptions.queryLanguageCode": The BCP-47 language code representing
+// the language of the query.
+func (c *QuerySourcesListCall) RequestOptionsQueryLanguageCode(requestOptionsQueryLanguageCode string) *QuerySourcesListCall {
+	c.urlParams_.Set("requestOptions.queryLanguageCode", requestOptionsQueryLanguageCode)
 	return c
 }
 

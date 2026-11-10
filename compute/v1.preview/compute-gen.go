@@ -19104,6 +19104,7 @@ type FirewallPolicy struct {
 	// Note: if not specified then VPC_POLICY will be used.
 	//
 	// Possible values:
+	//   "NCC_GATEWAY_POLICY" - A NCC Gateway firewall policy.
 	//   "RDMA_ROCE_POLICY"
 	//   "ULL_POLICY"
 	//   "VPC_POLICY"
@@ -37014,6 +37015,9 @@ type InstanceProperties struct {
 	// options.
 	// Note that for MachineImage, this is not supported yet.
 	ConfidentialInstanceConfig *ConfidentialInstanceConfig `json:"confidentialInstanceConfig,omitempty"`
+	// DeletionProtection: Whether the resource should be protected against
+	// deletion.
+	DeletionProtection bool `json:"deletionProtection,omitempty"`
 	// Description: An optional text description for the instances that are created
 	// from these
 	// properties.
@@ -51726,6 +51730,7 @@ type NetworkProfileNetworkFeatures struct {
 	//   "VPN_BLOCKED"
 	AllowVpn string `json:"allowVpn,omitempty"`
 	// Possible values:
+	//   "NCC_GATEWAY_POLICY" - A NCC Gateway firewall policy.
 	//   "RDMA_ROCE_POLICY"
 	//   "ULL_POLICY"
 	//   "VPC_POLICY"

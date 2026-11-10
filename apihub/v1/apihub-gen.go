@@ -192,6 +192,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Deployments = NewProjectsLocationsDeploymentsService(s)
 	rs.DiscoveredApiObservations = NewProjectsLocationsDiscoveredApiObservationsService(s)
 	rs.ExternalApis = NewProjectsLocationsExternalApisService(s)
+	rs.GeneratedSpecApis = NewProjectsLocationsGeneratedSpecApisService(s)
 	rs.HostProjectRegistrations = NewProjectsLocationsHostProjectRegistrationsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Plugins = NewProjectsLocationsPluginsService(s)
@@ -220,6 +221,8 @@ type ProjectsLocationsService struct {
 	DiscoveredApiObservations *ProjectsLocationsDiscoveredApiObservationsService
 
 	ExternalApis *ProjectsLocationsExternalApisService
+
+	GeneratedSpecApis *ProjectsLocationsGeneratedSpecApisService
 
 	HostProjectRegistrations *ProjectsLocationsHostProjectRegistrationsService
 
@@ -370,6 +373,15 @@ func NewProjectsLocationsExternalApisService(s *Service) *ProjectsLocationsExter
 }
 
 type ProjectsLocationsExternalApisService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGeneratedSpecApisService(s *Service) *ProjectsLocationsGeneratedSpecApisService {
+	rs := &ProjectsLocationsGeneratedSpecApisService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGeneratedSpecApisService struct {
 	s *Service
 }
 
@@ -2727,6 +2739,150 @@ func (s GoogleCloudApihubV1GatewayPluginConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApihubV1GenerateSpecRequest: Request for GenerateSpec.
+type GoogleCloudApihubV1GenerateSpecRequest struct {
+	// ObservationWindow: Required. The observation window. The server quantizes to
+	// day boundaries and caps the span at 90 days.
+	ObservationWindow *GoogleTypeInterval `json:"observationWindow,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ObservationWindow") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ObservationWindow") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1GenerateSpecRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1GenerateSpecRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1GenerateSpecResponse: Response for GenerateSpec.
+type GoogleCloudApihubV1GenerateSpecResponse struct {
+	// GeneratedSpec: The merged OpenAPI document for the requested window.
+	GeneratedSpec *GoogleCloudApihubV1SpecContents `json:"generatedSpec,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GeneratedSpec") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeneratedSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1GenerateSpecResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1GenerateSpecResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1GeneratedSpecApi: An API the pipeline is tracking for
+// spec generation.
+type GoogleCloudApihubV1GeneratedSpecApi struct {
+	// Api: Output only. The full resource name of the associated catalog API.
+	// Format: `projects/{project}/locations/{location}/apis/{api}`
+	Api string `json:"api,omitempty"`
+	// CreateTime: Output only. The time at which the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Deployment: Output only. The full resource name of the associated catalog
+	// Deployment. Format:
+	// `projects/{project}/locations/{location}/deployments/{deployment}`
+	Deployment string `json:"deployment,omitempty"`
+	// DisplayName: Output only. Human-readable display name; server-derived.
+	DisplayName string `json:"displayName,omitempty"`
+	// LastSpecGeneratedTime: Output only. The time at which the most recent spec
+	// was generated. Unset while `state == SPEC_API_REGISTERED`.
+	LastSpecGeneratedTime string `json:"lastSpecGeneratedTime,omitempty"`
+	// Name: Identifier. The full resource name. The trailing segment is the
+	// pipeline-generated identifier. Format:
+	// `projects/{project}/locations/{location}/generatedSpecApis/{generated_spec_ap
+	// i}`
+	Name string `json:"name,omitempty"`
+	// Source: Output only. Where the pipeline observed this API.
+	Source *GoogleCloudApihubV1GeneratedSpecApiSource `json:"source,omitempty"`
+	// Spec: Output only. The full resource name of the associated catalog Spec;
+	// populated only when `state == SPEC_ASSOCIATED`. Format:
+	// `projects/{project}/locations/{location}/apis/{api}/versions/{version}/specs/
+	// {spec}`
+	Spec string `json:"spec,omitempty"`
+	// State: Output only. The current lifecycle state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The default value. This value is unused.
+	//   "SPEC_API_REGISTERED" - Observed; no spec written yet.
+	//   "SPEC_GENERATED" - At least one generated spec exists.
+	//   "SPEC_ASSOCIATED" - User-linked to a catalog Spec; spec set.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The time at which the resource was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// Version: Output only. The full resource name of the associated catalog
+	// Version. Format:
+	// `projects/{project}/locations/{location}/apis/{api}/versions/{version}`
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Api") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Api") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1GeneratedSpecApi) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1GeneratedSpecApi
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1GeneratedSpecApiSource: User-facing collapse of the
+// source-side identity tuple.
+type GoogleCloudApihubV1GeneratedSpecApiSource struct {
+	// SourceDisplayName: Output only. Per-source instance label (e.g. "/" for
+	// Apigee X).
+	SourceDisplayName string `json:"sourceDisplayName,omitempty"`
+	// Type: Output only. The source type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - The default value. This value is unused.
+	//   "APIGEE_X" - Apigee X.
+	Type string `json:"type,omitempty"`
+	// TypeDisplayName: Output only. Server-supplied label (e.g. "Apigee X").
+	TypeDisplayName string `json:"typeDisplayName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceDisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceDisplayName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1GeneratedSpecApiSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1GeneratedSpecApiSource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApihubV1GoogleServiceAccountConfig: Config for Google service
 // account authentication.
 type GoogleCloudApihubV1GoogleServiceAccountConfig struct {
@@ -3427,6 +3583,36 @@ type GoogleCloudApihubV1ListExternalApisResponse struct {
 
 func (s GoogleCloudApihubV1ListExternalApisResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApihubV1ListExternalApisResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApihubV1ListGeneratedSpecApisResponse: Response for
+// ListGeneratedSpecApis.
+type GoogleCloudApihubV1ListGeneratedSpecApisResponse struct {
+	// GeneratedSpecApis: The tracked APIs for the requested parent, ordered by
+	// `update_time desc`.
+	GeneratedSpecApis []*GoogleCloudApihubV1GeneratedSpecApi `json:"generatedSpecApis,omitempty"`
+	// NextPageToken: A token to retrieve the next page of results; empty when
+	// there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "GeneratedSpecApis") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GeneratedSpecApis") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApihubV1ListGeneratedSpecApisResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApihubV1ListGeneratedSpecApisResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5072,7 +5258,9 @@ func (s GoogleCloudApihubV1Spec) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApihubV1SpecContents: The spec contents.
 type GoogleCloudApihubV1SpecContents struct {
-	// Contents: Required. The contents of the spec.
+	// Contents: Required. The contents of the spec. The contents should be base64
+	// encoded while calling the OnePlatform APIs like CreateSpec, UpdateSpec and
+	// CollectApiData.
 	Contents string `json:"contents,omitempty"`
 	// MimeType: Required. The mime type of the content for example
 	// application/json, application/yaml, application/wsdl etc.
@@ -5708,6 +5896,37 @@ type GoogleRpcStatus struct {
 
 func (s GoogleRpcStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleRpcStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeInterval: Represents a time interval, encoded as a Timestamp start
+// (inclusive) and a Timestamp end (exclusive). The start must be less than or
+// equal to the end. When the start equals the end, the interval is empty
+// (matches no time). When both start and end are unspecified, the interval
+// matches any time.
+type GoogleTypeInterval struct {
+	// EndTime: Optional. Exclusive end of the interval. If specified, a Timestamp
+	// matching this interval will have to be before the end.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: Optional. Inclusive start of the interval. If specified, a
+	// Timestamp matching this interval will have to be the same or after the
+	// start.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeInterval) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeInterval
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -14327,6 +14546,393 @@ func (c *ProjectsLocationsExternalApisPatchCall) Do(opts ...googleapi.CallOption
 	return ret, nil
 }
 
+type ProjectsLocationsGeneratedSpecApisGenerateSpecCall struct {
+	s                                      *Service
+	name                                   string
+	googlecloudapihubv1generatespecrequest *GoogleCloudApihubV1GenerateSpecRequest
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// GenerateSpec: Merges the per-day stored specs across the requested window
+// and returns the merged OpenAPI document. Preview: this method is in Public
+// Preview. Behavior and the API surface may change until the Spec Generation
+// feature reaches General Availability.
+//
+//   - name: The resource name of the GeneratedSpecApi to generate from. Format:
+//     `projects/{project}/locations/{location}/generatedSpecApis/{generated_spec_
+//     api}`.
+func (r *ProjectsLocationsGeneratedSpecApisService) GenerateSpec(name string, googlecloudapihubv1generatespecrequest *GoogleCloudApihubV1GenerateSpecRequest) *ProjectsLocationsGeneratedSpecApisGenerateSpecCall {
+	c := &ProjectsLocationsGeneratedSpecApisGenerateSpecCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapihubv1generatespecrequest = googlecloudapihubv1generatespecrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGeneratedSpecApisGenerateSpecCall) Fields(s ...googleapi.Field) *ProjectsLocationsGeneratedSpecApisGenerateSpecCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGeneratedSpecApisGenerateSpecCall) Context(ctx context.Context) *ProjectsLocationsGeneratedSpecApisGenerateSpecCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGeneratedSpecApisGenerateSpecCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGeneratedSpecApisGenerateSpecCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudapihubv1generatespecrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:generateSpec")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.generatedSpecApis.generateSpec", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.generatedSpecApis.generateSpec" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1GenerateSpecResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGeneratedSpecApisGenerateSpecCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1GenerateSpecResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1GenerateSpecResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.generatedSpecApis.generateSpec", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGeneratedSpecApisGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a single GeneratedSpecApi by resource name. Preview: this method
+// is in Public Preview. Behavior and the API surface may change until the Spec
+// Generation feature reaches General Availability.
+//
+//   - name: The resource name of the GeneratedSpecApi to retrieve. Format:
+//     `projects/{project}/locations/{location}/generatedSpecApis/{generated_spec_
+//     api}`.
+func (r *ProjectsLocationsGeneratedSpecApisService) Get(name string) *ProjectsLocationsGeneratedSpecApisGetCall {
+	c := &ProjectsLocationsGeneratedSpecApisGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGeneratedSpecApisGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGeneratedSpecApisGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGeneratedSpecApisGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGeneratedSpecApisGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGeneratedSpecApisGetCall) Context(ctx context.Context) *ProjectsLocationsGeneratedSpecApisGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGeneratedSpecApisGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGeneratedSpecApisGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.generatedSpecApis.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.generatedSpecApis.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1GeneratedSpecApi.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGeneratedSpecApisGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1GeneratedSpecApi, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1GeneratedSpecApi{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.generatedSpecApis.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsGeneratedSpecApisListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the APIs the pipeline is tracking, ordered by `update_time
+// desc`. Preview: this method is in Public Preview. Behavior and the API
+// surface may change until the Spec Generation feature reaches General
+// Availability.
+//
+//   - parent: The parent resource, which owns this collection of tracked APIs.
+//     Format: `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsGeneratedSpecApisService) List(parent string) *ProjectsLocationsGeneratedSpecApisListCall {
+	c := &ProjectsLocationsGeneratedSpecApisListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An AIP-160 filter. This release
+// supports the fields `state` and `source.source_type`, the `=` comparison
+// operator only, and `AND` conjunction only. Examples: - `state =
+// "SPEC_GENERATED" - `state = "SPEC_ASSOCIATED" AND source.source_type =
+// APIGEE_X`
+func (c *ProjectsLocationsGeneratedSpecApisListCall) Filter(filter string) *ProjectsLocationsGeneratedSpecApisListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return. The service may return fewer. If unspecified, at most 50
+// will be returned. The maximum value is 1000; values above 1000 will be
+// coerced to 1000.
+func (c *ProjectsLocationsGeneratedSpecApisListCall) PageSize(pageSize int64) *ProjectsLocationsGeneratedSpecApisListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListGeneratedSpecApis` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters (except `page_size`)
+// provided to `ListGeneratedSpecApis` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsGeneratedSpecApisListCall) PageToken(pageToken string) *ProjectsLocationsGeneratedSpecApisListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGeneratedSpecApisListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGeneratedSpecApisListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGeneratedSpecApisListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGeneratedSpecApisListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGeneratedSpecApisListCall) Context(ctx context.Context) *ProjectsLocationsGeneratedSpecApisListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGeneratedSpecApisListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGeneratedSpecApisListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/generatedSpecApis")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apihub.projects.locations.generatedSpecApis.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apihub.projects.locations.generatedSpecApis.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApihubV1ListGeneratedSpecApisResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGeneratedSpecApisListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApihubV1ListGeneratedSpecApisResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApihubV1ListGeneratedSpecApisResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apihub.projects.locations.generatedSpecApis.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGeneratedSpecApisListCall) Pages(ctx context.Context, f func(*GoogleCloudApihubV1ListGeneratedSpecApisResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsHostProjectRegistrationsCreateCall struct {
 	s                                          *Service
 	parent                                     string
@@ -14338,8 +14944,9 @@ type ProjectsLocationsHostProjectRegistrationsCreateCall struct {
 
 // Create: Create a host project registration. A Google cloud project can be
 // registered as a host project if it is not attached as a runtime project to
-// another host project. A project can be registered as a host project only
-// once. Subsequent register calls for the same project will fail.
+// another host project. A project can have only one host project registration
+// at a time. Subsequent register calls for the same project will fail until
+// the existing registration is deleted.
 //
 //   - parent: The parent resource for the host project. Format:
 //     `projects/{project}/locations/{location}`.

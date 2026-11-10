@@ -752,6 +752,10 @@ func (s AgentTimingInfo) MarshalJSON() ([]byte, error) {
 // AllocationPolicy: A Job's resource allocation policy describes when, where,
 // and how compute resources should be allocated for the Job.
 type AllocationPolicy struct {
+	// InstanceFlexibilityPolicy: Optional. The instance flexibility policy for the
+	// job. This configuration overrides the `instances` configuration. Only
+	// allowed in job level. Not allowed in task group level.
+	InstanceFlexibilityPolicy *InstanceFlexibilityPolicy `json:"instanceFlexibilityPolicy,omitempty"`
 	// Instances: Describe instances that can be created by this AllocationPolicy.
 	// Only instances[0] is supported now.
 	Instances []*InstancePolicyOrTemplate `json:"instances,omitempty"`
@@ -787,15 +791,15 @@ type AllocationPolicy struct {
 	// sources or targets for network firewalls. Each tag must be 1-63 characters
 	// long, and comply with RFC1035 (https://www.ietf.org/rfc/rfc1035.txt).
 	Tags []string `json:"tags,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Instances") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "InstanceFlexibilityPolicy")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Instances") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "InstanceFlexibilityPolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1187,6 +1191,38 @@ func (s GCS) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstanceFlexibilityPolicy: Allows creating VMs from multiple types of
+// machines. Instance flexibility configuration overrides instances
+// configuration.
+type InstanceFlexibilityPolicy struct {
+	// InstanceSelections: Required. Named instance selections configuring
+	// properties that the group will use when creating new VMs. The map key is a
+	// user-specified name for the instance selection. The key must be 1-63
+	// characters long, and comply with RFC1035
+	// (https://www.ietf.org/rfc/rfc1035.txt). Specifically, the key must consist
+	// of lowercase letters, numbers, and hyphens. The first character must be a
+	// lowercase letter, and the last character must be a lowercase letter or
+	// number. The maximum number of instance selections is 50. Exceeding this
+	// limit results in a validation error with code `INVALID_ARGUMENT`.
+	InstanceSelections map[string]InstanceSelection `json:"instanceSelections,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "InstanceSelections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "InstanceSelections") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceFlexibilityPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceFlexibilityPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InstancePolicy: InstancePolicy describes an instance type and resources
 // attached to each VM created by this InstancePolicy.
 type InstancePolicy struct {
@@ -1273,11 +1309,31 @@ type InstancePolicyOrTemplate struct {
 	// InstallOpsAgent: Optional. Set this field true if you want Batch to install
 	// Ops Agent on your behalf. Default is false.
 	InstallOpsAgent bool `json:"installOpsAgent,omitempty"`
-	// InstanceTemplate: Name of an instance template used to create VMs. Named the
-	// field as 'instance_template' instead of 'template' to avoid C++ keyword
-	// conflict. Batch only supports global instance templates from the same
-	// project as the job. You can specify the global instance template as a full
-	// or partial URL.
+	// InstanceTemplate: An instance template used to create VMs. Batch supports
+	// global and regional instance templates from the same project as the job. In
+	// case of a regional instance template, the job and the instance template must
+	// be in the same region. As shown in the following examples, you can specify
+	// the instance template as either only its ID, only its name (not unique), or
+	// a partial or full URL. If you specify only its name, then Batch checks for a
+	// global instance template first. The following formats are valid for global
+	// instance templates: * `{instance_template_id_number}` *
+	// `{instance_template_name}` (not unique) *
+	// `projects/{project}/global/instanceTemplates/{instance_template_id_number}`
+	// * `projects/{project}/global/instanceTemplates/{instance_template_name}` *
+	// `https://www.googleapis.com/compute/v1/projects/{project}/global/instanceTemp
+	// lates/{instance_template_id_number}` *
+	// `https://www.googleapis.com/compute/v1/projects/{project}/global/instanceTemp
+	// lates/{instance_template_name}` The following formats are valid for regional
+	// instance templates: * `{instance_template_id_number}` *
+	// `{instance_template_name}` (not unique) *
+	// `projects/{project}/regions/{region}/instanceTemplates/{instance_template_id_
+	// number}` *
+	// `projects/{project}/regions/{region}/instanceTemplates/{instance_template_nam
+	// e}` *
+	// `https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/in
+	// stanceTemplates/{instance_template_id_number}` *
+	// `https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/in
+	// stanceTemplates/{instance_template_name}`
 	InstanceTemplate string `json:"instanceTemplate,omitempty"`
 	// Policy: InstancePolicy.
 	Policy *InstancePolicy `json:"policy,omitempty"`
@@ -1296,6 +1352,39 @@ type InstancePolicyOrTemplate struct {
 
 func (s InstancePolicyOrTemplate) MarshalJSON() ([]byte, error) {
 	type NoMethod InstancePolicyOrTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// InstanceSelection: Defines an instance selection for a given instance
+// flexibility policy.
+type InstanceSelection struct {
+	// MachineTypes: Required. The Compute Engine machine type IDs. Only the
+	// machine type ID is supported, such as `n1-standard-16`. Full or partial URLs
+	// are not accepted. The total maximum number of machine types across all
+	// instance selections is 200. Exceeding this limit results in a validation
+	// error with code `INVALID_ARGUMENT`.
+	MachineTypes []string `json:"machineTypes,omitempty"`
+	// Rank: Optional. Indicates the preference of this instance selection. Lower
+	// number means higher preference. First try is to create a VM based on the
+	// machine-type with lowest rank and fallback to next rank based on
+	// availability. Machine types and instance selections with the same rank have
+	// the same preference.
+	Rank int64 `json:"rank,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MachineTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MachineTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstanceSelection) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceSelection
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

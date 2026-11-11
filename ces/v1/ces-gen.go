@@ -1207,7 +1207,8 @@ func (s AppVersion) MarshalJSON() ([]byte, error) {
 // ArtifactChunk: A streamed fragment of a document artifact (e.g. a markdown
 // TDD) that the assistant is generating. Content deltas stream while the
 // document is being written so clients can render a live preview; the
-// FINALIZED chunk carries the GCS URI once the file has been persisted.
+// FINALIZED chunk carries the Cloud Storage URI once the file has been
+// persisted.
 type ArtifactChunk struct {
 	// ArtifactId: Identifier of the artifact, stable across all chunks of one
 	// artifact within the stream.
@@ -1217,8 +1218,8 @@ type ArtifactChunk struct {
 	// DisplayName: The file name shown to the user, e.g. "hotel_booking_tdd.md".
 	// Set on STARTED (and repeated on FINALIZED).
 	DisplayName string `json:"displayName,omitempty"`
-	// GcsUri: The GCS object the artifact was persisted to. Set on FINALIZED
-	// chunks.
+	// GcsUri: The Cloud Storage object the artifact was persisted to. Set on
+	// FINALIZED chunks.
 	GcsUri string `json:"gcsUri,omitempty"`
 	// MimeType: The IANA media type of the artifact content, e.g. "text/markdown".
 	MimeType string `json:"mimeType,omitempty"`
@@ -1234,6 +1235,10 @@ type ArtifactChunk struct {
 	// delivered via content_delta chunks. Persistence may still follow; a
 	// FINALIZED chunk with a gcs_uri is sent if and when the artifact is saved.
 	State string `json:"state,omitempty"`
+	// TargetApp: Output only. The app this artifact was produced for, when it was
+	// produced for one. Format:
+	// `projects/{project}/locations/{location}/apps/{app}`
+	TargetApp string `json:"targetApp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArtifactId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1282,6 +1287,10 @@ type AssistantConfirmationRequest struct {
 	// free-form user text) is returned as
 	// AssistantConfirmationResponse.answer_text.
 	Questions []*OptionQuestionsChunkQuestion `json:"questions,omitempty"`
+	// Targets: Everything the confirmed action will change, so the console can
+	// render "Update 2 apps" and one badge per app. Empty for legacy single-target
+	// cards.
+	Targets []*AssistantConfirmationRequestTarget `json:"targets,omitempty"`
 	// Tool: Name of the tool call the agent paused on (e.g. "update_app"), for the
 	// card header. Unset for pure questions.
 	Tool string `json:"tool,omitempty"`
@@ -1300,6 +1309,37 @@ type AssistantConfirmationRequest struct {
 
 func (s AssistantConfirmationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AssistantConfirmationRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantConfirmationRequestTarget: One resource the confirmed action will
+// change.
+type AssistantConfirmationRequestTarget struct {
+	// Action: The action, e.g. `CREATE`, `UPDATE`, `DELETE`, `COPY`, `LINK`.
+	Action string `json:"action,omitempty"`
+	// DisplayName: Display name of the resource or app, for the card.
+	DisplayName string `json:"displayName,omitempty"`
+	// Resource: The resource that will change, as a full resource name.
+	Resource string `json:"resource,omitempty"`
+	// TargetApp: The app the resource belongs to, or empty for a location-scoped
+	// action such as creating an app. Format:
+	// `projects/{project}/locations/{location}/apps/{app}`
+	TargetApp string `json:"targetApp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantConfirmationRequestTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantConfirmationRequestTarget
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3907,6 +3947,8 @@ type ExperimentConfigVersionRelease struct {
 	//   "EXPIRED" - Deprecated: This state is no longer used.
 	State string `json:"state,omitempty"`
 	// TrafficAllocations: Optional. Traffic allocations for the version release.
+	// When non-empty, the `traffic_percentage` values across all allocations must
+	// sum to `100`, representing the split of remaining non-study traffic.
 	TrafficAllocations []*ExperimentConfigVersionReleaseTrafficAllocation `json:"trafficAllocations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3935,8 +3977,8 @@ type ExperimentConfigVersionReleaseTrafficAllocation struct {
 	// Id: Optional. Id of the traffic allocation. Free format string, up to 128
 	// characters.
 	Id string `json:"id,omitempty"`
-	// TrafficPercentage: Optional. Traffic percentage of the traffic allocation.
-	// Must be between 0 and 100.
+	// TrafficPercentage: Optional. Traffic percentage of the traffic allocation,
+	// relative to the remaining non-study traffic. Must be between `0` and `100`.
 	TrafficPercentage int64 `json:"trafficPercentage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3972,7 +4014,7 @@ type ExportAppRequest struct {
 	// GcsUri: Optional. The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to which to export the app. The
 	// format of this URI must be `gs:///`. The exported app archive will be
-	// written directly to the specified GCS object.
+	// written directly to the specified Cloud Storage object.
 	GcsUri string `json:"gcsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8108,6 +8150,9 @@ type StreamChatAiAssistantRequest struct {
 	// out-of-band by polling the operation and sending `operation_completed_event`
 	// to resume the turn. If not declared, the server manages LRO polling and
 	// completes the turn inline.
+	//   "PROJECT_SCOPE" - The client renders project-scope events: `typed_payload`
+	// cards, `target_app` on tool calls and responses, `targets` on confirmation
+	// requests and `touched_apps` on turn completion.
 	ClientCapabilities []string `json:"clientCapabilities,omitempty"`
 	// ConfirmationResponse: Optional. The user's answer to a pending
 	// AssistantConfirmationRequest. When set, the server resumes the paused agent
@@ -8150,7 +8195,7 @@ func (s StreamChatAiAssistantRequest) MarshalJSON() ([]byte, error) {
 // SessionService.StreamChatAiAssistant.
 type StreamChatAiAssistantResponse struct {
 	// ArtifactChunk: Generated-document artifact event (live preview deltas +
-	// final GCS pointer).
+	// final Cloud Storage pointer).
 	ArtifactChunk *ArtifactChunk `json:"artifactChunk,omitempty"`
 	// ConfirmationRequest: A blocking confirmation the agent paused on. The agent
 	// resumes when the answer arrives on a later request's
@@ -8487,6 +8532,11 @@ type ToolCall struct {
 	// for top-level calls. Lets a client group a sub-agent's work under the call
 	// that started it instead of rendering every step as a sibling.
 	ParentToolCallId string `json:"parentToolCallId,omitempty"`
+	// TargetApp: Output only. The app this call targets, derived by the assistant
+	// from the call's resource arguments: an app resource name, `PROJECT` for
+	// location-scoped tools, or empty for session-local tools. Set only in
+	// project-scoped assistant sessions.
+	TargetApp string `json:"targetApp,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
@@ -8578,6 +8628,9 @@ type ToolResponse struct {
 	// details (if any). If "output" and "error" keys are not specified, then whole
 	// "response" is treated as tool execution result.
 	Response googleapi.RawMessage `json:"response,omitempty"`
+	// TargetApp: Output only. The app the executed tool targeted; mirrors
+	// ToolCall.target_app.
+	TargetApp string `json:"targetApp,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
@@ -8948,6 +9001,10 @@ type TurnCompletedEvent struct {
 	// session, so nothing was tailed; the client should reload the session
 	// instead.
 	Reason string `json:"reason,omitempty"`
+	// TouchedApps: Apps this turn targeted or changed, so the console can refresh
+	// exactly those apps' stores. Project-scoped sessions only. Format:
+	// `projects/{project}/locations/{location}/apps/{app}`
+	TouchedApps []string `json:"touchedApps,omitempty"`
 	// TurnId: Identifier of the turn that ended; matches
 	// TurnResumeSnapshot.turn_id and ActiveTurnInfo.turn_id.
 	TurnId string `json:"turnId,omitempty"`

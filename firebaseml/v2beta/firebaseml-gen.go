@@ -4207,6 +4207,10 @@ func (s GoogleCloudAiplatformV1beta1ToolComputerUse) MarshalJSON() ([]byte, erro
 type GoogleCloudAiplatformV1beta1ToolConfig struct {
 	// FunctionCallingConfig: Optional. Function calling config.
 	FunctionCallingConfig *GoogleCloudAiplatformV1beta1FunctionCallingConfig `json:"functionCallingConfig,omitempty"`
+	// IncludeServerSideToolInvocations: Optional. If true, the API response will
+	// include the server-side tool calls and responses within the `Content`
+	// message. This allows clients to observe the server's tool interactions.
+	IncludeServerSideToolInvocations bool `json:"includeServerSideToolInvocations,omitempty"`
 	// RetrievalConfig: Optional. Retrieval config.
 	RetrievalConfig *GoogleCloudAiplatformV1beta1RetrievalConfig `json:"retrievalConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FunctionCallingConfig") to

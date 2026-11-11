@@ -121,11 +121,38 @@ const (
 	// Manage drafts and send emails
 	GmailComposeScope = "https://www.googleapis.com/auth/gmail.compose"
 
+	// Read, compose, send, update, and permanently delete your draft emails
+	GmailDraftsScope = "https://www.googleapis.com/auth/gmail.drafts"
+
+	// Compose new draft emails
+	GmailDraftsCreateScope = "https://www.googleapis.com/auth/gmail.drafts.create"
+
+	// Read your draft emails
+	GmailDraftsReadonlyScope = "https://www.googleapis.com/auth/gmail.drafts.readonly"
+
 	// Add emails into your Gmail mailbox
 	GmailInsertScope = "https://www.googleapis.com/auth/gmail.insert"
 
 	// See and edit your email labels
 	GmailLabelsScope = "https://www.googleapis.com/auth/gmail.labels"
+
+	// Create new email labels
+	GmailLabelsCreateScope = "https://www.googleapis.com/auth/gmail.labels.create"
+
+	// Read your email labels
+	GmailLabelsReadonlyScope = "https://www.googleapis.com/auth/gmail.labels.readonly"
+
+	// Read, update, and permanently delete all your emails
+	GmailMessagesScope = "https://www.googleapis.com/auth/gmail.messages"
+
+	// Permanently delete all your emails
+	GmailMessagesDeleteScope = "https://www.googleapis.com/auth/gmail.messages.delete"
+
+	// Update but not delete your emails
+	GmailMessagesModifyScope = "https://www.googleapis.com/auth/gmail.messages.modify"
+
+	// Read your emails
+	GmailMessagesReadonlyScope = "https://www.googleapis.com/auth/gmail.messages.readonly"
 
 	// View your email message metadata such as labels and headers, but not the
 	// email body
@@ -140,8 +167,17 @@ const (
 	// Send email on your behalf
 	GmailSendScope = "https://www.googleapis.com/auth/gmail.send"
 
+	// Send email to yourself
+	GmailSendSelfScope = "https://www.googleapis.com/auth/gmail.send.self"
+
 	// See, edit, create, or change your email settings and filters in Gmail
 	GmailSettingsBasicScope = "https://www.googleapis.com/auth/gmail.settings.basic"
+
+	// Read, create, and delete your filters
+	GmailSettingsFiltersScope = "https://www.googleapis.com/auth/gmail.settings.filters"
+
+	// Read your filters
+	GmailSettingsFiltersReadonlyScope = "https://www.googleapis.com/auth/gmail.settings.filters.readonly"
 
 	// Manage your sensitive mail settings, including who can manage your mail
 	GmailSettingsSharingScope = "https://www.googleapis.com/auth/gmail.settings.sharing"
@@ -156,13 +192,25 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/gmail.addons.current.message.metadata",
 		"https://www.googleapis.com/auth/gmail.addons.current.message.readonly",
 		"https://www.googleapis.com/auth/gmail.compose",
+		"https://www.googleapis.com/auth/gmail.drafts",
+		"https://www.googleapis.com/auth/gmail.drafts.create",
+		"https://www.googleapis.com/auth/gmail.drafts.readonly",
 		"https://www.googleapis.com/auth/gmail.insert",
 		"https://www.googleapis.com/auth/gmail.labels",
+		"https://www.googleapis.com/auth/gmail.labels.create",
+		"https://www.googleapis.com/auth/gmail.labels.readonly",
+		"https://www.googleapis.com/auth/gmail.messages",
+		"https://www.googleapis.com/auth/gmail.messages.delete",
+		"https://www.googleapis.com/auth/gmail.messages.modify",
+		"https://www.googleapis.com/auth/gmail.messages.readonly",
 		"https://www.googleapis.com/auth/gmail.metadata",
 		"https://www.googleapis.com/auth/gmail.modify",
 		"https://www.googleapis.com/auth/gmail.readonly",
 		"https://www.googleapis.com/auth/gmail.send",
+		"https://www.googleapis.com/auth/gmail.send.self",
 		"https://www.googleapis.com/auth/gmail.settings.basic",
+		"https://www.googleapis.com/auth/gmail.settings.filters",
+		"https://www.googleapis.com/auth/gmail.settings.filters.readonly",
 		"https://www.googleapis.com/auth/gmail.settings.sharing",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.

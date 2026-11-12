@@ -1479,7 +1479,7 @@ type ConfigManagementConfigSync struct {
 	// for details.
 	PreventDrift bool `json:"preventDrift,omitempty"`
 	// SourceFormat: Optional. Specifies whether the Config Sync repo is in
-	// `hierarchical` or `unstructured` mode. Defaults to `hierarchical`. See
+	// `hierarchy` or `unstructured` mode. Defaults to `hierarchy`. See
 	// https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/concepts/configs#organize-configs
 	// for an explanation.
 	SourceFormat string `json:"sourceFormat,omitempty"`
@@ -1895,11 +1895,17 @@ func (s ConfigManagementGatekeeperDeploymentState) MarshalJSON() ([]byte, error)
 // ConfigManagementGitConfig: Git repo configuration for a single cluster.
 type ConfigManagementGitConfig struct {
 	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
-	// used for auth when secret_type is `gcpserviceaccount`.
+	// used for auth when secret_type is `gcpserviceaccount`. Annotates the
+	// `RootSync` or `RepoSync` controller's Kubernetes Service Account.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 	// HttpsProxy: Optional. URL for the HTTPS proxy to be used when communicating
-	// with the Git repo. Only specify when secret_type is `cookiefile`, `token`,
-	// or `none`.
+	// with the Git repo. Defines an HTTPS_PROXY environment variable and only
+	// accepts `https` or unadorned URLs. For example,
+	// `https://proxy.internal.business.co:443` or
+	// `proxy.internal.business.co:443`. If using an unadorned URL, make sure the
+	// communication between your proxy server and Git host is secure. Rejects
+	// `http://` URLs. Only specify when secret_type is `cookiefile`, `token`, or
+	// `none`.
 	HttpsProxy string `json:"httpsProxy,omitempty"`
 	// PolicyDir: Optional. The path within the Git repository that represents the
 	// top level of the repo to sync. Default: the root directory of the
@@ -1915,7 +1921,9 @@ type ConfigManagementGitConfig struct {
 	// SyncRepo: Required. The URL of the Git repository to use as the source of
 	// truth.
 	SyncRepo string `json:"syncRepo,omitempty"`
-	// SyncRev: Optional. Git revision (tag or hash) to check out. Default HEAD.
+	// SyncRev: Optional. Git revision (tag or hash) or branch to sync from.
+	// Default `HEAD`. If not `HEAD`, takes precedence over `sync_branch` field.
+	// When using a hash, must be a full hash, and not an abbreviated form.
 	SyncRev string `json:"syncRev,omitempty"`
 	// SyncWaitSecs: Optional. Period in seconds between consecutive syncs.
 	// Default: 15.
@@ -2125,10 +2133,11 @@ type ConfigManagementMembershipSpec struct {
 	// configmanagement feature is no longer recommended. Use
 	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
-	// Management: Optional. Deprecated: In Preview, automatic Feature management
-	// is unavailable from version 1.21.0 onwards, and Config Sync only supports
-	// manual upgrades. If set to manual upgrades, clear this field instead, which
-	// is behaviorally equivalent.
+	// Management: Optional. Deprecated: Automatic Feature management is in Preview
+	// and is unavailable in version 1.21.0 and later, after which Config Sync only
+	// supports manual upgrades. If set to manual upgrades, clear this field
+	// instead, which is behaviorally equivalent but helps prevent compatibility
+	// issues with newer fields.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
@@ -2208,7 +2217,8 @@ func (s ConfigManagementMembershipState) MarshalJSON() ([]byte, error) {
 // ConfigManagementOciConfig: OCI repo configuration for a single cluster
 type ConfigManagementOciConfig struct {
 	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
-	// used for auth when secret_type is `gcpserviceaccount`.
+	// used for auth when secret_type is `gcpserviceaccount`. Annotates the
+	// `RootSync` or `RepoSync` controller's Kubernetes Service Account.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 	// PolicyDir: Optional. The absolute path of the directory that contains the
 	// local resources. Default: the root directory of the image.
@@ -5275,6 +5285,32 @@ func (s Origin) MarshalJSON() ([]byte, error) {
 type PauseRolloutRequest struct {
 }
 
+// PerStageSoakDurationOverrides: Configuration for per-stage soak duration
+// overrides.
+type PerStageSoakDurationOverrides struct {
+	// StageOverrides: Required. A mapping of stage numbers to their respective
+	// desired soak durations. Key is the stage number, value is the desired soak
+	// duration. Stages omitted from the map will receive the standard soak
+	// duration configured on the sequence for that stage.
+	StageOverrides map[string]string `json:"stageOverrides,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "StageOverrides") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "StageOverrides") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerStageSoakDurationOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod PerStageSoakDurationOverrides
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which specifies
 // access controls for Google Cloud resources. A `Policy` is a collection of
 // `bindings`. A `binding` binds one or more `members`, or principals, to a
@@ -6107,7 +6143,7 @@ func (s Role) MarshalJSON() ([]byte, error) {
 }
 
 // Rollout: Rollout contains the Rollout metadata and configuration. Next ID:
-// 28
+// 32
 type Rollout struct {
 	// CompleteTime: Output only. The timestamp at which the Rollout was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
@@ -6119,6 +6155,13 @@ type Rollout struct {
 	DisplayName string `json:"displayName,omitempty"`
 	// Etag: Output only. etag of the Rollout Ex. abc1234
 	Etag string `json:"etag,omitempty"`
+	// IgnoreClusterDisruptionBudgets: Optional. If set to true, the rollout will
+	// ignore the disruption budgets of the clusters.
+	IgnoreClusterDisruptionBudgets bool `json:"ignoreClusterDisruptionBudgets,omitempty"`
+	// IgnoreMaintenancePolicies: Optional. If set to true, the rollout will ignore
+	// any maintenance policies (Maintenance Windows and Maintenance Exclusions)
+	// set on the clusters.
+	IgnoreMaintenancePolicies bool `json:"ignoreMaintenancePolicies,omitempty"`
 	// Intent: Output only. The intent of the rollout.
 	//
 	// Possible values:
@@ -6128,6 +6171,8 @@ type Rollout struct {
 	// haven't been patched within the allowed window.
 	//   "END_OF_SUPPORT_ENFORCEMENT" - A mandatory upgrade for clusters that have
 	// reached its end of support.
+	//   "PARTIAL_PATCH" - A patch upgrade for a subset of clusters on a given
+	// minor version.
 	Intent string `json:"intent,omitempty"`
 	// Labels: Optional. Labels for this Rollout.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -6139,10 +6184,20 @@ type Rollout struct {
 	// Name: Identifier. The full, unique resource name of this Rollout in the
 	// format of `projects/{project}/locations/global/rollouts/{rollout}`.
 	Name string `json:"name,omitempty"`
+	// Prioritized: Optional. If set to true, conflicting rollouts will be paused,
+	// to allow this rollout to progress through the sequence. Conflicting rollouts
+	// running on the first stage will be canceled, to allow this rollout to be
+	// created.
+	Prioritized bool `json:"prioritized,omitempty"`
 	// RolloutSequence: Optional. Immutable. The full, unique resource name of the
 	// rollout sequence that initiatied this Rollout. In the format of
 	// `projects/{project}/locations/global/rolloutSequences/{rollout_sequence}`.
 	RolloutSequence string `json:"rolloutSequence,omitempty"`
+	// StageSoakDurationOverrides: Optional. Overrides the soak durations for
+	// specific stages of the rollout. Key is the stage number, value is the
+	// desired soak duration. Stages omitted from the map will receive the standard
+	// soak duration configured on the sequence for that stage.
+	StageSoakDurationOverrides map[string]string `json:"stageSoakDurationOverrides,omitempty"`
 	// Stages: Output only. The stages of the Rollout.
 	Stages []*RolloutStage `json:"stages,omitempty"`
 	// State: Output only. State specifies various states of the Rollout.
@@ -6278,7 +6333,7 @@ func (s RolloutMembershipState) MarshalJSON() ([]byte, error) {
 }
 
 // RolloutSequence: RolloutSequence defines the desired order of upgrades. Next
-// ID: 20
+// ID: 22
 type RolloutSequence struct {
 	// AutoUpgradeConfig: Optional. Configuration for automatic upgrades. If this
 	// message is `unset`, the system applies default behavior.
@@ -6770,6 +6825,11 @@ type ServiceMeshCondition struct {
 	// cluster.
 	//   "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE" - Gateway pods per cluster
 	// limit exceeded.
+	//   "MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART" - Cluster contains
+	// workloads that will require manual restart during modernization.
+	//   "MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET" - Cluster contains
+	// PodDisruptionBudgets that prevent automated pod eviction during
+	// modernization.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
@@ -6783,6 +6843,9 @@ type ServiceMeshCondition struct {
 	// the new implementation.
 	//   "MODERNIZATION_ROLLING_BACK_CLUSTER" - Rollback is in progress for
 	// modernization of a cluster.
+	//   "MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART" - Modernization of a
+	// cluster is awaiting manual restart of workloads. The customer must restart
+	// these workloads to complete modernization.
 	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
 	// fleet.
 	//   "MODERNIZATION_MANUAL" - Fleet is opted out from automated modernization.
@@ -6795,6 +6858,11 @@ type ServiceMeshCondition struct {
 	// a fleet. Rollback is no longer allowed.
 	//   "MODERNIZATION_ROLLING_BACK_FLEET" - Rollback is in progress for
 	// modernization of all clusters in a fleet.
+	//   "MODERNIZATION_MODERNIZED" - Modernization of all the fleet's clusters is
+	// complete. Soaking before finalizing the modernization.
+	//   "MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER" - Fleet modernization must be
+	// Customer-Triggered, and cannot be Google-driven. Specific details may be
+	// reported via another fleet/cluster condition.
 	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
 	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
 	// modernization.
@@ -6998,6 +7066,11 @@ type ServiceMeshFeatureCondition struct {
 	// cluster.
 	//   "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE" - Gateway pods per cluster
 	// limit exceeded.
+	//   "MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART" - Cluster contains
+	// workloads that will require manual restart during modernization.
+	//   "MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET" - Cluster contains
+	// PodDisruptionBudgets that prevent automated pod eviction during
+	// modernization.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
@@ -7011,6 +7084,9 @@ type ServiceMeshFeatureCondition struct {
 	// the new implementation.
 	//   "MODERNIZATION_ROLLING_BACK_CLUSTER" - Rollback is in progress for
 	// modernization of a cluster.
+	//   "MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART" - Modernization of a
+	// cluster is awaiting manual restart of workloads. The customer must restart
+	// these workloads to complete modernization.
 	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
 	// fleet.
 	//   "MODERNIZATION_MANUAL" - Fleet is opted out from automated modernization.
@@ -7023,6 +7099,11 @@ type ServiceMeshFeatureCondition struct {
 	// a fleet. Rollback is no longer allowed.
 	//   "MODERNIZATION_ROLLING_BACK_FLEET" - Rollback is in progress for
 	// modernization of all clusters in a fleet.
+	//   "MODERNIZATION_MODERNIZED" - Modernization of all clusters in the fleet is
+	// complete. Soaking before finalizing the modernization.
+	//   "MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER" - Fleet modernization must be
+	// Customer-Triggered, and cannot be Google-driven. Specific details may be
+	// reported via another fleet/cluster condition.
 	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
 	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
 	// modernization.
@@ -7076,6 +7157,22 @@ type ServiceMeshFeatureSpec struct {
 	//   "VALIDATION_DISABLED" - Google should not report modernization eligibility
 	// gaps.
 	ModernizationCompatibility string `json:"modernizationCompatibility,omitempty"`
+	// ModernizationStrategy: Optional. Declares your intended modernization
+	// strategy for the fleet.
+	//
+	// Possible values:
+	//   "MODERNIZATION_STRATEGY_UNSPECIFIED" - Default unspecified.
+	//   "AUTOMATIC" - The infrastructure is automatically modernized. Setting this
+	// strategy initiates the modernization process. The system schedules the
+	// modernization subject to configured maintenance windows and maintenance
+	// exclusions.
+	//   "DEFERRED" - The infrastructure is pinned to the legacy implementation.
+	// This fleet will not be selected for Google-driven modernization. If the
+	// resource is actively modernizing, or if the modernization has completed but
+	// is not yet finalized (e.g., during the soak time), setting this strategy
+	// triggers a rollback to the legacy state. If the modernization process has
+	// already been marked as finalized, setting this strategy has no effect.
+	ModernizationStrategy string `json:"modernizationStrategy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ModernizationCompatibility")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7451,6 +7548,28 @@ type UpgradeRolloutSequenceRequest struct {
 	// stage of the sequence will be cancelled to allow for the creation of the new
 	// rollout.
 	Force bool `json:"force,omitempty"`
+	// IgnoreClusterDisruptionBudgets: Optional. If set to true, the rollout will
+	// ignore the disruption budgets of the clusters.
+	IgnoreClusterDisruptionBudgets bool `json:"ignoreClusterDisruptionBudgets,omitempty"`
+	// IgnoreMaintenancePolicies: Optional. If set to true, the rollout will ignore
+	// any maintenance policies (Maintenance Windows and Maintenance Exclusions)
+	// set on the clusters.
+	IgnoreMaintenancePolicies bool `json:"ignoreMaintenancePolicies,omitempty"`
+	// PatchOnly: Optional. If set to true, the rollout will only upgrade clusters
+	// that match the minor version of the `version` field, but are on an earlier
+	// patch version.
+	PatchOnly bool `json:"patchOnly,omitempty"`
+	// Prioritized: Optional. If set to true, conflicting rollouts will be paused,
+	// to allow this rollout to progress through the sequence. Conflicting rollouts
+	// running on the first stage will be canceled, to allow this rollout to be
+	// created.
+	Prioritized bool `json:"prioritized,omitempty"`
+	// SoakDurationOverrideAllStages: Optional. Overrides the soak duration for all
+	// stages of the rollout.
+	SoakDurationOverrideAllStages string `json:"soakDurationOverrideAllStages,omitempty"`
+	// SoakDurationOverridePerStage: Optional. Overrides the soak durations for
+	// specific stages of the rollout.
+	SoakDurationOverridePerStage *PerStageSoakDurationOverrides `json:"soakDurationOverridePerStage,omitempty"`
 	// UpgradeType: Required. The type of upgrade.
 	//
 	// Possible values:

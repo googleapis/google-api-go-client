@@ -422,6 +422,7 @@ type BulkInsertOperationStatus struct {
 	//   "CREATING" - Rolling forward - creating VMs.
 	//   "ROLLING_BACK" - Rolling back - cleaning up after an error.
 	//   "DONE" - Done
+	//   "PENDING" - Pending - waiting until the capacity is available.
 	Status string `json:"status,omitempty"`
 	// TargetVmCount: [Output Only] Count of VMs originally planned to be created.
 	TargetVmCount int64 `json:"targetVmCount,omitempty"`
@@ -820,9 +821,11 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FirewallPolicyRuleOperationMetadata: Metadata for FirewallPolicyRule
+// operations.
 type FirewallPolicyRuleOperationMetadata struct {
-	// AllocatedPriority: The priority allocated for the firewall policy rule if
-	// query parameters specified minPriority/maxPriority.
+	// AllocatedPriority: Output only. [Output Only] The priority allocated for the
+	// firewall policy rule if query parameters specified minPriority/maxPriority.
 	AllocatedPriority int64 `json:"allocatedPriority,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllocatedPriority") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -839,6 +842,91 @@ type FirewallPolicyRuleOperationMetadata struct {
 
 func (s FirewallPolicyRuleOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod FirewallPolicyRuleOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GetHealthOperationMetadata: Metadata for GetHealth operations.
+type GetHealthOperationMetadata struct {
+	// HealthInfo: Output only. The health information.
+	HealthInfo *GetHealthOperationMetadataHealthInfo `json:"healthInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HealthInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HealthInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetHealthOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GetHealthOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GetHealthOperationMetadataHealthInfo: Health information.
+type GetHealthOperationMetadataHealthInfo struct {
+	// AvailabilitySloStatus: Output only. The availability SLO status.
+	//
+	// Possible values:
+	//   "AVAILABILITY_SLO_STATUS_UNSPECIFIED" - Unspecified availability SLO
+	// status.
+	//   "AVAILABILITY_SLO_STATUS_IN_SLO" - The slot availability is in SLO.
+	//   "AVAILABILITY_SLO_STATUS_OUT_OF_SLO" - The slot availability is out of
+	// SLO.
+	//   "AVAILABILITY_SLO_STATUS_SLO_UNKNOWN" - The slot availability is unknown.
+	AvailabilitySloStatus string `json:"availabilitySloStatus,omitempty"`
+	// HealthStatus: Output only. The health status.
+	//
+	// Possible values:
+	//   "HEALTH_STATUS_UNSPECIFIED" - Unspecified health status.
+	//   "HEALTH_STATUS_HEALTHY" - The reservation slot is healthy.
+	//   "HEALTH_STATUS_UNHEALTHY" - The reservation slot is unhealthy.
+	HealthStatus string `json:"healthStatus,omitempty"`
+	// RepairCategory: Output only. The repair category.
+	//
+	// Possible values:
+	//   "REPAIR_CATEGORY_UNSPECIFIED" - Unspecified repair category.
+	//   "REPAIR_CATEGORY_PLANNED_MAINTENANCE" - The repair is because of a planned
+	// maintenance
+	//   "REPAIR_CATEGORY_EMERGENT_MAINTENANCE" - The repair is because of an
+	// emergent maintenance
+	//   "REPAIR_CATEGORY_USER_REPORTED_FAULT" - The repair is because of a user
+	// reported fault
+	//   "REPAIR_CATEGORY_CRITICAL_FAILURE" - The repair is because of critical
+	// failures, that are scoped outside emergent maintenance
+	RepairCategory string `json:"repairCategory,omitempty"`
+	// UnhealthyReason: Output only. The reason for unhealthy status.
+	//
+	// Possible values:
+	//   "UNHEALTHY_REASON_UNSPECIFIED" - Unspecified unhealthy reason.
+	//   "UNHEALTHY_REASON_REPAIRING" - The slot is unhealthy because repair is in
+	// progress
+	//   "UNHEALTHY_REASON_PENDING_USER_APPROVAL" - The slot is unhealthy because
+	// there is a pending repair, waiting for customer approval
+	//   "UNHEALTHY_REASON_UNSCHEDULABLE" - The slot is unhealthy because a vm
+	// cannot be scheduled on it, and no repairs are running on the slot
+	UnhealthyReason string `json:"unhealthyReason,omitempty"`
+	// UpdateTime: Output only. The time when health info was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailabilitySloStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailabilitySloStatus") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetHealthOperationMetadataHealthInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GetHealthOperationMetadataHealthInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -863,11 +951,11 @@ func (s GetVersionOperationMetadata) MarshalJSON() ([]byte, error) {
 }
 
 type GetVersionOperationMetadataSbomInfo struct {
-	// CurrentComponentVersions: SBOM versions currently applied to the resource.
-	// The key is the component name and the value is the version.
+	// CurrentComponentVersions: A mapping of components to their currently-applied
+	// versions or other appropriate identifiers.
 	CurrentComponentVersions map[string]string `json:"currentComponentVersions,omitempty"`
-	// TargetComponentVersions: SBOM versions scheduled for the next maintenance.
-	// The key is the component name and the value is the version.
+	// TargetComponentVersions: A mapping of components to their target versions or
+	// other appropriate identifiers.
 	TargetComponentVersions map[string]string `json:"targetComponentVersions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentComponentVersions")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1018,6 +1106,30 @@ func (s InstancesBulkInsertOperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// InstancesTroubleshootOperationMetadata: [Output Only] Operation metadata for
+// instances.troubleshoot.
+type InstancesTroubleshootOperationMetadata struct {
+	// TroubleshootOutput: Output only. [Output Only] Serialized output of the
+	// troubleshooting diagnostic run.
+	TroubleshootOutput string `json:"troubleshootOutput,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TroubleshootOutput") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TroubleshootOutput") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstancesTroubleshootOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancesTroubleshootOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LocalizedMessage: Provides a localized error message that is safe to return
 // to the user which can be attached to an RPC error.
 type LocalizedMessage struct {
@@ -1140,14 +1252,22 @@ type Operation struct {
 	// Description: [Output Only] A textual description of the operation, which is
 	// set when the operation is created.
 	Description string `json:"description,omitempty"`
+	// Details: [Output Only] Extended details about the operation's execution.
+	Details *OperationDetails `json:"details,omitempty"`
 	// EndTime: [Output Only] The time that this operation was completed. This
 	// value is in RFC3339 text format.
 	EndTime string `json:"endTime,omitempty"`
 	// Error: [Output Only] If errors are generated during processing of the
 	// operation, this field will be populated.
-	Error                               *OperationError                      `json:"error,omitempty"`
+	Error *OperationError `json:"error,omitempty"`
+	// FirewallPolicyRuleOperationMetadata: Output only. [Output Only] Metadata
+	// containing the allocated priority from the networkFirewallPolicies.addRule
+	// and regionNetworkFirewallPolicies.addRule methods if not explicitly provided
+	// by the user.
 	FirewallPolicyRuleOperationMetadata *FirewallPolicyRuleOperationMetadata `json:"firewallPolicyRuleOperationMetadata,omitempty"`
-	GetVersionOperationMetadata         *GetVersionOperationMetadata         `json:"getVersionOperationMetadata,omitempty"`
+	// GetHealthOperationMetadata: Output only. Metadata for GetHealth operations.
+	GetHealthOperationMetadata  *GetHealthOperationMetadata  `json:"getHealthOperationMetadata,omitempty"`
+	GetVersionOperationMetadata *GetVersionOperationMetadata `json:"getVersionOperationMetadata,omitempty"`
 	// HttpErrorMessage: [Output Only] If the operation fails, this field contains
 	// the HTTP error message that was returned, such as `NOT FOUND`.
 	HttpErrorMessage string `json:"httpErrorMessage,omitempty"`
@@ -1162,6 +1282,9 @@ type Operation struct {
 	// value is in RFC3339 text format.
 	InsertTime                           string                                `json:"insertTime,omitempty"`
 	InstancesBulkInsertOperationMetadata *InstancesBulkInsertOperationMetadata `json:"instancesBulkInsertOperationMetadata,omitempty"`
+	// InstancesTroubleshootOperationMetadata: Output only. [Output Only] Operation
+	// metadata for instances.troubleshoot.
+	InstancesTroubleshootOperationMetadata *InstancesTroubleshootOperationMetadata `json:"instancesTroubleshootOperationMetadata,omitempty"`
 	// Kind: Output only. [Output Only] Type of the resource. Always
 	// `compute#operation` for Operation resources.
 	Kind string `json:"kind,omitempty"`
@@ -1202,9 +1325,10 @@ type Operation struct {
 	// following: `PENDING`, `RUNNING`, or `DONE`.
 	//
 	// Possible values:
-	//   "PENDING"
-	//   "RUNNING"
-	//   "DONE"
+	//   "PENDING" - The operation is waiting to be processed.
+	//   "RUNNING" - The operation is actively being processed.
+	//   "DONE" - The operation has completed processing successfully or with an
+	// error.
 	Status string `json:"status,omitempty"`
 	// StatusMessage: [Output Only] An optional textual description of the current
 	// status of the operation.
@@ -1271,6 +1395,8 @@ func (s OperationError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OperationErrorErrors: Represents a single error encountered during the
+// processing of an operation.
 type OperationErrorErrors struct {
 	// Arguments: Output only. [Output Only] Optional error details WARNING: DO NOT
 	// MAKE VISIBLE This is for internal use-only (like componentization) (thus the
@@ -1278,7 +1404,9 @@ type OperationErrorErrors struct {
 	// to follow pattern of: https://aip.dev/193 and expose as details field.
 	Arguments []string `json:"arguments,omitempty"`
 	// Code: [Output Only] The error type identifier for this error.
-	Code      string     `json:"code,omitempty"`
+	Code string `json:"code,omitempty"`
+	// DebugInfo: Output only. [Output Only] Advanced debugging information with
+	// stack traces and other diagnostic details for the error.
 	DebugInfo *DebugInfo `json:"debugInfo,omitempty"`
 	// ErrorDetails: [Output Only] An optional list of messages that contain the
 	// error details. There is a set of defined message types to use for providing
@@ -1308,11 +1436,19 @@ func (s OperationErrorErrors) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OperationErrorErrorsErrorDetails: Container for structured error details
+// providing additional context specific to the encountered error code.
 type OperationErrorErrorsErrorDetails struct {
-	ErrorInfo        *ErrorInfo         `json:"errorInfo,omitempty"`
-	Help             *Help              `json:"help,omitempty"`
-	LocalizedMessage *LocalizedMessage  `json:"localizedMessage,omitempty"`
-	QuotaInfo        *QuotaExceededInfo `json:"quotaInfo,omitempty"`
+	// ErrorInfo: Error information containing structured domain, reason, and
+	// metadata.
+	ErrorInfo *ErrorInfo `json:"errorInfo,omitempty"`
+	// Help: Links and information to help the user resolve the error.
+	Help *Help `json:"help,omitempty"`
+	// LocalizedMessage: A localized human-readable error message intended for end
+	// users.
+	LocalizedMessage *LocalizedMessage `json:"localizedMessage,omitempty"`
+	// QuotaInfo: Details about quota limits and metrics when a quota is exceeded.
+	QuotaInfo *QuotaExceededInfo `json:"quotaInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1416,7 +1552,7 @@ type OperationWarnings struct {
 	//   "RESERVED_ENTRY_143"
 	Code string `json:"code,omitempty"`
 	// Data: [Output Only] Metadata about this warning in key: value format. For
-	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }]
 	Data []*OperationWarningsData `json:"data,omitempty"`
 	// Message: [Output Only] A human-readable description of the warning code.
 	Message string `json:"message,omitempty"`
@@ -1464,6 +1600,29 @@ type OperationWarningsData struct {
 
 func (s OperationWarningsData) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationWarningsData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type OperationDetails struct {
+	// Data: Machine readable data from the message.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+	// Message: Human or AI readable details on execution of the operation.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OperationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1784,7 +1943,7 @@ type ResourceWarnings struct {
 	//   "RESERVED_ENTRY_143"
 	Code string `json:"code,omitempty"`
 	// Data: [Output Only] Metadata about this warning in key: value format. For
-	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }]
 	Data []*ResourceWarningsData `json:"data,omitempty"`
 	// Message: [Output Only] A human-readable description of the warning code.
 	Message string `json:"message,omitempty"`
@@ -1939,6 +2098,8 @@ func (s ResourceUpdateError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourceUpdateErrorErrors: Represents a single error encountered during the
+// processing of an operation.
 type ResourceUpdateErrorErrors struct {
 	// Arguments: Output only. [Output Only] Optional error details WARNING: DO NOT
 	// MAKE VISIBLE This is for internal use-only (like componentization) (thus the
@@ -1946,7 +2107,9 @@ type ResourceUpdateErrorErrors struct {
 	// to follow pattern of: https://aip.dev/193 and expose as details field.
 	Arguments []string `json:"arguments,omitempty"`
 	// Code: [Output Only] The error type identifier for this error.
-	Code      string     `json:"code,omitempty"`
+	Code string `json:"code,omitempty"`
+	// DebugInfo: Output only. [Output Only] Advanced debugging information with
+	// stack traces and other diagnostic details for the error.
 	DebugInfo *DebugInfo `json:"debugInfo,omitempty"`
 	// ErrorDetails: [Output Only] An optional list of messages that contain the
 	// error details. There is a set of defined message types to use for providing
@@ -1976,11 +2139,19 @@ func (s ResourceUpdateErrorErrors) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ResourceUpdateErrorErrorsErrorDetails: Container for structured error
+// details providing additional context specific to the encountered error code.
 type ResourceUpdateErrorErrorsErrorDetails struct {
-	ErrorInfo        *ErrorInfo         `json:"errorInfo,omitempty"`
-	Help             *Help              `json:"help,omitempty"`
-	LocalizedMessage *LocalizedMessage  `json:"localizedMessage,omitempty"`
-	QuotaInfo        *QuotaExceededInfo `json:"quotaInfo,omitempty"`
+	// ErrorInfo: Error information containing structured domain, reason, and
+	// metadata.
+	ErrorInfo *ErrorInfo `json:"errorInfo,omitempty"`
+	// Help: Links and information to help the user resolve the error.
+	Help *Help `json:"help,omitempty"`
+	// LocalizedMessage: A localized human-readable error message intended for end
+	// users.
+	LocalizedMessage *LocalizedMessage `json:"localizedMessage,omitempty"`
+	// QuotaInfo: Details about quota limits and metrics when a quota is exceeded.
+	QuotaInfo *QuotaExceededInfo `json:"quotaInfo,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ErrorInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2084,7 +2255,7 @@ type ResourceUpdateWarnings struct {
 	//   "RESERVED_ENTRY_143"
 	Code string `json:"code,omitempty"`
 	// Data: [Output Only] Metadata about this warning in key: value format. For
-	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }
+	// example: "data": [ { "key": "scope", "value": "zones/us-east1-d" }]
 	Data []*ResourceUpdateWarningsData `json:"data,omitempty"`
 	// Message: [Output Only] A human-readable description of the warning code.
 	Message string `json:"message,omitempty"`

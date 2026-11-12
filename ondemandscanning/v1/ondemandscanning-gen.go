@@ -216,13 +216,16 @@ type ProjectsLocationsScansVulnerabilitiesService struct {
 type AISkillAnalysisOccurrence struct {
 	// Findings: Findings produced by the analysis.
 	Findings []*Finding `json:"findings,omitempty"`
-	// MaxSeverity: Maximum severity found among findings.
+	// MaxSeverity: Maximum severity found among findings. Per scanner verdict
+	// details.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
 	//   "CRITICAL" - Critical severity.
 	//   "HIGH" - High severity.
 	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// PerScannerVerdict: Per scanner verdict.
+	PerScannerVerdict *PerScannerVerdict `json:"perScannerVerdict,omitempty"`
 	// SkillName: Name of the skill that produced this analysis.
 	SkillName string `json:"skillName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Findings") to
@@ -1368,6 +1371,126 @@ func (s *ExploitPredictionScoringSystem) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Exploitability: Exploitability information for a vulnerability. This data
+// can be used across multiple sources, including, but not limited to a
+// top-level vulnerability, a package occurrence, or a package file location.
+type Exploitability struct {
+	// Signals: Individual exploitability signals from various sources.
+	Signals []*ExploitabilitySignal `json:"signals,omitempty"`
+	// Summary: Rollup summary of the exploitability signals.
+	Summary *ExploitabilitySummary `json:"summary,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Signals") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Signals") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Exploitability) MarshalJSON() ([]byte, error) {
+	type NoMethod Exploitability
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExploitabilitySignal: A single exploitability signal from a specific source
+// (e.g., an upstream advisory, a customer VEX document, or an internal build
+// analysis).
+type ExploitabilitySignal struct {
+	// Rationale: Human-readable explanation of this signal.
+	Rationale string `json:"rationale,omitempty"`
+	// Source: Identifier of the signal source.
+	Source string `json:"source,omitempty"`
+	// VexJustification: Justification for why the vulnerability is not
+	// exploitable.
+	//
+	// Possible values:
+	//   "JUSTIFICATION_TYPE_UNSPECIFIED" - JUSTIFICATION_TYPE_UNSPECIFIED.
+	//   "COMPONENT_NOT_PRESENT" - The vulnerable component is not present in the
+	// product.
+	//   "VULNERABLE_CODE_NOT_PRESENT" - The vulnerable code is not present.
+	// Typically this case occurs when source code is configured or built in a way
+	// that excludes the vulnerable code.
+	//   "VULNERABLE_CODE_NOT_IN_EXECUTE_PATH" - The vulnerable code can not be
+	// executed. Typically this case occurs when the product includes the
+	// vulnerable code but does not call or use the vulnerable code.
+	//   "VULNERABLE_CODE_CANNOT_BE_CONTROLLED_BY_ADVERSARY" - The vulnerable code
+	// cannot be controlled by an attacker to exploit the vulnerability.
+	//   "INLINE_MITIGATIONS_ALREADY_EXIST" - The product includes built-in
+	// protections or features that prevent exploitation of the vulnerability.
+	// These built-in protections cannot be subverted by the attacker and cannot be
+	// configured or disabled by the user. These mitigations completely prevent
+	// exploitation based on known attack vectors.
+	VexJustification string `json:"vexJustification,omitempty"`
+	// VexStatus: The VEX status asserted by this signal.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state is specified.
+	//   "AFFECTED" - This product is known to be affected by this vulnerability.
+	//   "NOT_AFFECTED" - This product is known to be not affected by this
+	// vulnerability.
+	//   "FIXED" - This product contains a fix for this vulnerability.
+	//   "UNDER_INVESTIGATION" - It is not known yet whether these versions are or
+	// are not affected by the vulnerability. However, it is still under
+	// investigation.
+	VexStatus string `json:"vexStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rationale") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rationale") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExploitabilitySignal) MarshalJSON() ([]byte, error) {
+	type NoMethod ExploitabilitySignal
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExploitabilitySummary: Rollup summary of exploitability across signals.
+type ExploitabilitySummary struct {
+	// Rationale: Human-readable explanation of the summary.
+	Rationale string `json:"rationale,omitempty"`
+	// VexStatus: The rolled-up VEX status. Usually, this should result in an
+	// AFFECTED or NOT_AFFECTED vex status.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - No state is specified.
+	//   "AFFECTED" - This product is known to be affected by this vulnerability.
+	//   "NOT_AFFECTED" - This product is known to be not affected by this
+	// vulnerability.
+	//   "FIXED" - This product contains a fix for this vulnerability.
+	//   "UNDER_INVESTIGATION" - It is not known yet whether these versions are or
+	// are not affected by the vulnerability. However, it is still under
+	// investigation.
+	VexStatus string `json:"vexStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rationale") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rationale") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExploitabilitySummary) MarshalJSON() ([]byte, error) {
+	type NoMethod ExploitabilitySummary
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type File struct {
 	Digest map[string]string `json:"digest,omitempty"`
 	Name   string            `json:"name,omitempty"`
@@ -1651,8 +1774,35 @@ func (s GrafeasV1FileLocation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GrafeasV1LayerAttribute: LayerAttribute represents a single attribute (such
+// as a tag) that applies to a layer, along with the plugin that generated it.
+type GrafeasV1LayerAttribute struct {
+	// Plugin: The name of the plugin that generated this attribute.
+	Plugin string `json:"plugin,omitempty"`
+	// Value: The value of the attribute, with a meaning defined by the plugin.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Plugin") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Plugin") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GrafeasV1LayerAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod GrafeasV1LayerAttribute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GrafeasV1LayerDetails: Details about the layer a package was found in.
 type GrafeasV1LayerDetails struct {
+	// Attributes: Attributes that apply to the layer, such as buildpacks metadata.
+	Attributes []*GrafeasV1LayerAttribute `json:"attributes,omitempty"`
 	// BaseImages: The base images the layer is found within.
 	BaseImages []*GrafeasV1BaseImage `json:"baseImages,omitempty"`
 	// ChainId: The layer chain ID (sha256 hash) of the layer in the container
@@ -1667,13 +1817,13 @@ type GrafeasV1LayerDetails struct {
 	DiffId string `json:"diffId,omitempty"`
 	// Index: The index of the layer in the container image.
 	Index int64 `json:"index,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BaseImages") to
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BaseImages") to include in API
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2144,8 +2294,34 @@ func (s Layer) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LayerAttribute: An attribute attached to a layer by a plugin.
+type LayerAttribute struct {
+	// Plugin: The name of the plugin that generated this attribute.
+	Plugin string `json:"plugin,omitempty"`
+	// Value: The value of the attribute, with a meaning defined by the plugin.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Plugin") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Plugin") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LayerAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod LayerAttribute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LayerDetails: Details about the layer a package was found in.
 type LayerDetails struct {
+	// Attributes: Attributes attached to this layer by plugins.
+	Attributes []*LayerAttribute `json:"attributes,omitempty"`
 	// BaseImages: The base images the layer is found within.
 	BaseImages []*BaseImage `json:"baseImages,omitempty"`
 	// ChainId: The layer chain ID (sha256 hash) of the layer in the container
@@ -2159,13 +2335,13 @@ type LayerDetails struct {
 	DiffId string `json:"diffId,omitempty"`
 	// Index: The index of the layer in the container image.
 	Index int64 `json:"index,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "BaseImages") to
+	// ForceSendFields is a list of field names (e.g. "Attributes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BaseImages") to include in API
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2315,6 +2491,112 @@ type Maintainer struct {
 
 func (s Maintainer) MarshalJSON() ([]byte, error) {
 	type NoMethod Maintainer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MaliciousContentLLMResult: Result of Malicious Content LLM scan.
+type MaliciousContentLLMResult struct {
+	// MaxSeverity: Tracks max severity found.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// ModelId: The base name of the model that performed the scan.
+	ModelId string `json:"modelId,omitempty"`
+	// ScanStatus: Status of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATUS_UNSPECIFIED" - Unspecified scan status.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanStatus string `json:"scanStatus,omitempty"`
+	// TokenUsage: Telemetry metrics tracking token usage for the AI scan.
+	TokenUsage *TokenUsage `json:"tokenUsage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxSeverity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxSeverity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MaliciousContentLLMResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MaliciousContentLLMResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MaliciousContentStaticResult: Result of Malicious Content Static scan.
+type MaliciousContentStaticResult struct {
+	// MaxSeverity: Tracks max severity found.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// ScanStatus: Status of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATUS_UNSPECIFIED" - Unspecified scan status.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanStatus string `json:"scanStatus,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxSeverity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxSeverity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MaliciousContentStaticResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MaliciousContentStaticResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MalwareScanResult: Result of Malware scan.
+type MalwareScanResult struct {
+	// ScanStatus: Status of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATUS_UNSPECIFIED" - Unspecified scan status.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanStatus string `json:"scanStatus,omitempty"`
+	// Verdict: Verdict of the scan.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unspecified verdict.
+	//   "PASSED" - Scanner passed.
+	//   "FAILED" - Scanner failed.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScanStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScanStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MalwareScanResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MalwareScanResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2566,13 +2848,11 @@ type PackageData struct {
 	// package. This can be a Docker image, an SBOM attachment, or both, for
 	// example.
 	IngestionSources []*IngestionSource `json:"ingestionSources,omitempty"`
-	LayerDetails     *LayerDetails      `json:"layerDetails,omitempty"`
-	// Licenses: The list of licenses found that are related to a given package.
-	// Note that licenses may also be stored on the BinarySourceInfo. If there is
-	// no BinarySourceInfo (because there's no concept of source vs binary), then
-	// it will be stored here, while if there are BinarySourceInfos, it will be
-	// stored there, as one source can have multiple binaries with different
-	// licenses.
+	// LayerDetails: Deprecated: Layer details are captured per file location in
+	// FileLocation.layer_details. Top-level layer details is not persisted.
+	LayerDetails *LayerDetails `json:"layerDetails,omitempty"`
+	// Licenses: Deprecated: Top-level licenses is not persisted in the legacy
+	// Packages table. Licenses are captured in BinarySourceInfo or PackagesV2.
 	Licenses []string `json:"licenses,omitempty"`
 	// Maintainer: The maintainer of the package.
 	Maintainer *Maintainer `json:"maintainer,omitempty"`
@@ -2648,6 +2928,9 @@ type PackageIssue struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
+	// Exploitability: Output only. Exploitability signals and summary for this
+	// package issue.
+	Exploitability *Exploitability `json:"exploitability,omitempty"`
 	// FileLocation: The location at which this package was found.
 	FileLocation []*GrafeasV1FileLocation `json:"fileLocation,omitempty"`
 	// FixAvailable: Output only. Whether a fix is available for this package.
@@ -2752,6 +3035,33 @@ type PackageVersion struct {
 
 func (s PackageVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type PerScannerVerdict struct {
+	// MaliciousContentLlmResult: Malicious Content LLM scan result.
+	MaliciousContentLlmResult *MaliciousContentLLMResult `json:"maliciousContentLlmResult,omitempty"`
+	// MaliciousContentStaticResult: Malicious Content Static scan result.
+	MaliciousContentStaticResult *MaliciousContentStaticResult `json:"maliciousContentStaticResult,omitempty"`
+	// MalwareScan: Malware scan result.
+	MalwareScan *MalwareScanResult `json:"malwareScan,omitempty"`
+	// WorkspacePolicy: Workspace Policy scan result.
+	WorkspacePolicy *WorkspacePolicyResult `json:"workspacePolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaliciousContentLlmResult")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaliciousContentLlmResult") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerScannerVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod PerScannerVerdict
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3645,6 +3955,36 @@ func (s Subject) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TokenUsage: Token usage associated with an AI scan.
+type TokenUsage struct {
+	// CacheCount: Cache matched tokens for implicit cache.
+	CacheCount int64 `json:"cacheCount,omitempty,string"`
+	// CandidateCount: Tokens in the model response.
+	CandidateCount int64 `json:"candidateCount,omitempty,string"`
+	// PromptCount: Tokens in the user request.
+	PromptCount int64 `json:"promptCount,omitempty,string"`
+	// ThinkingCount: Tokens in the thinking output.
+	ThinkingCount int64 `json:"thinkingCount,omitempty,string"`
+	// ToolUsePromptCount: Prompt tokens for using tools.
+	ToolUsePromptCount int64 `json:"toolUsePromptCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CacheCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CacheCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TokenUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod TokenUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UpgradeDistribution: The Upgrade Distribution represents metadata about the
 // Upgrade for each operating system (CPE). Some distributions have additional
 // metadata around updates, classifying them into various categories and
@@ -3859,6 +4199,9 @@ type VulnerabilityOccurrence struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	EffectiveSeverity string `json:"effectiveSeverity,omitempty"`
+	// Exploitability: Output only. Rollup of exploitability across all
+	// PackageIssues in this occurrence.
+	Exploitability *Exploitability `json:"exploitability,omitempty"`
 	// ExtraDetails: Occurrence-specific extra details about the vulnerability.
 	ExtraDetails string `json:"extraDetails,omitempty"`
 	// FixAvailable: Output only. Whether at least one of the affected packages has
@@ -3958,6 +4301,40 @@ type WindowsUpdate struct {
 
 func (s WindowsUpdate) MarshalJSON() ([]byte, error) {
 	type NoMethod WindowsUpdate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WorkspacePolicyResult: Result of Workspace Policy scan.
+type WorkspacePolicyResult struct {
+	// ScanStatus: Status of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATUS_UNSPECIFIED" - Unspecified scan status.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanStatus string `json:"scanStatus,omitempty"`
+	// Verdict: Verdict of the scan.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unspecified verdict.
+	//   "PASSED" - Scanner passed.
+	//   "FAILED" - Scanner failed.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScanStatus") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScanStatus") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkspacePolicyResult) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkspacePolicyResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

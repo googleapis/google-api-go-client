@@ -239,6 +239,10 @@ type Assignment struct {
 	// Assignee: Optional. The resource which will use the reservation. E.g.
 	// `projects/myproject`, `folders/123`, or `organizations/456`.
 	Assignee string `json:"assignee,omitempty"`
+	// Condition: Optional. Common Expression Language (CEL) condition that defines
+	// the matching criteria for this assignment. The condition must resolve to a
+	// boolean value. Supported variables will be added later.
+	Condition *Expr `json:"condition,omitempty"`
 	// EnableGeminiInBigquery: Optional. Deprecated: "Gemini in BigQuery" is now
 	// available by default for all BigQuery editions and should not be explicitly
 	// set. Controls if "Gemini in BigQuery"
@@ -272,25 +276,34 @@ type Assignment struct {
 	// refreshing search indexes upon BigQuery table columns. Reservations with
 	// this job type take priority over a default BACKGROUND reservation assignment
 	// (if it exists).
+	//   "AUTOMATIC_MATERIALIZED_VIEW_REFRESH" - Automated materialized view
+	// refresh jobs will use the reservation. Reservations with this job type will
+	// take priority over a default QUERY reservation assignment (if it exists).
 	JobType string `json:"jobType,omitempty"`
 	// Name: Output only. Name of the resource. E.g.:
 	// `projects/myproject/locations/US/reservations/team1-prod/assignments/123`.
 	// The assignment_id must only contain lower case alphanumeric characters or
 	// dashes and the max length is 64 characters.
 	Name string `json:"name,omitempty"`
+	// Precedence: Optional. Specifies the priority precedence for this assignment.
+	// Used to resolve ambiguity when multiple assignments match a single job.
+	// Higher numerical values represent higher priority (e.g., 20 is higher than
+	// 10). If unspecified, it defaults to 0. Multiple assignments can share the
+	// same precedence, but it is recommended to use unique precedence values for
+	// assignments within the same assignee scope.
+	Precedence int64 `json:"precedence,omitempty,string"`
 	// Principal: Optional. Represents the principal for this assignment. If not
-	// empty, jobs run by this principal will utilize the associated reservation.
-	// Otherwise, jobs will fall back to using the reservation assigned to the
-	// project, folder, or organization (in that order). If no reservation is
-	// assigned at any of these levels, on-demand capacity will be used. The
-	// supported formats are: * `principal://goog/subject/USER_EMAIL_ADDRESS` for
-	// users, *
+	// empty, jobs run by this principal utilize the associated reservation.
+	// Otherwise, jobs fall back to using the reservation assigned to the project,
+	// folder, or organization, in that order. If no reservation is assigned at any
+	// of these levels, on-demand capacity is used. The supported formats are: *
+	// `principal://goog/subject/USER_EMAIL_ADDRESS` for users, *
 	// `principal://iam.googleapis.com/projects/-/serviceAccounts/SA_EMAIL_ADDRESS`
 	// for service accounts, *
 	// `principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/work
 	// loadIdentityPools/POOL_ID/subject/SUBJECT_ID` for workload identity pool
 	// identities. * The special value `unknown_or_deleted_user` represents
-	// principals which cannot be read from the user info service, for example
+	// principals which cannot be read from the user info service, for example,
 	// deleted users.
 	Principal string `json:"principal,omitempty"`
 	// SchedulingPolicy: Optional. The scheduling policy to use for jobs and
@@ -1223,6 +1236,13 @@ type Reservation struct {
 	// projects/{project}/locations/{location}/reservationGroups/{reservation_group}
 	//  or just {reservation_group}
 	ReservationGroup string `json:"reservationGroup,omitempty"`
+	// ReservationGroupPath: Output only. The reservation group path of the
+	// reservation from root to leaf. The order of elements matters: the first
+	// element is the top level group and the last element is the direct parent
+	// reservation group. For example, if a reservation is under group-1 -> group-2
+	// -> group-3, then the reservation group path is ["group-1", "group-2",
+	// "group-3"].
+	ReservationGroupPath []string `json:"reservationGroupPath,omitempty"`
 	// ScalingMode: Optional. The scaling mode for the reservation. If the field is
 	// present but max_slots is not present, requests will be rejected with error
 	// code `google.rpc.Code.INVALID_ARGUMENT`.
@@ -1313,6 +1333,8 @@ func (s Reservation) MarshalJSON() ([]byte, error) {
 
 // ReservationGroup: A reservation group is a container for reservations.
 type ReservationGroup struct {
+	// CreationTime: Output only. Creation time of the reservation group.
+	CreationTime string `json:"creationTime,omitempty"`
 	// Name: Identifier. The resource name of the reservation group, e.g.,
 	// `projects/*/locations/*/reservationGroups/team1-prod`. The
 	// reservation_group_id must only contain lower case alphanumeric characters or
@@ -1324,18 +1346,23 @@ type ReservationGroup struct {
 	// non-root reservation groups, or `projects/*/locations/*` for root
 	// reservation groups.
 	ParentGroup string `json:"parentGroup,omitempty"`
+	// UpdateTime: Output only. Last update time of the reservation group via a
+	// user operation. This timestamp is updated only when an update operation
+	// explicitly targets this reservation group directly. It is not updated when
+	// parent or child groups are created, updated, or deleted.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "CreationTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Name") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "CreationTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1622,6 +1649,79 @@ type TestIamPermissionsResponse struct {
 
 func (s TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeEditionRequest: The request for ReservationService.UpgradeEdition.
+// You must specify at least one reservation or capacity commitment.
+type UpgradeEditionRequest struct {
+	// CapacityCommitments: Optional. The resource names of the capacity
+	// commitments to upgrade, in the format
+	// `projects/{project}/locations/{location}/capacityCommitments/{capacity_commit
+	// ment}`. For example,
+	// `projects/myproject/locations/us-west1/capacityCommitments/123`. These
+	// capacity commitments must be in the `ACTIVE` state and must exist under the
+	// specified `parent`. The `commitment_start_time` and `commitment_end_time`
+	// fields don't change after the upgrade.
+	CapacityCommitments []string `json:"capacityCommitments,omitempty"`
+	// Reservations: Optional. The resource names of the reservations to upgrade,
+	// in the format
+	// `projects/{project}/locations/{location}/reservations/{reservation}`. For
+	// example, `projects/myproject/locations/us-west1/reservations/team1-prod`.
+	// These reservations must exist under the specified `parent`.
+	Reservations []string `json:"reservations,omitempty"`
+	// TargetEdition: The edition to upgrade the capacity commitments and
+	// reservations to. Supported values are `ENTERPRISE` and `ENTERPRISE_PLUS`.
+	//
+	// Possible values:
+	//   "EDITION_UNSPECIFIED" - Default value, which will be treated as
+	// ENTERPRISE.
+	//   "STANDARD" - Standard edition.
+	//   "ENTERPRISE" - Enterprise edition.
+	//   "ENTERPRISE_PLUS" - Enterprise Plus edition.
+	TargetEdition string `json:"targetEdition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CapacityCommitments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CapacityCommitments") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeEditionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeEditionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UpgradeEditionResponse: The response for ReservationService.UpgradeEdition.
+type UpgradeEditionResponse struct {
+	// CapacityCommitments: The updated capacity commitments after the upgrade.
+	CapacityCommitments []*CapacityCommitment `json:"capacityCommitments,omitempty"`
+	// Reservations: The updated reservations after the upgrade.
+	Reservations []*Reservation `json:"reservations,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CapacityCommitments") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CapacityCommitments") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UpgradeEditionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeEditionResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2179,6 +2279,123 @@ func (c *ProjectsLocationsUpdateBiReservationCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigqueryreservation.projects.locations.updateBiReservation", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsUpgradeEditionCall struct {
+	s                     *Service
+	parent                string
+	upgradeeditionrequest *UpgradeEditionRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// UpgradeEdition: Upgrades the edition for a list of reservations and capacity
+// commitments. You can only upgrade to a higher edition (from `STANDARD` to
+// `ENTERPRISE` or `ENTERPRISE_PLUS`, from `ENTERPRISE` to `ENTERPRISE_PLUS`,
+// or from `EDITION_UNSPECIFIED` to `ENTERPRISE` or `ENTERPRISE_PLUS`). You
+// can't downgrade an edition. The upgrade must not cause an overall flexible
+// slot increase across the original and target editions (for example, by
+// upgrading a reservation without upgrading its corresponding capacity
+// commitment). Otherwise, the method fails with a
+// `google.rpc.Code.FAILED_PRECONDITION` error. Before the upgrade, the service
+// validates that the resources meet the requirements of the target edition
+// (for example, all reservations within a reservation group must be upgraded
+// together).
+//
+//   - parent: The parent resource name that identifies the admin project and
+//     location, in the format `projects/{project}/locations/{location}`. For
+//     example, `projects/myproject/locations/us-west1`.
+func (r *ProjectsLocationsService) UpgradeEdition(parent string, upgradeeditionrequest *UpgradeEditionRequest) *ProjectsLocationsUpgradeEditionCall {
+	c := &ProjectsLocationsUpgradeEditionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.upgradeeditionrequest = upgradeeditionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpgradeEditionCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpgradeEditionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpgradeEditionCall) Context(ctx context.Context) *ProjectsLocationsUpgradeEditionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpgradeEditionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpgradeEditionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.upgradeeditionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:upgradeEdition")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigqueryreservation.projects.locations.upgradeEdition", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigqueryreservation.projects.locations.upgradeEdition" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *UpgradeEditionResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsUpgradeEditionCall) Do(opts ...googleapi.CallOption) (*UpgradeEditionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &UpgradeEditionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigqueryreservation.projects.locations.upgradeEdition", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

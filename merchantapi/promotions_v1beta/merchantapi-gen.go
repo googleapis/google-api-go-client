@@ -439,6 +439,7 @@ type Attributes struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	PromotionDestinations []string `json:"promotionDestinations,omitempty"`
 	// PromotionDisplayTimePeriod: Optional. `TimePeriod` representation of the
 	// promotion's display dates. This attribute specifies the date and time frame
@@ -473,6 +474,9 @@ type Attributes struct {
 	//   "CUSTOM" - The promotion can only be redeemed with a custom redemption
 	// restriction. In this case, the `custom_redemption_restriction` field must be
 	// set.
+	//   "FORMS_OF_PAYMENT" - The promotion is only available when the customer
+	// uses a specific form of payment, such as a specific credit card, bank card,
+	// or digital wallet.
 	RedemptionRestriction string `json:"redemptionRestriction,omitempty"`
 	// RegionIdInclusion: Optional. A list of regions
 	// (https://support.google.com/merchants/answer/15406457?#howregionswork) where
@@ -597,6 +601,7 @@ type DestinationStatus struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Status: Output only. The status for the specified destination.
 	//
@@ -743,6 +748,7 @@ type ItemLevelIssue struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Resolution: Output only. Whether the issue can be resolved by the merchant.
 	Resolution string `json:"resolution,omitempty"`
@@ -888,6 +894,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or

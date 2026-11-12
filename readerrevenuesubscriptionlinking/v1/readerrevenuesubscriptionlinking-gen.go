@@ -177,9 +177,10 @@ type Entitlement struct {
 	// for users who linked the subscription to a Google Account. Max 80 character
 	// limit.
 	Detail string `json:"detail,omitempty"`
-	// ExpireTime: Required. Expiration time of the entitlement. Entitlements that
-	// have expired over 30 days will be purged. The max expire_time is 398 days
-	// from now().
+	// ExpireTime: Optional. Expiration time of the entitlement. If unset, the
+	// entitlement does not expire (indefinite entitlement). We need to support
+	// indefinite entitlements for platform publishers. dd: go/rrm-sl-notedotcom
+	// Entitlements that have expired over 30 days will be purged.
 	ExpireTime string `json:"expireTime,omitempty"`
 	// ProductId: Required. The publication's product ID that the user has access
 	// to. This is the same product ID as can be found in Schema.org markup

@@ -346,10 +346,10 @@ func (s GoogleFirebaseAppcheckV1AppAttestConfig) MarshalJSON() ([]byte, error) {
 // which are used to access backend services protected by App Check.
 type GoogleFirebaseAppcheckV1AppCheckToken struct {
 	// Token: The App Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
-	// attested app and GCP project. This token is used to access Google services
-	// protected by App Check. These tokens can also be verified by your own custom
-	// backends
+	// (https://www.rfc-editor.org/info/rfc7519/) containing claims that identify
+	// the attested app and GCP project. This token is used to access Google
+	// services protected by App Check. These tokens can also be verified by your
+	// own custom backends
 	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
 	// the Firebase Admin SDK or third-party libraries.
 	Token string `json:"token,omitempty"`
@@ -829,10 +829,10 @@ type GoogleFirebaseAppcheckV1ExchangeCustomTokenRequest struct {
 	// token. *Limited use* App Check tokens with the same `jti` will be counted as
 	// the same token for the purposes of replay protection. An error is returned
 	// if this field is specified without setting `limited_use` to `true`. The size
-	// of this field is limited to 500 bytes. If specified, its length must be at
+	// of this field is limited to 250 bytes. If specified, its length must be at
 	// least 16 bytes. If this field is omitted or is empty and `limited_use` is
 	// set to `true`, a randomly generated `jti` claim with length between 16 and
-	// 500 bytes (inclusive) will be used in the returned App Check token. Leaving
+	// 250 bytes (inclusive) will be used in the returned App Check token. Leaving
 	// this field empty is only recommended if your custom attestation provider
 	// itself is not vulnerable to replay attacks. When `limited_use` is set to
 	// `false`, the presence and the contents of the `jti` claim in the returned
@@ -1087,6 +1087,37 @@ func (s GoogleFirebaseAppcheckV1GeneratePlayIntegrityChallengeResponse) MarshalJ
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppcheckV1LimitedUseConfig: Configuration for a limited-use
+// App Check token.
+type GoogleFirebaseAppcheckV1LimitedUseConfig struct {
+	// Jti: Optional. Specifies the desired `jti` claim (Section 4.1.7 of RFC 7519)
+	// in the returned App Check token. Limited-use App Check tokens with the same
+	// `jti` will be counted as the same token for the purposes of replay
+	// protection. The size of this field is limited to 250 bytes. If specified,
+	// its length must be at least 16 bytes. If this field is omitted or is empty,
+	// a randomly generated `jti` claim with length between 16 and 250 bytes
+	// (inclusive) will be used in the returned App Check token. Leaving this field
+	// empty is only recommended if your custom attestation provider itself is not
+	// vulnerable to replay attacks.
+	Jti string `json:"jti,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Jti") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Jti") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1LimitedUseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1LimitedUseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirebaseAppcheckV1ListDebugTokensResponse: Response message for the
 // ListDebugTokens method.
 type GoogleFirebaseAppcheckV1ListDebugTokensResponse struct {
@@ -1180,6 +1211,73 @@ type GoogleFirebaseAppcheckV1ListServicesResponse struct {
 
 func (s GoogleFirebaseAppcheckV1ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1ListServicesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1MintAppCheckTokenRequest: Request message for the
+// MintAppCheckToken method.
+type GoogleFirebaseAppcheckV1MintAppCheckTokenRequest struct {
+	// LimitedUseConfig: Optional. If specified, the returned App Check token will
+	// be a limited-use token minted according to the specified configuration
+	// options.
+	LimitedUseConfig *GoogleFirebaseAppcheckV1LimitedUseConfig `json:"limitedUseConfig,omitempty"`
+	// TokenTtl: Optional. If specified, the returned App Check token will be a
+	// session token, valid for the specified duration. Must be between 30 minutes
+	// and 7 days, inclusive.
+	TokenTtl string `json:"tokenTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LimitedUseConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LimitedUseConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1MintAppCheckTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1MintAppCheckTokenRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1MintAppCheckTokenResponse: Response message for the
+// MintAppCheckToken method.
+type GoogleFirebaseAppcheckV1MintAppCheckTokenResponse struct {
+	// Token: The App Check token, used to access backend services protected by App
+	// Check. App Check tokens are signed JWTs
+	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
+	// attested app and GCP project. This token is used to access Google services
+	// protected by App Check. These tokens can also be verified by your own custom
+	// backends
+	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
+	// the Firebase Admin SDK or third-party libraries.
+	Token string `json:"token,omitempty"`
+	// Ttl: The duration from the time this token is minted until its expiration.
+	// This field is intended to ease client-side token management, since the
+	// client may have clock skew, but is still able to accurately measure a
+	// duration.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Token") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Token") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1MintAppCheckTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1MintAppCheckTokenResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1352,8 +1450,8 @@ type GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity struct {
 	//
 	// Possible values:
 	//   "DEVICE_RECOGNITION_LEVEL_UNSPECIFIED" - Default value. Do not specify
-	// this value directly. When this default value is detected in a configuration,
-	// the `NO_INTEGRITY` default level takes effect.
+	// this value directly. If this value is detected in a configuration, it will
+	// have the same effect as the value `NO_INTEGRITY`.
 	//   "NO_INTEGRITY" - If this level is set, no explicit device integrity label
 	// requirements will be checked. However, because Play Integrity's other
 	// features may perform (and require) their own intrinsic device integrity
@@ -1410,26 +1508,26 @@ func (s GoogleFirebaseAppcheckV1PlayIntegrityConfigDeviceIntegrity) MarshalJSON(
 }
 
 // GoogleFirebaseAppcheckV1PublicJwk: A JWK as specified by section 4 of RFC
-// 7517 (https://tools.ietf.org/html/rfc7517#section-4) and section 6.3.1 of
-// RFC 7518 (https://tools.ietf.org/html/rfc7518#section-6.3.1).
+// 7517 (https://www.rfc-editor.org/info/rfc7517/#section-4) and section 6.3.1
+// of RFC 7518 (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1).
 type GoogleFirebaseAppcheckV1PublicJwk struct {
 	// Alg: See section 4.4 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.4).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.4).
 	Alg string `json:"alg,omitempty"`
 	// E: See section 6.3.1.2 of RFC 7518
-	// (https://tools.ietf.org/html/rfc7518#section-6.3.1.2).
+	// (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1.2).
 	E string `json:"e,omitempty"`
 	// Kid: See section 4.5 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.5).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.5).
 	Kid string `json:"kid,omitempty"`
 	// Kty: See section 4.1 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.1).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.1).
 	Kty string `json:"kty,omitempty"`
 	// N: See section 6.3.1.1 of RFC 7518
-	// (https://tools.ietf.org/html/rfc7518#section-6.3.1.1).
+	// (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1.1).
 	N string `json:"n,omitempty"`
 	// Use: See section 4.2 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.2).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.2).
 	Use string `json:"use,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Alg") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1452,11 +1550,11 @@ func (s GoogleFirebaseAppcheckV1PublicJwk) MarshalJSON() ([]byte, error) {
 // GoogleFirebaseAppcheckV1PublicJwkSet: The currently active set of public
 // keys that can be used to verify App Check tokens. This object is a JWK set
 // as specified by section 5 of RFC 7517
-// (https://tools.ietf.org/html/rfc7517#section-5). For security, the response
-// **must not** be cached for longer than six hours.
+// (https://www.rfc-editor.org/info/rfc7517#section-5). For security, the
+// response **must not** be cached for longer than six hours.
 type GoogleFirebaseAppcheckV1PublicJwkSet struct {
 	// Keys: The set of public keys. See section 5.1 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-5).
+	// (https://www.rfc-editor.org/info/rfc7517#section-5).
 	Keys []*GoogleFirebaseAppcheckV1PublicJwk `json:"keys,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1670,19 +1768,19 @@ type GoogleFirebaseAppcheckV1ResourcePolicy struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
 	// fields, and may be sent on update and delete requests to ensure the client
@@ -1765,19 +1863,19 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 	// Etag: Optional. This checksum is computed by the server based on the value
 	// of other fields, and may be sent on update and delete requests to ensure the
@@ -1796,7 +1894,13 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform
 	// services: * `maps-backend.googleapis.com` (Maps JavaScript API) *
 	// `places.googleapis.com` (Places API (New)) Other supported Google services:
-	// * `oauth2.googleapis.com` (Google Identity for iOS)
+	// * `oauth2.googleapis.com` (Google Identity for iOS) Note: While all the
+	// supported `service_id`s may appear to be subdomains of `googleapis.com`, the
+	// `service_id` has no semantic meaning beyond identifying the service to App
+	// Check. It is not intended to represent the actual domain to which your apps
+	// send traffic, nor is it necessarily the API that should be enabled to use
+	// the service. For information on using these Google services, consult their
+	// documentation.
 	Name string `json:"name,omitempty"`
 	// ReplayProtection: Optional. The replay protection EnforcementMode for this
 	// service. Note that this field cannot be set to a level higher than that of
@@ -1838,19 +1942,19 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	ReplayProtection string `json:"replayProtection,omitempty"`
 	// UpdateTime: Output only. Timestamp when this service configuration object
 	// was most recently updated.
@@ -1960,9 +2064,9 @@ type JwksGetCall struct {
 }
 
 // Get: Returns a public JWK set as specified by RFC 7517
-// (https://tools.ietf.org/html/rfc7517) that can be used to verify App Check
-// tokens. Exactly one of the public keys in the returned set will successfully
-// validate any App Check token that is currently valid.
+// (https://www.rfc-editor.org/info/rfc7517/) that can be used to verify App
+// Check tokens. Exactly one of the public keys in the returned set will
+// successfully validate any App Check token that is currently valid.
 //
 //   - name: The relative resource name to the public JWK set. Must always be
 //     exactly the string `jwks`.
@@ -3615,6 +3719,120 @@ func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsAppsMintAppCheckTokenCall struct {
+	s                                                *Service
+	appid                                            string
+	googlefirebaseappcheckv1mintappchecktokenrequest *GoogleFirebaseAppcheckV1MintAppCheckTokenRequest
+	urlParams_                                       gensupport.URLParams
+	ctx_                                             context.Context
+	header_                                          http.Header
+}
+
+// MintAppCheckToken: Mints a new App Check token for the specified Firebase
+// App. This method is intended to be called from a privileged environment
+// where the caller can be authorized via Cloud IAM; for example, using a
+// service account. To call this method, the caller must have the
+// `firebaseappcheck.googleapis.com/tokens.mint`
+// (https://firebase.google.com/docs/projects/iam/permissions#app-check)
+// permission. Returns a MintAppCheckTokenResponse.
+//
+//   - app: The relative resource name of the app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
+//     `project_number` element can be replaced with the project ID of the
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *ProjectsAppsService) MintAppCheckToken(appid string, googlefirebaseappcheckv1mintappchecktokenrequest *GoogleFirebaseAppcheckV1MintAppCheckTokenRequest) *ProjectsAppsMintAppCheckTokenCall {
+	c := &ProjectsAppsMintAppCheckTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appid = appid
+	c.googlefirebaseappcheckv1mintappchecktokenrequest = googlefirebaseappcheckv1mintappchecktokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsMintAppCheckTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsMintAppCheckTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsMintAppCheckTokenCall) Context(ctx context.Context) *ProjectsAppsMintAppCheckTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsMintAppCheckTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsMintAppCheckTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirebaseappcheckv1mintappchecktokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+app}:mintAppCheckToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.appid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.mintAppCheckToken", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.apps.mintAppCheckToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1MintAppCheckTokenResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsMintAppCheckTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1MintAppCheckTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1MintAppCheckTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.mintAppCheckToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -6380,7 +6598,13 @@ type ProjectsServicesPatchCall struct {
 //     `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform
 //     services: * `maps-backend.googleapis.com` (Maps JavaScript API) *
 //     `places.googleapis.com` (Places API (New)) Other supported Google
-//     services: * `oauth2.googleapis.com` (Google Identity for iOS).
+//     services: * `oauth2.googleapis.com` (Google Identity for iOS) Note: While
+//     all the supported `service_id`s may appear to be subdomains of
+//     `googleapis.com`, the `service_id` has no semantic meaning beyond
+//     identifying the service to App Check. It is not intended to represent the
+//     actual domain to which your apps send traffic, nor is it necessarily the
+//     API that should be enabled to use the service. For information on using
+//     these Google services, consult their documentation.
 func (r *ProjectsServicesService) Patch(name string, googlefirebaseappcheckv1service *GoogleFirebaseAppcheckV1Service) *ProjectsServicesPatchCall {
 	c := &ProjectsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

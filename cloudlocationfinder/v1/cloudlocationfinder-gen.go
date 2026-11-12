@@ -205,6 +205,7 @@ type CloudLocation struct {
 	//   "CLOUD_LOCATION_TYPE_ZONE" - CloudLocation type for zone.
 	//   "CLOUD_LOCATION_TYPE_GDCC_ZONE" - CloudLocation type for Google
 	// Distributed Cloud Connected Zone.
+	//   "CLOUD_LOCATION_TYPE_GLOBAL" - CloudLocation type for global.
 	CloudLocationType string `json:"cloudLocationType,omitempty"`
 	// CloudProvider: Optional. The provider of the cloud location. Values can be
 	// Google Cloud or third-party providers, including AWS, Azure, or Oracle Cloud
@@ -224,6 +225,8 @@ type CloudLocation struct {
 	// DisplayName: Optional. The human-readable name of the cloud location.
 	// Example: us-east-2, us-east1.
 	DisplayName string `json:"displayName,omitempty"`
+	// GcpAttributes: Optional. GCP-specific attributes.
+	GcpAttributes *GcpAttributes `json:"gcpAttributes,omitempty"`
 	// Name: Identifier. Name of the cloud location. Unique name of the cloud
 	// location including project and location using the form:
 	// `projects/{project_id}/locations/{location}/cloudLocations/{cloud_location}`
@@ -264,6 +267,33 @@ func (s *CloudLocation) UnmarshalJSON(data []byte) error {
 	}
 	s.CarbonFreeEnergyPercentage = float64(s1.CarbonFreeEnergyPercentage)
 	return nil
+}
+
+// GcpAttributes: GCP-specific attributes.
+type GcpAttributes struct {
+	// ZoneType: Optional. The type of the cloud zone.
+	//
+	// Possible values:
+	//   "GCP_ZONE_TYPE_UNSPECIFIED" - Default value. Unspecified zone type.
+	//   "GENERAL_PURPOSE" - General purpose zone type.
+	//   "AI_ZONE" - AI zone type.
+	ZoneType string `json:"zoneType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ZoneType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ZoneType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcpAttributes) MarshalJSON() ([]byte, error) {
+	type NoMethod GcpAttributes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ListCloudLocationsResponse: Message for response to listing cloud locations.
@@ -817,7 +847,9 @@ func (c *ProjectsLocationsCloudLocationsListCall) Filter(filter string) *Project
 
 // PageSize sets the optional parameter "pageSize": The maximum number of cloud
 // locations to return per page. The service might return fewer cloud locations
-// than this value. If unspecified, server will pick an appropriate default.
+// than this value. If unspecified, at most 500 cloud locations will be
+// returned. The maximum value is 1000; values above 1000 will be coerced to
+// 1000.
 func (c *ProjectsLocationsCloudLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsCloudLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -967,7 +999,8 @@ func (r *ProjectsLocationsCloudLocationsService) Search(parent string) *Projects
 
 // PageSize sets the optional parameter "pageSize": The maximum number of cloud
 // locations to return. The service might return fewer cloud locations than
-// this value. If unspecified, server will pick an appropriate default.
+// this value. If unspecified, at most 500 cloud locations will be returned.
+// The maximum value is 1000; values above 1000 will be coerced to 1000.
 func (c *ProjectsLocationsCloudLocationsSearchCall) PageSize(pageSize int64) *ProjectsLocationsCloudLocationsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

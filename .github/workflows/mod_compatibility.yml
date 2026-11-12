@@ -1,0 +1,36 @@
+name: validate go modules
+# The purpose of this action is to maintain a simple invariant that all the SDKs we release
+# supported versions of go in accordance with our policy:
+# https://docs.cloud.google.com/go/getting-started/supported-go-versions
+#
+# In a nutshell, this action runs on PRs to identify any go module files that declare an atypical
+# Go release version and flag them to the reviewer for scrutiny.
+on:
+  pull_request:
+    paths:
+      - '**/go.mod'
+
+
+permissions:
+  contents: read
+  
+env:
+  GOTOOLCHAIN: local
+
+jobs:
+  validate_go_version:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        fetch-depth: 1
+        persist-credentials: false
+    - uses: actions/setup-go@b7ad1dad31e06c5925ef5d2fc7ad053ef454303e # v7
+      with:
+        go-version: 1.27.x
+    - name: Validate go minimum version
+      id: validate
+      run: |
+        cd internal/actions
+        go run ./cmd/modvalidator --enforced_version=1.26.0 --dir=${{ github.workspace }}
+        

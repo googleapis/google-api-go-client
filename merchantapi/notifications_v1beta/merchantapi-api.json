@@ -197,13 +197,13 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "The maximum number of notification subscriptions to return in a page. The default value for `page_size` is 100. The maximum value is `200`. Values above `200` will be coerced to `200`.",
+                  "description": "Optional. The maximum number of notification subscriptions to return in a page. The default value for `page_size` is 100. The maximum value is `200`. Values above `200` will be coerced to `200`.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Token (if provided) to retrieve the subsequent page. All other parameters must match the original call that provided the page token.",
+                  "description": "Optional. Token (if provided) to retrieve the subsequent page. All other parameters must match the original call that provided the page token.",
                   "location": "query",
                   "type": "string"
                 },
@@ -262,7 +262,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20260901",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -310,11 +310,13 @@
           "description": "The event that the merchant wants to be notified about.",
           "enum": [
             "NOTIFICATION_EVENT_TYPE_UNSPECIFIED",
-            "PRODUCT_STATUS_CHANGE"
+            "PRODUCT_STATUS_CHANGE",
+            "ACCOUNT_SERVICE_CHANGE"
           ],
           "enumDescriptions": [
             "Notifications event type is unspecified.",
-            "Notification of product status changes, for example when product becomes disapproved."
+            "Notification of product status changes, for example when product becomes disapproved.",
+            "Notification of account service changes."
           ],
           "type": "string"
         },
@@ -363,12 +365,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -407,7 +411,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         }

@@ -6274,6 +6274,10 @@ type RequestOptions struct {
 	// ClientDisplayLanguageCode: The BCP-47 language code, such as "pt" or "en".
 	// It represents the user's preferred Display Language.
 	ClientDisplayLanguageCode string `json:"clientDisplayLanguageCode,omitempty"`
+	// CountryCode: Optional. Specifies the country/region where the query
+	// originated, as a lowercase ISO 3166-1 alpha-2 region code (using 'uk'
+	// instead of 'gb' for the United Kingdom).
+	CountryCode string `json:"countryCode,omitempty"`
 	// DebugOptions: Debug options of the request
 	DebugOptions *DebugOptions `json:"debugOptions,omitempty"`
 	// LanguageCode: The BCP-47 language code, such as "en-US" or "sr-Latn". For
@@ -6285,6 +6289,9 @@ type RequestOptions struct {
 	// results are biased towards the specified language. The Suggest API uses this
 	// field as a hint to make better third-party autocomplete predictions.
 	LanguageCode string `json:"languageCode,omitempty"`
+	// QueryLanguageCode: Optional. The BCP-47 language code representing the
+	// language of the query.
+	QueryLanguageCode string `json:"queryLanguageCode,omitempty"`
 	// SearchApplicationId: The ID generated when you create a search application
 	// using the admin console (https://support.google.com/a/answer/9043922).
 	SearchApplicationId string `json:"searchApplicationId,omitempty"`
@@ -6917,7 +6924,7 @@ func (s SearchRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchResponse: The search API response. NEXT ID: 20
+// SearchResponse: The search API response. NEXT ID: 21
 type SearchResponse struct {
 	// DebugInfo: Debugging information about the response.
 	DebugInfo *ResponseDebugInfo `json:"debugInfo,omitempty"`
@@ -10901,6 +10908,15 @@ func (c *QuerySourcesListCall) RequestOptionsClientDisplayLanguageCode(requestOp
 	return c
 }
 
+// RequestOptionsCountryCode sets the optional parameter
+// "requestOptions.countryCode": Specifies the country/region where the query
+// originated, as a lowercase ISO 3166-1 alpha-2 region code (using 'uk'
+// instead of 'gb' for the United Kingdom).
+func (c *QuerySourcesListCall) RequestOptionsCountryCode(requestOptionsCountryCode string) *QuerySourcesListCall {
+	c.urlParams_.Set("requestOptions.countryCode", requestOptionsCountryCode)
+	return c
+}
+
 // RequestOptionsDebugOptionsEnableDebugging sets the optional parameter
 // "requestOptions.debugOptions.enableDebugging": If you are asked by Google to
 // help with debugging, set this field. Otherwise, ignore this field.
@@ -10920,6 +10936,14 @@ func (c *QuerySourcesListCall) RequestOptionsDebugOptionsEnableDebugging(request
 // field as a hint to make better third-party autocomplete predictions.
 func (c *QuerySourcesListCall) RequestOptionsLanguageCode(requestOptionsLanguageCode string) *QuerySourcesListCall {
 	c.urlParams_.Set("requestOptions.languageCode", requestOptionsLanguageCode)
+	return c
+}
+
+// RequestOptionsQueryLanguageCode sets the optional parameter
+// "requestOptions.queryLanguageCode": The BCP-47 language code representing
+// the language of the query.
+func (c *QuerySourcesListCall) RequestOptionsQueryLanguageCode(requestOptionsQueryLanguageCode string) *QuerySourcesListCall {
+	c.urlParams_.Set("requestOptions.queryLanguageCode", requestOptionsQueryLanguageCode)
 	return c
 }
 

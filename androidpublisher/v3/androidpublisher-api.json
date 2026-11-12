@@ -439,6 +439,64 @@
         }
       }
     },
+    "appsigning": {
+      "methods": {
+        "enrollApp": {
+          "description": "Enrolls an app in Play App Signing using a self-hosted Google Cloud KMS key. Warning: Do not use this method for standard Play App Signing enrollment. * Standard enrollment with Google-generated or Google-managed keys cannot be done via API. * This advanced API is strictly for enterprise organizations with mandatory compliance, regulatory, or policy requirements to retain key custody in an external Google Cloud KMS instance. * Prerequisites: Requires an active, properly configured Google Cloud KMS key with appropriate IAM permissions granted to Google Play before calling this method. See Help Center: https://support.google.com/googleplay/android-developer/answer/9842756",
+          "flatPath": "androidpublisher/v3/applications/{name}/appSigning:enrollApp",
+          "httpMethod": "POST",
+          "id": "androidpublisher.appsigning.enrollApp",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. Either package name or app ID of the app enrolling in Play Signing.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "androidpublisher/v3/applications/{name}/appSigning:enrollApp",
+          "request": {
+            "$ref": "EnrollAppRequest"
+          },
+          "response": {
+            "$ref": "EnrollAppResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidpublisher"
+          ]
+        },
+        "rotateAppSigningKey": {
+          "description": "Rotates an app's signing key to a new self-hosted Google Cloud KMS key. Warning: This method only applies to apps enrolled with self-hosted Cloud KMS keys. For apps using standard Google-managed Play App Signing, key rotation requests must be initiated through the Google Play Console UI. See Help Center: https://support.google.com/googleplay/android-developer/answer/9842756",
+          "flatPath": "androidpublisher/v3/applications/{name}/appSigning:rotateAppSigningKey",
+          "httpMethod": "POST",
+          "id": "androidpublisher.appsigning.rotateAppSigningKey",
+          "parameterOrder": [
+            "name"
+          ],
+          "parameters": {
+            "name": {
+              "description": "Required. Either package name or app ID of the app rotating the signing key.",
+              "location": "path",
+              "required": true,
+              "type": "string"
+            }
+          },
+          "path": "androidpublisher/v3/applications/{name}/appSigning:rotateAppSigningKey",
+          "request": {
+            "$ref": "RotateAppSigningKeyRequest"
+          },
+          "response": {
+            "$ref": "RotateAppSigningKeyResponse"
+          },
+          "scopes": [
+            "https://www.googleapis.com/auth/androidpublisher"
+          ]
+        }
+      }
+    },
     "appstoreappsreview": {
       "methods": {
         "createappstorehostedapp": {
@@ -684,6 +742,96 @@
             "https://www.googleapis.com/auth/androidpublisher"
           ],
           "supportsMediaUpload": true
+        }
+      }
+    },
+    "appstorecatalog": {
+      "resources": {
+        "recentappviews": {
+          "methods": {
+            "get": {
+              "description": "Returns metadata about a recently updated app.",
+              "flatPath": "androidpublisher/v3/appstorecatalog/{appStorePackageName}/recentAppViews/{playAppPackageName}",
+              "httpMethod": "GET",
+              "id": "androidpublisher.appstorecatalog.recentappviews.get",
+              "parameterOrder": [
+                "appStorePackageName",
+                "playAppPackageName"
+              ],
+              "parameters": {
+                "appStorePackageName": {
+                  "description": "Required. The package name of the app store on behalf of which the request is made.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "playAppPackageName": {
+                  "description": "Required. The package name of the requested Play app.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "androidpublisher/v3/appstorecatalog/{appStorePackageName}/recentAppViews/{playAppPackageName}",
+              "response": {
+                "$ref": "RecentAppView"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ]
+            }
+          }
+        },
+        "recentupdateevents": {
+          "methods": {
+            "list": {
+              "description": "Lists update events for eligible apps in the given time range.",
+              "flatPath": "androidpublisher/v3/appstorecatalog/{appStorePackageName}/recentUpdateEvents",
+              "httpMethod": "GET",
+              "id": "androidpublisher.appstorecatalog.recentupdateevents.list",
+              "parameterOrder": [
+                "appStorePackageName"
+              ],
+              "parameters": {
+                "appStorePackageName": {
+                  "description": "Required. The package name of the app store on behalf of which the request is made.",
+                  "location": "path",
+                  "required": true,
+                  "type": "string"
+                },
+                "endTime": {
+                  "description": "Required. The end time of the range (exclusive).",
+                  "format": "google-datetime",
+                  "location": "query",
+                  "type": "string"
+                },
+                "pageSize": {
+                  "description": "Optional. The maximum number of update events to return. The service may return fewer than this value. If unspecified, at most 100 update events will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+                  "format": "int32",
+                  "location": "query",
+                  "type": "integer"
+                },
+                "pageToken": {
+                  "description": "Optional. A page token, received from a previous `ListRecentUpdateEvents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListRecentUpdateEvents` must match the call that provided the page token.",
+                  "location": "query",
+                  "type": "string"
+                },
+                "startTime": {
+                  "description": "Required. The start time of the range (inclusive).",
+                  "format": "google-datetime",
+                  "location": "query",
+                  "type": "string"
+                }
+              },
+              "path": "androidpublisher/v3/appstorecatalog/{appStorePackageName}/recentUpdateEvents",
+              "response": {
+                "$ref": "ListRecentUpdateEventsResponse"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/androidpublisher"
+              ]
+            }
+          }
         }
       }
     },
@@ -1124,7 +1272,7 @@
                 "accept": [
                   "application/octet-stream"
                 ],
-                "maxSize": "1677721600",
+                "maxSize": "2097152000",
                 "protocols": {
                   "resumable": {
                     "multipart": true,
@@ -3114,7 +3262,7 @@
               ],
               "parameters": {
                 "packageName": {
-                  "description": "Required. The parent app (package name) for which the one-time products should be deleted. Must be equal to the package_name field on all the OneTimeProduct resources.",
+                  "description": "Required. The parent app (package name) for which the one-time products should be deleted. Must be equal to the package_name field on all the requests.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -3138,7 +3286,7 @@
               ],
               "parameters": {
                 "packageName": {
-                  "description": "Required. The parent app (package name) for which the products should be retrieved. Must be equal to the package_name field on all requests.",
+                  "description": "Required. The parent app (package name) for which the products should be retrieved.",
                   "location": "path",
                   "required": true,
                   "type": "string"
@@ -3492,7 +3640,7 @@
                       ],
                       "parameters": {
                         "packageName": {
-                          "description": "Required. The parent app (package name) of the offers to delete. Must be equal to the package_name field on all the OneTimeProductOffer resources.",
+                          "description": "Required. The parent app (package name) of the offers to delete. Must be equal to the package_name field on all the requests.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -3504,7 +3652,7 @@
                           "type": "string"
                         },
                         "purchaseOptionId": {
-                          "description": "Required. The parent purchase option (ID) for which the offers should be deleted. May be specified as '-' to update offers from multiple purchase options.",
+                          "description": "Required. The parent purchase option (ID) for which the offers should be deleted. May be specified as '-' to delete offers from multiple purchase options.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -3530,19 +3678,19 @@
                       ],
                       "parameters": {
                         "packageName": {
-                          "description": "Required. The parent app (package name) of the updated offers. Must be equal to the package_name field on all the updated OneTimeProductOffer resources.",
+                          "description": "Required. The parent app (package name) of the offers to retrieve. Must be equal to the package_name field on all the requests.",
                           "location": "path",
                           "required": true,
                           "type": "string"
                         },
                         "productId": {
-                          "description": "Required. The product ID of the parent one-time product, if all updated offers belong to the same product. If this request spans multiple one-time products, set this field to \"-\".",
+                          "description": "Required. The product ID of the parent one-time product, if all offers belong to the same product. If this request spans multiple one-time products, set this field to \"-\".",
                           "location": "path",
                           "required": true,
                           "type": "string"
                         },
                         "purchaseOptionId": {
-                          "description": "Required. The parent purchase option (ID) for which the offers should be updated. May be specified as '-' to update offers from multiple purchase options.",
+                          "description": "Required. The parent purchase option (ID) for which the offers should be retrieved. May be specified as '-' to retrieve offers from multiple purchase options.",
                           "location": "path",
                           "required": true,
                           "type": "string"
@@ -3761,7 +3909,7 @@
                           "type": "integer"
                         },
                         "pageToken": {
-                          "description": "Optional. A page token, received from a previous `ListOneTimeProductsOffers` call. Provide this to retrieve the subsequent page. When paginating, product_id, package_name and purchase_option_id provided to `ListOneTimeProductsOffersRequest` must match the call that provided the page token.",
+                          "description": "Optional. A page token, received from a previous `ListOneTimeProductOffers` call. Provide this to retrieve the subsequent page. When paginating, product_id, package_name and purchase_option_id provided to `ListOneTimeProductOffersRequest` must match the call that provided the page token.",
                           "location": "query",
                           "type": "string"
                         },
@@ -5822,7 +5970,7 @@
       }
     }
   },
-  "revision": "20260717",
+  "revision": "20261111",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -6220,6 +6368,25 @@
       },
       "type": "object"
     },
+    "AppContactInformation": {
+      "description": "Contact information for the app.",
+      "id": "AppContactInformation",
+      "properties": {
+        "contactEmail": {
+          "description": "The contact email for this app. Always set.",
+          "type": "string"
+        },
+        "phoneNumber": {
+          "description": "The contact phone for this app. Optionally provided by the developer.",
+          "type": "string"
+        },
+        "websiteUrl": {
+          "description": "The contact website url for this app. Optionally provided by the developer.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "AppDetails": {
       "description": "The app details. The resource for DetailsService.",
       "id": "AppDetails",
@@ -6321,9 +6488,13 @@
       "type": "object"
     },
     "AppStoreAppActiveApkSet": {
-      "description": "An installable set of active APKs. A set of APKs might only contain 1 APK if the app in question publishes using APKs. If the app uses app bundles (or a similar technology), this set should contain all APKs (even optional ones) that might be installed for this app. A set of APKs should be installable together. If certain APKs are exclusive to one another and cannot be installed together, then a separate AppStoreAppActiveApkSet should be created.",
+      "description": "An installable set of active APKs. All APKs in this set should belong to the same version of the app. A set of APKs might only contain 1 APK if the app in question publishes using APKs. If the app uses app bundles (or a similar technology), this set should contain all APKs (even optional ones) that might be installed for this app. A set of APKs should be installable together. If certain APKs are exclusive to one another and cannot be installed together, then a separate AppStoreAppActiveApkSet should be created.",
       "id": "AppStoreAppActiveApkSet",
       "properties": {
+        "alreadyPublishedOnPlay": {
+          "description": "Optional. Whether all APKs referenced in this active APK set are published on Play Store (or derived from an app bundle published on Play Store). When this is set, version_code must be provided.",
+          "type": "boolean"
+        },
         "baseApkId": {
           "description": "Required. The ID for the main base application module. Example: base.apk or app.apk.",
           "type": "string"
@@ -6334,6 +6505,11 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "versionCode": {
+          "description": "Optional. Version code for the version this APK set represents.",
+          "format": "int64",
+          "type": "string"
         }
       },
       "type": "object"
@@ -6680,7 +6856,7 @@
       "id": "BatchDeleteOneTimeProductOffersRequest",
       "properties": {
         "requests": {
-          "description": "Required. A list of update requests of up to 100 elements. All requests must correspond to different offers.",
+          "description": "Required. A list of delete requests of up to 100 elements. All requests must correspond to different offers.",
           "items": {
             "$ref": "DeleteOneTimeProductOfferRequest"
           },
@@ -6736,7 +6912,7 @@
       "id": "BatchGetOneTimeProductOffersResponse",
       "properties": {
         "oneTimeProductOffers": {
-          "description": "The list of updated one-time product offers, in the same order as the request.",
+          "description": "The list of requested one-time product offers, in the same order as the request.",
           "items": {
             "$ref": "OneTimeProductOffer"
           },
@@ -7276,6 +7452,244 @@
       },
       "type": "object"
     },
+    "CatalogAppView": {
+      "description": "LINT.IfChange A view of a Google Play app within the Catalog Export for app stores.",
+      "id": "CatalogAppView",
+      "properties": {
+        "activeVersionNames": {
+          "description": "Active versions of the app mapped from `android:versionName` manifest attributes.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "appCategory": {
+          "description": "The category of the app.",
+          "enum": [
+            "APP_CATEGORY_UNSPECIFIED",
+            "GAME",
+            "APP"
+          ],
+          "enumDescriptions": [
+            "Unspecified category.",
+            "Game app.",
+            "General app."
+          ],
+          "type": "string"
+        },
+        "appContactInformation": {
+          "$ref": "AppContactInformation",
+          "description": "Developer-provided contact information for the app."
+        },
+        "appSubcategory": {
+          "description": "The subcategory of the app e.g. \"GAME_ACTION\".",
+          "type": "string"
+        },
+        "deliveryToken": {
+          "description": "The token used for delivery of the app with the Google Play Inline Install API. The token is unique per Play app and per third-party app store combination and has a limited validity period of 7 days.",
+          "type": "string"
+        },
+        "developerDetails": {
+          "$ref": "DeveloperDetails",
+          "description": "The developer details of the app."
+        },
+        "deviceCompatibilityRequirements": {
+          "description": "The app may specify multiple sets of device compatibility requirements, and a device is considered compatible with the app if it satisfies at least one of `DeviceCompatibilityRequirements`.",
+          "items": {
+            "$ref": "DeviceCompatibilityRequirements"
+          },
+          "type": "array"
+        },
+        "excludedDevicesByIdentifier": {
+          "description": "List of devices excluded from the app's distribution even if they are otherwise compatible with the requirements from device_compatibility_requirements. These are OR-ed, i.e. a device is excluded if it matches any of the identifiers.",
+          "items": {
+            "$ref": "DeviceIdentifier"
+          },
+          "type": "array"
+        },
+        "excludedDevicesBySelector": {
+          "description": "List of devices excluded from the app's distribution even if they are otherwise compatible with the requirements from device_compatibility_requirements. A device is excluded if it matches any of given the selectors.",
+          "items": {
+            "$ref": "CatalogDeviceSelector"
+          },
+          "type": "array"
+        },
+        "firstReleaseDate": {
+          "$ref": "Date",
+          "description": "The date when the app was first released."
+        },
+        "hasInAppAds": {
+          "description": "Whether the app has ads.",
+          "type": "boolean"
+        },
+        "hasInAppPurchases": {
+          "description": "Whether the app has in-app purchases through Google Play.",
+          "type": "boolean"
+        },
+        "iarcCertificateId": {
+          "description": "The IARC certificate ID for the app.",
+          "type": "string"
+        },
+        "isAdultOnlyAudience": {
+          "description": "Whether the app is targeted to an adult-only (18+) audience.",
+          "type": "boolean"
+        },
+        "lastPublishTime": {
+          "description": "The timestamp when the app was last published.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "localizedStoreListings": {
+          "$ref": "LocalizedStoreListings",
+          "description": "The localized store listings of the app which are shown on Google Play."
+        },
+        "packageName": {
+          "description": "The package name of the app.",
+          "type": "string"
+        },
+        "permissions": {
+          "description": "Required permissions declared by the app which apply for all Android SDK versions.",
+          "items": {
+            "$ref": "CatalogPermission"
+          },
+          "type": "array"
+        },
+        "permissionsSdk23": {
+          "description": "Required permissions declared by the app which apply for Android SDK versions SDK 23 and above.",
+          "items": {
+            "$ref": "CatalogPermission"
+          },
+          "type": "array"
+        },
+        "priceInTheUnitedStates": {
+          "$ref": "Money",
+          "description": "The price of the app in the United States. Empty if the app is free."
+        },
+        "privacyPolicyUrl": {
+          "description": "The URL of the app's privacy policy.",
+          "type": "string"
+        },
+        "salePriceInTheUnitedStates": {
+          "$ref": "Money",
+          "description": "The sale price of the app in the United States. Only populated for paid apps with an active US sale."
+        }
+      },
+      "type": "object"
+    },
+    "CatalogDeviceSelector": {
+      "description": "Defines a device selector for a device. A device is considered matched if it matches any of given the selectors.",
+      "id": "CatalogDeviceSelector",
+      "properties": {
+        "deviceTypeSelector": {
+          "description": "The device type selector.",
+          "enum": [
+            "DEVICE_TYPE_SELECTOR_UNSPECIFIED",
+            "ANDROID_GO"
+          ],
+          "enumDescriptions": [
+            "Unspecified device type selector.",
+            "Android Go device type."
+          ],
+          "type": "string"
+        },
+        "ramSelector": {
+          "$ref": "RamSelector",
+          "description": "Defines a RAM selector for a device."
+        },
+        "socSelectors": {
+          "description": "The SOC selectors. A device matches the device selector if it matches any of the SOC selectors.",
+          "items": {
+            "$ref": "SocSelector"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "CatalogPermission": {
+      "description": "A permission declared by an app.",
+      "id": "CatalogPermission",
+      "properties": {
+        "maxSdkVersion": {
+          "description": "The `maxSdkVersion` attribute indicating up to which Android SDK version the permission is requested.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "name": {
+          "description": "The `name` attribute indicating the permission name.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CatalogSdkVersion": {
+      "description": "Defines a range of SDK versions. A device is considered compatible uf its\\ SDK version falls within the min_sdk_version and max_sdk_version range.",
+      "id": "CatalogSdkVersion",
+      "properties": {
+        "maxSdkVersion": {
+          "description": "The maximum SDK version required for the app (inclusive).",
+          "format": "int64",
+          "type": "string"
+        },
+        "minSdkVersion": {
+          "description": "The minimum SDK version required for the app (inclusive).",
+          "format": "int64",
+          "type": "string"
+        },
+        "targetSdkVersion": {
+          "description": "The target SDK version for the app.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CertificateHashes": {
+      "description": "Hash digests of a certificate.",
+      "id": "CertificateHashes",
+      "properties": {
+        "certificateHashMd5": {
+          "description": "Hex-encoded MD5 hash of the certificate. example: `43:51:43:A1:B5:FC:8B:B7:0A:3A:A9:B1:0F:66:73:A8`",
+          "type": "string"
+        },
+        "certificateHashSha1": {
+          "description": "Hex-encoded SHA1 hash of the certificate. example: `86:61:97:1A:D5:EF:E5:74:1E:A7:5B:84:7C:68:37:65:CD:94:16:DE`",
+          "type": "string"
+        },
+        "certificateHashSha256": {
+          "description": "Hex-encoded SHA256 hash of the certificate. example: `94:49:C7:F3:A9:3C:F0:C5:5A:67:5D:DF:1C:83:73:2D:87:D5:62:55:E7:0B:15:0D:9E:6F:3C:F8:63:BB:7F:C1`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudKmsKey": {
+      "description": "Reference to a private key hosted in developer-managed Google Cloud KMS.",
+      "id": "CloudKmsKey",
+      "properties": {
+        "cryptoKeyVersionResource": {
+          "description": "Required. Resource identifier of the private key hosted in Google Cloud KMS. The Google Play service account must be granted Decrypt and Sign permissions on this resource. Format: projects//locations//keyRings//cryptoKeys//cryptoKeyVersions/",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CloudKmsKeyAndCert": {
+      "description": "Cloud KMS key and the certificate associated with the key.",
+      "id": "CloudKmsKeyAndCert",
+      "properties": {
+        "cloudKmsKey": {
+          "$ref": "CloudKmsKey",
+          "description": "Required. Cloud KMS key."
+        },
+        "pemCertificate": {
+          "description": "Required. Certificate associated with the key. The bytes must contain the certificate in PEM format.",
+          "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CoarseLocation": {
       "description": "Coarse Geographic location details for where the consumption happened.",
       "id": "CoarseLocation",
@@ -7310,6 +7724,67 @@
         "userComment": {
           "$ref": "UserComment",
           "description": "A comment from a user."
+        }
+      },
+      "type": "object"
+    },
+    "CompatibleScreen": {
+      "description": "Compatible screens as listed in the `compatible-screens` Manifest tag.",
+      "id": "CompatibleScreen",
+      "properties": {
+        "density": {
+          "description": "Screen density.",
+          "enum": [
+            "DENSITY_UNSPECIFIED",
+            "DENSITY_NODPI",
+            "DENSITY_LDPI",
+            "DENSITY_MDPI",
+            "DENSITY_TVDPI",
+            "DENSITY_HDPI",
+            "DENSITY_280",
+            "DENSITY_XHDPI",
+            "DENSITY_360",
+            "DENSITY_400",
+            "DENSITY_420",
+            "DENSITY_XXHDPI",
+            "DENSITY_560",
+            "DENSITY_XXXHDPI"
+          ],
+          "enumDescriptions": [
+            "Unspecified density.",
+            "No density.",
+            "Low density.",
+            "Medium density.",
+            "TV density.",
+            "High density.",
+            "280 dpi.",
+            "Extra high density.",
+            "360 dpi.",
+            "400 dpi.",
+            "420 dpi.",
+            "Extra extra high density.",
+            "560 dpi.",
+            "Extra extra extra high density."
+          ],
+          "type": "string"
+        },
+        "screenSize": {
+          "description": "The screen size.",
+          "enum": [
+            "SCREEN_SIZE_UNSPECIFIED",
+            "SCREEN_SIZE_SMALL",
+            "SCREEN_SIZE_NORMAL",
+            "SCREEN_SIZE_LARGE",
+            "SCREEN_SIZE_EXTRA_LARGE"
+          ],
+          "enumDescriptions": [
+            "Unspecified screen size.",
+            "Small screen size.",
+            "Normal screen size.",
+            "Large screen size.",
+            "Extra large screen size."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -7853,10 +8328,139 @@
       },
       "type": "object"
     },
+    "DeveloperDetails": {
+      "description": "The developer details of a Google Play app.",
+      "id": "DeveloperDetails",
+      "properties": {
+        "address": {
+          "description": "The physical address of the developer.",
+          "type": "string"
+        },
+        "contactEmail": {
+          "description": "The contact email of the developer.",
+          "type": "string"
+        },
+        "developerName": {
+          "description": "The developer name of the app.",
+          "type": "string"
+        },
+        "phoneNumber": {
+          "description": "The phone number of the developer.",
+          "type": "string"
+        },
+        "website": {
+          "description": "The website of the developer.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "DeveloperInitiatedCancellation": {
       "description": "Information specific to cancellations initiated by developers.",
       "id": "DeveloperInitiatedCancellation",
       "properties": {},
+      "type": "object"
+    },
+    "DeviceCompatibilityRequirements": {
+      "description": "Defines a set of device compatibility requirements for the app. A device must satisfy all of the requirements in a set to be considered compatible with the app.",
+      "id": "DeviceCompatibilityRequirements",
+      "properties": {
+        "compatibleScreens": {
+          "description": "Compatible screens as listed in the `compatible-screens` Manifest tag.",
+          "items": {
+            "$ref": "CompatibleScreen"
+          },
+          "type": "array"
+        },
+        "glEsVersion": {
+          "description": "Required version of OpenGL ES.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "isScreenRequired": {
+          "description": "Specifies if the app requires a screen.",
+          "type": "boolean"
+        },
+        "nativePlatforms": {
+          "description": "List of required ABIs (Application Binary Interface), e.g. `armeabi` or `x86`.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requiredSoftwareLibraries": {
+          "description": "List of required libraries as declared in the `uses-library` manifest tag.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requiredSystemFeatures": {
+          "description": "The system features that the app requires. A device must have all of the system features to be considered compatible with the app.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "requiresSmallestWidthDp": {
+          "description": "Specifies the minimum smallest width required of the screen.",
+          "format": "int64",
+          "type": "string"
+        },
+        "sdkVersion": {
+          "$ref": "CatalogSdkVersion",
+          "description": "Defines a range of SDK versions that the app is compatible with."
+        },
+        "supportedGlTextures": {
+          "description": "Supported gl textures as specified by the `supported-gl-texture` Manifest tag.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "supportedScreens": {
+          "description": "Compatible screens as listed in the `supports-screens` Manifest tag.",
+          "items": {
+            "enum": [
+              "SCREEN_SIZE_UNSPECIFIED",
+              "SCREEN_SIZE_SMALL",
+              "SCREEN_SIZE_NORMAL",
+              "SCREEN_SIZE_LARGE",
+              "SCREEN_SIZE_EXTRA_LARGE"
+            ],
+            "enumDescriptions": [
+              "Unspecified screen size.",
+              "Small screen size.",
+              "Normal screen size.",
+              "Large screen size.",
+              "Extra large screen size."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "use32BitAbi": {
+          "description": "Value of `android:use32BitAbi` flag retrieved from the Manifest.",
+          "enum": [
+            "USE_32_BIT_ABI_UNSPECIFIED",
+            "USE_32_BIT_ABI_TRUE",
+            "USE_32_BIT_ABI_OTHER"
+          ],
+          "enumDescriptions": [
+            "Unspecified 32-bit ABI usage.",
+            "Value of use32BitAbi is set to \"true\".",
+            "Value of use32BitAbi is not set or set to something other than \"true\"."
+          ],
+          "type": "string"
+        },
+        "usesConfigurations": {
+          "description": "Lists all configurations marked as required by use of the `uses-configuration` manifest tag. Each instance of this proto represents a single `uses-configuration` entry. See http://developer.android.com/guide/topics/manifest/uses-configuration-element.html",
+          "items": {
+            "$ref": "UsesConfiguration"
+          },
+          "type": "array"
+        }
+      },
       "type": "object"
     },
     "DeviceFeature": {
@@ -7914,6 +8518,21 @@
         },
         "buildDevice": {
           "description": "Value of Build.DEVICE.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DeviceIdentifier": {
+      "description": "Defines a device identifier for a device.",
+      "id": "DeviceIdentifier",
+      "properties": {
+        "deviceBrand": {
+          "description": "The brand of the device.",
+          "type": "string"
+        },
+        "deviceModel": {
+          "description": "The model of the device.",
           "type": "string"
         }
       },
@@ -8128,6 +8747,63 @@
       },
       "type": "object"
     },
+    "EnrollAppRequest": {
+      "description": "Request to enroll an app into Play App Signing using a self-hosted Cloud KMS key.",
+      "id": "EnrollAppRequest",
+      "properties": {
+        "enrollExistingApp": {
+          "$ref": "EnrollExistingApp",
+          "description": "Enrolls an existing app into Play signing using an external Cloud KMS key."
+        },
+        "enrollNewApp": {
+          "$ref": "EnrollNewApp",
+          "description": "Changes the signing key of a new app to an external Cloud KMS key. The app must not have published to Open testing or Production tracks."
+        },
+        "pemUploadCertificate": {
+          "description": "The certificate associated with the upload key, in PEM format.",
+          "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EnrollAppResponse": {
+      "description": "Response to enroll an app into Play signing.",
+      "id": "EnrollAppResponse",
+      "properties": {
+        "signingCertificate": {
+          "$ref": "CertificateHashes",
+          "description": "The signing certificate hashes for the app. Always set."
+        },
+        "uploadCertificate": {
+          "$ref": "CertificateHashes",
+          "description": "The upload certificate hashes for the app. Set iff pem_upload_certificate was set in the request."
+        }
+      },
+      "type": "object"
+    },
+    "EnrollExistingApp": {
+      "description": "Enroll an existing app into Play signing.",
+      "id": "EnrollExistingApp",
+      "properties": {
+        "cloudKmsKey": {
+          "$ref": "CloudKmsKey",
+          "description": "Required. Self-hosted key. Once enrolled, this key will be used to sign your app."
+        }
+      },
+      "type": "object"
+    },
+    "EnrollNewApp": {
+      "description": "Enroll a new app into Play signing.",
+      "id": "EnrollNewApp",
+      "properties": {
+        "cloudKmsKeyAndCert": {
+          "$ref": "CloudKmsKeyAndCert",
+          "description": "Required. Self-hosted key. Once enrolled, this key will be used to sign your app."
+        }
+      },
+      "type": "object"
+    },
     "ExpansionFile": {
       "description": "An expansion file. The resource for ExpansionFilesService.",
       "id": "ExpansionFile",
@@ -8185,6 +8861,45 @@
         },
         "obfuscatedProfileId": {
           "description": "Optional. Specifies an optional obfuscated string that is uniquely associated with the purchaser's user profile in your app. If you pass this value, Google Play can use it to detect irregular activity. Do not use this field to store any Personally Identifiable Information (PII) such as emails in cleartext. Attempting to store PII in this field will result in purchases being blocked. Google Play recommends that you use either encryption or a one-way hash to generate an obfuscated identifier to send to Google Play. This identifier is limited to 64 characters. This field can only be set for resubscription purchases. See https://developer.android.com/reference/com/android/billingclient/api/BillingFlowParams.Builder#setobfuscatedprofileid to set this field for purchases made using the standard in-app billing flow.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ExternalContentLinkDetails": {
+      "description": "Reporting details unique to the external content link program.",
+      "id": "ExternalContentLinkDetails",
+      "properties": {
+        "externalAppCategory": {
+          "description": "Optional. The category of the downlaoded app. This must match the category provided in Play Console during the external app verification process. Only required for app installs.",
+          "enum": [
+            "EXTERNAL_CONTENT_APP_CATEGORY_UNSPECIFIED",
+            "APP",
+            "GAME"
+          ],
+          "enumDescriptions": [
+            "Unspecified, do not use.",
+            "The app is classified under the app category.",
+            "The app is classified under the game category."
+          ],
+          "type": "string"
+        },
+        "installedAppPackage": {
+          "description": "Optional. The package name of the app downloaded through this transaction. Only required for app installs.",
+          "type": "string"
+        },
+        "linkType": {
+          "description": "Required. The type content being reported by this transaction.",
+          "enum": [
+            "EXTERNAL_CONTENT_LINK_TYPE_UNSPECIFIED",
+            "LINK_TO_DIGITAL_CONTENT_OFFER",
+            "LINK_TO_APP_DOWNLOAD"
+          ],
+          "enumDescriptions": [
+            "Unspecified, do not use.",
+            "An offer to purchase digital content.",
+            "An app install."
+          ],
           "type": "string"
         }
       },
@@ -8273,6 +8988,10 @@
           "$ref": "Price",
           "description": "Output only. The current tax amount. This represents the current tax amount including any refunds that may have been applied to this transaction.",
           "readOnly": true
+        },
+        "externalContentLinkDetails": {
+          "$ref": "ExternalContentLinkDetails",
+          "description": "Optional. Details necessary to accurately report external content link transactions."
         },
         "externalOfferDetails": {
           "$ref": "ExternalOfferDetails",
@@ -8823,6 +9542,17 @@
       },
       "type": "object"
     },
+    "ImageAsset": {
+      "description": "An image asset.",
+      "id": "ImageAsset",
+      "properties": {
+        "imageUrl": {
+          "description": "The URL of the image asset.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ImagesDeleteAllResponse": {
       "description": "Response for deleting all images.",
       "id": "ImagesDeleteAllResponse",
@@ -8875,7 +9605,8 @@
           "description": "Default price. Cannot be zero, as in-app products are never free. Always in the developer's Checkout merchant currency."
         },
         "gracePeriod": {
-          "description": "Grace period of the subscription, specified in ISO 8601 format. Allows developers to give their subscribers a grace period when the payment for the new recurrence period is declined. Acceptable values are P0D (zero days), P3D (three days), P7D (seven days), P14D (14 days), and P30D (30 days).",
+          "deprecated": true,
+          "description": "Deprecated: Subscriptions are no longer supported in the InAppProducts API. Use the Subscriptions API instead.",
           "type": "string"
         },
         "listings": {
@@ -8897,7 +9628,7 @@
           "additionalProperties": {
             "$ref": "Price"
           },
-          "description": "Prices per buyer region. None of these can be zero, as in-app products are never free. Map key is region code, as defined by ISO 3166-2.",
+          "description": "Prices per buyer region. None of these can be zero, as in-app products are never free. Map key is region code, as defined by ISO 3166-1 alpha-2.",
           "type": "object"
         },
         "purchaseType": {
@@ -8907,10 +9638,15 @@
             "managedUser",
             "subscription"
           ],
+          "enumDeprecated": [
+            false,
+            false,
+            true
+          ],
           "enumDescriptions": [
             "Unspecified purchase type.",
             "The default product type - one time purchase.",
-            "In-app product with a recurring period."
+            "Deprecated: Subscriptions are no longer supported in the InAppProducts API. Use the Subscriptions API instead."
           ],
           "type": "string"
         },
@@ -8933,15 +9669,18 @@
           "type": "string"
         },
         "subscriptionPeriod": {
-          "description": "Subscription period, specified in ISO 8601 format. Acceptable values are P1W (one week), P1M (one month), P3M (three months), P6M (six months), and P1Y (one year).",
+          "deprecated": true,
+          "description": "Deprecated: Subscriptions are no longer supported in the InAppProducts API. Use the Subscriptions API instead.",
           "type": "string"
         },
         "subscriptionTaxesAndComplianceSettings": {
           "$ref": "SubscriptionTaxAndComplianceSettings",
-          "description": "Details about taxes and legal compliance. Only applicable to subscription products."
+          "deprecated": true,
+          "description": "Deprecated: Subscriptions are no longer supported in the InAppProducts API. Use the Subscriptions API instead."
         },
         "trialPeriod": {
-          "description": "Trial period, specified in ISO 8601 format. Acceptable values are anything between P7D (seven days) and P999D (999 days).",
+          "deprecated": true,
+          "description": "Deprecated: Subscriptions are no longer supported in the InAppProducts API. Use the Subscriptions API instead.",
           "type": "string"
         }
       },
@@ -8952,7 +9691,8 @@
       "id": "InAppProductListing",
       "properties": {
         "benefits": {
-          "description": "Localized entitlement benefits for a subscription.",
+          "deprecated": true,
+          "description": "Deprecated: Subscriptions are no longer supported in the InAppProducts API. Use the Subscriptions API instead.",
           "items": {
             "type": "string"
           },
@@ -9459,6 +10199,24 @@
       },
       "type": "object"
     },
+    "ListRecentUpdateEventsResponse": {
+      "description": "Response message for ListRecentUpdateEvents.",
+      "id": "ListRecentUpdateEventsResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        },
+        "recentUpdateEvents": {
+          "description": "The list of recent update events.",
+          "items": {
+            "$ref": "RecentUpdateEvent"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "ListReleaseSummariesResponse": {
       "description": "Response listing all releases for a given track that are either ready to be sent for review, in review, approved, not approved or available.",
       "id": "ListReleaseSummariesResponse",
@@ -9566,6 +10324,70 @@
           "description": "All localized listings.",
           "items": {
             "$ref": "Listing"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "LocalizedStoreListing": {
+      "description": "A localized store listings of the app.",
+      "id": "LocalizedStoreListing",
+      "properties": {
+        "appName": {
+          "description": "The name of the app in this localization.",
+          "type": "string"
+        },
+        "featureGraphic": {
+          "$ref": "ImageAsset",
+          "description": "The feature graphic of the app."
+        },
+        "fullDescription": {
+          "description": "A longer description of the app in this localization.",
+          "type": "string"
+        },
+        "icon": {
+          "$ref": "ImageAsset",
+          "description": "The icon of the app."
+        },
+        "languageCode": {
+          "description": "The BCP-47 language code for this localization.",
+          "type": "string"
+        },
+        "phoneScreenshots": {
+          "$ref": "ScreenshotSet",
+          "description": "The phone screenshots of the app."
+        },
+        "shortDescription": {
+          "description": "A short description of the app in this localization.",
+          "type": "string"
+        },
+        "tabletRegularScreenshots": {
+          "$ref": "ScreenshotSet",
+          "description": "The regular tablet screenshots of the app."
+        },
+        "tabletSmallScreenshots": {
+          "$ref": "ScreenshotSet",
+          "description": "The small tablet screenshots of the app."
+        },
+        "video": {
+          "$ref": "VideoAsset",
+          "description": "The video of the app."
+        }
+      },
+      "type": "object"
+    },
+    "LocalizedStoreListings": {
+      "description": "The localized store listings of an app.",
+      "id": "LocalizedStoreListings",
+      "properties": {
+        "defaultLanguageCode": {
+          "description": "The default language code of the app. If a localized store listing is not available for a given language, assets from the default language are used instead.",
+          "type": "string"
+        },
+        "localizedStoreListings": {
+          "items": {
+            "$ref": "LocalizedStoreListing"
           },
           "type": "array"
         }
@@ -10032,6 +10854,18 @@
       },
       "type": "object"
     },
+    "OneTimeProductGameRewardOffer": {
+      "description": "Configuration specific to game reward offers.",
+      "id": "OneTimeProductGameRewardOffer",
+      "properties": {
+        "redemptionLimit": {
+          "description": "Optional. The number of times this offer can be redeemed. If unset or set to 0, allows for unlimited offer redemptions. Otherwise must be a number between 1 and 50 inclusive.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "OneTimeProductListing": {
       "description": "Regional store listing for a one-time product.",
       "id": "OneTimeProductListing",
@@ -10058,6 +10892,10 @@
         "discountedOffer": {
           "$ref": "OneTimeProductDiscountedOffer",
           "description": "A discounted offer."
+        },
+        "gameRewardOffer": {
+          "$ref": "OneTimeProductGameRewardOffer",
+          "description": "A game reward offer."
         },
         "offerId": {
           "description": "Required. Immutable. The ID of this product offer. Must be unique within the purchase option. It must start with a number or lower-case letter, and can only contain lower-case letters (a-z), numbers (0-9), and hyphens (-). The maximum length is 63 characters.",
@@ -10112,7 +10950,7 @@
             "The offer is not and has never been available to users.",
             "The offer is available to users, as long as its conditions are met.",
             "This state is specific to pre-orders. The offer is cancelled and not available to users. All pending orders related to this offer were cancelled.",
-            "This state is specific to discounted offers. The offer is no longer available to users."
+            "This state is specific to discounted and game reward offers. The offer is no longer available to users."
           ],
           "readOnly": true,
           "type": "string"
@@ -10153,11 +10991,11 @@
           "description": "The price defined in the purchase option for this region will be used."
         },
         "regionCode": {
-          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-2, e.g., \"US\".",
+          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-1 alpha-2, e.g., \"US\".",
           "type": "string"
         },
         "relativeDiscount": {
-          "description": "The fraction of the purchase option price that the user pays for this offer. For example, if the purchase option price for this region is $12, then a 50% discount would correspond to a price of $6. The discount must be specified as a fraction strictly larger than 0 and strictly smaller than 1. The resulting price will be rounded to the nearest billable unit (e.g. cents for USD). The relative discount is considered invalid if the discounted price ends up being smaller than the minimum price allowed in this region.",
+          "description": "The percentage discount subtracted from the purchase option price, specified as a fraction strictly larger than `0` and strictly smaller than `1`. For example, a value of `0.8` represents an 80% discount, meaning that if the purchase option price is $100, the offer price will be $20. The resulting price will be rounded to the nearest billable unit (e.g. cents for USD). The relative discount is considered invalid if the discounted price ends up being smaller than the minimum price allowed in this region.",
           "format": "double",
           "type": "number"
         }
@@ -10316,7 +11154,7 @@
           "description": "The price of the purchase option in the specified region. Must be set in the currency that is linked to the specified region."
         },
         "regionCode": {
-          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-2, e.g., \"US\".",
+          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-1 alpha-2, e.g., \"US\".",
           "type": "string"
         }
       },
@@ -10618,7 +11456,7 @@
       "properties": {
         "absoluteDiscounts": {
           "$ref": "OtherRegionsSubscriptionOfferPhasePrices",
-          "description": "The absolute amount of money subtracted from the base plan price prorated over the phase duration that the user pays for this offer phase. For example, if the base plan price for this region is $12 for a period of 1 year, then a $1 absolute discount for a phase of a duration of 3 months would correspond to a price of $2. The resulting price may not be smaller than the minimum price allowed for any new locations Play may launch in."
+          "description": "The absolute amount of money subtracted from the base plan price prorated over the phase duration. For example, if the base plan price for this region is $12 for a period of 1 year, then a $1 absolute discount for a phase of a duration of 3 months would correspond to a price of $2. The resulting price may not be smaller than the minimum price allowed for any new locations Play may launch in."
         },
         "free": {
           "$ref": "OtherRegionsSubscriptionOfferPhaseFreePriceOverride",
@@ -10629,7 +11467,7 @@
           "description": "The absolute price the user pays for this offer phase. The price must not be smaller than the minimum price allowed for any new locations Play may launch in."
         },
         "relativeDiscount": {
-          "description": "The fraction of the base plan price prorated over the phase duration that the user pays for this offer phase. For example, if the base plan price for this region is $12 for a period of 1 year, then a 50% discount for a phase of a duration of 3 months would correspond to a price of $1.50. The discount must be specified as a fraction strictly larger than 0 and strictly smaller than 1. The resulting price will be rounded to the nearest billable unit (e.g. cents for USD). The relative discount is considered invalid if the discounted price ends up being smaller than the minimum price allowed in any new locations Play may launch in.",
+          "description": "The percentage discount subtracted from the base plan price prorated over the phase duration, specified as a fraction strictly larger than `0` and strictly smaller than `1`. For example, a value of `0.8` represents an 80% discount, meaning that if the prorated base plan price is $100, the offer price will be $20. The resulting price will be rounded to the nearest billable unit (e.g. cents for USD). The relative discount is considered invalid if the discounted price ends up being smaller than the minimum price allowed in any new locations Play may launch in.",
           "format": "double",
           "type": "number"
         }
@@ -10866,7 +11704,7 @@
       "type": "object"
     },
     "PolicyResponse": {
-      "description": "An individual response to a policy question about an app.",
+      "description": "An individual response (answer) to a policy question about an app.",
       "id": "PolicyResponse",
       "properties": {
         "booleanResponse": {
@@ -11353,6 +12191,59 @@
       },
       "type": "object"
     },
+    "RamSelector": {
+      "description": "Defines a RAM selector for a device.",
+      "id": "RamSelector",
+      "properties": {
+        "ramMbLessThanOrEqual": {
+          "description": "This will match any device that has less than or equal ram_mb_less_than_or_equal mb of RAM.",
+          "format": "int64",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "RecentAppView": {
+      "description": "Metadata about a recently updated app.",
+      "id": "RecentAppView",
+      "properties": {
+        "appView": {
+          "$ref": "CatalogAppView",
+          "description": "Recently updated app view."
+        }
+      },
+      "type": "object"
+    },
+    "RecentUpdateEvent": {
+      "description": "A recent update event.",
+      "id": "RecentUpdateEvent",
+      "properties": {
+        "eventTime": {
+          "description": "The timestamp of the update.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "playAppPackageName": {
+          "description": "The package name of the app.",
+          "type": "string"
+        },
+        "updateType": {
+          "description": "The type of the update event.",
+          "enum": [
+            "UPDATE_TYPE_UNSPECIFIED",
+            "MODIFICATION",
+            "DELETION"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is not used.",
+            "The app was modified.",
+            "The app stopped being eligible for catalog inclusion or was removed from the Play Store."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "RecurringExternalTransaction": {
       "description": "Represents a transaction that is part of a recurring series of payments. This can be a subscription or a one-time product with multiple payments (such as preorder).",
       "id": "RecurringExternalTransaction",
@@ -11468,7 +12359,7 @@
           "description": "The price of the base plan in the specified region. Must be set if the base plan is available to new subscribers. Must be set in the currency that is linked to the specified region."
         },
         "regionCode": {
-          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-2, e.g. \"US\".",
+          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-1 alpha-2, e.g. \"US\".",
           "type": "string"
         }
       },
@@ -11498,7 +12389,7 @@
           "type": "string"
         },
         "regionCode": {
-          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-2, e.g. \"US\".",
+          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-1 alpha-2, e.g. \"US\".",
           "type": "string"
         }
       },
@@ -11527,7 +12418,7 @@
           "type": "string"
         },
         "regionCode": {
-          "description": "Region code this configuration applies to, as defined by ISO 3166-2, e.g. \"US\".",
+          "description": "Region code this configuration applies to, as defined by ISO 3166-1 alpha-2, e.g. \"US\".",
           "type": "string"
         }
       },
@@ -11542,7 +12433,7 @@
           "type": "boolean"
         },
         "regionCode": {
-          "description": "Required. Immutable. Region code this configuration applies to, as defined by ISO 3166-2, e.g. \"US\".",
+          "description": "Required. Immutable. Region code this configuration applies to, as defined by ISO 3166-1 alpha-2, e.g. \"US\".",
           "type": "string"
         }
       },
@@ -11554,7 +12445,7 @@
       "properties": {
         "absoluteDiscount": {
           "$ref": "Money",
-          "description": "The absolute amount of money subtracted from the base plan price prorated over the phase duration that the user pays for this offer phase. For example, if the base plan price for this region is $12 for a period of 1 year, then a $1 absolute discount for a phase of a duration of 3 months would correspond to a price of $2. The resulting price may not be smaller than the minimum price allowed for this region."
+          "description": "The absolute amount of money subtracted from the base plan price prorated over the phase duration. For example, if the base plan price for this region is $12 for a period of 1 year, then a $1 absolute discount for a phase of a duration of 3 months would correspond to a price of $2. The resulting price may not be smaller than the minimum price allowed for this region."
         },
         "free": {
           "$ref": "RegionalSubscriptionOfferPhaseFreePriceOverride",
@@ -11569,7 +12460,7 @@
           "type": "string"
         },
         "relativeDiscount": {
-          "description": "The fraction of the base plan price prorated over the phase duration that the user pays for this offer phase. For example, if the base plan price for this region is $12 for a period of 1 year, then a 50% discount for a phase of a duration of 3 months would correspond to a price of $1.50. The discount must be specified as a fraction strictly larger than 0 and strictly smaller than 1. The resulting price will be rounded to the nearest billable unit (e.g. cents for USD). The relative discount is considered invalid if the discounted price ends up being smaller than the minimum price allowed in this region.",
+          "description": "The percentage discount subtracted from the base plan price prorated over the phase duration, specified as a fraction strictly larger than `0` and strictly smaller than `1`. For example, a value of `0.8` represents an 80% discount, meaning that if the prorated base plan price is $100, the offer price will be $20. The resulting price will be rounded to the nearest billable unit (e.g. cents for USD). The relative discount is considered invalid if the discounted price ends up being smaller than the minimum price allowed in this region.",
           "format": "double",
           "type": "number"
         }
@@ -11591,7 +12482,7 @@
           "type": "boolean"
         },
         "regionCode": {
-          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-2, e.g. \"US\".",
+          "description": "Required. Region code this configuration applies to, as defined by ISO 3166-1 alpha-2, e.g. \"US\".",
           "type": "string"
         },
         "streamingTaxType": {
@@ -11842,7 +12733,7 @@
       "id": "RestrictedPaymentCountries",
       "properties": {
         "regionCodes": {
-          "description": "Required. Region codes to impose payment restrictions on, as defined by ISO 3166-2, e.g. \"US\".",
+          "description": "Required. Region codes to impose payment restrictions on, as defined by ISO 3166-1 alpha-2, e.g. \"US\".",
           "items": {
             "type": "string"
           },
@@ -11991,6 +12882,64 @@
       "properties": {},
       "type": "object"
     },
+    "RotateAppSigningKeyRequest": {
+      "description": "Request to rotate an app's signing key.",
+      "id": "RotateAppSigningKeyRequest",
+      "properties": {
+        "keyRotationReason": {
+          "description": "Required. Reason for rotating the app key.",
+          "enum": [
+            "KEY_ROTATION_REASON_UNSPECIFIED",
+            "COMPROMISED_KEY",
+            "USE_STRONGER_KEY",
+            "USE_SAME_KEY_FOR_MULTIPLE_APPS",
+            "ROUTINE_KEY_UPGRADE",
+            "OTHER"
+          ],
+          "enumDescriptions": [
+            "Unspecified key rotation reason. Cannot be used.",
+            "Key is compromised.",
+            "Stronger key is required.",
+            "Same key is used for multiple apps.",
+            "Routine key upgrade.",
+            "Other reason."
+          ],
+          "type": "string"
+        },
+        "rotatedCloudKmsKey": {
+          "$ref": "RotatedCloudKmsKey",
+          "description": "Required. Self-hosted Cloud KMS key."
+        }
+      },
+      "type": "object"
+    },
+    "RotateAppSigningKeyResponse": {
+      "description": "Response to rotate an app's signing key.",
+      "id": "RotateAppSigningKeyResponse",
+      "properties": {
+        "rotatedKeyCertificate": {
+          "$ref": "CertificateHashes",
+          "description": "The rotated key certificate hashes for the app. Always set."
+        }
+      },
+      "type": "object"
+    },
+    "RotatedCloudKmsKey": {
+      "description": "Message representing rotated Cloud KMS key. Consists of the Cloud KMS key and its associated proof of rotation.",
+      "id": "RotatedCloudKmsKey",
+      "properties": {
+        "cloudKmsKeyAndCert": {
+          "$ref": "CloudKmsKeyAndCert",
+          "description": "Required. Cloud KMS key and the certificate associated with the key."
+        },
+        "signingCertificateLineage": {
+          "description": "Required. Proof-of-rotation. See [creating signing certificate lineages](https://developer.android.com/studio/command-line/apksigner#rotate_signing_keys_2).",
+          "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SafetyLabelsUpdateRequest": {
       "description": "Request to update Safety Labels of an app.",
       "id": "SafetyLabelsUpdateRequest",
@@ -12067,6 +13016,20 @@
       },
       "type": "object"
     },
+    "ScreenshotSet": {
+      "description": "A set of screenshots.",
+      "id": "ScreenshotSet",
+      "properties": {
+        "screenshots": {
+          "description": "The image assets of the screenshots.",
+          "items": {
+            "$ref": "ImageAsset"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "SdkVersion": {
       "description": "Represents an sdk version.",
       "id": "SdkVersion",
@@ -12111,6 +13074,21 @@
         "vanityCode": {
           "$ref": "VanityCode",
           "description": "A vanity code was applied."
+        }
+      },
+      "type": "object"
+    },
+    "SocSelector": {
+      "description": "Defines a SOC selector for a device. This will match any device whose SoC (System on Chip) matches all fields in the selector.",
+      "id": "SocSelector",
+      "properties": {
+        "socMake": {
+          "description": "The manufacturer of the SoC.",
+          "type": "string"
+        },
+        "socModel": {
+          "description": "The model of the SoC.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -13251,7 +14229,12 @@
     "UpdateAppStoreHostedAppResponse": {
       "description": "Response for updating an app record for an app store hosted app.",
       "id": "UpdateAppStoreHostedAppResponse",
-      "properties": {},
+      "properties": {
+        "updateId": {
+          "description": "Unique identifier for the specific version of the hosted app submitted in this update. This identifier can be used to correlate publishing signals (such as those returned by ListHostedAppsPublishingSignals) with this specific app update.",
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "UpdateBasePlanStateRequest": {
@@ -13321,7 +14304,7 @@
         },
         "deactivateOneTimeProductOfferRequest": {
           "$ref": "DeactivateOneTimeProductOfferRequest",
-          "description": "Deactivates an offer. Once deactivated, the offer is no longer available to users. This state transition is specific to discounted offers."
+          "description": "Deactivates an offer. Once deactivated, the offer is no longer available to users. This state transition is specific to discounted and game reward offers."
         }
       },
       "type": "object"
@@ -13616,7 +14599,7 @@
               false,
               false,
               false,
-              false,
+              true,
               false,
               false,
               false,
@@ -13639,7 +14622,7 @@
               "Manage store presence.",
               "Create, edit, and delete draft apps.",
               "Create and publish private apps to your organization.",
-              "Choose whether apps are public, or only available to your organization.",
+              "Deprecated: This permission is no longer supported. Choose whether apps are public, or only available to your organization.",
               "Manage orders and subscriptions.",
               "Manage policy related pages on all apps for the developer.",
               "View app information and download bulk reports (read-only).",
@@ -13793,6 +14776,77 @@
       },
       "type": "object"
     },
+    "UsesConfiguration": {
+      "description": "Represents all configurations marked as required by use of the uses-configuration manifest tag.",
+      "id": "UsesConfiguration",
+      "properties": {
+        "requiredKeyboardType": {
+          "description": "The type of keyboard required.",
+          "enum": [
+            "KEYBOARD_TYPE_UNSPECIFIED",
+            "KEYBOARD_TYPE_UNDEFINED",
+            "KEYBOARD_TYPE_NO_KEYS",
+            "KEYBOARD_TYPE_QWERTY",
+            "KEYBOARD_TYPE_TWELVE_KEY"
+          ],
+          "enumDescriptions": [
+            "Unspecified keyboard type.",
+            "Undefined keyboard type.",
+            "No keys keyboard.",
+            "Qwerty keyboard.",
+            "Twelve key keyboard."
+          ],
+          "type": "string"
+        },
+        "requiredNavigationType": {
+          "description": "The navigation device required.",
+          "enum": [
+            "NAVIGATION_TYPE_UNSPECIFIED",
+            "NAVIGATION_TYPE_UNDEFINED",
+            "NAVIGATION_TYPE_NO_NAVIGATION",
+            "NAVIGATION_TYPE_DPAD",
+            "NAVIGATION_TYPE_TRACKBALL",
+            "NAVIGATION_TYPE_WHEEL"
+          ],
+          "enumDescriptions": [
+            "Unspecified navigation type.",
+            "Undefined navigation type.",
+            "No navigation.",
+            "Dpad navigation.",
+            "Trackball navigation.",
+            "Wheel navigation."
+          ],
+          "type": "string"
+        },
+        "requiredTouchscreenType": {
+          "description": "The type of touchscreen required.",
+          "enum": [
+            "TOUCHSCREEN_TYPE_UNSPECIFIED",
+            "TOUCHSCREEN_TYPE_UNDEFINED",
+            "TOUCHSCREEN_TYPE_NO_TOUCHSCREEN",
+            "TOUCHSCREEN_TYPE_STYLUS",
+            "TOUCHSCREEN_TYPE_FINGER"
+          ],
+          "enumDescriptions": [
+            "Unspecified touchscreen type.",
+            "Undefined touchscreen type.",
+            "No touchscreen.",
+            "Stylus touchscreen.",
+            "Finger touchscreen."
+          ],
+          "type": "string"
+        },
+        "requiresFiveWayNavigation": {
+          "description": "Whether or not the application requires a five-way navigation control.",
+          "type": "boolean"
+        },
+        "requiresHardwareKeyboard": {
+          "description": "Whether or not the application requires a hardware keyboard.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "UsesPermission": {
       "description": "A permission used by this APK.",
       "id": "UsesPermission",
@@ -13864,6 +14918,17 @@
         "textureCompressionFormatTargeting": {
           "$ref": "TextureCompressionFormatTargeting",
           "description": "Texture-compression-format-level targeting"
+        }
+      },
+      "type": "object"
+    },
+    "VideoAsset": {
+      "description": "A video asset.",
+      "id": "VideoAsset",
+      "properties": {
+        "videoUrl": {
+          "description": "The URL of the video asset.",
+          "type": "string"
         }
       },
       "type": "object"

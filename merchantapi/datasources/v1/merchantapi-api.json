@@ -110,7 +110,7 @@
         "dataSources": {
           "methods": {
             "create": {
-              "description": "Creates the new data source configuration for the given account. This method always creates a new data source.",
+              "description": "Creates the new data source configuration for the given account. This method always creates a new data source. For more information, see [Manage API data sources](https://developers.google.com/merchant/api/guides/data-sources/api-sources) and [Manage various data source types](https://developers.google.com/merchant/api/guides/data-sources/manage-various-data-sources).",
               "flatPath": "datasources/v1/accounts/{accountsId}/dataSources",
               "httpMethod": "POST",
               "id": "merchantapi.accounts.dataSources.create",
@@ -163,7 +163,7 @@
               ]
             },
             "fetch": {
-              "description": "Performs the data fetch immediately (even outside fetch schedule) on a data source from your Merchant Center Account. If you need to call this method more than once per day, you should use the Products service to update your product data instead. This method only works on data sources with a file input set.",
+              "description": "Performs the data fetch immediately (even outside fetch schedule) on a data source from your Merchant Center Account. If you need to call this method more than once per day, you should use the Products service to update your product data instead. This method only works on data sources with a file input set. For more information, see [Monitor and trigger data source processing](https://developers.google.com/merchant/api/guides/data-sources/monitor-status).",
               "flatPath": "datasources/v1/accounts/{accountsId}/dataSources/{dataSourcesId}:fetch",
               "httpMethod": "POST",
               "id": "merchantapi.accounts.dataSources.fetch",
@@ -321,11 +321,11 @@
       }
     }
   },
-  "revision": "20260615",
+  "revision": "20261110",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "DataSource": {
-      "description": "The [data source](/merchant/api/guides/data-sources/overview) for the Merchant Center account.",
+      "description": "The [data source](https://developers.google.com/merchant/api/guides/data-sources/overview) for the Merchant Center account. For more information, see [Manage API data sources](https://developers.google.com/merchant/api/guides/data-sources/api-sources) and [Manage various data source types](https://developers.google.com/merchant/api/guides/data-sources/manage-various-data-sources).",
       "id": "DataSource",
       "properties": {
         "dataSourceId": {
@@ -401,7 +401,8 @@
       "id": "DataSourceReference",
       "properties": {
         "primaryDataSourceName": {
-          "description": "Optional. The name of the primary data source. Format: `accounts/{account}/dataSources/{datasource}`",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use `self` instead to reference the primary data source. The name of the primary data source. Format: `accounts/{account}/dataSources/{datasource}`",
           "type": "string"
         },
         "self": {
@@ -448,7 +449,8 @@
             "FREE_VEHICLE_LISTINGS",
             "VEHICLE_ADS",
             "CLOUD_RETAIL",
-            "LOCAL_CLOUD_RETAIL"
+            "LOCAL_CLOUD_RETAIL",
+            "RENTAL_ADS"
           ],
           "enumDescriptions": [
             "Not specified.",
@@ -463,7 +465,8 @@
             "[Free vehicle listings](https://support.google.com/merchants/answer/11189169).",
             "[Vehicle ads](https://support.google.com/merchants/answer/11189169).",
             "[Cloud retail](https://cloud.google.com/solutions/retail).",
-            "[Local cloud retail](https://cloud.google.com/solutions/retail)."
+            "[Local cloud retail](https://cloud.google.com/solutions/retail).",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         },
@@ -605,7 +608,7 @@
       "type": "object"
     },
     "FileUpload": {
-      "description": "The file upload of a specific data source, that is, the result of the retrieval of the data source at a certain timestamp computed asynchronously when the data source processing is finished. Only applicable to file data sources.",
+      "description": "The file upload of a specific data source, that is, the result of the retrieval of the data source at a certain timestamp computed asynchronously when the data source processing is finished. Only applicable to file data sources. For more information, see [Monitor and trigger data source processing](https://developers.google.com/merchant/api/guides/data-sources/monitor-status) and [Manage various data source types](https://developers.google.com/merchant/api/guides/data-sources/manage-various-data-sources).",
       "id": "FileUpload",
       "properties": {
         "dataSourceId": {
@@ -832,12 +835,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -876,7 +881,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         }
@@ -890,7 +896,7 @@
       "type": "object"
     },
     "ProductStatusChangeMessage": {
-      "description": "The message that the merchant will receive to notify about product status change event",
+      "description": "The message that the merchant will receive to notify about product status change event. For more information, see [Product status changes](https://developers.google.com/merchant/api/guides/notifications/product-status-changes).",
       "id": "ProductStatusChangeMessage",
       "properties": {
         "account": {

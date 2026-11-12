@@ -29,6 +29,11 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://dataproc.europe-west6.rep.googleapis.com/",
+      "location": "europe-west6"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://dataproc.europe-west9.rep.googleapis.com/",
       "location": "europe-west9"
     },
@@ -722,6 +727,76 @@
                         "https://www.googleapis.com/auth/dataproc.read-only"
                       ]
                     },
+                    "accessNativeBuildInfo": {
+                      "description": "Obtain build data for Native Job",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches/{batchesId}/sparkApplications/{sparkApplicationsId}:accessNativeBuildInfo",
+                      "httpMethod": "GET",
+                      "id": "dataproc.projects.locations.batches.sparkApplications.accessNativeBuildInfo",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The fully qualified name of the batch to retrieve in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID/sparkApplications/APPLICATION_ID\"",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/batches/[^/]+/sparkApplications/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent (Batch) resource reference.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:accessNativeBuildInfo",
+                      "response": {
+                        "$ref": "AccessSparkApplicationNativeBuildInfoResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dataproc",
+                        "https://www.googleapis.com/auth/dataproc.read-only"
+                      ]
+                    },
+                    "accessNativeSqlQuery": {
+                      "description": "Obtain data corresponding to a particular Native SQL Query for a Spark Application.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches/{batchesId}/sparkApplications/{sparkApplicationsId}:accessNativeSqlQuery",
+                      "httpMethod": "GET",
+                      "id": "dataproc.projects.locations.batches.sparkApplications.accessNativeSqlQuery",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "executionId": {
+                          "description": "Required. Execution ID",
+                          "format": "int64",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Required. The fully qualified name of the batch to retrieve in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID/sparkApplications/APPLICATION_ID\"",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/batches/[^/]+/sparkApplications/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent (Batch) resource reference.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:accessNativeSqlQuery",
+                      "response": {
+                        "$ref": "AccessSparkApplicationNativeSqlQueryResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dataproc",
+                        "https://www.googleapis.com/auth/dataproc.read-only"
+                      ]
+                    },
                     "accessSqlPlan": {
                       "description": "Obtain Spark Plan Graph for a Spark Application SQL execution. Limits the number of clusters returned as part of the graph to 10000.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches/{batchesId}/sparkApplications/{sparkApplicationsId}:accessSqlPlan",
@@ -889,6 +964,49 @@
                       "path": "v1/{+name}:accessStageRddGraph",
                       "response": {
                         "$ref": "AccessSparkApplicationStageRddOperationGraphResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dataproc",
+                        "https://www.googleapis.com/auth/dataproc.read-only"
+                      ]
+                    },
+                    "computeTuningConfig": {
+                      "description": "Returns autotuning configuration for a specific query plan id and cohort id. Called by Spark during query planning.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches/{batchesId}/sparkApplications/{sparkApplicationsId}:computeTuningConfig",
+                      "httpMethod": "GET",
+                      "id": "dataproc.projects.locations.batches.sparkApplications.computeTuningConfig",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "executionId": {
+                          "description": "Required. Spark execution ID for the query.",
+                          "format": "int64",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Required. The fully qualified name of the spark application to retrieve autotuning configuration for in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID/sparkApplications/APPLICATION_ID\"",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/batches/[^/]+/sparkApplications/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent (Batch) resource reference.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "semanticQueryId": {
+                          "description": "Required. Spark semantic query ID.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:computeTuningConfig",
+                      "response": {
+                        "$ref": "ComputeTuningConfigResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
@@ -1141,6 +1259,49 @@
                       "path": "v1/{+name}:searchJobs",
                       "response": {
                         "$ref": "SearchSparkApplicationJobsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dataproc",
+                        "https://www.googleapis.com/auth/dataproc.read-only"
+                      ]
+                    },
+                    "searchNativeSqlQueries": {
+                      "description": "Obtain data corresponding to Native SQL Queries for a Spark Application.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/batches/{batchesId}/sparkApplications/{sparkApplicationsId}:searchNativeSqlQueries",
+                      "httpMethod": "GET",
+                      "id": "dataproc.projects.locations.batches.sparkApplications.searchNativeSqlQueries",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The fully qualified name of the batch to retrieve in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID/sparkApplications/APPLICATION_ID\"",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/batches/[^/]+/sparkApplications/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "pageSize": {
+                          "description": "Optional. Maximum number of queries to return in each response. The service may return fewer than this. The default page size is 10; the maximum page size is 100.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Optional. A page token received from a previous SearchSparkApplicationNativeSqlQueries call. Provide this token to retrieve the subsequent page.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent (Batch) resource reference.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:searchNativeSqlQueries",
+                      "response": {
+                        "$ref": "SearchSparkApplicationNativeSqlQueriesResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
@@ -2146,6 +2307,76 @@
                         "https://www.googleapis.com/auth/dataproc.read-only"
                       ]
                     },
+                    "accessNativeBuildInfo": {
+                      "description": "Obtain data corresponding to Native Build Information for a Spark Application.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}/sparkApplications/{sparkApplicationsId}:accessNativeBuildInfo",
+                      "httpMethod": "GET",
+                      "id": "dataproc.projects.locations.sessions.sparkApplications.accessNativeBuildInfo",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The fully qualified name of the session to retrieve in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/sessions/SESSION_ID/sparkApplications/APPLICATION_ID\"",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/sessions/[^/]+/sparkApplications/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent (Session) resource reference.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:accessNativeBuildInfo",
+                      "response": {
+                        "$ref": "AccessSessionSparkApplicationNativeBuildInfoResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dataproc",
+                        "https://www.googleapis.com/auth/dataproc.read-only"
+                      ]
+                    },
+                    "accessNativeSqlQuery": {
+                      "description": "Obtain data corresponding to a particular Native SQL Query for a Spark Application.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}/sparkApplications/{sparkApplicationsId}:accessNativeSqlQuery",
+                      "httpMethod": "GET",
+                      "id": "dataproc.projects.locations.sessions.sparkApplications.accessNativeSqlQuery",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "executionId": {
+                          "description": "Required. Execution ID",
+                          "format": "int64",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "name": {
+                          "description": "Required. The fully qualified name of the session to retrieve in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/sessions/SESSION_ID/sparkApplications/APPLICATION_ID\"",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/sessions/[^/]+/sparkApplications/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent (Session) resource reference.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:accessNativeSqlQuery",
+                      "response": {
+                        "$ref": "AccessSessionSparkApplicationNativeSqlQueryResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dataproc",
+                        "https://www.googleapis.com/auth/dataproc.read-only"
+                      ]
+                    },
                     "accessSqlPlan": {
                       "description": "Obtain Spark Plan Graph for a Spark Application SQL execution. Limits the number of clusters returned as part of the graph to 10000.",
                       "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}/sparkApplications/{sparkApplicationsId}:accessSqlPlan",
@@ -2572,6 +2803,49 @@
                       "path": "v1/{+name}:searchJobs",
                       "response": {
                         "$ref": "SearchSessionSparkApplicationJobsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform",
+                        "https://www.googleapis.com/auth/dataproc",
+                        "https://www.googleapis.com/auth/dataproc.read-only"
+                      ]
+                    },
+                    "searchNativeSqlQueries": {
+                      "description": "Obtain data corresponding to Native SQL Queries for a Spark Application.",
+                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/sessions/{sessionsId}/sparkApplications/{sparkApplicationsId}:searchNativeSqlQueries",
+                      "httpMethod": "GET",
+                      "id": "dataproc.projects.locations.sessions.sparkApplications.searchNativeSqlQueries",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The fully qualified name of the session to retrieve in the format \"projects/PROJECT_ID/locations/DATAPROC_REGION/sessions/SESSION_ID/sparkApplications/APPLICATION_ID\"",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/sessions/[^/]+/sparkApplications/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "pageSize": {
+                          "description": "Optional. Maximum number of queries to return in each response. The service may return fewer than this. The default page size is 10; the maximum page size is 100.",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "pageToken": {
+                          "description": "Optional. A page token received from a previous SearchSessionSparkApplicationSqlQueries call. Provide this token to retrieve the subsequent page.",
+                          "location": "query",
+                          "type": "string"
+                        },
+                        "parent": {
+                          "description": "Required. Parent (Session) resource reference.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:searchNativeSqlQueries",
+                      "response": {
+                        "$ref": "SearchSessionSparkApplicationNativeSqlQueriesResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform",
@@ -5229,7 +5503,7 @@
       }
     }
   },
-  "revision": "20260625",
+  "revision": "20261023",
   "rootUrl": "https://dataproc.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -5267,6 +5541,28 @@
           "$ref": "JobData",
           "description": "Output only. Data corresponding to a spark job.",
           "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "AccessSessionSparkApplicationNativeBuildInfoResponse": {
+      "description": "Details of a native build info for a Spark Application",
+      "id": "AccessSessionSparkApplicationNativeBuildInfoResponse",
+      "properties": {
+        "executionData": {
+          "$ref": "NativeBuildInfoUiData",
+          "description": "Native SQL Execution Data"
+        }
+      },
+      "type": "object"
+    },
+    "AccessSessionSparkApplicationNativeSqlQueryResponse": {
+      "description": "Details of a native query for a Spark Application",
+      "id": "AccessSessionSparkApplicationNativeSqlQueryResponse",
+      "properties": {
+        "executionData": {
+          "$ref": "NativeSqlExecutionUiData",
+          "description": "Native SQL Execution Data"
         }
       },
       "type": "object"
@@ -5347,6 +5643,28 @@
           "$ref": "JobData",
           "description": "Output only. Data corresponding to a spark job.",
           "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "AccessSparkApplicationNativeBuildInfoResponse": {
+      "description": "Details of Native Build Info for a Spark Application",
+      "id": "AccessSparkApplicationNativeBuildInfoResponse",
+      "properties": {
+        "buildInfo": {
+          "$ref": "NativeBuildInfoUiData",
+          "description": "Native Build Info Data"
+        }
+      },
+      "type": "object"
+    },
+    "AccessSparkApplicationNativeSqlQueryResponse": {
+      "description": "Details of a query for a Spark Application",
+      "id": "AccessSparkApplicationNativeSqlQueryResponse",
+      "properties": {
+        "executionData": {
+          "$ref": "NativeSqlExecutionUiData",
+          "description": "Native SQL Execution Data"
         }
       },
       "type": "object"
@@ -5541,6 +5859,11 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "eventLogPath": {
+          "description": "Output only. The event log path for the application attempt.",
+          "readOnly": true,
+          "type": "string"
+        },
         "lastUpdated": {
           "format": "google-datetime",
           "type": "string"
@@ -5670,7 +5993,8 @@
           "type": "integer"
         },
         "diskType": {
-          "description": "Optional. Disk type.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use type instead.",
           "enum": [
             "DISK_TYPE_UNSPECIFIED",
             "HYPERDISK_BALANCED",
@@ -5679,11 +6003,11 @@
             "HYPERDISK_THROUGHPUT"
           ],
           "enumDescriptions": [
-            "Required unspecified disk type.",
-            "Hyperdisk Balanced disk type.",
-            "Hyperdisk Extreme disk type.",
-            "Hyperdisk ML disk type.",
-            "Hyperdisk Throughput disk type."
+            "Disk type is not specified.",
+            "Hyperdisk Balanced.",
+            "Hyperdisk Extreme.",
+            "Hyperdisk ML.",
+            "Hyperdisk Throughput."
           ],
           "type": "string"
         },
@@ -5696,6 +6020,77 @@
           "description": "Optional. Indicates how much throughput to provision for the attached disk. This sets the number of throughput mb per second that the disk can handle. See https://cloud.google.com/compute/docs/disks/hyperdisks#hyperdisk-features",
           "format": "int64",
           "type": "string"
+        },
+        "type": {
+          "description": "Optional. Attached disk type. Currently only supports Hyperdisks. See https://cloud.google.com/compute/docs/disks/hyperdisks. Note: Hyperdisk Balanced High Availability is not supported.Allowed values are: hyperdisk-balanced hyperdisk-extreme hyperdisk-ml hyperdisk-throughput",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "AttachmentOperationMetadata": {
+      "description": "Metadata describing the Attachment operation.",
+      "id": "AttachmentOperationMetadata",
+      "properties": {
+        "attachment": {
+          "description": "Output only. Name of the attachment for the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "attachmentUuid": {
+          "description": "Output only. Attachment UUID for the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "createTime": {
+          "description": "Output only. The time when the operation was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "Output only. Short description of the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "doneTime": {
+          "description": "Output only. The time when the operation finished.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Output only. Labels associated with the operation.",
+          "readOnly": true,
+          "type": "object"
+        },
+        "operationType": {
+          "description": "Output only. The operation type.",
+          "enum": [
+            "ATTACHMENT_OPERATION_TYPE_UNSPECIFIED",
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ],
+          "enumDescriptions": [
+            "Attachment operation type is unknown.",
+            "Create Attachment operation type.",
+            "Update Attachment operation type.",
+            "Delete Attachment operation type."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "warnings": {
+          "description": "Output only. Warnings encountered during operation execution.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
         }
       },
       "type": "object"
@@ -6261,13 +6656,25 @@
           "$ref": "InstanceGroupConfig",
           "description": "Optional. The Compute Engine config settings for the cluster's master instance."
         },
+        "masterFlexibleConfig": {
+          "$ref": "FlexibleInstanceGroupConfig",
+          "description": "Optional. The High Obtainability (HO) config settings for the cluster's master instances.In High Obtainability (HO) mode, flexible configs are the single source of truth for desired cluster configuration across node groups: * For single-node clusters: master_flexible_config must be specified, and no worker configs should be set. * For multi-node (standard) clusters: both master_flexible_config and worker_flexible_config must be specified. Mixing standard and flexible configs across node groups is not allowed.Only one of master_config or master_flexible_config can be set."
+        },
         "metastoreConfig": {
           "$ref": "MetastoreConfig",
           "description": "Optional. Metastore configuration."
         },
+        "schedulingConfig": {
+          "$ref": "SchedulingConfig",
+          "description": "Optional. Config for scheduling the resources to be allocated when available."
+        },
         "secondaryWorkerConfig": {
           "$ref": "InstanceGroupConfig",
           "description": "Optional. The Compute Engine config settings for a cluster's secondary worker instances"
+        },
+        "secondaryWorkerFlexibleConfig": {
+          "$ref": "FlexibleInstanceGroupConfig",
+          "description": "Optional. The High Obtainability (HO) config settings for a cluster's secondary worker instances.In High Obtainability (HO) mode, flexible configs are the single source of truth for desired cluster configuration. num_instances represents the desired capacity of the secondary worker group and is mutable via cluster updates and autoscaling.Only one of secondary_worker_config or secondary_worker_flexible_config can be set.In High Obtainability (HO) mode, secondary workers are optional. If secondary workers are used in an HO cluster, they must be configured using secondary_worker_flexible_config (not secondary_worker_config)."
         },
         "securityConfig": {
           "$ref": "SecurityConfig",
@@ -6284,6 +6691,10 @@
         "workerConfig": {
           "$ref": "InstanceGroupConfig",
           "description": "Optional. The Compute Engine config settings for the cluster's worker instances."
+        },
+        "workerFlexibleConfig": {
+          "$ref": "FlexibleInstanceGroupConfig",
+          "description": "Optional. The High Obtainability (HO) config settings for the cluster's worker instances.In High Obtainability (HO) mode, flexible configs are the single source of truth for desired cluster configuration. num_instances represents the desired capacity of the worker group and is mutable via cluster updates and autoscaling.Only one of worker_config or worker_flexible_config can be set.In High Obtainability (HO) mode, for multi-node (standard) clusters, both master_flexible_config and worker_flexible_config must be specified. Mixing standard and flexible configs across node groups is not allowed. Single-node clusters do not specify worker configs."
         }
       },
       "type": "object"
@@ -6460,8 +6871,7 @@
       "id": "ClusterStatus",
       "properties": {
         "detail": {
-          "description": "Optional. Output only. Details of cluster's state.",
-          "readOnly": true,
+          "description": "Optional. Details of cluster's state.",
           "type": "string"
         },
         "state": {
@@ -6563,6 +6973,20 @@
           ],
           "readOnly": true,
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ComputeTuningConfigResponse": {
+      "description": "Response for ComputeTuningConfig RPC.",
+      "id": "ComputeTuningConfigResponse",
+      "properties": {
+        "recommendedProperties": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Recommended Spark properties for the query (e.g., {\"spark.sql.shuffle.partitions\": \"500\"}).",
+          "type": "object"
         }
       },
       "type": "object"
@@ -7326,6 +7750,42 @@
       },
       "type": "object"
     },
+    "FlexibleInstanceGroupConfig": {
+      "description": "The configuration for High Obtainability (HO) flexible instance groups. Flexible instance group configs serve as the single source of truth for desired state.",
+      "id": "FlexibleInstanceGroupConfig",
+      "properties": {
+        "bootDiskSizeGb": {
+          "description": "Optional. The boot disk size in GB. This is a create-time specification and is not currently mutable via update masks.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "coreCount": {
+          "description": "Optional. The number of vCPUs per instance. Must be a power of 2 (2, 4, 8, 16, 32). This is a create-time specification and is not currently mutable via update masks.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "hardwareClass": {
+          "description": "Optional. The hardware class of the instances. This is a create-time specification and is not currently mutable via update masks.",
+          "enum": [
+            "HARDWARE_CLASS_UNSPECIFIED",
+            "STANDARD",
+            "PERFORMANCE"
+          ],
+          "enumDescriptions": [
+            "Unspecified hardware class.",
+            "Standard hardware class. Provides a balanced compute configuration with approximately 4GB of memory per vCPU and standard disk storage tiers.Candidate machine types include n4-standard, n4d-standard, n2-standard, and n2d-standard (Rank 0), and c4-standard and c4d-standard (Rank 1) (for requested core counts 2, 4, 8, 16, 32).Warning: The specific machine families and types selected for this hardware class are subject to change. Users should not take a dependency on the underlying machine type selection.",
+            "Performance hardware class. Provides a high-performance configuration with approximately 8GB of memory per vCPU (e.g. high-memory machine types) and higher-tier disk configurations (e.g. higher IOPS and throughput).Candidate machine types include n4-highmem, n4d-highmem, n2-highmem, and n2d-highmem (Rank 0), and c4-highmem and c4d-highmem (Rank 1) (for requested core counts 2, 4, 8, 16, 32). n4, n4d, c4, and c4d use Hyperdisk Balanced with provisioned storage, whereas n2 and n2d use SSD persistent disks.Warning: The specific machine families and types selected for this hardware class are subject to change. Users should not take a dependency on the underlying machine type selection."
+          ],
+          "type": "string"
+        },
+        "numInstances": {
+          "description": "Optional. The number of VM instances requested.For master instances, this must be 1. For worker and secondary worker instances, this represents the desired capacity of the group and is mutable via cluster update operations and autoscaling.",
+          "format": "int32",
+          "type": "integer"
+        }
+      },
+      "type": "object"
+    },
     "FlinkJob": {
       "description": "A Dataproc job for running Apache Flink applications on YARN.",
       "id": "FlinkJob",
@@ -7395,6 +7855,10 @@
           },
           "description": "Optional. The Compute Engine metadata entries to add to all instances (see Project and instance metadata (https://cloud.google.com/compute/docs/storing-retrieving-metadata#project_and_instance_metadata)).",
           "type": "object"
+        },
+        "multiZoneConfig": {
+          "$ref": "MultiZoneConfig",
+          "description": "Optional. Controls how instances within this Cluster are allowed to exist in multiple Zones within the Region. Only one of zone_uri or multi_zone_config must be set."
         },
         "networkUri": {
           "description": "Optional. The Compute Engine network to be used for machine communications. Cannot be specified with subnetwork_uri. If neither network_uri nor subnetwork_uri is specified, the \"default\" network of the project is used, if it exists. Cannot be a Custom Subnet Network (see Using Subnetworks (https://cloud.google.com/compute/docs/subnetworks) for more information).A full URL, partial URI, or short name are valid. Examples: https://www.googleapis.com/compute/v1/projects/[project_id]/global/networks/default projects/[project_id]/global/networks/default default",
@@ -7757,6 +8221,10 @@
       "description": "Identity related configuration, including service account based secure multi-tenancy user mappings.",
       "id": "IdentityConfig",
       "properties": {
+        "enableSsh": {
+          "description": "Optional. Whether to enable SSH access for the cluster. The default is true for image versions prior to 3.1 and false for image versions 3.1 and later. The default behavior can be changed when creating clusters using image versions 2.3.30 and later.",
+          "type": "boolean"
+        },
         "userServiceAccountMapping": {
           "additionalProperties": {
             "type": "string"
@@ -8372,8 +8840,7 @@
       "id": "JobStatus",
       "properties": {
         "details": {
-          "description": "Optional. Output only. Job state details, such as an error description if the state is ERROR.",
-          "readOnly": true,
+          "description": "Optional. Job state details, such as an error description if the state is ERROR.",
           "type": "string"
         },
         "state": {
@@ -8947,7 +9414,7 @@
       "id": "Metric",
       "properties": {
         "metricOverrides": {
-          "description": "Optional. Specify one or more Custom metrics (https://cloud.google.com/dataproc/docs/guides/dataproc-metrics#custom_metrics) to collect for the metric course (for the SPARK metric source (any Spark metric (https://spark.apache.org/docs/latest/monitoring.html#metrics) can be specified).Provide metrics in the following format: METRIC_SOURCE: INSTANCE:GROUP:METRIC Use camelcase as appropriate.Examples: yarn:ResourceManager:QueueMetrics:AppsCompleted spark:driver:DAGScheduler:job.allJobs sparkHistoryServer:JVM:Memory:NonHeapMemoryUsage.committed hiveserver2:JVM:Memory:NonHeapMemoryUsage.used Notes: Only the specified overridden metrics are collected for the metric source. For example, if one or more spark:executive metrics are listed as metric overrides, other SPARK metrics are not collected. The collection of the metrics for other enabled custom metric sources is unaffected. For example, if both SPARK and YARN metric sources are enabled, and overrides are provided for Spark metrics only, all YARN metrics are collected.",
+          "description": "Optional. Specify one or more Custom metrics (https://cloud.google.com/dataproc/docs/guides/dataproc-metrics#custom_metrics) to collect for the metric course (for the SPARK metric source (any Spark metric (https://spark.apache.org/docs/latest/monitoring.html#metrics) can be specified).Provide metrics in the following format:METRIC_SOURCE:INSTANCE :GROUP:METRIC Use camelcase as appropriate.Examples: yarn:ResourceManager:QueueMetrics:AppsCompleted spark:driver:DAGScheduler:job.allJobs sparkHistoryServer:JVM:Memory:NonHeapMemoryUsage.committed hiveserver2:JVM:Memory:NonHeapMemoryUsage.used Notes: Only the specified overridden metrics are collected for the metric source. For example, if one or more spark:executive metrics are listed as metric overrides, other SPARK metrics are not collected. The collection of the metrics for other enabled custom metric sources is unaffected. For example, if both SPARK and YARN metric sources are enabled, and overrides are provided for Spark metrics only, all YARN metrics are collected.",
           "items": {
             "type": "string"
           },
@@ -8976,6 +9443,25 @@
             "Hiveserver2 metric source.",
             "hivemetastore metric source",
             "flink metric source"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "MultiZoneConfig": {
+      "description": "Configuration for multi-zonal clusters that can create instances across multiple Zones within the Region.",
+      "id": "MultiZoneConfig",
+      "properties": {
+        "targetShape": {
+          "description": "Optional. The distribution shape of the nodes in the multi-zonal cluster.",
+          "enum": [
+            "TARGET_SHAPE_UNSPECIFIED",
+            "ANY"
+          ],
+          "enumDescriptions": [
+            "Target shape is unspecified. Setting this will cause error.",
+            "Instances may exist in any Zones within the Region."
           ],
           "type": "string"
         }
@@ -10275,6 +10761,23 @@
       },
       "type": "object"
     },
+    "SchedulingConfig": {
+      "description": "Config for scheduling the request to create Compute Engine resources for the cluster, when available.",
+      "id": "SchedulingConfig",
+      "properties": {
+        "requestedRunDuration": {
+          "description": "Optional. Required lifetime of the resources, once provisioned. Min 10 mins, Max/Default 7 days . Note that the cluster can still be deleted before reaching this time. This time is a maximum amount of time before the cluster is forcibly deleted. Lower times are more likely to start running sooner.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "schedulingTimeout": {
+          "description": "Optional. How long to wait for worker resources to be allocated before failing the cluster creation request. Max/Default value: 13 days",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "SearchSessionSparkApplicationExecutorStageSummaryResponse": {
       "description": "List of Executors associated with a Spark Application Stage.",
       "id": "SearchSessionSparkApplicationExecutorStageSummaryResponse",
@@ -10323,6 +10826,25 @@
           "description": "Output only. Data corresponding to a spark job.",
           "items": {
             "$ref": "JobData"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SearchSessionSparkApplicationNativeSqlQueriesResponse": {
+      "description": "List of all Native queries for a Spark Application.",
+      "id": "SearchSessionSparkApplicationNativeSqlQueriesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "This token is included in the response if there are more results to fetch. To fetch additional results, provide this value as the page_token in a subsequent SearchSessionSparkApplicationSqlQueriesRequest.",
+          "type": "string"
+        },
+        "sparkApplicationNativeSqlQueries": {
+          "description": "Output only. Native SQL Execution Data",
+          "items": {
+            "$ref": "NativeSqlExecutionUiData"
           },
           "readOnly": true,
           "type": "array"
@@ -10473,6 +10995,25 @@
           "description": "Output only. Data corresponding to a spark job.",
           "items": {
             "$ref": "JobData"
+          },
+          "readOnly": true,
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SearchSparkApplicationNativeSqlQueriesResponse": {
+      "description": "List of all Native SQL queries details for a Spark Application.",
+      "id": "SearchSparkApplicationNativeSqlQueriesResponse",
+      "properties": {
+        "nextPageToken": {
+          "description": "This token is included in the response if there are more results to fetch. To fetch additional results, provide this value as the page_token in a subsequent SearchSparkApplicationNativeSqlQueriesRequest.",
+          "type": "string"
+        },
+        "sparkApplicationNativeSqlQueries": {
+          "description": "Output only. Native SQL Execution Data",
+          "items": {
+            "$ref": "NativeSqlExecutionUiData"
           },
           "readOnly": true,
           "type": "array"
@@ -10634,7 +11175,7 @@
           "readOnly": true
         },
         "sessionTemplate": {
-          "description": "Optional. The session template used by the session.Only resource names, including project ID and location, are valid.Example: * https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id] * projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]The template must be in the same project and Dataproc region as the session.",
+          "description": "Optional. The session template used by the session.Resource names and short template IDs are valid. Examples: * projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id] * [template_id]The template must be in the same project and Dataproc region as the session.",
           "type": "string"
         },
         "sparkConnectSession": {
@@ -10808,6 +11349,10 @@
         },
         "description": {
           "description": "Optional. Brief description of the template.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional. User-friendly display name for the session template. Can be up to 63 characters.",
           "type": "string"
         },
         "environmentConfig": {
@@ -11100,6 +11645,7 @@
           "items": {
             "enum": [
               "COMPONENT_UNSPECIFIED",
+              "ALLOYDB_CONNECTOR",
               "ANACONDA",
               "DELTA",
               "DOCKER",
@@ -11121,6 +11667,7 @@
             ],
             "enumDescriptions": [
               "Unspecified component. Specifying this will cause Cluster creation to fail.",
+              "The AlloyDB Connector.",
               "The Anaconda component is no longer supported or applicable to supported Dataproc on Compute Engine image versions (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-version-clusters#supported-dataproc-image-versions). It cannot be activated on clusters created with supported Dataproc on Compute Engine image versions.",
               "Delta Lake.",
               "Docker",
@@ -13299,6 +13846,73 @@
         "stagingBucket": {
           "description": "Optional. A Cloud Storage bucket used to stage job dependencies, config files, and job driver console output. If you do not specify a staging bucket, the service will determine a Cloud Storage location (US, ASIA, or EU) for your cluster's staging bucket according to the Compute Engine zone where your cluster is deployed, and then create and manage this project-level, per-location bucket (see staging and temp buckets (https://cloud.google.com/dataproc/docs/concepts/configuring-clusters/staging-bucket)). This field requires a Cloud Storage bucket name, not a gs://... URI to a Cloud Storage bucket.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "VirtualClusterOperationMetadata": {
+      "description": "Metadata describing the VirtualCluster operation.",
+      "id": "VirtualClusterOperationMetadata",
+      "properties": {
+        "createTime": {
+          "description": "Output only. The time when the operation was created.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "description": {
+          "description": "Output only. Short description of the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "doneTime": {
+          "description": "Output only. The time when the operation finished.",
+          "format": "google-datetime",
+          "readOnly": true,
+          "type": "string"
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Output only. Labels associated with the operation.",
+          "readOnly": true,
+          "type": "object"
+        },
+        "operationType": {
+          "description": "Output only. The operation type.",
+          "enum": [
+            "VIRTUAL_CLUSTER_OPERATION_TYPE_UNSPECIFIED",
+            "CREATE",
+            "UPDATE",
+            "DELETE"
+          ],
+          "enumDescriptions": [
+            "VirtualCluster operation type is unknown.",
+            "Create VirtualCluster operation type.",
+            "Update VirtualCluster operation type.",
+            "Delete VirtualCluster operation type."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "virtualCluster": {
+          "description": "Output only. Name of the virtual cluster for the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "virtualClusterUuid": {
+          "description": "Output only. VirtualCluster UUID for the operation.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "warnings": {
+          "description": "Output only. Warnings encountered during operation execution.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
         }
       },
       "type": "object"

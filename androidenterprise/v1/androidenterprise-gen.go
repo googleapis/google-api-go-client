@@ -1537,13 +1537,6 @@ func (s GenerateEnterpriseUpgradeUrlResponse) MarshalJSON() ([]byte, error) {
 // GoogleAuthenticationSettings: Contains settings for Google-provided user
 // authentication.
 type GoogleAuthenticationSettings struct {
-	// DedicatedDevicesAllowed: Whether dedicated devices are allowed.
-	//
-	// Possible values:
-	//   "dedicatedDevicesAllowedUnspecified" - This value is unused.
-	//   "disallowed" - Dedicated devices are not allowed.
-	//   "allowed" - Dedicated devices are allowed.
-	DedicatedDevicesAllowed string `json:"dedicatedDevicesAllowed,omitempty"`
 	// GoogleAuthenticationRequired: Whether Google authentication is required.
 	//
 	// Possible values:
@@ -1551,13 +1544,13 @@ type GoogleAuthenticationSettings struct {
 	//   "notRequired" - Google authentication is not required.
 	//   "required" - User is required to be successfully authenticated by Google.
 	GoogleAuthenticationRequired string `json:"googleAuthenticationRequired,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DedicatedDevicesAllowed") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// ForceSendFields is a list of field names (e.g.
+	// "GoogleAuthenticationRequired") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DedicatedDevicesAllowed") to
+	// NullFields is a list of field names (e.g. "GoogleAuthenticationRequired") to
 	// include in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.

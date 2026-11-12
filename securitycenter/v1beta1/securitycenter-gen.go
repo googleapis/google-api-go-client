@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	securitycenterService, err := securitycenter.NewService(ctx, option.WithScopes(securitycenter.SecuritycenterScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,17 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Security Command Center
+	// data and see the email address for your Google Account
+	SecuritycenterScope = "https://www.googleapis.com/auth/securitycenter"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/securitycenter",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -1181,6 +1191,26 @@ func (s CloudLoggingEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type CloudRun struct {
+	Revisions []string `json:"revisions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Revisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Revisions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CloudRun) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudRun
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type Compliance struct {
 	Ids      []string `json:"ids,omitempty"`
 	Standard string   `json:"standard,omitempty"`
@@ -2030,6 +2060,7 @@ type Finding struct {
 	CloudArmor                  *CloudArmor                                          `json:"cloudArmor,omitempty"`
 	CloudDlpDataProfile         *CloudDlpDataProfile                                 `json:"cloudDlpDataProfile,omitempty"`
 	CloudDlpInspection          *CloudDlpInspection                                  `json:"cloudDlpInspection,omitempty"`
+	CloudRun                    *CloudRun                                            `json:"cloudRun,omitempty"`
 	ComplianceDetails           *ComplianceDetails                                   `json:"complianceDetails,omitempty"`
 	Compliances                 []*Compliance                                        `json:"compliances,omitempty"`
 	Connections                 []*Connection                                        `json:"connections,omitempty"`
@@ -2273,14 +2304,15 @@ func (s GetPolicyOptions) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudSecuritycenterV1BigQueryExport struct {
-	CreateTime       string `json:"createTime,omitempty"`
-	Dataset          string `json:"dataset,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Filter           string `json:"filter,omitempty"`
-	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	Name             string `json:"name,omitempty"`
-	Principal        string `json:"principal,omitempty"`
-	UpdateTime       string `json:"updateTime,omitempty"`
+	CreateTime                   string `json:"createTime,omitempty"`
+	Dataset                      string `json:"dataset,omitempty"`
+	DeletionNotificationsEnabled bool   `json:"deletionNotificationsEnabled,omitempty"`
+	Description                  string `json:"description,omitempty"`
+	Filter                       string `json:"filter,omitempty"`
+	MostRecentEditor             string `json:"mostRecentEditor,omitempty"`
+	Name                         string `json:"name,omitempty"`
+	Principal                    string `json:"principal,omitempty"`
+	UpdateTime                   string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2513,18 +2545,19 @@ func (s GoogleCloudSecuritycenterV1MuteConfig) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudSecuritycenterV1NotificationMessage struct {
+	DeletedFinding         bool                                 `json:"deletedFinding,omitempty"`
 	Finding                *Finding                             `json:"finding,omitempty"`
 	NotificationConfigName string                               `json:"notificationConfigName,omitempty"`
 	Resource               *GoogleCloudSecuritycenterV1Resource `json:"resource,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Finding") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DeletedFinding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Finding") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeletedFinding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3801,15 +3834,16 @@ func (s GoogleCloudSecuritycenterV2BackupDisasterRecovery) MarshalJSON() ([]byte
 }
 
 type GoogleCloudSecuritycenterV2BigQueryExport struct {
-	CreateTime       string `json:"createTime,omitempty"`
-	CryptoKeyName    string `json:"cryptoKeyName,omitempty"`
-	Dataset          string `json:"dataset,omitempty"`
-	Description      string `json:"description,omitempty"`
-	Filter           string `json:"filter,omitempty"`
-	MostRecentEditor string `json:"mostRecentEditor,omitempty"`
-	Name             string `json:"name,omitempty"`
-	Principal        string `json:"principal,omitempty"`
-	UpdateTime       string `json:"updateTime,omitempty"`
+	CreateTime                   string `json:"createTime,omitempty"`
+	CryptoKeyName                string `json:"cryptoKeyName,omitempty"`
+	Dataset                      string `json:"dataset,omitempty"`
+	DeletionNotificationsEnabled bool   `json:"deletionNotificationsEnabled,omitempty"`
+	Description                  string `json:"description,omitempty"`
+	Filter                       string `json:"filter,omitempty"`
+	MostRecentEditor             string `json:"mostRecentEditor,omitempty"`
+	Name                         string `json:"name,omitempty"`
+	Principal                    string `json:"principal,omitempty"`
+	UpdateTime                   string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3995,6 +4029,26 @@ type GoogleCloudSecuritycenterV2CloudLoggingEntry struct {
 
 func (s GoogleCloudSecuritycenterV2CloudLoggingEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudSecuritycenterV2CloudLoggingEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudSecuritycenterV2CloudRun struct {
+	Revisions []string `json:"revisions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Revisions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Revisions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2CloudRun) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2CloudRun
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4825,6 +4879,7 @@ type GoogleCloudSecuritycenterV2Finding struct {
 	CloudArmor                  *GoogleCloudSecuritycenterV2CloudArmor                   `json:"cloudArmor,omitempty"`
 	CloudDlpDataProfile         *GoogleCloudSecuritycenterV2CloudDlpDataProfile          `json:"cloudDlpDataProfile,omitempty"`
 	CloudDlpInspection          *GoogleCloudSecuritycenterV2CloudDlpInspection           `json:"cloudDlpInspection,omitempty"`
+	CloudRun                    *GoogleCloudSecuritycenterV2CloudRun                     `json:"cloudRun,omitempty"`
 	ComplianceDetails           *GoogleCloudSecuritycenterV2ComplianceDetails            `json:"complianceDetails,omitempty"`
 	Compliances                 []*GoogleCloudSecuritycenterV2Compliance                 `json:"compliances,omitempty"`
 	Connections                 []*GoogleCloudSecuritycenterV2Connection                 `json:"connections,omitempty"`
@@ -6431,18 +6486,19 @@ func (s GoogleCloudSecuritycenterV2Notebook) MarshalJSON() ([]byte, error) {
 }
 
 type GoogleCloudSecuritycenterV2NotificationMessage struct {
+	DeletedFinding         bool                                 `json:"deletedFinding,omitempty"`
 	Finding                *GoogleCloudSecuritycenterV2Finding  `json:"finding,omitempty"`
 	NotificationConfigName string                               `json:"notificationConfigName,omitempty"`
 	Resource               *GoogleCloudSecuritycenterV2Resource `json:"resource,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Finding") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "DeletedFinding") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Finding") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DeletedFinding") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

@@ -335,6 +335,8 @@ type AuditLog struct {
 	// resources or permissions involved, then there is one AuthorizationInfo
 	// element for each {resource, permission} tuple.
 	AuthorizationInfo []*AuthorizationInfo `json:"authorizationInfo,omitempty"`
+	// CallerAgent: Information set when the caller is an agent.
+	CallerAgent *CallerAgent `json:"callerAgent,omitempty"`
 	// Metadata: Other service-specific data about the request, response, and other
 	// information associated with the current audited event.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
@@ -402,6 +404,37 @@ type AuditLog struct {
 
 func (s AuditLog) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AuditPamBindingId: A composite unique identifier for a PAM Grant which is
+// {Org/Folder/Project identifier, grant Unique Identifier} tuple.
+type AuditPamBindingId struct {
+	// Container: Output only. GCP Project/Folder/Organization identifier to which
+	// the PAM entitlement/grant is bound to. Container will be in the following
+	// form: projects/$project_num or folders/$folder_num or organizations/$org
+	Container string `json:"container,omitempty"`
+	// GrantUuid: Output only. Represents the unique identifier for the PAM grant.
+	// Full_resource_name_pattern for PAM Grant is:
+	// //privilegedaccessmanager.googleapis.com/
+	// (projects|folders|organizations)/$0/locations/$1/entitlements/$2/ grants/$3
+	// where $3 is the grant_uuid.
+	GrantUuid string `json:"grantUuid,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Container") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Container") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuditPamBindingId) MarshalJSON() ([]byte, error) {
+	type NoMethod AuditPamBindingId
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -557,6 +590,11 @@ type AuthorizationInfo struct {
 	//   "DATA_READ" - Permissions that gate reading user-provided data.
 	//   "DATA_WRITE" - Permissions that gate writing user-provided data.
 	PermissionType string `json:"permissionType,omitempty"`
+	// PrivilegedAccessManagerMetadata: Output only. Metadata about the Privileged
+	// Access Manager (PAM) backed authorization decisions. This field is populated
+	// if the access is granted via an IAM policy with a binding which is managed
+	// by Privileged Access Manager.
+	PrivilegedAccessManagerMetadata *PrivilegedAccessManagerMetadata `json:"privilegedAccessManagerMetadata,omitempty"`
 	// Resource: The resource being accessed, as a REST-style or cloud resource
 	// string. For example:
 	// bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID or
@@ -583,6 +621,38 @@ type AuthorizationInfo struct {
 
 func (s AuthorizationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AuthorizationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CallerAgent: Information set when the caller is an agent.
+type CallerAgent struct {
+	// Authority: The type of authority for the caller agent.
+	//
+	// Possible values:
+	//   "AUTHORITY_TYPE_UNSPECIFIED" - Default value. Should not be used.
+	//   "SELF" - Acts under its own authority.
+	//   "ON_BEHALF_OF" - Acts on behalf of another authority.
+	Authority string `json:"authority,omitempty"`
+	// Id: The agent identifier of the caller agent. This is a globally unique,
+	// immutable name in Uniform Resource Name (URN) format. Example:
+	// 'urn:agent:projects-123456789:projects:123456789:locations:us-central1:aiplat
+	// form:reasoningEngines:987654321'
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Authority") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Authority") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CallerAgent) MarshalJSON() ([]byte, error) {
+	type NoMethod CallerAgent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1697,6 +1767,34 @@ type PolicyViolationInfo struct {
 
 func (s PolicyViolationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PolicyViolationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PrivilegedAccessManagerMetadata: Metadata about the Privileged Access
+// Manager (PAM) backed authorization decisions.
+type PrivilegedAccessManagerMetadata struct {
+	// PamBindingIds: Output only. If PAM is managing the elevated access,
+	// AuditPamBindingId is written to an Identity and Access Management (IAM)
+	// policy, which specifies access controls for resources. If the access is
+	// granted via an IAM policy with a binding which is managed by Privileged
+	// Access Manager, PrivilegedAccessManagerMetadata will contain the
+	// AuditPamBindingId.
+	PamBindingIds []*AuditPamBindingId `json:"pamBindingIds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PamBindingIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PamBindingIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PrivilegedAccessManagerMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivilegedAccessManagerMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	orgpolicyService, err := orgpolicy.NewService(ctx, option.WithScopes(orgpolicy.OrganizationpolicyReadonlyScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,22 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Organization Policy data
+	// and see the email address for your Google Account
+	OrganizationpolicyScope = "https://www.googleapis.com/auth/organizationpolicy"
+
+	// See your Google Cloud Organization Policy data and the email address of your
+	// Google Account
+	OrganizationpolicyReadonlyScope = "https://www.googleapis.com/auth/organizationpolicy.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/organizationpolicy",
+		"https://www.googleapis.com/auth/organizationpolicy.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -340,9 +355,9 @@ type GoogleCloudOrgpolicyV2Constraint struct {
 	ListConstraint *GoogleCloudOrgpolicyV2ConstraintListConstraint `json:"listConstraint,omitempty"`
 	// Name: Immutable. The resource name of the constraint. Must be in one of the
 	// following forms: * `projects/{project_number}/constraints/{constraint_name}`
-	// * `folders/{folder_id}/constraints/{constraint_name}` *
-	// `organizations/{organization_id}/constraints/{constraint_name}` For example,
-	// "/projects/123/constraints/compute.disableSerialPortAccess".
+	// * `folders/{folder_number}/constraints/{constraint_name}` *
+	// `organizations/{organization_number}/constraints/{constraint_name}` For
+	// example, "/projects/123/constraints/compute.disableSerialPortAccess".
 	Name string `json:"name,omitempty"`
 	// SupportsDryRun: Shows if dry run is supported for this constraint or not.
 	SupportsDryRun bool `json:"supportsDryRun,omitempty"`
@@ -733,9 +748,9 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	// following forms, where `constraint_name` is the name of the constraint that
 	// this policy configures: *
 	// `projects/{project_number}/policies/{constraint_name}` *
-	// `folders/{folder_id}/policies/{constraint_name}` *
-	// `organizations/{organization_id}/policies/{constraint_name}` For example,
-	// `projects/123/policies/compute.disableSerialPortAccess`. Note:
+	// `folders/{folder_number}/policies/{constraint_name}` *
+	// `organizations/{organization_number}/policies/{constraint_name}` For
+	// example, `projects/123/policies/compute.disableSerialPortAccess`. Note:
 	// `projects/{project_id}/policies/{constraint_name}` is also an acceptable
 	// name for API requests, but responses will return the name using the
 	// equivalent project number.
@@ -986,8 +1001,8 @@ type FoldersConstraintsListCall struct {
 //
 //   - parent: The Google Cloud resource that parents the constraint. Must be in
 //     one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *FoldersConstraintsService) List(parent string) *FoldersConstraintsListCall {
 	c := &FoldersConstraintsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1139,8 +1154,8 @@ type FoldersPoliciesCreateCall struct {
 //
 //   - parent: The Google Cloud resource that will parent the new policy. Must be
 //     in one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *FoldersPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *FoldersPoliciesCreateCall {
 	c := &FoldersPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1583,8 +1598,8 @@ type FoldersPoliciesListCall struct {
 //   - parent: The target Google Cloud resource that parents the set of
 //     constraints and policies that will be returned from this call. Must be in
 //     one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *FoldersPoliciesService) List(parent string) *FoldersPoliciesListCall {
 	c := &FoldersPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1739,9 +1754,9 @@ type FoldersPoliciesPatchCall struct {
 //     following forms, where `constraint_name` is the name of the constraint
 //     that this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
-//     `folders/{folder_id}/policies/{constraint_name}` *
-//     `organizations/{organization_id}/policies/{constraint_name}` For example,
-//     `projects/123/policies/compute.disableSerialPortAccess`. Note:
+//     `folders/{folder_number}/policies/{constraint_name}` *
+//     `organizations/{organization_number}/policies/{constraint_name}` For
+//     example, `projects/123/policies/compute.disableSerialPortAccess`. Note:
 //     `projects/{project_id}/policies/{constraint_name}` is also an acceptable
 //     name for API requests, but responses will return the name using the
 //     equivalent project number.
@@ -1858,8 +1873,8 @@ type OrganizationsConstraintsListCall struct {
 //
 //   - parent: The Google Cloud resource that parents the constraint. Must be in
 //     one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *OrganizationsConstraintsService) List(parent string) *OrganizationsConstraintsListCall {
 	c := &OrganizationsConstraintsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2593,8 +2608,8 @@ type OrganizationsPoliciesCreateCall struct {
 //
 //   - parent: The Google Cloud resource that will parent the new policy. Must be
 //     in one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *OrganizationsPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *OrganizationsPoliciesCreateCall {
 	c := &OrganizationsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3037,8 +3052,8 @@ type OrganizationsPoliciesListCall struct {
 //   - parent: The target Google Cloud resource that parents the set of
 //     constraints and policies that will be returned from this call. Must be in
 //     one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *OrganizationsPoliciesService) List(parent string) *OrganizationsPoliciesListCall {
 	c := &OrganizationsPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3193,9 +3208,9 @@ type OrganizationsPoliciesPatchCall struct {
 //     following forms, where `constraint_name` is the name of the constraint
 //     that this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
-//     `folders/{folder_id}/policies/{constraint_name}` *
-//     `organizations/{organization_id}/policies/{constraint_name}` For example,
-//     `projects/123/policies/compute.disableSerialPortAccess`. Note:
+//     `folders/{folder_number}/policies/{constraint_name}` *
+//     `organizations/{organization_number}/policies/{constraint_name}` For
+//     example, `projects/123/policies/compute.disableSerialPortAccess`. Note:
 //     `projects/{project_id}/policies/{constraint_name}` is also an acceptable
 //     name for API requests, but responses will return the name using the
 //     equivalent project number.
@@ -3312,8 +3327,8 @@ type ProjectsConstraintsListCall struct {
 //
 //   - parent: The Google Cloud resource that parents the constraint. Must be in
 //     one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *ProjectsConstraintsService) List(parent string) *ProjectsConstraintsListCall {
 	c := &ProjectsConstraintsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3465,8 +3480,8 @@ type ProjectsPoliciesCreateCall struct {
 //
 //   - parent: The Google Cloud resource that will parent the new policy. Must be
 //     in one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *ProjectsPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *ProjectsPoliciesCreateCall {
 	c := &ProjectsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3909,8 +3924,8 @@ type ProjectsPoliciesListCall struct {
 //   - parent: The target Google Cloud resource that parents the set of
 //     constraints and policies that will be returned from this call. Must be in
 //     one of the following forms: * `projects/{project_number}` *
-//     `projects/{project_id}` * `folders/{folder_id}` *
-//     `organizations/{organization_id}`.
+//     `projects/{project_id}` * `folders/{folder_number}` *
+//     `organizations/{organization_number}`.
 func (r *ProjectsPoliciesService) List(parent string) *ProjectsPoliciesListCall {
 	c := &ProjectsPoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4065,9 +4080,9 @@ type ProjectsPoliciesPatchCall struct {
 //     following forms, where `constraint_name` is the name of the constraint
 //     that this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
-//     `folders/{folder_id}/policies/{constraint_name}` *
-//     `organizations/{organization_id}/policies/{constraint_name}` For example,
-//     `projects/123/policies/compute.disableSerialPortAccess`. Note:
+//     `folders/{folder_number}/policies/{constraint_name}` *
+//     `organizations/{organization_number}/policies/{constraint_name}` For
+//     example, `projects/123/policies/compute.disableSerialPortAccess`. Note:
 //     `projects/{project_id}/policies/{constraint_name}` is also an acceptable
 //     name for API requests, but responses will return the name using the
 //     equivalent project number.

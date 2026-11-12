@@ -1458,8 +1458,10 @@ type ProjectsScanConfigsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a ScanConfig. This method support partial update of a
-// ScanConfig.
+// Patch: Updates a ScanConfig. This method supports partial update of a
+// ScanConfig. Authorization requires the following IAM
+// (https://cloud.google.com/iam/docs/) permission on the specified resource
+// `scan_config.name`: - `cloudsecurityscanner.scans.update`
 //
 //   - name: The resource name of the ScanConfig. The name follows the format of
 //     'projects/{projectId}/scanConfigs/{scanConfigId}'. The ScanConfig IDs are

@@ -238,7 +238,7 @@ type ApigatewayApi struct {
 	// not specified, a new Service will automatically be created in the same
 	// project as this API.
 	ManagedService string `json:"managedService,omitempty"`
-	// Name: Output only. Resource name of the API. Format:
+	// Name: Identifier. Resource name of the API. Format:
 	// projects/{project}/locations/global/apis/{api}
 	Name string `json:"name,omitempty"`
 	// State: Output only. State of the API.
@@ -307,7 +307,7 @@ type ApigatewayApiConfig struct {
 	// Repeated fields are concatenated. * Singular embedded messages are merged
 	// using these rules for nested fields.
 	ManagedServiceConfigs []*ApigatewayApiConfigFile `json:"managedServiceConfigs,omitempty"`
-	// Name: Output only. Resource name of the API Config. Format:
+	// Name: Identifier. Resource name of the API Config. Format:
 	// projects/{project}/locations/global/apis/{api}/configs/{api_config}
 	Name string `json:"name,omitempty"`
 	// OpenapiDocuments: Optional. OpenAPI specification documents. If specified,
@@ -700,16 +700,32 @@ type ApigatewayGateway struct {
 	ApiConfig string `json:"apiConfig,omitempty"`
 	// CreateTime: Output only. Created time.
 	CreateTime string `json:"createTime,omitempty"`
-	// DefaultHostname: Output only. The default API Gateway host name of the form
-	// `{gateway_id}-{hash}.{region_code}.gateway.dev`.
+	// DefaultHostname: Output only. The default hostname that serves traffic for
+	// this Gateway.
 	DefaultHostname string `json:"defaultHostname,omitempty"`
 	// DisplayName: Optional. Display name.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveStreamingMode: Output only. The streaming mode this gateway is
+	// actually served with, which the service resolves at creation from
+	// `streaming_mode`, the referenced API Config, and the platform default at the
+	// time. Read this rather than `streaming_mode` to determine whether a gateway
+	// supports streaming.
+	//
+	// Possible values:
+	//   "EFFECTIVE_STREAMING_MODE_UNSPECIFIED" - Indicates that the service has
+	// not resolved a mode. Every gateway returned by `GetGateway` and
+	// `ListGateways` carries a resolved mode, so this value should not be returned
+	// under normal circumstances.
+	//   "EFFECTIVE_STREAMING_MODE_DISABLED" - Indicates that the gateway does not
+	// support streaming.
+	//   "EFFECTIVE_STREAMING_MODE_ENABLED" - Indicates that the gateway supports
+	// streaming.
+	EffectiveStreamingMode string `json:"effectiveStreamingMode,omitempty"`
 	// Labels: Optional. Resource labels to represent user-provided metadata. Refer
 	// to cloud documentation on labels for more details.
 	// https://cloud.google.com/compute/docs/labeling-resources
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. Resource name of the Gateway. Format:
+	// Name: Identifier. Resource name of the Gateway. Format:
 	// projects/{project}/locations/{location}/gateways/{gateway}
 	Name string `json:"name,omitempty"`
 	// State: Output only. The current state of the Gateway.
@@ -722,6 +738,29 @@ type ApigatewayGateway struct {
 	//   "DELETING" - Gateway is being deleted.
 	//   "UPDATING" - Gateway is being updated.
 	State string `json:"state,omitempty"`
+	// StreamingMode: Optional. Immutable. Requests streaming for a new gateway. An
+	// attempt to change it on update is rejected. If unset, the service selects
+	// the mode. This field records only what was requested and is never modified
+	// by the service; read `effective_streaming_mode` for the mode the gateway is
+	// served with.
+	//
+	// Possible values:
+	//   "STREAMING_MODE_UNSPECIFIED" - Lets the service select the streaming mode.
+	//   "STREAMING_MODE_ENABLED" - Enables streaming. The gateway supports
+	// Server-Sent Events (SSE), HTTP/2 streaming, HTTP chunked transfer,
+	// WebSockets, and gRPC bidirectional streaming. The API config's backend
+	// `deadline` field governs how long a request (unary or streaming) may run.
+	// Enabling streaming on a gateway does not change how the `deadline` field
+	// behaves on an SSE or chunked-transfer path. The deadline remains a
+	// wall-clock bound on the complete response, so a stream is cut once the
+	// deadline elapses regardless of how much data it is sending. The default is
+	// 15 seconds and the maximum is 3,600 seconds. On gRPC streaming and
+	// WebSockets, `deadline` bounds the gap between messages instead: default 300
+	// seconds; set `deadline` to change it, up to 3,600 seconds. On WebSockets, a
+	// `deadline` of less than 300 seconds is ignored and a 300-second minimum
+	// applies. The maximum total request duration is always 3,600 seconds, not
+	// configurable.
+	StreamingMode string `json:"streamingMode,omitempty"`
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -2188,7 +2227,7 @@ type ProjectsLocationsApisPatchCall struct {
 
 // Patch: Updates the parameters of a single Api.
 //
-//   - name: Output only. Resource name of the API. Format:
+//   - name: Identifier. Resource name of the API. Format:
 //     projects/{project}/locations/global/apis/{api}.
 func (r *ProjectsLocationsApisService) Patch(name string, apigatewayapi *ApigatewayApi) *ProjectsLocationsApisPatchCall {
 	c := &ProjectsLocationsApisPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2200,8 +2239,8 @@ func (r *ProjectsLocationsApisService) Patch(name string, apigatewayapi *Apigate
 // UpdateMask sets the optional parameter "updateMask": Field mask is used to
 // specify the fields to be overwritten in the Api resource by the update. The
 // fields specified in the update_mask are relative to the resource, not the
-// full request. A field will be overwritten if it is in the mask. If the user
-// does not provide a mask then all fields will be overwritten.
+// full request. A field will be overwritten if it is in the mask. The request
+// fails if `update_mask` is missing or empty.
 func (c *ProjectsLocationsApisPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApisPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -3144,7 +3183,7 @@ type ProjectsLocationsApisConfigsPatchCall struct {
 
 // Patch: Updates the parameters of a single ApiConfig.
 //
-//   - name: Output only. Resource name of the API Config. Format:
+//   - name: Identifier. Resource name of the API Config. Format:
 //     projects/{project}/locations/global/apis/{api}/configs/{api_config}.
 func (r *ProjectsLocationsApisConfigsService) Patch(name string, apigatewayapiconfig *ApigatewayApiConfig) *ProjectsLocationsApisConfigsPatchCall {
 	c := &ProjectsLocationsApisConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3157,8 +3196,7 @@ func (r *ProjectsLocationsApisConfigsService) Patch(name string, apigatewayapico
 // specify the fields to be overwritten in the ApiConfig resource by the
 // update. The fields specified in the update_mask are relative to the
 // resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// mask. The request fails if `update_mask` is missing or empty.
 func (c *ProjectsLocationsApisConfigsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsApisConfigsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4085,7 +4123,7 @@ type ProjectsLocationsGatewaysPatchCall struct {
 
 // Patch: Updates the parameters of a single Gateway.
 //
-//   - name: Output only. Resource name of the Gateway. Format:
+//   - name: Identifier. Resource name of the Gateway. Format:
 //     projects/{project}/locations/{location}/gateways/{gateway}.
 func (r *ProjectsLocationsGatewaysService) Patch(name string, apigatewaygateway *ApigatewayGateway) *ProjectsLocationsGatewaysPatchCall {
 	c := &ProjectsLocationsGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4097,8 +4135,8 @@ func (r *ProjectsLocationsGatewaysService) Patch(name string, apigatewaygateway 
 // UpdateMask sets the optional parameter "updateMask": Field mask is used to
 // specify the fields to be overwritten in the Gateway resource by the update.
 // The fields specified in the update_mask are relative to the resource, not
-// the full request. A field will be overwritten if it is in the mask. If the
-// user does not provide a mask then all fields will be overwritten.
+// the full request. A field will be overwritten if it is in the mask. The
+// request fails if `update_mask` is missing or empty.
 func (c *ProjectsLocationsGatewaysPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGatewaysPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

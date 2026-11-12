@@ -772,6 +772,19 @@ type InternalRange struct {
 	// is set as well, and both fields must match. In other words, with IPv6 this
 	// field only works as a redundant parameter.
 	PrefixLength int64 `json:"prefixLength,omitempty"`
+	// Purpose: Optional. The purpose of this internal range. Defines the intended
+	// use of the range and any restrictions associated with it. If not specified,
+	// it defaults to VPC_SUBNET.
+	//
+	// Possible values:
+	//   "PURPOSE_UNSPECIFIED" - If purpose is left unspecified in
+	// CreateInternalRange or UpdateInternalRange, it will be defaulted to
+	// VPC_SUBNET.
+	//   "VPC_SUBNET" - The internal range is used for VPC subnetworks.
+	//   "INTERNAL_ADDRESS" - The internal range is used exclusively for allocating
+	// individual IP addresses (e.g., for global PSC endpoints). Child ranges or
+	// subnetworks cannot be created from a range with this purpose.
+	Purpose string `json:"purpose,omitempty"`
 	// RangeStatus: Output only. Status of the Internal Range.
 	//
 	// Possible values:

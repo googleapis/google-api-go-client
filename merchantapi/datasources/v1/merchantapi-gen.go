@@ -186,8 +186,13 @@ type AccountsDataSourcesFileUploadsService struct {
 	s *Service
 }
 
-// DataSource: The data source (/merchant/api/guides/data-sources/overview) for
-// the Merchant Center account.
+// DataSource: The data source
+// (https://developers.google.com/merchant/api/guides/data-sources/overview)
+// for the Merchant Center account. For more information, see Manage API data
+// sources
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources)
+// and Manage various data source types
+// (https://developers.google.com/merchant/api/guides/data-sources/manage-various-data-sources).
 type DataSource struct {
 	// DataSourceId: Output only. The data source id.
 	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
@@ -265,8 +270,9 @@ func (s DataSource) MarshalJSON() ([]byte, error) {
 // DataSourceReference: Data source reference can be used to manage related
 // data sources within the data source service.
 type DataSourceReference struct {
-	// PrimaryDataSourceName: Optional. The name of the primary data source.
-	// Format: `accounts/{account}/dataSources/{datasource}`
+	// PrimaryDataSourceName: Optional. Deprecated: Use `self` instead to reference
+	// the primary data source. The name of the primary data source. Format:
+	// `accounts/{account}/dataSources/{datasource}`
 	PrimaryDataSourceName string `json:"primaryDataSourceName,omitempty"`
 	// Self: Self should be used to reference the primary data source itself.
 	Self bool `json:"self,omitempty"`
@@ -359,6 +365,7 @@ type Destination struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	Destination string `json:"destination,omitempty"`
 	// State: The state of the destination.
 	//
@@ -507,7 +514,11 @@ func (s FileInput) MarshalJSON() ([]byte, error) {
 // FileUpload: The file upload of a specific data source, that is, the result
 // of the retrieval of the data source at a certain timestamp computed
 // asynchronously when the data source processing is finished. Only applicable
-// to file data sources.
+// to file data sources. For more information, see Monitor and trigger data
+// source processing
+// (https://developers.google.com/merchant/api/guides/data-sources/monitor-status)
+// and Manage various data source types
+// (https://developers.google.com/merchant/api/guides/data-sources/manage-various-data-sources).
 type FileUpload struct {
 	// DataSourceId: Output only. The data source id.
 	DataSourceId int64 `json:"dataSourceId,omitempty,string"`
@@ -788,6 +799,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -812,7 +824,9 @@ type ProductReviewDataSource struct {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -1013,7 +1027,11 @@ type AccountsDataSourcesCreateCall struct {
 }
 
 // Create: Creates the new data source configuration for the given account.
-// This method always creates a new data source.
+// This method always creates a new data source. For more information, see
+// Manage API data sources
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources)
+// and Manage various data source types
+// (https://developers.google.com/merchant/api/guides/data-sources/manage-various-data-sources).
 //
 //   - parent: The account where this data source will be created. Format:
 //     `accounts/{account}`.
@@ -1219,7 +1237,9 @@ type AccountsDataSourcesFetchCall struct {
 // a data source from your Merchant Center Account. If you need to call this
 // method more than once per day, you should use the Products service to update
 // your product data instead. This method only works on data sources with a
-// file input set.
+// file input set. For more information, see Monitor and trigger data source
+// processing
+// (https://developers.google.com/merchant/api/guides/data-sources/monitor-status).
 //
 //   - name: The name of the data source resource to fetch. Format:
 //     `accounts/{account}/dataSources/{datasource}`.

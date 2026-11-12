@@ -432,6 +432,17 @@ func (s CloudresourcemanagerGoogleCloudResourcemanagerV2beta1FolderOperation) Ma
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateBoundaryMetadata: A status object which is used as the `metadata`
+// field for the Operation returned by CreateBoundary. Currently empty.
+type CreateBoundaryMetadata struct {
+}
+
+// CreateCapabilityConfigMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by CreateCapabilityConfig.
+// Currently empty.
+type CreateCapabilityConfigMetadata struct {
+}
+
 // CreateFolderMetadata: Metadata pertaining to the Folder creation process.
 type CreateFolderMetadata struct {
 	// DisplayName: The display name of the folder.
@@ -487,6 +498,16 @@ func (s CreateProjectMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CreateSemanticTagBindingMetadata: Metadata for the
+// `CreateSemanticTagBinding` long-running operation.
+type CreateSemanticTagBindingMetadata struct {
+}
+
+// CreateSemanticTagValueMetadata: Runtime operation information for creating a
+// `SemanticTagValue`.
+type CreateSemanticTagValueMetadata struct {
+}
+
 // CreateTagBindingMetadata: Runtime operation information for creating a
 // TagValue.
 type CreateTagBindingMetadata struct {
@@ -499,6 +520,17 @@ type CreateTagKeyMetadata struct {
 // CreateTagValueMetadata: Runtime operation information for creating a
 // TagValue.
 type CreateTagValueMetadata struct {
+}
+
+// DeleteBoundaryMetadata: A status object which is used as the `metadata`
+// field for the Operation returned by DeleteBoundary. Currently empty.
+type DeleteBoundaryMetadata struct {
+}
+
+// DeleteCapabilityConfigMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by DeleteCapabilityConfig.
+// Currently empty.
+type DeleteCapabilityConfigMetadata struct {
 }
 
 // DeleteFolderMetadata: A status object which is used as the `metadata` field
@@ -514,6 +546,16 @@ type DeleteOrganizationMetadata struct {
 // DeleteProjectMetadata: A status object which is used as the `metadata` field
 // for the Operation returned by `DeleteProject`.
 type DeleteProjectMetadata struct {
+}
+
+// DeleteSemanticTagBindingMetadata: Metadata for the
+// `DeleteSemanticTagBinding` long-running operation.
+type DeleteSemanticTagBindingMetadata struct {
+}
+
+// DeleteSemanticTagValueMetadata: Runtime operation information for deleting a
+// `SemanticTagValue`.
+type DeleteSemanticTagValueMetadata struct {
 }
 
 // DeleteTagBindingMetadata: Runtime operation information for deleting a
@@ -1231,6 +1273,23 @@ type UndeleteOrganizationMetadata struct {
 // UndeleteProjectMetadata: A status object which is used as the `metadata`
 // field for the Operation returned by `UndeleteProject`.
 type UndeleteProjectMetadata struct {
+}
+
+// UpdateBoundaryConfigMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by UpdateBoundaryConfig.
+// Currently empty.
+type UpdateBoundaryConfigMetadata struct {
+}
+
+// UpdateBoundaryMetadata: A status object which is used as the `metadata`
+// field for the Operation returned by UpdateBoundary. Currently empty.
+type UpdateBoundaryMetadata struct {
+}
+
+// UpdateCapabilityConfigMetadata: A status object which is used as the
+// `metadata` field for the Operation returned by UpdateCapabilityConfig.
+// Currently empty.
+type UpdateCapabilityConfigMetadata struct {
 }
 
 // UpdateFolderMetadata: A status object which is used as the `metadata` field

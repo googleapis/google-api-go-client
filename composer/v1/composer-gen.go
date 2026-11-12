@@ -766,6 +766,17 @@ type Environment struct {
 	// [\p{Ll}\p{Lo}\p{N}_-]{0,63} * Both keys and values are additionally
 	// constrained to be <= 128 bytes in size.
 	Labels map[string]string `json:"labels,omitempty"`
+	// Mode: Optional. Selects the environment mode that determines what settings
+	// are customizable and what features are available in the environment.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Represents the default mode, which allows full
+	// customization of the environment. It should be used for all production and
+	// customized test environments.
+	//   "DEVELOPMENT" - Represents the development mode, which has constraints on
+	// the environment configuration, but offers an additional feature (environment
+	// hibernation). It should be used only for test environments.
+	Mode string `json:"mode,omitempty"`
 	// Name: Identifier. The resource name of the environment, in the form:
 	// "projects/{projectId}/locations/{locationId}/environments/{environmentId}"
 	// EnvironmentId must start with a lowercase letter followed by up to 63
@@ -784,6 +795,8 @@ type Environment struct {
 	// for use.
 	//   "UPDATING" - The environment is being updated. It remains usable but
 	// cannot receive additional update requests or be deleted at this time.
+	//   "HIBERNATED" - The environment is currently hibernated. It does not run
+	// any DAGs.
 	//   "DELETING" - The environment is undergoing deletion. It cannot be used.
 	//   "ERROR" - The environment has encountered an error and cannot be used.
 	State string `json:"state,omitempty"`
@@ -855,6 +868,8 @@ type EnvironmentConfig struct {
 	//   "ENVIRONMENT_SIZE_MEDIUM" - The environment size is medium.
 	//   "ENVIRONMENT_SIZE_LARGE" - The environment size is large.
 	//   "ENVIRONMENT_SIZE_EXTRA_LARGE" - The environment size is extra large.
+	//   "ENVIRONMENT_SIZE_X_EXTRA_LARGE" - The environment size is double extra
+	// large.
 	EnvironmentSize string `json:"environmentSize,omitempty"`
 	// GkeCluster: Output only. The Kubernetes Engine cluster used to run this
 	// environment.
@@ -1051,6 +1066,10 @@ func (s FetchDatabasePropertiesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// HibernateEnvironmentRequest: Request to hibernate a Composer environment.
+type HibernateEnvironmentRequest struct {
+}
+
 // IPAllocationPolicy: Configuration for controlling how IPs are allocated in
 // the GKE cluster running the Apache Airflow software.
 type IPAllocationPolicy struct {
@@ -1113,6 +1132,9 @@ type ImageVersion struct {
 	// CreationDisabled: Whether it is impossible to create an environment with the
 	// image version.
 	CreationDisabled bool `json:"creationDisabled,omitempty"`
+	// DevModeSupported: Whether it is possible to create an environment in the
+	// `DEVELOPMENT` mode with the image version.
+	DevModeSupported bool `json:"devModeSupported,omitempty"`
 	// ImageVersionId: The string identifier of the ImageVersion, in the form:
 	// "composer-x.y.z-airflow-a.b.c"
 	ImageVersionId string `json:"imageVersionId,omitempty"`
@@ -1141,6 +1163,33 @@ type ImageVersion struct {
 
 func (s ImageVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ImageVersion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ImageVersionRollbackTarget: The image version an environment can be rolled
+// back to.
+type ImageVersionRollbackTarget struct {
+	// ImageVersion: Output only. The image version the environment can be rolled
+	// back to.
+	ImageVersion string `json:"imageVersion,omitempty"`
+	// LastActiveTime: Output only. The last time when the environment was running
+	// this image version.
+	LastActiveTime string `json:"lastActiveTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ImageVersionRollbackTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageVersionRollbackTarget
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1666,6 +1715,8 @@ type OperationMetadata struct {
 	//   "DATABASE_FAILOVER" - Triggers failover of environment's Cloud SQL
 	// instance (only for highly resilient environments).
 	//   "MIGRATE" - Migrates resource to a new major version.
+	//   "HIBERNATE" - Hibernates a resource.
+	//   "RESUME" - Resumes a resource.
 	OperationType string `json:"operationType,omitempty"`
 	// Resource: Output only. The resource being operated on, as a relative
 	// resource name ( /apis/design/resource_names#relative_resource_name).
@@ -1908,6 +1959,10 @@ func (s RecoveryConfig) MarshalJSON() ([]byte, error) {
 type RestartWebServerRequest struct {
 }
 
+// ResumeEnvironmentRequest: Request to resume a Composer environment.
+type ResumeEnvironmentRequest struct {
+}
+
 // SaveSnapshotRequest: Request to create a snapshot of a Cloud Composer
 // environment.
 type SaveSnapshotRequest struct {
@@ -2097,6 +2152,11 @@ type SoftwareConfig struct {
 	// list (/composer/docs/concepts/versioning/composer-versions) and versioning
 	// overview (/composer/docs/concepts/versioning/composer-versioning-overview).
 	ImageVersion string `json:"imageVersion,omitempty"`
+	// ImageVersionRollbackTargets: Output only. The list of image versions the
+	// environment can be rolled back to, sorted by last_active_time in descending
+	// order (most recent first). This field is supported for Cloud Composer
+	// environments in versions composer-3-airflow-*.*.*-build.* and newer.
+	ImageVersionRollbackTargets []*ImageVersionRollbackTarget `json:"imageVersionRollbackTargets,omitempty"`
 	// PypiPackages: Optional. Custom Python Package Index (PyPI) packages to be
 	// installed in the environment. Keys refer to the lowercase package name such
 	// as "numpy" and values are the lowercase extras and version specifier such as
@@ -3314,6 +3374,114 @@ func (c *ProjectsLocationsEnvironmentsGetCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 }
 
+type ProjectsLocationsEnvironmentsHibernateCall struct {
+	s                           *Service
+	name                        string
+	hibernateenvironmentrequest *HibernateEnvironmentRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Hibernate: Hibernates (pauses) a running environment. It requests the
+// environment to switch to the `HIBERNATED` state, keeping its data and
+// minimizing cost, but not running any DAGs. This method is supported for
+// Cloud Composer environments in development mode in versions
+// composer-3-airflow-*.*.*-build.* and newer.
+//
+//   - name: The resource name of the environment to hibernate, in the form:
+//     "projects/{project}/locations/{location}/environments/{environment}".
+func (r *ProjectsLocationsEnvironmentsService) Hibernate(name string, hibernateenvironmentrequest *HibernateEnvironmentRequest) *ProjectsLocationsEnvironmentsHibernateCall {
+	c := &ProjectsLocationsEnvironmentsHibernateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.hibernateenvironmentrequest = hibernateenvironmentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEnvironmentsHibernateCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsHibernateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEnvironmentsHibernateCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsHibernateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEnvironmentsHibernateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsHibernateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.hibernateenvironmentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:hibernate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "composer.projects.locations.environments.hibernate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.hibernate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsHibernateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "composer.projects.locations.environments.hibernate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsEnvironmentsListCall struct {
 	s            *Service
 	parent       string
@@ -3959,6 +4127,113 @@ func (c *ProjectsLocationsEnvironmentsRestartWebServerCall) Do(opts ...googleapi
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "composer.projects.locations.environments.restartWebServer", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsEnvironmentsResumeCall struct {
+	s                        *Service
+	name                     string
+	resumeenvironmentrequest *ResumeEnvironmentRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Resume: Resumes (unpauses) a hibernated environment. It requests the
+// environment to switch to the `RUNNING` state, so that it is ready to use and
+// run DAGs. This method is supported for Cloud Composer environments in
+// development mode in versions composer-3-airflow-*.*.*-build.* and newer.
+//
+//   - name: The resource name of the environment to resume, in the form:
+//     "projects/{project}/locations/{location}/environments/{environment}".
+func (r *ProjectsLocationsEnvironmentsService) Resume(name string, resumeenvironmentrequest *ResumeEnvironmentRequest) *ProjectsLocationsEnvironmentsResumeCall {
+	c := &ProjectsLocationsEnvironmentsResumeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.resumeenvironmentrequest = resumeenvironmentrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsEnvironmentsResumeCall) Fields(s ...googleapi.Field) *ProjectsLocationsEnvironmentsResumeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsEnvironmentsResumeCall) Context(ctx context.Context) *ProjectsLocationsEnvironmentsResumeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsEnvironmentsResumeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEnvironmentsResumeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.resumeenvironmentrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:resume")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "composer.projects.locations.environments.resume", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "composer.projects.locations.environments.resume" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsEnvironmentsResumeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "composer.projects.locations.environments.resume", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

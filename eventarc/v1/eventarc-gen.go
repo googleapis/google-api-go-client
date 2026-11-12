@@ -2721,7 +2721,7 @@ type Trigger struct {
 	// payload in MIME format that is expected from the CloudEvent data field. This
 	// is set to `application/json` if the value is not defined.
 	EventDataContentType string `json:"eventDataContentType,omitempty"`
-	// EventFilters: Required. Unordered list. The list of filters that applies to
+	// EventFilters: Optional. Unordered list. The list of filters that applies to
 	// event attributes. Only events that match all the provided filters are sent
 	// to the destination.
 	EventFilters []*EventFilter `json:"eventFilters,omitempty"`

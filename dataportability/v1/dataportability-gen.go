@@ -208,6 +208,9 @@ const (
 	// Move a copy of your food purchase and reservation activity
 	DataportabilityOrderReservePurchasesReservationsScope = "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations"
 
+	// Usage and diagnostic data from your Pixel devices.
+	DataportabilityPixelDeviceDataScope = "https://www.googleapis.com/auth/dataportability.pixel.device_data"
+
 	// Move a copy of information about your devices with Google Play Store
 	// installed
 	DataportabilityPlayDevicesScope = "https://www.googleapis.com/auth/dataportability.play.devices"
@@ -367,6 +370,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.nest.store",
 		"https://www.googleapis.com/auth/dataportability.nest.user",
 		"https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
+		"https://www.googleapis.com/auth/dataportability.pixel.device_data",
 		"https://www.googleapis.com/auth/dataportability.play.devices",
 		"https://www.googleapis.com/auth/dataportability.play.grouping",
 		"https://www.googleapis.com/auth/dataportability.play.installs",

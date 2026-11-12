@@ -180,13 +180,17 @@ type NotificationSetting struct {
 	//   "NEW_CUSTOMER_MEDIA" - A new media item has been added to the location by
 	// a Google Maps user. The notification will provide the resource name of the
 	// new media item.
-	//   "NEW_QUESTION" - A new question is added to the location. The notification
+	//   "NEW_QUESTION" - Deprecated: The My Business Q&A API was discontinued on
+	// November 3, 2025. A new question is added to the location. The notification
 	// will provide the resource name of question.
-	//   "UPDATED_QUESTION" - A question of the location is updated. The
-	// notification will provide the resource name of question.
-	//   "NEW_ANSWER" - A new answer is added to the location. The notification
+	//   "UPDATED_QUESTION" - Deprecated: The My Business Q&A API was discontinued
+	// on November 3, 2025. A question of the location is updated. The notification
+	// will provide the resource name of question.
+	//   "NEW_ANSWER" - Deprecated: The My Business Q&A API was discontinued on
+	// November 3, 2025. A new answer is added to the location. The notification
 	// will provide the resource name of question and answer.
-	//   "UPDATED_ANSWER" - An answer of the location is updated. The notification
+	//   "UPDATED_ANSWER" - Deprecated: The My Business Q&A API was discontinued on
+	// November 3, 2025. An answer of the location is updated. The notification
 	// will provide the resource name of question and answer.
 	//   "DUPLICATE_LOCATION" - Indicates whether there is a change in location
 	// metadata's duplicate location field.

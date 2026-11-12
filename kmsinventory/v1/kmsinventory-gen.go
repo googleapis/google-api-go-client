@@ -644,6 +644,10 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "KEM_ECDH_P256" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-256 key that returns shared secret.
+	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-384 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -746,9 +750,9 @@ type GoogleCloudKmsV1CryptoKeyVersion struct {
 	// destroyed. Additional details can be found in
 	// CryptoKeyVersion.external_destruction_failure_reason.
 	State string `json:"state,omitempty"`
-	// TrustedWrappingEnabled: Immutable. Field indicating that the key may be
-	// wrapped by a trusted key. This field can be set for all key purposes except
-	// ENCRYPT_DECRYPT, and is only valid for keys with protection level
+	// TrustedWrappingEnabled: Optional. Immutable. Field indicating that the key
+	// may be wrapped by a trusted key. This field can be set for all key purposes
+	// except ENCRYPT_DECRYPT, and is only valid for keys with protection level
 	// HSM_SINGLE_TENANT. This field can only be set at creation or import time via
 	// CreateCryptoKeyVersion, or ImportCryptoKeyVersion.
 	TrustedWrappingEnabled bool `json:"trustedWrappingEnabled,omitempty"`
@@ -861,6 +865,10 @@ type GoogleCloudKmsV1CryptoKeyVersionTemplate struct {
 	//   "PQ_SIGN_ML_DSA_87_EXTERNAL_MU" - The post-quantum Module-Lattice-Based
 	// Digital Signature Algorithm, at security level 5. Randomized version
 	// supporting externally-computed message representatives.
+	//   "KEM_ECDH_P256" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-256 key that returns shared secret.
+	//   "KEM_ECDH_P384" - Key encapsulation: Elliptic Curve Diffie-Hellman with
+	// NIST P-384 key that returns shared secret.
 	//   "AES_256_KWP" - AES key wrap with zero padding algorithm (RFC 5649). Can
 	// only be used by keys with purpose AES_WRAPPING.
 	Algorithm string `json:"algorithm,omitempty"`
@@ -902,7 +910,7 @@ func (s GoogleCloudKmsV1CryptoKeyVersionTemplate) MarshalJSON() ([]byte, error) 
 type GoogleCloudKmsV1ExternalProtectionLevelOptions struct {
 	// EkmConnectionBackendOverride: Optional. The resource name of the backend
 	// environment where the key material of CryptoKeyVersions is associated with.
-	// Setting this field overrides the CryptoKeyBackend. This field may be set
+	// Setting this field overrides the crypto_key_backend. This field may be set
 	// when CryptoKeyVersions is set to EXTERNAL_VPC. Format:
 	// `projects/*/locations/*/ekmConnections/*`.
 	EkmConnectionBackendOverride string `json:"ekmConnectionBackendOverride,omitempty"`
@@ -1028,6 +1036,8 @@ type GoogleCloudKmsV1KeyOperationAttestation struct {
 	// https://www.marvell.com/products/security-solutions/nitrox-hs-adapters/software-key-attestation.html.
 	//   "CAVIUM_V2_COMPRESSED" - Cavium HSM attestation V2 compressed with gzip.
 	// This is a new format introduced in Cavium's version 3.2-08.
+	//   "CAVIUM_V209" - Cavium HSM attestation V209, introduced in Cavium's
+	// version 2.09-0702.
 	Format string `json:"format,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CertChains") to
 	// unconditionally include in API requests. By default, fields with empty or

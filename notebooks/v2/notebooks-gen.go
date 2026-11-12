@@ -34,6 +34,11 @@
 //
 // # Other authentication options
 //
+// By default, all available scopes (see "Constants") are used to authenticate.
+// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
+//
+//	notebooksService, err := notebooks.NewService(ctx, option.WithScopes(notebooks.NotebooksScope))
+//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -101,12 +106,17 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
+
+	// See, edit, configure, and delete your Google Cloud Agent Platform Workbench
+	// Instances data and see the email address for your Google Account
+	NotebooksScope = "https://www.googleapis.com/auth/notebooks"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/notebooks",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -211,7 +221,9 @@ type AcceleratorConfig struct {
 	//
 	// Possible values:
 	//   "ACCELERATOR_TYPE_UNSPECIFIED" - Accelerator type is not specified.
-	//   "NVIDIA_TESLA_P100" - Accelerator type is Nvidia Tesla P100.
+	//   "NVIDIA_TESLA_P100" - Deprecated: Use `NVIDIA_TESLA_T4` (N1) or
+	// `NVIDIA_L4` (G2) instead. The NVIDIA Tesla P100 GPU is being decommissioned
+	// fleet-wide by Compute Engine and is no longer available for new instances.
 	//   "NVIDIA_TESLA_V100" - Accelerator type is Nvidia Tesla V100.
 	//   "NVIDIA_TESLA_P4" - Accelerator type is Nvidia Tesla P4.
 	//   "NVIDIA_TESLA_T4" - Accelerator type is Nvidia Tesla T4.
@@ -224,8 +236,9 @@ type AcceleratorConfig struct {
 	//   "NVIDIA_H200_141GB" - Accelerator type is Nvidia Tesla H200 - 141GB.
 	//   "NVIDIA_TESLA_T4_VWS" - Accelerator type is NVIDIA Tesla T4 Virtual
 	// Workstations.
-	//   "NVIDIA_TESLA_P100_VWS" - Accelerator type is NVIDIA Tesla P100 Virtual
-	// Workstations.
+	//   "NVIDIA_TESLA_P100_VWS" - Deprecated: Use `NVIDIA_TESLA_T4_VWS` instead.
+	// The NVIDIA Tesla P100 GPU (Virtual Workstations) is being decommissioned
+	// fleet-wide by Compute Engine and is no longer available for new instances.
 	//   "NVIDIA_TESLA_P4_VWS" - Accelerator type is NVIDIA Tesla P4 Virtual
 	// Workstations.
 	//   "NVIDIA_B200" - Accelerator type is NVIDIA B200.
@@ -252,11 +265,11 @@ func (s AcceleratorConfig) MarshalJSON() ([]byte, error) {
 // AccessConfig: An access configuration attached to an instance's network
 // interface.
 type AccessConfig struct {
-	// ExternalIp: An external IP address associated with this instance. Specify an
-	// unused static external IP address available to the project or leave this
-	// field undefined to use an IP from a shared ephemeral IP address pool. If you
-	// specify a static external IP address, it must live in the same region as the
-	// zone of the instance.
+	// ExternalIp: Optional. An external IP address associated with this instance.
+	// Specify an unused static external IP address available to the project or
+	// leave this field undefined to use an IP from a shared ephemeral IP address
+	// pool. If you specify a static external IP address, it must live in the same
+	// region as the zone of the instance.
 	ExternalIp string `json:"externalIp,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExternalIp") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -377,8 +390,8 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 
 // BootDisk: The definition of a boot disk.
 type BootDisk struct {
-	// DiskEncryption: Optional. Input only. Disk encryption method used on the
-	// boot and data disks, defaults to GMEK.
+	// DiskEncryption: Optional. Disk encryption method used on the boot and data
+	// disks, defaults to GMEK.
 	//
 	// Possible values:
 	//   "DISK_ENCRYPTION_UNSPECIFIED" - Disk encryption is not specified.
@@ -409,8 +422,8 @@ type BootDisk struct {
 	//   "HYPERDISK_ML" - Represents the Hyperdisk ML persistent disk type. Can be
 	// used as a boot disk or data disk.
 	DiskType string `json:"diskType,omitempty"`
-	// KmsKey: Optional. Input only. The KMS key used to encrypt the disks, only
-	// applicable if disk_encryption is CMEK. Format:
+	// KmsKey: Optional. The KMS key used to encrypt the disks, only applicable if
+	// disk_encryption is CMEK. Format:
 	// `projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys
 	// /{key_id}` Learn more about using your own encryption keys.
 	KmsKey string `json:"kmsKey,omitempty"`
@@ -620,8 +633,8 @@ func (s ContainerImage) MarshalJSON() ([]byte, error) {
 
 // DataDisk: An instance-attached disk resource.
 type DataDisk struct {
-	// DiskEncryption: Optional. Input only. Disk encryption method used on the
-	// boot and data disks, defaults to GMEK.
+	// DiskEncryption: Optional. Disk encryption method used on the boot and data
+	// disks, defaults to GMEK.
 	//
 	// Possible values:
 	//   "DISK_ENCRYPTION_UNSPECIFIED" - Disk encryption is not specified.
@@ -652,8 +665,8 @@ type DataDisk struct {
 	//   "HYPERDISK_ML" - Represents the Hyperdisk ML persistent disk type. Can be
 	// used as a boot disk or data disk.
 	DiskType string `json:"diskType,omitempty"`
-	// KmsKey: Optional. Input only. The KMS key used to encrypt the disks, only
-	// applicable if disk_encryption is CMEK. Format:
+	// KmsKey: Optional. The KMS key used to encrypt the disks, only applicable if
+	// disk_encryption is CMEK. Format:
 	// `projects/{project_id}/locations/{location}/keyRings/{key_ring_id}/cryptoKeys
 	// /{key_id}` Learn more about using your own encryption keys.
 	KmsKey string `json:"kmsKey,omitempty"`
@@ -948,6 +961,10 @@ type GceSetup struct {
 	// supported Shielded VM features
 	// (https://cloud.google.com/compute/docs/instances/modifying-shielded-vm).
 	ShieldedInstanceConfig *ShieldedInstanceConfig `json:"shieldedInstanceConfig,omitempty"`
+	// SystemMetadata: Output only. Represents system-managed metadata for this
+	// instance: the subset of `metadata` whose keys are recognized Workbench
+	// system keys.
+	SystemMetadata map[string]string `json:"systemMetadata,omitempty"`
 	// Tags: Optional. The Compute Engine network tags to add to runtime (see Add
 	// network tags (https://cloud.google.com/vpc/docs/add-remove-network-tags)).
 	Tags []string `json:"tags,omitempty"`
@@ -1140,6 +1157,10 @@ type Instance struct {
 	//   "INITIALIZING" - The instance is being created.
 	//   "SUSPENDING" - The instance is suspending.
 	//   "SUSPENDED" - The instance is suspended.
+	//   "ORPHANED" - The instance has no VM. An upgrade removed the original and
+	// could not create its replacement; the data disk and any snapshots are
+	// intact. Retry the upgrade to finish it, or roll the instance back to the
+	// snapshot taken before it started.
 	State string `json:"state,omitempty"`
 	// ThirdPartyProxyUrl: Output only. The workforce pools proxy endpoint that is
 	// used to access the Jupyter notebook.
@@ -1309,6 +1330,11 @@ type NetworkInterface struct {
 	// accessConfigs specified, the instance will have an external internet access
 	// through an ephemeral external IP address.
 	AccessConfigs []*AccessConfig `json:"accessConfigs,omitempty"`
+	// InternalIp: Optional. An internal IP address associated with this instance.
+	// Specify an unused static internal IP address available to the subnet this
+	// instance is in, or leave this field undefined to use an IP from the subnet's
+	// ephemeral range.
+	InternalIp string `json:"internalIp,omitempty"`
 	// Network: Optional. The name of the VPC that this VM instance is in. Format:
 	// `projects/{project_id}/global/networks/{network_id}`
 	Network string `json:"network,omitempty"`
@@ -2005,6 +2031,15 @@ type VmImage struct {
 	// Family: Optional. Use this VM image family to find the image; the newest
 	// image in this family will be used.
 	Family string `json:"family,omitempty"`
+	// ImageDescription: Output only. A human-readable description of the image
+	// running on the instance (for example, "Debian 11, Python 3.10"), derived at
+	// read time from the image release configuration (the source of truth). Set to
+	// "Custom" for unrecognized boot-disk images.
+	ImageDescription string `json:"imageDescription,omitempty"`
+	// ImageId: Output only. The ID of the specific Compute Engine VM image the
+	// instance is currently running (for example,
+	// "workbench-instances-2603-20260918-2130-rc0").
+	ImageId string `json:"imageId,omitempty"`
 	// Name: Optional. Use VM image name to find the image.
 	Name string `json:"name,omitempty"`
 	// Project: Required. The name of the Google Cloud project that this VM image
@@ -3512,7 +3547,11 @@ func (c *ProjectsLocationsInstancesPatchCall) RequestId(requestId string) *Proje
 // `gce_setup.reservation_affinity.values` * `gce_setup.tags` *
 // `gce_setup.container_image` * `gce_setup.container_image.repository` *
 // `gce_setup.container_image.tag` * `gce_setup.disable_public_ip` *
-// `disable_proxy_access`
+// `disable_proxy_access` Note: `gce_setup.disable_public_ip` and
+// `disable_proxy_access` are one-way on update -- they can only be used to
+// *disable* the feature (set the field to `true`). Requests that set either
+// field back to `false` (re-enabling the external IP or proxy access) are
+// rejected with `INVALID_ARGUMENT`.
 func (c *ProjectsLocationsInstancesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsInstancesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

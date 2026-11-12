@@ -238,6 +238,7 @@ type NotificationSubscription struct {
 	// unspecified.
 	//   "PRODUCT_STATUS_CHANGE" - Notification of product status changes, for
 	// example when product becomes disapproved.
+	//   "ACCOUNT_SERVICE_CHANGE" - Notification of account service changes.
 	RegisteredEvent string `json:"registeredEvent,omitempty"`
 	// TargetAccount: The `name` of the account you want to receive notifications
 	// for. Format: `accounts/{account}`
@@ -322,6 +323,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or

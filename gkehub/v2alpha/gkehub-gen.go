@@ -562,7 +562,7 @@ type ConfigManagementConfigSync struct {
 	// for details.
 	PreventDrift bool `json:"preventDrift,omitempty"`
 	// SourceFormat: Optional. Specifies whether the Config Sync repo is in
-	// `hierarchical` or `unstructured` mode. Defaults to `hierarchical`. See
+	// `hierarchy` or `unstructured` mode. Defaults to `hierarchy`. See
 	// https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/concepts/configs#organize-configs
 	// for an explanation.
 	SourceFormat string `json:"sourceFormat,omitempty"`
@@ -978,11 +978,17 @@ func (s ConfigManagementGatekeeperDeploymentState) MarshalJSON() ([]byte, error)
 // ConfigManagementGitConfig: Git repo configuration for a single cluster.
 type ConfigManagementGitConfig struct {
 	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
-	// used for auth when secret_type is `gcpserviceaccount`.
+	// used for auth when secret_type is `gcpserviceaccount`. Annotates the
+	// `RootSync` or `RepoSync` controller's Kubernetes Service Account.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 	// HttpsProxy: Optional. URL for the HTTPS proxy to be used when communicating
-	// with the Git repo. Only specify when secret_type is `cookiefile`, `token`,
-	// or `none`.
+	// with the Git repo. Defines an HTTPS_PROXY environment variable and only
+	// accepts `https` or unadorned URLs. For example,
+	// `https://proxy.internal.business.co:443` or
+	// `proxy.internal.business.co:443`. If using an unadorned URL, make sure the
+	// communication between your proxy server and Git host is secure. Rejects
+	// `http://` URLs. Only specify when secret_type is `cookiefile`, `token`, or
+	// `none`.
 	HttpsProxy string `json:"httpsProxy,omitempty"`
 	// PolicyDir: Optional. The path within the Git repository that represents the
 	// top level of the repo to sync. Default: the root directory of the
@@ -998,7 +1004,9 @@ type ConfigManagementGitConfig struct {
 	// SyncRepo: Required. The URL of the Git repository to use as the source of
 	// truth.
 	SyncRepo string `json:"syncRepo,omitempty"`
-	// SyncRev: Optional. Git revision (tag or hash) to check out. Default HEAD.
+	// SyncRev: Optional. Git revision (tag or hash) or branch to sync from.
+	// Default `HEAD`. If not `HEAD`, takes precedence over `sync_branch` field.
+	// When using a hash, must be a full hash, and not an abbreviated form.
 	SyncRev string `json:"syncRev,omitempty"`
 	// SyncWaitSecs: Optional. Period in seconds between consecutive syncs.
 	// Default: 15.
@@ -1190,7 +1198,8 @@ func (s ConfigManagementInstallError) MarshalJSON() ([]byte, error) {
 // ConfigManagementOciConfig: OCI repo configuration for a single cluster.
 type ConfigManagementOciConfig struct {
 	// GcpServiceAccountEmail: Optional. The Google Cloud Service Account Email
-	// used for auth when secret_type is `gcpserviceaccount`.
+	// used for auth when secret_type is `gcpserviceaccount`. Annotates the
+	// `RootSync` or `RepoSync` controller's Kubernetes Service Account.
 	GcpServiceAccountEmail string `json:"gcpServiceAccountEmail,omitempty"`
 	// PolicyDir: Optional. The absolute path of the directory that contains the
 	// local resources. Default: the root directory of the image.
@@ -1437,10 +1446,11 @@ type ConfigManagementSpec struct {
 	// configmanagement feature is no longer recommended. Use
 	// https://github.com/kubernetes-sigs/hierarchical-namespaces instead.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
-	// Management: Optional. Deprecated: In Preview, automatic Feature management
-	// is unavailable from version 1.21.0 onwards, and Config Sync only supports
-	// manual upgrades. If set to manual upgrades, clear this field instead, which
-	// is behaviorally equivalent.
+	// Management: Optional. Deprecated: Automatic Feature management is in Preview
+	// and is unavailable in version 1.21.0 and later, after which Config Sync only
+	// supports manual upgrades. If set to manual upgrades, clear this field
+	// instead, which is behaviorally equivalent but helps prevent compatibility
+	// issues with newer fields.
 	//
 	// Possible values:
 	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
@@ -3284,6 +3294,11 @@ type ServiceMeshCondition struct {
 	// cluster.
 	//   "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE" - Gateway pods per cluster
 	// limit exceeded.
+	//   "MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART" - Cluster contains
+	// workloads that will require manual restart during modernization.
+	//   "MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET" - Cluster contains
+	// PodDisruptionBudgets that prevent automated pod eviction during
+	// modernization.
 	//   "MODERNIZATION_SCHEDULED" - Modernization is scheduled for a cluster.
 	//   "MODERNIZATION_IN_PROGRESS" - Modernization is in progress for a cluster.
 	//   "MODERNIZATION_COMPLETED" - Modernization is completed for a cluster.
@@ -3297,6 +3312,9 @@ type ServiceMeshCondition struct {
 	// the new implementation.
 	//   "MODERNIZATION_ROLLING_BACK_CLUSTER" - Rollback is in progress for
 	// modernization of a cluster.
+	//   "MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART" - Modernization of a
+	// cluster is awaiting manual restart of workloads. The customer must restart
+	// these workloads to complete modernization.
 	//   "MODERNIZATION_WILL_BE_SCHEDULED" - Modernization will be scheduled for a
 	// fleet.
 	//   "MODERNIZATION_MANUAL" - Fleet is opted out from automated modernization.
@@ -3309,6 +3327,11 @@ type ServiceMeshCondition struct {
 	// a fleet. Rollback is no longer allowed.
 	//   "MODERNIZATION_ROLLING_BACK_FLEET" - Rollback is in progress for
 	// modernization of all clusters in a fleet.
+	//   "MODERNIZATION_MODERNIZED" - Modernization of all the fleet's clusters is
+	// complete. Soaking before finalizing the modernization.
+	//   "MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER" - Fleet modernization must be
+	// Customer-Triggered, and cannot be Google-driven. Specific details may be
+	// reported via another fleet/cluster condition.
 	//   "MODERNIZATION_COMPATIBLE" - Fleet is compatible for modernization.
 	//   "MODERNIZATION_INCOMPATIBLE" - Fleet is not yet compatible for
 	// modernization.

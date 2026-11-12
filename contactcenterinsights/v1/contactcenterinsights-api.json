@@ -1464,12 +1464,14 @@
                               "enum": [
                                 "CONVERSATION_VIEW_UNSPECIFIED",
                                 "FULL",
-                                "BASIC"
+                                "BASIC",
+                                "FULL_WITH_STRUCTURED_TRANSCRIPT"
                               ],
                               "enumDescriptions": [
                                 "The conversation view is not specified. * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in `ListConversationsRequest`.",
                                 "Populates all fields in the conversation.",
-                                "Populates all fields in the conversation except the transcript."
+                                "Populates all fields in the conversation except the transcript.",
+                                "Populates all fields in the conversation, including the structured transcript parts."
                               ],
                               "location": "query",
                               "type": "string"
@@ -1525,12 +1527,14 @@
                               "enum": [
                                 "CONVERSATION_VIEW_UNSPECIFIED",
                                 "FULL",
-                                "BASIC"
+                                "BASIC",
+                                "FULL_WITH_STRUCTURED_TRANSCRIPT"
                               ],
                               "enumDescriptions": [
                                 "The conversation view is not specified. * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in `ListConversationsRequest`.",
                                 "Populates all fields in the conversation.",
-                                "Populates all fields in the conversation except the transcript."
+                                "Populates all fields in the conversation except the transcript.",
+                                "Populates all fields in the conversation, including the structured transcript parts."
                               ],
                               "location": "query",
                               "type": "string"
@@ -2537,12 +2541,14 @@
                       "enum": [
                         "CONVERSATION_VIEW_UNSPECIFIED",
                         "FULL",
-                        "BASIC"
+                        "BASIC",
+                        "FULL_WITH_STRUCTURED_TRANSCRIPT"
                       ],
                       "enumDescriptions": [
                         "The conversation view is not specified. * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in `ListConversationsRequest`.",
                         "Populates all fields in the conversation.",
-                        "Populates all fields in the conversation except the transcript."
+                        "Populates all fields in the conversation except the transcript.",
+                        "Populates all fields in the conversation, including the structured transcript parts."
                       ],
                       "location": "query",
                       "type": "string"
@@ -2626,12 +2632,14 @@
                       "enum": [
                         "CONVERSATION_VIEW_UNSPECIFIED",
                         "FULL",
-                        "BASIC"
+                        "BASIC",
+                        "FULL_WITH_STRUCTURED_TRANSCRIPT"
                       ],
                       "enumDescriptions": [
                         "The conversation view is not specified. * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in `ListConversationsRequest`.",
                         "Populates all fields in the conversation.",
-                        "Populates all fields in the conversation except the transcript."
+                        "Populates all fields in the conversation except the transcript.",
+                        "Populates all fields in the conversation, including the structured transcript parts."
                       ],
                       "location": "query",
                       "type": "string"
@@ -3572,154 +3580,6 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 }
-              },
-              "resources": {
-                "charts": {
-                  "methods": {
-                    "create": {
-                      "description": "Creates a Chart.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dashboards/{dashboardsId}/charts",
-                      "httpMethod": "POST",
-                      "id": "contactcenterinsights.projects.locations.dashboards.charts.create",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "chartId": {
-                          "description": "Optional. A unique ID for the new Chart. This ID will become the final component of the Chart's resource name. If no ID is specified, a server-generated ID will be used. This value should be 4-64 characters and must match the regular expression `^[a-z]([a-z0-9-]{0,61}[a-z0-9])?$`.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "parent": {
-                          "description": "Required. The parent resource of the chart.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/dashboards/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+parent}/charts",
-                      "request": {
-                        "$ref": "GoogleCloudContactcenterinsightsV1Chart"
-                      },
-                      "response": {
-                        "$ref": "GoogleCloudContactcenterinsightsV1Chart"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "delete": {
-                      "description": "Deletes a Chart.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dashboards/{dashboardsId}/charts/{chartsId}",
-                      "httpMethod": "DELETE",
-                      "id": "contactcenterinsights.projects.locations.dashboards.charts.delete",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. The name of the chart to delete.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/dashboards/[^/]+/charts/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+name}",
-                      "response": {
-                        "$ref": "GoogleProtobufEmpty"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "get": {
-                      "description": "Gets a Chart.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dashboards/{dashboardsId}/charts/{chartsId}",
-                      "httpMethod": "GET",
-                      "id": "contactcenterinsights.projects.locations.dashboards.charts.get",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Required. The name of the chart to get.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/dashboards/[^/]+/charts/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+name}",
-                      "response": {
-                        "$ref": "GoogleCloudContactcenterinsightsV1Chart"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "list": {
-                      "description": "Lists Charts.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dashboards/{dashboardsId}/charts",
-                      "httpMethod": "GET",
-                      "id": "contactcenterinsights.projects.locations.dashboards.charts.list",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "Required. The parent resource of the charts.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/dashboards/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+parent}/charts",
-                      "response": {
-                        "$ref": "GoogleCloudContactcenterinsightsV1ListChartsResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "patch": {
-                      "description": "Updates a Chart.",
-                      "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/dashboards/{dashboardsId}/charts/{chartsId}",
-                      "httpMethod": "PATCH",
-                      "id": "contactcenterinsights.projects.locations.dashboards.charts.patch",
-                      "parameterOrder": [
-                        "name"
-                      ],
-                      "parameters": {
-                        "name": {
-                          "description": "Identifier. Chart resource name. Format: projects/{project}/locations/{location}/dashboards/{dashboard}/charts/{chart}",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/dashboards/[^/]+/charts/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        },
-                        "updateMask": {
-                          "description": "Optional. List of fields to be updated. All possible fields can be updated by passing `*`, or a subset of the following updateable fields can be provided: * `display_name`",
-                          "format": "google-fieldmask",
-                          "location": "query",
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1/{+name}",
-                      "request": {
-                        "$ref": "GoogleCloudContactcenterinsightsV1Chart"
-                      },
-                      "response": {
-                        "$ref": "GoogleCloudContactcenterinsightsV1Chart"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    }
-                  }
-                }
               }
             },
             "datasets": {
@@ -4143,12 +4003,14 @@
                           "enum": [
                             "CONVERSATION_VIEW_UNSPECIFIED",
                             "FULL",
-                            "BASIC"
+                            "BASIC",
+                            "FULL_WITH_STRUCTURED_TRANSCRIPT"
                           ],
                           "enumDescriptions": [
                             "The conversation view is not specified. * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in `ListConversationsRequest`.",
                             "Populates all fields in the conversation.",
-                            "Populates all fields in the conversation except the transcript."
+                            "Populates all fields in the conversation except the transcript.",
+                            "Populates all fields in the conversation, including the structured transcript parts."
                           ],
                           "location": "query",
                           "type": "string"
@@ -4232,12 +4094,14 @@
                           "enum": [
                             "CONVERSATION_VIEW_UNSPECIFIED",
                             "FULL",
-                            "BASIC"
+                            "BASIC",
+                            "FULL_WITH_STRUCTURED_TRANSCRIPT"
                           ],
                           "enumDescriptions": [
                             "The conversation view is not specified. * Defaults to `FULL` in `GetConversationRequest`. * Defaults to `BASIC` in `ListConversationsRequest`.",
                             "Populates all fields in the conversation.",
-                            "Populates all fields in the conversation except the transcript."
+                            "Populates all fields in the conversation except the transcript.",
+                            "Populates all fields in the conversation, including the structured transcript parts."
                           ],
                           "location": "query",
                           "type": "string"
@@ -5494,12 +5358,14 @@
                       "enum": [
                         "QA_SCORECARD_SOURCE_UNSPECIFIED",
                         "QA_SCORECARD_SOURCE_CUSTOMER_DEFINED",
-                        "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE"
+                        "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE",
+                        "QA_SCORECARD_SOURCE_INTENT_TAXONOMY"
                       ],
                       "enumDescriptions": [
                         "The source of the scorecard is unspecified. Default to QA_SCORECARD_SOURCE_CUSTOMER_DEFINED.",
                         "The scorecard is a custom scorecard created by the user.",
-                        "The scorecard is a scorecard created through discovery engine deployment."
+                        "The scorecard is a scorecard created through discovery engine deployment.",
+                        "The scorecard is derived from the custom intent taxonomy. Customers can edit question content, but cannot delete the scorecard or add/remove questions."
                       ],
                       "location": "query",
                       "repeated": true,
@@ -5705,12 +5571,14 @@
                           "enum": [
                             "QA_SCORECARD_SOURCE_UNSPECIFIED",
                             "QA_SCORECARD_SOURCE_CUSTOMER_DEFINED",
-                            "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE"
+                            "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE",
+                            "QA_SCORECARD_SOURCE_INTENT_TAXONOMY"
                           ],
                           "enumDescriptions": [
                             "The source of the scorecard is unspecified. Default to QA_SCORECARD_SOURCE_CUSTOMER_DEFINED.",
                             "The scorecard is a custom scorecard created by the user.",
-                            "The scorecard is a scorecard created through discovery engine deployment."
+                            "The scorecard is a scorecard created through discovery engine deployment.",
+                            "The scorecard is derived from the custom intent taxonomy. Customers can edit question content, but cannot delete the scorecard or add/remove questions."
                           ],
                           "location": "query",
                           "repeated": true,
@@ -6101,7 +5969,7 @@
       }
     }
   },
-  "revision": "20260623",
+  "revision": "20261104",
   "rootUrl": "https://contactcenterinsights.googleapis.com/",
   "schemas": {
     "GoogleCloudCesV1mainAgentTransfer": {
@@ -6214,6 +6082,10 @@
       "description": "Represents an image input or output in the conversation.",
       "id": "GoogleCloudCesV1mainImage",
       "properties": {
+        "altText": {
+          "description": "Optional. The alternative text for the image.",
+          "type": "string"
+        },
         "data": {
           "description": "Required. Raw bytes of the image.",
           "format": "byte",
@@ -6300,6 +6172,11 @@
       "description": "Request for the client or the agent to execute the specified tool.",
       "id": "GoogleCloudCesV1mainToolCall",
       "properties": {
+        "agentName": {
+          "description": "Output only. Human-readable name of the agent that issued this call, e.g. \"Contract Architect\". Empty when the root agent issued it.",
+          "readOnly": true,
+          "type": "string"
+        },
         "args": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -6317,6 +6194,16 @@
           "description": "Optional. The unique identifier of the tool call. If populated, the client should return the execution result with the matching ID in ToolResponse.",
           "type": "string"
         },
+        "parentToolCallId": {
+          "description": "Output only. The id of the tool call that caused this one, when it was issued by a sub-agent working on behalf of a parent call. Empty for top-level calls. Lets a client group a sub-agent's work under the call that started it instead of rendering every step as a sibling.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "targetApp": {
+          "description": "Output only. The app this call targets, derived by the assistant from the call's resource arguments: an app resource name, `PROJECT` for location-scoped tools, or empty for session-local tools. Set only in project-scoped assistant sessions.",
+          "readOnly": true,
+          "type": "string"
+        },
         "tool": {
           "description": "Optional. The name of the tool to execute. Format: `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`",
           "type": "string"
@@ -6332,6 +6219,11 @@
       "description": "The execution result of a specific tool from the client or the agent.",
       "id": "GoogleCloudCesV1mainToolResponse",
       "properties": {
+        "agentName": {
+          "description": "Output only. Human-readable name of the agent that issued this call, e.g. \"Contract Architect\". Empty when the root agent issued it.",
+          "readOnly": true,
+          "type": "string"
+        },
         "displayName": {
           "description": "Output only. Display name of the tool.",
           "readOnly": true,
@@ -6341,6 +6233,11 @@
           "description": "Optional. The matching ID of the tool call the response is for.",
           "type": "string"
         },
+        "parentToolCallId": {
+          "description": "Output only. The id of the tool call that caused this one, when it was issued by a sub-agent working on behalf of a parent call. Empty for top-level calls. Lets a client group a sub-agent's work under the call that started it instead of rendering every step as a sibling.",
+          "readOnly": true,
+          "type": "string"
+        },
         "response": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -6348,6 +6245,11 @@
           },
           "description": "Required. The tool execution result in JSON object format. Use \"output\" key to specify tool response and \"error\" key to specify error details (if any). If \"output\" and \"error\" keys are not specified, then whole \"response\" is treated as tool execution result.",
           "type": "object"
+        },
+        "targetApp": {
+          "description": "Output only. The app the executed tool targeted; mirrors ToolCall.target_app.",
+          "readOnly": true,
+          "type": "string"
         },
         "tool": {
           "description": "Optional. The name of the tool to execute. Format: `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`",
@@ -6403,6 +6305,16 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -6514,6 +6426,16 @@
         "name": {
           "description": "Identifier. The resource name of the analysis rule. Format: projects/{project}/locations/{location}/analysisRules/{analysis_rule}",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "updateTime": {
           "description": "Output only. The most recent time at which this analysis rule was updated.",
@@ -6813,6 +6735,16 @@
           "$ref": "GoogleCloudContactcenterinsightsV1SampleRule",
           "description": "The sample rule for the assessment rule."
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "scheduleInfo": {
           "$ref": "GoogleCloudContactcenterinsightsV1ScheduleInfo",
           "description": "Schedule info for the assessment rule."
@@ -6848,6 +6780,16 @@
           "description": "Identifier. The resource name of the AuthorizedView. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}/authorizedViews/{authorized_view}",
           "type": "string"
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "updateTime": {
           "description": "Output only. The most recent time at which the authorized view was updated.",
           "format": "google-datetime",
@@ -6874,6 +6816,16 @@
         "name": {
           "description": "Identifier. The resource name of the AuthorizedViewSet. Format: projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_set}",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "updateTime": {
           "description": "Output only. Update time.",
@@ -6990,7 +6942,8 @@
           "type": "array"
         },
         "relabel": {
-          "description": "Output only. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Output only. Deprecated: Use `request.annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -7028,7 +6981,8 @@
           "type": "string"
         },
         "relabel": {
-          "description": "Optional. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use `annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "type": "boolean"
         }
       },
@@ -7903,6 +7857,16 @@
           "readOnly": true,
           "type": "array"
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "startTime": {
           "description": "The time at which the conversation started.",
           "format": "google-datetime",
@@ -8243,6 +8207,14 @@
           "description": "The agent's location.",
           "type": "string"
         },
+        "studyArmId": {
+          "description": "The study arm ID associated with the conversation. Only applicable to automated agents.",
+          "type": "string"
+        },
+        "studyId": {
+          "description": "The study ID associated with the conversation. Only applicable to automated agents.",
+          "type": "string"
+        },
         "team": {
           "deprecated": true,
           "description": "A user-specified string representing the agent's team. Deprecated in favor of the `teams` field.",
@@ -8349,6 +8321,13 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "parts": {
+          "description": "Optional. The structured parts that make up this transcript segment.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPart"
+          },
+          "type": "array"
+        },
         "segmentParticipant": {
           "$ref": "GoogleCloudContactcenterinsightsV1ConversationParticipant",
           "description": "The participant of this segment."
@@ -8382,6 +8361,311 @@
         "smartReplyAllowlistCovered": {
           "description": "Whether the transcript segment was covered under the configured smart reply allowlist in Agent Assist.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPart": {
+      "description": "A structured component/part of a transcript segment.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPart",
+      "properties": {
+        "citation": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart",
+          "description": "Optional. Citation or reference to grounding material."
+        },
+        "customPayload": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart",
+          "description": "Optional. Generic custom structured payload."
+        },
+        "image": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+          "description": "Optional. Image media."
+        },
+        "link": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart",
+          "description": "Optional. Web link or URL."
+        },
+        "list": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListPart",
+          "description": "Optional. Ordered or unordered list."
+        },
+        "productCollection": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart",
+          "description": "Optional. Product collection or carousel."
+        },
+        "suggestionChips": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart",
+          "description": "Optional. Suggestion chips or interactive buttons."
+        },
+        "table": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart",
+          "description": "Optional. Tabular data."
+        },
+        "text": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart",
+          "description": "Optional. Plain text content."
+        },
+        "thought": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart",
+          "description": "Optional. Model thought or internal reasoning."
+        },
+        "video": {
+          "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+          "description": "Optional. Video media."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartChip": {
+      "description": "A suggestion chip.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartChip",
+      "properties": {
+        "actionUri": {
+          "description": "Optional. Optional action or destination URI triggered by the chip.",
+          "type": "string"
+        },
+        "text": {
+          "description": "Optional. The chip label or text.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart": {
+      "description": "A citation part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart",
+      "properties": {
+        "snippet": {
+          "description": "Optional. Snippet of the cited text.",
+          "type": "string"
+        },
+        "sourceTitle": {
+          "description": "Optional. The cited source title.",
+          "type": "string"
+        },
+        "sourceUri": {
+          "description": "Optional. The cited source URI.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart": {
+      "description": "A custom payload part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart",
+      "properties": {
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Optional. Arbitrary structured payload.",
+          "type": "object"
+        },
+        "payloadType": {
+          "description": "Optional. Type identifier for the payload.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart": {
+      "description": "A link part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart",
+      "properties": {
+        "text": {
+          "description": "Optional. Anchor or display text.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Optional. Target URI.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem": {
+      "description": "An item in a list.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem",
+      "properties": {
+        "subItems": {
+          "description": "Optional. Nested sub-items.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem"
+          },
+          "type": "array"
+        },
+        "text": {
+          "description": "Optional. The text of the list item.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListPart": {
+      "description": "A list part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListPart",
+      "properties": {
+        "items": {
+          "description": "Optional. List items.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem"
+          },
+          "type": "array"
+        },
+        "listType": {
+          "description": "Optional. The type of list.",
+          "enum": [
+            "LIST_TYPE_UNSPECIFIED",
+            "UNORDERED",
+            "ORDERED_NUMBER",
+            "ORDERED_ALPHA"
+          ],
+          "enumDescriptions": [
+            "Unspecified list type.",
+            "Unordered list.",
+            "Ordered numbered list.",
+            "Ordered alphabetic list."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart": {
+      "description": "A media part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+      "properties": {
+        "alternativeText": {
+          "description": "Optional. Alternative text description.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Optional. URI or URL to the media.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProduct": {
+      "description": "A product in a product collection.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProduct",
+      "properties": {
+        "description": {
+          "description": "Optional. Product description.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional. Product display name.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Optional. Product ID.",
+          "type": "string"
+        },
+        "imageUris": {
+          "description": "Optional. Product image URLs.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "price": {
+          "$ref": "GoogleTypeMoney",
+          "description": "Optional. Product price."
+        },
+        "uri": {
+          "description": "Optional. Product URL or deep link.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart": {
+      "description": "A product collection part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart",
+      "properties": {
+        "products": {
+          "description": "Optional. List of products.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProduct"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart": {
+      "description": "A suggestion chips part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart",
+      "properties": {
+        "chips": {
+          "description": "Optional. List of suggestion chips.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartChip"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart": {
+      "description": "A table part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart",
+      "properties": {
+        "headers": {
+          "description": "Optional. Table column headers.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "rows": {
+          "description": "Optional. Table rows.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow"
+          },
+          "type": "array"
+        },
+        "title": {
+          "description": "Optional. Optional title for the table.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow": {
+      "description": "A row in a table.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow",
+      "properties": {
+        "cells": {
+          "description": "Optional. The cell values in the row.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart": {
+      "description": "A text part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart",
+      "properties": {
+        "text": {
+          "description": "Optional. The text content.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart": {
+      "description": "A thought part.",
+      "id": "GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart",
+      "properties": {
+        "text": {
+          "description": "Optional. The thought or reasoning text.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -8650,6 +8934,16 @@
         "name": {
           "description": "Immutable. Identifier. Resource name of the dataset. Format: projects/{project}/locations/{location}/datasets/{dataset}",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "ttl": {
           "description": "Optional. Option TTL for the dataset.",
@@ -9194,6 +9488,16 @@
         "name": {
           "description": "Immutable. The resource name of the encryption key specification resource. Format: projects/{project}/locations/{location}/encryptionSpec",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -9368,6 +9672,8 @@
             "EXPORT_V15",
             "EXPORT_V16",
             "EXPORT_V17",
+            "EXPORT_V18",
+            "EXPORT_V19",
             "EXPORT_VERSION_LATEST_AVAILABLE"
           ],
           "enumDescriptions": [
@@ -9389,6 +9695,8 @@
             "Export schema version 15.",
             "Export schema version 16.",
             "Export schema version 17.",
+            "Export schema version 18.",
+            "Export schema version 19.",
             "Export schema version latest available."
           ],
           "type": "string"
@@ -9561,6 +9869,16 @@
           "$ref": "GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue",
           "description": "QaAnswer label used for Quality AI example conversations."
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "updateTime": {
           "description": "Output only. Update time of the label.",
           "format": "google-datetime",
@@ -9581,8 +9899,16 @@
       "id": "GoogleCloudContactcenterinsightsV1GcsSource",
       "properties": {
         "audioUri": {
-          "description": "Cloud Storage URI that points to a file that contains the conversation audio.",
+          "deprecated": true,
+          "description": "Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI that points to a file that contains the conversation audio.",
           "type": "string"
+        },
+        "audioUris": {
+          "description": "Immutable. Cloud Storage URIs that point to files that contain the conversation audio. Supports both single audio files and multi-leg session recordings (e.g., call transfers, rolling recording buffers).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "transcriptUri": {
           "description": "Immutable. Cloud Storage URI that points to a file that contains the conversation transcript.",
@@ -9971,6 +10297,10 @@
           "description": "Optional. The SQL query specified by the user. This query must be in BigQuery SQL dialect. The `filter` field will also be ignored, as it is assumed that any filtering is already included in the SQL query.",
           "type": "string"
         },
+        "timeZone": {
+          "description": "Optional. The time zone name from the [IANA Time Zone Database](https://www.iana.org/time-zones) (for example, `\"America/Los_Angeles\"`) used to group daily time-series results. If empty, or if the name is well-formed but not known to the server, `UTC` is used. Malformed values are rejected with `INVALID_ARGUMENT`.",
+          "type": "string"
+        },
         "userProvidedChartSpec": {
           "additionalProperties": {
             "description": "Properties of the object.",
@@ -9992,6 +10322,10 @@
             "$ref": "GoogleCloudContactcenterinsightsV1GenerativeInsightsResponseGenerativeResponse"
           },
           "type": "array"
+        },
+        "timeZone": {
+          "description": "The time zone name from the [IANA Time Zone Database](https://www.iana.org/time-zones) that the query actually used to group results. Equals the requested `time_zone` when the chart SQL supports time zones, otherwise `\"UTC\"`.",
+          "type": "string"
         },
         "transcript": {
           "$ref": "GoogleCloudContactcenterinsightsV1GenerativeInsightConversationTranscript",
@@ -10799,24 +11133,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudContactcenterinsightsV1ListChartsResponse": {
-      "description": "The response of listing charts.",
-      "id": "GoogleCloudContactcenterinsightsV1ListChartsResponse",
-      "properties": {
-        "charts": {
-          "description": "The charts under the parent.",
-          "items": {
-            "$ref": "GoogleCloudContactcenterinsightsV1Chart"
-          },
-          "type": "array"
-        },
-        "nextPageToken": {
-          "description": "The value returned by the last `ListChartsResponse`. This value indicates that this is a continuation of a prior `ListCharts` call and that the system should return the next page of data.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudContactcenterinsightsV1ListConversationsResponse": {
       "description": "The response of listing conversations.",
       "id": "GoogleCloudContactcenterinsightsV1ListConversationsResponse",
@@ -11478,6 +11794,16 @@
           ],
           "type": "string"
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "tags": {
           "description": "Questions are tagged for categorization and scoring. Tags can either be: - Default Tags: These are predefined categories. They are identified by their string value (e.g., \"BUSINESS\", \"COMPLIANCE\", and \"CUSTOMER\"). - Custom Tags: These are user-defined categories. They are identified by their full resource name (e.g., projects/{project}/locations/{location}/qaQuestionTags/{qa_question_tag}). Both default and custom tags are used to group questions and to influence the scoring of each question.",
           "items": {
@@ -11553,12 +11879,16 @@
           "enum": [
             "PREDEFINED_QUESTION_TYPE_UNSPECIFIED",
             "CONVERSATION_OUTCOME",
-            "CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE"
+            "CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE",
+            "CONVERSATION_OUTCOME_AI_AVERSION",
+            "CONVERSATION_OUTCOME_ESCALATION_REASON"
           ],
           "enumDescriptions": [
             "The type of the predefined question is unspecified.",
             "A prebuilt classifier classfying the outcome of the conversation. For example, if the customer issue mentioned in a conversation has been resolved or not.",
-            "A prebuilt classifier classfying the initiator of the conversation escalation. For example, if it was initiated by the customer or the agent."
+            "A prebuilt classifier classfying the initiator of the conversation escalation. For example, if it was initiated by the customer or the agent.",
+            "Classifies whether the customer demonstrates AI aversion by instantly requesting escalation to a human agent without attempting to work with the AI agent.",
+            "Classifies the primary reason for escalating the conversation to a human agent."
           ],
           "type": "string"
         }
@@ -11600,6 +11930,16 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "updateTime": {
           "description": "Output only. The most recent time at which the question tag was updated.",
@@ -11673,17 +12013,29 @@
           "description": "Identifier. The scorecard name. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}",
           "type": "string"
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "source": {
           "description": "Output only. The source of the scorecard.",
           "enum": [
             "QA_SCORECARD_SOURCE_UNSPECIFIED",
             "QA_SCORECARD_SOURCE_CUSTOMER_DEFINED",
-            "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE"
+            "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE",
+            "QA_SCORECARD_SOURCE_INTENT_TAXONOMY"
           ],
           "enumDescriptions": [
             "The source of the scorecard is unspecified. Default to QA_SCORECARD_SOURCE_CUSTOMER_DEFINED.",
             "The scorecard is a custom scorecard created by the user.",
-            "The scorecard is a scorecard created through discovery engine deployment."
+            "The scorecard is a scorecard created through discovery engine deployment.",
+            "The scorecard is derived from the custom intent taxonomy. Customers can edit question content, but cannot delete the scorecard or add/remove questions."
           ],
           "readOnly": true,
           "type": "string"
@@ -11852,6 +12204,16 @@
         "name": {
           "description": "Identifier. The name of the scorecard revision. Format: projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions/{revision}",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "snapshot": {
           "$ref": "GoogleCloudContactcenterinsightsV1QaScorecard",
@@ -12792,6 +13154,16 @@
           "$ref": "GoogleCloudContactcenterinsightsV1RedactionConfig",
           "description": "Default DLP redaction resources to be applied while ingesting conversations. This applies to conversations ingested from the `UploadConversation` and `IngestConversations` endpoints, including conversations coming from CCAI Platform."
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "screenRecordingBucketUri": {
           "description": "Optional. The path to a Cloud Storage bucket containing conversation screen recordings. If provided, Insights will search in the bucket for a screen recording file matching the conversation data source object name prefix. If matches are found, these file URIs will be stored in the conversation screen recordings field.",
           "type": "string"
@@ -12859,6 +13231,14 @@
         "signedGcsAudioUri": {
           "description": "The signed URI for the audio from the Cloud Storage conversation source.",
           "type": "string"
+        },
+        "signedGcsAudioUris": {
+          "description": "Output only. The signed URIs for the audio from the Cloud Storage conversation source when multiple audio files exist (e.g. multi-leg conversations).",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
         },
         "signedTurnLevelAudios": {
           "description": "The signed URI for the audio corresponding to each turn in the conversation.",
@@ -13375,6 +13755,16 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -13696,7 +14086,8 @@
           "type": "array"
         },
         "relabel": {
-          "description": "Output only. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Output only. Deprecated: Use `request.annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -13734,7 +14125,8 @@
           "type": "string"
         },
         "relabel": {
-          "description": "Optional. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use `annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "type": "boolean"
         }
       },
@@ -14082,6 +14474,16 @@
           "readOnly": true,
           "type": "array"
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "startTime": {
           "description": "The time at which the conversation started.",
           "format": "google-datetime",
@@ -14411,6 +14813,14 @@
           "description": "The agent's location.",
           "type": "string"
         },
+        "studyArmId": {
+          "description": "The study arm ID associated with the conversation. Only applicable to automated agents.",
+          "type": "string"
+        },
+        "studyId": {
+          "description": "The study ID associated with the conversation. Only applicable to automated agents.",
+          "type": "string"
+        },
         "team": {
           "deprecated": true,
           "description": "A user-specified string representing the agent's team. Deprecated in favor of the `teams` field.",
@@ -14517,6 +14927,13 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "parts": {
+          "description": "Optional. The structured parts that make up this transcript segment.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPart"
+          },
+          "type": "array"
+        },
         "segmentParticipant": {
           "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationParticipant",
           "description": "The participant of this segment."
@@ -14550,6 +14967,311 @@
         "smartReplyAllowlistCovered": {
           "description": "Whether the transcript segment was covered under the configured smart reply allowlist in Agent Assist.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPart": {
+      "description": "A structured component/part of a transcript segment.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPart",
+      "properties": {
+        "citation": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart",
+          "description": "Optional. Citation or reference to grounding material."
+        },
+        "customPayload": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart",
+          "description": "Optional. Generic custom structured payload."
+        },
+        "image": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+          "description": "Optional. Image media."
+        },
+        "link": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart",
+          "description": "Optional. Web link or URL."
+        },
+        "list": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListPart",
+          "description": "Optional. Ordered or unordered list."
+        },
+        "productCollection": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart",
+          "description": "Optional. Product collection or carousel."
+        },
+        "suggestionChips": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart",
+          "description": "Optional. Suggestion chips or interactive buttons."
+        },
+        "table": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart",
+          "description": "Optional. Tabular data."
+        },
+        "text": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart",
+          "description": "Optional. Plain text content."
+        },
+        "thought": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart",
+          "description": "Optional. Model thought or internal reasoning."
+        },
+        "video": {
+          "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+          "description": "Optional. Video media."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartChip": {
+      "description": "A suggestion chip.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartChip",
+      "properties": {
+        "actionUri": {
+          "description": "Optional. Optional action or destination URI triggered by the chip.",
+          "type": "string"
+        },
+        "text": {
+          "description": "Optional. The chip label or text.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart": {
+      "description": "A citation part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart",
+      "properties": {
+        "snippet": {
+          "description": "Optional. Snippet of the cited text.",
+          "type": "string"
+        },
+        "sourceTitle": {
+          "description": "Optional. The cited source title.",
+          "type": "string"
+        },
+        "sourceUri": {
+          "description": "Optional. The cited source URI.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart": {
+      "description": "A custom payload part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart",
+      "properties": {
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Optional. Arbitrary structured payload.",
+          "type": "object"
+        },
+        "payloadType": {
+          "description": "Optional. Type identifier for the payload.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart": {
+      "description": "A link part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart",
+      "properties": {
+        "text": {
+          "description": "Optional. Anchor or display text.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Optional. Target URI.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem": {
+      "description": "An item in a list.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem",
+      "properties": {
+        "subItems": {
+          "description": "Optional. Nested sub-items.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem"
+          },
+          "type": "array"
+        },
+        "text": {
+          "description": "Optional. The text of the list item.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListPart": {
+      "description": "A list part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListPart",
+      "properties": {
+        "items": {
+          "description": "Optional. List items.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem"
+          },
+          "type": "array"
+        },
+        "listType": {
+          "description": "Optional. The type of list.",
+          "enum": [
+            "LIST_TYPE_UNSPECIFIED",
+            "UNORDERED",
+            "ORDERED_NUMBER",
+            "ORDERED_ALPHA"
+          ],
+          "enumDescriptions": [
+            "Unspecified list type.",
+            "Unordered list.",
+            "Ordered numbered list.",
+            "Ordered alphabetic list."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart": {
+      "description": "A media part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+      "properties": {
+        "alternativeText": {
+          "description": "Optional. Alternative text description.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Optional. URI or URL to the media.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProduct": {
+      "description": "A product in a product collection.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProduct",
+      "properties": {
+        "description": {
+          "description": "Optional. Product description.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional. Product display name.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Optional. Product ID.",
+          "type": "string"
+        },
+        "imageUris": {
+          "description": "Optional. Product image URLs.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "price": {
+          "$ref": "GoogleTypeMoney",
+          "description": "Optional. Product price."
+        },
+        "uri": {
+          "description": "Optional. Product URL or deep link.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart": {
+      "description": "A product collection part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart",
+      "properties": {
+        "products": {
+          "description": "Optional. List of products.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProduct"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart": {
+      "description": "A suggestion chips part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart",
+      "properties": {
+        "chips": {
+          "description": "Optional. List of suggestion chips.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartChip"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart": {
+      "description": "A table part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart",
+      "properties": {
+        "headers": {
+          "description": "Optional. Table column headers.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "rows": {
+          "description": "Optional. Table rows.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow"
+          },
+          "type": "array"
+        },
+        "title": {
+          "description": "Optional. Optional title for the table.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow": {
+      "description": "A row in a table.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow",
+      "properties": {
+        "cells": {
+          "description": "Optional. The cell values in the row.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart": {
+      "description": "A text part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart",
+      "properties": {
+        "text": {
+          "description": "Optional. The text content.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart": {
+      "description": "A thought part.",
+      "id": "GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart",
+      "properties": {
+        "text": {
+          "description": "Optional. The thought or reasoning text.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -14706,6 +15428,16 @@
         "name": {
           "description": "Immutable. Identifier. Resource name of the dataset. Format: projects/{project}/locations/{location}/datasets/{dataset}",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "ttl": {
           "description": "Optional. Option TTL for the dataset.",
@@ -15197,6 +15929,16 @@
         "name": {
           "description": "Immutable. The resource name of the encryption key specification resource. Format: projects/{project}/locations/{location}/encryptionSpec",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -15360,6 +16102,8 @@
             "EXPORT_V15",
             "EXPORT_V16",
             "EXPORT_V17",
+            "EXPORT_V18",
+            "EXPORT_V19",
             "EXPORT_VERSION_LATEST_AVAILABLE"
           ],
           "enumDescriptions": [
@@ -15381,6 +16125,8 @@
             "Export schema version 15.",
             "Export schema version 16.",
             "Export schema version 17.",
+            "Export schema version 18.",
+            "Export schema version 19.",
             "Export schema version latest available."
           ],
           "type": "string"
@@ -15553,6 +16299,16 @@
           "$ref": "GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue",
           "description": "QaAnswer label used for Quality AI example conversations."
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "updateTime": {
           "description": "Output only. Update time of the label.",
           "format": "google-datetime",
@@ -15567,8 +16323,16 @@
       "id": "GoogleCloudContactcenterinsightsV1alpha1GcsSource",
       "properties": {
         "audioUri": {
-          "description": "Cloud Storage URI that points to a file that contains the conversation audio.",
+          "deprecated": true,
+          "description": "Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI that points to a file that contains the conversation audio.",
           "type": "string"
+        },
+        "audioUris": {
+          "description": "Immutable. Cloud Storage URIs that point to files that contain the conversation audio. Supports both single audio files and multi-leg session recordings (e.g., call transfers, rolling recording buffers).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "transcriptUri": {
           "description": "Immutable. Cloud Storage URI that points to a file that contains the conversation transcript.",
@@ -15746,6 +16510,10 @@
             "$ref": "GoogleCloudContactcenterinsightsV1alpha1GenerativeInsightsResponseGenerativeResponse"
           },
           "type": "array"
+        },
+        "timeZone": {
+          "description": "The time zone name from the [IANA Time Zone Database](https://www.iana.org/time-zones) that the query actually used to group results. Equals the requested `time_zone` when the chart SQL supports time zones, otherwise `\"UTC\"`.",
+          "type": "string"
         },
         "transcript": {
           "$ref": "GoogleCloudContactcenterinsightsV1alpha1GenerativeInsightConversationTranscript",
@@ -16597,6 +17365,16 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "updateTime": {
           "description": "Output only. The most recent time at which the question tag was updated.",
@@ -17786,6 +18564,16 @@
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -18107,7 +18895,8 @@
           "type": "array"
         },
         "relabel": {
-          "description": "Output only. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Output only. Deprecated: Use `request.annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "readOnly": true,
           "type": "boolean"
         },
@@ -18145,7 +18934,8 @@
           "type": "string"
         },
         "relabel": {
-          "description": "Optional. If true, the labeling rules will be re-evaluated for the conversations.",
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use `annotator_selector.run_auto_labeling_annotator` instead. If true, the labeling rules will be re-evaluated for the conversations.",
           "type": "boolean"
         }
       },
@@ -18673,6 +19463,16 @@
           "readOnly": true,
           "type": "array"
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "startTime": {
           "description": "The time at which the conversation started.",
           "format": "google-datetime",
@@ -19002,6 +19802,14 @@
           "description": "The agent's location.",
           "type": "string"
         },
+        "studyArmId": {
+          "description": "The study arm ID associated with the conversation. Only applicable to automated agents.",
+          "type": "string"
+        },
+        "studyId": {
+          "description": "The study ID associated with the conversation. Only applicable to automated agents.",
+          "type": "string"
+        },
         "team": {
           "deprecated": true,
           "description": "A user-specified string representing the agent's team. Deprecated in favor of the `teams` field.",
@@ -19108,6 +19916,13 @@
           "format": "google-datetime",
           "type": "string"
         },
+        "parts": {
+          "description": "Optional. The structured parts that make up this transcript segment.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPart"
+          },
+          "type": "array"
+        },
         "segmentParticipant": {
           "$ref": "GoogleCloudContactcenterinsightsV1mainConversationParticipant",
           "description": "The participant of this segment."
@@ -19141,6 +19956,311 @@
         "smartReplyAllowlistCovered": {
           "description": "Whether the transcript segment was covered under the configured smart reply allowlist in Agent Assist.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPart": {
+      "description": "A structured component/part of a transcript segment.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPart",
+      "properties": {
+        "citation": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCitationPart",
+          "description": "Optional. Citation or reference to grounding material."
+        },
+        "customPayload": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart",
+          "description": "Optional. Generic custom structured payload."
+        },
+        "image": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+          "description": "Optional. Image media."
+        },
+        "link": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartLinkPart",
+          "description": "Optional. Web link or URL."
+        },
+        "list": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListPart",
+          "description": "Optional. Ordered or unordered list."
+        },
+        "productCollection": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart",
+          "description": "Optional. Product collection or carousel."
+        },
+        "suggestionChips": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart",
+          "description": "Optional. Suggestion chips or interactive buttons."
+        },
+        "table": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTablePart",
+          "description": "Optional. Tabular data."
+        },
+        "text": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTextPart",
+          "description": "Optional. Plain text content."
+        },
+        "thought": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart",
+          "description": "Optional. Model thought or internal reasoning."
+        },
+        "video": {
+          "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+          "description": "Optional. Video media."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartChip": {
+      "description": "A suggestion chip.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartChip",
+      "properties": {
+        "actionUri": {
+          "description": "Optional. Optional action or destination URI triggered by the chip.",
+          "type": "string"
+        },
+        "text": {
+          "description": "Optional. The chip label or text.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCitationPart": {
+      "description": "A citation part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCitationPart",
+      "properties": {
+        "snippet": {
+          "description": "Optional. Snippet of the cited text.",
+          "type": "string"
+        },
+        "sourceTitle": {
+          "description": "Optional. The cited source title.",
+          "type": "string"
+        },
+        "sourceUri": {
+          "description": "Optional. The cited source URI.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart": {
+      "description": "A custom payload part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart",
+      "properties": {
+        "payload": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Optional. Arbitrary structured payload.",
+          "type": "object"
+        },
+        "payloadType": {
+          "description": "Optional. Type identifier for the payload.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartLinkPart": {
+      "description": "A link part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartLinkPart",
+      "properties": {
+        "text": {
+          "description": "Optional. Anchor or display text.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Optional. Target URI.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem": {
+      "description": "An item in a list.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem",
+      "properties": {
+        "subItems": {
+          "description": "Optional. Nested sub-items.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem"
+          },
+          "type": "array"
+        },
+        "text": {
+          "description": "Optional. The text of the list item.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListPart": {
+      "description": "A list part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListPart",
+      "properties": {
+        "items": {
+          "description": "Optional. List items.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem"
+          },
+          "type": "array"
+        },
+        "listType": {
+          "description": "Optional. The type of list.",
+          "enum": [
+            "LIST_TYPE_UNSPECIFIED",
+            "UNORDERED",
+            "ORDERED_NUMBER",
+            "ORDERED_ALPHA"
+          ],
+          "enumDescriptions": [
+            "Unspecified list type.",
+            "Unordered list.",
+            "Ordered numbered list.",
+            "Ordered alphabetic list."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart": {
+      "description": "A media part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart",
+      "properties": {
+        "alternativeText": {
+          "description": "Optional. Alternative text description.",
+          "type": "string"
+        },
+        "uri": {
+          "description": "Optional. URI or URL to the media.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProduct": {
+      "description": "A product in a product collection.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProduct",
+      "properties": {
+        "description": {
+          "description": "Optional. Product description.",
+          "type": "string"
+        },
+        "displayName": {
+          "description": "Optional. Product display name.",
+          "type": "string"
+        },
+        "id": {
+          "description": "Optional. Product ID.",
+          "type": "string"
+        },
+        "imageUris": {
+          "description": "Optional. Product image URLs.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "price": {
+          "$ref": "GoogleTypeMoney",
+          "description": "Optional. Product price."
+        },
+        "uri": {
+          "description": "Optional. Product URL or deep link.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart": {
+      "description": "A product collection part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart",
+      "properties": {
+        "products": {
+          "description": "Optional. List of products.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProduct"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart": {
+      "description": "A suggestion chips part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart",
+      "properties": {
+        "chips": {
+          "description": "Optional. List of suggestion chips.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartChip"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTablePart": {
+      "description": "A table part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTablePart",
+      "properties": {
+        "headers": {
+          "description": "Optional. Table column headers.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "rows": {
+          "description": "Optional. Table rows.",
+          "items": {
+            "$ref": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTableRow"
+          },
+          "type": "array"
+        },
+        "title": {
+          "description": "Optional. Optional title for the table.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTableRow": {
+      "description": "A row in a table.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTableRow",
+      "properties": {
+        "cells": {
+          "description": "Optional. The cell values in the row.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTextPart": {
+      "description": "A text part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTextPart",
+      "properties": {
+        "text": {
+          "description": "Optional. The text content.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart": {
+      "description": "A thought part.",
+      "id": "GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart",
+      "properties": {
+        "text": {
+          "description": "Optional. The thought or reasoning text.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -19297,6 +20417,16 @@
         "name": {
           "description": "Immutable. Identifier. Resource name of the dataset. Format: projects/{project}/locations/{location}/datasets/{dataset}",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "ttl": {
           "description": "Optional. Option TTL for the dataset.",
@@ -19788,6 +20918,16 @@
         "name": {
           "description": "Immutable. The resource name of the encryption key specification resource. Format: projects/{project}/locations/{location}/encryptionSpec",
           "type": "string"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -19951,6 +21091,8 @@
             "EXPORT_V15",
             "EXPORT_V16",
             "EXPORT_V17",
+            "EXPORT_V18",
+            "EXPORT_V19",
             "EXPORT_VERSION_LATEST_AVAILABLE"
           ],
           "enumDescriptions": [
@@ -19972,6 +21114,8 @@
             "Export schema version 15.",
             "Export schema version 16.",
             "Export schema version 17.",
+            "Export schema version 18.",
+            "Export schema version 19.",
             "Export schema version latest available."
           ],
           "type": "string"
@@ -20144,6 +21288,16 @@
           "$ref": "GoogleCloudContactcenterinsightsV1mainQaAnswerAnswerValue",
           "description": "QaAnswer label used for Quality AI example conversations."
         },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
         "updateTime": {
           "description": "Output only. Update time of the label.",
           "format": "google-datetime",
@@ -20158,8 +21312,16 @@
       "id": "GoogleCloudContactcenterinsightsV1mainGcsSource",
       "properties": {
         "audioUri": {
-          "description": "Cloud Storage URI that points to a file that contains the conversation audio.",
+          "deprecated": true,
+          "description": "Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI that points to a file that contains the conversation audio.",
           "type": "string"
+        },
+        "audioUris": {
+          "description": "Immutable. Cloud Storage URIs that point to files that contain the conversation audio. Supports both single audio files and multi-leg session recordings (e.g., call transfers, rolling recording buffers).",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "transcriptUri": {
           "description": "Immutable. Cloud Storage URI that points to a file that contains the conversation transcript.",
@@ -20337,6 +21499,10 @@
             "$ref": "GoogleCloudContactcenterinsightsV1mainGenerativeInsightsResponseGenerativeResponse"
           },
           "type": "array"
+        },
+        "timeZone": {
+          "description": "The time zone name from the [IANA Time Zone Database](https://www.iana.org/time-zones) that the query actually used to group results. Equals the requested `time_zone` when the chart SQL supports time zones, otherwise `\"UTC\"`.",
+          "type": "string"
         },
         "transcript": {
           "$ref": "GoogleCloudContactcenterinsightsV1mainGenerativeInsightConversationTranscript",
@@ -21188,6 +22354,16 @@
             "type": "string"
           },
           "type": "array"
+        },
+        "satisfiesPzi": {
+          "description": "Output only. Whether this resource is zone isolated.",
+          "readOnly": true,
+          "type": "boolean"
+        },
+        "satisfiesPzs": {
+          "description": "Output only. Whether this resource is zone separated.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "updateTime": {
           "description": "Output only. The most recent time at which the question tag was updated.",
@@ -22622,6 +23798,27 @@
         "startTime": {
           "description": "Optional. Inclusive start of the interval. If specified, a Timestamp matching this interval will have to be the same or after the start.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleTypeMoney": {
+      "description": "Represents an amount of money with its currency type.",
+      "id": "GoogleTypeMoney",
+      "properties": {
+        "currencyCode": {
+          "description": "The three-letter currency code defined in ISO 4217.",
+          "type": "string"
+        },
+        "nanos": {
+          "description": "Number of nano (10^-9) units of the amount. The value must be between -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos` must be positive or zero. If `units` is zero, `nanos` can be positive, zero, or negative. If `units` is negative, `nanos` must be negative or zero. For example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "units": {
+          "description": "The whole units of the amount. For example if `currencyCode` is `\"USD\"`, then 1 unit is one US dollar.",
+          "format": "int64",
           "type": "string"
         }
       },

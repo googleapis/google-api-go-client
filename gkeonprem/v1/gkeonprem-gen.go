@@ -5282,6 +5282,8 @@ type VmwareNodePool struct {
 	Uid string `json:"uid,omitempty"`
 	// UpdateTime: Output only. The time at which this node pool was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// ValidationCheck: The validation check for the node pool.
+	ValidationCheck *ValidationCheck `json:"validationCheck,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`

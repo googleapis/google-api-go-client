@@ -15,6 +15,53 @@
   "description": "The Cluster Director API lets you deploy, manage, and monitor clusters that run artificial intelligence (AI), machine learning (ML), or high performance computing (HPC) workloads.",
   "discoveryVersion": "v1",
   "documentationLink": "https://docs.cloud.google.com/cluster-director/docs",
+  "endpoints": [
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-east1.rep.googleapis.com/",
+      "location": "us-east1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-east4.rep.googleapis.com/",
+      "location": "us-east4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-east5.rep.googleapis.com/",
+      "location": "us-east5"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-south1.rep.googleapis.com/",
+      "location": "us-south1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-west1.rep.googleapis.com/",
+      "location": "us-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-west2.rep.googleapis.com/",
+      "location": "us-west2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-west3.rep.googleapis.com/",
+      "location": "us-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-west4.rep.googleapis.com/",
+      "location": "us-west4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://hypercomputecluster.us-central1.rep.googleapis.com/",
+      "location": "us-central1"
+    }
+  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -498,7 +545,7 @@
       }
     }
   },
-  "revision": "20260617",
+  "revision": "20261021",
   "rootUrl": "https://hypercomputecluster.googleapis.com/",
   "schemas": {
     "BootDisk": {
@@ -595,6 +642,11 @@
           },
           "description": "Optional. Storage resources available to the cluster. Keys specify the ID of the storage resource by which it can be referenced elsewhere, and must conform to [RFC-1034](https://datatracker.ietf.org/doc/html/rfc1034) (lower-case, alphanumeric, and at most 63 characters).",
           "type": "object"
+        },
+        "uid": {
+          "description": "Output only. The globally unique identifier for this Cluster.",
+          "readOnly": true,
+          "type": "string"
         },
         "updateTime": {
           "description": "Output only. Time that the cluster was most recently updated.",
@@ -1168,14 +1220,16 @@
             "STANDARD",
             "NEARLINE",
             "COLDLINE",
-            "ARCHIVE"
+            "ARCHIVE",
+            "RAPID"
           ],
           "enumDescriptions": [
             "Not set.",
             "Best for data that is frequently accessed.",
             "Low-cost storage for data that is accessed less frequently.",
             "Very low-cost storage for infrequently accessed data.",
-            "Lowest-cost storage for data archiving, online backup, and disaster recovery."
+            "Lowest-cost storage for data archiving, online backup, and disaster recovery.",
+            "Storage class optimized for I/O intensive workloads."
           ],
           "type": "string"
         }

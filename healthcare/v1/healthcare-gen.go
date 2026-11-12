@@ -1210,6 +1210,12 @@ type BulkDeleteResourcesRequest struct {
 	// resource type. Each object contains newline delimited strings in the format
 	// {resourceType}/{resourceId}.
 	GcsDestination *GoogleCloudHealthcareV1FhirGcsDestination `json:"gcsDestination,omitempty"`
+	// GcsSource: Optional. Specifies the Cloud Storage source data location
+	// containing the list of resource IDs to delete. Each file inside `gcs_source`
+	// must contain newline-delimited strings in the format
+	// `{resourceType}/{resourceId}`. This field is mutually exclusive with filter
+	// parameters such as `type` and `until`.
+	GcsSource *GoogleCloudHealthcareV1FhirGcsSource `json:"gcsSource,omitempty"`
 	// Type: Optional. String of comma-delimited FHIR resource types. If provided,
 	// only resources of the specified resource type(s) will be deleted.
 	Type string `json:"type,omitempty"`
@@ -1218,10 +1224,8 @@ type BulkDeleteResourcesRequest struct {
 	// example, `2015-02-07T13:28:17.239+02:00` or `2017-01-01T00:00:00Z`. The time
 	// must be specified to the second and include a time zone.
 	Until string `json:"until,omitempty"`
-	// ValidateOnly: Optional. If set to true, the request will only perform a dry
-	// run. By default (once the behavior change is fully rolled out), this will
-	// default to true. During the transition period, the default depends on the
-	// Mendel flag status for the project.
+	// ValidateOnly: Optional. If set to `true`, the request will only perform a
+	// dry run. By default this will default to `false`.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// VersionConfig: Optional. Specifies which version of the resources to delete.
 	//
@@ -1815,6 +1819,31 @@ type CryptoHashConfig struct {
 
 func (s CryptoHashConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CryptoHashConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomRegex: Defines a custom regular expression pattern to detect and
+// redact in the image.
+type CustomRegex struct {
+	// GroupIndexes: Optional. The capturing group indexes to redact.
+	GroupIndexes []int64 `json:"groupIndexes,omitempty"`
+	// Pattern: Optional. The regular expression pattern to match.
+	Pattern string `json:"pattern,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroupIndexes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroupIndexes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomRegex
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2711,6 +2740,8 @@ type ExportDicomDataRequest struct {
 	// the BigQuery location: `roles/bigquery.dataEditor` and
 	// `roles/bigquery.jobUser`.
 	BigqueryDestination *GoogleCloudHealthcareV1DicomBigQueryDestination `json:"bigqueryDestination,omitempty"`
+	// FilterConfig: Specifies the filter configuration.
+	FilterConfig *DicomFilterConfig `json:"filterConfig,omitempty"`
 	// GcsDestination: The Cloud Storage output destination. The Cloud Healthcare
 	// Service Agent requires the `roles/storage.objectAdmin` Cloud IAM roles on
 	// the Cloud Storage location.
@@ -3756,14 +3787,14 @@ func (s GoogleCloudHealthcareV1FhirGcsDestination) MarshalJSON() ([]byte, error)
 // GoogleCloudHealthcareV1FhirGcsSource: Specifies the configuration for
 // importing data from Cloud Storage.
 type GoogleCloudHealthcareV1FhirGcsSource struct {
-	// Uri: Points to a Cloud Storage URI containing file(s) to import. The URI
-	// must be in the following format: `gs://{bucket_id}/{object_id}`. The URI can
-	// include wildcards in `object_id` and thus identify multiple files. Supported
-	// wildcards: * `*` to match 0 or more non-separator characters * `**` to match
-	// 0 or more characters (including separators). Must be used at the end of a
-	// path and with no other wildcards in the path. Can also be used with a file
-	// extension (such as .ndjson), which imports all files with the extension in
-	// the specified directory and its sub-directories. For example,
+	// Uri: Required. Points to a Cloud Storage URI containing file(s) to import.
+	// The URI must be in the following format: `gs://{bucket_id}/{object_id}`. The
+	// URI can include wildcards in `object_id` and thus identify multiple files.
+	// Supported wildcards: * `*` to match 0 or more non-separator characters *
+	// `**` to match 0 or more characters (including separators). Must be used at
+	// the end of a path and with no other wildcards in the path. Can also be used
+	// with a file extension (such as .ndjson), which imports all files with the
+	// extension in the specified directory and its sub-directories. For example,
 	// `gs://my-bucket/my-directory/**.ndjson` imports all files with `.ndjson`
 	// extensions in `my-directory/` and its sub-directories. * `?` to match 1
 	// character Files matching the wildcard are expected to contain content only,
@@ -4135,6 +4166,8 @@ func (s Image) MarshalJSON() ([]byte, error) {
 
 // ImageConfig: Specifies how to handle de-identification of image pixels.
 type ImageConfig struct {
+	// CustomRegexes: Optional. Custom regex patterns to redact from the image.
+	CustomRegexes []*CustomRegex `json:"customRegexes,omitempty"`
 	// TextRedactionMode: Optional. Determines how to redact text from image.
 	//
 	// Possible values:
@@ -4147,15 +4180,15 @@ type ImageConfig struct {
 	// ify#default_dicom_infotypes).
 	//   "REDACT_NO_TEXT" - Do not redact text.
 	TextRedactionMode string `json:"textRedactionMode,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "TextRedactionMode") to
+	// ForceSendFields is a list of field names (e.g. "CustomRegexes") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "TextRedactionMode") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomRegexes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

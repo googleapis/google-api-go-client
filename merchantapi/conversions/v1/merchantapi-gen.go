@@ -215,7 +215,9 @@ func (s AttributionSettings) MarshalJSON() ([]byte, error) {
 }
 
 // ConversionSource: Represents a conversion source owned by a Merchant
-// account. A merchant account can have up to 200 conversion sources.
+// account. A merchant account can have up to 200 conversion sources. For more
+// information, see Manage conversion sources
+// (https://developers.google.com/merchant/api/guides/conversion-sources/overview).
 type ConversionSource struct {
 	// Controller: Output only. Controller of the conversion source.
 	//
@@ -461,6 +463,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -481,7 +484,9 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`

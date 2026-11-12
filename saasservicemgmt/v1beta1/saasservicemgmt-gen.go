@@ -6,7 +6,7 @@
 
 // Package saasservicemgmt provides access to the App Lifecycle Manager API.
 //
-// For product documentation, see: https://cloud.google.com/saas-runtime/docs
+// For product documentation, see: https://docs.cloud.google.com/app-lifecycle-manager
 //
 // # Library status
 //
@@ -191,7 +191,6 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.RolloutKinds = NewProjectsLocationsRolloutKindsService(s)
 	rs.Rollouts = NewProjectsLocationsRolloutsService(s)
 	rs.Saas = NewProjectsLocationsSaasService(s)
-	rs.SaasReleases = NewProjectsLocationsSaasReleasesService(s)
 	rs.Tenants = NewProjectsLocationsTenantsService(s)
 	rs.UnitGroupOperations = NewProjectsLocationsUnitGroupOperationsService(s)
 	rs.UnitGroups = NewProjectsLocationsUnitGroupsService(s)
@@ -219,8 +218,6 @@ type ProjectsLocationsService struct {
 	Rollouts *ProjectsLocationsRolloutsService
 
 	Saas *ProjectsLocationsSaasService
-
-	SaasReleases *ProjectsLocationsSaasReleasesService
 
 	Tenants *ProjectsLocationsTenantsService
 
@@ -304,15 +301,6 @@ func NewProjectsLocationsSaasService(s *Service) *ProjectsLocationsSaasService {
 }
 
 type ProjectsLocationsSaasService struct {
-	s *Service
-}
-
-func NewProjectsLocationsSaasReleasesService(s *Service) *ProjectsLocationsSaasReleasesService {
-	rs := &ProjectsLocationsSaasReleasesService{s: s}
-	return rs
-}
-
-type ProjectsLocationsSaasReleasesService struct {
 	s *Service
 }
 
@@ -455,13 +443,14 @@ func (s AllocationSlot) MarshalJSON() ([]byte, error) {
 // AppParams: AppParams contains the parameters for creating an AppHub
 // Application.
 type AppParams struct {
-	// Group: Grouping used to construct the name of the AppHub Application.
-	// Multiple UnitKinds can specify the same group to use the same Application
-	// across their respective units. Corresponds to the app_boundary_id in the ADC
-	// composite ApplicationTemplate. Defaults to UnitKind.name
+	// Group: Optional. Grouping used to construct the name of the AppHub
+	// Application. Multiple UnitKinds can specify the same group to use the same
+	// Application across their respective units. Corresponds to the
+	// app_boundary_id in the ADC composite ApplicationTemplate. Defaults to
+	// UnitKind.name
 	Group string `json:"group,omitempty"`
-	// Scope: Corresponds to the scope in the ADC composite ApplicationTemplate.
-	// Defaults to TYPE_REGIONAL.
+	// Scope: Optional. Corresponds to the scope in the ADC composite
+	// ApplicationTemplate. Defaults to TYPE_REGIONAL.
 	Scope *Scope `json:"scope,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -483,12 +472,12 @@ func (s AppParams) MarshalJSON() ([]byte, error) {
 
 // Blueprint: Blueprints are OCI Images that contain all of the artifacts
 // needed to provision a unit. Metadata such as, type of the engine used to
-// actuate the blueprint (e.g. terraform, helm etc) and version will come from
+// actuate the blueprint (Terraform, for example) and version will come from
 // the image manifest. If the hostname is omitted, it will be assumed to be the
 // regional path to Artifact Registry (eg. us-east1-docker.pkg.dev).
 type Blueprint struct {
-	// Engine: Output only. Type of the engine used to actuate the blueprint. e.g.
-	// terraform, helm etc.
+	// Engine: Output only. Type of the engine used to actuate the blueprint.
+	// (Terraform, for example)
 	Engine string `json:"engine,omitempty"`
 	// Package: Optional. Immutable. URI to a blueprint used by the Unit (required
 	// unless unitKind or release is set).
@@ -517,11 +506,11 @@ func (s Blueprint) MarshalJSON() ([]byte, error) {
 type ComponentRef struct {
 	// Component: Optional. Name of the component in composite.Components
 	Component string `json:"component,omitempty"`
-	// CompositeRef: Reference to the Composite ApplicationTemplate.
+	// CompositeRef: Optional. Reference to the Composite ApplicationTemplate.
 	CompositeRef *CompositeRef `json:"compositeRef,omitempty"`
-	// Revision: Revision of the component. If the component does not have a
-	// revision, this field will be explicitly set to the revision of the composite
-	// ApplicationTemplate.
+	// Revision: Optional. Revision of the component. If the component does not
+	// have a revision, this field will be explicitly set to the revision of the
+	// composite ApplicationTemplate.
 	Revision string `json:"revision,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Component") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -546,9 +535,9 @@ type CompositeRef struct {
 	// ApplicationTemplate: Required. Reference to the ApplicationTemplate
 	// resource.
 	ApplicationTemplate string `json:"applicationTemplate,omitempty"`
-	// Revision: Revision of the ApplicationTemplate to use. Changes to revision
-	// will trigger manual resynchronization. If empty, ApplicationTemplate will be
-	// ignored.
+	// Revision: Optional. Revision of the ApplicationTemplate to use. Changes to
+	// revision will trigger manual resynchronization. If empty,
+	// ApplicationTemplate will be ignored.
 	Revision string `json:"revision,omitempty"`
 	// SyncOperation: Output only. Reference to on-going AppTemplate import and
 	// replication operation (i.e. the operation_id for the long-running
@@ -666,6 +655,36 @@ func (s Dependency) MarshalJSON() ([]byte, error) {
 type Deprovision struct {
 }
 
+// DurationLimits: DurationLimits defines the time-related constraints for a
+// UnitOperation's execution. This allows users to control how long an
+// operation can run before being cancelled by the system.
+type DurationLimits struct {
+	// UnitOperationTimeout: Optional. The maximum duration a UnitOperation is
+	// allowed to execute in the RUNNING state. - Minimum value: 60 seconds (1
+	// minute) - Maximum value: 604800 seconds (7 days) If this field is not set,
+	// or if the provided value falls outside the allowed range, the system will
+	// use a default timeout of 10800 seconds (3 hours). Upon exceeding this time
+	// limit, the UnitOperation will be best-effort cancelled, and its state will
+	// be set to FAILED.
+	UnitOperationTimeout string `json:"unitOperationTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UnitOperationTimeout") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UnitOperationTimeout") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DurationLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod DurationLimits
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -673,6 +692,34 @@ type Deprovision struct {
 type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// Engine: Engine captures metadata about the underlying actuation engine
+// instance managing this Unit.
+type Engine struct {
+	// EngineId: Optional. Output only. The full resource name of the underlying
+	// engine deployment created for this unit (e.g.,
+	// "projects/{project}/locations/{location}/deployments/{deployment}").
+	EngineId string `json:"engineId,omitempty"`
+	// Location: Optional. Output only. The location where the unit's underlying
+	// engine deployment is actuated (e.g., "us-central1").
+	Location string `json:"location,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EngineId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EngineId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Engine) MarshalJSON() ([]byte, error) {
+	type NoMethod Engine
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorBudget: The configuration for error budget. If the number of failed
@@ -747,9 +794,13 @@ type EvaluationSpec struct {
 	// Attributes: Optional. Names of the context attributes that are used in the
 	// evaluation rules and allocations.
 	Attributes []string `json:"attributes,omitempty"`
+	// DefaultAllocation: Optional. The ID of an allocation to use as the default.
+	DefaultAllocation string `json:"defaultAllocation,omitempty"`
 	// DefaultTarget: Optional. Deprecated: Use `base_target` instead. Default
 	// variant or allocation of the flag.
 	DefaultTarget string `json:"defaultTarget,omitempty"`
+	// DefaultVariant: Optional. The name of a variant to use as the default.
+	DefaultVariant string `json:"defaultVariant,omitempty"`
 	// Rules: Optional. Evaluation rules define the logic for evaluating the flag
 	// against a given context. The rules are evaluated sequentially in their
 	// specified order.
@@ -792,9 +843,9 @@ type Flag struct {
 	Etag string `json:"etag,omitempty"`
 	// EvaluationSpec: Optional. Specification of how the flag value should be
 	// evaluated. If a bool flag is created without an evaluation_spec specified,
-	// two default variants, "Enabled" (with bool_value = true) and "Disabled"
-	// (with bool_value = false), are created by default, and "Disabled" is set as
-	// the default_target.
+	// two default variants, "Enabled" (with boolean_value = true) and "Disabled"
+	// (with boolean_value = false), are created by default, and "Disabled" is set
+	// as the default_variant.
 	EvaluationSpec *EvaluationSpec `json:"evaluationSpec,omitempty"`
 	// FlagSet: Optional. Flag set this flag belongs to.
 	FlagSet string `json:"flagSet,omitempty"`
@@ -950,6 +1001,28 @@ func (s FlagAttribute) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FlagNameList: Wrapper for a list of flags.
+type FlagNameList struct {
+	// Flags: Required. Flags to be rolled out.
+	Flags []string `json:"flags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Flags") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Flags") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FlagNameList) MarshalJSON() ([]byte, error) {
+	type NoMethod FlagNameList
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FlagRelease: A collection of FlagRevisions.
 type FlagRelease struct {
 	// AllFlags: Optional. Immutable. DEPRECATED: Use all_flags_release instead.
@@ -975,6 +1048,9 @@ type FlagRelease struct {
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
 	Etag string `json:"etag,omitempty"`
+	// FlagNamesRelease: Optional. Immutable. Specifies the release consisting of a
+	// list of flags.
+	FlagNamesRelease *FlagNameList `json:"flagNamesRelease,omitempty"`
 	// FlagRevisions: Optional. Immutable. DEPRECATED: Use flag_revisions_release
 	// instead. FlagRevisions to be rolled out. Only one of flag_revisions,
 	// all_flags, or flag_sets can be set. It used to be the ultimate source to
@@ -1178,7 +1254,7 @@ type FlagVariant struct {
 	IntegerValue int64 `json:"integerValue,omitempty,string"`
 	// StringValue: Optional. String variant value.
 	StringValue string `json:"stringValue,omitempty"`
-	// TrackingId: Optional. trackingId is unique depending on name and value of
+	// TrackingId: Output only. trackingId is unique depending on name and value of
 	// the variant within the scope of the service. It is typically generated by
 	// the server and must not be changed. trackingId is used to uniquely identify
 	// and track variants.
@@ -1528,38 +1604,6 @@ func (s ListRolloutsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListSaasReleasesResponse: The response structure for the ListSaasReleases
-// method.
-type ListSaasReleasesResponse struct {
-	// NextPageToken: If present, the next page token can be provided to a
-	// subsequent ListSaasReleases call to list the next page. If empty, there are
-	// no more pages.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-	// SaasReleases: The resulting saas releases.
-	SaasReleases []*SaasRelease `json:"saasReleases,omitempty"`
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s ListSaasReleasesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod ListSaasReleasesResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // ListSaasResponse: The response structure for the ListSaas method.
 type ListSaasResponse struct {
 	// NextPageToken: If present, the next page token can be provided to a
@@ -1784,6 +1828,14 @@ func (s ListUnitsResponse) MarshalJSON() ([]byte, error) {
 type Location struct {
 	// Name: Optional. Name of location.
 	Name string `json:"name,omitempty"`
+	// Type: Type of location.
+	//
+	// Possible values:
+	//   "LOCATION_TYPE_UNSPECIFIED" - Unspecified location type.
+	//   "CLOUD_GLOBAL" - Cloud global.
+	//   "CLOUD_REGION" - Cloud region.
+	//   "CLOUD_ZONE" - Cloud zone.
+	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1858,8 +1910,7 @@ func (s Provision) MarshalJSON() ([]byte, error) {
 }
 
 // Release: A new version to be propagated and deployed to units. This includes
-// pointers to packaged blueprints for actuation (e.g Helm or Terraform
-// configuration packages) via artifact registry.
+// pointers to packaged blueprints for actuation via Artifact Registry.
 type Release struct {
 	// Annotations: Optional. Annotations is an unstructured key-value map stored
 	// with a resource that may be set by external tools to store and retrieve
@@ -1995,10 +2046,7 @@ type Rollout struct {
 	// server agree on the ordering of a resource being written.
 	Etag string `json:"etag,omitempty"`
 	// FlagRelease: Optional. Immutable. Name of the FlagRelease to be rolled out
-	// to the target Units. Release and FlagRelease are mutually exclusive. Note:
-	// `release` comment needs to be adjusted to mention that "Release and
-	// FlagRelease are mutually exclusive" when visibility restriction will be
-	// lifted.
+	// to the target Units. Release and FlagRelease are mutually exclusive.
 	FlagRelease string `json:"flagRelease,omitempty"`
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
@@ -2049,6 +2097,7 @@ type Rollout struct {
 	//   "ROLLOUT_STATE_CANCELLING" - Rollout is being canceled.
 	//   "ROLLOUT_STATE_RESUMING" - Rollout is being resumed.
 	//   "ROLLOUT_STATE_PAUSING" - Rollout is being paused.
+	//   "ROLLOUT_STATE_AWAITING_APPROVAL" - Rollout is awaiting manual approval.
 	State string `json:"state,omitempty"`
 	// StateMessage: Output only. Human readable message indicating details about
 	// the last state transition.
@@ -2158,6 +2207,15 @@ type RolloutKind struct {
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
+	// LocationType: Optional. The location type of the rollout. Based on the
+	// location type, the rollout will target the corresponding locations.
+	//
+	// Possible values:
+	//   "LOCATION_TYPE_UNSPECIFIED" - Unspecified location type.
+	//   "CLOUD_GLOBAL" - Cloud global.
+	//   "CLOUD_REGION" - Cloud region.
+	//   "CLOUD_ZONE" - Cloud zone.
+	LocationType string `json:"locationType,omitempty"`
 	// Name: Identifier. The resource name (full URI of the resource) following the
 	// standard naming scheme:
 	// "projects/{project}/locations/{location}/rolloutKinds/{rollout_kind_id}"
@@ -2175,12 +2233,12 @@ type RolloutKind struct {
 	// must not be changed. UID is used to uniquely identify resources with
 	// resource name reuses. This should be a UUID4.
 	Uid string `json:"uid,omitempty"`
-	// UnitFilter: Optional. CEL(https://github.com/google/cel-spec) formatted
+	// UnitFilter: Optional. CEL (https://github.com/google/cel-spec) formatted
 	// filter string against Unit. The filter will be applied to determine the
 	// eligible unit population. This filter can only reduce, but not expand the
 	// scope of the rollout.
 	UnitFilter string `json:"unitFilter,omitempty"`
-	// UnitKind: Required. Immutable. UnitKind that this rollout kind corresponds
+	// UnitKind: Optional. Immutable. UnitKind that this rollout kind corresponds
 	// to. Rollouts stemming from this rollout kind will target the units of this
 	// unit kind. In other words, this defines the population of target units to be
 	// upgraded by rollouts.
@@ -2286,11 +2344,11 @@ type Saas struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// ApplicationTemplate: Reference to composite ApplicationTemplate. When
-	// specified, the template components will be imported into their equivalent
-	// UnitKind, Release and Blueprint resources. Deleted references will not
-	// delete imported resources. Should only be specified on source regions, and
-	// be unspecified on replica regions.
+	// ApplicationTemplate: Optional. Reference to composite ApplicationTemplate.
+	// When specified, the template components will be imported into their
+	// equivalent UnitKind, Release and Blueprint resources. Deleted references
+	// will not delete imported resources. Should only be specified on source
+	// regions, and be unspecified on replica regions.
 	ApplicationTemplate *CompositeRef `json:"applicationTemplate,omitempty"`
 	// BlueprintRepo: Output only. Name of repository in Artifact Registry for
 	// system-generated Blueprints, eg. Blueprints of imported
@@ -2322,7 +2380,9 @@ type Saas struct {
 	// the application_template is empty.
 	//
 	// Possible values:
-	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified.
+	//   "STATE_UNSPECIFIED" - State is unspecified.
+	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified. Deprecated: Use
+	// STATE_UNSPECIFIED instead.
 	//   "STATE_ACTIVE" - The Saas is ready
 	//   "STATE_RUNNING" - In the process of importing, synchronizing or
 	// replicating ApplicationTemplates
@@ -2400,60 +2460,6 @@ type SaasCondition struct {
 
 func (s SaasCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod SaasCondition
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// SaasRelease: SaasRelease is a collection of Releases that are assigned to a
-// UnitGroup. It allows provisioning and updates of UnitGroup, which contains
-// multiple Units of different UnitKinds.
-type SaasRelease struct {
-	// Annotations: Optional. Annotations is an unstructured key-value map stored
-	// with a resource that may be set by external tools to store and retrieve
-	// arbitrary metadata. They are not queryable and should be preserved when
-	// modifying objects. More info:
-	// https://kubernetes.io/docs/user-guide/annotations
-	Annotations map[string]string `json:"annotations,omitempty"`
-	// CreateTime: Output only. The timestamp when the resource was created.
-	CreateTime string `json:"createTime,omitempty"`
-	// Etag: Output only. An opaque value that uniquely identifies a version or
-	// generation of a resource. It can be used to confirm that the client and
-	// server agree on the ordering of a resource being written.
-	Etag string `json:"etag,omitempty"`
-	// Labels: Optional. The labels on the resource, which can be used for
-	// categorization. similar to Kubernetes resource labels.
-	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Identifier. The resource name (full URI of the resource) following the
-	// standard naming scheme:
-	// "projects/{project}/locations/{location}/saasReleases/{saasRelease}"
-	Name string `json:"name,omitempty"`
-	// Uid: Output only. The unique identifier of the resource. UID is unique in
-	// the time and space for this resource within the scope of the service. It is
-	// typically generated by the server on successful creation of a resource and
-	// must not be changed. UID is used to uniquely identify resources with
-	// resource name reuses. This should be a UUID4.
-	Uid string `json:"uid,omitempty"`
-	// UpdateTime: Output only. The timestamp when the resource was last updated.
-	// Any change to the resource made by users must refresh this value. Changes to
-	// a resource made by the service should refresh this value.
-	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s SaasRelease) MarshalJSON() ([]byte, error) {
-	type NoMethod SaasRelease
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2637,7 +2643,7 @@ func (s ToMapping) MarshalJSON() ([]byte, error) {
 }
 
 // Unit: A unit of deployment that has its lifecycle via a CRUD API using an
-// actuation engine under the hood (e.g. based on Terraform, Helm or a custom
+// actuation engine under the hood (e.g. based on Terraform, or a custom
 // implementation provided by a service producer). A building block of a SaaS
 // Tenant.
 type Unit struct {
@@ -2662,6 +2668,13 @@ type Unit struct {
 	// Dependents: Optional. Output only. List of Units that depend on this unit.
 	// Unit can only be deprovisioned if this list is empty. Maximum 1000.
 	Dependents []*UnitDependency `json:"dependents,omitempty"`
+	// DeploymentLocation: Optional. Deployment location of the unit. Deployment
+	// location is used to determine which cloud_zone, prod_zone or prod_region to
+	// use for the unit.
+	DeploymentLocation *Location `json:"deploymentLocation,omitempty"`
+	// Engine: Optional. Output only. Metadata about the underlying actuation
+	// engine instance managing this Unit.
+	Engine *Engine `json:"engine,omitempty"`
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
@@ -2700,9 +2713,8 @@ type Unit struct {
 	OngoingOperations []string `json:"ongoingOperations,omitempty"`
 	// OutputVariables: Optional. Output only. Set of key/value pairs corresponding
 	// to output variables from execution of actuation templates. The variables are
-	// declared in actuation configs (e.g in helm chart or terraform) and the
-	// values are fetched and returned by the actuation engine upon completion of
-	// execution.
+	// declared in actuation configs (in Terraform for example) and the values are
+	// fetched and returned by the actuation engine upon completion of execution.
 	OutputVariables []*UnitVariable `json:"outputVariables,omitempty"`
 	// PendingOperations: Optional. Output only. List of pending (wait to be
 	// executed) UnitOperations for this unit.
@@ -2931,6 +2943,9 @@ type UnitGroupOperation struct {
 	Annotations map[string]string `json:"annotations,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DeleteTime: Output only. The timestamp when the resource was marked for
+	// deletion (deletion is an asynchronous operation).
+	DeleteTime string `json:"deleteTime,omitempty"`
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
@@ -2984,8 +2999,8 @@ type UnitKind struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
-	// AppParams: AppParams contains the parameters for creating an AppHub
-	// Application.
+	// AppParams: Optional. AppParams contains the parameters for creating an
+	// AppHub Application.
 	AppParams *AppParams `json:"appParams,omitempty"`
 	// ApplicationTemplateComponent: Optional. Reference to component and revision
 	// in a composite ApplicationTemplate.
@@ -3009,10 +3024,22 @@ type UnitKind struct {
 	// specified, a new unit must explicitly reference which release to use for its
 	// creation.
 	DefaultRelease string `json:"defaultRelease,omitempty"`
+	// DeleteTime: Output only. The timestamp when the resource was marked for
+	// deletion (deletion is an asynchronous operation).
+	DeleteTime string `json:"deleteTime,omitempty"`
 	// Dependencies: Optional. Immutable. List of other unit kinds that this
 	// release will depend on. Dependencies will be automatically provisioned if
 	// not found. Maximum 10.
 	Dependencies []*Dependency `json:"dependencies,omitempty"`
+	// DurationLimits: Optional. Defines the default duration limits for
+	// UnitOperations created from this UnitKind. These settings provide a baseline
+	// for execution time constraints. The limits specified here can be overridden
+	// by more specific settings on an individual UnitOperation resource. See the
+	// DurationLimits message definition for details on the constraints like
+	// minimum, maximum, and system default values for unit_operation_timeout. If
+	// not set, UnitOperations will use the system default duration limits unless
+	// overridden on the UnitOperation.
+	DurationLimits *DurationLimits `json:"durationLimits,omitempty"`
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
@@ -3095,6 +3122,12 @@ type UnitOperation struct {
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Deprovision: Optional. Deprovision operation.
 	Deprovision *Deprovision `json:"deprovision,omitempty"`
+	// DurationLimits: Optional. Defines the duration limits for this specific
+	// UnitOperation instance. These settings override any default duration limits
+	// set on the UnitKind. See the DurationLimits message definition for details
+	// on the constraints like minimum, maximum, and system default values for
+	// unit_operation_timeout.
+	DurationLimits *DurationLimits `json:"durationLimits,omitempty"`
 	// EngineState: Optional. Output only. The engine state for on-going deployment
 	// engine operation(s). This field is opaque for external usage.
 	EngineState string `json:"engineState,omitempty"`
@@ -3143,7 +3176,7 @@ type UnitOperation struct {
 	// of the unit operation.
 	//
 	// Possible values:
-	//   "UNIT_OPERATION_STATE_UNKNOWN"
+	//   "UNIT_OPERATION_STATE_UNKNOWN" - Unit operation state is unknown.
 	//   "UNIT_OPERATION_STATE_PENDING" - Unit operation is accepted but not ready
 	// to run.
 	//   "UNIT_OPERATION_STATE_SCHEDULED" - Unit operation is accepted and
@@ -9100,646 +9133,6 @@ func (c *ProjectsLocationsSaasPatchCall) Do(opts ...googleapi.CallOption) (*Saas
 	return ret, nil
 }
 
-type ProjectsLocationsSaasReleasesCreateCall struct {
-	s           *Service
-	parent      string
-	saasrelease *SaasRelease
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Create: Create a new saas release.
-//
-// - parent: The parent of the saas release.
-func (r *ProjectsLocationsSaasReleasesService) Create(parent string, saasrelease *SaasRelease) *ProjectsLocationsSaasReleasesCreateCall {
-	c := &ProjectsLocationsSaasReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.saasrelease = saasrelease
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests.
-func (c *ProjectsLocationsSaasReleasesCreateCall) RequestId(requestId string) *ProjectsLocationsSaasReleasesCreateCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// SaasReleaseId sets the optional parameter "saasReleaseId": Required. The ID
-// value for the new saas release.
-func (c *ProjectsLocationsSaasReleasesCreateCall) SaasReleaseId(saasReleaseId string) *ProjectsLocationsSaasReleasesCreateCall {
-	c.urlParams_.Set("saasReleaseId", saasReleaseId)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsSaasReleasesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsSaasReleasesCreateCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsSaasReleasesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSaasReleasesCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsSaasReleasesCreateCall) Context(ctx context.Context) *ProjectsLocationsSaasReleasesCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsSaasReleasesCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSaasReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.saasrelease)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/saasReleases")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.saasReleases.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *SaasRelease.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsSaasReleasesCreateCall) Do(opts ...googleapi.CallOption) (*SaasRelease, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &SaasRelease{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsSaasReleasesDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Delete a single saas release.
-//
-// - name: The resource name of the resource within a service.
-func (r *ProjectsLocationsSaasReleasesService) Delete(name string) *ProjectsLocationsSaasReleasesDeleteCall {
-	c := &ProjectsLocationsSaasReleasesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Etag sets the optional parameter "etag": The etag known to the client for
-// the expected state of the saas release.
-func (c *ProjectsLocationsSaasReleasesDeleteCall) Etag(etag string) *ProjectsLocationsSaasReleasesDeleteCall {
-	c.urlParams_.Set("etag", etag)
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests.
-func (c *ProjectsLocationsSaasReleasesDeleteCall) RequestId(requestId string) *ProjectsLocationsSaasReleasesDeleteCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsSaasReleasesDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsSaasReleasesDeleteCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsSaasReleasesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSaasReleasesDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsSaasReleasesDeleteCall) Context(ctx context.Context) *ProjectsLocationsSaasReleasesDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsSaasReleasesDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSaasReleasesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.saasReleases.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsSaasReleasesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsSaasReleasesGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Retrieve a single saas release.
-//
-// - name: The resource name of the resource within a service.
-func (r *ProjectsLocationsSaasReleasesService) Get(name string) *ProjectsLocationsSaasReleasesGetCall {
-	c := &ProjectsLocationsSaasReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsSaasReleasesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsSaasReleasesGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsSaasReleasesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsSaasReleasesGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsSaasReleasesGetCall) Context(ctx context.Context) *ProjectsLocationsSaasReleasesGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsSaasReleasesGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSaasReleasesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.saasReleases.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *SaasRelease.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsSaasReleasesGetCall) Do(opts ...googleapi.CallOption) (*SaasRelease, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &SaasRelease{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsSaasReleasesListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Retrieve a collection of saas releases.
-//
-// - parent: The parent of the saas releases.
-func (r *ProjectsLocationsSaasReleasesService) List(parent string) *ProjectsLocationsSaasReleasesListCall {
-	c := &ProjectsLocationsSaasReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": Filter the list as specified in
-// https://google.aip.dev/160.
-func (c *ProjectsLocationsSaasReleasesListCall) Filter(filter string) *ProjectsLocationsSaasReleasesListCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Order results as specified in
-// https://google.aip.dev/132.
-func (c *ProjectsLocationsSaasReleasesListCall) OrderBy(orderBy string) *ProjectsLocationsSaasReleasesListCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": The maximum number of saas
-// releases to send per page.
-func (c *ProjectsLocationsSaasReleasesListCall) PageSize(pageSize int64) *ProjectsLocationsSaasReleasesListCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": The page token: If the
-// next_page_token from a previous response is provided, this request will send
-// the subsequent page.
-func (c *ProjectsLocationsSaasReleasesListCall) PageToken(pageToken string) *ProjectsLocationsSaasReleasesListCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsSaasReleasesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSaasReleasesListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsSaasReleasesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSaasReleasesListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsSaasReleasesListCall) Context(ctx context.Context) *ProjectsLocationsSaasReleasesListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsSaasReleasesListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSaasReleasesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/saasReleases")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.list", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.saasReleases.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *ListSaasReleasesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsSaasReleasesListCall) Do(opts ...googleapi.CallOption) (*ListSaasReleasesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &ListSaasReleasesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.list", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsSaasReleasesListCall) Pages(ctx context.Context, f func(*ListSaasReleasesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken"))
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-type ProjectsLocationsSaasReleasesPatchCall struct {
-	s           *Service
-	name        string
-	saasrelease *SaasRelease
-	urlParams_  gensupport.URLParams
-	ctx_        context.Context
-	header_     http.Header
-}
-
-// Patch: Update a single saas release.
-//
-//   - name: Identifier. The resource name (full URI of the resource) following
-//     the standard naming scheme:
-//     "projects/{project}/locations/{location}/saasReleases/{saasRelease}".
-func (r *ProjectsLocationsSaasReleasesService) Patch(name string, saasrelease *SaasRelease) *ProjectsLocationsSaasReleasesPatchCall {
-	c := &ProjectsLocationsSaasReleasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.saasrelease = saasrelease
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests.
-func (c *ProjectsLocationsSaasReleasesPatchCall) RequestId(requestId string) *ProjectsLocationsSaasReleasesPatchCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten.
-func (c *ProjectsLocationsSaasReleasesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSaasReleasesPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsSaasReleasesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsSaasReleasesPatchCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsSaasReleasesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsSaasReleasesPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsSaasReleasesPatchCall) Context(ctx context.Context) *ProjectsLocationsSaasReleasesPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsSaasReleasesPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsSaasReleasesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.saasrelease)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.saasReleases.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *SaasRelease.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsSaasReleasesPatchCall) Do(opts ...googleapi.CallOption) (*SaasRelease, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &SaasRelease{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.saasReleases.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsTenantsCreateCall struct {
 	s          *Service
 	parent     string
@@ -10416,274 +9809,6 @@ func (c *ProjectsLocationsTenantsPatchCall) Do(opts ...googleapi.CallOption) (*T
 	return ret, nil
 }
 
-type ProjectsLocationsUnitGroupOperationsCreateCall struct {
-	s                  *Service
-	parent             string
-	unitgroupoperation *UnitGroupOperation
-	urlParams_         gensupport.URLParams
-	ctx_               context.Context
-	header_            http.Header
-}
-
-// Create: Create a new unit group operation.
-//
-// - parent: The parent of the unit group operation.
-func (r *ProjectsLocationsUnitGroupOperationsService) Create(parent string, unitgroupoperation *UnitGroupOperation) *ProjectsLocationsUnitGroupOperationsCreateCall {
-	c := &ProjectsLocationsUnitGroupOperationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.unitgroupoperation = unitgroupoperation
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsUnitGroupOperationsCreateCall) RequestId(requestId string) *ProjectsLocationsUnitGroupOperationsCreateCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// UnitGroupOperationId sets the optional parameter "unitGroupOperationId":
-// Required. The ID value for the new unit group operation.
-func (c *ProjectsLocationsUnitGroupOperationsCreateCall) UnitGroupOperationId(unitGroupOperationId string) *ProjectsLocationsUnitGroupOperationsCreateCall {
-	c.urlParams_.Set("unitGroupOperationId", unitGroupOperationId)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsUnitGroupOperationsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsUnitGroupOperationsCreateCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsUnitGroupOperationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsUnitGroupOperationsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsUnitGroupOperationsCreateCall) Context(ctx context.Context) *ProjectsLocationsUnitGroupOperationsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsUnitGroupOperationsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsUnitGroupOperationsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unitgroupoperation)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/unitGroupOperations")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroupOperations.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.unitGroupOperations.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *UnitGroupOperation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsUnitGroupOperationsCreateCall) Do(opts ...googleapi.CallOption) (*UnitGroupOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &UnitGroupOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroupOperations.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsUnitGroupOperationsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Delete a single unit group operation.
-//
-// - name: The resource name of the resource within a service.
-func (r *ProjectsLocationsUnitGroupOperationsService) Delete(name string) *ProjectsLocationsUnitGroupOperationsDeleteCall {
-	c := &ProjectsLocationsUnitGroupOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Etag sets the optional parameter "etag": The etag known to the client for
-// the expected state of the unit group operation. This is used with
-// state-changing methods to prevent accidental overwrites when multiple user
-// agents might be acting in parallel on the same resource. An etag wildcard
-// provide optimistic concurrency based on the expected existence of the unit
-// group operation. The Any wildcard (`*`) requires that the resource must
-// already exists, and the Not Any wildcard (`!*`) requires that it must not.
-func (c *ProjectsLocationsUnitGroupOperationsDeleteCall) Etag(etag string) *ProjectsLocationsUnitGroupOperationsDeleteCall {
-	c.urlParams_.Set("etag", etag)
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsUnitGroupOperationsDeleteCall) RequestId(requestId string) *ProjectsLocationsUnitGroupOperationsDeleteCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsUnitGroupOperationsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsUnitGroupOperationsDeleteCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsUnitGroupOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsUnitGroupOperationsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsUnitGroupOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsUnitGroupOperationsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsUnitGroupOperationsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsUnitGroupOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroupOperations.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.unitGroupOperations.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsUnitGroupOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroupOperations.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsUnitGroupOperationsGetCall struct {
 	s            *Service
 	name         string
@@ -10954,392 +10079,6 @@ func (c *ProjectsLocationsUnitGroupOperationsListCall) Pages(ctx context.Context
 	}
 }
 
-type ProjectsLocationsUnitGroupOperationsPatchCall struct {
-	s                  *Service
-	name               string
-	unitgroupoperation *UnitGroupOperation
-	urlParams_         gensupport.URLParams
-	ctx_               context.Context
-	header_            http.Header
-}
-
-// Patch: Update a single unit group operation.
-//
-//   - name: Identifier. The resource name (full URI of the resource) following
-//     the standard naming scheme:
-//     "projects/{project}/locations/{location}/unitGroupOperations/{unitGroupOper
-//     ation}".
-func (r *ProjectsLocationsUnitGroupOperationsService) Patch(name string, unitgroupoperation *UnitGroupOperation) *ProjectsLocationsUnitGroupOperationsPatchCall {
-	c := &ProjectsLocationsUnitGroupOperationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.unitgroupoperation = unitgroupoperation
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
-// request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
-func (c *ProjectsLocationsUnitGroupOperationsPatchCall) RequestId(requestId string) *ProjectsLocationsUnitGroupOperationsPatchCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten in the UnitGroupOperation resource by
-// the update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields in the
-// UnitGroupOperation will be overwritten.
-func (c *ProjectsLocationsUnitGroupOperationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsUnitGroupOperationsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsUnitGroupOperationsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsUnitGroupOperationsPatchCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsUnitGroupOperationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsUnitGroupOperationsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsUnitGroupOperationsPatchCall) Context(ctx context.Context) *ProjectsLocationsUnitGroupOperationsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsUnitGroupOperationsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsUnitGroupOperationsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unitgroupoperation)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroupOperations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.unitGroupOperations.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *UnitGroupOperation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsUnitGroupOperationsPatchCall) Do(opts ...googleapi.CallOption) (*UnitGroupOperation, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &UnitGroupOperation{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroupOperations.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsUnitGroupsCreateCall struct {
-	s          *Service
-	parent     string
-	unitgroup  *UnitGroup
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Create: Create a new unit group.
-//
-// - parent: The parent of the unit group.
-func (r *ProjectsLocationsUnitGroupsService) Create(parent string, unitgroup *UnitGroup) *ProjectsLocationsUnitGroupsCreateCall {
-	c := &ProjectsLocationsUnitGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.unitgroup = unitgroup
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests.
-func (c *ProjectsLocationsUnitGroupsCreateCall) RequestId(requestId string) *ProjectsLocationsUnitGroupsCreateCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// UnitGroupId sets the optional parameter "unitGroupId": Required. The ID
-// value for the new unit group.
-func (c *ProjectsLocationsUnitGroupsCreateCall) UnitGroupId(unitGroupId string) *ProjectsLocationsUnitGroupsCreateCall {
-	c.urlParams_.Set("unitGroupId", unitGroupId)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsUnitGroupsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsUnitGroupsCreateCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsUnitGroupsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsUnitGroupsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsUnitGroupsCreateCall) Context(ctx context.Context) *ProjectsLocationsUnitGroupsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsUnitGroupsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsUnitGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unitgroup)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/unitGroups")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroups.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.unitGroups.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *UnitGroup.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsUnitGroupsCreateCall) Do(opts ...googleapi.CallOption) (*UnitGroup, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &UnitGroup{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroups.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsUnitGroupsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Delete a single unit group.
-//
-// - name: The resource name of the resource within a service.
-func (r *ProjectsLocationsUnitGroupsService) Delete(name string) *ProjectsLocationsUnitGroupsDeleteCall {
-	c := &ProjectsLocationsUnitGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Etag sets the optional parameter "etag": The etag known to the client for
-// the expected state of the unit group.
-func (c *ProjectsLocationsUnitGroupsDeleteCall) Etag(etag string) *ProjectsLocationsUnitGroupsDeleteCall {
-	c.urlParams_.Set("etag", etag)
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests.
-func (c *ProjectsLocationsUnitGroupsDeleteCall) RequestId(requestId string) *ProjectsLocationsUnitGroupsDeleteCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsUnitGroupsDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsUnitGroupsDeleteCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsUnitGroupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsUnitGroupsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsUnitGroupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsUnitGroupsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsUnitGroupsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsUnitGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroups.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.unitGroups.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsUnitGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroups.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsUnitGroupsGetCall struct {
 	s            *Service
 	name         string
@@ -11607,133 +10346,6 @@ func (c *ProjectsLocationsUnitGroupsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
-}
-
-type ProjectsLocationsUnitGroupsPatchCall struct {
-	s          *Service
-	name       string
-	unitgroup  *UnitGroup
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Patch: Update a single unit group.
-//
-//   - name: Identifier. The resource name (full URI of the resource) following
-//     the standard naming scheme:
-//     "projects/{project}/locations/{location}/unitGroups/{unitGroup}".
-func (r *ProjectsLocationsUnitGroupsService) Patch(name string, unitgroup *UnitGroup) *ProjectsLocationsUnitGroupsPatchCall {
-	c := &ProjectsLocationsUnitGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.unitgroup = unitgroup
-	return c
-}
-
-// RequestId sets the optional parameter "requestId": An optional request ID to
-// identify requests.
-func (c *ProjectsLocationsUnitGroupsPatchCall) RequestId(requestId string) *ProjectsLocationsUnitGroupsPatchCall {
-	c.urlParams_.Set("requestId", requestId)
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": Field mask is used to
-// specify the fields to be overwritten.
-func (c *ProjectsLocationsUnitGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsUnitGroupsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// ValidateOnly sets the optional parameter "validateOnly": If "validate_only"
-// is set to true, the service will try to validate that this request would
-// succeed, but will not actually make changes.
-func (c *ProjectsLocationsUnitGroupsPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsUnitGroupsPatchCall {
-	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsUnitGroupsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsUnitGroupsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsUnitGroupsPatchCall) Context(ctx context.Context) *ProjectsLocationsUnitGroupsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsUnitGroupsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsUnitGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.unitgroup)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroups.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "saasservicemgmt.projects.locations.unitGroups.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *UnitGroup.ServerResponse.Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was returned.
-func (c *ProjectsLocationsUnitGroupsPatchCall) Do(opts ...googleapi.CallOption) (*UnitGroup, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &UnitGroup{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "saasservicemgmt.projects.locations.unitGroups.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
 }
 
 type ProjectsLocationsUnitKindsCreateCall struct {

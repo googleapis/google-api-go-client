@@ -193,6 +193,7 @@ type ProjectsLocationsService struct {
 func NewProjectsLocationsAppsService(s *Service) *ProjectsLocationsAppsService {
 	rs := &ProjectsLocationsAppsService{s: s}
 	rs.Agents = NewProjectsLocationsAppsAgentsService(s)
+	rs.AssistantSessions = NewProjectsLocationsAppsAssistantSessionsService(s)
 	rs.Changelogs = NewProjectsLocationsAppsChangelogsService(s)
 	rs.Conversations = NewProjectsLocationsAppsConversationsService(s)
 	rs.Deployments = NewProjectsLocationsAppsDeploymentsService(s)
@@ -215,6 +216,8 @@ type ProjectsLocationsAppsService struct {
 	s *Service
 
 	Agents *ProjectsLocationsAppsAgentsService
+
+	AssistantSessions *ProjectsLocationsAppsAssistantSessionsService
 
 	Changelogs *ProjectsLocationsAppsChangelogsService
 
@@ -253,6 +256,15 @@ func NewProjectsLocationsAppsAgentsService(s *Service) *ProjectsLocationsAppsAge
 }
 
 type ProjectsLocationsAppsAgentsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsAppsAssistantSessionsService(s *Service) *ProjectsLocationsAppsAssistantSessionsService {
+	rs := &ProjectsLocationsAppsAssistantSessionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAppsAssistantSessionsService struct {
 	s *Service
 }
 
@@ -502,6 +514,48 @@ func (s ActionEntityOperation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ActiveTurnInfo: Live-attachment info for a session turn that is currently
+// running, disconnected from its client, or parked for pickup by another
+// server task.
+type ActiveTurnInfo struct {
+	// LastProgressTime: Output only. When the turn last persisted progress.
+	LastProgressTime string `json:"lastProgressTime,omitempty"`
+	// OrphanDeadlineTime: Output only. When the turn will be wound down if no
+	// client attaches.
+	OrphanDeadlineTime string `json:"orphanDeadlineTime,omitempty"`
+	// StartTime: Output only. When the turn started.
+	StartTime string `json:"startTime,omitempty"`
+	// Status: Current attachment status.
+	//
+	// Possible values:
+	//   "STATUS_UNSPECIFIED" - Unspecified.
+	//   "RUNNING" - The turn is executing with at least one client attached.
+	//   "DISCONNECTED" - The turn is executing with no client attached.
+	//   "RESUMING" - The turn is parked for pickup: the next attach continues it.
+	//   "ABANDONED" - The turn's server lease has lapsed and no task is driving
+	// it; the next read seals it to a committed partial. Not attachable.
+	Status string `json:"status,omitempty"`
+	// TurnId: Identifies the turn; echoed by resume snapshots on the streaming
+	// API.
+	TurnId string `json:"turnId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LastProgressTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LastProgressTime") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActiveTurnInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ActiveTurnInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Agent: An agent acts as the fundamental building block that provides
 // instructions to the Large Language Model (LLM) for executing specific tasks.
 type Agent struct {
@@ -572,6 +626,9 @@ type Agent struct {
 	// Name: Identifier. The unique identifier of the agent. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/agents/{agent}`
 	Name string `json:"name,omitempty"`
+	// RemoteA2aAgent: Optional. The remote A2A (https://github.com/a2aproject/A2A)
+	// agent to be used for the agent execution.
+	RemoteA2aAgent *AgentRemoteA2aAgent `json:"remoteA2aAgent,omitempty"`
 	// RemoteDialogflowAgent: Optional. The remote Dialogflow
 	// (https://cloud.google.com/dialogflow/cx/docs/concept/console-conversational-agents)
 	// agent to be used for the agent execution. If this field is set, all other
@@ -713,6 +770,54 @@ func (s AgentInterface) MarshalJSON() ([]byte, error) {
 // AgentLlmAgent: Default agent type. The agent uses instructions and callbacks
 // specified in the agent to perform the task using a large language model.
 type AgentLlmAgent struct {
+}
+
+// AgentRegistryDeployment: Configuration and status for Agent Registry
+// deployment.
+type AgentRegistryDeployment struct {
+	// AgentRegistryServiceName: Optional. Output only. The resource name of the
+	// deployed Agent Registry service. Format:
+	// `projects/{project}/locations/{location}/services/{service}`
+	AgentRegistryServiceName string `json:"agentRegistryServiceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentRegistryServiceName")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentRegistryServiceName") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentRegistryDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentRegistryDeployment
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AgentRemoteA2aAgent: The agent which will transfer execution to a remote A2A
+// (https://github.com/a2aproject/A2A) agent.
+type AgentRemoteA2aAgent struct {
+	// A2aConfig: Required. The A2A connection configuration.
+	A2aConfig *RemoteA2aConfig `json:"a2aConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "A2aConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "A2aConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentRemoteA2aAgent) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentRemoteA2aAgent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // AgentRemoteDialogflowAgent: The agent which will transfer execution to a
@@ -1255,6 +1360,9 @@ type App struct {
 	ClientCertificateSettings *ClientCertificateSettings `json:"clientCertificateSettings,omitempty"`
 	// CreateTime: Output only. Timestamp when the app was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// DashboardSettings: Optional. App-specific dashboard settings for linking and
+	// configuring Contact Center Insights dashboards.
+	DashboardSettings *DashboardSettings `json:"dashboardSettings,omitempty"`
 	// DataStoreSettings: Optional. The data store settings for the app.
 	DataStoreSettings *DataStoreSettings `json:"dataStoreSettings,omitempty"`
 	// DefaultChannelProfile: Optional. The default channel profile used by the
@@ -1440,6 +1548,8 @@ type AppVersion struct {
 	Name string `json:"name,omitempty"`
 	// Snapshot: Output only. The snapshot of the app when the version is created.
 	Snapshot *AppSnapshot `json:"snapshot,omitempty"`
+	// UpdateTime: Output only. Timestamp when the app version was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1461,6 +1571,449 @@ func (s AppVersion) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ArtifactChunk: A streamed fragment of a document artifact (e.g. a markdown
+// TDD) that the assistant is generating. Content deltas stream while the
+// document is being written so clients can render a live preview; the
+// FINALIZED chunk carries the Cloud Storage URI once the file has been
+// persisted.
+type ArtifactChunk struct {
+	// ArtifactId: Identifier of the artifact, stable across all chunks of one
+	// artifact within the stream.
+	ArtifactId string `json:"artifactId,omitempty"`
+	// ContentDelta: Incremental artifact content. Set on DELTA chunks.
+	ContentDelta string `json:"contentDelta,omitempty"`
+	// DisplayName: The file name shown to the user, e.g. "hotel_booking_tdd.md".
+	// Set on STARTED (and repeated on FINALIZED).
+	DisplayName string `json:"displayName,omitempty"`
+	// GcsUri: The Cloud Storage object the artifact was persisted to. Set on
+	// FINALIZED chunks.
+	GcsUri string `json:"gcsUri,omitempty"`
+	// MimeType: The IANA media type of the artifact content, e.g. "text/markdown".
+	MimeType string `json:"mimeType,omitempty"`
+	// State: Lifecycle position of this chunk.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unused default.
+	//   "STARTED" - The assistant started generating the artifact.
+	//   "DELTA" - A content increment; content_delta is set.
+	//   "FINALIZED" - The artifact was persisted; gcs_uri is set.
+	//   "FAILED" - Generation or persistence failed; the artifact was not saved.
+	//   "CLOSED" - The document finished streaming: its content was fully
+	// delivered via content_delta chunks. Persistence may still follow; a
+	// FINALIZED chunk with a gcs_uri is sent if and when the artifact is saved.
+	State string `json:"state,omitempty"`
+	// TargetApp: Output only. The app this artifact was produced for, when it was
+	// produced for one. Format:
+	// `projects/{project}/locations/{location}/apps/{app}`
+	TargetApp string `json:"targetApp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArtifactId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ArtifactChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod ArtifactChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantChunk: A chunk of data in an assistant message.
+type AssistantChunk struct {
+	// CreateTime: Optional. Timestamp when the chunk was created or emitted.
+	CreateTime string `json:"createTime,omitempty"`
+	// Payload: Optional. Payload which contains structured responses like the
+	// quality report, agent version name, suggested responses etc.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// Text: Optional. Text data.
+	Text string `json:"text,omitempty"`
+	// Thought: Optional. Thought generated by the model.
+	Thought string `json:"thought,omitempty"`
+	// TypedPayload: Optional. Typed payload which contains structured responses.
+	TypedPayload *TypedPayload `json:"typedPayload,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantConfirmationRequest: A blocking question or confirmation the
+// assistant needs answered before an agent action can proceed. The requesting
+// agent is paused and resumes only when the answer arrives on a later
+// StreamChatAiAssistantRequest.confirmation_response.
+type AssistantConfirmationRequest struct {
+	// AgentName: Display label of the agent that raised the confirmation (e.g.
+	// "Contract Architect"), for the card header.
+	AgentName string `json:"agentName,omitempty"`
+	// ConfirmationId: Identifier correlating this request with its response.
+	// Opaque to clients; must be echoed verbatim on the answering request.
+	ConfirmationId string `json:"confirmationId,omitempty"`
+	// Context: Context describing what is being confirmed (e.g. the action the
+	// agent wants to take, or the question it needs answered). Rendered as plain
+	// text, not Markdown.
+	Context string `json:"context,omitempty"`
+	// ExpireTime: Time after which this confirmation can no longer be answered. An
+	// expired card renders as inactive, and the server declines the confirmation
+	// on the next turn so the paused agent does not wait indefinitely.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// NegativeLabel: Label for the declining action of a binary confirmation (e.g.
+	// "Not yet"). Unset when `questions` is populated.
+	NegativeLabel string `json:"negativeLabel,omitempty"`
+	// PositiveLabel: Label for the approving action of a binary confirmation (e.g.
+	// "Publish"). Unset when `questions` is populated.
+	PositiveLabel string `json:"positiveLabel,omitempty"`
+	// Questions: Multi-choice form of the confirmation. When populated, the card
+	// renders a selectable option list and the chosen option's submit_text (or
+	// free-form user text) is returned as
+	// AssistantConfirmationResponse.answer_text.
+	Questions []*OptionQuestionsChunkQuestion `json:"questions,omitempty"`
+	// Targets: Everything the confirmed action will change, so the console can
+	// render "Update 2 apps" and one badge per app. Empty for legacy single-target
+	// cards.
+	Targets []*AssistantConfirmationRequestTarget `json:"targets,omitempty"`
+	// Tool: Name of the tool call the agent paused on (e.g. "update_app"), for the
+	// card header. Unset for pure questions.
+	Tool string `json:"tool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantConfirmationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantConfirmationRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantConfirmationRequestTarget: One resource the confirmed action will
+// change.
+type AssistantConfirmationRequestTarget struct {
+	// Action: The action, e.g. `CREATE`, `UPDATE`, `DELETE`, `COPY`, `LINK`.
+	Action string `json:"action,omitempty"`
+	// DisplayName: Display name of the resource or app, for the card.
+	DisplayName string `json:"displayName,omitempty"`
+	// Resource: The resource that will change, as a full resource name.
+	Resource string `json:"resource,omitempty"`
+	// TargetApp: The app the resource belongs to, or empty for a location-scoped
+	// action such as creating an app. Format:
+	// `projects/{project}/locations/{location}/apps/{app}`
+	TargetApp string `json:"targetApp,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantConfirmationRequestTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantConfirmationRequestTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantConfirmationResponse: The user's answer to an
+// AssistantConfirmationRequest, sent on the next
+// SessionService.StreamChatAiAssistant call to resume the paused agent.
+type AssistantConfirmationResponse struct {
+	// AnswerText: The chosen option's submit_text, or free-form user text. The
+	// paused action is cancelled and the text is handed to the agent to act on.
+	AnswerText string `json:"answerText,omitempty"`
+	// ConfirmationId: The AssistantConfirmationRequest.confirmation_id being
+	// answered.
+	ConfirmationId string `json:"confirmationId,omitempty"`
+	// Confirmed: Binary answer: true approves the paused action, false declines
+	// it.
+	Confirmed bool `json:"confirmed,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AnswerText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AnswerText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantConfirmationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantConfirmationResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantMessage: A message in an assistant session.
+type AssistantMessage struct {
+	// AttachedGcsUris: Optional. Cloud Storage URIs for files uploaded by the user
+	// during this turn. This allows attachments to be persisted and rendered in
+	// the session history UI. Example: "gs://cxas-transient-uploads/uuid/prd.pdf"
+	AttachedGcsUris []string `json:"attachedGcsUris,omitempty"`
+	// Chunks: Optional. Content of the message as chunks.
+	Chunks []*AssistantChunk `json:"chunks,omitempty"`
+	// EventTime: Required. Timestamp when the message was sent or received.
+	EventTime string `json:"eventTime,omitempty"`
+	// Role: Required. Role within the conversation "user" or "model".
+	Role string `json:"role,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AttachedGcsUris") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttachedGcsUris") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantMessage) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantMessage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantOutput: The output from the assistant agent.
+type AssistantOutput struct {
+	// Message: Required. The response from the assistant agent.
+	Message *AssistantMessage `json:"message,omitempty"`
+	// UserResponseSuggestions: Output only. Suggested user responses from the
+	// assistant agent.
+	UserResponseSuggestions *UserResponseSuggestions `json:"userResponseSuggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantOutput) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantOutput
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantSession: An assistant session represents a conversation between a
+// user and the assistant agent.
+type AssistantSession struct {
+	// ActiveTurn: Output only. Attachment info for this session's currently
+	// running turn. Unset when no turn is running.
+	ActiveTurn *ActiveTurnInfo `json:"activeTurn,omitempty"`
+	// Artifacts: Output only. Document artifacts (e.g. generated TDDs in markdown)
+	// produced by the assistant in this session. Pointers only; the file content
+	// lives in the customer's Cloud Storage bucket.
+	Artifacts []*AssistantSessionArtifact `json:"artifacts,omitempty"`
+	// CreateTime: Output only. The time the assistant session was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Optional. The display name of the assistant session.
+	DisplayName string `json:"displayName,omitempty"`
+	// Messages: Optional. History of messages in the session.
+	Messages []*AssistantMessage `json:"messages,omitempty"`
+	// Name: Required. Identifier. The unique identifier of the session. Format:
+	// `projects/{project}/locations/{location}/apps/{app}/assistantSessions/{sessio
+	// n}`
+	Name string `json:"name,omitempty"`
+	// Requestor: Output only. The user who initiated the session.
+	Requestor string `json:"requestor,omitempty"`
+	// SessionCheckpoint: Output only. Session checkpoint containing user intent
+	// and rolling history summary.
+	SessionCheckpoint *SessionCheckpoint `json:"sessionCheckpoint,omitempty"`
+	// State: Output only. The status of the assistant session.
+	//
+	// Possible values:
+	//   "ASSISTANT_SESSION_STATE_UNSPECIFIED" - The default value. This value is
+	// used if the status is not specified.
+	//   "PROCESSING" - The assistant agent is processing the request as a long
+	// running task.
+	//   "IDLE" - The assistant agent is idle and does not have any pending
+	// requests or response.
+	//   "PENDING_REVIEW" - The assistant agent is done processing a long running
+	// task and has a response ready for the user.
+	State string `json:"state,omitempty"`
+	// TouchedApps: Output only. Apps this session has targeted or changed
+	// (project-scoped sessions only), for history tags. Format:
+	// `projects/{project}/locations/{location}/apps/{app}`
+	TouchedApps []string `json:"touchedApps,omitempty"`
+	// UpdateTime: Output only. The time the assistant session was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UserResponseSuggestions: Output only. Suggested user responses from the
+	// assistant agent.
+	UserResponseSuggestions *UserResponseSuggestions `json:"userResponseSuggestions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ActiveTurn") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActiveTurn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantSession) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantSession
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantSessionArtifact: A document artifact generated by the assistant
+// within a session, stored as a file in the customer's Cloud Storage bucket.
+type AssistantSessionArtifact struct {
+	// CreateTime: Output only. When the artifact was persisted.
+	CreateTime string `json:"createTime,omitempty"`
+	// DisplayName: Output only. The file name shown to the user, e.g.
+	// "hotel_booking_tdd.md".
+	DisplayName string `json:"displayName,omitempty"`
+	// GcsUri: Output only. The Cloud Storage object holding the artifact content.
+	// Example:
+	// "gs://{project}-agent-assist-artifacts/agent-assist-generated/1_tdd.md"
+	GcsUri string `json:"gcsUri,omitempty"`
+	// Id: Output only. The unique identifier of the artifact within the session.
+	Id string `json:"id,omitempty"`
+	// MimeType: Output only. The IANA media type of the artifact content, e.g.
+	// "text/markdown".
+	MimeType string `json:"mimeType,omitempty"`
+	// TurnIndex: Output only. Index of the message in [AssistantSession.messages]
+	// whose turn produced the artifact, for placing the artifact chip when history
+	// is restored.
+	TurnIndex int64 `json:"turnIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantSessionArtifact) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantSessionArtifact
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantSuggestion: A single personalized onboarding suggestion chip for
+// Arc's zero state.
+type AssistantSuggestion struct {
+	// CandidateType: Rule-table candidate type in kebab-case (e.g.
+	// "resume-pending-review"), for metrics.
+	CandidateType string `json:"candidateType,omitempty"`
+	// Icon: Icon hint for the chip.
+	//
+	// Possible values:
+	//   "ICON_UNSPECIFIED" - Unspecified icon.
+	//   "RESUME" - Resume a previous session.
+	//   "BUILD" - Build something new.
+	//   "EVALUATE" - Evaluation-related suggestion.
+	//   "DEPLOY" - Deployment-related suggestion.
+	//   "EXPLORE" - Exploration / discovery suggestion.
+	//   "FIX" - Fix an error or failing state.
+	Icon string `json:"icon,omitempty"`
+	// Label: Chip label shown to the user (at most 60 characters).
+	Label string `json:"label,omitempty"`
+	// LoadSession: Open an existing assistant session.
+	LoadSession *AssistantSuggestionLoadSession `json:"loadSession,omitempty"`
+	// Rationale: Optional short explanation of why this suggestion is shown
+	// (tooltip / rationale popover).
+	Rationale string `json:"rationale,omitempty"`
+	// SeedPrompt: Prefill the composer with this text; the user reviews and sends.
+	SeedPrompt string `json:"seedPrompt,omitempty"`
+	// SendMessage: Prefill the composer with this text and submit immediately.
+	// Only used for quick-reply chips inside an active onboarding conversation.
+	SendMessage string `json:"sendMessage,omitempty"`
+	// Source: How this suggestion was produced.
+	//
+	// Possible values:
+	//   "SOURCE_UNSPECIFIED" - Unspecified source.
+	//   "RULE" - Deterministic rule-table candidate with template phrasing.
+	//   "LLM_RANKED" - Rule-table candidate re-ranked and phrased by the LLM
+	// phrasing step.
+	Source string `json:"source,omitempty"`
+	// SuggestionId: Stable identifier for this suggestion, round-tripped by
+	// clients in interaction logging.
+	SuggestionId string `json:"suggestionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CandidateType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CandidateType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantSuggestion
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AssistantSuggestionLoadSession: Parameters for the load_session action.
+type AssistantSuggestionLoadSession struct {
+	// AssistantSessionId: Identifier of the assistant session to open (the final
+	// segment of the AssistantSession resource name).
+	AssistantSessionId string `json:"assistantSessionId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssistantSessionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssistantSessionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AssistantSuggestionLoadSession) MarshalJSON() ([]byte, error) {
+	type NoMethod AssistantSuggestionLoadSession
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AudioProcessingConfig: Configuration for how the input and output audio
 // should be processed and delivered.
 type AudioProcessingConfig struct {
@@ -1471,6 +2024,9 @@ type AudioProcessingConfig struct {
 	// BargeInConfig: Optional. Configures the agent behavior for the user barge-in
 	// activities.
 	BargeInConfig *BargeInConfig `json:"bargeInConfig,omitempty"`
+	// CustomVoiceSamples: Optional. Configures custom voice samples for voice
+	// cloning.
+	CustomVoiceSamples []*CustomVoiceSample `json:"customVoiceSamples,omitempty"`
 	// InactivityTimeout: Optional. The duration of user inactivity (no speech or
 	// interaction) before the agent prompts the user for reengagement. If not set,
 	// the agent will not prompt the user for reengagement.
@@ -1728,6 +2284,57 @@ type Callback struct {
 
 func (s Callback) MarshalJSON() ([]byte, error) {
 	type NoMethod Callback
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CancelAssistantTurnRequest: Request to cancel an assistant session's
+// in-flight turn.
+type CancelAssistantTurnRequest struct {
+	// TurnId: Optional. The turn to cancel; empty cancels whichever turn is
+	// running. A cancel naming a turn that is no longer the running one is a
+	// no-op.
+	TurnId string `json:"turnId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TurnId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TurnId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancelAssistantTurnRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelAssistantTurnRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CancelAssistantTurnResponse: Response for CancelAssistantTurn.
+type CancelAssistantTurnResponse struct {
+	// Cancelled: Whether an in-flight turn was found and asked to stop (directly
+	// on this task, or through an epoch preemption for a turn hosted elsewhere).
+	Cancelled bool `json:"cancelled,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Cancelled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cancelled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancelAssistantTurnResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelAssistantTurnResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2017,6 +2624,79 @@ func (s ChannelProfileWhatsAppConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ChatAiAssistantRequest: Request message for
+// AssistantService.ChatAiAssistant.
+type ChatAiAssistantRequest struct {
+	// AssistantSession: Required. The assistant session to be used to run the
+	// assistant. Format:
+	// `projects/{project}/locations/{location}/apps/{app}/assistantSessions/{assist
+	// ant_session}`
+	AssistantSession string `json:"assistantSession,omitempty"`
+	// AttachedGcsUris: Optional. Cloud Storage URIs for files uploaded by the user
+	// during this turn. Example: "gs://cxas-transient-uploads/uuid/prd.pdf"
+	AttachedGcsUris []string `json:"attachedGcsUris,omitempty"`
+	// ContextToken: Optional. Opaque onboarding context token returned by
+	// SessionService.GenerateOnboardingSuggestions. When set and still fresh, the
+	// server reuses the onboarding snapshot computed for the zero state instead of
+	// recomputing it for the first conversation turn.
+	ContextToken string `json:"contextToken,omitempty"`
+	// Message: Required. The message to send to the assistant agent.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssistantSession") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssistantSession") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChatAiAssistantRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ChatAiAssistantRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ChatAiAssistantResponse: Response message for
+// AssistantService.ChatAiAssistant.
+type ChatAiAssistantResponse struct {
+	// EventId: Unique identifier for the event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Timestamp when the event occurred.
+	EventTime string `json:"eventTime,omitempty"`
+	// SessionCheckpoint: Session checkpoint/compaction recap event containing user
+	// intent and rolling summary.
+	SessionCheckpoint *SessionCheckpoint `json:"sessionCheckpoint,omitempty"`
+	// StatusMessage: Simple status update
+	StatusMessage string `json:"statusMessage,omitempty"`
+	// TextChunk: Text Token (for streaming Gemini responses word-by-word)
+	TextChunk string `json:"textChunk,omitempty"`
+	// UiEvent: Optional. UI event payload.
+	UiEvent *UiEvent `json:"uiEvent,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "EventId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EventId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ChatAiAssistantResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ChatAiAssistantResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Chunk: A chunk of content within a message.
 type Chunk struct {
 	// AgentTransfer: Optional. Agent transfer event.
@@ -2063,6 +2743,8 @@ func (s Chunk) MarshalJSON() ([]byte, error) {
 type Citations struct {
 	// CitedChunks: List of cited pieces of information.
 	CitedChunks []*CitationsCitedChunk `json:"citedChunks,omitempty"`
+	// InlineCitations: Optional. List of inline citations in the agent response.
+	InlineCitations []*CitationsInlineCitation `json:"inlineCitations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CitedChunks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2107,6 +2789,35 @@ type CitationsCitedChunk struct {
 
 func (s CitationsCitedChunk) MarshalJSON() ([]byte, error) {
 	type NoMethod CitationsCitedChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CitationsInlineCitation: An inline citation in the response text.
+type CitationsInlineCitation struct {
+	// CitedChunkIndices: The indices of the cited chunks that back this text
+	// segment. Indices refer to the elements in `cited_chunks`.
+	CitedChunkIndices []int64 `json:"citedChunkIndices,omitempty"`
+	// EndIndex: The ending index (in bytes) of the text segment in the agent
+	// response.
+	EndIndex int64 `json:"endIndex,omitempty"`
+	// StartIndex: The starting index (in bytes) of the text segment in the agent
+	// response.
+	StartIndex int64 `json:"startIndex,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CitedChunkIndices") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CitedChunkIndices") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CitationsInlineCitation) MarshalJSON() ([]byte, error) {
+	type NoMethod CitationsInlineCitation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2423,6 +3134,10 @@ type ConversationTurn struct {
 	Messages []*Message `json:"messages,omitempty"`
 	// RootSpan: Optional. The root span of the action processing.
 	RootSpan *Span `json:"rootSpan,omitempty"`
+	// UserIntendedText: Optional. The intended ground-truth text from the
+	// Simulated Caller (Polysynth). Only populated when word error rate metrics
+	// are enabled.
+	UserIntendedText string `json:"userIntendedText,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Messages") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2438,6 +3153,141 @@ type ConversationTurn struct {
 
 func (s ConversationTurn) MarshalJSON() ([]byte, error) {
 	type NoMethod ConversationTurn
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CreateAssistantSessionRequest: Request message for
+// AssistantService.CreateAssistantSession.
+type CreateAssistantSessionRequest struct {
+	// AssistantSessionId: Optional. The ID to use for the assistant session, which
+	// will become the final component of the assistant session's resource name. If
+	// not provided, a unique ID will be automatically assigned for the assistant
+	// session.
+	AssistantSessionId string `json:"assistantSessionId,omitempty"`
+	// AssistantSessionMessages: Optional. The messages to seed the assistant
+	// session with.
+	AssistantSessionMessages []*AssistantMessage `json:"assistantSessionMessages,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssistantSessionId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssistantSessionId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CreateAssistantSessionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateAssistantSessionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomVoiceSample: Configuration for a custom voice sample used for voice
+// cloning.
+type CustomVoiceSample struct {
+	// ConsentAudioGcsUri: Optional. Consent audio for voice cloning.
+	ConsentAudioGcsUri string `json:"consentAudioGcsUri,omitempty"`
+	// Name: Optional. The user-defined name for the custom voice sample.
+	Name string `json:"name,omitempty"`
+	// PreviewAudioContent: Output only. Synthesized preview audio for custom
+	// voice, formatted as canonical WAV (LINEAR16, 24kHz, 16-bit, mono).
+	PreviewAudioContent string `json:"previewAudioContent,omitempty"`
+	// PreviewText: Optional. Text for synthesizing preview audio for custom voice.
+	PreviewText string `json:"previewText,omitempty"`
+	// VoiceInstruction: Optional. Natural language instructions for voice style,
+	// tone, pacing, or pronunciation.
+	VoiceInstruction string `json:"voiceInstruction,omitempty"`
+	// VoiceInstructionMode: Optional. Instruction mode for the voice sample. If
+	// unspecified, defaults to NO_INSTRUCTION.
+	//
+	// Possible values:
+	//   "VOICE_INSTRUCTION_MODE_UNSPECIFIED" - Unspecified instruction mode.
+	// Defaults to NO_INSTRUCTION.
+	//   "NO_INSTRUCTION" - No voice instruction will be used.
+	//   "GENERATE_INSTRUCTION" - Voice instruction will be automatically generated
+	// by AI from the audio sample.
+	//   "CUSTOM_INSTRUCTION" - Custom voice instruction provided by the user.
+	VoiceInstructionMode string `json:"voiceInstructionMode,omitempty"`
+	// VoiceSampleGcsUri: Optional. The Cloud Storage URI to the audio sample for
+	// voice cloning. The audio sample should be a mono-channel, 24kHz WAV file.
+	VoiceSampleGcsUri string `json:"voiceSampleGcsUri,omitempty"`
+	// Warnings: Output only. Warning messages encountered during voice clone
+	// processing (e.g. low audio level).
+	Warnings []*CustomVoiceSampleWarning `json:"warnings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsentAudioGcsUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsentAudioGcsUri") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomVoiceSample) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomVoiceSample
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomVoiceSampleWarning: A warning message encountered during voice sample
+// processing.
+type CustomVoiceSampleWarning struct {
+	// Message: Output only. A human-readable description of the warning.
+	Message string `json:"message,omitempty"`
+	// Type: Output only. The type of the warning.
+	//
+	// Possible values:
+	//   "WARNING_TYPE_UNSPECIFIED" - Unspecified warning type.
+	//   "LOW_AUDIO_LEVEL" - The audio level of the voice sample is too low (e.g.
+	// low RMS amplitude).
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomVoiceSampleWarning) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomVoiceSampleWarning
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DashboardSettings: Settings for dashboards associated with the app, that
+// show up in the Monitoring view.
+type DashboardSettings struct {
+	// DefaultDashboard: Optional. The resource name of the default Contact Center
+	// Insights dashboard associated with the app. This is the dashboard that will
+	// be displayed when users navigate to the Monitoring view for the app. Format:
+	// `projects/{project}/locations/{location}/dashboards/{dashboard}`
+	DefaultDashboard string `json:"defaultDashboard,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultDashboard") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultDashboard") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DashboardSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod DashboardSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2944,6 +3794,8 @@ type DataStoreToolModalityConfig struct {
 	ModalityType string `json:"modalityType,omitempty"`
 	// RewriterConfig: Optional. The rewriter config.
 	RewriterConfig *DataStoreToolRewriterConfig `json:"rewriterConfig,omitempty"`
+	// SnippetsConfig: Optional. The snippets configuration.
+	SnippetsConfig *DataStoreToolSnippetsConfig `json:"snippetsConfig,omitempty"`
 	// SummarizationConfig: Optional. The summarization config.
 	SummarizationConfig *DataStoreToolSummarizationConfig `json:"summarizationConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GroundingConfig") to
@@ -2991,6 +3843,31 @@ func (s DataStoreToolRewriterConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DataStoreToolSnippetsConfig: Snippets configuration.
+type DataStoreToolSnippetsConfig struct {
+	// EnableSnippets: Optional. Whether snippets are enabled.
+	EnableSnippets bool `json:"enableSnippets,omitempty"`
+	// MaxSnippets: Optional. Number of snippets to return per query. If unset,
+	// returns all snippets from the service by default.
+	MaxSnippets int64 `json:"maxSnippets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EnableSnippets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EnableSnippets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DataStoreToolSnippetsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DataStoreToolSnippetsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DataStoreToolSummarizationConfig: Summarization configuration.
 type DataStoreToolSummarizationConfig struct {
 	// Disabled: Optional. Whether summarization is disabled.
@@ -3023,9 +3900,35 @@ func (s DataStoreToolSummarizationConfig) MarshalJSON() ([]byte, error) {
 type DeleteEvaluationRunOperationMetadata struct {
 }
 
+// DeployChannelResponse: Response message for AgentService.DeployChannel.
+type DeployChannelResponse struct {
+	// Deployment: The created deployment.
+	Deployment *Deployment `json:"deployment,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Deployment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Deployment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeployChannelResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod DeployChannelResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Deployment: A deployment represents an immutable, queryable version of the
 // app. It is used to deploy an app version with a specific channel profile.
 type Deployment struct {
+	// AgentRegistryDeployment: Optional. Configuration for deploying this
+	// deployment to Agent Registry. If present, this deployment will be published
+	// to Agent Registry.
+	AgentRegistryDeployment *AgentRegistryDeployment `json:"agentRegistryDeployment,omitempty"`
 	// AppVersion: Optional. The resource name of the app version to deploy.
 	// Format:
 	// `projects/{project}/locations/{location}/apps/{app}/versions/{version}` Use
@@ -3047,6 +3950,21 @@ type Deployment struct {
 	// InstagramCredentials: Optional. Input only. Ephemeral Instagram credentials
 	// required when configuring a Instagram channel profile.
 	InstagramCredentials *InstagramCredentials `json:"instagramCredentials,omitempty"`
+	// Modality: Optional. The modality of the deployment. Note: Deployment-level
+	// modality override is gated behind an allowlist. Contact the CXAS team to
+	// enable this field.
+	//
+	// Possible values:
+	//   "MODALITY_UNSPECIFIED" - Unknown modality.
+	//   "MODALITY_TEXT" - Text modality.
+	//   "MODALITY_VOICE" - Voice modality.
+	//   "MODALITY_VIDEO" - Video modality.
+	Modality string `json:"modality,omitempty"`
+	// ModelSettings: Optional. Model settings for the deployment. Overrides model
+	// settings configured at the app/agent levels. Note: Deployment-level model
+	// settings override is gated behind an allowlist. Contact the CXAS team to
+	// enable this field.
+	ModelSettings *ModelSettings `json:"modelSettings,omitempty"`
 	// Name: Identifier. The resource name of the deployment. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
 	Name string `json:"name,omitempty"`
@@ -3058,15 +3976,15 @@ type Deployment struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AppVersion") to
+	// ForceSendFields is a list of field names (e.g. "AgentRegistryDeployment") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AppVersion") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentRegistryDeployment") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4333,9 +5251,20 @@ type EvaluationResult struct {
 	// `projects/{project}/locations/{location}/apps/{app}/evaluations/{evaluation}/
 	// results/{result}`
 	Name string `json:"name,omitempty"`
+	// OutcomeMetadata: Output only. The outcome metadata of the evaluation. Only
+	// populated if execution_state is COMPLETE.
+	//
+	// Possible values:
+	//   "OUTCOME_METADATA_UNSPECIFIED" - Unspecified outcome metadata.
+	//   "GRACEFUL_HANDOFF" - The evaluation resulted in a graceful handoff to a
+	// human representative.
+	OutcomeMetadata string `json:"outcomeMetadata,omitempty"`
 	// Persona: Output only. The persona used to generate the conversation for the
 	// evaluation result.
 	Persona *EvaluationPersona `json:"persona,omitempty"`
+	// RootSpan: Output only. The root span of the evaluation execution, which
+	// includes information about each step of the evaluation.
+	RootSpan *Span `json:"rootSpan,omitempty"`
 	// ScenarioResult: Output only. The outcome of a scenario evaluation.
 	ScenarioResult *EvaluationResultScenarioResult `json:"scenarioResult,omitempty"`
 
@@ -4757,6 +5686,9 @@ type EvaluationResultScenarioResult struct {
 	// HallucinationResult: Output only. The result of the hallucination check.
 	// There will be one hallucination result for each turn in the conversation.
 	HallucinationResult []*EvaluationResultHallucinationResult `json:"hallucinationResult,omitempty"`
+	// MilestoneResults: Output only. The results of each milestone in the
+	// scenario.
+	MilestoneResults []*EvaluationResultScenarioResultMilestoneResult `json:"milestoneResults,omitempty"`
 	// RubricOutcomes: Output only. The outcome of the rubric.
 	RubricOutcomes []*EvaluationResultScenarioRubricOutcome `json:"rubricOutcomes,omitempty"`
 	// SpanLatencies: Output only. The latency of spans in the conversation.
@@ -4794,6 +5726,39 @@ type EvaluationResultScenarioResult struct {
 
 func (s EvaluationResultScenarioResult) MarshalJSON() ([]byte, error) {
 	type NoMethod EvaluationResultScenarioResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationResultScenarioResultMilestoneResult: Represents the result of a
+// milestone execution.
+type EvaluationResultScenarioResultMilestoneResult struct {
+	// Justification: Output only. The justification for the current status.
+	Justification string `json:"justification,omitempty"`
+	// Milestone: Output only. The milestone being tracked.
+	Milestone *EvaluationScenarioMilestone `json:"milestone,omitempty"`
+	// Status: Output only. The current status of the milestone.
+	//
+	// Possible values:
+	//   "MILESTONE_STATUS_UNSPECIFIED" - Unspecified status.
+	//   "NOT_STARTED" - The milestone has not started yet.
+	//   "IN_PROGRESS" - The milestone is currently in progress.
+	//   "COMPLETED" - The milestone has been successfully completed.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Justification") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Justification") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationResultScenarioResultMilestoneResult) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationResultScenarioResultMilestoneResult
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4992,10 +5957,11 @@ type EvaluationResultUserGoalSatisfactionResult struct {
 	// Explanation: Output only. The explanation for the user task satisfaction
 	// score.
 	Explanation string `json:"explanation,omitempty"`
-	// Label: Output only. The label associated with each score. Score 1: User Task
-	// Satisfied Score 0: User Task Not Satisfied Score -1: User Task Unspecified
+	// Label: Output only. The label associated with each score. Score 2: Graceful
+	// Handoff Score 1: User Task Satisfied Score 0: User Task Not Satisfied Score
+	// -1: User Task Unspecified
 	Label string `json:"label,omitempty"`
-	// Score: Output only. The user task satisfaction score. Can be -1, 0, 1.
+	// Score: Output only. The user task satisfaction score. Can be -1, 0, 1, 2.
 	Score int64 `json:"score,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Explanation") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5252,6 +6218,8 @@ type EvaluationScenario struct {
 	// MaxTurns: Optional. The maximum number of turns to simulate. The maximum
 	// allowed value is 100. The default value is 100.
 	MaxTurns int64 `json:"maxTurns,omitempty"`
+	// Milestones: Optional. The milestones for this scenario.
+	Milestones []*EvaluationScenarioMilestone `json:"milestones,omitempty"`
 	// Rubrics: Required. The rubrics to score the scenario against.
 	Rubrics []string `json:"rubrics,omitempty"`
 	// ScenarioExecutionMode: Optional. The execution mode for scenario
@@ -5363,6 +6331,43 @@ type EvaluationScenarioExpectationToolExpectation struct {
 
 func (s EvaluationScenarioExpectationToolExpectation) MarshalJSON() ([]byte, error) {
 	type NoMethod EvaluationScenarioExpectationToolExpectation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationScenarioMilestone: Represents a single milestone in the scenario.
+// Used to guide the behaviour of the user simulator to follow a protocol. The
+// user simulator executes the milestone sequentially and only proceeds to the
+// next one if the success_criteria of that milestone is achieved.
+type EvaluationScenarioMilestone struct {
+	// Event: Optional. An event input to send instead of dynamic generation.
+	Event *Event `json:"event,omitempty"`
+	// Goal: Required. The goal of the milestone.
+	Goal string `json:"goal,omitempty"`
+	// MaxTurnCount: Optional. The maximum number of turns for this milestone.
+	MaxTurnCount int64 `json:"maxTurnCount,omitempty"`
+	// Protocol: Optional. The guidelines the agent should follow during the
+	// conversation.
+	Protocol string `json:"protocol,omitempty"`
+	// StaticUtterance: Optional. A static utterance that the simulator will send
+	// exactly, instead of dynamically generating user input.
+	StaticUtterance string `json:"staticUtterance,omitempty"`
+	// SuccessCriteria: Optional. The success criteria of the milestone.
+	SuccessCriteria string `json:"successCriteria,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Event") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Event") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EvaluationScenarioMilestone) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationScenarioMilestone
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5493,6 +6498,8 @@ func (s EvaluationStep) MarshalJSON() ([]byte, error) {
 type Event struct {
 	// Event: Required. The name of the event.
 	Event string `json:"event,omitempty"`
+	// Variables: Optional. Additional variables associated with the event.
+	Variables googleapi.RawMessage `json:"variables,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Event") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5677,6 +6684,8 @@ type ExperimentConfigVersionRelease struct {
 	//   "EXPIRED" - Deprecated: This state is no longer used.
 	State string `json:"state,omitempty"`
 	// TrafficAllocations: Optional. Traffic allocations for the version release.
+	// When non-empty, the `traffic_percentage` values across all allocations must
+	// sum to `100`, representing the split of remaining non-study traffic.
 	TrafficAllocations []*ExperimentConfigVersionReleaseTrafficAllocation `json:"trafficAllocations,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "State") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5705,8 +6714,8 @@ type ExperimentConfigVersionReleaseTrafficAllocation struct {
 	// Id: Optional. Id of the traffic allocation. Free format string, up to 128
 	// characters.
 	Id string `json:"id,omitempty"`
-	// TrafficPercentage: Optional. Traffic percentage of the traffic allocation.
-	// Must be between 0 and 100.
+	// TrafficPercentage: Optional. Traffic percentage of the traffic allocation,
+	// relative to the remaining non-study traffic. Must be between `0` and `100`.
 	TrafficPercentage int64 `json:"trafficPercentage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5742,7 +6751,7 @@ type ExportAppRequest struct {
 	// GcsUri: Optional. The Google Cloud Storage
 	// (https://cloud.google.com/storage/docs/) URI to which to export the app. The
 	// format of this URI must be `gs:///`. The exported app archive will be
-	// written directly to the specified GCS object.
+	// written directly to the specified Cloud Storage object.
 	GcsUri string `json:"gcsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6669,6 +7678,68 @@ func (s GenerateEvaluationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenerateOnboardingSuggestionsRequest: Request message for
+// SessionService.GenerateOnboardingSuggestions.
+type GenerateOnboardingSuggestionsRequest struct {
+	// MaxSuggestions: Optional. Maximum number of suggestions to return. Defaults
+	// to 4 when unset.
+	MaxSuggestions int64 `json:"maxSuggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxSuggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxSuggestions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateOnboardingSuggestionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateOnboardingSuggestionsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateOnboardingSuggestionsResponse: Response message for
+// SessionService.GenerateOnboardingSuggestions.
+type GenerateOnboardingSuggestionsResponse struct {
+	// ContextToken: Opaque token capturing the onboarding snapshot used to
+	// generate these suggestions. Clients echo it on the first
+	// StreamChatAiAssistantRequest so the server can reuse the snapshot.
+	ContextToken string `json:"contextToken,omitempty"`
+	// Suggestions: Personalized suggestions, ranked most relevant first.
+	Suggestions []*AssistantSuggestion `json:"suggestions,omitempty"`
+	// UserProfile: Classification of the requesting user's history.
+	//
+	// Possible values:
+	//   "USER_PROFILE_UNSPECIFIED" - Unspecified profile.
+	//   "NEW" - No assistant sessions containing messages.
+	//   "EXPLORING" - One or two assistant sessions containing messages.
+	//   "RETURNING" - More than two assistant sessions containing messages.
+	UserProfile string `json:"userProfile,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ContextToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateOnboardingSuggestionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateOnboardingSuggestionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleSearchSuggestions: Search suggestions from Google Search Tool.
 type GoogleSearchSuggestions struct {
 	// Htmls: Compliant HTML and CSS styling for search suggestions. The provided
@@ -6800,6 +7871,8 @@ type Guardrail struct {
 	// Name: Identifier. The unique identifier of the guardrail. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/guardrails/{guardrail}`
 	Name string `json:"name,omitempty"`
+	// Supervisor: Optional. Guardrail that runs supervisor intervention.
+	Supervisor *GuardrailSupervisor `json:"supervisor,omitempty"`
 	// UpdateTime: Output only. Timestamp when the guardrail was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -6895,7 +7968,17 @@ type GuardrailContentFilter struct {
 	// in the text is surrounded by word delimiters. Banned phrases can also
 	// contain word delimiters.
 	//   "REGEXP_MATCH" - Content is matched using regular expression syntax.
+	//   "SENSITIVE_WORDS" - Content is matched against a system-managed list of
+	// sensitive words and phrases. Attaching a guardrail with this match type to
+	// an app or agent replaces the default sensitive words filter for the affected
+	// agents; disable the guardrail to opt out of the default filter.
 	MatchType string `json:"matchType,omitempty"`
+	// SensitiveWordsExemptions: Optional. Entries of the sensitive words list that
+	// this guardrail allows. Only valid when match_type is SENSITIVE_WORDS. Each
+	// value must equal a list entry (case-insensitive, surrounding whitespace
+	// ignored); other values have no effect. Applies to this guardrail only. At
+	// most 1000 entries of up to 256 characters each.
+	SensitiveWordsExemptions []string `json:"sensitiveWordsExemptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BannedContents") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6945,7 +8028,9 @@ type GuardrailLlmPolicy struct {
 	// input and agent response. Applying this policy scope will introduce
 	// additional latency before the agent can respond.
 	PolicyScope string `json:"policyScope,omitempty"`
-	// Prompt: Required. Policy prompt.
+	// Prompt: Required. Policy prompt. Supports session variable placeholders
+	// (`{var}`) as well as `{agent_system_instruction}` to inject the agent's
+	// resolved system instructions.
 	Prompt string `json:"prompt,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowShortUtterance") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7060,6 +8145,8 @@ type GuardrailModelSafetySafetySetting struct {
 	//   "HARM_CATEGORY_HARASSMENT" - The harm category is harassment.
 	//   "HARM_CATEGORY_SEXUALLY_EXPLICIT" - The harm category is sexually explicit
 	// content.
+	//   "HARM_CATEGORY_PROFANITY" - The harm category is profanity.
+	//   "HARM_CATEGORY_TOXIC" - The harm category is toxic.
 	Category string `json:"category,omitempty"`
 	// Threshold: Required. The harm block threshold.
 	//
@@ -7089,22 +8176,67 @@ func (s GuardrailModelSafetySafetySetting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GuardrailSupervisor: Guardrail that runs supervisor intervention.
+type GuardrailSupervisor struct {
+	// DetectionMode: Optional. The detection mode of the supervisor.
+	//
+	// Possible values:
+	//   "DETECTION_MODE_UNSPECIFIED" - Detection mode is unspecified. Default to
+	// NON_BLOCKING.
+	//   "NON_BLOCKING" - Non blocking detection mode. Response is not blocked when
+	// the supervisor detection is ongoing.
+	//   "BLOCKING" - Blocking detection mode. Response is blocked when the
+	// supervisor detection is ongoing.
+	DetectionMode string `json:"detectionMode,omitempty"`
+	// Type: Optional. The type of the supervisor.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "INVALID_TEXT" - Invalid text issue type.
+	//   "LANGUAGE_SHIFT" - Language shift issue type.
+	//   "SPEAKER_SHIFT" - Speaker shift issue type.
+	//   "AUDIO_MISMATCH" - Audio mismatch issue type.
+	//   "MISSING_TOOL_CALL" - Missing tool call issue type.
+	//   "CUSTOM" - Custom issue type.
+	//   "CHOPPY_AUDIO" - Choppy audio issue type.
+	//   "PROFANITY" - Agent profanity issue type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetectionMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetectionMode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GuardrailSupervisor) MarshalJSON() ([]byte, error) {
+	type NoMethod GuardrailSupervisor
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Image: Represents an image input or output in the conversation.
 type Image struct {
+	// AltText: Optional. The alternative text for the image.
+	AltText string `json:"altText,omitempty"`
 	// Data: Required. Raw bytes of the image.
 	Data string `json:"data,omitempty"`
 	// MimeType: Required. The IANA standard MIME type of the source data.
 	// Supported image types includes: * image/png * image/jpeg * image/webp
 	MimeType string `json:"mimeType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Data") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AltText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -7140,6 +8272,11 @@ type ImportAppRequest struct {
 	IgnoreAppLock bool `json:"ignoreAppLock,omitempty"`
 	// ImportOptions: Optional. Options governing the import process for the app.
 	ImportOptions *ImportAppRequestImportOptions `json:"importOptions,omitempty"`
+	// JsonPatchContent: Optional. Patch content as a JSON string.
+	JsonPatchContent string `json:"jsonPatchContent,omitempty"`
+	// JsonPatchGcsUri: Optional. A Cloud Storage URI pointing to a JSON file
+	// containing the patches.
+	JsonPatchGcsUri string `json:"jsonPatchGcsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppContent") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7181,6 +8318,10 @@ type ImportAppRequestImportOptions struct {
 	// Toolsets) in the app will be deleted. - Imported resources will be created
 	// as new resources.
 	ConflictResolutionStrategy string `json:"conflictResolutionStrategy,omitempty"`
+	// ValidateOnly: Optional. Flag for dry-running the import process. If set to
+	// true, the import process will only perform validations and will not make any
+	// changes to the existing app or create a new one.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ConflictResolutionStrategy")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -7449,9 +8590,9 @@ func (s InstagramCredentials) MarshalJSON() ([]byte, error) {
 type LanguageSettings struct {
 	// DefaultLanguageCode: Optional. The default language code of the app.
 	DefaultLanguageCode string `json:"defaultLanguageCode,omitempty"`
-	// EnableMultilingualSupport: Optional. Enables multilingual support. If true,
-	// agents in the app will use pre-built instructions to improve handling of
-	// multilingual input.
+	// EnableMultilingualSupport: Optional. Enables multilingual support. If
+	// `true`, agents in the app will use pre-built instructions to improve
+	// handling of multilingual input.
 	EnableMultilingualSupport bool `json:"enableMultilingualSupport,omitempty"`
 	// FallbackAction: Optional. Deprecated: This feature is no longer supported.
 	// Use `enable_multilingual_support` instead to improve handling of
@@ -7843,7 +8984,12 @@ type LfA2aV1AgentInterface struct {
 	// exposes. Use the latest supported minor version per major version. Examples:
 	// "0.3", "1.0"
 	ProtocolVersion string `json:"protocolVersion,omitempty"`
-	// Tenant: Tenant ID to be used in the request when calling the agent.
+	// Tenant: Optional. An opaque string used for routing requests to a specific
+	// agent or tenant when multiple agents are served behind a single A2A
+	// endpoint. When set, clients MUST include this value in the `tenant` field of
+	// all request messages sent to this interface. The server is responsible for
+	// interpreting the value and routing requests accordingly; the protocol does
+	// not define its format or semantics.
 	Tenant string `json:"tenant,omitempty"`
 	// Url: Required. The URL where this interface is available. Must be a valid
 	// absolute HTTPS URL in production. Example: "https://api.example.com/a2a/v1",
@@ -8526,6 +9672,38 @@ func (s LfA2aV1SendMessageResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LfA2aV1StreamResponse: A wrapper object used in streaming operations to
+// encapsulate different types of response data.
+type LfA2aV1StreamResponse struct {
+	// ArtifactUpdate: An event indicating a task artifact update.
+	ArtifactUpdate *LfA2aV1TaskArtifactUpdateEvent `json:"artifactUpdate,omitempty"`
+	// Message: A Message object containing a message from the agent.
+	Message *LfA2aV1Message `json:"message,omitempty"`
+	// StatusUpdate: An event indicating a task status update.
+	StatusUpdate *LfA2aV1TaskStatusUpdateEvent `json:"statusUpdate,omitempty"`
+	// Task: A Task object containing the current state of the task.
+	Task *LfA2aV1Task `json:"task,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactUpdate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArtifactUpdate") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1StreamResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1StreamResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LfA2aV1StringList: protolint:disable REPEATED_FIELD_NAMES_PLURALIZED A list
 // of strings.
 type LfA2aV1StringList struct {
@@ -8589,6 +9767,40 @@ func (s LfA2aV1Task) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// LfA2aV1TaskArtifactUpdateEvent: A task delta where an artifact has been
+// generated.
+type LfA2aV1TaskArtifactUpdateEvent struct {
+	// Append: If true, the content of this artifact should be appended to a
+	// previously sent artifact with the same ID.
+	Append bool `json:"append,omitempty"`
+	// Artifact: Required. The artifact that was generated or updated.
+	Artifact *LfA2aV1Artifact `json:"artifact,omitempty"`
+	// ContextId: Required. The ID of the context that this task belongs to.
+	ContextId string `json:"contextId,omitempty"`
+	// LastChunk: If true, this is the final chunk of the artifact.
+	LastChunk bool `json:"lastChunk,omitempty"`
+	// Metadata: Optional. Metadata associated with the artifact update.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// TaskId: Required. The ID of the task for this artifact.
+	TaskId string `json:"taskId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Append") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Append") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1TaskArtifactUpdateEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1TaskArtifactUpdateEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // LfA2aV1TaskPushNotificationConfig: A container associating a push
 // notification configuration with a specific task.
 type LfA2aV1TaskPushNotificationConfig struct {
@@ -8600,7 +9812,8 @@ type LfA2aV1TaskPushNotificationConfig struct {
 	Id string `json:"id,omitempty"`
 	// TaskId: The ID of the task this configuration is associated with.
 	TaskId string `json:"taskId,omitempty"`
-	// Tenant: Optional. Tenant ID.
+	// Tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+	// from the selected `AgentInterface` in the Agent Card when that field is set.
 	Tenant string `json:"tenant,omitempty"`
 	// Token: A token unique for this task or session.
 	Token string `json:"token,omitempty"`
@@ -8670,6 +9883,35 @@ type LfA2aV1TaskStatus struct {
 
 func (s LfA2aV1TaskStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod LfA2aV1TaskStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LfA2aV1TaskStatusUpdateEvent: An event sent by the agent to notify the
+// client of a change in a task's status.
+type LfA2aV1TaskStatusUpdateEvent struct {
+	// ContextId: Required. The ID of the context that the task belongs to.
+	ContextId string `json:"contextId,omitempty"`
+	// Metadata: Optional. Metadata associated with the task update.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Status: Required. The new status of the task.
+	Status *LfA2aV1TaskStatus `json:"status,omitempty"`
+	// TaskId: Required. The ID of the task that has changed.
+	TaskId string `json:"taskId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContextId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContextId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LfA2aV1TaskStatusUpdateEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod LfA2aV1TaskStatusUpdateEvent
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8759,6 +10001,36 @@ type ListAppsResponse struct {
 
 func (s ListAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAppsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListAssistantSessionsResponse: Response message for
+// AssistantService.ListAssistantSessions.
+type ListAssistantSessionsResponse struct {
+	// AssistantSessions: The list of assistant sessions.
+	AssistantSessions []*AssistantSession `json:"assistantSessions,omitempty"`
+	// NextPageToken: Optional. A token that can be sent as
+	// ListAssistantSessionsRequest.page_token to retrieve the next page. Absence
+	// of this field indicates there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AssistantSessions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssistantSessions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAssistantSessionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAssistantSessionsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9270,6 +10542,14 @@ type LoggingSettings struct {
 	// RedactionConfig: Optional. Configuration for how sensitive data should be
 	// redacted.
 	RedactionConfig *RedactionConfig `json:"redactionConfig,omitempty"`
+	// RequiredRecordingConsent: Optional. Whether the app has to say what may be
+	// recorded before anything is kept. When true, a session starts with recording
+	// off and stays off until the client sends SessionInput.recording_control,
+	// which then decides every turn from that point on. This covers audio
+	// recording as well as conversation history, BigQuery export and Cloud
+	// Logging. When `false`, the default, the settings above decide on their own
+	// and the client does not have to send anything.
+	RequiredRecordingConsent bool `json:"requiredRecordingConsent,omitempty"`
 	// UnredactedAudioRecordingConfig: Optional. Configures an additional recording
 	// of unredacted audio. This can be used to maintain a raw audio copy when
 	// audio redaction is enabled, typically for auditing or monitoring purposes.
@@ -9612,6 +10892,15 @@ type ModelSettings struct {
 	// temperatures produce responses that are more predictable. Higher
 	// temperatures produce responses that are more creative.
 	Temperature float64 `json:"temperature,omitempty"`
+	// ThinkingLevel: Optional. The thinking level of the model.
+	//
+	// Possible values:
+	//   "THINKING_LEVEL_UNSPECIFIED" - Thinking level is unspecified.
+	//   "DEFAULT" - Default thinking level.
+	//   "LOW" - Low thinking level.
+	//   "MEDIUM" - Medium thinking level.
+	//   "HIGH" - High thinking level.
+	ThinkingLevel string `json:"thinkingLevel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Model") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -9816,6 +11105,47 @@ func (s Operation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OperationCompletedEvent: Event sent by the client or background worker to
+// resume an assistant session after an asynchronous Long-Running Operation
+// (LRO) completes.
+type OperationCompletedEvent struct {
+	// DeduplicationToken: Optional deduplication token (e.g. UUID) to prevent
+	// duplicate turn execution from concurrent browser tabs.
+	DeduplicationToken string `json:"deduplicationToken,omitempty"`
+	// Error: Optional canonical error status if the operation failed.
+	Error *Status `json:"error,omitempty"`
+	// Metadata: Optional structured result metadata (e.g. pass_rate,
+	// total_examples, export_uri).
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// OperationName: The operation resource name (e.g. `operations/{op}`).
+	OperationName string `json:"operationName,omitempty"`
+	// OperationType: The operation type or tool name (e.g. "run_evaluation",
+	// "copy_app", "export_app").
+	OperationType string `json:"operationType,omitempty"`
+	// Status: Status of the operation run (e.g. "SUCCEEDED", "FAILED",
+	// "CANCELLED").
+	Status string `json:"status,omitempty"`
+	// TargetResourceName: The primary resource targeted or produced by the
+	// operation (e.g. evaluation run ID, app ID, dataset ID).
+	TargetResourceName string `json:"targetResourceName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeduplicationToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeduplicationToken") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OperationCompletedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationCompletedEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OperationMetadata: Represents the metadata of the long-running operation.
 type OperationMetadata struct {
 	// CreateTime: Output only. The time the operation was created.
@@ -9888,6 +11218,83 @@ type OptimizationConfig struct {
 
 func (s OptimizationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod OptimizationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OptionQuestionsChunk: Structured clarification options the assistant asks
+// the user to choose among, transduced server-side out of the model's turn
+// (the option block is stripped from the streamed and persisted text). The
+// console renders a keyboard-navigable option list docked above the composer.
+type OptionQuestionsChunk struct {
+	// Questions: The questions asked this turn. More than one entry drives the
+	// console's "1 of N" pager.
+	Questions []*OptionQuestionsChunkQuestion `json:"questions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Questions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Questions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OptionQuestionsChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod OptionQuestionsChunk
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OptionQuestionsChunkOption: A single selectable option.
+type OptionQuestionsChunkOption struct {
+	// Details: Optional trade-off details shown as secondary text.
+	Details string `json:"details,omitempty"`
+	// SubmitText: Optional message text to send when the option is chosen;
+	// defaults to `title` when empty.
+	SubmitText string `json:"submitText,omitempty"`
+	// Title: Short plain-text option title (no markdown, no numbering).
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OptionQuestionsChunkOption) MarshalJSON() ([]byte, error) {
+	type NoMethod OptionQuestionsChunkOption
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OptionQuestionsChunkQuestion: One question with its options.
+type OptionQuestionsChunkQuestion struct {
+	// Options: The selectable options, in presentation order.
+	Options []*OptionQuestionsChunkOption `json:"options,omitempty"`
+	// Question: The question header text.
+	Question string `json:"question,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Options") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OptionQuestionsChunkQuestion) MarshalJSON() ([]byte, error) {
+	type NoMethod OptionQuestionsChunkQuestion
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10095,7 +11502,7 @@ type RedactionConfig struct {
 	// `projects/{project}/locations/{location}/deidentifyTemplates/{deidentify_temp
 	// late}`
 	DeidentifyTemplate string `json:"deidentifyTemplate,omitempty"`
-	// EnableRedaction: Optional. If true, redaction will be applied in various
+	// EnableRedaction: Optional. If `true`, redaction will be applied in various
 	// logging scenarios, including conversation history, Cloud Logging and audio
 	// recording.
 	EnableRedaction bool `json:"enableRedaction,omitempty"`
@@ -10121,16 +11528,73 @@ func (s RedactionConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RemoteA2aConfig: Shared configuration for connecting to a remote A2A
+// (https://github.com/a2aproject/A2A) agent.
+type RemoteA2aConfig struct {
+	// AgentCard: Optional. The full agent card defined inline.
+	AgentCard *AgentCard `json:"agentCard,omitempty"`
+	// AgentRegistry: Optional. Reference to the agent in the Agent Registry.
+	// Format: `projects/{project}/locations/{location}/agents/{agent}`
+	AgentRegistry string `json:"agentRegistry,omitempty"`
+	// ApiAuthentication: Optional. Authentication configuration for calling the
+	// remote agent. Optional if the registry reference already handles
+	// authentication.
+	ApiAuthentication *ApiAuthentication `json:"apiAuthentication,omitempty"`
+	// ContextId: Optional. If not empty, interactions with the remote A2A agent
+	// will use this context ID. This context_id field can refer to a session
+	// variable like `$context.variables.order_agent_session_id`.
+	ContextId string `json:"contextId,omitempty"`
+	// InputVariableMapping: Optional. Mapping of input variable names of remote
+	// agent to GECX variable names.
+	InputVariableMapping map[string]string `json:"inputVariableMapping,omitempty"`
+	// OutputVariableMapping: Optional. Mapping of output variable names of remote
+	// agent to GECX variable names.
+	OutputVariableMapping map[string]string `json:"outputVariableMapping,omitempty"`
+	// StreamingEnabled: Optional. Whether streaming is enabled for the remote
+	// agent.
+	StreamingEnabled bool `json:"streamingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentCard") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentCard") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RemoteA2aConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteA2aConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RemoteAgentTool: Represents a tool that allows the agent to call another
 // remote agent.
 type RemoteAgentTool struct {
 	// AgentCard: Required. The agent card of the remote agent that this tool
 	// invokes.
 	AgentCard *AgentCard `json:"agentCard,omitempty"`
+	// ApiAuthentication: Optional. Authentication configuration for calling the
+	// remote agent.
+	ApiAuthentication *ApiAuthentication `json:"apiAuthentication,omitempty"`
 	// Description: Required. The description of the tool.
 	Description string `json:"description,omitempty"`
+	// InputVariableMapping: Optional. Mapping of input variable names of remote
+	// agent to GECX variable names.
+	InputVariableMapping map[string]string `json:"inputVariableMapping,omitempty"`
 	// Name: Required. The name of the tool.
 	Name string `json:"name,omitempty"`
+	// OutputVariableMapping: Optional. Mapping of output variable names of remote
+	// agent to GECX variable names.
+	OutputVariableMapping map[string]string `json:"outputVariableMapping,omitempty"`
+	// StatefulAgent: Optional. When enabled, the interaction between the CXAS app
+	// and the remote agent will share the same context. If the remote agent
+	// returns a context_id, it will be persisted for the entirety of the session
+	// for this remote agent tool.
+	StatefulAgent bool `json:"statefulAgent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AgentCard") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10266,12 +11730,89 @@ func (s RetrieveToolsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RunAssistantRequest: Request message for AssistantService.RunAssistant.
+type RunAssistantRequest struct {
+	// AssistantSession: Required. The assistant session to be used to run the
+	// assistant. Format:
+	// `projects/{project}/locations/{location}/apps/{app}/assistantSessions/{assist
+	// ant_session}`
+	AssistantSession string `json:"assistantSession,omitempty"`
+	// InteractionType: Optional. Different interaction types for the assistant
+	// message.
+	//
+	// Possible values:
+	//   "INTERACTION_TYPE_UNSPECIFIED" - The default value. This value is used if
+	// the type is not specified.
+	//   "NEW_MESSAGE" - The message is a user input. User input is provided in the
+	// chunk list.
+	//   "POLL" - The message is for polling the state of the assistant session.
+	//   "DISMISS" - The message is to dismiss the assistant session pending
+	// review. This will change the state of the assistant session to idle.
+	InteractionType string `json:"interactionType,omitempty"`
+	// Message: Required. The message to send to the assistant agent.
+	Message *AssistantMessage `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssistantSession") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssistantSession") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RunAssistantRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RunAssistantRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RunAssistantResponse: Response message for AssistantService.RunAssistant.
+type RunAssistantResponse struct {
+	// Output: Required. The output from the assistant agent.
+	Output *AssistantOutput `json:"output,omitempty"`
+	// State: Output only. The status of the assistant session.
+	//
+	// Possible values:
+	//   "ASSISTANT_SESSION_STATE_UNSPECIFIED" - The default value. This value is
+	// used if the status is not specified.
+	//   "PROCESSING" - The assistant agent is processing the request as a long
+	// running task.
+	//   "IDLE" - The assistant agent is idle and does not have any pending
+	// requests or response.
+	//   "PENDING_REVIEW" - The assistant agent is done processing a long running
+	// task and has a response ready for the user.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Output") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Output") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RunAssistantResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod RunAssistantResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RunEvaluationRequest: Request message for EvaluationService.RunEvaluation.
 type RunEvaluationRequest struct {
 	// App: Required. The app to evaluate. Format:
 	// `projects/{project}/locations/{location}/apps/{app}`
 	App string `json:"app,omitempty"`
-	// AppVersion: Optional. The app version to evaluate. Format:
+	// AppVersion: Optional. The app version to evaluate. At most one of
+	// `app_version` or `deployment` can be set. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/versions/{version}`
 	AppVersion string `json:"appVersion,omitempty"`
 	// Config: Optional. The configuration to use for the run.
@@ -10716,27 +12257,65 @@ func (s ServiceDirectoryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SessionCheckpoint: Session checkpoint containing inferred user intent for
+// session title and UI.
+type SessionCheckpoint struct {
+	// UserIntent: Inferred user goal or topic for the session (e.g. "Building
+	// E-Commerce Support Agent").
+	UserIntent string `json:"userIntent,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserIntent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserIntent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SessionCheckpoint) MarshalJSON() ([]byte, error) {
+	type NoMethod SessionCheckpoint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SessionConfig: The configuration for the session.
 type SessionConfig struct {
 	// Deployment: Optional. The deployment of the app to use for the session.
 	// Format:
 	// `projects/{project}/locations/{location}/apps/{app}/deployments/{deployment}`
 	Deployment string `json:"deployment,omitempty"`
-	// EnableTextStreaming: Optional. Whether to enable streaming text outputs from
-	// the model. By default, text outputs from the model are collected before
-	// sending to the client. NOTE: This is only supported for text (non-voice)
-	// sessions via StreamRunSession or BidiRunSession.
+	// EnableTextStreaming: Optional. Whether to stream text output from the model
+	// to the client incrementally as it is generated. Defaults to `false`. * When
+	// disabled, the model's text output is buffered, and each text output sent to
+	// the client is a complete sentence. Clients can render each text output on a
+	// new line. * When enabled, each text output may contain only part of a
+	// sentence. Clients should concatenate consecutive text outputs to render the
+	// complete response. NOTE: This is only supported for text (non-voice)
+	// sessions using StreamRunSession or BidiRunSession.
 	EnableTextStreaming bool `json:"enableTextStreaming,omitempty"`
 	// EntryAgent: Optional. The entry agent to handle the session. If not
 	// specified, the session will be handled by the root agent of the app. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/agents/{agent}`
 	EntryAgent string `json:"entryAgent,omitempty"`
+	// ExcludeDiagnosticInfo: Optional. Whether to exclude diagnostic info from the
+	// session output.
+	ExcludeDiagnosticInfo bool `json:"excludeDiagnosticInfo,omitempty"`
 	// HistoricalContexts: Optional. The historical context of the session,
 	// including user inputs, agent responses, and other messages. Typically, CES
 	// agent would manage session automatically so client doesn't need to
 	// explicitly populate this field. However, client can optionally override the
 	// historical contexts to force the session start from certain state.
 	HistoricalContexts []*Message `json:"historicalContexts,omitempty"`
+	// IncludeLlmThoughtSummary: Optional. Whether to include LLM thought summaries
+	// in the session outputs.
+	IncludeLlmThoughtSummary bool `json:"includeLlmThoughtSummary,omitempty"`
+	// IncludeProgressUpdate: Optional. Whether to include intermediate processing
+	// update to the client. If enabled, the update will be sent back in
+	// SessionOutput.progress.
+	IncludeProgressUpdate bool `json:"includeProgressUpdate,omitempty"`
 	// InputAudioConfig: Optional. Configuration for processing the input audio.
 	InputAudioConfig *InputAudioConfig `json:"inputAudioConfig,omitempty"`
 	// OutputAudioConfig: Optional. Configuration for generating the output audio.
@@ -10821,6 +12400,28 @@ type SessionInput struct {
 	Event *Event `json:"event,omitempty"`
 	// Image: Optional. Image data from the end user.
 	Image *Image `json:"image,omitempty"`
+	// RecordingControl: Optional. Whether the conversation may be recorded and
+	// logged from here on. Use this when the app, rather than the agent, decides
+	// what may be kept: for example when the end user has to consent to being
+	// recorded before anything about the call can be stored. The value stays in
+	// effect until the client sends a different one, so it only needs to be sent
+	// when the answer changes. Whatever is in effect when a turn completes decides
+	// that turn, both whether its audio reaches the recording bucket and whether
+	// its transcript reaches conversation history, BigQuery and Cloud Logging. It
+	// covers the agent's side of the turn as well as the end user's. Turns that
+	// complete before the client first sends this are recorded according to the
+	// app's logging settings, as though the field did not exist. If more than one
+	// input in the same request sets it, the last one wins.
+	//
+	// Possible values:
+	//   "RECORDING_CONTROL_UNSPECIFIED" - The app is not controlling recording.
+	// The app's logging settings decide, as they do for every session that never
+	// sets this field.
+	//   "RECORDING_ENABLED" - The conversation may be recorded and logged from
+	// here on.
+	//   "RECORDING_DISABLED" - The conversation may not be recorded or logged from
+	// here on.
+	RecordingControl string `json:"recordingControl,omitempty"`
 	// Text: Optional. Text data from the end user.
 	Text string `json:"text,omitempty"`
 	// ToolResponses: Optional. Execution results for the tool calls from the
@@ -10863,8 +12464,6 @@ type SessionOutput struct {
 	// Citations: Citations that provide the source information for the agent's
 	// generated text.
 	Citations *Citations `json:"citations,omitempty"`
-	// Context: Context messages for external supervision guardrails.
-	Context []googleapi.RawMessage `json:"context,omitempty"`
 	// DiagnosticInfo: Optional. Diagnostic information contains execution details
 	// during the processing of the input. Only populated in the last SessionOutput
 	// (with `turn_completed=true`) for each turn.
@@ -10874,8 +12473,12 @@ type SessionOutput struct {
 	// GoogleSearchSuggestions: The suggestions returned from Google Search as a
 	// result of invoking the GoogleSearchTool.
 	GoogleSearchSuggestions *GoogleSearchSuggestions `json:"googleSearchSuggestions,omitempty"`
+	// Image: Output image from the CES agent.
+	Image *Image `json:"image,omitempty"`
 	// Payload: Custom payload with structured output from the CES agent.
 	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// Progress: Intermediate progress update from the CES agent.
+	Progress string `json:"progress,omitempty"`
 	// Text: Output text from the CES agent.
 	Text string `json:"text,omitempty"`
 	// ToolCalls: Request for the client to execute the tools.
@@ -10997,6 +12600,147 @@ func (s Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// StreamChatAiAssistantRequest: Request message for
+// SessionService.StreamChatAiAssistant.
+type StreamChatAiAssistantRequest struct {
+	// AttachOnly: Optional. Optional flag to attach to an existing in-flight turn
+	// without submitting a new message.
+	AttachOnly bool `json:"attachOnly,omitempty"`
+	// AttachedGcsUris: Optional. Cloud Storage URIs for files uploaded by the user
+	// during this turn. Example: "gs://cxas-transient-uploads/uuid/prd.pdf"
+	AttachedGcsUris []string `json:"attachedGcsUris,omitempty"`
+	// ClientCapabilities: Optional. Response features this client can render. The
+	// server only emits events that need a capability (e.g.
+	// `confirmation_request`) when the capability is declared, so older clients
+	// never receive events they would silently drop.
+	//
+	// Possible values:
+	//   "CLIENT_CAPABILITY_UNSPECIFIED" - Unspecified capability; ignored.
+	//   "CONFIRMATION_CARDS" - The client renders AssistantConfirmationRequest
+	// cards and answers them via `confirmation_response`.
+	//   "CLIENT_MANAGED_LRO" - The client manages long-running operations
+	// out-of-band by polling the operation and sending `operation_completed_event`
+	// to resume the turn. If not declared, the server manages LRO polling and
+	// completes the turn inline.
+	//   "PROJECT_SCOPE" - The client renders project-scope events: `typed_payload`
+	// cards, `target_app` on tool calls and responses, `targets` on confirmation
+	// requests and `touched_apps` on turn completion.
+	ClientCapabilities []string `json:"clientCapabilities,omitempty"`
+	// ConfirmationResponse: Optional. The user's answer to a pending
+	// AssistantConfirmationRequest. When set, the server resumes the paused agent
+	// with this answer instead of (or in addition to) starting a new prompt turn.
+	ConfirmationResponse *AssistantConfirmationResponse `json:"confirmationResponse,omitempty"`
+	// ContextToken: Optional. Opaque onboarding context token returned by
+	// SessionService.GenerateOnboardingSuggestions. When set and still fresh, the
+	// server reuses the onboarding snapshot computed for the zero state instead of
+	// recomputing it for the first conversation turn.
+	ContextToken string `json:"contextToken,omitempty"`
+	// Message: Optional. The message to send to the assistant agent. May be empty
+	// when `confirmation_response` is set (answering a pending confirmation
+	// without adding a new message); at least one of the two must be provided.
+	Message string `json:"message,omitempty"`
+	// OperationCompletedEvent: Optional. Resumes an assistant session paused
+	// waiting for a client-managed long-running operation to complete.
+	OperationCompletedEvent *OperationCompletedEvent `json:"operationCompletedEvent,omitempty"`
+	// ResumeFromSequenceNumber: Optional. Optional cursor to resume and replay
+	// events from an in-flight or completed turn.
+	ResumeFromSequenceNumber int64 `json:"resumeFromSequenceNumber,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "AttachOnly") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AttachOnly") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StreamChatAiAssistantRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamChatAiAssistantRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StreamChatAiAssistantResponse: Response message for
+// SessionService.StreamChatAiAssistant.
+type StreamChatAiAssistantResponse struct {
+	// ArtifactChunk: Generated-document artifact event (live preview deltas +
+	// final Cloud Storage pointer).
+	ArtifactChunk *ArtifactChunk `json:"artifactChunk,omitempty"`
+	// ConfirmationRequest: A blocking confirmation the agent paused on. The agent
+	// resumes when the answer arrives on a later request's
+	// `confirmation_response`. Only sent to clients that declared the
+	// CONFIRMATION_CARDS capability on the request.
+	ConfirmationRequest *AssistantConfirmationRequest `json:"confirmationRequest,omitempty"`
+	// EventId: Unique identifier for the event.
+	EventId string `json:"eventId,omitempty"`
+	// EventTime: Timestamp when the event occurred.
+	EventTime string `json:"eventTime,omitempty"`
+	// Handoff: Tells the client to silently reconnect with
+	// resume_from_sequence_number: the task serving this stream is going away and
+	// the turn will continue elsewhere. Not an error; the stream completes
+	// normally after this event.
+	Handoff *TurnHandoffEvent `json:"handoff,omitempty"`
+	// OptionQuestionsChunk: Structured clarification options parsed out of the
+	// model turn. The console renders these as a selectable option list instead of
+	// raw text.
+	OptionQuestionsChunk *OptionQuestionsChunk `json:"optionQuestionsChunk,omitempty"`
+	// ResumeSnapshot: A compacted replay of an in-flight turn, sent as the first
+	// event of every attach or resume before any live event. The client replaces
+	// any locally rendered state for this turn with the snapshot's contents.
+	ResumeSnapshot *TurnResumeSnapshot `json:"resumeSnapshot,omitempty"`
+	// SequenceNumber: Optional. Monotonically increasing sequence number for this
+	// session turn.
+	SequenceNumber int64 `json:"sequenceNumber,omitempty,string"`
+	// SessionCheckpoint: Session checkpoint/compaction recap event containing user
+	// intent and rolling summary.
+	SessionCheckpoint *SessionCheckpoint `json:"sessionCheckpoint,omitempty"`
+	// Status: Simple status update.
+	Status *Status `json:"status,omitempty"`
+	// TextChunk: Text Token (for streaming Gemini responses word-by-word).
+	TextChunk string `json:"textChunk,omitempty"`
+	// ThoughtChunk: Thought text chunk (agent's reasoning before generating
+	// response).
+	ThoughtChunk string `json:"thoughtChunk,omitempty"`
+	// ToolCall: Tool call execution event.
+	ToolCall *ToolCall `json:"toolCall,omitempty"`
+	// ToolResponse: Tool call response event.
+	ToolResponse *ToolResponse `json:"toolResponse,omitempty"`
+	// TurnCompleted: The turn has ended. Sent as the last event of every turn, on
+	// the original stream and on every attached or resumed stream, so clients can
+	// end the turn on an explicit signal instead of inferring it from stream
+	// closure.
+	TurnCompleted *TurnCompletedEvent `json:"turnCompleted,omitempty"`
+	// TurnInProgress: Optional. Indicates whether the turn is still actively
+	// running in the background.
+	TurnInProgress bool `json:"turnInProgress,omitempty"`
+	// TurnMetadata: Optional. Turn-level metadata and intent categorization.
+	TurnMetadata *TurnMetadata `json:"turnMetadata,omitempty"`
+	// UiEvent: Optional. UI event payload.
+	UiEvent *UiEvent `json:"uiEvent,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactChunk") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArtifactChunk") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StreamChatAiAssistantResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamChatAiAssistantResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SynthesizeSpeechConfig: Configuration for how the agent response should be
 // synthesized.
 type SynthesizeSpeechConfig struct {
@@ -11017,12 +12761,6 @@ type SynthesizeSpeechConfig struct {
 	// (https://cloud.google.com/text-to-speech/docs/voices) from Cloud
 	// Text-to-Speech.
 	Voice string `json:"voice,omitempty"`
-	// VoiceSampleGcsUri: Optional. The Cloud Storage URI to the audio sample for
-	// voice cloning. The audio sample should be a mono-channel, 24kHz WAV file.
-	// Note: Please make sure the CES service agent
-	// `service-@gcp-sa-ces.iam.gserviceaccount.com` has `storage.objects.get`
-	// permission to the Cloud Storage object.
-	VoiceSampleGcsUri string `json:"voiceSampleGcsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Instruction") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -11261,6 +12999,9 @@ type Tool struct {
 	OpenApiTool *OpenApiTool `json:"openApiTool,omitempty"`
 	// PythonFunction: Optional. The python function tool.
 	PythonFunction *PythonFunction `json:"pythonFunction,omitempty"`
+	// ReadOnly: Output only. Indicates whether the tool is read-only. If true, the
+	// tool cannot be modified by the user.
+	ReadOnly bool `json:"readOnly,omitempty"`
 	// RemoteAgentTool: Optional. The remote agent tool.
 	RemoteAgentTool *RemoteAgentTool `json:"remoteAgentTool,omitempty"`
 	// SystemTool: Optional. The system tool.
@@ -11298,6 +13039,9 @@ func (s Tool) MarshalJSON() ([]byte, error) {
 
 // ToolCall: Request for the client or the agent to execute the specified tool.
 type ToolCall struct {
+	// AgentName: Output only. Human-readable name of the agent that issued this
+	// call, e.g. "Contract Architect". Empty when the root agent issued it.
+	AgentName string `json:"agentName,omitempty"`
 	// Args: Optional. The input parameters and values for the tool in JSON object
 	// format.
 	Args googleapi.RawMessage `json:"args,omitempty"`
@@ -11307,20 +13051,30 @@ type ToolCall struct {
 	// client should return the execution result with the matching ID in
 	// ToolResponse.
 	Id string `json:"id,omitempty"`
+	// ParentToolCallId: Output only. The id of the tool call that caused this one,
+	// when it was issued by a sub-agent working on behalf of a parent call. Empty
+	// for top-level calls. Lets a client group a sub-agent's work under the call
+	// that started it instead of rendering every step as a sibling.
+	ParentToolCallId string `json:"parentToolCallId,omitempty"`
+	// TargetApp: Output only. The app this call targets, derived by the assistant
+	// from the call's resource arguments: an app resource name, `PROJECT` for
+	// location-scoped tools, or empty for session-local tools. Set only in
+	// project-scoped assistant sessions.
+	TargetApp string `json:"targetApp,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
 	// ToolsetTool: Optional. The toolset tool to execute.
 	ToolsetTool *ToolsetTool `json:"toolsetTool,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Args") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AgentName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -11381,27 +13135,38 @@ func (s ToolFakeConfig) MarshalJSON() ([]byte, error) {
 // ToolResponse: The execution result of a specific tool from the client or the
 // agent.
 type ToolResponse struct {
+	// AgentName: Output only. Human-readable name of the agent that issued this
+	// call, e.g. "Contract Architect". Empty when the root agent issued it.
+	AgentName string `json:"agentName,omitempty"`
 	// DisplayName: Output only. Display name of the tool.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: Optional. The matching ID of the tool call the response is for.
 	Id string `json:"id,omitempty"`
+	// ParentToolCallId: Output only. The id of the tool call that caused this one,
+	// when it was issued by a sub-agent working on behalf of a parent call. Empty
+	// for top-level calls. Lets a client group a sub-agent's work under the call
+	// that started it instead of rendering every step as a sibling.
+	ParentToolCallId string `json:"parentToolCallId,omitempty"`
 	// Response: Required. The tool execution result in JSON object format. Use
 	// "output" key to specify tool response and "error" key to specify error
 	// details (if any). If "output" and "error" keys are not specified, then whole
 	// "response" is treated as tool execution result.
 	Response googleapi.RawMessage `json:"response,omitempty"`
+	// TargetApp: Output only. The app the executed tool targeted; mirrors
+	// ToolCall.target_app.
+	TargetApp string `json:"targetApp,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
 	// ToolsetTool: Optional. The toolset tool that got executed.
 	ToolsetTool *ToolsetTool `json:"toolsetTool,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "AgentName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// NullFields is a list of field names (e.g. "AgentName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -11741,6 +13506,221 @@ func (s TriggerActionTransferAgent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TurnCompletedEvent: Terminal event of a turn (see
+// StreamChatAiAssistantResponse.turn_completed).
+type TurnCompletedEvent struct {
+	// FinalSequenceNumber: Sequence number of the last event the turn produced. A
+	// client whose cursor is lower missed content and should reload the session to
+	// see it.
+	FinalSequenceNumber int64 `json:"finalSequenceNumber,omitempty,string"`
+	// Reason: Why the turn ended.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unspecified.
+	//   "COMPLETED" - The turn ran to completion; the session holds its committed
+	// output.
+	//   "ABANDONED" - No task was driving the turn any more; it was sealed to a
+	// committed partial and cannot be continued.
+	//   "RESUME_UNAVAILABLE" - This server does not serve attach or resume for the
+	// session, so nothing was tailed; the client should reload the session
+	// instead.
+	Reason string `json:"reason,omitempty"`
+	// TouchedApps: Apps this turn targeted or changed, so the console can refresh
+	// exactly those apps' stores. Project-scoped sessions only. Format:
+	// `projects/{project}/locations/{location}/apps/{app}`
+	TouchedApps []string `json:"touchedApps,omitempty"`
+	// TurnId: Identifier of the turn that ended; matches
+	// TurnResumeSnapshot.turn_id and ActiveTurnInfo.turn_id.
+	TurnId string `json:"turnId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FinalSequenceNumber") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FinalSequenceNumber") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TurnCompletedEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod TurnCompletedEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TurnHandoffEvent: Emitted before this task stops serving the stream mid-turn
+// (e.g. a server restart). The turn's state is persisted; a reconnect carrying
+// resume_from_sequence_number continues it on another task.
+type TurnHandoffEvent struct {
+	// Reason: Why the stream is handing off.
+	//
+	// Possible values:
+	//   "REASON_UNSPECIFIED" - Unspecified.
+	//   "SERVER_RESTART" - The serving task is shutting down (release push or
+	// rescheduling).
+	Reason string `json:"reason,omitempty"`
+	// TurnId: Identifies the turn to resume.
+	TurnId string `json:"turnId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Reason") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TurnHandoffEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod TurnHandoffEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TurnMetadata: Turn-level metadata and intent categorization.
+type TurnMetadata struct {
+	// ContractDraftComplete: Set on the terminal event of a contract draft whose
+	// every placeholder is resolved (contract_progress is 100%), whether or not
+	// the draft was published. Clients complete and dismiss the contract progress
+	// display on it; publication is reported separately by contract_finalized.
+	ContractDraftComplete bool `json:"contractDraftComplete,omitempty"`
+	// ContractFinalized: Set on the final artifact event of a turn whose contract
+	// draft was published (a revision was activated). Terminal for the
+	// clarification flow of this draft: contract_progress is authoritative and
+	// complete.
+	ContractFinalized bool `json:"contractFinalized,omitempty"`
+	// ContractRelated: Indicates whether this assistant turn was contract-related
+	// (e.g. contract drafting, alignment, extraction, or revision).
+	ContractRelated bool `json:"contractRelated,omitempty"`
+	// ContractStreamingPhase: Set only on in-flight progress estimates emitted
+	// while a contract artifact fence is streaming, and on the revision-turn-start
+	// event. Unset on authoritative payloads.
+	//
+	// Possible values:
+	//   "CONTRACT_STREAMING_PHASE_UNSPECIFIED" - The payload is authoritative
+	// (computed from a complete contract document, a persisted snapshot, or the
+	// pre-draft state). Clients must replace any previously received progress with
+	// it.
+	//   "DRAFTING" - An initial contract draft is streaming. contract_progress is
+	// an in-flight estimate: non-decreasing within one artifact fence, capped
+	// below the authoritative range, with pillar_breakdowns carrying
+	// total_item_count == 0 to mark estimated pillar states.
+	//   "REVISING" - A revision of an existing contract is streaming (for example
+	// after an annotation submission). Same estimate semantics as DRAFTING.
+	ContractStreamingPhase string `json:"contractStreamingPhase,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ContractDraftComplete") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ContractDraftComplete") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TurnMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod TurnMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TurnResumeSnapshot: A compacted replay of an in-flight turn: everything
+// needed to render the turn's visible output so far, plus the position live
+// events continue from.
+type TurnResumeSnapshot struct {
+	// Events: Compacted events reconstructing the turn's visible output, in render
+	// order, using the same event shapes as live streaming.
+	Events []*StreamChatAiAssistantResponse `json:"events,omitempty"`
+	// OrphanDeadlineTime: When the turn will be wound down if no client remains
+	// attached.
+	OrphanDeadlineTime string `json:"orphanDeadlineTime,omitempty"`
+	// ResolvedSequenceNumber: The position this snapshot represents. Live events
+	// follow with sequence_number strictly greater than this. When lower than the
+	// resume_from_sequence_number the client requested, flushed progress lags what
+	// the client already rendered: the client must discard its rendered content of
+	// this turn beyond this position before applying the snapshot.
+	ResolvedSequenceNumber int64 `json:"resolvedSequenceNumber,omitempty,string"`
+	// TurnId: Identifies the turn being attached to.
+	TurnId string `json:"turnId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Events") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Events") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TurnResumeSnapshot) MarshalJSON() ([]byte, error) {
+	type NoMethod TurnResumeSnapshot
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TypedPayload: Payload with a type. Used by the assistant history
+// (`AssistantChunk`) and by the streaming `typed_payload` event; lives here
+// because both assistant_service.proto and session_service.proto need it.
+type TypedPayload struct {
+	// DisplayName: Required. The display name of the payload.
+	DisplayName string `json:"displayName,omitempty"`
+	// Metadata: Optional. The metadata of the payload.
+	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
+	// Type: Required. The type of the payload.
+	Type string `json:"type,omitempty"`
+	// Value: Required. The value of the payload.
+	Value googleapi.RawMessage `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TypedPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod TypedPayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UiEvent: Represents a UI event payload.
+type UiEvent struct {
+	// JsonPayload: The JSON payload representing the A2UI surface.
+	JsonPayload string `json:"jsonPayload,omitempty"`
+	// MimeType: The media type (MIME type) indicating the format of the UI event
+	// payload (e.g., "application/json+a2ui").
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JsonPayload") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JsonPayload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UiEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod UiEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UploadEvaluationAudioRequest: Request message for
 // EvaluationService.UploadEvaluationAudio.
 type UploadEvaluationAudioRequest struct {
@@ -11797,6 +13777,29 @@ type UploadEvaluationAudioResponse struct {
 
 func (s UploadEvaluationAudioResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UploadEvaluationAudioResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserResponseSuggestions: Suggested user responses from the assistant agent.
+type UserResponseSuggestions struct {
+	// Suggestions: Required. The assistant suggested user responses. These are
+	// suggestions for the user on how to interact with the assistant.
+	Suggestions []string `json:"suggestions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Suggestions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Suggestions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserResponseSuggestions) MarshalJSON() ([]byte, error) {
+	type NoMethod UserResponseSuggestions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -12529,6 +14532,112 @@ func (c *ProjectsLocationsUpdateSecuritySettingsCall) Do(opts ...googleapi.CallO
 	return ret, nil
 }
 
+type ProjectsLocationsAppsChatAiAssistantCall struct {
+	s                      *Service
+	app                    string
+	chataiassistantrequest *ChatAiAssistantRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// ChatAiAssistant: Runs Arc, the AI assistant, for the specified assistant
+// session.
+//
+//   - app: The app to run assistant for. Format:
+//     `projects/{project}/locations/{location}/apps/{app}`.
+func (r *ProjectsLocationsAppsService) ChatAiAssistant(app string, chataiassistantrequest *ChatAiAssistantRequest) *ProjectsLocationsAppsChatAiAssistantCall {
+	c := &ProjectsLocationsAppsChatAiAssistantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.app = app
+	c.chataiassistantrequest = chataiassistantrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsChatAiAssistantCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsChatAiAssistantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsChatAiAssistantCall) Context(ctx context.Context) *ProjectsLocationsAppsChatAiAssistantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsChatAiAssistantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsChatAiAssistantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.chataiassistantrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+app}:chatAiAssistant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.app,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.chatAiAssistant", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.chatAiAssistant" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ChatAiAssistantResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsChatAiAssistantCall) Do(opts ...googleapi.CallOption) (*ChatAiAssistantResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ChatAiAssistantResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.chatAiAssistant", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAppsCreateCall struct {
 	s          *Service
 	parent     string
@@ -13058,6 +15167,115 @@ func (c *ProjectsLocationsAppsGenerateAppResourceCall) Do(opts ...googleapi.Call
 	return ret, nil
 }
 
+type ProjectsLocationsAppsGenerateOnboardingSuggestionsCall struct {
+	s                                    *Service
+	name                                 string
+	generateonboardingsuggestionsrequest *GenerateOnboardingSuggestionsRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// GenerateOnboardingSuggestions: Generates personalized onboarding suggestions
+// for the Arc zero state: classifies the requesting user (new / exploring /
+// returning) from their assistant-session history in the app and returns
+// suggestion chips (resume a session, continue work, or start something new)
+// to render before any message is sent.
+//
+//   - name: The app whose zero state is being rendered. Format:
+//     `projects/{project}/locations/{location}/apps/{app}`.
+func (r *ProjectsLocationsAppsService) GenerateOnboardingSuggestions(name string, generateonboardingsuggestionsrequest *GenerateOnboardingSuggestionsRequest) *ProjectsLocationsAppsGenerateOnboardingSuggestionsCall {
+	c := &ProjectsLocationsAppsGenerateOnboardingSuggestionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generateonboardingsuggestionsrequest = generateonboardingsuggestionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsGenerateOnboardingSuggestionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsGenerateOnboardingSuggestionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsGenerateOnboardingSuggestionsCall) Context(ctx context.Context) *ProjectsLocationsAppsGenerateOnboardingSuggestionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsGenerateOnboardingSuggestionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsGenerateOnboardingSuggestionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generateonboardingsuggestionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:generateOnboardingSuggestions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.generateOnboardingSuggestions", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.generateOnboardingSuggestions" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateOnboardingSuggestionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsGenerateOnboardingSuggestionsCall) Do(opts ...googleapi.CallOption) (*GenerateOnboardingSuggestionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateOnboardingSuggestionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.generateOnboardingSuggestions", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAppsGetCall struct {
 	s            *Service
 	name         string
@@ -13169,7 +15387,7 @@ func (c *ProjectsLocationsAppsGetCall) Do(opts ...googleapi.CallOption) (*App, e
 
 type ProjectsLocationsAppsGetExtendedAgentCardCall struct {
 	s            *Service
-	tenant       string
+	tenantid     string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -13179,10 +15397,12 @@ type ProjectsLocationsAppsGetExtendedAgentCardCall struct {
 // GetExtendedAgentCard: Gets the extended agent card for the authenticated
 // agent.
 //
-// - tenant: Optional. Tenant ID, provided as a path parameter.
-func (r *ProjectsLocationsAppsService) GetExtendedAgentCard(tenant string) *ProjectsLocationsAppsGetExtendedAgentCardCall {
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsService) GetExtendedAgentCard(tenantid string) *ProjectsLocationsAppsGetExtendedAgentCardCall {
 	c := &ProjectsLocationsAppsGetExtendedAgentCardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
+	c.tenantid = tenantid
 	return c
 }
 
@@ -13232,7 +15452,7 @@ func (c *ProjectsLocationsAppsGetExtendedAgentCardCall) doRequest(alt string) (*
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
+		"tenant": c.tenantid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.getExtendedAgentCard", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -13861,6 +16081,111 @@ func (c *ProjectsLocationsAppsRetrieveToolSchemaCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.retrieveToolSchema", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsRunAssistantCall struct {
+	s                   *Service
+	app                 string
+	runassistantrequest *RunAssistantRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// RunAssistant: Runs the assistant agent for the specified assistant session.
+//
+//   - app: The app to run assistant for. Format:
+//     `projects/{project}/locations/{location}/apps/{app}`.
+func (r *ProjectsLocationsAppsService) RunAssistant(app string, runassistantrequest *RunAssistantRequest) *ProjectsLocationsAppsRunAssistantCall {
+	c := &ProjectsLocationsAppsRunAssistantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.app = app
+	c.runassistantrequest = runassistantrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsRunAssistantCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsRunAssistantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsRunAssistantCall) Context(ctx context.Context) *ProjectsLocationsAppsRunAssistantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsRunAssistantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsRunAssistantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.runassistantrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+app}:runAssistant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.app,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.runAssistant", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.runAssistant" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *RunAssistantResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsRunAssistantCall) Do(opts ...googleapi.CallOption) (*RunAssistantResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RunAssistantResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.runAssistant", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -14680,6 +17005,691 @@ func (c *ProjectsLocationsAppsAgentsPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.agents.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall struct {
+	s                          *Service
+	name                       string
+	cancelassistantturnrequest *CancelAssistantTurnRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// CancelAssistantTurn: Cancels the assistant session's in-flight turn, if any:
+// the explicit user stop for a turn running detached from any stream. A cancel
+// landing on a task that does not host the turn preempts it through the
+// session turn epoch instead, ending it within one lease renewal.
+//
+// - name: The assistant session whose in-flight turn to cancel.
+func (r *ProjectsLocationsAppsAssistantSessionsService) CancelAssistantTurn(name string, cancelassistantturnrequest *CancelAssistantTurnRequest) *ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall {
+	c := &ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cancelassistantturnrequest = cancelassistantturnrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall) Context(ctx context.Context) *ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cancelassistantturnrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:cancelAssistantTurn")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.cancelAssistantTurn", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.assistantSessions.cancelAssistantTurn" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CancelAssistantTurnResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsAssistantSessionsCancelAssistantTurnCall) Do(opts ...googleapi.CallOption) (*CancelAssistantTurnResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CancelAssistantTurnResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.cancelAssistantTurn", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsAssistantSessionsCreateCall struct {
+	s                             *Service
+	parent                        string
+	createassistantsessionrequest *CreateAssistantSessionRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Create: Creates a new assistant session in the given app.
+//
+//   - parent: The app to create the assistant session in Format:
+//     `projects/{project}/locations/{location}/apps/{app}`.
+func (r *ProjectsLocationsAppsAssistantSessionsService) Create(parent string, createassistantsessionrequest *CreateAssistantSessionRequest) *ProjectsLocationsAppsAssistantSessionsCreateCall {
+	c := &ProjectsLocationsAppsAssistantSessionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createassistantsessionrequest = createassistantsessionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsAssistantSessionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsAssistantSessionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsAssistantSessionsCreateCall) Context(ctx context.Context) *ProjectsLocationsAppsAssistantSessionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsAssistantSessionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsAssistantSessionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.createassistantsessionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/assistantSessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.assistantSessions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AssistantSession.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsAssistantSessionsCreateCall) Do(opts ...googleapi.CallOption) (*AssistantSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AssistantSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsAssistantSessionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified assistant session.
+//
+//   - name: The name of the assistant session to delete. Format:
+//     `projects/{project}/locations/{location}/apps/{app}/assistantSessions/{assi
+//     stant_session}`.
+func (r *ProjectsLocationsAppsAssistantSessionsService) Delete(name string) *ProjectsLocationsAppsAssistantSessionsDeleteCall {
+	c := &ProjectsLocationsAppsAssistantSessionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsAssistantSessionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsAssistantSessionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsAssistantSessionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsAppsAssistantSessionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsAssistantSessionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsAssistantSessionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.assistantSessions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsAssistantSessionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsAssistantSessionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of the specified assistant session.
+//
+//   - name: The name of the assistant session to retrieve. Format:
+//     `projects/{project}/locations/{location}/apps/{app}/assistantSessions/{assi
+//     stant_session}`.
+func (r *ProjectsLocationsAppsAssistantSessionsService) Get(name string) *ProjectsLocationsAppsAssistantSessionsGetCall {
+	c := &ProjectsLocationsAppsAssistantSessionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsAssistantSessionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsAssistantSessionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAppsAssistantSessionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAppsAssistantSessionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsAssistantSessionsGetCall) Context(ctx context.Context) *ProjectsLocationsAppsAssistantSessionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsAssistantSessionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsAssistantSessionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.assistantSessions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AssistantSession.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsAssistantSessionsGetCall) Do(opts ...googleapi.CallOption) (*AssistantSession, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AssistantSession{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsAssistantSessionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all assistant sessions in the given app.
+//
+//   - parent: The app to list assistant sessions from. Format:
+//     `projects/{project}/locations/{location}/apps/{app}`.
+func (r *ProjectsLocationsAppsAssistantSessionsService) List(parent string) *ProjectsLocationsAppsAssistantSessionsListCall {
+	c := &ProjectsLocationsAppsAssistantSessionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter to be applied when
+// listing the assistant sessions. See https://google.aip.dev/160 for more
+// details.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) Filter(filter string) *ProjectsLocationsAppsAssistantSessionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer items than requested. If unspecified, server will pick an
+// appropriate default.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) PageSize(pageSize int64) *ProjectsLocationsAppsAssistantSessionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous list AssistantService.ListAssistantSessions call.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) PageToken(pageToken string) *ProjectsLocationsAppsAssistantSessionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsAssistantSessionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAppsAssistantSessionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) Context(ctx context.Context) *ProjectsLocationsAppsAssistantSessionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/assistantSessions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.assistantSessions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAssistantSessionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) Do(opts ...googleapi.CallOption) (*ListAssistantSessionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAssistantSessionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAppsAssistantSessionsListCall) Pages(ctx context.Context, f func(*ListAssistantSessionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall struct {
+	s                            *Service
+	name                         string
+	streamchataiassistantrequest *StreamChatAiAssistantRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// StreamChatAiAssistant: Runs Arc, the AI assistant, for the specified
+// assistant session in a streaming fashion.
+//
+//   - name: The assistant session to be used to run the assistant. Format:
+//     `projects/{project}/locations/{location}/apps/{app}/assistantSessions/{assi
+//     stant_session}`.
+func (r *ProjectsLocationsAppsAssistantSessionsService) StreamChatAiAssistant(name string, streamchataiassistantrequest *StreamChatAiAssistantRequest) *ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall {
+	c := &ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.streamchataiassistantrequest = streamchataiassistantrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall) Context(ctx context.Context) *ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.streamchataiassistantrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:streamChatAiAssistant")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.streamChatAiAssistant", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.assistantSessions.streamChatAiAssistant" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *StreamChatAiAssistantResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsAssistantSessionsStreamChatAiAssistantCall) Do(opts ...googleapi.CallOption) (*StreamChatAiAssistantResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &StreamChatAiAssistantResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.assistantSessions.streamChatAiAssistant", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15936,7 +18946,7 @@ func (c *ProjectsLocationsAppsDeploymentsGetCall) Do(opts ...googleapi.CallOptio
 
 type ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall struct {
 	s            *Service
-	tenant       string
+	tenantid     string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -15946,10 +18956,12 @@ type ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall struct {
 // GetExtendedAgentCard: Gets the extended agent card for the authenticated
 // agent.
 //
-// - tenant: Optional. Tenant ID, provided as a path parameter.
-func (r *ProjectsLocationsAppsDeploymentsService) GetExtendedAgentCard(tenant string) *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall {
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsDeploymentsService) GetExtendedAgentCard(tenantid string) *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall {
 	c := &ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
+	c.tenantid = tenantid
 	return c
 }
 
@@ -15999,7 +19011,7 @@ func (c *ProjectsLocationsAppsDeploymentsGetExtendedAgentCardCall) doRequest(alt
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
+		"tenant": c.tenantid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.getExtendedAgentCard", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -16317,7 +19329,7 @@ func (c *ProjectsLocationsAppsDeploymentsPatchCall) Do(opts ...googleapi.CallOpt
 
 type ProjectsLocationsAppsDeploymentsMessageSendCall struct {
 	s                         *Service
-	tenant                    string
+	tenantid                  string
 	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
 	urlParams_                gensupport.URLParams
 	ctx_                      context.Context
@@ -16326,10 +19338,12 @@ type ProjectsLocationsAppsDeploymentsMessageSendCall struct {
 
 // Send: Sends a message to an agent.
 //
-// - tenant: Optional. Tenant ID, provided as a path parameter.
-func (r *ProjectsLocationsAppsDeploymentsMessageService) Send(tenant string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsDeploymentsMessageSendCall {
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsDeploymentsMessageService) Send(tenantid string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsDeploymentsMessageSendCall {
 	c := &ProjectsLocationsAppsDeploymentsMessageSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
+	c.tenantid = tenantid
 	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
 	return c
 }
@@ -16373,7 +19387,7 @@ func (c *ProjectsLocationsAppsDeploymentsMessageSendCall) doRequest(alt string) 
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
+		"tenant": c.tenantid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.message.send", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -16416,6 +19430,113 @@ func (c *ProjectsLocationsAppsDeploymentsMessageSendCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.message.send", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsDeploymentsMessageStreamCall struct {
+	s                         *Service
+	tenantid                  string
+	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Stream: Sends a streaming message to an agent, allowing for real-time
+// interaction and status updates. Streaming version of `SendMessage`
+//
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsDeploymentsMessageService) Stream(tenantid string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsDeploymentsMessageStreamCall {
+	c := &ProjectsLocationsAppsDeploymentsMessageStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenantid = tenantid
+	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsDeploymentsMessageStreamCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsDeploymentsMessageStreamCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsDeploymentsMessageStreamCall) Context(ctx context.Context) *ProjectsLocationsAppsDeploymentsMessageStreamCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsDeploymentsMessageStreamCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsDeploymentsMessageStreamCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.lfa2av1sendmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+tenant}/message:stream")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenantid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.message.stream", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.deployments.message.stream" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1StreamResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsDeploymentsMessageStreamCall) Do(opts ...googleapi.CallOption) (*LfA2aV1StreamResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1StreamResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.deployments.message.stream", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -20765,7 +23886,7 @@ func (c *ProjectsLocationsAppsGuardrailsPatchCall) Do(opts ...googleapi.CallOpti
 
 type ProjectsLocationsAppsMessageSendCall struct {
 	s                         *Service
-	tenant                    string
+	tenantid                  string
 	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
 	urlParams_                gensupport.URLParams
 	ctx_                      context.Context
@@ -20774,10 +23895,12 @@ type ProjectsLocationsAppsMessageSendCall struct {
 
 // Send: Sends a message to an agent.
 //
-// - tenant: Optional. Tenant ID, provided as a path parameter.
-func (r *ProjectsLocationsAppsMessageService) Send(tenant string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsMessageSendCall {
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsMessageService) Send(tenantid string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsMessageSendCall {
 	c := &ProjectsLocationsAppsMessageSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
+	c.tenantid = tenantid
 	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
 	return c
 }
@@ -20821,7 +23944,7 @@ func (c *ProjectsLocationsAppsMessageSendCall) doRequest(alt string) (*http.Resp
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
+		"tenant": c.tenantid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.message.send", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -20864,6 +23987,113 @@ func (c *ProjectsLocationsAppsMessageSendCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.message.send", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsMessageStreamCall struct {
+	s                         *Service
+	tenantid                  string
+	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Stream: Sends a streaming message to an agent, allowing for real-time
+// interaction and status updates. Streaming version of `SendMessage`
+//
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsMessageService) Stream(tenantid string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsMessageStreamCall {
+	c := &ProjectsLocationsAppsMessageStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenantid = tenantid
+	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsMessageStreamCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsMessageStreamCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsMessageStreamCall) Context(ctx context.Context) *ProjectsLocationsAppsMessageStreamCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsMessageStreamCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsMessageStreamCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.lfa2av1sendmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+tenant}/message:stream")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenantid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.message.stream", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.message.stream" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1StreamResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsMessageStreamCall) Do(opts ...googleapi.CallOption) (*LfA2aV1StreamResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1StreamResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.message.stream", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -23460,7 +26690,7 @@ func (c *ProjectsLocationsAppsVersionsGetCall) Do(opts ...googleapi.CallOption) 
 
 type ProjectsLocationsAppsVersionsGetExtendedAgentCardCall struct {
 	s            *Service
-	tenant       string
+	tenantid     string
 	urlParams_   gensupport.URLParams
 	ifNoneMatch_ string
 	ctx_         context.Context
@@ -23470,10 +26700,12 @@ type ProjectsLocationsAppsVersionsGetExtendedAgentCardCall struct {
 // GetExtendedAgentCard: Gets the extended agent card for the authenticated
 // agent.
 //
-// - tenant: Optional. Tenant ID, provided as a path parameter.
-func (r *ProjectsLocationsAppsVersionsService) GetExtendedAgentCard(tenant string) *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall {
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsVersionsService) GetExtendedAgentCard(tenantid string) *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall {
 	c := &ProjectsLocationsAppsVersionsGetExtendedAgentCardCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
+	c.tenantid = tenantid
 	return c
 }
 
@@ -23523,7 +26755,7 @@ func (c *ProjectsLocationsAppsVersionsGetExtendedAgentCardCall) doRequest(alt st
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
+		"tenant": c.tenantid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.getExtendedAgentCard", "request", internallog.HTTPRequest(req, nil))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -23730,6 +26962,117 @@ func (c *ProjectsLocationsAppsVersionsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
+type ProjectsLocationsAppsVersionsPatchCall struct {
+	s          *Service
+	nameid     string
+	appversion *AppVersion
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates the specified app version.
+//
+//   - name: Identifier. The unique identifier of the app version. Format:
+//     `projects/{project}/locations/{location}/apps/{app}/versions/{version}`.
+func (r *ProjectsLocationsAppsVersionsService) Patch(nameid string, appversion *AppVersion) *ProjectsLocationsAppsVersionsPatchCall {
+	c := &ProjectsLocationsAppsVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.appversion = appversion
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update. If empty, fields `display_name` and `description` will be updated.
+func (c *ProjectsLocationsAppsVersionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAppsVersionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsVersionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsVersionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsVersionsPatchCall) Context(ctx context.Context) *ProjectsLocationsAppsVersionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsVersionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.appversion)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.versions.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AppVersion.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAppsVersionsPatchCall) Do(opts ...googleapi.CallOption) (*AppVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AppVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAppsVersionsRestoreCall struct {
 	s                        *Service
 	name                     string
@@ -23837,7 +27180,7 @@ func (c *ProjectsLocationsAppsVersionsRestoreCall) Do(opts ...googleapi.CallOpti
 
 type ProjectsLocationsAppsVersionsMessageSendCall struct {
 	s                         *Service
-	tenant                    string
+	tenantid                  string
 	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
 	urlParams_                gensupport.URLParams
 	ctx_                      context.Context
@@ -23846,10 +27189,12 @@ type ProjectsLocationsAppsVersionsMessageSendCall struct {
 
 // Send: Sends a message to an agent.
 //
-// - tenant: Optional. Tenant ID, provided as a path parameter.
-func (r *ProjectsLocationsAppsVersionsMessageService) Send(tenant string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsVersionsMessageSendCall {
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsVersionsMessageService) Send(tenantid string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsVersionsMessageSendCall {
 	c := &ProjectsLocationsAppsVersionsMessageSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.tenant = tenant
+	c.tenantid = tenantid
 	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
 	return c
 }
@@ -23893,7 +27238,7 @@ func (c *ProjectsLocationsAppsVersionsMessageSendCall) doRequest(alt string) (*h
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"tenant": c.tenant,
+		"tenant": c.tenantid,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.message.send", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -23936,6 +27281,113 @@ func (c *ProjectsLocationsAppsVersionsMessageSendCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.message.send", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAppsVersionsMessageStreamCall struct {
+	s                         *Service
+	tenantid                  string
+	lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Stream: Sends a streaming message to an agent, allowing for real-time
+// interaction and status updates. Streaming version of `SendMessage`
+//
+//   - tenant: Optional. Opaque routing identifier. Must match the `tenant` value
+//     from the selected `AgentInterface` in the Agent Card when that field is
+//     set.
+func (r *ProjectsLocationsAppsVersionsMessageService) Stream(tenantid string, lfa2av1sendmessagerequest *LfA2aV1SendMessageRequest) *ProjectsLocationsAppsVersionsMessageStreamCall {
+	c := &ProjectsLocationsAppsVersionsMessageStreamCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.tenantid = tenantid
+	c.lfa2av1sendmessagerequest = lfa2av1sendmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAppsVersionsMessageStreamCall) Fields(s ...googleapi.Field) *ProjectsLocationsAppsVersionsMessageStreamCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAppsVersionsMessageStreamCall) Context(ctx context.Context) *ProjectsLocationsAppsVersionsMessageStreamCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAppsVersionsMessageStreamCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAppsVersionsMessageStreamCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.lfa2av1sendmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+tenant}/message:stream")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"tenant": c.tenantid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.message.stream", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "ces.projects.locations.apps.versions.message.stream" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *LfA2aV1StreamResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsAppsVersionsMessageStreamCall) Do(opts ...googleapi.CallOption) (*LfA2aV1StreamResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LfA2aV1StreamResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "ces.projects.locations.apps.versions.message.stream", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

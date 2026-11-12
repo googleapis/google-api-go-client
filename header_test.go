@@ -14,8 +14,6 @@ import (
 
 // Files in this package use a BSD-style license.
 var sentinel = regexp.MustCompile(`(//|#) Copyright \d\d\d\d (Google LLC|The Go Authors)(\.)*( All rights reserved\.)*
-(//|#) Use of this source code is governed by a BSD-style
-(//|#) license that can be found in the LICENSE file.
 `)
 
 const prefix = "// Copyright"

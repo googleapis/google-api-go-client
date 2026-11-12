@@ -437,6 +437,10 @@ type BoostConfig struct {
 	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in gigabytes
 	// (GB). The minimum boot disk size is `30` GB. Defaults to `50` GB.
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
+	// EnableAutomaticFailover: Optional. Indicates if this boost config is
+	// eligible for automatic failover when the service cannot provision the
+	// default VM type. Defaults to `false`.
+	EnableAutomaticFailover bool `json:"enableAutomaticFailover,omitempty"`
 	// EnableNestedVirtualization: Optional. Whether to enable nested
 	// virtualization on boosted Cloud Workstations VMs running using this boost
 	// configuration. Defaults to false. Nested virtualization lets you run virtual
@@ -684,18 +688,26 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 
 // GatewayConfig: Configuration options for Cluster HTTP Gateway.
 type GatewayConfig struct {
+	// DirectAccessPorts: Optional. Specifies VM ports that can be accessed using
+	// the standard `$HOSTNAME:$PORT` format in addition to the service's default
+	// `$PORT-$HOSTNAME` format. See [Access HTTP Servers Running on Workstations]
+	// (https://docs.cloud.google.com/workstations/docs/access-http-servers-running-on-workstations).
+	// Note: This only controls the routing URL format. Network-level access is
+	// still controlled by `allowed_ports` on WorkstationConfig. All
+	// `allowed_ports` remain accessible via the default `$PORT-$HOSTNAME` format.
+	DirectAccessPorts []int64 `json:"directAccessPorts,omitempty"`
 	// Http2Enabled: Optional. Whether HTTP/2 is enabled for this workstation
 	// cluster. Defaults to false.
 	Http2Enabled bool `json:"http2Enabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Http2Enabled") to
+	// ForceSendFields is a list of field names (e.g. "DirectAccessPorts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Http2Enabled") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DirectAccessPorts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -743,8 +755,18 @@ type GceHyperdiskBalancedHighAvailability struct {
 	// will never be archived.
 	ArchiveTimeout string `json:"archiveTimeout,omitempty"`
 	// MaxSizeGb: Optional. Maximum size in GB to which this persistent directory
-	// can be resized. Defaults to unlimited if not set.
+	// can be resized. Defaults to `0`, which indicates no maximum limit is
+	// enforced by this configuration. Resizing is still subject to the quotas and
+	// limits of the underlying disk type.
 	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
+	// ProvisionedIops: Optional. Indicates how many IOPS to provision for the
+	// disk. This sets the number of I/O operations per second that the disk can
+	// handle. Values must be between 3,000 and 100,000.
+	ProvisionedIops int64 `json:"provisionedIops,omitempty,string"`
+	// ProvisionedThroughput: Optional. Indicates how much throughput to provision
+	// for the disk. This sets the number of throughput MB per second that the disk
+	// can handle. Values must be between 1 and 2,400.
+	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
 	// to `DELETE`.
@@ -1015,7 +1037,9 @@ type GceRegionalPersistentDisk struct {
 	// empty if source_snapshot is set. Defaults to "ext4".
 	FsType string `json:"fsType,omitempty"`
 	// MaxSizeGb: Optional. Maximum size in GB to which this persistent directory
-	// can be resized. Defaults to unlimited if not set.
+	// can be resized. Defaults to `0`, which indicates no maximum limit is
+	// enforced by this configuration. Resizing is still subject to the quotas and
+	// limits of the underlying disk type.
 	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
@@ -2153,6 +2177,13 @@ type WorkstationCluster struct {
 	// Conditions: Output only. Status conditions describing the workstation
 	// cluster's current state.
 	Conditions []*Status `json:"conditions,omitempty"`
+	// ConsoleBaseUrl: Optional. Specifies a custom base URL for the Google Cloud
+	// Console. This field is intended to be user-configurable to support data
+	// residency for Cloud Workstations users. This will be used generally for user
+	// journeys where users need to go to the Cloud Console from Code OSS. When the
+	// Auth and Launch URLs are unset, this will be used as the base URL for those
+	// endpoints if set.
+	ConsoleBaseUrl string `json:"consoleBaseUrl,omitempty"`
 	// ControlPlaneIp: Output only. The private IP address of the control plane for
 	// this workstation cluster. Workstation VMs need access to this IP address to
 	// work with the service, so make sure that your firewall rules allow egress
@@ -2349,9 +2380,10 @@ type WorkstationConfig struct {
 	//   "SUSPEND" - Suspend the workstation after idle_timeout.
 	IdleAction string `json:"idleAction,omitempty"`
 	// IdleTimeout: Optional. Number of seconds to wait before automatically
-	// stopping a workstation after it last received user traffic. A value of
-	// "0s" indicates that Cloud Workstations VMs created with this configuration
-	// should never time out due to idleness. Provide duration
+	// stopping or suspending a workstation after it last received user traffic.
+	// See idle_action to configure whether to stop or suspend idle workstations. A
+	// value of "0s" indicates that Cloud Workstations VMs created with this
+	// configuration should never time out due to idleness. Provide duration
 	// (https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#duration)
 	// terminated by `s` for seconds—for example, "7200s" (2 hours). The
 	// default is "1200s" (20 minutes).
@@ -2389,14 +2421,16 @@ type WorkstationConfig struct {
 	// zones within the region are used. Immutable after the workstation
 	// configuration is created.
 	ReplicaZones []string `json:"replicaZones,omitempty"`
-	// RunningTimeout: Optional. Number of seconds that a workstation can run until
-	// it is automatically shut down. We recommend that workstations be shut down
-	// daily to reduce costs and so that security updates can be applied upon
-	// restart. The idle_timeout and running_timeout fields are independent of each
-	// other. Note that the running_timeout field shuts down VMs after the
-	// specified time, regardless of whether or not the VMs are idle. Provide
-	// duration terminated by `s` for seconds—for example, "54000s" (15 hours).
-	// Defaults to "43200s" (12 hours). A value of "0s" indicates that
+	// RunningTimeout: Optional. Number of seconds to wait before automatically
+	// stopping a workstation. We recommend that workstations be stopped daily so
+	// that security updates can be applied upon restart. The idle_timeout and
+	// running_timeout fields are independent of each other. Note that the
+	// running_timeout field stops workstations after the specified time,
+	// regardless of whether or not the workstations are idle. Note: This timeout
+	// applies to workstations in the following states: - STATE_RUNNING -
+	// STATE_SUSPENDED Suspending a workstation does not reset this timeout.
+	// Provide duration terminated by `s` for seconds—for example, "54000s" (15
+	// hours). Defaults to "43200s" (12 hours). A value of "0s" indicates that
 	// workstations using this configuration should never time out. If
 	// encryption_key is set, it must be greater than "0s" and less than
 	// "86400s" (24 hours). Warning: A value of "0s" indicates that Cloud

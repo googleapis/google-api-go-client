@@ -366,7 +366,7 @@
       }
     }
   },
-  "revision": "20260601",
+  "revision": "20260922",
   "rootUrl": "https://bigqueryconnection.googleapis.com/",
   "schemas": {
     "AuditConfig": {
@@ -439,6 +439,10 @@
         "accessRole": {
           "$ref": "AwsAccessRole",
           "description": "Authentication using Google owned service account to assume into customer's AWS IAM Role."
+        },
+        "crossCloudCacheOptions": {
+          "$ref": "CrossCloudCacheOptions",
+          "description": "Optional. Configuration options for cross-cloud caching of data and metadata files."
         }
       },
       "type": "object"
@@ -456,6 +460,10 @@
           "description": "Output only. The client id of the Azure Active Directory Application.",
           "readOnly": true,
           "type": "string"
+        },
+        "crossCloudCacheOptions": {
+          "$ref": "CrossCloudCacheOptions",
+          "description": "Optional. Configuration options for cross-cloud caching of data and metadata files."
         },
         "customerTenantId": {
           "description": "The id of customer's directory that host the data.",
@@ -703,8 +711,12 @@
           "additionalProperties": {
             "$ref": "ConnectorConfigurationParameterValue"
           },
-          "description": "Optional. A map of name-value pairs for connector-specific parameters. Extra configuration parameters, that are not standardized in configuration sections. To update a single parameter value call ConnectionService.UpdateConnection with `update_mask` set to `configuration.parameters.parameter_id`. If parameter id does not fit `[a-zA-Z0-9_]+` pattern, it should be escaped with backticks - for example ``configuration.parameters.`parameter id` ``.",
+          "description": "Optional. A map of name-value pairs for connector-specific parameters. These extra configuration parameters aren't standardized in the configuration sections. To update a single parameter value, call ConnectionService.UpdateConnection with `update_mask` set to `configuration.parameters.parameter_id`. If ``parameter_id`` doesn't fit the `[a-zA-Z0-9_]+` pattern, ``parameter_id`` should be escaped with backticks—for example, ``configuration.parameters.`parameter id` ``.",
           "type": "object"
+        },
+        "tls": {
+          "$ref": "ConnectorConfigurationTls",
+          "description": "Optional. TLS configuration options."
         }
       },
       "type": "object"
@@ -732,7 +744,7 @@
           "additionalProperties": {
             "$ref": "ConnectorConfigurationParameterValue"
           },
-          "description": "Optional. A map of name-value pairs for authentication-specific parameters. Extra configuration parameters, that are not standardized in authentication. To update a single parameter value call ConnectionService.UpdateConnection with `update_mask` set to `configuration.authentication.parameters.parameter_id`. If parameter id does not fit `[a-zA-Z0-9_]+` pattern, it should be escaped with backticks - for example ``configuration.authentication.parameters.`parameter id` ``.",
+          "description": "Optional. A map of name-value pairs for connector-specific parameters. These extra configuration parameters aren't standardized in the configuration sections. To update a single parameter value, call ConnectionService.UpdateConnection with `update_mask` set to `configuration.parameters.parameter_id`. If ``parameter_id`` doesn't fit the `[a-zA-Z0-9_]+` pattern, ``parameter_id`` should be escaped with backticks—for example, ``configuration.parameters.`parameter id` ``.",
           "type": "object"
         },
         "serviceAccount": {
@@ -833,6 +845,56 @@
       },
       "type": "object"
     },
+    "ConnectorConfigurationTls": {
+      "description": "TLS configuration options.",
+      "id": "ConnectorConfigurationTls",
+      "properties": {
+        "mode": {
+          "description": "Optional. The mode of TLS configuration.",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "DISABLE",
+            "ENCRYPT_VERIFY_NONE",
+            "ENCRYPT_VERIFY_CA",
+            "ENCRYPT_VERIFY_CA_AND_HOST"
+          ],
+          "enumDescriptions": [
+            "TLS mode unspecified.",
+            "TLS is disabled.",
+            "Encryption is enabled, but server certificate is not verified.",
+            "Encryption is enabled, and server certificate is verified.",
+            "Encryption is enabled, and server certificate and host are verified."
+          ],
+          "type": "string"
+        },
+        "privatePki": {
+          "$ref": "ConnectorConfigurationTlsPrivatePki",
+          "description": "Optional. Private PKI."
+        },
+        "webPki": {
+          "$ref": "ConnectorConfigurationTlsWebPki",
+          "description": "Optional. Web PKI."
+        }
+      },
+      "type": "object"
+    },
+    "ConnectorConfigurationTlsPrivatePki": {
+      "description": "Private PKI.",
+      "id": "ConnectorConfigurationTlsPrivatePki",
+      "properties": {
+        "trustedCertificatesPem": {
+          "description": "Optional. a PEM-encoded list of certificates to trust",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ConnectorConfigurationTlsWebPki": {
+      "description": "Web PKI.",
+      "id": "ConnectorConfigurationTlsWebPki",
+      "properties": {},
+      "type": "object"
+    },
     "ConnectorConfigurationUsernamePassword": {
       "description": "Username and Password authentication.",
       "id": "ConnectorConfigurationUsernamePassword",
@@ -844,6 +906,17 @@
         "username": {
           "description": "Required. Username.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CrossCloudCacheOptions": {
+      "description": "Options for caching cross-cloud data and metadata files.",
+      "id": "CrossCloudCacheOptions",
+      "properties": {
+        "enabled": {
+          "description": "Optional. Whether cross-cloud caching is enabled. This only affects queries through BigQuery. If this value is `true`, read data and metadata are stored in a cache, which can increase performance and decrease network egress costs for cross-cloud queries. If this value is `false`, cross-cloud caching is disabled.",
+          "type": "boolean"
         }
       },
       "type": "object"
@@ -964,6 +1037,10 @@
       "description": "Connection properties specific to Salesforce DataCloud. This is intended for use only by Salesforce partner projects.",
       "id": "SalesforceDataCloudProperties",
       "properties": {
+        "crossCloudCacheOptions": {
+          "$ref": "CrossCloudCacheOptions",
+          "description": "Optional. Configuration options for cross-cloud caching of data and metadata files."
+        },
         "identity": {
           "description": "Output only. A unique Google-owned and Google-generated service account identity for the connection.",
           "readOnly": true,

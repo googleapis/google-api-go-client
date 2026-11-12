@@ -1410,7 +1410,7 @@ func (s *EntityAnnotation) UnmarshalJSON(data []byte) error {
 // FaceAnnotation: A face annotation object contains the results of face
 // detection.
 type FaceAnnotation struct {
-	// AngerLikelihood: Anger likelihood.
+	// AngerLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -1456,7 +1456,7 @@ type FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
-	// JoyLikelihood: Joy likelihood.
+	// JoyLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -1478,7 +1478,7 @@ type FaceAnnotation struct {
 	// clockwise/anti-clockwise rotation of the face relative to the image vertical
 	// about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
-	// SorrowLikelihood: Sorrow likelihood.
+	// SorrowLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -1488,7 +1488,7 @@ type FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
-	// SurpriseLikelihood: Surprise likelihood.
+	// SurpriseLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -2097,7 +2097,7 @@ func (s *GoogleCloudVisionV1p1beta1EntityAnnotation) UnmarshalJSON(data []byte) 
 // GoogleCloudVisionV1p1beta1FaceAnnotation: A face annotation object contains
 // the results of face detection.
 type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
-	// AngerLikelihood: Anger likelihood.
+	// AngerLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -2143,7 +2143,7 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
-	// JoyLikelihood: Joy likelihood.
+	// JoyLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -2165,7 +2165,7 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	// clockwise/anti-clockwise rotation of the face relative to the image vertical
 	// about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
-	// SorrowLikelihood: Sorrow likelihood.
+	// SorrowLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -2175,7 +2175,7 @@ type GoogleCloudVisionV1p1beta1FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
-	// SurpriseLikelihood: Surprise likelihood.
+	// SurpriseLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -3977,7 +3977,7 @@ func (s *GoogleCloudVisionV1p2beta1EntityAnnotation) UnmarshalJSON(data []byte) 
 // GoogleCloudVisionV1p2beta1FaceAnnotation: A face annotation object contains
 // the results of face detection.
 type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
-	// AngerLikelihood: Anger likelihood.
+	// AngerLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -4023,7 +4023,7 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
-	// JoyLikelihood: Joy likelihood.
+	// JoyLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -4045,7 +4045,7 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	// clockwise/anti-clockwise rotation of the face relative to the image vertical
 	// about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
-	// SorrowLikelihood: Sorrow likelihood.
+	// SorrowLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -4055,7 +4055,7 @@ type GoogleCloudVisionV1p2beta1FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
-	// SurpriseLikelihood: Surprise likelihood.
+	// SurpriseLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -5899,7 +5899,7 @@ func (s *GoogleCloudVisionV1p3beta1EntityAnnotation) UnmarshalJSON(data []byte) 
 // GoogleCloudVisionV1p3beta1FaceAnnotation: A face annotation object contains
 // the results of face detection.
 type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
-	// AngerLikelihood: Anger likelihood.
+	// AngerLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -5945,7 +5945,7 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
-	// JoyLikelihood: Joy likelihood.
+	// JoyLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -5967,7 +5967,7 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	// clockwise/anti-clockwise rotation of the face relative to the image vertical
 	// about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
-	// SorrowLikelihood: Sorrow likelihood.
+	// SorrowLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -5977,7 +5977,7 @@ type GoogleCloudVisionV1p3beta1FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
-	// SurpriseLikelihood: Surprise likelihood.
+	// SurpriseLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -7963,7 +7963,7 @@ func (s *GoogleCloudVisionV1p4beta1EntityAnnotation) UnmarshalJSON(data []byte) 
 // GoogleCloudVisionV1p4beta1FaceAnnotation: A face annotation object contains
 // the results of face detection.
 type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
-	// AngerLikelihood: Anger likelihood.
+	// AngerLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -8009,7 +8009,7 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	HeadwearLikelihood string `json:"headwearLikelihood,omitempty"`
-	// JoyLikelihood: Joy likelihood.
+	// JoyLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -8036,7 +8036,7 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	// clockwise/anti-clockwise rotation of the face relative to the image vertical
 	// about the axis perpendicular to the face. Range [-180,180].
 	RollAngle float64 `json:"rollAngle,omitempty"`
-	// SorrowLikelihood: Sorrow likelihood.
+	// SorrowLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -8046,7 +8046,7 @@ type GoogleCloudVisionV1p4beta1FaceAnnotation struct {
 	//   "LIKELY" - It is likely.
 	//   "VERY_LIKELY" - It is very likely.
 	SorrowLikelihood string `json:"sorrowLikelihood,omitempty"`
-	// SurpriseLikelihood: Surprise likelihood.
+	// SurpriseLikelihood: Deprecated: No longer populated.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.

@@ -350,8 +350,8 @@ func (s AddEsimParams) MarshalJSON() ([]byte, error) {
 // AdvancedSecurityOverrides: Advanced security settings. In most cases,
 // setting these is not needed.
 type AdvancedSecurityOverrides struct {
-	// CommonCriteriaMode: Controls Common Criteria Mode—security standards
-	// defined in the Common Criteria for Information Technology Security
+	// CommonCriteriaMode: Optional. Controls Common Criteria Mode—security
+	// standards defined in the Common Criteria for Information Technology Security
 	// Evaluation (https://www.commoncriteriaportal.org/) (CC). Enabling Common
 	// Criteria Mode increases certain security components on a device, see
 	// CommonCriteriaMode for details.Warning: Common Criteria Mode enforces a
@@ -385,8 +385,8 @@ type AdvancedSecurityOverrides struct {
 	// protection.Supported on Android 15 and above. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 15.
 	ContentProtectionPolicy string `json:"contentProtectionPolicy,omitempty"`
-	// DeveloperSettings: Controls access to developer settings: developer options
-	// and safe boot. Replaces safeBootDisabled (deprecated) and
+	// DeveloperSettings: Optional. Controls access to developer settings:
+	// developer options and safe boot. Replaces safeBootDisabled (deprecated) and
 	// debuggingFeaturesAllowed (deprecated). On personally-owned devices with a
 	// work profile, setting this policy will not disable safe boot. In this case,
 	// a NonComplianceDetail with MANAGEMENT_MODE is reported.
@@ -399,9 +399,9 @@ type AdvancedSecurityOverrides struct {
 	//   "DEVELOPER_SETTINGS_ALLOWED" - Allows all developer settings. The user can
 	// access and optionally configure the settings.
 	DeveloperSettings string `json:"developerSettings,omitempty"`
-	// GooglePlayProtectVerifyApps: Whether Google Play Protect verification
-	// (https://support.google.com/accounts/answer/2812853) is enforced. Replaces
-	// ensureVerifyAppsEnabled (deprecated).
+	// GooglePlayProtectVerifyApps: Optional. Whether Google Play Protect
+	// verification (https://support.google.com/accounts/answer/2812853) is
+	// enforced. Replaces ensureVerifyAppsEnabled (deprecated).
 	//
 	// Possible values:
 	//   "GOOGLE_PLAY_PROTECT_VERIFY_APPS_UNSPECIFIED" - Unspecified. Defaults to
@@ -434,15 +434,15 @@ type AdvancedSecurityOverrides struct {
 	// not support MTE.Supported on Android 14 and above. A NonComplianceDetail
 	// with API_LEVEL is reported if the Android version is less than 14.
 	MtePolicy string `json:"mtePolicy,omitempty"`
-	// PersonalAppsThatCanReadWorkNotifications: Personal apps that can read work
-	// profile notifications using a NotificationListenerService
+	// PersonalAppsThatCanReadWorkNotifications: Optional. Personal apps that can
+	// read work profile notifications using a NotificationListenerService
 	// (https://developer.android.com/reference/android/service/notification/NotificationListenerService).
 	// By default, no personal apps (aside from system apps) can read work
 	// notifications. Each value in the list must be a package name.
 	PersonalAppsThatCanReadWorkNotifications []string `json:"personalAppsThatCanReadWorkNotifications,omitempty"`
-	// UntrustedAppsPolicy: The policy for untrusted apps (apps from unknown
-	// sources) enforced on the device. Replaces install_unknown_sources_allowed
-	// (deprecated).
+	// UntrustedAppsPolicy: Optional. The policy for untrusted apps (apps from
+	// unknown sources) enforced on the device. Replaces
+	// install_unknown_sources_allowed (deprecated).
 	//
 	// Possible values:
 	//   "UNTRUSTED_APPS_POLICY_UNSPECIFIED" - Unspecified. Defaults to
@@ -1155,6 +1155,8 @@ type ApplicationPolicy struct {
 	// governed by credentialProviderPolicyDefault.
 	//   "CREDENTIAL_PROVIDER_ALLOWED" - App is allowed to act as a credential
 	// provider.
+	//   "CREDENTIAL_PROVIDER_DISALLOWED" - App is not allowed to act as a
+	// credential provider.
 	CredentialProviderPolicy string `json:"credentialProviderPolicy,omitempty"`
 	// CustomAppConfig: Optional. Configuration for this custom app.install_type
 	// must be set to CUSTOM for this to be set.
@@ -2012,12 +2014,16 @@ type Command struct {
 	// See also stop_lost_mode_params.
 	//   "ADD_ESIM" - Adds an eSIM profile to the device. This is supported on
 	// Android 15 and above. See also addEsimParams. To remove an eSIM profile, use
-	// the REMOVE_ESIM command. To determine what happens to the eSIM profile when
-	// a device is wiped, set wipeDataFlags in the policy. Note: To provision
-	// multiple eSIMs on a single device, it is recommended to introduce a delay of
-	// a few minutes between successive executions of the command.
+	// the REMOVE_ESIM command. Note that REMOVE_ESIM is not supported on
+	// company-owned devices with a work profile running Android 16 QPR2 or Android
+	// 16 QPR3. To determine what happens to the eSIM profile when a device is
+	// wiped, set wipeDataFlags in the policy. Note: To provision multiple eSIMs on
+	// a single device, it is recommended to introduce a delay of a few minutes
+	// between successive executions of the command.
 	//   "REMOVE_ESIM" - Removes an eSIM profile from the device. This is supported
-	// on Android 15 and above. See also removeEsimParams.
+	// on Android 15 and above. This command is not supported on company-owned
+	// devices with a work profile running Android 16 QPR2 or Android 16 QPR3. See
+	// also removeEsimParams.
 	//   "REQUEST_DEVICE_INFO" - Request information related to the device.
 	//   "WIPE" - Wipes the device, via a factory reset for a company owned device,
 	// or by deleting the work profile for a personally owned device with work
@@ -2233,6 +2239,73 @@ func (s ContentProviderEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CrossDevicePolicies: Policies controlling cross-device communication.
+type CrossDevicePolicies struct {
+	// NearbyAppStreaming: Optional. Manages video streaming of apps on the device
+	// for fully managed devices or in the work profile for devices with work
+	// profiles to nearby devices. This is supported on Android 13 and above.
+	//
+	// Possible values:
+	//   "NEARBY_APP_STREAMING_UNSPECIFIED" - Unspecified. Defaults to
+	// NEARBY_APP_STREAMING_USER_CHOICE_SAME_MANAGED_ACCOUNT.
+	//   "NEARBY_APP_STREAMING_USER_CHOICE" - The user is allowed to choose whether
+	// to stream apps to nearby devices.
+	//   "NEARBY_APP_STREAMING_DISABLED" - Disables app streaming to nearby
+	// devices.
+	//   "NEARBY_APP_STREAMING_USER_CHOICE_SAME_MANAGED_ACCOUNT" - The user is
+	// allowed to choose whether to stream apps to other nearby devices which are
+	// signed in with the same authenticated managed account.
+	NearbyAppStreaming string `json:"nearbyAppStreaming,omitempty"`
+	// NearbyNotificationStreaming: Optional. Manages streaming of notifications
+	// from apps on the device for fully managed devices or in the work profile for
+	// devices with work profiles to nearby devices. This is supported on Android
+	// 13 and above.
+	//
+	// Possible values:
+	//   "NEARBY_NOTIFICATION_STREAMING_UNSPECIFIED" - Unspecified. Defaults to
+	// NEARBY_NOTIFICATION_STREAMING_USER_CHOICE_SAME_MANAGED_ACCOUNT.
+	//   "NEARBY_NOTIFICATION_STREAMING_USER_CHOICE" - The user is allowed to
+	// choose whether to stream notifications to nearby devices.
+	//   "NEARBY_NOTIFICATION_STREAMING_DISABLED" - Disables notification streaming
+	// to nearby devices.
+	//   "NEARBY_NOTIFICATION_STREAMING_USER_CHOICE_SAME_MANAGED_ACCOUNT" - The
+	// user is allowed to choose whether to stream notifications to other nearby
+	// devices which are signed in with the same authenticated managed account.
+	NearbyNotificationStreaming string `json:"nearbyNotificationStreaming,omitempty"`
+	// TaskContinuityHandoff: Optional. Controls the task continuity handoff
+	// (https://developer.android.com/partners/android-17/features#handoff)
+	// feature. This policy applies to the entire device for fully managed devices,
+	// and to the work profile for devices with a work profile. Requires Android 17
+	// QPR1 or higher.
+	//
+	// Possible values:
+	//   "TASK_CONTINUITY_HANDOFF_UNSPECIFIED" - Defaults to
+	// TASK_CONTINUITY_HANDOFF_ALLOWED.
+	//   "TASK_CONTINUITY_HANDOFF_ALLOWED" - Allows the user to enable or disable
+	// the task continuity handoff feature in settings. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is lower than Android 17 QPR1.
+	//   "TASK_CONTINUITY_HANDOFF_DISALLOWED" - The task continuity handoff feature
+	// is disallowed. A NonComplianceDetail with API_LEVEL is reported if the
+	// Android version is lower than Android 17 QPR1.
+	TaskContinuityHandoff string `json:"taskContinuityHandoff,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "NearbyAppStreaming") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NearbyAppStreaming") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrossDevicePolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossDevicePolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CrossProfilePolicies: Controls the data from the work profile that can be
 // accessed from the personal profile and vice versa. A NonComplianceDetail
 // with MANAGEMENT_MODE is reported if the device does not have a work profile.
@@ -2253,8 +2326,8 @@ type CrossProfilePolicies struct {
 	// appFunctions must not be set to APP_FUNCTIONS_DISALLOWED, otherwise the
 	// policy will be rejected.
 	CrossProfileAppFunctions string `json:"crossProfileAppFunctions,omitempty"`
-	// CrossProfileCopyPaste: Whether text copied from one profile (personal or
-	// work) can be pasted in the other profile.
+	// CrossProfileCopyPaste: Optional. Whether text copied from one profile
+	// (personal or work) can be pasted in the other profile.
 	//
 	// Possible values:
 	//   "CROSS_PROFILE_COPY_PASTE_UNSPECIFIED" - Unspecified. Defaults to
@@ -2266,11 +2339,11 @@ type CrossProfilePolicies struct {
 	//   "CROSS_PROFILE_COPY_PASTE_ALLOWED" - Text copied in either profile can be
 	// pasted in the other profile.
 	CrossProfileCopyPaste string `json:"crossProfileCopyPaste,omitempty"`
-	// CrossProfileDataSharing: Whether data from one profile (personal or work)
-	// can be shared with apps in the other profile. Specifically controls simple
-	// data sharing via intents. Management of other cross-profile communication
-	// channels, such as contact search, copy/paste, or connected work & personal
-	// apps, are configured separately.
+	// CrossProfileDataSharing: Optional. Whether data from one profile (personal
+	// or work) can be shared with apps in the other profile. Specifically controls
+	// simple data sharing via intents. Management of other cross-profile
+	// communication channels, such as contact search, copy/paste, or connected
+	// work & personal apps, are configured separately.
 	//
 	// Possible values:
 	//   "CROSS_PROFILE_DATA_SHARING_UNSPECIFIED" - Unspecified. Defaults to
@@ -2284,11 +2357,11 @@ type CrossProfilePolicies struct {
 	//   "CROSS_PROFILE_DATA_SHARING_ALLOWED" - Data from either profile can be
 	// shared with the other profile.
 	CrossProfileDataSharing string `json:"crossProfileDataSharing,omitempty"`
-	// ExemptionsToShowWorkContactsInPersonalProfile: List of apps which are
-	// excluded from the ShowWorkContactsInPersonalProfile setting. For this to be
-	// set, ShowWorkContactsInPersonalProfile must be set to one of the following
-	// values: SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED. In this case, these
-	// exemptions act as a blocklist.
+	// ExemptionsToShowWorkContactsInPersonalProfile: Optional. List of apps which
+	// are excluded from the ShowWorkContactsInPersonalProfile setting. For this to
+	// be set, ShowWorkContactsInPersonalProfile must be set to one of the
+	// following values: SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_ALLOWED. In this
+	// case, these exemptions act as a blocklist.
 	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED. In this case, these
 	// exemptions act as an allowlist.
 	// SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED_EXCEPT_SYSTEM. In this
@@ -2297,8 +2370,8 @@ type CrossProfilePolicies struct {
 	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 14.
 	ExemptionsToShowWorkContactsInPersonalProfile *PackageNameList `json:"exemptionsToShowWorkContactsInPersonalProfile,omitempty"`
-	// ShowWorkContactsInPersonalProfile: Whether personal apps can access contacts
-	// stored in the work profile.See also
+	// ShowWorkContactsInPersonalProfile: Optional. Whether personal apps can
+	// access contacts stored in the work profile.See also
 	// exemptions_to_show_work_contacts_in_personal_profile.
 	//
 	// Possible values:
@@ -2331,9 +2404,10 @@ type CrossProfilePolicies struct {
 	// to SHOW_WORK_CONTACTS_IN_PERSONAL_PROFILE_DISALLOWED and a
 	// NonComplianceDetail with API_LEVEL is reported.
 	ShowWorkContactsInPersonalProfile string `json:"showWorkContactsInPersonalProfile,omitempty"`
-	// WorkProfileWidgetsDefault: Specifies the default behaviour for work profile
-	// widgets. If the policy does not specify work_profile_widgets for a specific
-	// application, it will behave according to the value specified here.
+	// WorkProfileWidgetsDefault: Optional. Specifies the default behaviour for
+	// work profile widgets. If the policy does not specify work_profile_widgets
+	// for a specific application, it will behave according to the value specified
+	// here.
 	//
 	// Possible values:
 	//   "WORK_PROFILE_WIDGETS_DEFAULT_UNSPECIFIED" - Unspecified. Defaults to
@@ -2979,9 +3053,9 @@ type DeviceConnectivityManagement struct {
 	// on Android 8 and above. A NonComplianceDetail with API_LEVEL is reported on
 	// fully managed devices if the Android version is less than 8.
 	BluetoothSharing string `json:"bluetoothSharing,omitempty"`
-	// ConfigureWifi: Controls Wi-Fi configuring privileges. Based on the option
-	// set, user will have either full or limited or no control in configuring
-	// Wi-Fi networks.
+	// ConfigureWifi: Optional. Controls Wi-Fi configuring privileges. Based on the
+	// option set, user will have either full or limited or no control in
+	// configuring Wi-Fi networks.
 	//
 	// Possible values:
 	//   "CONFIGURE_WIFI_UNSPECIFIED" - Unspecified. Defaults to
@@ -3018,8 +3092,8 @@ type DeviceConnectivityManagement struct {
 	PreferentialNetworkServiceSettings *PreferentialNetworkServiceSettings `json:"preferentialNetworkServiceSettings,omitempty"`
 	// PrivateDnsSettings: Optional. The global private DNS settings.
 	PrivateDnsSettings *PrivateDnsSettings `json:"privateDnsSettings,omitempty"`
-	// TetheringSettings: Controls tethering settings. Based on the value set, the
-	// user is partially or fully disallowed from using different forms of
+	// TetheringSettings: Optional. Controls tethering settings. Based on the value
+	// set, the user is partially or fully disallowed from using different forms of
 	// tethering.
 	//
 	// Possible values:
@@ -3038,8 +3112,8 @@ type DeviceConnectivityManagement struct {
 	// fully managed devices and work profile on company-owned devices, on all
 	// supported android versions. The setting tetheringConfigDisabled is ignored.
 	TetheringSettings string `json:"tetheringSettings,omitempty"`
-	// UsbDataAccess: Controls what files and/or data can be transferred via USB.
-	// Supported only on company-owned devices.
+	// UsbDataAccess: Optional. Controls what files and/or data can be transferred
+	// via USB. Supported only on company-owned devices.
 	//
 	// Possible values:
 	//   "USB_DATA_ACCESS_UNSPECIFIED" - Unspecified. Defaults to
@@ -3057,8 +3131,8 @@ type DeviceConnectivityManagement struct {
 	// with DEVICE_INCOMPATIBLE is reported if the device does not have USB HAL 1.3
 	// or above. usbFileTransferDisabled is ignored.
 	UsbDataAccess string `json:"usbDataAccess,omitempty"`
-	// WifiDirectSettings: Controls configuring and using Wi-Fi direct settings.
-	// Supported on company-owned devices running Android 13 and above.
+	// WifiDirectSettings: Optional. Controls configuring and using Wi-Fi direct
+	// settings. Supported on company-owned devices running Android 13 and above.
 	//
 	// Possible values:
 	//   "WIFI_DIRECT_SETTINGS_UNSPECIFIED" - Unspecified. Defaults to
@@ -3070,9 +3144,13 @@ type DeviceConnectivityManagement struct {
 	WifiDirectSettings string `json:"wifiDirectSettings,omitempty"`
 	// WifiRoamingPolicy: Optional. Wi-Fi roaming policy.
 	WifiRoamingPolicy *WifiRoamingPolicy `json:"wifiRoamingPolicy,omitempty"`
-	// WifiSsidPolicy: Restrictions on which Wi-Fi SSIDs the device can connect to.
-	// Note that this does not affect which networks can be configured on the
-	// device. Supported on company-owned devices running Android 13 and above.
+	// WifiSsidPolicy: Optional. Restrictions on which Wi-Fi SSIDs the device can
+	// connect to. Note that this does not affect which networks can be configured
+	// on the device.Supported on Android 13 (API level 33) and higher on fully
+	// managed devices and work profiles on company-owned devices. A
+	// NonComplianceDetail with MANAGEMENT_MODE is reported on other management
+	// modes. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 13 (API level 33).
 	WifiSsidPolicy *WifiSsidPolicy `json:"wifiSsidPolicy,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApnPolicy") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3094,8 +3172,8 @@ func (s DeviceConnectivityManagement) MarshalJSON() ([]byte, error) {
 
 // DeviceRadioState: Controls for device radio settings.
 type DeviceRadioState struct {
-	// AirplaneModeState: Controls whether airplane mode can be toggled by the user
-	// or not.
+	// AirplaneModeState: Optional. Controls whether airplane mode can be toggled
+	// by the user or not.
 	//
 	// Possible values:
 	//   "AIRPLANE_MODE_STATE_UNSPECIFIED" - Unspecified. Defaults to
@@ -3106,8 +3184,8 @@ type DeviceRadioState struct {
 	// allowed to toggle airplane mode on. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 9.
 	AirplaneModeState string `json:"airplaneModeState,omitempty"`
-	// CellularTwoGState: Controls whether cellular 2G setting can be toggled by
-	// the user or not.
+	// CellularTwoGState: Optional. Controls whether cellular 2G setting can be
+	// toggled by the user or not.
 	//
 	// Possible values:
 	//   "CELLULAR_TWO_G_STATE_UNSPECIFIED" - Unspecified. Defaults to
@@ -3118,8 +3196,8 @@ type DeviceRadioState struct {
 	// allowed to toggle cellular 2G on via settings. A NonComplianceDetail with
 	// API_LEVEL is reported if the Android version is less than 14.
 	CellularTwoGState string `json:"cellularTwoGState,omitempty"`
-	// MinimumWifiSecurityLevel: The minimum required security level of Wi-Fi
-	// networks that the device can connect to.
+	// MinimumWifiSecurityLevel: Optional. The minimum required security level of
+	// Wi-Fi networks that the device can connect to.
 	//
 	// Possible values:
 	//   "MINIMUM_WIFI_SECURITY_LEVEL_UNSPECIFIED" - Defaults to
@@ -3143,8 +3221,24 @@ type DeviceRadioState struct {
 	// ENTERPRISE_NETWORK_SECURITY. A NonComplianceDetail with API_LEVEL is
 	// reported if the Android version is less than 13.
 	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
-	// UltraWidebandState: Controls the state of the ultra wideband setting and
-	// whether the user can toggle it on or off.
+	// Nfc: Optional. Controls whether NFC is disabled on the device and if the
+	// user can toggle NFC between enabled and disabled. This is for fully managed
+	// devices. To control NFC on work profiles on company-owned devices, use
+	// deviceWidePolicies.deviceRadioState.nfc instead.
+	//
+	// Possible values:
+	//   "NFC_UNSPECIFIED" - Unspecified. Defaults to NFC_USER_CHOICE.
+	//   "NFC_USER_CHOICE" - The user is allowed to toggle NFC between enabled and
+	// disabled. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 15.
+	//   "NFC_DISABLED" - NFC is disabled on the device. The user is not allowed to
+	// toggle NFC on. This is supported on fully managed devices and work profiles
+	// on company-owned devices. For other management modes, a NonComplianceDetail
+	// with MANAGEMENT_MODE is reported. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 15.
+	Nfc string `json:"nfc,omitempty"`
+	// UltraWidebandState: Optional. Controls the state of the ultra wideband
+	// setting and whether the user can toggle it on or off.
 	//
 	// Possible values:
 	//   "ULTRA_WIDEBAND_STATE_UNSPECIFIED" - Unspecified. Defaults to
@@ -3163,11 +3257,19 @@ type DeviceRadioState struct {
 	// USER_INITIATED_ADD_ESIM_ALLOWED.
 	//   "USER_INITIATED_ADD_ESIM_ALLOWED" - The user is allowed to add eSIM
 	// profiles.
-	//   "USER_INITIATED_ADD_ESIM_DISALLOWED" - Supported only on company-owned
-	// devices. A NonComplianceDetail with MANAGEMENT_MODE is reported for
-	// personally-owned devices.
+	//   "USER_INITIATED_ADD_ESIM_DISALLOWED" - Prevents the user from adding any
+	// new eSIM profiles. Note the following behaviors: * Admin-provisioned eSIMs:
+	// This setting does not block adding or managing eSIMs programmatically using
+	// commands like ADD_ESIM. * Existing eSIMs: Any eSIM profiles already present
+	// on the device before this restriction is applied, will remain and are not
+	// removed. To view existing eSIMs, refer to the data reported in
+	// TelephonyInfo.Supported on Android 15 and higher. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 15.Supported only
+	// on company-owned devices. A NonComplianceDetail with MANAGEMENT_MODE is
+	// reported for personally-owned devices.
 	UserInitiatedAddEsimSettings string `json:"userInitiatedAddEsimSettings,omitempty"`
-	// WifiState: Controls current state of Wi-Fi and if user can change its state.
+	// WifiState: Optional. Controls current state of Wi-Fi and if user can change
+	// its state.
 	//
 	// Possible values:
 	//   "WIFI_STATE_UNSPECIFIED" - Unspecified. Defaults to WIFI_STATE_USER_CHOICE
@@ -3248,6 +3350,65 @@ type DeviceSettings struct {
 
 func (s DeviceSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeviceWidePolicies: Policies controlling the device on company-owned
+// devices.
+type DeviceWidePolicies struct {
+	// DeviceRadioState: Optional. Covers controls for radio state.
+	DeviceRadioState *DeviceWideRadioState `json:"deviceRadioState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceRadioState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceRadioState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceWidePolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceWidePolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeviceWideRadioState: Controls for device radio settings.
+type DeviceWideRadioState struct {
+	// Nfc: Optional. Controls whether NFC is disabled on the device and if the
+	// user can toggle NFC between enabled and disabled. This is for work profiles
+	// on company-owned devices. To control NFC on fully managed devices, use
+	// deviceRadioState.nfc instead.
+	//
+	// Possible values:
+	//   "NFC_UNSPECIFIED" - Unspecified. Defaults to NFC_USER_CHOICE.
+	//   "NFC_USER_CHOICE" - The user is allowed to toggle NFC between enabled and
+	// disabled. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 15.
+	//   "NFC_DISABLED" - NFC is disabled on the device. The user is not allowed to
+	// toggle NFC on. This is supported on fully managed devices and work profiles
+	// on company-owned devices. For other management modes, a NonComplianceDetail
+	// with MANAGEMENT_MODE is reported. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 15.
+	Nfc string `json:"nfc,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Nfc") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Nfc") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceWideRadioState) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceWideRadioState
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3672,7 +3833,10 @@ type EsimCommandStatus struct {
 	//   "SUCCESS" - The eSIM operation was successfully performed on the device.
 	//   "IN_PROGRESS" - The eSIM operation is in progress.
 	//   "PENDING_USER_ACTION" - The user needs to take an action for the eSIM
-	// operation to proceed.
+	// operation to proceed. When ADD_ESIM is issued, this can happen when the
+	// device requires user consent to install or activate the eSIM, or when the
+	// eSIM profile requires a confirmation code that was not provided in
+	// confirmation_code.
 	//   "ERROR_SETUP_IN_PROGRESS" - The eSIM operation cannot be executed when
 	// setup is in progress.
 	//   "ERROR_USER_DENIED" - The user has denied the eSIM operation.
@@ -3832,6 +3996,40 @@ type ExternalData struct {
 
 func (s ExternalData) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtraCapabilities: Extra capabilities for a role.
+type ExtraCapabilities struct {
+	// LocalDeviceWipeCommand: Optional. Controls whether the companion app can
+	// perform local device wipe
+	// (https://developers.google.com/android/management/sdk-local-commands) using
+	// AMAPI SDK
+	// (https://developers.google.com/android/management/sdk-integration).
+	//
+	// Possible values:
+	//   "LOCAL_DEVICE_WIPE_COMMAND_UNSPECIFIED" - Unspecified. Defaults to
+	// LOCAL_DEVICE_WIPE_COMMAND_DISALLOWED.
+	//   "LOCAL_DEVICE_WIPE_COMMAND_DISALLOWED" - The app is not allowed to perform
+	// local device wipe.
+	//   "LOCAL_DEVICE_WIPE_COMMAND_ALLOWED" - The app is allowed to perform local
+	// device wipe. Only the COMPANION_APP role type can use this field.
+	LocalDeviceWipeCommand string `json:"localDeviceWipeCommand,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LocalDeviceWipeCommand") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LocalDeviceWipeCommand") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtraCapabilities) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtraCapabilities
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4353,8 +4551,9 @@ type InternalErrorDetails struct {
 	//   "ERROR_ADDRESS_MISSING" - See EuiccManager.ERROR_ADDRESS_MISSING
 	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_ADDRESS_MISSING)
 	// for details.
-	//   "ERROR_INVALID_CONFIRMATION_CODE" - See
-	// EuiccManager.ERROR_INVALID_CONFIRMATION_CODE
+	//   "ERROR_INVALID_CONFIRMATION_CODE" - The confirmation code is invalid. When
+	// ADD_ESIM is issued, this is reported when the carrier rejects the provided
+	// confirmation_code. See EuiccManager.ERROR_INVALID_CONFIRMATION_CODE
 	// (https://developer.android.com/reference/android/telephony/euicc/EuiccManager#ERROR_INVALID_CONFIRMATION_CODE)
 	// for details.
 	//   "ERROR_CERTIFICATE_ERROR" - See EuiccManager.ERROR_CERTIFICATE_ERROR
@@ -4676,9 +4875,10 @@ type KeyguardSecuredEvent struct {
 
 // KioskCustomization: Settings controlling the behavior of a device in kiosk
 // mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true or
-// specify an app in the policy with installType KIOSK.
+// specify an app in the policy with the KIOSK role.
 type KioskCustomization struct {
-	// DeviceSettings: Specifies whether the Settings app is allowed in kiosk mode.
+	// DeviceSettings: Optional. Specifies whether the Settings app is allowed in
+	// kiosk mode.
 	//
 	// Possible values:
 	//   "DEVICE_SETTINGS_UNSPECIFIED" - Unspecified, defaults to
@@ -4688,8 +4888,8 @@ type KioskCustomization struct {
 	//   "SETTINGS_ACCESS_BLOCKED" - Access to the Settings app is not allowed in
 	// kiosk mode.
 	DeviceSettings string `json:"deviceSettings,omitempty"`
-	// PowerButtonActions: Sets the behavior of a device in kiosk mode when a user
-	// presses and holds (long-presses) the Power button.
+	// PowerButtonActions: Optional. Sets the behavior of a device in kiosk mode
+	// when a user presses and holds (long-presses) the Power button.
 	//
 	// Possible values:
 	//   "POWER_BUTTON_ACTIONS_UNSPECIFIED" - Unspecified, defaults to
@@ -4700,8 +4900,8 @@ type KioskCustomization struct {
 	// shown when a user long-presses the Power button of a device in kiosk mode.
 	// Note: this may prevent users from turning off the device.
 	PowerButtonActions string `json:"powerButtonActions,omitempty"`
-	// StatusBar: Specifies whether system info and notifications are disabled in
-	// kiosk mode.
+	// StatusBar: Optional. Specifies whether system info and notifications are
+	// disabled in kiosk mode.
 	//
 	// Possible values:
 	//   "STATUS_BAR_UNSPECIFIED" - Unspecified, defaults to
@@ -4714,9 +4914,10 @@ type KioskCustomization struct {
 	// are disabled in kiosk mode.
 	//   "SYSTEM_INFO_ONLY" - Only system info is shown on the status bar.
 	StatusBar string `json:"statusBar,omitempty"`
-	// SystemErrorWarnings: Specifies whether system error dialogs for crashed or
-	// unresponsive apps are blocked in kiosk mode. When blocked, the system will
-	// force-stop the app as if the user chooses the "close app" option on the UI.
+	// SystemErrorWarnings: Optional. Specifies whether system error dialogs for
+	// crashed or unresponsive apps are blocked in kiosk mode. When blocked, the
+	// system will force-stop the app as if the user chooses the "close app" option
+	// on the UI.
 	//
 	// Possible values:
 	//   "SYSTEM_ERROR_WARNINGS_UNSPECIFIED" - Unspecified, defaults to
@@ -4727,8 +4928,8 @@ type KioskCustomization struct {
 	// app not responding (ANR) are blocked. When blocked, the system force-stops
 	// the app as if the user closes the app from the UI.
 	SystemErrorWarnings string `json:"systemErrorWarnings,omitempty"`
-	// SystemNavigation: Specifies which navigation features are enabled (e.g.
-	// Home, Overview buttons) in kiosk mode.
+	// SystemNavigation: Optional. Specifies which navigation features are enabled
+	// (e.g. Home, Overview buttons) in kiosk mode.
 	//
 	// Possible values:
 	//   "SYSTEM_NAVIGATION_UNSPECIFIED" - Unspecified, defaults to
@@ -5524,6 +5725,7 @@ type NonComplianceDetail struct {
 	// high enough.
 	//   "APP_NOT_UPDATED" - The app is installed, but it hasn't been updated to
 	// the minimum version code specified by policy.
+	//   "OS_NOT_PERMITTED" - This OS version is not permitted by the policy
 	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
 	// requirements.
 	//   "APP_SIGNING_CERT_MISMATCH" - The app's signing certificate does not match
@@ -5600,6 +5802,9 @@ type NonComplianceDetail struct {
 	//   "PRIVATE_DNS_HOST_NOT_SERVING" - The specified host for private DNS is a
 	// valid hostname but was found to not be a private DNS server.
 	// nonComplianceReason is set to INVALID_VALUE.
+	//   "USER_NOT_UNLOCKED" - The user's device is not unlocked (in direct boot
+	// mode), preventing the application of the policy. nonComplianceReason is set
+	// to PENDING.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5649,6 +5854,7 @@ type NonComplianceDetailCondition struct {
 	// high enough.
 	//   "APP_NOT_UPDATED" - The app is installed, but it hasn't been updated to
 	// the minimum version code specified by policy.
+	//   "OS_NOT_PERMITTED" - This OS version is not permitted by the policy
 	//   "DEVICE_INCOMPATIBLE" - The device is incompatible with the policy
 	// requirements.
 	//   "APP_SIGNING_CERT_MISMATCH" - The app's signing certificate does not match
@@ -5820,6 +6026,48 @@ func (s OsStartupEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Outcome: Determines how to proceed with the update.
+type Outcome struct {
+	// OutcomeType: Optional. Determines how to proceed with the update.
+	//
+	// Possible values:
+	//   "OUTCOME_TYPE_UNSPECIFIED" - Do not use this value.
+	//   "FORCE" - The action for which the policy is being evaluated (depending on
+	// the stages), such as downloading the update or rebooting the device, happens
+	// immediately. Positivity requirement: Any rule which uses this can't use any
+	// of the following: * METERED_NETWORK * NOT_IDLE * NOT_CHARGING *
+	// BATTERY_LEVEL_LOW
+	//   "USER_PROMPT" - Action should not be taken without the user's consent, but
+	// the user has a way of proceeding with the update and is prompted to do so.
+	// Supported only for OS_UPDATE_WITHOUT_API_LEVEL_CHANGE and
+	// OS_UPDATE_WITH_API_LEVEL_CHANGE. For SINGLE_APP, GOOGLE_SYSTEM_SERVICES, and
+	// GOOGLE_PLAY_SYSTEM_UPDATE, the default update behavior applies, as if no
+	// rule matched.
+	//   "BLOCK" - The update is not downloaded and not installed. For updates on
+	// Google Play, this only affects automatic updates, but does not prevent the
+	// user from manually updating. For OEM system updates, this prevents both
+	// manual and automatic updates. Positivity requirement: Any rule which uses
+	// this cannot use any of the following: * UNMETERED_NETWORK * IDLE * CHARGING
+	// * BATTERY_LEVEL_NOT_LOW
+	OutcomeType string `json:"outcomeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OutcomeType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OutcomeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Outcome) MarshalJSON() ([]byte, error) {
+	type NoMethod Outcome
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PackageNameList: A list of package names.
 type PackageNameList struct {
 	// PackageNames: A list of package names.
@@ -5875,40 +6123,42 @@ func (s PasswordPoliciesContext) MarshalJSON() ([]byte, error) {
 
 // PasswordRequirements: Requirements for the password used to unlock a device.
 type PasswordRequirements struct {
-	// MaximumFailedPasswordsForWipe: Number of incorrect device-unlock passwords
-	// that can be entered before a device is wiped. A value of 0 means there is no
-	// restriction.
+	// MaximumFailedPasswordsForWipe: Optional. Number of incorrect device-unlock
+	// passwords that can be entered before a device is wiped. A value of 0 means
+	// there is no restriction.
 	MaximumFailedPasswordsForWipe int64 `json:"maximumFailedPasswordsForWipe,omitempty"`
-	// PasswordExpirationTimeout: Password expiration timeout.
+	// PasswordExpirationTimeout: Optional. Password expiration timeout.
 	PasswordExpirationTimeout string `json:"passwordExpirationTimeout,omitempty"`
-	// PasswordHistoryLength: The length of the password history. After setting
-	// this field, the user won't be able to enter a new password that is the same
-	// as any password in the history. A value of 0 means there is no restriction.
+	// PasswordHistoryLength: Optional. The length of the password history. After
+	// setting this field, the user won't be able to enter a new password that is
+	// the same as any password in the history. A value of 0 means there is no
+	// restriction.
 	PasswordHistoryLength int64 `json:"passwordHistoryLength,omitempty"`
-	// PasswordMinimumLength: The minimum allowed password length. A value of 0
-	// means there is no restriction. Only enforced when password_quality is
-	// NUMERIC, NUMERIC_COMPLEX, ALPHABETIC, ALPHANUMERIC, or COMPLEX.
+	// PasswordMinimumLength: Optional. The minimum allowed password length. A
+	// value of 0 means there is no restriction. Only enforced when
+	// password_quality is NUMERIC, NUMERIC_COMPLEX, ALPHABETIC, ALPHANUMERIC, or
+	// COMPLEX.
 	PasswordMinimumLength int64 `json:"passwordMinimumLength,omitempty"`
-	// PasswordMinimumLetters: Minimum number of letters required in the password.
-	// Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumLetters: Optional. Minimum number of letters required in the
+	// password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumLetters int64 `json:"passwordMinimumLetters,omitempty"`
-	// PasswordMinimumLowerCase: Minimum number of lower case letters required in
-	// the password. Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumLowerCase: Optional. Minimum number of lower case letters
+	// required in the password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumLowerCase int64 `json:"passwordMinimumLowerCase,omitempty"`
-	// PasswordMinimumNonLetter: Minimum number of non-letter characters (numerical
-	// digits or symbols) required in the password. Only enforced when
+	// PasswordMinimumNonLetter: Optional. Minimum number of non-letter characters
+	// (numerical digits or symbols) required in the password. Only enforced when
 	// password_quality is COMPLEX.
 	PasswordMinimumNonLetter int64 `json:"passwordMinimumNonLetter,omitempty"`
-	// PasswordMinimumNumeric: Minimum number of numerical digits required in the
-	// password. Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumNumeric: Optional. Minimum number of numerical digits
+	// required in the password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumNumeric int64 `json:"passwordMinimumNumeric,omitempty"`
-	// PasswordMinimumSymbols: Minimum number of symbols required in the password.
-	// Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumSymbols: Optional. Minimum number of symbols required in the
+	// password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumSymbols int64 `json:"passwordMinimumSymbols,omitempty"`
-	// PasswordMinimumUpperCase: Minimum number of upper case letters required in
-	// the password. Only enforced when password_quality is COMPLEX.
+	// PasswordMinimumUpperCase: Optional. Minimum number of upper case letters
+	// required in the password. Only enforced when password_quality is COMPLEX.
 	PasswordMinimumUpperCase int64 `json:"passwordMinimumUpperCase,omitempty"`
-	// PasswordQuality: The required password quality.
+	// PasswordQuality: Optional. The required password quality.
 	//
 	// Possible values:
 	//   "PASSWORD_QUALITY_UNSPECIFIED" - There are no password requirements.
@@ -5966,7 +6216,7 @@ type PasswordRequirements struct {
 	// must meet.Enforcement varies among different Android versions, management
 	// modes and password scopes. See PasswordQuality for details.
 	PasswordQuality string `json:"passwordQuality,omitempty"`
-	// PasswordScope: The scope that the password requirement applies to.
+	// PasswordScope: Optional. The scope that the password requirement applies to.
 	//
 	// Possible values:
 	//   "SCOPE_UNSPECIFIED" - The scope is unspecified. The password requirements
@@ -5976,11 +6226,12 @@ type PasswordRequirements struct {
 	//   "SCOPE_PROFILE" - The password requirements are only applied to the work
 	// profile.
 	PasswordScope string `json:"passwordScope,omitempty"`
-	// RequirePasswordUnlock: The length of time after a device or work profile is
-	// unlocked using a strong form of authentication (password, PIN, pattern) that
-	// it can be unlocked using any other authentication method (e.g. fingerprint,
-	// trust agents, face). After the specified time period elapses, only strong
-	// forms of authentication can be used to unlock the device or work profile.
+	// RequirePasswordUnlock: Optional. The length of time after a device or work
+	// profile is unlocked using a strong form of authentication (password, PIN,
+	// pattern) that it can be unlocked using any other authentication method (e.g.
+	// fingerprint, trust agents, face). After the specified time period elapses,
+	// only strong forms of authentication can be used to unlock the device or work
+	// profile.
 	//
 	// Possible values:
 	//   "REQUIRE_PASSWORD_UNLOCK_UNSPECIFIED" - Unspecified. Defaults to
@@ -5989,9 +6240,9 @@ type PasswordRequirements struct {
 	// default.
 	//   "REQUIRE_EVERY_DAY" - The timeout period is set to 24 hours.
 	RequirePasswordUnlock string `json:"requirePasswordUnlock,omitempty"`
-	// UnifiedLockSettings: Controls whether a unified lock is allowed for the
-	// device and the work profile, on devices running Android 9 and above with a
-	// work profile. This can be set only if password_scope is set to
+	// UnifiedLockSettings: Optional. Controls whether a unified lock is allowed
+	// for the device and the work profile, on devices running Android 9 and above
+	// with a work profile. This can be set only if password_scope is set to
 	// SCOPE_PROFILE, the policy will be rejected otherwise. If user has not set a
 	// separate work lock and this field is set to REQUIRE_SEPARATE_WORK_LOCK, a
 	// NonComplianceDetail is reported with nonComplianceReason set to USER_ACTION.
@@ -6175,6 +6426,44 @@ func (s PersonalApplicationPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PersonalCrossDevicePolicies: Policies controlling cross-device communication
+// in the personal profile.
+type PersonalCrossDevicePolicies struct {
+	// TaskContinuityHandoff: Optional. Controls the task continuity handoff
+	// (https://developer.android.com/partners/android-17/features#handoff) feature
+	// for the personal profile on company-owned devices with a work profile. To
+	// disable Handoff device-wide on a company-owned device, both
+	// crossDevicePolicies.taskContinuityHandoff and this policy should be set to
+	// TASK_CONTINUITY_HANDOFF_DISALLOWED. Requires Android 17 QPR1 or higher.
+	//
+	// Possible values:
+	//   "TASK_CONTINUITY_HANDOFF_UNSPECIFIED" - Defaults to
+	// TASK_CONTINUITY_HANDOFF_ALLOWED.
+	//   "TASK_CONTINUITY_HANDOFF_ALLOWED" - Allows the user to enable or disable
+	// the task continuity handoff feature in settings. A NonComplianceDetail with
+	// API_LEVEL is reported if the Android version is lower than Android 17 QPR1.
+	//   "TASK_CONTINUITY_HANDOFF_DISALLOWED" - The task continuity handoff feature
+	// is disallowed. A NonComplianceDetail with API_LEVEL is reported if the
+	// Android version is lower than Android 17 QPR1.
+	TaskContinuityHandoff string `json:"taskContinuityHandoff,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TaskContinuityHandoff") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TaskContinuityHandoff") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PersonalCrossDevicePolicies) MarshalJSON() ([]byte, error) {
+	type NoMethod PersonalCrossDevicePolicies
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PersonalUsagePolicies: Policies controlling personal usage on a
 // company-owned device with a work profile.
 type PersonalUsagePolicies struct {
@@ -6197,6 +6486,9 @@ type PersonalUsagePolicies struct {
 	BluetoothSharing string `json:"bluetoothSharing,omitempty"`
 	// CameraDisabled: If true, the camera is disabled on the personal profile.
 	CameraDisabled bool `json:"cameraDisabled,omitempty"`
+	// CrossDevicePolicies: Optional. Policies controlling cross-device
+	// communication in the personal profile.
+	CrossDevicePolicies *PersonalCrossDevicePolicies `json:"crossDevicePolicies,omitempty"`
 	// MaxDaysWithWorkOff: Controls how long the work profile can stay off. The
 	// minimum duration must be at least 3 days. Other details are as follows: - If
 	// the duration is set to 0, the feature is turned off. - If the duration is
@@ -6271,8 +6563,8 @@ type Policy struct {
 	// AdjustVolumeDisabled: Whether adjusting the master volume is disabled. Also
 	// mutes the device. The setting has effect only on fully managed devices.
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
-	// AdvancedSecurityOverrides: Advanced security settings. In most cases,
-	// setting these is not needed.
+	// AdvancedSecurityOverrides: Optional. Advanced security settings. In most
+	// cases, setting these is not needed.
 	AdvancedSecurityOverrides *AdvancedSecurityOverrides `json:"advancedSecurityOverrides,omitempty"`
 	// AlwaysOnVpnPackage: Configuration for an always-on VPN connection. Use with
 	// vpn_config_disabled to prevent modification of this setting.
@@ -6356,6 +6648,19 @@ type Policy struct {
 	//   "AUTOFILL_DISABLED" - Autofill is disabled and the user is not allowed to
 	// change this setting. This is supported only on Android 8 and above.
 	AutofillPolicy string `json:"autofillPolicy,omitempty"`
+	// BackupService: Optional. Controls whether the backup service is disabled.
+	// Supported only on fully managed devices running Android 8 and above.
+	//
+	// Possible values:
+	//   "BACKUP_SERVICE_UNSPECIFIED" - Unspecified. Defaults to
+	// BACKUP_SERVICE_DISABLED.
+	//   "BACKUP_SERVICE_DISABLED" - Backup service is disabled. The user is not
+	// allowed to change this setting. A NonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 8 on a fully managed device.
+	//   "BACKUP_SERVICE_USER_CHOICE" - The user can enable or disable the backup
+	// service. A NonComplianceDetail with API_LEVEL is reported if the Android
+	// version is less than 8 on a fully managed device.
+	BackupService string `json:"backupService,omitempty"`
 	// BlockApplicationsEnabled: This field has no effect.
 	BlockApplicationsEnabled bool `json:"blockApplicationsEnabled,omitempty"`
 	// BluetoothConfigDisabled: Whether configuring bluetooth is disabled.
@@ -6431,10 +6736,16 @@ type Policy struct {
 	// credentialProviderPolicy unspecified are not allowed to act as a credential
 	// provider except for the OEM default credential providers. OEM default
 	// credential providers are always allowed to act as credential providers.
+	//   "CREDENTIAL_PROVIDER_DEFAULT_ALLOWED" - Apps with credentialProviderPolicy
+	// unspecified are allowed to act as a credential provider.
 	CredentialProviderPolicyDefault string `json:"credentialProviderPolicyDefault,omitempty"`
 	// CredentialsConfigDisabled: Whether configuring user credentials is disabled.
 	CredentialsConfigDisabled bool `json:"credentialsConfigDisabled,omitempty"`
-	// CrossProfilePolicies: Cross-profile policies applied on the device.
+	// CrossDevicePolicies: Optional. Policies controlling cross-device
+	// communication.
+	CrossDevicePolicies *CrossDevicePolicies `json:"crossDevicePolicies,omitempty"`
+	// CrossProfilePolicies: Optional. Cross-profile policies applied on the
+	// device.
 	CrossProfilePolicies *CrossProfilePolicies `json:"crossProfilePolicies,omitempty"`
 	// DataRoamingDisabled: Whether roaming data services are disabled.
 	DataRoamingDisabled bool `json:"dataRoamingDisabled,omitempty"`
@@ -6480,15 +6791,19 @@ type Policy struct {
 	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
-	// DeviceConnectivityManagement: Covers controls for device connectivity such
-	// as Wi-Fi, USB data access, keyboard/mouse connections, and more.
+	// DeviceConnectivityManagement: Optional. Covers controls for device
+	// connectivity such as Wi-Fi, USB data access, keyboard/mouse connections, and
+	// more.
 	DeviceConnectivityManagement *DeviceConnectivityManagement `json:"deviceConnectivityManagement,omitempty"`
-	// DeviceOwnerLockScreenInfo: The device owner information to be shown on the
-	// lock screen.
+	// DeviceOwnerLockScreenInfo: Optional. The device owner information to be
+	// shown on the lock screen.
 	DeviceOwnerLockScreenInfo *UserFacingMessage `json:"deviceOwnerLockScreenInfo,omitempty"`
-	// DeviceRadioState: Covers controls for radio state such as Wi-Fi, bluetooth,
-	// and more.
+	// DeviceRadioState: Optional. Covers controls for radio state such as Wi-Fi,
+	// bluetooth, and more.
 	DeviceRadioState *DeviceRadioState `json:"deviceRadioState,omitempty"`
+	// DeviceWidePolicies: Optional. Policies controlling the device on
+	// company-owned devices.
+	DeviceWidePolicies *DeviceWidePolicies `json:"deviceWidePolicies,omitempty"`
 	// DisplaySettings: Optional. Controls for the display settings.
 	DisplaySettings *DisplaySettings `json:"displaySettings,omitempty"`
 	// EncryptionPolicy: Whether encryption is enabled
@@ -6568,9 +6883,9 @@ type Policy struct {
 	// page in alphabetical order. Use kioskCustomization to further configure the
 	// kiosk device behavior.
 	KioskCustomLauncherEnabled bool `json:"kioskCustomLauncherEnabled,omitempty"`
-	// KioskCustomization: Settings controlling the behavior of a device in kiosk
-	// mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true or
-	// specify an app in the policy with installType KIOSK.
+	// KioskCustomization: Optional. Settings controlling the behavior of a device
+	// in kiosk mode. To enable kiosk mode, set kioskCustomLauncherEnabled to true
+	// or specify an app in the policy with the KIOSK role.
 	KioskCustomization *KioskCustomization `json:"kioskCustomization,omitempty"`
 	// LocationMode: The degree of location detection enabled.
 	//
@@ -6629,7 +6944,9 @@ type Policy struct {
 	// toggle. On devices which run Android 11 or below, this is equivalent to
 	// MICROPHONE_ACCESS_USER_CHOICE.
 	MicrophoneAccess string `json:"microphoneAccess,omitempty"`
-	// MinimumApiLevel: The minimum allowed Android API level.
+	// MinimumApiLevel: The minimum allowed Android API level. A
+	// NonComplianceDetail with OS_NOT_PERMITTED is reported if the Android API
+	// level of the device is lower than this value.
 	MinimumApiLevel int64 `json:"minimumApiLevel,omitempty"`
 	// MobileNetworksConfigDisabled: Whether configuring mobile networks is
 	// disabled.
@@ -6668,9 +6985,9 @@ type Policy struct {
 	OutgoingBeamDisabled bool `json:"outgoingBeamDisabled,omitempty"`
 	// OutgoingCallsDisabled: Whether outgoing calls are disabled.
 	OutgoingCallsDisabled bool `json:"outgoingCallsDisabled,omitempty"`
-	// PasswordPolicies: Password requirement policies. Different policies can be
-	// set for work profile or fully managed devices by setting the password_scope
-	// field in the policy.
+	// PasswordPolicies: Optional. Password requirement policies. Different
+	// policies can be set for work profile or fully managed devices by setting the
+	// password_scope field in the policy.
 	PasswordPolicies []*PasswordRequirements `json:"passwordPolicies,omitempty"`
 	// PasswordRequirements: Password requirements. The field
 	// password_requirements.require_password_unlock must not be set. DEPRECATED -
@@ -6809,12 +7126,23 @@ type Policy struct {
 	// called Mainline updates) are automatically downloaded and require a device
 	// reboot to be installed. Refer to the mainline section in Manage system
 	// updates (https://developer.android.com/work/dpc/system-updates#mainline) for
-	// further details.
+	// further details.If this policy is set, it takes precedence over
+	// unifiedUpdatePolicy for OEM OS updates. For more information, see
+	// unifiedUpdatePolicy.
 	SystemUpdate *SystemUpdate `json:"systemUpdate,omitempty"`
 	// TetheringConfigDisabled: Whether configuring tethering and portable hotspots
 	// is disabled. If tetheringSettings is set to anything other than
 	// TETHERING_SETTINGS_UNSPECIFIED, this setting is ignored.
 	TetheringConfigDisabled bool `json:"tetheringConfigDisabled,omitempty"`
+	// UnifiedUpdatePolicy: Optional. The Unified Update Control policy, for
+	// controlling updates of software components on the device. Supported only on
+	// company-owned devices.The targets OS_UPDATE_WITH_API_LEVEL_CHANGE and
+	// OS_UPDATE_WITHOUT_API_LEVEL_CHANGE are supported only on devices where the
+	// OEM has integrated with Unified Update Controls, and are ignored otherwise.
+	// If systemUpdate is set, then that policy takes precedence and the targets
+	// OS_UPDATE_WITH_API_LEVEL_CHANGE and OS_UPDATE_WITHOUT_API_LEVEL_CHANGE are
+	// ignored here.
+	UnifiedUpdatePolicy *UnifiedUpdatePolicy `json:"unifiedUpdatePolicy,omitempty"`
 	// UninstallAppsDisabled: Whether user uninstallation of applications is
 	// disabled. This prevents apps from being uninstalled, even those removed
 	// using applications
@@ -6825,7 +7153,7 @@ type Policy struct {
 	// disabled, otherwise they are available. This is available only on fully
 	// managed devices.
 	UnmuteMicrophoneDisabled bool `json:"unmuteMicrophoneDisabled,omitempty"`
-	// UsageLog: Configuration of device activity logging.
+	// UsageLog: Optional. Configuration of device activity logging.
 	UsageLog *UsageLog `json:"usageLog,omitempty"`
 	// UsbFileTransferDisabled: Whether transferring files over USB is disabled.
 	// This is supported only on company-owned devices.
@@ -7021,6 +7349,76 @@ func (s *PowerManagementEvent) UnmarshalJSON(data []byte) error {
 	}
 	s.BatteryLevel = float64(s1.BatteryLevel)
 	return nil
+}
+
+// Predicate: A predicate is something that can be evaluated on a device at any
+// point of time, to return true or false. This is the conjunction (logical
+// AND) of all the individual conditions defined here. An empty Predicate
+// always evaluates to true.
+type Predicate struct {
+	// DateLowerBound: Optional. A lower bound on the current date, in the device
+	// time zone. If not set, always evaluates to true.
+	DateLowerBound *Date `json:"dateLowerBound,omitempty"`
+	// DateUpperBound: Optional. An upper bound on the current date, in the device
+	// time zone. If not set, always evaluates to true.
+	DateUpperBound *Date `json:"dateUpperBound,omitempty"`
+	// DaysOfWeek: Optional. Evaluates to true if this list is empty or if the
+	// current day of the week in the device's local time is in this list.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
+	// TimeOfDayLowerBound: Optional. A lower bound on the current time of the day,
+	// evaluated as hh:00:00 in the device time zone. Must specify only the hour
+	// (0-23). The policy will be rejected if minutes, seconds, or nanos are set.
+	// If not set, always evaluates to true.
+	TimeOfDayLowerBound *TimeOfDay `json:"timeOfDayLowerBound,omitempty"`
+	// TimeOfDayUpperBound: Optional. An upper bound on the current time of the
+	// day, evaluated as hh:00:00 in the device time zone. Must specify only the
+	// hour (0-23). The policy will be rejected if minutes, seconds, or nanos are
+	// set. If not set, always evaluates to true.The window closes at the specified
+	// hour (for example, a lower bound of 14 and an upper bound of 15 covers 14:00
+	// to 15:00). When both bounds are set in the same rule, timeOfDayUpperBound
+	// must be strictly greater than timeOfDayLowerBound for the window to match;
+	// if timeOfDayUpperBound is less than or equal to timeOfDayLowerBound, the
+	// predicate evaluates to false. Setting timeOfDayUpperBound to 0 (00:00)
+	// evaluates to false for the entire day. To extend a window to the end of the
+	// day (24:00), omit timeOfDayUpperBound. To define an overnight window
+	// spanning midnight, use two rules: an evening rule with only
+	// timeOfDayLowerBound set and a morning rule with only timeOfDayUpperBound set
+	// (targeting the following day if daysOfWeek is set).
+	TimeOfDayUpperBound *TimeOfDay `json:"timeOfDayUpperBound,omitempty"`
+	// UpdateAgeLowerBound: Optional. A lower bound on the amount of time for which
+	// the update (that is, the specific build or version) has been available to
+	// the device. This must be a multiple of 24 hours.
+	UpdateAgeLowerBound string `json:"updateAgeLowerBound,omitempty"`
+	// UpdateAgeUpperBound: Optional. An upper bound on the amount of time for
+	// which the update has been available. If not set or set to zero, always
+	// evaluates to true. This must be a multiple of 24 hours.
+	UpdateAgeUpperBound string `json:"updateAgeUpperBound,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DateLowerBound") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DateLowerBound") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Predicate) MarshalJSON() ([]byte, error) {
+	type NoMethod Predicate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // PreferentialNetworkServiceConfig: Individual preferential network service
@@ -7471,6 +7869,9 @@ func (s RequestDeviceInfoStatus) MarshalJSON() ([]byte, error) {
 
 // Role: Role an app can have.
 type Role struct {
+	// ExtraCapabilities: Optional. Extra capabilities configured specifically for
+	// this role. Not all role types support or utilize extra capabilities.
+	ExtraCapabilities *ExtraCapabilities `json:"extraCapabilities,omitempty"`
 	// RoleType: Required. The type of the role an app can have.
 	//
 	// Possible values:
@@ -7510,21 +7911,76 @@ type Role struct {
 	// Android 11 and above, the user control is disallowed and userControlSettings
 	// cannot be set to USER_CONTROL_ALLOWED for the app with this role.
 	RoleType string `json:"roleType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "RoleType") to
+	// ForceSendFields is a list of field names (e.g. "ExtraCapabilities") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RoleType") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ExtraCapabilities") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s Role) MarshalJSON() ([]byte, error) {
 	type NoMethod Role
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Rule: A rule as a part of the Unified Update Control policy. See rules for
+// how this is used.
+type Rule struct {
+	// Id: Required. An EMM-defined identifier for this rule, of length at most 64
+	// characters. This must not be empty. Within a UnifiedUpdatePolicy, different
+	// rules must have different ids.
+	Id string `json:"id,omitempty"`
+	// Outcome: Optional. Determines how to proceed with the update.
+	Outcome *Outcome `json:"outcome,omitempty"`
+	// Predicate: Optional. The predicate of the rule, which can evaluate to true
+	// or false. See rules for how this is used. If not set, the predicate always
+	// evaluates to true.
+	Predicate *Predicate `json:"predicate,omitempty"`
+	// Stages: Optional. The stages at which the rule is evaluated. If this list is
+	// empty, the rule is evaluated at all stages. Specifying stages is supported
+	// only for OS_UPDATE_WITHOUT_API_LEVEL_CHANGE and
+	// OS_UPDATE_WITH_API_LEVEL_CHANGE. For SINGLE_APP, GOOGLE_SYSTEM_SERVICES, and
+	// GOOGLE_PLAY_SYSTEM_UPDATE, this field is ignored and the rule is evaluated
+	// at all stages.
+	//
+	// Possible values:
+	//   "STAGE_UNSPECIFIED" - This must not be used.
+	//   "STAGE_DOWNLOAD" - The policy is evaluated for the download of the update.
+	//   "STAGE_APPLY" - The policy is evaluated before taking an action which
+	// causes the update to be applied. This is best-effort, and the update may be
+	// applied regardless. For example, some updates such as apps and services
+	// installed by Google Play get automatically applied immediately after
+	// download. Some updates which need a reboot to apply may get applied as a
+	// result of a user-initiated reboot, regardless of policy. If an update needs
+	// a reboot to apply, policy is evaluated before the system triggers an
+	// automatic reboot for the purpose of applying the update.
+	Stages []string `json:"stages,omitempty"`
+	// Targets: Required. Targets that this rule applies to. This can have multiple
+	// targets here for convenience, and that is equivalent to having multiple
+	// rules in sequence each having one target, in the same order in which targets
+	// are listed here. This list must not be empty and must not have duplicates.
+	Targets []*Target `json:"targets,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Rule) MarshalJSON() ([]byte, error) {
+	type NoMethod Rule
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7857,6 +8313,29 @@ type SignupUrl struct {
 
 func (s SignupUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod SignupUrl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SingleApp: Details of an app on Google System services.
+type SingleApp struct {
+	// PackageName: Required. The package name of the app. This can only be an app
+	// which is a part of GOOGLE_SYSTEM_SERVICES.
+	PackageName string `json:"packageName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PackageName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PackageName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SingleApp) MarshalJSON() ([]byte, error) {
+	type NoMethod SingleApp
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8256,6 +8735,45 @@ func (s SystemUpdateInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Target: A software component that can be updated.
+type Target struct {
+	// SingleApp: Details of an app on Google System services.
+	SingleApp *SingleApp `json:"singleApp,omitempty"`
+	// TargetType: Required. The type of software component that can be updated.
+	//
+	// Possible values:
+	//   "TARGET_TYPE_UNSPECIFIED" - This must not be used.
+	//   "SINGLE_APP" - An app on Google System services. singleApp must be set.
+	// This can be used only to control an app which is a part of
+	// GOOGLE_SYSTEM_SERVICES.
+	//   "GOOGLE_SYSTEM_SERVICES" - Google system services
+	// (https://support.google.com/product-documentation/answer/14343500) updated
+	// from Google Play, such as WebView.
+	//   "GOOGLE_PLAY_SYSTEM_UPDATE" - Google Play System Updates. See
+	// https://source.android.com/docs/core/ota/modular-system .
+	//   "OS_UPDATE_WITHOUT_API_LEVEL_CHANGE" - An OS update issued by the OEM
+	// which does not change the API level of the device.
+	//   "OS_UPDATE_WITH_API_LEVEL_CHANGE" - An OS update issued by the OEM which
+	// changes the API level of the device.
+	TargetType string `json:"targetType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SingleApp") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SingleApp") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Target) MarshalJSON() ([]byte, error) {
+	type NoMethod Target
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TelephonyInfo: Telephony information associated with a given SIM card on the
 // device. This is supported for all SIM cards on fully managed devices on
 // Android 6 and above. In addition, this is supported for admin-added eSIMs on
@@ -8331,12 +8849,79 @@ func (s TermsAndConditions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TimeOfDay: Represents a time of day. The date and time zone are either not
+// significant or are specified elsewhere. An API may choose to allow leap
+// seconds. Related types are google.type.Date and google.protobuf.Timestamp.
+type TimeOfDay struct {
+	// Hours: Hours of a day in 24 hour format. Must be greater than or equal to 0
+	// and typically must be less than or equal to 23. An API may choose to allow
+	// the value "24:00:00" for scenarios like business closing time.
+	Hours int64 `json:"hours,omitempty"`
+	// Minutes: Minutes of an hour. Must be greater than or equal to 0 and less
+	// than or equal to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+	// Nanos: Fractions of seconds, in nanoseconds. Must be greater than or equal
+	// to 0 and less than or equal to 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Seconds: Seconds of a minute. Must be greater than or equal to 0 and
+	// typically must be less than or equal to 59. An API may allow the value 60 if
+	// it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Hours") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UnifiedUpdatePolicy: The Unified Update Control policy, for controlling
+// updates of software components on the device (see Target). Supported only on
+// company-owned devices.
+type UnifiedUpdatePolicy struct {
+	// Rules: Optional. When the policy is evaluated for a given target, all rules
+	// which refer to that target are evaluated in sequence. The first rule for
+	// which the predicate evaluates to true is considered, and its outcome is
+	// used. If no rule matches, the default update behavior applies. In other
+	// words, this behaves like a chained if-else statement.However, if an update
+	// has been available for more than a certain amount of time, any outcome of
+	// BLOCK is automatically changed to the default update behavior. At most 100
+	// rules are allowed.
+	Rules []*Rule `json:"rules,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Rules") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Rules") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UnifiedUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod UnifiedUpdatePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // UsageLog: Controls types of device activity logs collected from the device
 // and reported via Pub/Sub notification
 // (https://developers.google.com/android/management/notifications).
 type UsageLog struct {
-	// EnabledLogTypes: Specifies which log types are enabled. Note that users will
-	// receive on-device messaging when usage logging is enabled.
+	// EnabledLogTypes: Optional. Specifies which log types are enabled. Note that
+	// users will receive on-device messaging when usage logging is enabled.
 	//
 	// Possible values:
 	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
@@ -8355,9 +8940,9 @@ type UsageLog struct {
 	// work profile are logged. Can be overridden by the application delegated
 	// scope NETWORK_ACTIVITY_LOGS
 	EnabledLogTypes []string `json:"enabledLogTypes,omitempty"`
-	// UploadOnCellularAllowed: Specifies which of the enabled log types can be
-	// uploaded over mobile data. By default logs are queued for upload when the
-	// device connects to WiFi.
+	// UploadOnCellularAllowed: Optional. Specifies which of the enabled log types
+	// can be uploaded over mobile data. By default logs are queued for upload when
+	// the device connects to WiFi.
 	//
 	// Possible values:
 	//   "LOG_TYPE_UNSPECIFIED" - This value is not used.
@@ -8851,9 +9436,10 @@ func (s WifiSsid) MarshalJSON() ([]byte, error) {
 
 // WifiSsidPolicy: Restrictions on which Wi-Fi SSIDs the device can connect to.
 // Note that this does not affect which networks can be configured on the
-// device. Supported on company-owned devices running Android 13 and above.
+// device. Supported on Android 13 (API level 33) and higher on fully managed
+// devices and work profiles on company-owned devices.
 type WifiSsidPolicy struct {
-	// WifiSsidPolicyType: Type of the Wi-Fi SSID policy to be applied.
+	// WifiSsidPolicyType: Optional. Type of the Wi-Fi SSID policy to be applied.
 	//
 	// Possible values:
 	//   "WIFI_SSID_POLICY_TYPE_UNSPECIFIED" - Defaults to WIFI_SSID_DENYLIST.
@@ -8866,11 +9452,8 @@ type WifiSsidPolicy struct {
 	// to connect to any other Wi-Fi network.
 	WifiSsidPolicyType string `json:"wifiSsidPolicyType,omitempty"`
 	// WifiSsids: Optional. List of Wi-Fi SSIDs that should be applied in the
-	// policy. This field must be non-empty when WifiSsidPolicyType is set to
-	// WIFI_SSID_ALLOWLIST. If this is set to a non-empty list, then a
-	// NonComplianceDetail detail with API_LEVEL is reported if the Android version
-	// is less than 13 and a NonComplianceDetail with MANAGEMENT_MODE is reported
-	// for non-company-owned devices.
+	// policy. This field must be non-empty when wifiSsidPolicyType is set to
+	// WIFI_SSID_ALLOWLIST.
 	WifiSsids []*WifiSsid `json:"wifiSsids,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "WifiSsidPolicyType") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -8894,7 +9477,8 @@ func (s WifiSsidPolicy) MarshalJSON() ([]byte, error) {
 // profile. Note: blockAction must also be specified.
 type WipeAction struct {
 	// PreserveFrp: Whether the factory-reset protection data is preserved on the
-	// device. This setting doesn’t apply to work profiles.
+	// device. This setting applies to fully managed devices and work profiles on
+	// company-owned devices.
 	PreserveFrp bool `json:"preserveFrp,omitempty"`
 	// WipeAfterDays: Number of days the policy is non-compliant before the device
 	// or work profile is wiped. wipeAfterDays must be greater than blockAfterDays.
@@ -8981,7 +9565,7 @@ type WorkAccountSetupConfig struct {
 	// GOOGLE_AUTHENTICATED. This must be an enterprise account and not a consumer
 	// account. Once set and a Google authenticated account is added to the device,
 	// changing this field will have no effect, and thus recommended to be set only
-	// once.
+	// once. The email address must be all lowercase.
 	RequiredAccountEmail string `json:"requiredAccountEmail,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AuthenticationType") to
 	// unconditionally include in API requests. By default, fields with empty or

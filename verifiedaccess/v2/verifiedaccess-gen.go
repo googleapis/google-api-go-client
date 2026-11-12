@@ -312,6 +312,8 @@ type DeviceSignals struct {
 	//   "WINDOWS" - Windows.
 	//   "MAC_OS_X" - Mac Os X.
 	//   "LINUX" - Linux
+	//   "IOS" - iOS.
+	//   "ANDROID" - Android.
 	OperatingSystem string `json:"operatingSystem,omitempty"`
 	// OsFirewall: Output only. The state of the OS level firewall. On ChromeOS,
 	// the value will always be ENABLED on regular devices and UNKNOWN on devices

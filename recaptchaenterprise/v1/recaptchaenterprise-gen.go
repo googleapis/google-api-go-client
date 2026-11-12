@@ -675,8 +675,8 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// format `projects/{project}/assessments/{assessment}`.
 	Name string `json:"name,omitempty"`
 	// PhoneFraudAssessment: Output only. Assessment returned when a site key, a
-	// token, and a phone number as `user_id` are provided. SMS defense needs to be
-	// enabled.
+	// token, `user_info.account_id`, and a phone number in `user_info.user_ids`
+	// are provided. SMS defense must be enabled.
 	PhoneFraudAssessment *GoogleCloudRecaptchaenterpriseV1PhoneFraudAssessment `json:"phoneFraudAssessment,omitempty"`
 	// PolicyEvaluation: Output only. Provides information about the policy
 	// evaluation for this assessment.
@@ -756,8 +756,14 @@ type GoogleCloudRecaptchaenterpriseV1Bot struct {
 	BotType string `json:"botType,omitempty"`
 	// Name: Optional. Enumerated string value that indicates the identity of the
 	// bot, formatted in kebab-case. Current example values include the following:
-	// * google-agent * browser-base * chat-gpt * aws-bedrock * cybaa-bot *
-	// cloudflare * payhawk Ensure that your applications can handle identifier
+	// * google-agent - AI_AGENT * browser-base - AI_AGENT * chat-gpt - AI_AGENT *
+	// aws-bedrock - AI_AGENT * cybaa-bot - AI_AGENT * cloudflare - AI_AGENT *
+	// payhawk - AI_AGENT * duck-duck-go - AI_AGENT * mediaboard - CONTENT_SCRAPER
+	// * marker-io - AI_AGENT * anchor-browser - AI_AGENT * shopify - AI_AGENT *
+	// stackscope - CONTENT_SCRAPER * manus - AI_AGENT * kernel-sh - AI_AGENT *
+	// zvelo - SEARCH_INDEXER * meta-muse - AI_AGENT * duck-duck-bot -
+	// SEARCH_INDEXER * my-porta - SEARCH_INDEXER * ison-search - SEARCH_INDEXER *
+	// rokt - SEARCH_INDEXER Ensure that your applications can handle identifier
 	// values not explicitly listed here. Deprecated values might take some time to
 	// stop showing up in responses. New values can be pushed so this list should
 	// be taken as non exhaustive.
@@ -820,8 +826,9 @@ type GoogleCloudRecaptchaenterpriseV1ChallengeRule struct {
 	// Challenge: Present a challenge to the user.
 	Challenge *GoogleCloudRecaptchaenterpriseV1ChallengeRuleChallengeOutcome `json:"challenge,omitempty"`
 	// Condition: Optional. A CEL condition that must be met for this rule to
-	// apply. The following fields can be referenced in the condition: * `score` *
-	// `user_ip_address` * `user_asn` * `user_agent` * `verified_bots.name` *
+	// apply. If unspecified, the rule applies unconditionally. The following
+	// fields can be referenced in the condition: * `score` * `user_ip_address` *
+	// `user_asn` * `user_agent` * `region_code` * `verified_bots.name` *
 	// `verified_bots.bot_type` Examples: * `score < 0.5` * `user_ip_address ==
 	// "123.45.67.89" * `user_agent.contains("Chrome")` * `score < 0.5 &&
 	// user_ip_address == "123.45.67.89"
@@ -2069,19 +2076,22 @@ func (s GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification) Marshal
 // endpoint to protect with reCAPTCHA.
 type GoogleCloudRecaptchaenterpriseV1ProtectedEndpoint struct {
 	// Action: Required. Action name to be used for token generation for this
-	// endpoint. The action name is not case-sensitive and can only contain
-	// alphanumeric characters, slashes, and underscores.
+	// endpoint. The action name can only contain alphanumeric characters, slashes,
+	// and underscores.
 	Action string `json:"action,omitempty"`
-	// Path: Required. URI path of the API endpoint to protect. Must start with
-	// '/'. Supports glob characters '*' to match a single path segment and '**' to
-	// match multiple path segments. Standalone root catch-alls ('/*' and '/**')
-	// are invalid because it would hurt performance to trigger reCAPTCHA on every
-	// single request to your backend. Matching is evaluated against the URL path
-	// only (domain, scheme, and query parameters are ignored). Examples: -
-	// `/login` matches `/login`, `https://example.com/login`, and
-	// `/login?query=1`, but not `/login/step1`. - `/products/*` matches
-	// `/products/123`, but not `/products/123/456`. - `/content/**` matches
-	// `/content/articles/2024/01/01`.
+	// Path: Required. The URI path of the API endpoint to protect. The path is
+	// case-sensitive and must meet the following criteria: * Be unique, start with
+	// `/`, and contain 1 to 200 characters without consecutive slashes (`//`). *
+	// Include at least one non-wildcard segment. For example, cannot be `/`, `/*`,
+	// `/**`, or `/*/`. * Wildcards must occupy complete segments: `*` matches a
+	// single segment. For example, `/api/*/login` or `/api/*` are valid;
+	// `/api/login*` is invalid, and `**` matches multiple segments as the final
+	// segment only. For example, `/api/**` is valid; `/api/**/login` is invalid.
+	// Matching is evaluated against the URL path only. Domain, scheme, and query
+	// parameters are ignored. Examples: * `/login` matches `/login`,
+	// `https://example.com/login`, and `/login?query=1`, but not `/login/step1`. *
+	// `/products/*` matches `/products/123`, but not `/products/123/456`. *
+	// `/content/**` matches `/content/articles/2024/01/01`.
 	Path string `json:"path,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2306,6 +2316,9 @@ type GoogleCloudRecaptchaenterpriseV1RiskAnalysis struct {
 	//   "CHALLENGE_TYPE_UNSPECIFIED" - Default unspecified type.
 	//   "CHALLENGE_TYPE_VISUAL" - A visual challenge.
 	//   "CHALLENGE_TYPE_AUDIO" - An audio challenge.
+	//   "CHALLENGE_TYPE_QR_CODE" - A challenge requiring mobile device
+	// verification, completed by scanning a QR code on desktop or clicking a
+	// verification button directly on a mobile device.
 	LastChallengeType string `json:"lastChallengeType,omitempty"`
 	// Reasons: Output only. Reasons contributing to the risk analysis verdict.
 	//
@@ -2536,9 +2549,9 @@ func (s *GoogleCloudRecaptchaenterpriseV1SmsTollFraudVerdict) UnmarshalJSON(data
 // GoogleCloudRecaptchaenterpriseV1TestingOptions: Options for user acceptance
 // testing.
 type GoogleCloudRecaptchaenterpriseV1TestingOptions struct {
-	// TestingChallenge: Optional. For challenge-based keys only (CHECKBOX,
-	// INVISIBLE), all challenge requests for this site return nocaptcha if
-	// NOCAPTCHA, or an unsolvable challenge if CHALLENGE.
+	// TestingChallenge: Optional. For challenge-based keys only (`CHECKBOX`,
+	// `INVISIBLE`), all challenge requests for this site do not show a challenge
+	// if `NOCAPTCHA`, or show an unsolvable challenge if `UNSOLVABLE_CHALLENGE`.
 	//
 	// Possible values:
 	//   "TESTING_CHALLENGE_UNSPECIFIED" - Perform the normal risk analysis and
@@ -2591,6 +2604,13 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// AndroidPackageName: Output only. The name of the Android package with which
 	// the token was generated (Android keys only).
 	AndroidPackageName string `json:"androidPackageName,omitempty"`
+	// ClientProperties: Output only. Information collected by the reCAPTCHA
+	// Enterprise client-side integration when the token is generated.
+	ClientProperties *GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties `json:"clientProperties,omitempty"`
+	// ClientSignalsFailed: Output only. Indicates a failure collecting reCAPTCHA
+	// signals at token generation. This might be a transient condition, or
+	// persistent for a user's environment.
+	ClientSignalsFailed bool `json:"clientSignalsFailed,omitempty"`
 	// CreateTime: Output only. The timestamp corresponding to the generation of
 	// the token.
 	CreateTime string `json:"createTime,omitempty"`
@@ -2611,10 +2631,10 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 	// the browser. Could easily be simulated by an attacker.
 	//   "UNEXPECTED_ACTION" - The action provided at token generation was
 	// different than the `expected_action` in the assessment request. The
-	// comparison is case-insensitive. This reason can only be returned if all of
-	// the following are true: - your `site_key` has the POLICY_BASED_CHALLENGE
-	// integration type - you set an action score threshold higher than 0.0 - you
-	// provided a non-empty `expected_action`
+	// comparison is case-insensitive. This reason can only be returned if an
+	// `expected_action` is provided and either: - your `site_key` is a Universal
+	// key, or - your `site_key` has the `POLICY_BASED_CHALLENGE` integration type
+	// with an action score threshold higher than 0.0
 	//   "KEY_MISMATCH" - The key used to generate the token does not match the
 	// `site_key`.
 	//   "DOMAIN_MISMATCH" - The domain of the page on which the token was
@@ -2642,6 +2662,37 @@ type GoogleCloudRecaptchaenterpriseV1TokenProperties struct {
 
 func (s GoogleCloudRecaptchaenterpriseV1TokenProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRecaptchaenterpriseV1TokenProperties
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties: Information
+// collected by the reCAPTCHA Enterprise client-side integration when the token
+// is generated.
+type GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties struct {
+	// UserAgent: Output only. The `User-Agent` header string observed by reCAPTCHA
+	// during token generation. This string is truncated to a maximum length of
+	// 1000 characters.
+	UserAgent string `json:"userAgent,omitempty"`
+	// UserIpAddress: Output only. The user's IP address at token generation. This
+	// can be either an IPv4 address (e.g., `192.0.2.1`) or an IPv6 address in
+	// canonical format per RFC 5952 section 4 (e.g., `2001:db8::1`). IPv4-mapped
+	// IPv6 addresses are canonicalized to standard IPv4.
+	UserIpAddress string `json:"userIpAddress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UserAgent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UserAgent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1TokenPropertiesClientProperties
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2841,8 +2892,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1TransactionDataItem) UnmarshalJSON(data
 // account involved in the transaction.
 type GoogleCloudRecaptchaenterpriseV1TransactionDataUser struct {
 	// AccountId: Optional. Unique account identifier for this user. If using
-	// Account defense, this should match the hashed_account_id field. Otherwise, a
-	// unique and persistent identifier for this account.
+	// Account defense, this should match the `user_info.account_id` field.
+	// Otherwise, a unique and persistent identifier for this account.
 	AccountId string `json:"accountId,omitempty"`
 	// CreationMs: Optional. The epoch milliseconds of the user's account creation.
 	CreationMs int64 `json:"creationMs,omitempty,string"`
@@ -3115,8 +3166,8 @@ type GoogleCloudRecaptchaenterpriseV1WebKeySettings struct {
 	AllowedDomains []string `json:"allowedDomains,omitempty"`
 	// ChallengeSecurityPreference: Optional. Settings for the frequency and
 	// difficulty at which this key triggers captcha challenges. This should only
-	// be specified for `IntegrationType` CHECKBOX, INVISIBLE or
-	// POLICY_BASED_CHALLENGE.
+	// be specified for `IntegrationType` CHECKBOX (defaults to BALANCE), INVISIBLE
+	// (defaults to USABILITY), or POLICY_BASED_CHALLENGE (defaults to USABILITY).
 	//
 	// Possible values:
 	//   "CHALLENGE_SECURITY_PREFERENCE_UNSPECIFIED" - Default type that indicates

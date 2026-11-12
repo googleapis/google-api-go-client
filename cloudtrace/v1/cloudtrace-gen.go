@@ -230,12 +230,13 @@ func (s ListTracesResponse) MarshalJSON() ([]byte, error) {
 // operation. It consists of a set of spans, each of which represent a single
 // timed event within the operation.
 type Trace struct {
-	// ProjectId: Project ID of the Cloud project where the trace data is stored.
+	// ProjectId: Required. Project ID of the Cloud project where the trace data is
+	// stored.
 	ProjectId string `json:"projectId,omitempty"`
 	// Spans: Collection of spans in the trace.
 	Spans []*TraceSpan `json:"spans,omitempty"`
-	// TraceId: Globally unique identifier for the trace. This identifier is a
-	// 128-bit numeric value formatted as a 32-byte hex string. For example,
+	// TraceId: Required. Globally unique identifier for the trace. This identifier
+	// is a 128-bit numeric value formatted as a 32-byte hex string. For example,
 	// `382d4f4c6b7bb2f4a972559d9085001d`. The numeric value should not be zero.
 	TraceId string `json:"traceId,omitempty"`
 
@@ -265,13 +266,13 @@ func (s Trace) MarshalJSON() ([]byte, error) {
 // more subspans for its suboperations. Spans do not need to be contiguous.
 // There may be gaps between spans in a trace.
 type TraceSpan struct {
-	// EndTime: End time of the span in seconds and nanoseconds from the UNIX
-	// epoch.
+	// EndTime: Required. End time of the span in seconds and nanoseconds from the
+	// UNIX epoch.
 	EndTime string `json:"endTime,omitempty"`
-	// Kind: Distinguishes between spans generated in a particular context. For
-	// example, two spans with the same name may be distinguished using
-	// `RPC_CLIENT` and `RPC_SERVER` to identify queueing latency associated with
-	// the span.
+	// Kind: Optional. Distinguishes between spans generated in a particular
+	// context. For example, two spans with the same name may be distinguished
+	// using `RPC_CLIENT` and `RPC_SERVER` to identify queueing latency associated
+	// with the span.
 	//
 	// Possible values:
 	//   "SPAN_KIND_UNSPECIFIED" - Unspecified.
@@ -280,25 +281,25 @@ type TraceSpan struct {
 	//   "RPC_CLIENT" - Indicates that the span covers the client-side wrapper
 	// around an RPC or other remote request.
 	Kind string `json:"kind,omitempty"`
-	// Labels: Collection of labels associated with the span. Label keys must be
-	// less than 128 bytes. Label values must be less than 16 KiB. Some keys might
-	// have predefined meaning, and you can also create your own. For more
-	// information, see Cloud Trace labels
+	// Labels: Optional. Collection of labels associated with the span. Label keys
+	// must be less than 128 bytes. Label values must be less than 16 KiB. Some
+	// keys might have predefined meaning, and you can also create your own. For
+	// more information, see Cloud Trace labels
 	// (https://cloud.google.com/trace/docs/trace-labels).
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Name of the span. Must be less than 128 bytes. The span name is
-	// sanitized and displayed in the Trace tool in the Google Cloud Platform
+	// Name: Required. Name of the span. Must be less than 128 bytes. The span name
+	// is sanitized and displayed in the Trace tool in the Google Cloud Platform
 	// Console. The name may be a method name or some other per-call site name. For
 	// the same executable and the same call point, a best practice is to use a
 	// consistent name, which makes it easier to correlate cross-trace spans.
 	Name string `json:"name,omitempty"`
 	// ParentSpanId: Optional. ID of the parent span, if any.
 	ParentSpanId uint64 `json:"parentSpanId,omitempty,string"`
-	// SpanId: Identifier for the span. Must be a 64-bit integer other than 0 and
-	// unique within a trace. For example, `2205310701640571284`.
+	// SpanId: Required. Identifier for the span. Must be a 64-bit integer other
+	// than 0 and unique within a trace. For example, `2205310701640571284`.
 	SpanId uint64 `json:"spanId,omitempty,string"`
-	// StartTime: Start time of the span in seconds and nanoseconds from the UNIX
-	// epoch.
+	// StartTime: Required. Start time of the span in seconds and nanoseconds from
+	// the UNIX epoch.
 	StartTime string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -576,8 +577,9 @@ func (r *ProjectsTracesService) List(projectId string) *ProjectsTracesListCall {
 	return c
 }
 
-// EndTime sets the optional parameter "endTime": End of the time interval
-// (inclusive) during which the trace data was collected from the application.
+// EndTime sets the optional parameter "endTime": Required. End of the time
+// interval (inclusive) during which the trace data was collected from the
+// application.
 func (c *ProjectsTracesListCall) EndTime(endTime string) *ProjectsTracesListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -619,8 +621,8 @@ func (c *ProjectsTracesListCall) PageToken(pageToken string) *ProjectsTracesList
 	return c
 }
 
-// StartTime sets the optional parameter "startTime": Start of the time
-// interval (inclusive) during which the trace data was collected from the
+// StartTime sets the optional parameter "startTime": Required. Start of the
+// time interval (inclusive) during which the trace data was collected from the
 // application.
 func (c *ProjectsTracesListCall) StartTime(startTime string) *ProjectsTracesListCall {
 	c.urlParams_.Set("startTime", startTime)

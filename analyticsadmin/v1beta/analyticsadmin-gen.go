@@ -2319,7 +2319,7 @@ type GoogleAnalyticsAdminV1betaProvisionAccountTicketRequest struct {
 	// Account: The account to create.
 	Account *GoogleAnalyticsAdminV1betaAccount `json:"account,omitempty"`
 	// RedirectUri: Redirect URI where the user will be sent after accepting Terms
-	// of Service. Must be configured in Cloud Console as a Redirect URI.
+	// of Service.
 	RedirectUri string `json:"redirectUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5467,7 +5467,10 @@ type PropertiesCustomDimensionsCreateCall struct {
 	header_                                   http.Header
 }
 
-// Create: Creates a CustomDimension.
+// Create: Creates a CustomDimension. Warning: It's not permissible to use this
+// method to collect data on individual users. In particular, sending user IDs
+// in custom dimensions violates the Google Analytics Terms of Service
+// (https://www.google.com/analytics/terms/).
 //
 // - parent: Example format: properties/1234.
 func (r *PropertiesCustomDimensionsService) Create(parent string, googleanalyticsadminv1betacustomdimension *GoogleAnalyticsAdminV1betaCustomDimension) *PropertiesCustomDimensionsCreateCall {
@@ -8709,7 +8712,7 @@ type PropertiesKeyEventsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieve a single Key Event.
+// Get: Retrieves a single Key Event.
 //
 //   - name: The resource name of the Key Event to retrieve. Format:
 //     properties/{property}/keyEvents/{key_event} Example:

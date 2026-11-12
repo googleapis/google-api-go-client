@@ -1300,6 +1300,18 @@ type ConsumerQuotaLimit struct {
 	// SupportedLocations: List of all supported locations. This field is present
 	// only if the limit has a {region} or {zone} dimension.
 	SupportedLocations []string `json:"supportedLocations,omitempty"`
+	// TrafficSource: Indicates the traffic type attribution for this quota limit
+	// (e.g. agentic). This is an informational field used to categorize and filter
+	// the quota limits.
+	//
+	// Possible values:
+	//   "TRAFFIC_SOURCE_UNSPECIFIED" - This quota limit applies to all traffic.
+	// This is the default value.
+	//   "TRAFFIC_SOURCE_NONAGENTIC" - This quota limit applies to traffic not
+	// recognized as agentic.
+	//   "TRAFFIC_SOURCE_AGENTIC" - This quota limit applies to only agentic
+	// traffic.
+	TrafficSource string `json:"trafficSource,omitempty"`
 	// Unit: The limit unit. An example unit would be `1/{project}/{region}` Note
 	// that `{project}` and `{region}` are not placeholders in this example; the
 	// literal characters `{` and `}` occur in the string.
@@ -1888,36 +1900,26 @@ func (s EnableFailure) MarshalJSON() ([]byte, error) {
 }
 
 // EnableRule: The consumer policy rule that defines enabled services and
-// groups.
+// catalogs.
 type EnableRule struct {
-	// EnableType: Client and resource project enable type.
-	//
-	// Possible values:
-	//   "ENABLE_TYPE_UNSPECIFIED" - Unspecified enable type, which means enabled
-	// as both client and resource project.
-	//   "CLIENT" - Enable all clients under the CRM node specified by
-	// `ConsumerPolicy.name` to use the listed services. A client can be an API
-	// key, an OAuth client, or a service account.
-	//   "RESOURCE" - Enable resources in the list services to be created and used
-	// under the CRM node specified by the `ConsumerPolicy.name`.
-	//   "V1_COMPATIBLE" - Activation made by Service Usage v1 API. This will be
-	// how consumers differentiate between policy changes made by v1 and v2 clients
-	// and understand what is actually possible based on those different policies.
-	EnableType string `json:"enableType,omitempty"`
+	// Catalogs: The names of the catalogs that are enabled. Example:
+	// `catalogs/default-cloud-services`.
+	Catalogs []string `json:"catalogs,omitempty"`
 	// Services: The names of the services that are enabled. Example:
 	// `services/storage.googleapis.com`.
 	Services []string `json:"services,omitempty"`
-	// Values: The names of the services or service groups that are enabled.
-	// Example: `services/storage.googleapis.com`, `groups/googleServices`,
+	// Values: Deprecated: Use the `services` field instead. The names of the
+	// services or service groups that are enabled. Example:
+	// `services/storage.googleapis.com`, `groups/googleServices`,
 	// `groups/allServices`.
 	Values []string `json:"values,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EnableType") to
+	// ForceSendFields is a list of field names (e.g. "Catalogs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EnableType") to include in API
+	// NullFields is a list of field names (e.g. "Catalogs") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2949,16 +2951,19 @@ func (s GoogleApiServiceusageV2betaConsumerPolicy) MarshalJSON() ([]byte, error)
 // GoogleApiServiceusageV2betaEnableRule: The consumer policy rule that defines
 // enabled services, groups, and categories.
 type GoogleApiServiceusageV2betaEnableRule struct {
+	// Catalogs: The names of the catalogs that are enabled. Example:
+	// `catalogs/default-cloud-services`.
+	Catalogs []string `json:"catalogs,omitempty"`
 	// Services: The names of the services that are enabled. Example:
 	// `services/storage.googleapis.com`.
 	Services []string `json:"services,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Services") to
+	// ForceSendFields is a list of field names (e.g. "Catalogs") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Services") to include in API
+	// NullFields is a list of field names (e.g. "Catalogs") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4305,23 +4310,35 @@ func (s MetricDescriptorMetadata) MarshalJSON() ([]byte, error) {
 // MetricRule: Bind API methods to metrics. Binding a method to a metric causes
 // that metric's configured quota behaviors to apply to the method call.
 type MetricRule struct {
+	// AgenticMetricCosts: Optional. Metrics to update when the selected methods
+	// are called, and the associated cost applied to each metric, iff the source
+	// of the call is an agent. The key of the map is the metric name, and the
+	// values are the amount increased for the metric against which the quota
+	// limits are defined. The value must not be negative.
+	AgenticMetricCosts map[string]string `json:"agenticMetricCosts,omitempty"`
 	// MetricCosts: Metrics to update when the selected methods are called, and the
 	// associated cost applied to each metric. The key of the map is the metric
 	// name, and the values are the amount increased for the metric against which
 	// the quota limits are defined. The value must not be negative.
 	MetricCosts map[string]string `json:"metricCosts,omitempty"`
+	// NonagenticMetricCosts: Optional. Metrics to update when the selected methods
+	// are called, and the associated cost applied to each metric, iff the source
+	// of the call is not an agent. The key of the map is the metric name, and the
+	// values are the amount increased for the metric against which the quota
+	// limits are defined. The value must not be negative.
+	NonagenticMetricCosts map[string]string `json:"nonagenticMetricCosts,omitempty"`
 	// Selector: Selects the methods to which this rule applies. Refer to selector
 	// for syntax details.
 	Selector string `json:"selector,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MetricCosts") to
+	// ForceSendFields is a list of field names (e.g. "AgenticMetricCosts") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MetricCosts") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgenticMetricCosts") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5105,6 +5122,18 @@ type QuotaLimit struct {
 	// unique within the service. The name can only include alphanumeric characters
 	// as well as '-'. The maximum length of the limit name is 64 characters.
 	Name string `json:"name,omitempty"`
+	// TrafficSource: Optional. This is only informational, the logic to allocate
+	// the quota to the correct metric (such as in `metric_rules`) should identify
+	// which quota metrics to allocate to.
+	//
+	// Possible values:
+	//   "TRAFFIC_SOURCE_UNSPECIFIED" - This quota limit applies to all traffic.
+	// This is the default value.
+	//   "TRAFFIC_SOURCE_NONAGENTIC" - This quota limit applies to traffic not
+	// recognized as agentic.
+	//   "TRAFFIC_SOURCE_AGENTIC" - This quota limit applies to only agentic
+	// traffic.
+	TrafficSource string `json:"trafficSource,omitempty"`
 	// Unit: Specify the unit of the quota limit. It uses the same syntax as
 	// MetricDescriptor.unit. The supported unit kinds are determined by the quota
 	// backend system. Here are some examples: * "1/min/{project}" for quota per
@@ -5204,7 +5233,8 @@ type RemoveEnableRulesResponse struct {
 	// `folders/12345/consumerPolicies/default`, or
 	// `organizations/12345/consumerPolicies/default`.
 	Parent string `json:"parent,omitempty"`
-	// RemovedValues: The values removed from the parent consumer policy.
+	// RemovedValues: Deprecated: This field is no longer populated. Use
+	// GetConsumerPolicy to verify the remaining enabled values.
 	RemovedValues []string `json:"removedValues,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

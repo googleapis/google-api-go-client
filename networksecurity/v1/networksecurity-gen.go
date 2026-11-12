@@ -204,10 +204,22 @@ type OrganizationsLocationsAddressGroupsService struct {
 
 func NewOrganizationsLocationsFirewallEndpointsService(s *Service) *OrganizationsLocationsFirewallEndpointsService {
 	rs := &OrganizationsLocationsFirewallEndpointsService{s: s}
+	rs.WildfireVerdictChangeRequests = NewOrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService(s)
 	return rs
 }
 
 type OrganizationsLocationsFirewallEndpointsService struct {
+	s *Service
+
+	WildfireVerdictChangeRequests *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService
+}
+
+func NewOrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService(s *Service) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService {
+	rs := &OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService struct {
 	s *Service
 }
 
@@ -399,10 +411,22 @@ type ProjectsLocationsFirewallEndpointAssociationsService struct {
 
 func NewProjectsLocationsFirewallEndpointsService(s *Service) *ProjectsLocationsFirewallEndpointsService {
 	rs := &ProjectsLocationsFirewallEndpointsService{s: s}
+	rs.WildfireVerdictChangeRequests = NewProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService(s)
 	return rs
 }
 
 type ProjectsLocationsFirewallEndpointsService struct {
+	s *Service
+
+	WildfireVerdictChangeRequests *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService
+}
+
+func NewProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService(s *Service) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService {
+	rs := &ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService struct {
 	s *Service
 }
 
@@ -766,18 +790,21 @@ func (s AuthorizationPolicy) MarshalJSON() ([]byte, error) {
 // AuthzPolicy: `AuthzPolicy` is a resource that allows to forward traffic to a
 // callout backend designed to scan the traffic for security purposes.
 type AuthzPolicy struct {
-	// Action: Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`. When the action
-	// is `CUSTOM`, `customProvider` must be specified. When the action is `ALLOW`,
-	// only requests matching the policy will be allowed. When the action is
-	// `DENY`, only requests matching the policy will be denied. When a request
-	// arrives, the policies are evaluated in the following order: 1. If there is a
-	// `CUSTOM` policy that matches the request, the `CUSTOM` policy is evaluated
-	// using the custom authorization providers and the request is denied if the
-	// provider rejects the request. 2. If there are any `DENY` policies that match
-	// the request, the request is denied. 3. If there are no `ALLOW` policies for
-	// the resource or if any of the `ALLOW` policies match the request, the
-	// request is allowed. 4. Else the request is denied by default if none of the
-	// configured AuthzPolicies with `ALLOW` action match the request.
+	// Action: Required. Can be one of `ALLOW`, `DENY`, `CUSTOM`,
+	// `DENY_BY_DEFAULT`. When the action is `CUSTOM`, `customProvider` must be
+	// specified. When the action is `ALLOW`, only requests matching the policy
+	// will be allowed. When the action is `DENY`, only requests matching the
+	// policy will be denied. When the action is `DENY_BY_DEFAULT`, no `http_rules`
+	// or `network_rules` can be specified. When a request arrives, the policies
+	// are evaluated in the following order: 1. If there is a `CUSTOM` policy that
+	// matches the request, the `CUSTOM` policy is evaluated using the custom
+	// authorization providers and the request is denied if the provider rejects
+	// the request. 2. If there are any `DENY` policies that match the request, the
+	// request is denied. 3. If any of the `ALLOW` policies match the request, the
+	// request is allowed. 4. If a `DENY_BY_DEFAULT` policy is applied to the
+	// resource, the request is denied (unless it was explicitly allowed by a
+	// `CUSTOM` or `ALLOW` policy). 5. Else, the request is allowed by default if
+	// no other policies are configured.
 	//
 	// Possible values:
 	//   "AUTHZ_ACTION_UNSPECIFIED" - Unspecified action.
@@ -785,6 +812,10 @@ type AuthzPolicy struct {
 	//   "DENY" - Deny the request and return a HTTP 404 to the client.
 	//   "CUSTOM" - Delegate the authorization decision to an external
 	// authorization engine.
+	//   "DENY_BY_DEFAULT" - Establishes a secure-by-default posture by denying any
+	// request not explicitly matched by any `ALLOW`, `DENY`, or `CUSTOM` policy.
+	// This action serves as a universal fallback: if no other policies match or
+	// are configured, the request is denied.
 	Action string `json:"action,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1268,8 +1299,8 @@ func (s AuthzPolicyAuthzRuleToRequestOperationHeaderSet) MarshalJSON() ([]byte, 
 // attributes to match against for a given MCP request.
 type AuthzPolicyAuthzRuleToRequestOperationMCP struct {
 	// BaseProtocolMethodsOption: Optional. If specified, matches on the MCP
-	// protocol’s non-access specific methods namely: * initialize * completion/
-	// * logging/ * notifications/ * ping Defaults to SKIP_BASE_PROTOCOL_METHODS if
+	// protocol's non-access specific methods namely: * initialize * completion/ *
+	// logging/ * notifications/ * ping Defaults to SKIP_BASE_PROTOCOL_METHODS if
 	// not specified.
 	//
 	// Possible values:
@@ -1306,9 +1337,9 @@ func (s AuthzPolicyAuthzRuleToRequestOperationMCP) MarshalJSON() ([]byte, error)
 // AuthzPolicyAuthzRuleToRequestOperationMCPMethod: Describes a set of MCP
 // methods to match against.
 type AuthzPolicyAuthzRuleToRequestOperationMCPMethod struct {
-	// Name: Required. The MCP method to match against. Allowed values are as
-	// follows: 1. `tools`, `prompts`, `resources` - these will match against all
-	// sub methods under the respective methods. 2. `prompts/list`, `tools/list`,
+	// Name: Required. The MCP method to match against. Allowed values include: 1.
+	// `tools`, `prompts`, `resources` - these will match against all sub methods
+	// under the respective methods. 2. `prompts/list`, `tools/list`,
 	// `resources/list`, `resources/templates/list` 3. `prompts/get`, `tools/call`,
 	// `resources/subscribe`, `resources/unsubscribe`, `resources/read` Params
 	// cannot be specified for categories 1 and 2.
@@ -1409,9 +1440,10 @@ type AuthzPolicyTarget struct {
 	// by this policy and extensions must share the same load balancing scheme.
 	// Required only when targeting forwarding rules. If targeting Secure Web
 	// Proxy, this field must be `INTERNAL_MANAGED` or not specified. Must not be
-	// specified when targeting Agent Gateway. Supported values: `INTERNAL_MANAGED`
-	// and `EXTERNAL_MANAGED`. For more information, refer to Backend services
-	// overview (https://cloud.google.com/load-balancing/docs/backend-service).
+	// specified when targeting Agent Gateway. Supported values include
+	// `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. For more information, refer to
+	// Backend services overview
+	// (https://cloud.google.com/load-balancing/docs/backend-service).
 	//
 	// Possible values:
 	//   "LOAD_BALANCING_SCHEME_UNSPECIFIED" - Default value. Do not use.
@@ -1829,39 +1861,40 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FirewallEndpoint: Message describing Endpoint object.
+// FirewallEndpoint: Message describing a firewall endpoint.
 type FirewallEndpoint struct {
-	// AssociatedNetworks: Output only. Deprecated: List of networks that are
-	// associated with this endpoint in the local zone. This is a projection of the
-	// FirewallEndpointAssociations pointing at this endpoint. A network will only
-	// appear in this list after traffic routing is fully configured. Format:
-	// projects/{project}/global/networks/{name}.
+	// AssociatedNetworks: Output only. Deprecated: Use the `network` field in the
+	// `associations` message instead. List of networks that are associated with
+	// this endpoint in the local zone. This is a projection of the firewall
+	// endpoint association resources pointing at this endpoint. A network only
+	// appears in this list after traffic routing is fully configured. Format:
+	// `projects/{project}/global/networks/{name}`.
 	AssociatedNetworks []string `json:"associatedNetworks,omitempty"`
-	// Associations: Output only. List of FirewallEndpointAssociations that are
-	// associated to this endpoint. An association will only appear in this list
-	// after traffic routing is fully configured.
+	// Associations: Output only. List of firewall endpoint association resources
+	// that are associated with this endpoint. An association only appears in this
+	// list after traffic routing is fully configured.
 	Associations []*FirewallEndpointAssociationReference `json:"associations,omitempty"`
 	// BillingProjectId: Optional. Project to charge for the deployed firewall
 	// endpoint. This field must be specified when creating the endpoint in the
 	// organization scope, and should be omitted otherwise.
 	BillingProjectId string `json:"billingProjectId,omitempty"`
-	// CreateTime: Output only. Create time stamp.
+	// CreateTime: Output only. Create timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// Description: Optional. Description of the firewall endpoint. Max length 2048
-	// characters.
+	// Description: Optional. Description of the firewall endpoint. The maximum
+	// length is 2048 characters.
 	Description string `json:"description,omitempty"`
 	// EndpointSettings: Optional. Settings for the endpoint.
 	EndpointSettings *FirewallEndpointEndpointSettings `json:"endpointSettings,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. Name of resource.
+	// Name: Immutable. Identifier. The name of the resource.
 	Name string `json:"name,omitempty"`
 	// Reconciling: Output only. Whether reconciling is in progress, recommended
 	// per https://google.aip.dev/128.
 	Reconciling bool `json:"reconciling,omitempty"`
-	// SatisfiesPzi: Output only. [Output Only] Reserved for future use.
+	// SatisfiesPzi: Output only. Reserved for future use.
 	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
-	// SatisfiesPzs: Output only. [Output Only] Reserved for future use.
+	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// State: Output only. Current state of the endpoint.
 	//
@@ -1872,8 +1905,11 @@ type FirewallEndpoint struct {
 	//   "DELETING" - Being deleted.
 	//   "INACTIVE" - Down or in an error state.
 	State string `json:"state,omitempty"`
-	// UpdateTime: Output only. Update time stamp
+	// UpdateTime: Output only. Update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
+	// WildfireSettings: Optional. Settings for Advanced malware sandbox (WildFire)
+	// analysis.
+	WildfireSettings *FirewallEndpointWildfireSettings `json:"wildfireSettings,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1895,24 +1931,25 @@ func (s FirewallEndpoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FirewallEndpointAssociation: Message describing Association object
+// FirewallEndpointAssociation: Message describing a firewall endpoint
+// association.
 type FirewallEndpointAssociation struct {
-	// CreateTime: Output only. Create time stamp
+	// CreateTime: Output only. Create timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// Disabled: Optional. Whether the association is disabled. True indicates that
-	// traffic won't be intercepted
+	// Disabled: Optional. Whether the association is disabled. Setting this to
+	// `true` indicates that traffic isn't intercepted. The default value is
+	// `false`.
 	Disabled bool `json:"disabled,omitempty"`
-	// FirewallEndpoint: Required. The URL of the FirewallEndpoint that is being
+	// FirewallEndpoint: Required. The URL of the `FirewallEndpoint` that is being
 	// associated.
 	FirewallEndpoint string `json:"firewallEndpoint,omitempty"`
-	// Labels: Optional. Labels as key value pairs
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. name of resource
+	// Name: Immutable. Identifier. The name of the resource.
 	Name string `json:"name,omitempty"`
 	// Network: Required. The URL of the network that is being associated.
 	Network string `json:"network,omitempty"`
-	// Reconciling: Output only. Whether reconciling is in progress, recommended
-	// per https://google.aip.dev/128.
+	// Reconciling: Output only. Whether reconciliation is in progress.
 	Reconciling bool `json:"reconciling,omitempty"`
 	// State: Output only. Current state of the association.
 	//
@@ -1924,10 +1961,10 @@ type FirewallEndpointAssociation struct {
 	//   "INACTIVE" - Down or in an error state.
 	//   "ORPHAN" - The project that housed the association has been deleted.
 	State string `json:"state,omitempty"`
-	// TlsInspectionPolicy: Optional. The URL of the TlsInspectionPolicy that is
+	// TlsInspectionPolicy: Optional. The URL of the `TlsInspectionPolicy` that is
 	// being associated.
 	TlsInspectionPolicy string `json:"tlsInspectionPolicy,omitempty"`
-	// UpdateTime: Output only. Update time stamp
+	// UpdateTime: Output only. Update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1950,16 +1987,16 @@ func (s FirewallEndpointAssociation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// FirewallEndpointAssociationReference: This is a subset of the
-// FirewallEndpointAssociation message, containing fields to be used by the
+// FirewallEndpointAssociationReference: A subset of the
+// `FirewallEndpointAssociation` message, containing fields to be used by the
 // consumer.
 type FirewallEndpointAssociationReference struct {
-	// Name: Output only. The resource name of the FirewallEndpointAssociation.
+	// Name: Output only. The resource name of the `FirewallEndpointAssociation`.
 	// Format:
-	// projects/{project}/locations/{location}/firewallEndpointAssociations/{id}
+	// `projects/{project}/locations/{location}/firewallEndpointAssociations/{id}`.
 	Name string `json:"name,omitempty"`
-	// Network: Output only. The VPC network associated. Format:
-	// projects/{project}/global/networks/{name}.
+	// Network: Output only. The associated VPC network. Format:
+	// `projects/{project}/global/networks/{name}`.
 	Network string `json:"network,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1981,16 +2018,61 @@ func (s FirewallEndpointAssociationReference) MarshalJSON() ([]byte, error) {
 
 // FirewallEndpointEndpointSettings: Settings for the endpoint.
 type FirewallEndpointEndpointSettings struct {
-	// JumboFramesEnabled: Optional. Immutable. Indicates whether Jumbo Frames are
-	// enabled. Default value is false.
+	// ContentCloudRegion: Optional. The content cloud region of the endpoint.
+	//
+	// Possible values:
+	//   "CONTENT_CLOUD_REGION_UNSPECIFIED" - Palo Alto Networks content cloud
+	// region not specified.
+	//   "US_CENTRAL" - US Central content cloud portal:
+	// `us.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "APAC" - APAC content cloud portal:
+	// `apac.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "INDIA" - India content cloud portal:
+	// `in.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "UK" - UK content cloud portal:
+	// `uk.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "FRANCE" - France content cloud portal:
+	// `fr.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "JAPAN" - Japan content cloud portal:
+	// `jp.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "AUSTRALIA" - Australia content cloud portal:
+	// `au.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "CANADA" - Canada content cloud portal:
+	// `ca.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "SWITZERLAND" - Switzerland content cloud portal:
+	// `ch.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "NETHERLANDS" - Netherlands content cloud portal:
+	// `nl.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "INDONESIA" - Indonesia content cloud portal:
+	// `id.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "QATAR" - Qatar content cloud portal:
+	// `qa.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "TAIWAN" - Taiwan content cloud portal:
+	// `tw.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "POLAND" - Poland content cloud portal:
+	// `pl.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "SOUTH_KOREA" - South Korea content cloud portal:
+	// `kr.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "SAUDI_ARABIA" - Saudi Arabia content cloud portal:
+	// `sa.hawkeye.services-edge.paloaltonetworks.com`.
+	//   "ITALY" - Italy content cloud portal:
+	// `it.hawkeye.services-edge.paloaltonetworks.com`.
+	ContentCloudRegion string `json:"contentCloudRegion,omitempty"`
+	// HttpPartialResponseBlocked: Optional. Whether to block HTTP partial
+	// responses for the endpoint. When set to `true`, the firewall blocks the
+	// resumption of HTTP file downloads. Setting this to `false` provides maximum
+	// availability, while `true` provides maximum security.
+	HttpPartialResponseBlocked bool `json:"httpPartialResponseBlocked,omitempty"`
+	// JumboFramesEnabled: Optional. Immutable. Indicates whether jumbo frames are
+	// enabled. The default value is `false`.
 	JumboFramesEnabled bool `json:"jumboFramesEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "JumboFramesEnabled") to
+	// ForceSendFields is a list of field names (e.g. "ContentCloudRegion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "JumboFramesEnabled") to include
+	// NullFields is a list of field names (e.g. "ContentCloudRegion") to include
 	// in API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1999,6 +2081,121 @@ type FirewallEndpointEndpointSettings struct {
 
 func (s FirewallEndpointEndpointSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod FirewallEndpointEndpointSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FirewallEndpointWildfireSettings: Settings for Advanced malware sandbox
+// analysis.
+type FirewallEndpointWildfireSettings struct {
+	// Enabled: Optional. Indicates whether Advanced malware sandbox analysis is
+	// enabled. The default value is `false`.
+	Enabled bool `json:"enabled,omitempty"`
+	// WildfireInlineCloudAnalysisSettings: Optional. Settings for Advanced malware
+	// sandbox inline cloud analysis.
+	WildfireInlineCloudAnalysisSettings *FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings `json:"wildfireInlineCloudAnalysisSettings,omitempty"`
+	// WildfireRealtimeLookupDuration: Optional. The duration that a file is held
+	// while the Advanced malware sandbox real-time signature cloud performs a
+	// signature lookup. Valid values are from 1 to 5000 milliseconds. In canonical
+	// JSON encoding, this is represented as a string ending in `s` (for example,
+	// "0.001s" to "5s"). The default value is `1000` milliseconds ("1s" in
+	// JSON).
+	WildfireRealtimeLookupDuration string `json:"wildfireRealtimeLookupDuration,omitempty"`
+	// WildfireRealtimeLookupTimeoutAction: Optional. The action to take on an
+	// Advanced malware sandbox real-time signature lookup timeout. The default
+	// value is `ALLOW`.
+	//
+	// Possible values:
+	//   "WILDFIRE_REALTIME_SIGNATURE_LOOKUP_TIMEOUT_ACTION_UNSPECIFIED" - Advanced
+	// malware sandbox real-time signature lookup timeout action not specified.
+	//   "ALLOW" - Files that time out during the signature lookup are allowed to
+	// transmit.
+	//   "DENY" - Files that time out during the signature lookup are not allowed
+	// to transmit.
+	WildfireRealtimeLookupTimeoutAction string `json:"wildfireRealtimeLookupTimeoutAction,omitempty"`
+	// WildfireRegion: Optional. The region where Advanced malware sandbox analysis
+	// is performed. For a list of Palo Alto Networks supported regions, see
+	// Advanced WildFire global cloud
+	// (https://docs.paloaltonetworks.com/advanced-wildfire/administration/advanced-wildfire-overview/advanced-wildfire-deployments/advanced-wildfire-global-cloud).
+	//
+	// Possible values:
+	//   "WILDFIRE_REGION_UNSPECIFIED" - WildFire region not specified.
+	//   "CANADA" - Canada cloud portal: ca.wildfire.paloaltonetworks.com
+	//   "UNITED_STATES" - United States cloud portal:
+	// us-native.wildfire.paloaltonetworks.com
+	//   "JAPAN" - Japan cloud portal: jp.wildfire.paloaltonetworks.com
+	//   "SINGAPORE" - Singapore cloud portal: sg.wildfire.paloaltonetworks.com
+	//   "UNITED_KINGDOM" - United Kingdom cloud portal:
+	// uk.wildfire.paloaltonetworks.com
+	//   "AUSTRALIA" - Australia cloud portal: au.wildfire.paloaltonetworks.com
+	//   "GERMANY" - Germany cloud portal: de.wildfire.paloaltonetworks.com
+	//   "INDIA" - India cloud portal: in.wildfire.paloaltonetworks.com
+	//   "SWITZERLAND" - Switzerland cloud portal: ch.wildfire.paloaltonetworks.com
+	//   "POLAND" - Poland cloud portal: pl.wildfire.paloaltonetworks.com
+	//   "INDONESIA" - Indonesia cloud portal: id.wildfire.paloaltonetworks.com
+	//   "TAIWAN" - Taiwan cloud portal: tw.wildfire.paloaltonetworks.com
+	//   "FRANCE" - France cloud portal: fr.wildfire.paloaltonetworks.com
+	//   "QATAR" - Qatar cloud portal: qatar.wildfire.paloaltonetworks.com
+	//   "SOUTH_KOREA" - South Korea cloud portal: kr.wildfire.paloaltonetworks.com
+	//   "ISRAEL" - Israel cloud portal: il.wildfire.paloaltonetworks.com
+	//   "SAUDI_ARABIA" - Saudi Arabia cloud portal:
+	// sa.wildfire.paloaltonetworks.com
+	//   "SPAIN" - Spain cloud portal: es.wildfire.paloaltonetworks.com
+	WildfireRegion string `json:"wildfireRegion,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FirewallEndpointWildfireSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod FirewallEndpointWildfireSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings:
+// Settings for Advanced malware sandbox inline cloud analysis.
+type FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings struct {
+	// MaxAnalysisDuration: Optional. The timeout that a file is held while
+	// Advanced malware sandbox inline cloud analysis is performed. Valid values
+	// are from 1 to 240000 milliseconds. In canonical JSON encoding, this is
+	// represented as a string ending in `s` (for example, "0.001s" to "240s").
+	// The default value is `30000` milliseconds ("30s" in JSON).
+	MaxAnalysisDuration string `json:"maxAnalysisDuration,omitempty"`
+	// SubmissionTimeoutLoggingDisabled: Optional. Whether to disable Advanced
+	// malware sandbox submission log generation for files that time out during
+	// Advanced malware sandbox inline cloud analysis.
+	SubmissionTimeoutLoggingDisabled bool `json:"submissionTimeoutLoggingDisabled,omitempty"`
+	// TimeoutAction: Optional. The action to take when Advanced malware sandbox
+	// inline cloud analysis times out. The default value is `ALLOW`.
+	//
+	// Possible values:
+	//   "WILDFIRE_INLINE_CLOUD_ANALYSIS_TIMEOUT_ACTION_UNSPECIFIED" - Advanced
+	// malware sandbox inline cloud analysis timeout action not specified.
+	//   "ALLOW" - Files that time out are allowed to transmit.
+	//   "DENY" - Files that time out are not allowed to transmit.
+	TimeoutAction string `json:"timeoutAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxAnalysisDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxAnalysisDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod FirewallEndpointWildfireSettingsWildfireInlineCloudAnalysisSettings
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3304,14 +3501,15 @@ func (s ListDnsThreatDetectorsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListFirewallEndpointAssociationsResponse: Message for response to listing
-// Associations
+// associations.
 type ListFirewallEndpointAssociationsResponse struct {
-	// FirewallEndpointAssociations: The list of Association
+	// FirewallEndpointAssociations: The list of associations.
 	FirewallEndpointAssociations []*FirewallEndpointAssociation `json:"firewallEndpointAssociations,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Locations that could not be reached. The list of unreachable
+	// locations might expand in the future.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3334,14 +3532,15 @@ func (s ListFirewallEndpointAssociationsResponse) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListFirewallEndpointsResponse: Message for response to listing Endpoints
+// ListFirewallEndpointsResponse: Message for response to listing endpoints.
 type ListFirewallEndpointsResponse struct {
-	// FirewallEndpoints: The list of Endpoint
+	// FirewallEndpoints: The list of endpoints.
 	FirewallEndpoints []*FirewallEndpoint `json:"firewallEndpoints,omitempty"`
-	// NextPageToken: A token identifying a page of results the server should
-	// return.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Locations that could not be reached. The list of unreachable
+	// locations might expand in the future.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3803,14 +4002,12 @@ func (s ListSACRealmsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // ListSecurityProfileGroupsResponse: Response returned by the
-// ListSecurityProfileGroups method.
+// `ListSecurityProfileGroups` method.
 type ListSecurityProfileGroupsResponse struct {
-	// NextPageToken: If there might be more results than those appearing in this
-	// response, then `next_page_token` is included. To get the next set of
-	// results, call this method again using the value of `next_page_token` as
-	// `page_token`.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// SecurityProfileGroups: List of SecurityProfileGroups resources.
+	// SecurityProfileGroups: List of `SecurityProfileGroup` resources.
 	SecurityProfileGroups []*SecurityProfileGroup `json:"securityProfileGroups,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3833,15 +4030,13 @@ func (s ListSecurityProfileGroupsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ListSecurityProfilesResponse: Response returned by the ListSecurityProfiles
-// method.
+// ListSecurityProfilesResponse: Response returned by the
+// `ListSecurityProfiles` method.
 type ListSecurityProfilesResponse struct {
-	// NextPageToken: If there might be more results than those appearing in this
-	// response, then `next_page_token` is included. To get the next set of
-	// results, call this method again using the value of `next_page_token` as
-	// `page_token`.
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// SecurityProfiles: List of SecurityProfile resources.
+	// SecurityProfiles: List of `SecurityProfile` resources.
 	SecurityProfiles []*SecurityProfile `json:"securityProfiles,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3964,6 +4159,38 @@ func (s ListUrlListsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListWildfireVerdictChangeRequestsResponse: Message for response to listing
+// `WildfireVerdictChangeRequest` resources.
+type ListWildfireVerdictChangeRequestsResponse struct {
+	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+	// WildfireVerdictChangeRequests: The list of `WildfireVerdictChangeRequest`
+	// resources.
+	WildfireVerdictChangeRequests []*WildfireVerdictChangeRequest `json:"wildfireVerdictChangeRequests,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListWildfireVerdictChangeRequestsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListWildfireVerdictChangeRequestsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby city
@@ -4027,7 +4254,35 @@ type MTLSPolicy struct {
 	// the backend only if validation of the client certificate passed. If set,
 	// requires a reference to non-empty TrustConfig specified in
 	// `client_validation_trust_config`.
+	//   "ALLOW_VALIDATION_RELAXATIONS" - Require a client certificate, but apply
+	// the specific validation relaxations requested in
+	// `client_validation_relaxations`. All selected relaxations are applied
+	// simultaneously.
 	ClientValidationMode string `json:"clientValidationMode,omitempty"`
+	// ClientValidationRelaxations: A list of validation relaxations to apply when
+	// `client_validation_mode` is set to ALLOW_VALIDATION_RELAXATIONS.
+	//
+	// Possible values:
+	//   "CLIENT_VALIDATION_RELAXATION_UNSPECIFIED" - Not allowed.
+	//   "ALLOW_MISSING_EKU" - Allows the client certificate to completely omit the
+	// Extended Key Usage (EKU) extension. If the EKU extension is present, it must
+	// permit the `clientAuth` key purpose (OID 1.3.6.1.5.5.7.3.2). Security
+	// Warning: Enabling this option is risky if the customer uses a Root CA that
+	// issues certificates for multiple different purposes. Without EKU
+	// enforcement, a certificate intended for a non-authentication purpose (like
+	// S/MIME or server-only auth) might be accepted for mTLS client
+	// authentication. Customers should only use this relaxation if they are using
+	// a dedicated Private CA solely for issuing client authentication
+	// certificates.
+	//   "ALLOW_SHA1_HASHING" - Allows validation of client certificate chains
+	// signed using legacy SHA-1 message digests. Enabling this is insecure and
+	// should only be used to support legacy clients during migration periods.
+	//   "ALLOW_EXPIRED_LEAF_CERTIFICATE" - Allows validation of an expired client
+	// leaf certificate. The certificate will be validated as if the current time
+	// was one second before the end of its validity period (the `notAfter`
+	// timestamp). This relaxation applies strictly to the leaf certificate and not
+	// to the rest of the chain.
+	ClientValidationRelaxations []string `json:"clientValidationRelaxations,omitempty"`
 	// ClientValidationTrustConfig: Reference to the TrustConfig from
 	// certificatemanager.googleapis.com namespace. If specified, the chain
 	// validation will be performed against certificates configured in the given
@@ -4864,49 +5119,57 @@ func (s SACRealmPairingKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecurityProfile: SecurityProfile is a resource that defines the behavior for
-// one of many ProfileTypes.
+// SecurityProfile: A resource that defines the behavior for one of many
+// `ProfileType` values.
 type SecurityProfile struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// CustomInterceptProfile: The custom TPPI configuration for the
-	// SecurityProfile.
+	// CustomInterceptProfile: The custom network security in-band integration
+	// configuration for the `SecurityProfile`.
 	CustomInterceptProfile *CustomInterceptProfile `json:"customInterceptProfile,omitempty"`
-	// CustomMirroringProfile: The custom Packet Mirroring v2 configuration for the
-	// SecurityProfile.
+	// CustomMirroringProfile: The custom network security out-of-band integration
+	// configuration for the `SecurityProfile`.
 	CustomMirroringProfile *CustomMirroringProfile `json:"customMirroringProfile,omitempty"`
-	// Description: Optional. An optional description of the profile. Max length
-	// 512 characters.
+	// Description: Optional. An optional description of the profile. The maximum
+	// length is 512 characters.
 	Description string `json:"description,omitempty"`
 	// Etag: Output only. This checksum is computed by the server based on the
 	// value of other fields, and may be sent on update and delete requests to
 	// ensure the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// Labels: Optional. Labels as key value pairs.
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. Name of the SecurityProfile resource. It
-	// matches pattern
-	// `projects|organizations/*/locations/{location}/securityProfiles/{security_pro
-	// file}`.
+	// Name: Immutable. Identifier. Name of the `SecurityProfile` resource. Format:
+	// `organizations/{organization}/locations/{location}/securityProfiles/{security
+	// _profile}` or
+	// `projects/{project}/locations/{location}/securityProfiles/{security_profile}`
+	// .
 	Name string `json:"name,omitempty"`
 	// ThreatPreventionProfile: The threat prevention configuration for the
-	// SecurityProfile.
+	// `SecurityProfile`.
 	ThreatPreventionProfile *ThreatPreventionProfile `json:"threatPreventionProfile,omitempty"`
-	// Type: Immutable. The single ProfileType that the SecurityProfile resource
-	// configures.
+	// Type: Immutable. The single `ProfileType` that the `SecurityProfile`
+	// resource configures.
 	//
 	// Possible values:
 	//   "PROFILE_TYPE_UNSPECIFIED" - Profile type not specified.
 	//   "THREAT_PREVENTION" - Profile type for threat prevention.
-	//   "CUSTOM_MIRRORING" - Profile type for packet mirroring v2
-	//   "CUSTOM_INTERCEPT" - Profile type for TPPI.
+	//   "CUSTOM_MIRRORING" - Profile type for network security out-of-band
+	// integration.
+	//   "CUSTOM_INTERCEPT" - Profile type for network security in-band
+	// integration.
 	//   "URL_FILTERING" - Profile type for URL filtering.
+	//   "WILDFIRE_ANALYSIS" - Profile type for Advanced malware sandbox (WildFire)
+	// analysis.
 	Type string `json:"type,omitempty"`
 	// UpdateTime: Output only. Last resource update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// UrlFilteringProfile: The URL filtering configuration for the
-	// SecurityProfile.
+	// `SecurityProfile`.
 	UrlFilteringProfile *UrlFilteringProfile `json:"urlFilteringProfile,omitempty"`
+	// WildfireAnalysisProfile: The Advanced malware sandbox analysis configuration
+	// for the `SecurityProfile`.
+	WildfireAnalysisProfile *WildfireAnalysisProfile `json:"wildfireAnalysisProfile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4928,42 +5191,47 @@ func (s SecurityProfile) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// SecurityProfileGroup: SecurityProfileGroup is a resource that defines the
-// behavior for various ProfileTypes.
+// SecurityProfileGroup: A resource that defines the behavior for various
+// `ProfileType` values.
 type SecurityProfileGroup struct {
 	// CreateTime: Output only. Resource creation timestamp.
 	CreateTime string `json:"createTime,omitempty"`
-	// CustomInterceptProfile: Optional. Reference to a SecurityProfile with the
-	// CustomIntercept configuration.
+	// CustomInterceptProfile: Optional. Reference to a `SecurityProfile` with the
+	// custom intercept configuration.
 	CustomInterceptProfile string `json:"customInterceptProfile,omitempty"`
-	// CustomMirroringProfile: Optional. Reference to a SecurityProfile with the
-	// CustomMirroring configuration.
+	// CustomMirroringProfile: Optional. Reference to a `SecurityProfile` with the
+	// custom mirroring configuration.
 	CustomMirroringProfile string `json:"customMirroringProfile,omitempty"`
-	// DataPathId: Output only. Identifier used by the data-path. Unique within
+	// DataPathId: Output only. Identifier used by the data path. Unique within
 	// `{container, location}`.
 	DataPathId uint64 `json:"dataPathId,omitempty,string"`
-	// Description: Optional. An optional description of the profile group. Max
-	// length 2048 characters.
+	// Description: Optional. An optional description of the profile group. The
+	// maximum length is 2048 characters.
 	Description string `json:"description,omitempty"`
 	// Etag: Output only. This checksum is computed by the server based on the
 	// value of other fields, and may be sent on update and delete requests to
 	// ensure the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// Labels: Optional. Labels as key value pairs.
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Immutable. Identifier. Name of the SecurityProfileGroup resource. It
-	// matches pattern
-	// `projects|organizations/*/locations/{location}/securityProfileGroups/{securit
-	// y_profile_group}`.
+	// Name: Immutable. Identifier. Name of the `SecurityProfileGroup` resource.
+	// Format:
+	// `organizations/{organization}/locations/{location}/securityProfileGroups/{sec
+	// urity_profile_group}` or
+	// `projects/{project}/locations/{location}/securityProfileGroups/{security_prof
+	// ile_group}`.
 	Name string `json:"name,omitempty"`
-	// ThreatPreventionProfile: Optional. Reference to a SecurityProfile with the
-	// ThreatPrevention configuration.
+	// ThreatPreventionProfile: Optional. Reference to a `SecurityProfile` with the
+	// threat prevention configuration.
 	ThreatPreventionProfile string `json:"threatPreventionProfile,omitempty"`
 	// UpdateTime: Output only. Last resource update timestamp.
 	UpdateTime string `json:"updateTime,omitempty"`
-	// UrlFilteringProfile: Optional. Reference to a SecurityProfile with the
-	// UrlFiltering configuration.
+	// UrlFilteringProfile: Optional. Reference to a `SecurityProfile` with the URL
+	// filtering configuration.
 	UrlFilteringProfile string `json:"urlFilteringProfile,omitempty"`
+	// WildfireAnalysisProfile: Optional. Reference to a `SecurityProfile` with the
+	// Advanced malware sandbox (WildFire) configuration.
+	WildfireAnalysisProfile string `json:"wildfireAnalysisProfile,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -5265,6 +5533,16 @@ type TlsInspectionPolicy struct {
 	// certificates. The CA pool string has a relative resource path following the
 	// form "projects/{project}/locations/{location}/caPools/{ca_pool}".
 	CaPool string `json:"caPool,omitempty"`
+	// CertificateIssuanceMode: Optional. The mode used to issue certificates
+	// (local CA signing vs direct leaf).
+	//
+	// Possible values:
+	//   "CERTIFICATE_ISSUANCE_MODE_UNSPECIFIED" - Unspecified default mode.
+	//   "DIRECT_LEAF_PROVISIONING" - Fallback: Direct Private CA leaf certificate
+	// provisioning.
+	//   "LOCAL_INTERMEDIATE_CA_SIGNING" - High-speed Local Intermediate CA
+	// signing.
+	CertificateIssuanceMode string `json:"certificateIssuanceMode,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomTlsFeatures: Optional. List of custom TLS cipher suites selected. This
@@ -5473,6 +5751,566 @@ type ValidationCA struct {
 
 func (s ValidationCA) MarshalJSON() ([]byte, error) {
 	type NoMethod ValidationCA
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireAnalysisProfile: `WildfireAnalysisProfile` defines Palo Alto
+// Networks WildFire behavior.
+type WildfireAnalysisProfile struct {
+	// WildfireInlineCloudAnalysisRules: Optional. Configuration for Advanced
+	// malware sandbox inline cloud analysis.
+	WildfireInlineCloudAnalysisRules []*WildfireInlineCloudAnalysisRule `json:"wildfireInlineCloudAnalysisRules,omitempty"`
+	// WildfireInlineMlOverrides: Optional. Configuration for overriding inline ML
+	// Advanced malware sandbox actions per protocol.
+	WildfireInlineMlOverrides []*WildfireInlineMlOverride `json:"wildfireInlineMlOverrides,omitempty"`
+	// WildfireInlineMlSetting: Optional. Settings for Advanced malware sandbox
+	// inline ML analysis.
+	WildfireInlineMlSetting *WildfireInlineMlSettings `json:"wildfireInlineMlSetting,omitempty"`
+	// WildfireInlineMlSettings: Optional. Deprecated: Use
+	// `wildfire_inline_ml_setting` instead. Settings for Advanced malware sandbox
+	// inline ML analysis.
+	WildfireInlineMlSettings []*WildfireInlineMlSettings `json:"wildfireInlineMlSettings,omitempty"`
+	// WildfireOverrides: Optional. Configuration for overriding Advanced malware
+	// sandbox actions per protocol.
+	WildfireOverrides []*WildfireOverride `json:"wildfireOverrides,omitempty"`
+	// WildfireRealtimeLookup: Optional. Whether to hold the transfer of a file
+	// while the Advanced malware sandbox real-time signature cloud performs a
+	// signature lookup. The default value is `false`.
+	WildfireRealtimeLookup bool `json:"wildfireRealtimeLookup,omitempty"`
+	// WildfireSubmissionRules: Optional. Configurations for Advanced malware
+	// sandbox (WildFire) file submissions.
+	WildfireSubmissionRules []*WildfireSubmissionRule `json:"wildfireSubmissionRules,omitempty"`
+	// WildfireThreatOverrides: Optional. Configuration for overriding the Advanced
+	// malware sandbox threat action by `threat_id` match.
+	WildfireThreatOverrides []*WildfireThreatOverride `json:"wildfireThreatOverrides,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "WildfireInlineCloudAnalysisRules") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted from
+	// API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g.
+	// "WildfireInlineCloudAnalysisRules") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
+	// more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireAnalysisProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireAnalysisProfile
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineCloudAnalysisRule: The list of file type configurations to be
+// scanned by Advanced malware sandbox inline cloud analysis.
+type WildfireInlineCloudAnalysisRule struct {
+	// Action: Required. Action to take when a threat is detected using Advanced
+	// malware sandbox inline cloud analysis. The default value is `DENY`.
+	//
+	// Possible values:
+	//   "WILDFIRE_INLINE_CLOUD_ANALYSIS_ACTION_UNSPECIFIED" - Advanced malware
+	// sandbox inline cloud analysis action not specified.
+	//   "ALLOW" - Files detected by Advanced malware sandbox inline cloud analysis
+	// are allowed to transmit.
+	//   "DENY" - Files detected by Advanced malware sandbox inline cloud analysis
+	// are not allowed to transmit.
+	//   "ALERT" - Files detected by Advanced malware sandbox inline cloud analysis
+	// are allowed to transmit, and a `wildfire_submission_log` entry is sent to
+	// the consumer project.
+	Action string `json:"action,omitempty"`
+	// CustomFileTypes: Submit a custom list of file types for Advanced malware
+	// sandbox inline cloud analysis.
+	CustomFileTypes *WildfireInlineCloudAnalysisRuleCustomFileTypes `json:"customFileTypes,omitempty"`
+	// Direction: Required. Direction for the files to be analyzed by Advanced
+	// malware sandbox inline cloud analysis.
+	//
+	// Possible values:
+	//   "DIRECTION_UNSPECIFIED" - Direction not specified.
+	//   "UPLOAD" - Upload direction.
+	//   "DOWNLOAD" - Download direction.
+	//   "BOTH" - Both upload and download directions.
+	Direction string `json:"direction,omitempty"`
+	// FileSelectionMode: Required. File selection mode for Advanced malware
+	// sandbox inline cloud analysis.
+	//
+	// Possible values:
+	//   "FILE_SELECTION_MODE_UNSPECIFIED" - File selection mode not specified.
+	//   "ALL_FILE_TYPES" - Submit all file types for scanning.
+	//   "CUSTOM_FILE_TYPES" - Submit a custom list of file types for scanning.
+	FileSelectionMode string `json:"fileSelectionMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineCloudAnalysisRule) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineCloudAnalysisRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineCloudAnalysisRuleCustomFileTypes: The options to submit a
+// custom list of file types for scanning.
+type WildfireInlineCloudAnalysisRuleCustomFileTypes struct {
+	// FileTypes: Required. File types to be submitted for Advanced malware sandbox
+	// inline cloud analysis.
+	//
+	// Possible values:
+	//   "FILE_TYPE_UNSPECIFIED" - File type not specified.
+	//   "PE" - Portable Executable (PE) files.
+	FileTypes []string `json:"fileTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineCloudAnalysisRuleCustomFileTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineCloudAnalysisRuleCustomFileTypes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineMlFileException: Defines the file to exclude from Advanced
+// malware sandbox inline ML analysis.
+type WildfireInlineMlFileException struct {
+	// Filename: Optional. Name of the file to exclude from Advanced malware
+	// sandbox inline ML analysis.
+	Filename string `json:"filename,omitempty"`
+	// PartialHash: Required. Machine learning partial hash of the file to exclude
+	// from Advanced malware sandbox inline ML analysis.
+	PartialHash string `json:"partialHash,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filename") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filename") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineMlFileException) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineMlFileException
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineMlOverride: Defines what action to take for Advanced malware
+// sandbox inline ML threats per protocol.
+type WildfireInlineMlOverride struct {
+	// Action: Required. The action to take for Advanced malware sandbox inline ML
+	// override.
+	//
+	// Possible values:
+	//   "WILDFIRE_THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "WILDFIRE_DEFAULT_ACTION" - The default action (as specified by the
+	// vendor) is taken.
+	//   "WILDFIRE_ALLOW" - Packets matching this rule are allowed to transmit.
+	//   "WILDFIRE_ALERT" - Packets matching this rule are allowed to transmit, and
+	// a `threat_log` entry is sent to the consumer project.
+	//   "WILDFIRE_DENY" - Packets matching this rule are dropped, and a
+	// `threat_log` entry is sent to the consumer project.
+	Action string `json:"action,omitempty"`
+	// Protocol: Required. Protocol to match for Advanced malware sandbox inline ML
+	// override.
+	//
+	// Possible values:
+	//   "WILDFIRE_PROTOCOL_UNSPECIFIED" - Protocol not specified.
+	//   "WILDFIRE_SMTP" - SMTP protocol.
+	//   "WILDFIRE_SMB" - SMB protocol.
+	//   "WILDFIRE_POP3" - POP3 protocol.
+	//   "WILDFIRE_IMAP" - IMAP protocol.
+	//   "WILDFIRE_HTTP2" - HTTP2 protocol.
+	//   "WILDFIRE_HTTP" - HTTP protocol.
+	//   "WILDFIRE_FTP" - FTP protocol.
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineMlOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineMlOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineMlSettings: Defines the settings for Advanced malware sandbox
+// inline ML analysis.
+type WildfireInlineMlSettings struct {
+	// FileExceptions: Optional. List of files to exclude from Advanced malware
+	// sandbox inline ML analysis.
+	FileExceptions []*WildfireInlineMlFileException `json:"fileExceptions,omitempty"`
+	// InlineMlConfigs: Optional. List of inline ML configurations to enable in
+	// Advanced malware sandbox inline ML analysis.
+	InlineMlConfigs []*WildfireInlineMlSettingsInlineMlConfig `json:"inlineMlConfigs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileExceptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileExceptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineMlSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineMlSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireInlineMlSettingsInlineMlConfig: Configuration for Advanced malware
+// sandbox inline ML analysis per file type.
+type WildfireInlineMlSettingsInlineMlConfig struct {
+	// Action: Required. Action to take when a threat is detected using inline ML.
+	//
+	// Possible values:
+	//   "INLINE_ML_ACTION_UNSPECIFIED" - Inline ML threat action not specified.
+	//   "DISABLE" - Disables Advanced malware sandbox inline ML for the associated
+	// file type.
+	//   "ALERT" - Enables Advanced malware sandbox inline ML for the associated
+	// file type. Overrides any protocol-level settings with an action stricter
+	// than `ALERT` to `ALERT` so that detected malicious files generate a threat
+	// log in the consumer project without being blocked.
+	//   "ENABLE" - Enables Advanced malware sandbox inline ML for the associated
+	// file type. Detected malicious files are blocked.
+	Action string `json:"action,omitempty"`
+	// FileType: Required. File type to configure inline ML for.
+	//
+	// Possible values:
+	//   "INLINE_ML_CONFIG_UNSPECIFIED" - Inline ML configuration not specified.
+	//   "WINDOWS_EXECUTABLE" - Enables the machine learning engine to dynamically
+	// detect malicious PE files.
+	//   "POWERSHELL_SCRIPT1" - Enables the machine learning engine to dynamically
+	// identify malicious PowerShell scripts with a known length.
+	//   "POWERSHELL_SCRIPT2" - Enables the machine learning engine to dynamically
+	// identify malicious PowerShell scripts without a known length.
+	//   "ELF" - Enables the machine learning engine to dynamically detect
+	// malicious ELF files.
+	//   "MS_OFFICE" - Enables the machine learning engine to dynamically detect
+	// malicious Microsoft Office (97-2003) files.
+	//   "SHELL" - Enables the machine learning engine to dynamically detect
+	// malicious shell files.
+	//   "OOXML" - Enables the machine learning engine to dynamically detect
+	// malicious Office Open XML (OOXML) files.
+	//   "MACHO" - Enables the machine learning engine to dynamically detect
+	// malicious Mach-O files.
+	FileType string `json:"fileType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireInlineMlSettingsInlineMlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireInlineMlSettingsInlineMlConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireOverride: Defines what action to take for Advanced malware sandbox
+// threats per protocol.
+type WildfireOverride struct {
+	// Action: Required. Threat action override. For some threat types, only a
+	// subset of actions applies.
+	//
+	// Possible values:
+	//   "WILDFIRE_THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "WILDFIRE_DEFAULT_ACTION" - The default action (as specified by the
+	// vendor) is taken.
+	//   "WILDFIRE_ALLOW" - Packets matching this rule are allowed to transmit.
+	//   "WILDFIRE_ALERT" - Packets matching this rule are allowed to transmit, and
+	// a `threat_log` entry is sent to the consumer project.
+	//   "WILDFIRE_DENY" - Packets matching this rule are dropped, and a
+	// `threat_log` entry is sent to the consumer project.
+	Action string `json:"action,omitempty"`
+	// Protocol: Required. Protocol to match.
+	//
+	// Possible values:
+	//   "WILDFIRE_PROTOCOL_UNSPECIFIED" - Protocol not specified.
+	//   "WILDFIRE_SMTP" - SMTP protocol.
+	//   "WILDFIRE_SMB" - SMB protocol.
+	//   "WILDFIRE_POP3" - POP3 protocol.
+	//   "WILDFIRE_IMAP" - IMAP protocol.
+	//   "WILDFIRE_HTTP2" - HTTP2 protocol.
+	//   "WILDFIRE_HTTP" - HTTP protocol.
+	//   "WILDFIRE_FTP" - FTP protocol.
+	Protocol string `json:"protocol,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireSubmissionRule: Defines the file types to be submitted for Advanced
+// malware sandbox analysis and the direction of the traffic.
+type WildfireSubmissionRule struct {
+	// CustomFileTypes: Submit a custom list of file types for Advanced malware
+	// sandbox analysis.
+	CustomFileTypes *WildfireSubmissionRuleCustomFileTypes `json:"customFileTypes,omitempty"`
+	// Direction: Required. Direction for the files to be analyzed by Advanced
+	// malware sandbox.
+	//
+	// Possible values:
+	//   "DIRECTION_UNSPECIFIED" - Direction not specified.
+	//   "UPLOAD" - Upload direction.
+	//   "DOWNLOAD" - Download direction.
+	//   "BOTH" - Both upload and download directions.
+	Direction string `json:"direction,omitempty"`
+	// FileSelectionMode: Required. File selection mode for Advanced malware
+	// sandbox analysis.
+	//
+	// Possible values:
+	//   "FILE_SELECTION_MODE_UNSPECIFIED" - File selection mode not specified.
+	//   "ALL_FILE_TYPES" - Submit all file types for scanning.
+	//   "CUSTOM_FILE_TYPES" - Submit a custom list of file types for scanning.
+	FileSelectionMode string `json:"fileSelectionMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CustomFileTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CustomFileTypes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireSubmissionRule) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireSubmissionRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireSubmissionRuleCustomFileTypes: The options to submit a custom list
+// of file types for scanning.
+type WildfireSubmissionRuleCustomFileTypes struct {
+	// FileTypes: Required. File types to be submitted for Advanced malware sandbox
+	// analysis.
+	//
+	// Possible values:
+	//   "FILE_TYPE_UNSPECIFIED" - File type not specified.
+	//   "APK" - Android Application Package (APK) files.
+	//   "ARCHIVE" - Roshal Archive (RAR) and 7-Zip (7z) archive files.
+	//   "EMAIL_LINK" - HTTP and HTTPS links contained in SMTP and POP3 email
+	// messages.
+	//   "FLASH" - Adobe Flash applets and Flash content embedded in web pages.
+	//   "JAR" - Java applets (JAR and class file types).
+	//   "LINUX" - Executable and Linkable Format (ELF) files.
+	//   "MS_OFFICE" - Files used by Microsoft Office.
+	//   "PDF" - Portable Document Format (PDF) files.
+	//   "PE" - Portable Executable (PE) files.
+	//   "SCRIPT" - Script files, such as JScript (JS), VBScript (VBS), PowerShell
+	// scripts (PS1), batch files (BAT), and HTML Application (HTA) files.
+	FileTypes []string `json:"fileTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileTypes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileTypes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireSubmissionRuleCustomFileTypes) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireSubmissionRuleCustomFileTypes
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireThreatOverride: Defines what action to take for a specific Advanced
+// malware sandbox `threat_id` match.
+type WildfireThreatOverride struct {
+	// Action: Required. Threat action override.
+	//
+	// Possible values:
+	//   "WILDFIRE_THREAT_ACTION_UNSPECIFIED" - Threat action not specified.
+	//   "WILDFIRE_DEFAULT_ACTION" - The default action (as specified by the
+	// vendor) is taken.
+	//   "WILDFIRE_ALLOW" - Packets matching this rule are allowed to transmit.
+	//   "WILDFIRE_ALERT" - Packets matching this rule are allowed to transmit, and
+	// a `threat_log` entry is sent to the consumer project.
+	//   "WILDFIRE_DENY" - Packets matching this rule are dropped, and a
+	// `threat_log` entry is sent to the consumer project.
+	Action string `json:"action,omitempty"`
+	// ThreatId: Required. Threat ID to match.
+	ThreatId string `json:"threatId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireThreatOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireThreatOverride
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// WildfireVerdictChangeRequest: Message for an Advanced malware sandbox
+// verdict change request (`WildfireVerdictChangeRequest`).
+type WildfireVerdictChangeRequest struct {
+	// Comment: Required. The justification for the verdict change request. The
+	// maximum length is 2048 characters.
+	Comment string `json:"comment,omitempty"`
+	// CreateTime: Output only. The timestamp when the
+	// `WildfireVerdictChangeRequest` was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// FileName: Output only. The file name of the malware sample.
+	FileName string `json:"fileName,omitempty"`
+	// FileType: Output only. The file type of the malware sample.
+	FileType string `json:"fileType,omitempty"`
+	// FinalVerdict: Output only. The final verdict of the malware sample.
+	//
+	// Possible values:
+	//   "WILDFIRE_SAMPLE_VERDICT_UNKNOWN" - Default value. The malware sample is
+	// not yet classified.
+	//   "BENIGN" - Sample is safe and does not exhibit malicious behavior.
+	//   "MALWARE" - Sample is malware and poses a security threat.
+	//   "GRAYWARE" - Sample does not pose a direct security threat, but might
+	// display otherwise obtrusive behavior.
+	//   "PHISHING" - Link directs users to a phishing site and poses a security
+	// threat.
+	FinalVerdict string `json:"finalVerdict,omitempty"`
+	// Name: Output only. Identifier. The relative name of the
+	// `WildfireVerdictChangeRequest`. This is a unique identifier generated by the
+	// third-party API. Format:
+	// `organizations/{organization}/locations/{location}/firewallEndpoints/{firewal
+	// l_endpoint}/wildfireVerdictChangeRequests/{wildfire_verdict_change_request_id
+	// }` or
+	// `projects/{project}/locations/{location}/firewallEndpoints/{firewall_endpoint
+	// }/wildfireVerdictChangeRequests/{wildfire_verdict_change_request_id}`. Where
+	// `{wildfire_verdict_change_request_id}` is an ID in the format
+	// `^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}
+	// $`.
+	Name string `json:"name,omitempty"`
+	// NewVerdict: Required. The suggested verdict to apply to the malware sample.
+	//
+	// Possible values:
+	//   "WILDFIRE_SAMPLE_VERDICT_UNKNOWN" - Default value. The malware sample is
+	// not yet classified.
+	//   "BENIGN" - Sample is safe and does not exhibit malicious behavior.
+	//   "MALWARE" - Sample is malware and poses a security threat.
+	//   "GRAYWARE" - Sample does not pose a direct security threat, but might
+	// display otherwise obtrusive behavior.
+	//   "PHISHING" - Link directs users to a phishing site and poses a security
+	// threat.
+	NewVerdict string `json:"newVerdict,omitempty"`
+	// OldVerdict: Output only. The original verdict of the malware sample.
+	//
+	// Possible values:
+	//   "WILDFIRE_SAMPLE_VERDICT_UNKNOWN" - Default value. The malware sample is
+	// not yet classified.
+	//   "BENIGN" - Sample is safe and does not exhibit malicious behavior.
+	//   "MALWARE" - Sample is malware and poses a security threat.
+	//   "GRAYWARE" - Sample does not pose a direct security threat, but might
+	// display otherwise obtrusive behavior.
+	//   "PHISHING" - Link directs users to a phishing site and poses a security
+	// threat.
+	OldVerdict string `json:"oldVerdict,omitempty"`
+	// ResolutionTime: Output only. The timestamp when the
+	// `WildfireVerdictChangeRequest` was resolved.
+	ResolutionTime string `json:"resolutionTime,omitempty"`
+	// Sha256: Required. The SHA256 hash (FIPS 180-4
+	// (https://csrc.nist.gov/publications/detail/fips/180/4/final)) of the malware
+	// sample that requires a verdict change.
+	Sha256 string `json:"sha256,omitempty"`
+	// SourceRegion: Output only. The region of the file associated with the
+	// malware sample.
+	SourceRegion string `json:"sourceRegion,omitempty"`
+	// State: Output only. The review state of the `WildfireVerdictChangeRequest`.
+	//
+	// Possible values:
+	//   "VERDICT_CHANGE_REQUEST_STATE_UNSPECIFIED" - Default value. The request
+	// does not have a state. This value is unused.
+	//   "OPEN" - The request has been created and review has not started.
+	//   "CLOSED" - The malware sample has been reviewed and the final verdict has
+	// been updated.
+	//   "PENDING" - The malware sample is being reviewed.
+	State string `json:"state,omitempty"`
+	// UpdateTime: Output only. The timestamp when the
+	// `WildfireVerdictChangeRequest` was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// WildfireVerdictChangeRequestId: Output only. The ID of the
+	// `WildfireVerdictChangeRequest`. This is a unique identifier generated by the
+	// third-party API. Format:
+	// `^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}
+	// $`.
+	WildfireVerdictChangeRequestId string `json:"wildfireVerdictChangeRequestId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Comment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WildfireVerdictChangeRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod WildfireVerdictChangeRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6978,9 +7816,12 @@ type OrganizationsLocationsFirewallEndpointsCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Creates a new FirewallEndpoint in a given organization and location.
+// Create: Creates a new firewall endpoint in a given organization and
+// location.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this firewall endpoint is created.
+//     Format: `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *OrganizationsLocationsFirewallEndpointsService) Create(parent string, firewallendpoint *FirewallEndpoint) *OrganizationsLocationsFirewallEndpointsCreateCall {
 	c := &OrganizationsLocationsFirewallEndpointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6989,9 +7830,10 @@ func (r *OrganizationsLocationsFirewallEndpointsService) Create(parent string, f
 }
 
 // FirewallEndpointId sets the optional parameter "firewallEndpointId":
-// Required. Id of the requesting object. If auto-generating Id server-side,
-// remove this field and firewall_endpoint_id from the method_signature of
-// Create RPC.
+// Required. The ID to use for the firewall endpoint, which becomes the final
+// component of the endpoint's resource name. This value must be 1-63
+// characters long, start with a lowercase letter, contain only lowercase
+// letters, numbers, and hyphens, and cannot end with a hyphen.
 func (c *OrganizationsLocationsFirewallEndpointsCreateCall) FirewallEndpointId(firewallEndpointId string) *OrganizationsLocationsFirewallEndpointsCreateCall {
 	c.urlParams_.Set("firewallEndpointId", firewallEndpointId)
 	return c
@@ -6999,17 +7841,24 @@ func (c *OrganizationsLocationsFirewallEndpointsCreateCall) FirewallEndpointId(f
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *OrganizationsLocationsFirewallEndpointsCreateCall) RequestId(requestId string) *OrganizationsLocationsFirewallEndpointsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, validates
+// the request and previews the endpoint, but does not actually create it.
+func (c *OrganizationsLocationsFirewallEndpointsCreateCall) ValidateOnly(validateOnly bool) *OrganizationsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -7105,9 +7954,9 @@ type OrganizationsLocationsFirewallEndpointsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single org Endpoint.
+// Delete: Deletes a single organization endpoint.
 //
-// - name: Name of the resource.
+// - name: The name of the resource.
 func (r *OrganizationsLocationsFirewallEndpointsService) Delete(name string) *OrganizationsLocationsFirewallEndpointsDeleteCall {
 	c := &OrganizationsLocationsFirewallEndpointsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7116,15 +7965,15 @@ func (r *OrganizationsLocationsFirewallEndpointsService) Delete(name string) *Or
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *OrganizationsLocationsFirewallEndpointsDeleteCall) RequestId(requestId string) *OrganizationsLocationsFirewallEndpointsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -7219,9 +8068,9 @@ type OrganizationsLocationsFirewallEndpointsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single org Endpoint.
+// Get: Gets details of a single organization endpoint.
 //
-// - name: Name of the resource.
+// - name: The name of the resource.
 func (r *OrganizationsLocationsFirewallEndpointsService) Get(name string) *OrganizationsLocationsFirewallEndpointsGetCall {
 	c := &OrganizationsLocationsFirewallEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7329,38 +8178,43 @@ type OrganizationsLocationsFirewallEndpointsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists FirewallEndpoints in a given organization and location.
+// List: Lists firewall endpoints in a given organization and location.
 //
-// - parent: Parent value for ListEndpointsRequest.
+//   - parent: The parent resource from which the firewall endpoints are listed.
+//     Format: `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *OrganizationsLocationsFirewallEndpointsService) List(parent string) *OrganizationsLocationsFirewallEndpointsListCall {
 	c := &OrganizationsLocationsFirewallEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *OrganizationsLocationsFirewallEndpointsListCall) Filter(filter string) *OrganizationsLocationsFirewallEndpointsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *OrganizationsLocationsFirewallEndpointsListCall) OrderBy(orderBy string) *OrganizationsLocationsFirewallEndpointsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, server will pick an
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server might return fewer items than requested. The maximum value is 1000;
+// values above 1000 are coerced to 1000. If unspecified, the server picks an
 // appropriate default.
 func (c *OrganizationsLocationsFirewallEndpointsListCall) PageSize(pageSize int64) *OrganizationsLocationsFirewallEndpointsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListFirewallEndpoints` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListFirewallEndpoints` must match the call that provided the page token.
 func (c *OrganizationsLocationsFirewallEndpointsListCall) PageToken(pageToken string) *OrganizationsLocationsFirewallEndpointsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -7488,9 +8342,9 @@ type OrganizationsLocationsFirewallEndpointsPatchCall struct {
 	header_          http.Header
 }
 
-// Patch: Update a single org Endpoint.
+// Patch: Updates a single organization endpoint.
 //
-// - name: Immutable. Identifier. Name of resource.
+// - name: Immutable. Identifier. The name of the resource.
 func (r *OrganizationsLocationsFirewallEndpointsService) Patch(name string, firewallendpoint *FirewallEndpoint) *OrganizationsLocationsFirewallEndpointsPatchCall {
 	c := &OrganizationsLocationsFirewallEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7500,26 +8354,26 @@ func (r *OrganizationsLocationsFirewallEndpointsService) Patch(name string, fire
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *OrganizationsLocationsFirewallEndpointsPatchCall) RequestId(requestId string) *OrganizationsLocationsFirewallEndpointsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the Endpoint resource by the
-// update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask
+// used to specify the fields to be overwritten in the `FirewallEndpoint`
+// resource by the update. The fields specified in the `update_mask` are
+// relative to the resource, not the full request. A field is overwritten if it
+// is in the mask. If the user does not provide a mask, then all fields present
+// in the request are overwritten.
 func (c *OrganizationsLocationsFirewallEndpointsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsFirewallEndpointsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7607,6 +8461,404 @@ func (c *OrganizationsLocationsFirewallEndpointsPatchCall) Do(opts ...googleapi.
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall struct {
+	s                            *Service
+	parent                       string
+	wildfireverdictchangerequest *WildfireVerdictChangeRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Create: Creates an Advanced malware sandbox verdict change request in a
+// given firewall endpoint in an organization and location.
+//
+//   - parent: Parent value for `CreateWildfireVerdictChangeRequestRequest`. The
+//     parent is a firewall endpoint resource. Format:
+//     `organizations/{organization}/locations/{location}/firewallEndpoints/{firew
+//     all_endpoint}` or
+//     `projects/{project}/locations/{location}/firewallEndpoints/{firewall_endpoi
+//     nt}`.
+func (r *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) Create(parent string, wildfireverdictchangerequest *WildfireVerdictChangeRequest) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c := &OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.wildfireverdictchangerequest = wildfireverdictchangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Context(ctx context.Context) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.wildfireverdictchangerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/wildfireVerdictChangeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WildfireVerdictChangeRequest.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Do(opts ...googleapi.CallOption) (*WildfireVerdictChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WildfireVerdictChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Advanced malware sandbox verdict change request in a given
+// firewall endpoint in an organization and location.
+//
+//   - name: The name of the `WildfireVerdictChangeRequest` to retrieve. Format:
+//     `organizations/{organization}/locations/{location}/firewallEndpoints/{firew
+//     all_endpoint}/wildfireVerdictChangeRequests/{wildfire_verdict_change_reques
+//     t_id}` or
+//     `projects/{project}/locations/{location}/firewallEndpoints/{firewall_endpoi
+//     nt}/wildfireVerdictChangeRequests/{wildfire_verdict_change_request_id}`.
+//     Where `{wildfire_verdict_change_request_id}` is an ID in the format
+//     `^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{1
+//     2}$`.
+func (r *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) Get(name string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c := &OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Context(ctx context.Context) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WildfireVerdictChangeRequest.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Do(opts ...googleapi.CallOption) (*WildfireVerdictChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WildfireVerdictChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Advanced malware sandbox (WildFire) verdict change requests
+// in a given firewall endpoint in an organization and location.
+//
+//   - parent: Parent value for `ListWildfireVerdictChangeRequestsRequest`. The
+//     parent is a firewall endpoint resource. Format:
+//     `organizations/{organization}/locations/{location}/firewallEndpoints/{firew
+//     all_endpoint}` or
+//     `projects/{project}/locations/{location}/firewallEndpoints/{firewall_endpoi
+//     nt}`.
+func (r *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) List(parent string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c := &OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results. Supported fields are: - `sha256` (string, equality only, for
+// example, `sha256 = "...") - `state` (enum, equality only, valid values are
+// `OPEN`, `CLOSED`, or `PENDING`, for example, `state = "PENDING") -
+// `create_time` (timestamp, comparisons, for example, `create_time >=
+// "2026-01-01T00:00:00Z" AND create_time <= "2026-01-31T23:59:59Z"). If
+// filtering by `create_time`, you must specify both a start time and an end
+// time. If `create_time` is not specified, the query defaults to the past 30
+// days.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Filter(filter string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server might return fewer items than requested. If unspecified, the server
+// picks an appropriate default.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) PageSize(pageSize int64) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListWildfireVerdictChangeRequests` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListWildfireVerdictChangeRequests` must match the call that provided the
+// page token.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) PageToken(pageToken string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Context(ctx context.Context) *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/wildfireVerdictChangeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListWildfireVerdictChangeRequestsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Do(opts ...googleapi.CallOption) (*ListWildfireVerdictChangeRequestsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWildfireVerdictChangeRequestsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.organizations.locations.firewallEndpoints.wildfireVerdictChangeRequests.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Pages(ctx context.Context, f func(*ListWildfireVerdictChangeRequestsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type OrganizationsLocationsOperationsCancelCall struct {
@@ -8105,11 +9357,12 @@ type OrganizationsLocationsSecurityProfileGroupsCreateCall struct {
 	header_              http.Header
 }
 
-// Create: Creates a new SecurityProfileGroup in a given organization and
+// Create: Creates a new security profile group in a given organization and
 // location.
 //
-//   - parent: The parent resource of the SecurityProfileGroup. Must be in the
-//     format `projects|organizations/*/locations/{location}`.
+//   - parent: The parent resource of the `SecurityProfileGroup`. Format:
+//     `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *OrganizationsLocationsSecurityProfileGroupsService) Create(parent string, securityprofilegroup *SecurityProfileGroup) *OrganizationsLocationsSecurityProfileGroupsCreateCall {
 	c := &OrganizationsLocationsSecurityProfileGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8118,10 +9371,10 @@ func (r *OrganizationsLocationsSecurityProfileGroupsService) Create(parent strin
 }
 
 // SecurityProfileGroupId sets the optional parameter "securityProfileGroupId":
-// Required. Short name of the SecurityProfileGroup resource to be created.
-// This value should be 1-63 characters long, containing only letters, numbers,
-// hyphens, and underscores, and should not start with a number. E.g.
-// "security_profile_group1".
+// Required. Short name of the `SecurityProfileGroup` resource to be created.
+// This value must be 1 to 63 characters long, contain only lowercase letters,
+// numbers, and hyphens, and must not start with a number. For example,
+// `security-profile-group1`.
 func (c *OrganizationsLocationsSecurityProfileGroupsCreateCall) SecurityProfileGroupId(securityProfileGroupId string) *OrganizationsLocationsSecurityProfileGroupsCreateCall {
 	c.urlParams_.Set("securityProfileGroupId", securityProfileGroupId)
 	return c
@@ -8219,19 +9472,21 @@ type OrganizationsLocationsSecurityProfileGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single SecurityProfileGroup.
+// Delete: Deletes a single security profile group.
 //
-//   - name: A name of the SecurityProfileGroup to delete. Must be in the format
-//     `projects|organizations/*/locations/{location}/securityProfileGroups/{secur
-//     ity_profile_group}`.
+//   - name: The name of the `SecurityProfileGroup` to delete. Format:
+//     `organizations/{organization}/locations/{location}/securityProfileGroups/{s
+//     ecurity_profile_group}` or
+//     `projects/{project}/locations/{location}/securityProfileGroups/{security_pr
+//     ofile_group}`.
 func (r *OrganizationsLocationsSecurityProfileGroupsService) Delete(name string) *OrganizationsLocationsSecurityProfileGroupsDeleteCall {
 	c := &OrganizationsLocationsSecurityProfileGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": If client provided etag is out of
-// date, delete will return FAILED_PRECONDITION error.
+// Etag sets the optional parameter "etag": If the client-provided `etag` is
+// out of date, the delete request returns an `ABORTED` error.
 func (c *OrganizationsLocationsSecurityProfileGroupsDeleteCall) Etag(etag string) *OrganizationsLocationsSecurityProfileGroupsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -8326,11 +9581,13 @@ type OrganizationsLocationsSecurityProfileGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single SecurityProfileGroup.
+// Get: Gets details of a single security profile group.
 //
-//   - name: A name of the SecurityProfileGroup to get. Must be in the format
-//     `projects|organizations/*/locations/{location}/securityProfileGroups/{secur
-//     ity_profile_group}`.
+//   - name: The name of the `SecurityProfileGroup` to get. Format:
+//     `organizations/{organization}/locations/{location}/securityProfileGroups/{s
+//     ecurity_profile_group}` or
+//     `projects/{project}/locations/{location}/securityProfileGroups/{security_pr
+//     ofile_group}`.
 func (r *OrganizationsLocationsSecurityProfileGroupsService) Get(name string) *OrganizationsLocationsSecurityProfileGroupsGetCall {
 	c := &OrganizationsLocationsSecurityProfileGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8438,11 +9695,13 @@ type OrganizationsLocationsSecurityProfileGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists SecurityProfileGroups in a given organization and location.
+// List: Lists security profile group resources in a given organization and
+// location.
 //
 //   - parent: The project or organization and location from which the
-//     SecurityProfileGroups should be listed, specified in the format
-//     `projects|organizations/*/locations/{location}`.
+//     `SecurityProfileGroup` resources are listed. Format:
+//     `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *OrganizationsLocationsSecurityProfileGroupsService) List(parent string) *OrganizationsLocationsSecurityProfileGroupsListCall {
 	c := &OrganizationsLocationsSecurityProfileGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8450,16 +9709,19 @@ func (r *OrganizationsLocationsSecurityProfileGroupsService) List(parent string)
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// SecurityProfileGroups to return per call.
+// `SecurityProfileGroup` resources to return per call. The maximum value is
+// 1000; values above 1000 are coerced to 1000. If unspecified, the server
+// picks an appropriate default.
 func (c *OrganizationsLocationsSecurityProfileGroupsListCall) PageSize(pageSize int64) *OrganizationsLocationsSecurityProfileGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned by the
-// last `ListSecurityProfileGroupsResponse` Indicates that this is a
-// continuation of a prior `ListSecurityProfileGroups` call, and that the
-// system should return the next page of data.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSecurityProfileGroups` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListSecurityProfileGroups` must match the call that provided the page
+// token.
 func (c *OrganizationsLocationsSecurityProfileGroupsListCall) PageToken(pageToken string) *OrganizationsLocationsSecurityProfileGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -8587,12 +9849,14 @@ type OrganizationsLocationsSecurityProfileGroupsPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Updates the parameters of a single SecurityProfileGroup.
+// Patch: Updates the parameters of a single security profile group.
 //
-//   - name: Immutable. Identifier. Name of the SecurityProfileGroup resource. It
-//     matches pattern
-//     `projects|organizations/*/locations/{location}/securityProfileGroups/{secur
-//     ity_profile_group}`.
+//   - name: Immutable. Identifier. Name of the `SecurityProfileGroup` resource.
+//     Format:
+//     `organizations/{organization}/locations/{location}/securityProfileGroups/{s
+//     ecurity_profile_group}` or
+//     `projects/{project}/locations/{location}/securityProfileGroups/{security_pr
+//     ofile_group}`.
 func (r *OrganizationsLocationsSecurityProfileGroupsService) Patch(name string, securityprofilegroup *SecurityProfileGroup) *OrganizationsLocationsSecurityProfileGroupsPatchCall {
 	c := &OrganizationsLocationsSecurityProfileGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8601,10 +9865,10 @@ func (r *OrganizationsLocationsSecurityProfileGroupsService) Patch(name string, 
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the SecurityProfileGroup
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask.
+// used to specify the fields to be overwritten in the `SecurityProfileGroup`
+// resource by the update. The fields specified in the `update_mask` are
+// relative to the resource, not the full request. A field is overwritten if it
+// is in the mask.
 func (c *OrganizationsLocationsSecurityProfileGroupsPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsSecurityProfileGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8703,10 +9967,11 @@ type OrganizationsLocationsSecurityProfilesCreateCall struct {
 	header_         http.Header
 }
 
-// Create: Creates a new SecurityProfile in a given organization and location.
+// Create: Creates a new security profile in a given organization and location.
 //
-//   - parent: The parent resource of the SecurityProfile. Must be in the format
-//     `projects|organizations/*/locations/{location}`.
+//   - parent: The parent resource of the `SecurityProfile`. Format:
+//     `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *OrganizationsLocationsSecurityProfilesService) Create(parent string, securityprofile *SecurityProfile) *OrganizationsLocationsSecurityProfilesCreateCall {
 	c := &OrganizationsLocationsSecurityProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8715,9 +9980,9 @@ func (r *OrganizationsLocationsSecurityProfilesService) Create(parent string, se
 }
 
 // SecurityProfileId sets the optional parameter "securityProfileId": Required.
-// Short name of the SecurityProfile resource to be created. This value should
-// be 1-63 characters long, containing only letters, numbers, hyphens, and
-// underscores, and should not start with a number. E.g. "security_profile1".
+// Short name of the `SecurityProfile` resource to be created. This value must
+// be 1 to 63 characters long, contain only lowercase letters, numbers, and
+// hyphens, and must not start with a number. For example, `security-profile1`.
 func (c *OrganizationsLocationsSecurityProfilesCreateCall) SecurityProfileId(securityProfileId string) *OrganizationsLocationsSecurityProfilesCreateCall {
 	c.urlParams_.Set("securityProfileId", securityProfileId)
 	return c
@@ -8815,19 +10080,21 @@ type OrganizationsLocationsSecurityProfilesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single SecurityProfile.
+// Delete: Deletes a single security profile.
 //
-//   - name: A name of the SecurityProfile to delete. Must be in the format
-//     `projects|organizations/*/locations/{location}/securityProfiles/{security_p
-//     rofile_id}`.
+//   - name: The name of the `SecurityProfile` to delete. Format:
+//     `organizations/{organization}/locations/{location}/securityProfiles/{securi
+//     ty_profile}` or
+//     `projects/{project}/locations/{location}/securityProfiles/{security_profile
+//     }`.
 func (r *OrganizationsLocationsSecurityProfilesService) Delete(name string) *OrganizationsLocationsSecurityProfilesDeleteCall {
 	c := &OrganizationsLocationsSecurityProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": If client provided etag is out of
-// date, delete will return FAILED_PRECONDITION error.
+// Etag sets the optional parameter "etag": If the client-provided `etag` is
+// out of date, the delete request returns an `ABORTED` error.
 func (c *OrganizationsLocationsSecurityProfilesDeleteCall) Etag(etag string) *OrganizationsLocationsSecurityProfilesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -8922,11 +10189,13 @@ type OrganizationsLocationsSecurityProfilesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single SecurityProfile.
+// Get: Gets details of a single security profile.
 //
-//   - name: A name of the SecurityProfile to get. Must be in the format
-//     `projects|organizations/*/locations/{location}/securityProfiles/{security_p
-//     rofile_id}`.
+//   - name: The name of the `SecurityProfile` to get. Format:
+//     `organizations/{organization}/locations/{location}/securityProfiles/{securi
+//     ty_profile}` or
+//     `projects/{project}/locations/{location}/securityProfiles/{security_profile
+//     }`.
 func (r *OrganizationsLocationsSecurityProfilesService) Get(name string) *OrganizationsLocationsSecurityProfilesGetCall {
 	c := &OrganizationsLocationsSecurityProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9034,11 +10303,12 @@ type OrganizationsLocationsSecurityProfilesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists SecurityProfiles in a given organization and location.
+// List: Lists security profile resources in a given organization and location.
 //
 //   - parent: The project or organization and location from which the
-//     SecurityProfiles should be listed, specified in the format
-//     `projects|organizations/*/locations/{location}`.
+//     `SecurityProfile` resources are listed. Format:
+//     `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *OrganizationsLocationsSecurityProfilesService) List(parent string) *OrganizationsLocationsSecurityProfilesListCall {
 	c := &OrganizationsLocationsSecurityProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9046,16 +10316,18 @@ func (r *OrganizationsLocationsSecurityProfilesService) List(parent string) *Org
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// SecurityProfiles to return per call.
+// `SecurityProfile` resources to return per call. The maximum value is 1000;
+// values above 1000 are coerced to 1000. If unspecified, the server picks an
+// appropriate default.
 func (c *OrganizationsLocationsSecurityProfilesListCall) PageSize(pageSize int64) *OrganizationsLocationsSecurityProfilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned by the
-// last `ListSecurityProfilesResponse` Indicates that this is a continuation of
-// a prior `ListSecurityProfiles` call, and that the system should return the
-// next page of data.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSecurityProfiles` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListSecurityProfiles` must match the call that provided the page token.
 func (c *OrganizationsLocationsSecurityProfilesListCall) PageToken(pageToken string) *OrganizationsLocationsSecurityProfilesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -9183,12 +10455,14 @@ type OrganizationsLocationsSecurityProfilesPatchCall struct {
 	header_         http.Header
 }
 
-// Patch: Updates the parameters of a single SecurityProfile.
+// Patch: Updates the parameters of a single security profile.
 //
-//   - name: Immutable. Identifier. Name of the SecurityProfile resource. It
-//     matches pattern
-//     `projects|organizations/*/locations/{location}/securityProfiles/{security_p
-//     rofile}`.
+//   - name: Immutable. Identifier. Name of the `SecurityProfile` resource.
+//     Format:
+//     `organizations/{organization}/locations/{location}/securityProfiles/{securi
+//     ty_profile}` or
+//     `projects/{project}/locations/{location}/securityProfiles/{security_profile
+//     }`.
 func (r *OrganizationsLocationsSecurityProfilesService) Patch(name string, securityprofile *SecurityProfile) *OrganizationsLocationsSecurityProfilesPatchCall {
 	c := &OrganizationsLocationsSecurityProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9197,10 +10471,10 @@ func (r *OrganizationsLocationsSecurityProfilesService) Patch(name string, secur
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the SecurityProfile resource
-// by the update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask.
+// used to specify the fields to be overwritten in the `SecurityProfile`
+// resource by the update. The fields specified in the `update_mask` are
+// relative to the resource, not the full request. A field is overwritten if it
+// is in the mask.
 func (c *OrganizationsLocationsSecurityProfilesPatchCall) UpdateMask(updateMask string) *OrganizationsLocationsSecurityProfilesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15075,10 +16349,11 @@ type ProjectsLocationsFirewallEndpointAssociationsCreateCall struct {
 	header_                     http.Header
 }
 
-// Create: Creates a new FirewallEndpointAssociation in a given project and
+// Create: Creates a new firewall endpoint association in a given project and
 // location.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this firewall endpoint association is
+//     created. Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsFirewallEndpointAssociationsService) Create(parent string, firewallendpointassociation *FirewallEndpointAssociation) *ProjectsLocationsFirewallEndpointAssociationsCreateCall {
 	c := &ProjectsLocationsFirewallEndpointAssociationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15087,9 +16362,11 @@ func (r *ProjectsLocationsFirewallEndpointAssociationsService) Create(parent str
 }
 
 // FirewallEndpointAssociationId sets the optional parameter
-// "firewallEndpointAssociationId": Id of the requesting object. If
-// auto-generating Id server-side, remove this field and
-// firewall_endpoint_association_id from the method_signature of Create RPC.
+// "firewallEndpointAssociationId": The ID to use for the firewall endpoint
+// association, which becomes the final component of the association's resource
+// name. This value must be 1-63 characters long, start with a lowercase
+// letter, contain only lowercase letters, numbers, and hyphens, and cannot end
+// with a hyphen.
 func (c *ProjectsLocationsFirewallEndpointAssociationsCreateCall) FirewallEndpointAssociationId(firewallEndpointAssociationId string) *ProjectsLocationsFirewallEndpointAssociationsCreateCall {
 	c.urlParams_.Set("firewallEndpointAssociationId", firewallEndpointAssociationId)
 	return c
@@ -15097,15 +16374,15 @@ func (c *ProjectsLocationsFirewallEndpointAssociationsCreateCall) FirewallEndpoi
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *ProjectsLocationsFirewallEndpointAssociationsCreateCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointAssociationsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -15203,9 +16480,9 @@ type ProjectsLocationsFirewallEndpointAssociationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single FirewallEndpointAssociation.
+// Delete: Deletes a single firewall endpoint association.
 //
-// - name: Name of the resource.
+// - name: The name of the resource.
 func (r *ProjectsLocationsFirewallEndpointAssociationsService) Delete(name string) *ProjectsLocationsFirewallEndpointAssociationsDeleteCall {
 	c := &ProjectsLocationsFirewallEndpointAssociationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15214,15 +16491,15 @@ func (r *ProjectsLocationsFirewallEndpointAssociationsService) Delete(name strin
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *ProjectsLocationsFirewallEndpointAssociationsDeleteCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointAssociationsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -15317,9 +16594,9 @@ type ProjectsLocationsFirewallEndpointAssociationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single FirewallEndpointAssociation.
+// Get: Gets details of a single firewall endpoint association.
 //
-// - name: Name of the resource.
+// - name: The name of the resource.
 func (r *ProjectsLocationsFirewallEndpointAssociationsService) Get(name string) *ProjectsLocationsFirewallEndpointAssociationsGetCall {
 	c := &ProjectsLocationsFirewallEndpointAssociationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15427,38 +16704,43 @@ type ProjectsLocationsFirewallEndpointAssociationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists Associations in a given project and location.
+// List: Lists associations in a given project and location.
 //
-// - parent: Parent value for ListAssociationsRequest.
+//   - parent: The parent resource from which the firewall endpoint associations
+//     are listed. Format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsFirewallEndpointAssociationsService) List(parent string) *ProjectsLocationsFirewallEndpointAssociationsListCall {
 	c := &ProjectsLocationsFirewallEndpointAssociationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsFirewallEndpointAssociationsListCall) Filter(filter string) *ProjectsLocationsFirewallEndpointAssociationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsFirewallEndpointAssociationsListCall) OrderBy(orderBy string) *ProjectsLocationsFirewallEndpointAssociationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, server will pick an
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server might return fewer items than requested. The maximum value is 1000;
+// values above 1000 are coerced to 1000. If unspecified, the server picks an
 // appropriate default.
 func (c *ProjectsLocationsFirewallEndpointAssociationsListCall) PageSize(pageSize int64) *ProjectsLocationsFirewallEndpointAssociationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListFirewallEndpointAssociations` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListFirewallEndpointAssociations` must match the call that provided the
+// page token.
 func (c *ProjectsLocationsFirewallEndpointAssociationsListCall) PageToken(pageToken string) *ProjectsLocationsFirewallEndpointAssociationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -15586,9 +16868,9 @@ type ProjectsLocationsFirewallEndpointAssociationsPatchCall struct {
 	header_                     http.Header
 }
 
-// Patch: Update a single FirewallEndpointAssociation.
+// Patch: Updates a single firewall endpoint association.
 //
-// - name: Immutable. Identifier. name of resource.
+// - name: Immutable. Identifier. The name of the resource.
 func (r *ProjectsLocationsFirewallEndpointAssociationsService) Patch(name string, firewallendpointassociation *FirewallEndpointAssociation) *ProjectsLocationsFirewallEndpointAssociationsPatchCall {
 	c := &ProjectsLocationsFirewallEndpointAssociationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15598,26 +16880,26 @@ func (r *ProjectsLocationsFirewallEndpointAssociationsService) Patch(name string
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *ProjectsLocationsFirewallEndpointAssociationsPatchCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointAssociationsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the Association resource by
-// the update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask
+// used to specify the fields to be overwritten in the
+// `FirewallEndpointAssociation` resource by the update. The fields specified
+// in the `update_mask` are relative to the resource, not the full request. A
+// field is overwritten if it is in the mask. If the user does not provide a
+// mask, then all fields present in the request are overwritten.
 func (c *ProjectsLocationsFirewallEndpointAssociationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFirewallEndpointAssociationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -15716,9 +16998,11 @@ type ProjectsLocationsFirewallEndpointsCreateCall struct {
 	header_          http.Header
 }
 
-// Create: Creates a new FirewallEndpoint in a given project and location.
+// Create: Creates a new firewall endpoint in a given project and location.
 //
-// - parent: Value for parent.
+//   - parent: The parent resource where this firewall endpoint is created.
+//     Format: `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsFirewallEndpointsService) Create(parent string, firewallendpoint *FirewallEndpoint) *ProjectsLocationsFirewallEndpointsCreateCall {
 	c := &ProjectsLocationsFirewallEndpointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -15727,9 +17011,10 @@ func (r *ProjectsLocationsFirewallEndpointsService) Create(parent string, firewa
 }
 
 // FirewallEndpointId sets the optional parameter "firewallEndpointId":
-// Required. Id of the requesting object. If auto-generating Id server-side,
-// remove this field and firewall_endpoint_id from the method_signature of
-// Create RPC.
+// Required. The ID to use for the firewall endpoint, which becomes the final
+// component of the endpoint's resource name. This value must be 1-63
+// characters long, start with a lowercase letter, contain only lowercase
+// letters, numbers, and hyphens, and cannot end with a hyphen.
 func (c *ProjectsLocationsFirewallEndpointsCreateCall) FirewallEndpointId(firewallEndpointId string) *ProjectsLocationsFirewallEndpointsCreateCall {
 	c.urlParams_.Set("firewallEndpointId", firewallEndpointId)
 	return c
@@ -15737,17 +17022,24 @@ func (c *ProjectsLocationsFirewallEndpointsCreateCall) FirewallEndpointId(firewa
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *ProjectsLocationsFirewallEndpointsCreateCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set, validates
+// the request and previews the endpoint, but does not actually create it.
+func (c *ProjectsLocationsFirewallEndpointsCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsFirewallEndpointsCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
 	return c
 }
 
@@ -15843,9 +17135,9 @@ type ProjectsLocationsFirewallEndpointsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single project Endpoint.
+// Delete: Deletes a single project endpoint.
 //
-// - name: Name of the resource.
+// - name: The name of the resource.
 func (r *ProjectsLocationsFirewallEndpointsService) Delete(name string) *ProjectsLocationsFirewallEndpointsDeleteCall {
 	c := &ProjectsLocationsFirewallEndpointsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -15854,15 +17146,15 @@ func (r *ProjectsLocationsFirewallEndpointsService) Delete(name string) *Project
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes after
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes after the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *ProjectsLocationsFirewallEndpointsDeleteCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -15957,9 +17249,9 @@ type ProjectsLocationsFirewallEndpointsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single project Endpoint.
+// Get: Gets details of a single project endpoint.
 //
-// - name: Name of the resource.
+// - name: The name of the resource.
 func (r *ProjectsLocationsFirewallEndpointsService) Get(name string) *ProjectsLocationsFirewallEndpointsGetCall {
 	c := &ProjectsLocationsFirewallEndpointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16067,38 +17359,43 @@ type ProjectsLocationsFirewallEndpointsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists FirewallEndpoints in a given project and location.
+// List: Lists firewall endpoints in a given project and location.
 //
-// - parent: Parent value for ListEndpointsRequest.
+//   - parent: The parent resource from which the firewall endpoints are listed.
+//     Format: `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsFirewallEndpointsService) List(parent string) *ProjectsLocationsFirewallEndpointsListCall {
 	c := &ProjectsLocationsFirewallEndpointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsFirewallEndpointsListCall) Filter(filter string) *ProjectsLocationsFirewallEndpointsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order the
-// results
+// results.
 func (c *ProjectsLocationsFirewallEndpointsListCall) OrderBy(orderBy string) *ProjectsLocationsFirewallEndpointsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size. Server
-// may return fewer items than requested. If unspecified, server will pick an
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server might return fewer items than requested. The maximum value is 1000;
+// values above 1000 are coerced to 1000. If unspecified, the server picks an
 // appropriate default.
 func (c *ProjectsLocationsFirewallEndpointsListCall) PageSize(pageSize int64) *ProjectsLocationsFirewallEndpointsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token identifying a
-// page of results the server should return.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListFirewallEndpoints` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListFirewallEndpoints` must match the call that provided the page token.
 func (c *ProjectsLocationsFirewallEndpointsListCall) PageToken(pageToken string) *ProjectsLocationsFirewallEndpointsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -16226,9 +17523,9 @@ type ProjectsLocationsFirewallEndpointsPatchCall struct {
 	header_          http.Header
 }
 
-// Patch: Update a single project Endpoint.
+// Patch: Updates a single project endpoint.
 //
-// - name: Immutable. Identifier. Name of resource.
+// - name: Immutable. Identifier. The name of the resource.
 func (r *ProjectsLocationsFirewallEndpointsService) Patch(name string, firewallendpoint *FirewallEndpoint) *ProjectsLocationsFirewallEndpointsPatchCall {
 	c := &ProjectsLocationsFirewallEndpointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -16238,26 +17535,26 @@ func (r *ProjectsLocationsFirewallEndpointsService) Patch(name string, firewalle
 
 // RequestId sets the optional parameter "requestId": An optional request ID to
 // identify requests. Specify a unique request ID so that if you must retry
-// your request, the server will know to ignore the request if it has already
-// been completed. The server will guarantee that for at least 60 minutes since
-// the first request. For example, consider a situation where you make an
-// initial request and the request times out. If you make the request again
-// with the same request ID, the server can check if original operation with
-// the same request ID was received, and if so, will ignore the second request.
-// This prevents clients from accidentally creating duplicate commitments. The
+// your request, the server knows to ignore the request if it has already been
+// completed. The server guarantees that for at least 60 minutes since the
+// first request. For example, consider a situation where you make an initial
+// request and the request times out. If you make the request again with the
+// same request ID, the server can check if the original operation with the
+// same request ID was received, and if so, ignores the second request. This
+// prevents clients from accidentally creating duplicate commitments. The
 // request ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// supported (`00000000-0000-0000-0000-000000000000`).
 func (c *ProjectsLocationsFirewallEndpointsPatchCall) RequestId(requestId string) *ProjectsLocationsFirewallEndpointsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the Endpoint resource by the
-// update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask. If the user does not provide a mask then all fields will be
-// overwritten.
+// UpdateMask sets the optional parameter "updateMask": Required. Field mask
+// used to specify the fields to be overwritten in the `FirewallEndpoint`
+// resource by the update. The fields specified in the `update_mask` are
+// relative to the resource, not the full request. A field is overwritten if it
+// is in the mask. If the user does not provide a mask, then all fields present
+// in the request are overwritten.
 func (c *ProjectsLocationsFirewallEndpointsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFirewallEndpointsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -16345,6 +17642,404 @@ func (c *ProjectsLocationsFirewallEndpointsPatchCall) Do(opts ...googleapi.CallO
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall struct {
+	s                            *Service
+	parent                       string
+	wildfireverdictchangerequest *WildfireVerdictChangeRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// Create: Creates an Advanced malware sandbox verdict change request in a
+// given firewall endpoint in a project and location.
+//
+//   - parent: Parent value for `CreateWildfireVerdictChangeRequestRequest`. The
+//     parent is a firewall endpoint resource. Format:
+//     `organizations/{organization}/locations/{location}/firewallEndpoints/{firew
+//     all_endpoint}` or
+//     `projects/{project}/locations/{location}/firewallEndpoints/{firewall_endpoi
+//     nt}`.
+func (r *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) Create(parent string, wildfireverdictchangerequest *WildfireVerdictChangeRequest) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c := &ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.wildfireverdictchangerequest = wildfireverdictchangerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.wildfireverdictchangerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/wildfireVerdictChangeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WildfireVerdictChangeRequest.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsCreateCall) Do(opts ...googleapi.CallOption) (*WildfireVerdictChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WildfireVerdictChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an Advanced malware sandbox verdict change request in a given
+// firewall endpoint in a project and location.
+//
+//   - name: The name of the `WildfireVerdictChangeRequest` to retrieve. Format:
+//     `organizations/{organization}/locations/{location}/firewallEndpoints/{firew
+//     all_endpoint}/wildfireVerdictChangeRequests/{wildfire_verdict_change_reques
+//     t_id}` or
+//     `projects/{project}/locations/{location}/firewallEndpoints/{firewall_endpoi
+//     nt}/wildfireVerdictChangeRequests/{wildfire_verdict_change_request_id}`.
+//     Where `{wildfire_verdict_change_request_id}` is an ID in the format
+//     `^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{1
+//     2}$`.
+func (r *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) Get(name string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c := &ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *WildfireVerdictChangeRequest.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsGetCall) Do(opts ...googleapi.CallOption) (*WildfireVerdictChangeRequest, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WildfireVerdictChangeRequest{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the Advanced malware sandbox verdict change requests in a given
+// firewall endpoint in a project and location.
+//
+//   - parent: Parent value for `ListWildfireVerdictChangeRequestsRequest`. The
+//     parent is a firewall endpoint resource. Format:
+//     `organizations/{organization}/locations/{location}/firewallEndpoints/{firew
+//     all_endpoint}` or
+//     `projects/{project}/locations/{location}/firewallEndpoints/{firewall_endpoi
+//     nt}`.
+func (r *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsService) List(parent string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c := &ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to filter the
+// results. Supported fields are: - `sha256` (string, equality only, for
+// example, `sha256 = "...") - `state` (enum, equality only, valid values are
+// `OPEN`, `CLOSED`, or `PENDING`, for example, `state = "PENDING") -
+// `create_time` (timestamp, comparisons, for example, `create_time >=
+// "2026-01-01T00:00:00Z" AND create_time <= "2026-01-31T23:59:59Z"). If
+// filtering by `create_time`, you must specify both a start time and an end
+// time. If `create_time` is not specified, the query defaults to the past 30
+// days.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Filter(filter string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// server might return fewer items than requested. If unspecified, the server
+// picks an appropriate default.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) PageSize(pageSize int64) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListWildfireVerdictChangeRequests` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters provided
+// to `ListWildfireVerdictChangeRequests` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) PageToken(pageToken string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Context(ctx context.Context) *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/wildfireVerdictChangeRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListWildfireVerdictChangeRequestsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Do(opts ...googleapi.CallOption) (*ListWildfireVerdictChangeRequestsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWildfireVerdictChangeRequestsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networksecurity.projects.locations.firewallEndpoints.wildfireVerdictChangeRequests.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsFirewallEndpointsWildfireVerdictChangeRequestsListCall) Pages(ctx context.Context, f func(*ListWildfireVerdictChangeRequestsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsGatewaySecurityPoliciesCreateCall struct {
@@ -24073,10 +25768,12 @@ type ProjectsLocationsSecurityProfileGroupsCreateCall struct {
 	header_              http.Header
 }
 
-// Create: Creates a new SecurityProfileGroup in a given project and location.
+// Create: Creates a new security profile group in a given project and
+// location.
 //
-//   - parent: The parent resource of the SecurityProfileGroup. Must be in the
-//     format `projects|organizations/*/locations/{location}`.
+//   - parent: The parent resource of the `SecurityProfileGroup`. Format:
+//     `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsSecurityProfileGroupsService) Create(parent string, securityprofilegroup *SecurityProfileGroup) *ProjectsLocationsSecurityProfileGroupsCreateCall {
 	c := &ProjectsLocationsSecurityProfileGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24085,10 +25782,10 @@ func (r *ProjectsLocationsSecurityProfileGroupsService) Create(parent string, se
 }
 
 // SecurityProfileGroupId sets the optional parameter "securityProfileGroupId":
-// Required. Short name of the SecurityProfileGroup resource to be created.
-// This value should be 1-63 characters long, containing only letters, numbers,
-// hyphens, and underscores, and should not start with a number. E.g.
-// "security_profile_group1".
+// Required. Short name of the `SecurityProfileGroup` resource to be created.
+// This value must be 1 to 63 characters long, contain only lowercase letters,
+// numbers, and hyphens, and must not start with a number. For example,
+// `security-profile-group1`.
 func (c *ProjectsLocationsSecurityProfileGroupsCreateCall) SecurityProfileGroupId(securityProfileGroupId string) *ProjectsLocationsSecurityProfileGroupsCreateCall {
 	c.urlParams_.Set("securityProfileGroupId", securityProfileGroupId)
 	return c
@@ -24186,19 +25883,21 @@ type ProjectsLocationsSecurityProfileGroupsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single SecurityProfileGroup.
+// Delete: Deletes a single security profile group.
 //
-//   - name: A name of the SecurityProfileGroup to delete. Must be in the format
-//     `projects|organizations/*/locations/{location}/securityProfileGroups/{secur
-//     ity_profile_group}`.
+//   - name: The name of the `SecurityProfileGroup` to delete. Format:
+//     `organizations/{organization}/locations/{location}/securityProfileGroups/{s
+//     ecurity_profile_group}` or
+//     `projects/{project}/locations/{location}/securityProfileGroups/{security_pr
+//     ofile_group}`.
 func (r *ProjectsLocationsSecurityProfileGroupsService) Delete(name string) *ProjectsLocationsSecurityProfileGroupsDeleteCall {
 	c := &ProjectsLocationsSecurityProfileGroupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": If client provided etag is out of
-// date, delete will return FAILED_PRECONDITION error.
+// Etag sets the optional parameter "etag": If the client-provided `etag` is
+// out of date, the delete request returns an `ABORTED` error.
 func (c *ProjectsLocationsSecurityProfileGroupsDeleteCall) Etag(etag string) *ProjectsLocationsSecurityProfileGroupsDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -24293,11 +25992,13 @@ type ProjectsLocationsSecurityProfileGroupsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single SecurityProfileGroup.
+// Get: Gets details of a single security profile group.
 //
-//   - name: A name of the SecurityProfileGroup to get. Must be in the format
-//     `projects|organizations/*/locations/{location}/securityProfileGroups/{secur
-//     ity_profile_group}`.
+//   - name: The name of the `SecurityProfileGroup` to get. Format:
+//     `organizations/{organization}/locations/{location}/securityProfileGroups/{s
+//     ecurity_profile_group}` or
+//     `projects/{project}/locations/{location}/securityProfileGroups/{security_pr
+//     ofile_group}`.
 func (r *ProjectsLocationsSecurityProfileGroupsService) Get(name string) *ProjectsLocationsSecurityProfileGroupsGetCall {
 	c := &ProjectsLocationsSecurityProfileGroupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24405,11 +26106,13 @@ type ProjectsLocationsSecurityProfileGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists SecurityProfileGroups in a given project and location.
+// List: Lists security profile group resources in a given project and
+// location.
 //
 //   - parent: The project or organization and location from which the
-//     SecurityProfileGroups should be listed, specified in the format
-//     `projects|organizations/*/locations/{location}`.
+//     `SecurityProfileGroup` resources are listed. Format:
+//     `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsSecurityProfileGroupsService) List(parent string) *ProjectsLocationsSecurityProfileGroupsListCall {
 	c := &ProjectsLocationsSecurityProfileGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24417,16 +26120,19 @@ func (r *ProjectsLocationsSecurityProfileGroupsService) List(parent string) *Pro
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// SecurityProfileGroups to return per call.
+// `SecurityProfileGroup` resources to return per call. The maximum value is
+// 1000; values above 1000 are coerced to 1000. If unspecified, the server
+// picks an appropriate default.
 func (c *ProjectsLocationsSecurityProfileGroupsListCall) PageSize(pageSize int64) *ProjectsLocationsSecurityProfileGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned by the
-// last `ListSecurityProfileGroupsResponse` Indicates that this is a
-// continuation of a prior `ListSecurityProfileGroups` call, and that the
-// system should return the next page of data.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSecurityProfileGroups` call. Provide this to retrieve
+// the subsequent page. When paginating, all other parameters provided to
+// `ListSecurityProfileGroups` must match the call that provided the page
+// token.
 func (c *ProjectsLocationsSecurityProfileGroupsListCall) PageToken(pageToken string) *ProjectsLocationsSecurityProfileGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -24554,12 +26260,14 @@ type ProjectsLocationsSecurityProfileGroupsPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Updates the parameters of a single SecurityProfileGroup.
+// Patch: Updates the parameters of a single security profile group.
 //
-//   - name: Immutable. Identifier. Name of the SecurityProfileGroup resource. It
-//     matches pattern
-//     `projects|organizations/*/locations/{location}/securityProfileGroups/{secur
-//     ity_profile_group}`.
+//   - name: Immutable. Identifier. Name of the `SecurityProfileGroup` resource.
+//     Format:
+//     `organizations/{organization}/locations/{location}/securityProfileGroups/{s
+//     ecurity_profile_group}` or
+//     `projects/{project}/locations/{location}/securityProfileGroups/{security_pr
+//     ofile_group}`.
 func (r *ProjectsLocationsSecurityProfileGroupsService) Patch(name string, securityprofilegroup *SecurityProfileGroup) *ProjectsLocationsSecurityProfileGroupsPatchCall {
 	c := &ProjectsLocationsSecurityProfileGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -24568,10 +26276,10 @@ func (r *ProjectsLocationsSecurityProfileGroupsService) Patch(name string, secur
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the SecurityProfileGroup
-// resource by the update. The fields specified in the update_mask are relative
-// to the resource, not the full request. A field will be overwritten if it is
-// in the mask.
+// used to specify the fields to be overwritten in the `SecurityProfileGroup`
+// resource by the update. The fields specified in the `update_mask` are
+// relative to the resource, not the full request. A field is overwritten if it
+// is in the mask.
 func (c *ProjectsLocationsSecurityProfileGroupsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSecurityProfileGroupsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -24670,10 +26378,11 @@ type ProjectsLocationsSecurityProfilesCreateCall struct {
 	header_         http.Header
 }
 
-// Create: Creates a new SecurityProfile in a given project and location.
+// Create: Creates a new security profile in a given project and location.
 //
-//   - parent: The parent resource of the SecurityProfile. Must be in the format
-//     `projects|organizations/*/locations/{location}`.
+//   - parent: The parent resource of the `SecurityProfile`. Format:
+//     `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsSecurityProfilesService) Create(parent string, securityprofile *SecurityProfile) *ProjectsLocationsSecurityProfilesCreateCall {
 	c := &ProjectsLocationsSecurityProfilesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -24682,9 +26391,9 @@ func (r *ProjectsLocationsSecurityProfilesService) Create(parent string, securit
 }
 
 // SecurityProfileId sets the optional parameter "securityProfileId": Required.
-// Short name of the SecurityProfile resource to be created. This value should
-// be 1-63 characters long, containing only letters, numbers, hyphens, and
-// underscores, and should not start with a number. E.g. "security_profile1".
+// Short name of the `SecurityProfile` resource to be created. This value must
+// be 1 to 63 characters long, contain only lowercase letters, numbers, and
+// hyphens, and must not start with a number. For example, `security-profile1`.
 func (c *ProjectsLocationsSecurityProfilesCreateCall) SecurityProfileId(securityProfileId string) *ProjectsLocationsSecurityProfilesCreateCall {
 	c.urlParams_.Set("securityProfileId", securityProfileId)
 	return c
@@ -24782,19 +26491,21 @@ type ProjectsLocationsSecurityProfilesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a single SecurityProfile.
+// Delete: Deletes a single security profile.
 //
-//   - name: A name of the SecurityProfile to delete. Must be in the format
-//     `projects|organizations/*/locations/{location}/securityProfiles/{security_p
-//     rofile_id}`.
+//   - name: The name of the `SecurityProfile` to delete. Format:
+//     `organizations/{organization}/locations/{location}/securityProfiles/{securi
+//     ty_profile}` or
+//     `projects/{project}/locations/{location}/securityProfiles/{security_profile
+//     }`.
 func (r *ProjectsLocationsSecurityProfilesService) Delete(name string) *ProjectsLocationsSecurityProfilesDeleteCall {
 	c := &ProjectsLocationsSecurityProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": If client provided etag is out of
-// date, delete will return FAILED_PRECONDITION error.
+// Etag sets the optional parameter "etag": If the client-provided `etag` is
+// out of date, the delete request returns an `ABORTED` error.
 func (c *ProjectsLocationsSecurityProfilesDeleteCall) Etag(etag string) *ProjectsLocationsSecurityProfilesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -24889,11 +26600,13 @@ type ProjectsLocationsSecurityProfilesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets details of a single SecurityProfile.
+// Get: Gets details of a single security profile.
 //
-//   - name: A name of the SecurityProfile to get. Must be in the format
-//     `projects|organizations/*/locations/{location}/securityProfiles/{security_p
-//     rofile_id}`.
+//   - name: The name of the `SecurityProfile` to get. Format:
+//     `organizations/{organization}/locations/{location}/securityProfiles/{securi
+//     ty_profile}` or
+//     `projects/{project}/locations/{location}/securityProfiles/{security_profile
+//     }`.
 func (r *ProjectsLocationsSecurityProfilesService) Get(name string) *ProjectsLocationsSecurityProfilesGetCall {
 	c := &ProjectsLocationsSecurityProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25001,11 +26714,12 @@ type ProjectsLocationsSecurityProfilesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists SecurityProfiles in a given project and location.
+// List: Lists security profiles in a given project and location.
 //
 //   - parent: The project or organization and location from which the
-//     SecurityProfiles should be listed, specified in the format
-//     `projects|organizations/*/locations/{location}`.
+//     `SecurityProfile` resources are listed. Format:
+//     `organizations/{organization}/locations/{location}` or
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsSecurityProfilesService) List(parent string) *ProjectsLocationsSecurityProfilesListCall {
 	c := &ProjectsLocationsSecurityProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -25013,16 +26727,18 @@ func (r *ProjectsLocationsSecurityProfilesService) List(parent string) *Projects
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of
-// SecurityProfiles to return per call.
+// `SecurityProfile` resources to return per call. The maximum value is 1000;
+// values above 1000 are coerced to 1000. If unspecified, the server picks an
+// appropriate default.
 func (c *ProjectsLocationsSecurityProfilesListCall) PageSize(pageSize int64) *ProjectsLocationsSecurityProfilesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned by the
-// last `ListSecurityProfilesResponse` Indicates that this is a continuation of
-// a prior `ListSecurityProfiles` call, and that the system should return the
-// next page of data.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListSecurityProfiles` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListSecurityProfiles` must match the call that provided the page token.
 func (c *ProjectsLocationsSecurityProfilesListCall) PageToken(pageToken string) *ProjectsLocationsSecurityProfilesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -25150,12 +26866,14 @@ type ProjectsLocationsSecurityProfilesPatchCall struct {
 	header_         http.Header
 }
 
-// Patch: Updates the parameters of a single SecurityProfile.
+// Patch: Updates the parameters of a single security profile.
 //
-//   - name: Immutable. Identifier. Name of the SecurityProfile resource. It
-//     matches pattern
-//     `projects|organizations/*/locations/{location}/securityProfiles/{security_p
-//     rofile}`.
+//   - name: Immutable. Identifier. Name of the `SecurityProfile` resource.
+//     Format:
+//     `organizations/{organization}/locations/{location}/securityProfiles/{securi
+//     ty_profile}` or
+//     `projects/{project}/locations/{location}/securityProfiles/{security_profile
+//     }`.
 func (r *ProjectsLocationsSecurityProfilesService) Patch(name string, securityprofile *SecurityProfile) *ProjectsLocationsSecurityProfilesPatchCall {
 	c := &ProjectsLocationsSecurityProfilesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -25164,10 +26882,10 @@ func (r *ProjectsLocationsSecurityProfilesService) Patch(name string, securitypr
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. Field mask is
-// used to specify the fields to be overwritten in the SecurityProfile resource
-// by the update. The fields specified in the update_mask are relative to the
-// resource, not the full request. A field will be overwritten if it is in the
-// mask.
+// used to specify the fields to be overwritten in the `SecurityProfile`
+// resource by the update. The fields specified in the `update_mask` are
+// relative to the resource, not the full request. A field is overwritten if it
+// is in the mask.
 func (c *ProjectsLocationsSecurityProfilesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsSecurityProfilesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

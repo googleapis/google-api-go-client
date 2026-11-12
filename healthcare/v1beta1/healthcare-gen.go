@@ -1285,6 +1285,12 @@ type BulkDeleteResourcesRequest struct {
 	// resource type. Each object contains newline delimited strings in the format
 	// {resourceType}/{resourceId}.
 	GcsDestination *GoogleCloudHealthcareV1beta1FhirGcsDestination `json:"gcsDestination,omitempty"`
+	// GcsSource: Optional. Specifies the Cloud Storage source data location
+	// containing the list of resource IDs to delete. Each file inside `gcs_source`
+	// must contain newline-delimited strings in the format
+	// `{resourceType}/{resourceId}`. This field is mutually exclusive with filter
+	// parameters such as `type` and `until`.
+	GcsSource *GoogleCloudHealthcareV1beta1FhirGcsSource `json:"gcsSource,omitempty"`
 	// Type: Optional. String of comma-delimited FHIR resource types. If provided,
 	// only resources of the specified resource type(s) will be deleted.
 	Type string `json:"type,omitempty"`
@@ -1293,10 +1299,8 @@ type BulkDeleteResourcesRequest struct {
 	// example, `2015-02-07T13:28:17.239+02:00` or `2017-01-01T00:00:00Z`. The time
 	// must be specified to the second and include a time zone.
 	Until string `json:"until,omitempty"`
-	// ValidateOnly: Optional. If set to true, the request will only perform a dry
-	// run. By default (once the behavior change is fully rolled out), this will
-	// default to true. During the transition period, the default depends on the
-	// Mendel flag status for the project.
+	// ValidateOnly: Optional. If set to `true`, the request will only perform a
+	// dry run. By default this will default to `false`.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 	// VersionConfig: Optional. Specifies which version of the resources to delete.
 	//
@@ -2849,6 +2853,82 @@ func (s EvaluateUserConsentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExecuteCohortRequest: Request to execute a cohort definition from a FHIR
+// store based on provided queries and sending the resulting subset of data to
+// a specified sink.
+type ExecuteCohortRequest struct {
+	// At: Optional. If provided, the queried resources will represent the state of
+	// the FHIR store at the given past timestamp. Runs the operation against the
+	// state of the store at this timestamp. State of the store is represented by
+	// the resource versions that were the current versions during the time
+	// specified or the resources that have not been updated since. Only works if
+	// the store has history enabled. Although users should be able to use this
+	// field to reproduce previous runs of the operation and get consistent
+	// results, there are a few cases where the past state of the store can be
+	// altered, thus resulting in no guarantee of reproducibility. For example,
+	// resource versions can be deleted using the purge method, or modified using
+	// ImportResourcesHistory.
+	At string `json:"_at,omitempty"`
+	// FhirpathQuery: Return resources that match the specified FHIRPath
+	// expressions.
+	FhirpathQuery *FHIRPathQuery `json:"fhirpathQuery,omitempty"`
+	// GcsDestination: The Cloud Storage output destination. The Healthcare Service
+	// Agent account requires the `roles/storage.objectAdmin` role on the Cloud
+	// Storage location. The exported outputs are organized by FHIR resource types.
+	// The server creates one or more objects per resource type depending on the
+	// volume of the resources exported. When there is only one object per resource
+	// type, the object name is in the form of `{operation_id}_{resource_type}`.
+	// When there are multiple objects for a given resource type, the object names
+	// are in the form of `{operation_id}_{resource_type}-{index}-of-{total}`. Each
+	// object contains newline delimited JSON, and each line is a FHIR resource.
+	GcsDestination *GoogleCloudHealthcareV1beta1FhirGcsDestination `json:"gcsDestination,omitempty"`
+	// ValidateOnly: Optional. If true, the request will be validated but no cohort
+	// execution will be run.
+	ValidateOnly bool `json:"validateOnly,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "At") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "At") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteCohortRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteCohortRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExecuteCohortResponse: Response when ExecuteCohort operation finishes
+// querying all resources and sends them to a sink destination. This structure
+// will be included in the response when the operation finishes successfully.
+type ExecuteCohortResponse struct {
+	// FhirStore: The name of the queried FHIR store, in the format
+	// `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStor
+	// es/{fhir_store_id}`.
+	FhirStore string `json:"fhirStore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FhirStore") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FhirStore") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExecuteCohortResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecuteCohortResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExplainDataAccessConsentInfo: The enforcing consent's metadata.
 type ExplainDataAccessConsentInfo struct {
 	// CascadeOrigins: The compartment base resources that matched a cascading
@@ -3227,6 +3307,74 @@ type Expr struct {
 
 func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Expression: A FHIRPath expression.
+type Expression struct {
+	// FhirpathExpression: Required. FHIRPath expression used for evaluation
+	// against FHIR resources. Must be in the format
+	// `[/"Resource"/"DomainResource"].[expression]` Expressions are applied per
+	// single FHIR resource, so they can't span multiple base resource types. For
+	// example, expressions like `Patient.union(Encounter)` are invalid. For
+	// expressions involving more than one resource or resource type, consider
+	// using the FHIRPath `resolve()` method. Expressions are only allowed to
+	// evaluate to a boolean type or a single or collection of FHIR.Resource
+	// (https://hl7.org/fhir/resource.html) types. Expressions evaluating to
+	// boolean would include the base resource in the result if the expression
+	// evaluates to `true`. Expressions evaluating to one or more FHIR.Resource
+	// types will include those resources in the result, e.g.
+	// `CareTeam.member.resolve()`.
+	FhirpathExpression string `json:"fhirpathExpression,omitempty"`
+	// Label: Optional. Expressions with the same label will be grouped together
+	// under the same directory when exporting to Cloud Storage.
+	Label string `json:"label,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FhirpathExpression") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FhirpathExpression") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Expression) MarshalJSON() ([]byte, error) {
+	type NoMethod Expression
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// FHIRPathQuery: A set of FHIRPath expressions that are used to filter the
+// FHIR resources. These expressions do not maintain referential integrity on
+// the resulting resources. Users are responsible for making sure the
+// expressions are written in a way to ensure that if desired.
+type FHIRPathQuery struct {
+	// EngineVersion: Optional. FHIRPath engine version number, for example "1.0".
+	// Will use the latest version if not specified. For more details about the
+	// supported versions, see
+	// https://cloud.google.com/healthcare-api/private/docs/how-tos/fhir-execute-cohort#fhirpath-engine-versions.
+	EngineVersion string `json:"engineVersion,omitempty"`
+	// Expressions: Required. List of FHIRPath expressions used for filtering the
+	// data.
+	Expressions []*Expression `json:"expressions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EngineVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EngineVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FHIRPathQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod FHIRPathQuery
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4322,14 +4470,14 @@ func (s GoogleCloudHealthcareV1beta1FhirGcsDestination) MarshalJSON() ([]byte, e
 // GoogleCloudHealthcareV1beta1FhirGcsSource: Specifies the configuration for
 // importing data from Cloud Storage.
 type GoogleCloudHealthcareV1beta1FhirGcsSource struct {
-	// Uri: Points to a Cloud Storage URI containing file(s) to import. The URI
-	// must be in the following format: `gs://{bucket_id}/{object_id}`. The URI can
-	// include wildcards in `object_id` and thus identify multiple files. Supported
-	// wildcards: * `*` to match 0 or more non-separator characters * `**` to match
-	// 0 or more characters (including separators). Must be used at the end of a
-	// path and with no other wildcards in the path. Can also be used with a file
-	// extension (such as .ndjson), which imports all files with the extension in
-	// the specified directory and its sub-directories. For example,
+	// Uri: Required. Points to a Cloud Storage URI containing file(s) to import.
+	// The URI must be in the following format: `gs://{bucket_id}/{object_id}`. The
+	// URI can include wildcards in `object_id` and thus identify multiple files.
+	// Supported wildcards: * `*` to match 0 or more non-separator characters *
+	// `**` to match 0 or more characters (including separators). Must be used at
+	// the end of a path and with no other wildcards in the path. Can also be used
+	// with a file extension (such as .ndjson), which imports all files with the
+	// extension in the specified directory and its sub-directories. For example,
 	// `gs://my-bucket/my-directory/**.ndjson` imports all files with `.ndjson`
 	// extensions in `my-directory/` and its sub-directories. * `?` to match 1
 	// character Files matching the wildcard are expected to contain content only,
@@ -18190,6 +18338,120 @@ func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupCall) Do(opts ...goog
 	return c.doRequest("")
 }
 
+type ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall struct {
+	s          *Service
+	name       string
+	body_      io.Reader
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// BulkExportGroupPost: Export resources using POST.
+//
+//   - name: Name of the `Group` resource that is exported, in format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}/fhir/Group/{group_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) BulkExportGroupPost(name string, body_ io.Reader) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c := &ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.body_ = body_
+	return c
+}
+
+// Since sets the optional parameter "_since": If provided, only resources
+// updated after this time are exported. The time uses the format
+// YYYY-MM-DDThh:mm:ss.sss+zz:zz. For example, `2015-02-07T13:28:17.239+02:00`
+// or `2017-01-01T00:00:00Z`. The time must be specified to the second and
+// include a time zone.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Since(Since string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("_since", Since)
+	return c
+}
+
+// Type sets the optional parameter "_type": String of comma-delimited FHIR
+// resource types. If provided, only resources of the specified resource
+// type(s) are exported.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Type(Type string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("_type", Type)
+	return c
+}
+
+// OrganizeOutputBy sets the optional parameter "organizeOutputBy": Required.
+// The FHIR resource type used to organize exported resources. Only supports
+// "Patient". When organized by Patient resource, output files are grouped as
+// follows: * Patient file(s) containing the Patient resources. Each Patient is
+// sequentially followed by all resources the Patient references, and all
+// resources that reference the Patient (equivalent to a GetPatientEverything
+// request). * Individual files grouped by resource type for resources in the
+// Group's member field and the Group resource itself. Resources may be
+// duplicated across multiple Patients. For example, if two Patient resources
+// reference the same Organization resource, it will appear twice, once after
+// each Patient. The Group resource from the request does not appear in the
+// Patient files.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) OrganizeOutputBy(organizeOutputBy string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("organizeOutputBy", organizeOutputBy)
+	return c
+}
+
+// OutputFormat sets the optional parameter "outputFormat": Output format of
+// the export. This field is optional and only `application/fhir+ndjson` is
+// supported.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) OutputFormat(outputFormat string) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("outputFormat", outputFormat)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	body := bytes.NewBuffer(nil)
+	_, err := body.ReadFrom(c.body_)
+	if err != nil {
+		return nil, err
+	}
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}/$export")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.bulk-export-group-post", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.bulk-export-group-post" call.
+func (c *ProjectsLocationsDatasetsFhirStoresBulkExportGroupPostCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	return c.doRequest("")
+}
+
 type ProjectsLocationsDatasetsFhirStoresBulkDeleteCall struct {
 	s                          *Service
 	name                       string
@@ -18728,6 +18990,119 @@ func (c *ProjectsLocationsDatasetsFhirStoresDeleteCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDatasetsFhirStoresExecuteCohortCall struct {
+	s                    *Service
+	name                 string
+	executecohortrequest *ExecuteCohortRequest
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// ExecuteCohort: Executes and materializes a cohort definition from a FHIR
+// store. This method returns an Operation that can be used to track the status
+// of the cohort execution by calling GetOperation. Immediate fatal errors
+// appear in the error field, errors are also logged to Cloud Logging (see
+// Viewing error logs in Cloud Logging
+// (https://cloud.google.com/healthcare/docs/how-tos/logging)). Otherwise, when
+// the operation finishes, a detailed response of type ExecuteCohortResponse is
+// returned in the response field. The metadata field type for this operation
+// is OperationMetadata.
+//
+//   - name: The name of the FHIR store to query, in the format
+//     `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirSt
+//     ores/{fhir_store_id}`.
+func (r *ProjectsLocationsDatasetsFhirStoresService) ExecuteCohort(name string, executecohortrequest *ExecuteCohortRequest) *ProjectsLocationsDatasetsFhirStoresExecuteCohortCall {
+	c := &ProjectsLocationsDatasetsFhirStoresExecuteCohortCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.executecohortrequest = executecohortrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDatasetsFhirStoresExecuteCohortCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresExecuteCohortCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDatasetsFhirStoresExecuteCohortCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresExecuteCohortCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDatasetsFhirStoresExecuteCohortCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDatasetsFhirStoresExecuteCohortCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.executecohortrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+name}:executeCohort")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.executeCohort", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "healthcare.projects.locations.datasets.fhirStores.executeCohort" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDatasetsFhirStoresExecuteCohortCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "healthcare.projects.locations.datasets.fhirStores.executeCohort", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -550,11 +550,14 @@ func (s AzureEventHubs) MarshalJSON() ([]byte, error) {
 
 // BigQueryConfig: Configuration for a BigQuery subscription.
 type BigQueryConfig struct {
-	// DropUnknownFields: Optional. When true and use_topic_schema is true, any
-	// fields that are a part of the topic schema that are not part of the BigQuery
-	// table schema are dropped when writing to BigQuery. Otherwise, the schemas
-	// must be kept in sync and any messages with extra fields are not written and
-	// remain in the subscription's backlog.
+	// DropUnknownFields: Optional. If true and `use_topic_schema` is true, drops
+	// any fields that are part of the topic schema that are not part of the
+	// BigQuery table schema when writing to BigQuery. Otherwise, the schemas must
+	// be kept in sync and any messages with extra fields are not written and
+	// remain in the subscription's backlog. If true and `use_table_schema` is
+	// true, drops any fields in the message that are not part of the BigQuery
+	// table schema when writing to BigQuery. Otherwise, the write to BigQuery will
+	// fail.
 	DropUnknownFields bool `json:"dropUnknownFields,omitempty"`
 	// ServiceAccountEmail: Optional. The service account to use to write to
 	// BigQuery. The subscription creator or updater that specifies this field must
@@ -622,17 +625,19 @@ func (s BigQueryConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// BigtableConfig: Configuration for a Bigtable subscription. The Pub/Sub
-// message will be written to a Bigtable row as follows: - row key:
-// subscription name, message ID hash, and message ID delimited by `#`. -
-// columns: message bytes written to a single column family `data` with an
-// empty-string column qualifier. - cell timestamp: the message publish
-// timestamp.
+// BigtableConfig: Configuration for a Bigtable subscription, which will write
+// a Pub/Sub message to a Bigtable row. See the ColumnFamilyMapping
+// documentation below for details on how the row keys and columns will be
+// written.
 type BigtableConfig struct {
 	// AppProfileId: Optional. The app profile to use for the Bigtable writes. If
 	// not specified, the "default" application profile will be used. The app
 	// profile must use single-cluster routing.
 	AppProfileId string `json:"appProfileId,omitempty"`
+	// ColumnFamilyMapping: Optional. Configuration that allows writing row keys
+	// and/or columns based on fields in the input message. The input message
+	// format must be JSON if this field is set.
+	ColumnFamilyMapping *ColumnFamilyMapping `json:"columnFamilyMapping,omitempty"`
 	// ServiceAccountEmail: Optional. The service account to use to write to
 	// Bigtable. The subscription creator or updater that specifies this field must
 	// have `iam.serviceAccounts.actAs` permission on the service account. If not
@@ -803,8 +808,8 @@ type CloudStorage struct {
 	// format.
 	AvroFormat *AvroFormat `json:"avroFormat,omitempty"`
 	// Bucket: Optional. Cloud Storage bucket. The bucket name must be without any
-	// prefix like "gs://". See the [bucket naming requirements]
-	// (https://cloud.google.com/storage/docs/buckets#naming).
+	// prefix like "gs://". See the bucket naming requirements (
+	// https://cloud.google.com/storage/docs/buckets#naming).
 	Bucket string `json:"bucket,omitempty"`
 	// MatchGlob: Optional. Glob pattern used to match objects that will be
 	// ingested. If unset, all objects will be ingested. See the supported patterns
@@ -944,6 +949,49 @@ func (s CloudStorageConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ColumnFamilyMapping: Configuration for writing a Pub/Sub message to a
+// Bigtable row with a user-defined key and writing to column families. If this
+// field is set: - The subscription messages must be formatted as JSON. - The
+// row key mapping is configured in the `key_definition` section. - The
+// top-level fields will be written either: - By default, they will be written
+// to the `data` column family with the field name as the column qualifier. -
+// But if the field name matches an existing column family (except for the
+// default `data` column), then that field will be written to that column
+// family, either as a scalar or its next level nested fields if it's a JSON
+// object. - The cell timestamp will be the message publish timestamp. If the
+// field is not set, the default behavior is to write: - row key: subscription
+// name, message ID hash, and message ID delimited by `#`. - columns: message
+// bytes written to a single column family `data` with an empty-string column
+// qualifier. - cell timestamp: the message publish timestamp.
+type ColumnFamilyMapping struct {
+	// DelimitedKey: Optional. If set, the row key is constructed from the given
+	// key fields and delimiter. All key fields must be present in the message;
+	// otherwise, the message remains in the subscription backlog.
+	DelimitedKey *DelimitedKey `json:"delimitedKey,omitempty"`
+	// RowKeySchema: Optional. If set, the row key is constructed from the field
+	// names of the table's structured row key
+	// ({$universe.dns_names.final_documentation_domain}/bigtable/docs/manage-row-ke
+	// y-schemas). Note that if the field is nullable in the structured row key,
+	// then it need not be present in the message; null will be used instead.
+	RowKeySchema *RowKeySchema `json:"rowKeySchema,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DelimitedKey") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DelimitedKey") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ColumnFamilyMapping) MarshalJSON() ([]byte, error) {
+	type NoMethod ColumnFamilyMapping
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CommitSchemaRequest: Request for CommitSchema method.
 type CommitSchemaRequest struct {
 	// Schema: Required. The schema revision to commit.
@@ -963,6 +1011,31 @@ type CommitSchemaRequest struct {
 
 func (s CommitSchemaRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CommitSchemaRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CompiledProtoSchema: Configuration specific to compiled Protocol Buffer
+// schemas.
+type CompiledProtoSchema struct {
+	// CompiledBytes: Required. The compiled FileDescriptorSet binary.
+	CompiledBytes string `json:"compiledBytes,omitempty"`
+	// RootMessage: Required. The name of the root message type in the schema.
+	RootMessage string `json:"rootMessage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompiledBytes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompiledBytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompiledProtoSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod CompiledProtoSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1131,6 +1204,34 @@ type DeadLetterPolicy struct {
 
 func (s DeadLetterPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod DeadLetterPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DelimitedKey: Row key definition based on fields from the message.
+type DelimitedKey struct {
+	// Delimiter: Optional. Byte sequence used to delimit concatenated fields. Must
+	// be specified if multiple key fields are used. The delimiter must contain at
+	// least 1 character and at most 50 characters.
+	Delimiter string `json:"delimiter,omitempty"`
+	// KeyFields: Required. The key fields to construct from the row key. The
+	// fields must be present in the message as a top-level field, i.e. JSON path
+	// expressions will not traverse into nested objects.
+	KeyFields []string `json:"keyFields,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Delimiter") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Delimiter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DelimitedKey) MarshalJSON() ([]byte, error) {
+	type NoMethod DelimitedKey
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1815,6 +1916,36 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 type PubSubAvroFormat struct {
 }
 
+// PublishOperation: Telemetry about a `Publish` operation which may or may not
+// be common across individual RPCs.
+type PublishOperation struct {
+	// HedgedAttemptCount: Optional. If the publisher client is using publish
+	// hedging, provides the attempt count for the hedge (starting at 1). A value
+	// of 0 indicates that the request was not hedged.
+	HedgedAttemptCount int64 `json:"hedgedAttemptCount,omitempty"`
+	// PublishStartTime: Optional. Time at which the `publish()` call was initiated
+	// in the client library, meaning across all RPC retry attempts, see grpc
+	// retries (https://grpc.io/docs/guides/retry/). Provides a sense of the
+	// end-to-end publish duration from the client perspective, across retries.
+	PublishStartTime string `json:"publishStartTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HedgedAttemptCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HedgedAttemptCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PublishOperation) MarshalJSON() ([]byte, error) {
+	type NoMethod PublishOperation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PublishRequest: Request for the Publish method.
 type PublishRequest struct {
 	// Messages: Required. The messages to publish.
@@ -1864,13 +1995,38 @@ func (s PublishResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// PubsubClientTelemetry: Client-side telemetry about Pub/Sub requests, useful
+// for debugging purposes. If the client opts to provide this information, it
+// will be passed as a serialized proto in the `x-goog-pubsub-client-telemetry`
+// header.
+type PubsubClientTelemetry struct {
+	// PublishOperation: Optional. Telemetry about a `Publish` operation.
+	PublishOperation *PublishOperation `json:"publishOperation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PublishOperation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PublishOperation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PubsubClientTelemetry) MarshalJSON() ([]byte, error) {
+	type NoMethod PubsubClientTelemetry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PubsubMessage: A message that is published by publishers and consumed by
 // subscribers. The message must contain either a non-empty data field or at
 // least one attribute. Note that client libraries represent this object
 // differently depending on the language. See the corresponding client library
 // documentation (https://cloud.google.com/pubsub/docs/reference/libraries) for
-// more information. See [quotas and limits]
-// (https://cloud.google.com/pubsub/quotas) for more information about message
+// more information. See quotas and limits (
+// https://cloud.google.com/pubsub/quotas) for more information about message
 // limits.
 type PubsubMessage struct {
 	// Attributes: Optional. Attributes for this message. If this field is empty,
@@ -2009,8 +2165,8 @@ type PushConfig struct {
 	// message.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
 	// PubsubWrapper: Optional. When set, the payload to the push endpoint is in
-	// the form of the JSON representation of a PubsubMessage
-	// (https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
+	// the form of the JSON representation of a PubsubMessage (
+	// https://cloud.google.com/pubsub/docs/reference/rpc/google.pubsub.v1#pubsubmessage).
 	PubsubWrapper *PubsubWrapper `json:"pubsubWrapper,omitempty"`
 	// PushEndpoint: Optional. A URL locating the endpoint to which messages should
 	// be pushed. For example, a Webhook endpoint might use
@@ -2127,8 +2283,20 @@ func (s RollbackSchemaRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RowKeySchema: Row key definition that reads the input message fields based
+// on the field names of the table's structured row key
+// ({$universe.dns_names.final_documentation_domain}/bigtable/docs/manage-row-ke
+// y-schemas). Note that if the field is nullable in the structured row key,
+// then it need not be present in the message; null will be used instead.
+type RowKeySchema struct {
+}
+
 // Schema: A schema resource.
 type Schema struct {
+	// CompiledProtoSchema: Optional. Configuration for a schema provided as a
+	// pre-compiled Protocol Buffer FileDescriptorSet. The `type` field above must
+	// be set to PROTOCOL_BUFFER.
+	CompiledProtoSchema *CompiledProtoSchema `json:"compiledProtoSchema,omitempty"`
 	// Definition: The definition of the schema. This should contain a string
 	// representing the full definition of the schema that is a valid schema
 	// definition of the type specified in `type`.
@@ -2151,15 +2319,15 @@ type Schema struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Definition") to
+	// ForceSendFields is a list of field names (e.g. "CompiledProtoSchema") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Definition") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CompiledProtoSchema") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2293,8 +2461,8 @@ type Snapshot struct {
 	// will expire in 4 days. The service will refuse to create a snapshot that
 	// would expire in less than 1 hour after creation.
 	ExpireTime string `json:"expireTime,omitempty"`
-	// Labels: Optional. See [Creating and managing labels]
-	// (https://cloud.google.com/pubsub/docs/labels).
+	// Labels: Optional. See Creating and managing labels (
+	// https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: Optional. The name of the snapshot.
 	Name string `json:"name,omitempty"`
@@ -2426,8 +2594,8 @@ type Subscription struct {
 	// messages. If true, then messages are not expunged from the subscription's
 	// backlog, even if they are acknowledged, until they fall out of the
 	// `message_retention_duration` window. This must be true if you would like to
-	// [`Seek` to a timestamp]
-	// (https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time) in the
+	// `Seek` to a timestamp (
+	// https://cloud.google.com/pubsub/docs/replay-overview#seek_to_a_time) in the
 	// past to replay previously-acknowledged messages.
 	RetainAckedMessages bool `json:"retainAckedMessages,omitempty"`
 	// RetryPolicy: Optional. A policy that specifies how Pub/Sub retries message
@@ -2575,8 +2743,8 @@ type Topic struct {
 	// used to protect access to messages published on this topic. The expected
 	// format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
-	// Labels: Optional. See [Creating and managing labels]
-	// (https://cloud.google.com/pubsub/docs/labels).
+	// Labels: Optional. See Creating and managing labels (
+	// https://cloud.google.com/pubsub/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 	// MessageRetentionDuration: Optional. Indicates the minimum duration to retain
 	// a message after it is published to the topic. If this field is set, messages
@@ -4374,8 +4542,8 @@ type ProjectsSnapshotsCreateCall struct {
 // `FAILED_PRECONDITION` is returned. See also the `Snapshot.expire_time`
 // field. If the name is not provided in the request, the server will assign a
 // random name for this snapshot on the same project as the subscription,
-// conforming to the [resource name format]
-// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
+// conforming to the resource name format (
+// https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
 // generated name is populated in the returned Snapshot object. Note that for
 // REST API requests, you must specify a name in the request.
 //
@@ -4484,8 +4652,8 @@ type ProjectsSnapshotsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Removes an existing snapshot. Snapshots are used in [Seek]
-// (https://cloud.google.com/pubsub/docs/replay-overview) operations, which
+// Delete: Removes an existing snapshot. Snapshots are used in Seek (
+// https://cloud.google.com/pubsub/docs/replay-overview) operations, which
 // allow you to manage message acknowledgments in bulk. That is, you can set
 // the acknowledgment state of messages in an existing subscription to the
 // state captured by a snapshot. When the snapshot is deleted, all messages
@@ -5420,14 +5588,13 @@ type ProjectsSubscriptionsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates a subscription to a given topic. See the [resource name
-// rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
-// If the subscription already exists, returns `ALREADY_EXISTS`. If the
-// corresponding topic doesn't exist, returns `NOT_FOUND`. If the name is not
-// provided in the request, the server will assign a random name for this
-// subscription on the same project as the topic, conforming to the [resource
-// name format]
-// (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
+// Create: Creates a subscription to a given topic. See the resource name rules
+// ( https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). If the
+// subscription already exists, returns `ALREADY_EXISTS`. If the corresponding
+// topic doesn't exist, returns `NOT_FOUND`. If the name is not provided in the
+// request, the server will assign a random name for this subscription on the
+// same project as the topic, conforming to the resource name format (
+// https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names). The
 // generated name is populated in the returned Subscription object. Note that
 // for REST API requests, you must specify a name in the request.
 //
@@ -6559,8 +6726,8 @@ type ProjectsSubscriptionsSeekCall struct {
 }
 
 // Seek: Seeks an existing subscription to a point in time or to a given
-// snapshot, whichever is provided in the request. Snapshots are used in [Seek]
-// (https://cloud.google.com/pubsub/docs/replay-overview) operations, which
+// snapshot, whichever is provided in the request. Snapshots are used in Seek (
+// https://cloud.google.com/pubsub/docs/replay-overview) operations, which
 // allow you to manage message acknowledgments in bulk. That is, you can set
 // the acknowledgment state of messages in an existing subscription to the
 // state captured by a snapshot. Note that both the subscription and the
@@ -6885,8 +7052,8 @@ type ProjectsTopicsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates the given topic with the given name. See the [resource name
-// rules] (https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
+// Create: Creates the given topic with the given name. See the resource name
+// rules ( https://cloud.google.com/pubsub/docs/pubsub-basics#resource_names).
 //
 //   - name: Identifier. The name of the topic. It must have the format
 //     "projects/{project}/topics/{topic}". `{topic}` must start with a letter,

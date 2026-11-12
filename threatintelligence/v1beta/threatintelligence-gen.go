@@ -223,6 +223,30 @@ type ProjectsFindingsService struct {
 	s *Service
 }
 
+// AVDetections: Details about the detection vendors.
+type AVDetections struct {
+	// DetectedVendorCount: Optional. Number of vendors that detected the threat.
+	DetectedVendorCount int64 `json:"detectedVendorCount,omitempty"`
+	// TotalVendorCount: Optional. Total number of vendors.
+	TotalVendorCount int64 `json:"totalVendorCount,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DetectedVendorCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DetectedVendorCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AVDetections) MarshalJSON() ([]byte, error) {
+	type NoMethod AVDetections
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Alert: Stateful object representing a group of Findings. Key feature to an
 // Alert is that it expresses the user's intent towards the findings of that
 // group, even those that haven't occurred yet.
@@ -284,6 +308,29 @@ type Alert struct {
 	//   "BENIGN" - alert is benign.
 	//   "TRACKED_EXTERNALLY" - alert is tracked externally.
 	State string `json:"state,omitempty"`
+	// Tags: Output only. System taxonomy tags associated with this alert.
+	//
+	// Possible values:
+	//   "ALERT_TAG_UNSPECIFIED" - Default value, should never be set.
+	//   "ALERT_TAG_PASSWORD_LENGTH_UNDER_8" - Password length is under 8
+	// characters.
+	//   "ALERT_TAG_PASSWORD_LENGTH_8_TO_11" - Password length is between 8 and 11
+	// characters inclusive.
+	//   "ALERT_TAG_PASSWORD_LENGTH_12_PLUS" - Password length is 12 or more
+	// characters.
+	//   "ALERT_TAG_PASSWORD_HAS_LOWERCASE" - Password contains at least one
+	// lowercase letter.
+	//   "ALERT_TAG_PASSWORD_HAS_UPPERCASE" - Password contains at least one
+	// uppercase letter.
+	//   "ALERT_TAG_PASSWORD_HAS_NUMBER" - Password contains at least one numeric
+	// digit.
+	//   "ALERT_TAG_PASSWORD_HAS_SPECIAL" - Password contains at least one special
+	// character.
+	//   "ALERT_TAG_MATCH_LOGIN_EMAIL_DOMAIN" - Credential login email domain
+	// matches a customer domain.
+	//   "ALERT_TAG_MATCH_SERVICE_DOMAIN" - Credential service domain matches a
+	// customer domain.
+	Tags []string `json:"tags,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -312,6 +359,8 @@ type AlertDetail struct {
 	// DetailType: Output only. Name of the detail type. Will be set by the server
 	// during creation to the name of the field that is set in the detail union.
 	DetailType string `json:"detailType,omitempty"`
+	// DomainMonitoring: Domain Monitoring alert detail type.
+	DomainMonitoring *DomainMonitoringAlertDetail `json:"domainMonitoring,omitempty"`
 	// InitialAccessBroker: Initial Access Broker alert detail type.
 	InitialAccessBroker *InitialAccessBrokerAlertDetail `json:"initialAccessBroker,omitempty"`
 	// InsiderThreat: Insider Threat alert detail type.
@@ -345,6 +394,9 @@ type AlertDocument struct {
 	// CollectionTime: Output only. Time when the origin source collected the
 	// intel.
 	CollectionTime string `json:"collectionTime,omitempty"`
+	// CommunicationContext: Output only. Platform identifiers of the message,
+	// thread and channel.
+	CommunicationContext *CommunicationContext `json:"communicationContext,omitempty"`
 	// Content: Output only. The content of the document.
 	Content string `json:"content,omitempty"`
 	// CreateTime: Output only. The timestamp of the original external publication
@@ -478,6 +530,66 @@ func (s Audit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CertificateDetails: Details regarding the SSL certificate configuration.
+type CertificateDetails struct {
+	// Issuer: Optional. The SSL certificate issuer.
+	Issuer string `json:"issuer,omitempty"`
+	// SubjectAlternativeNames: Optional. The SSL subject alternative names.
+	SubjectAlternativeNames []string `json:"subjectAlternativeNames,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Issuer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Issuer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CertificateDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CommunicationContext: Detailed communication context metadata for documents
+// originating from deep and dark web communication channels.
+type CommunicationContext struct {
+	// ChannelDescription: Optional. Description of the communication channel.
+	ChannelDescription string `json:"channelDescription,omitempty"`
+	// ChannelName: Optional. Name of the communication channel.
+	ChannelName string `json:"channelName,omitempty"`
+	// ChannelPath: Optional. Channel path (e.g. forum path or sub-channel).
+	ChannelPath string `json:"channelPath,omitempty"`
+	// ChannelUrl: Optional. URL of the communication channel.
+	ChannelUrl string `json:"channelUrl,omitempty"`
+	// MessageId: Optional. Message or post identifier on the originating platform.
+	MessageId string `json:"messageId,omitempty"`
+	// ServiceName: Optional. Service from the collection event origin (e.g. forum
+	// or chat service name).
+	ServiceName string `json:"serviceName,omitempty"`
+	// ThreadId: Optional. Conversation thread identifier.
+	ThreadId string `json:"threadId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ChannelDescription") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChannelDescription") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommunicationContext) MarshalJSON() ([]byte, error) {
+	type NoMethod CommunicationContext
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Configuration: A configuration represents a behavior an engine should follow
 // when producing new findings.
 type Configuration struct {
@@ -535,22 +647,28 @@ func (s Configuration) MarshalJSON() ([]byte, error) {
 // ConfigurationDetail: Wrapper class that contains the union struct for all
 // the various configuration detail specific classes.
 type ConfigurationDetail struct {
+	// CustomThreatScenario: Custom Threat Scenario detail config.
+	CustomThreatScenario *CustomThreatScenarioConfig `json:"customThreatScenario,omitempty"`
 	// CustomerProfile: Customer Profile detail config.
 	CustomerProfile *CustomerProfileConfig `json:"customerProfile,omitempty"`
 	// DetailType: Output only. Name of the detail type. Will be set by the server
 	// during creation to the name of the field that is set in the detail union.
 	DetailType string `json:"detailType,omitempty"`
+	// DomainConfiguration: Domain Configuration detail config.
+	DomainConfiguration *DomainConfiguration `json:"domainConfiguration,omitempty"`
+	// DomainMonitoring: Domain Monitoring detail config.
+	DomainMonitoring *DomainMonitoringConfig `json:"domainMonitoring,omitempty"`
 	// TechnologyWatchlist: Technology Watchlist detail config.
 	TechnologyWatchlist *TechnologyWatchListConfig `json:"technologyWatchlist,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CustomerProfile") to
+	// ForceSendFields is a list of field names (e.g. "CustomThreatScenario") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomerProfile") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CustomThreatScenario") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -585,6 +703,78 @@ type ConfigurationRevision struct {
 
 func (s ConfigurationRevision) MarshalJSON() ([]byte, error) {
 	type NoMethod ConfigurationRevision
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomThreatScenarioConfig: CustomThreatScenarioConfig represents a
+// user-defined threat scenario configuration.
+type CustomThreatScenarioConfig struct {
+	// CompiledLuceneQuery: Output only. The compiled Lucene query string.
+	CompiledLuceneQuery string `json:"compiledLuceneQuery,omitempty"`
+	// DocumentCondition: Required. The condition driving the scenario, stored as a
+	// stringified JSON. This is used to query/filter documents.
+	DocumentCondition string `json:"documentCondition,omitempty"`
+	// DocumentQuery: Optional. The query used to match documents.
+	DocumentQuery *DocumentQuery `json:"documentQuery,omitempty"`
+	// LegacyMonitorMetadata: Output only. Legacy metadata associated with this
+	// scenario/monitor.
+	LegacyMonitorMetadata *LegacyMetadata `json:"legacyMonitorMetadata,omitempty"`
+	// ScenarioType: Optional. The custom threat scenario type used to create this
+	// configuration.
+	//
+	// Possible values:
+	//   "CUSTOM_THREAT_SCENARIO_TYPE_UNSPECIFIED" - Unspecified scenario type.
+	//   "DATA_LEAKS" - Data Leaks.
+	//   "DEEP_DARK_WEB" - Deep & Dark Web.
+	//   "DOMAIN_PROTECTION" - Domain Protection.
+	//   "RANSOMWARE_THREATS" - Ransomware Threats.
+	//   "INITIAL_ACCESS_BROKER" - Initial Access Broker.
+	//   "NETBLOCKS_AND_DOMAIN_MENTIONS" - Netblocks and Domain Mentions.
+	//   "SUPPLY_CHAIN_COMPROMISE" - Supply Chain Compromise.
+	//   "CARD_SHOPS" - Card Shops.
+	//   "CUSTOM_MONITOR" - Custom Monitor (Non-templated legacy monitor).
+	ScenarioType string `json:"scenarioType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CompiledLuceneQuery") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CompiledLuceneQuery") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomThreatScenarioConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomThreatScenarioConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CustomerProfileBrand: Brand information for the customer profile.
+type CustomerProfileBrand struct {
+	// Brand: Required. The name of the brand.
+	Brand string `json:"brand,omitempty"`
+	// CitationIds: Optional. The citation ids for the brand.
+	CitationIds []string `json:"citationIds,omitempty"`
+	// Id: Optional. The unique identifier for the brand.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Brand") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Brand") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomerProfileBrand) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerProfileBrand
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -670,6 +860,8 @@ func (s CustomerProfileCompany) MarshalJSON() ([]byte, error) {
 // CustomerProfileConfig: CustomerProfileConfig is the configuration for the
 // customer profile.
 type CustomerProfileConfig struct {
+	// Brands: Optional. Brands associated with the organization.
+	Brands []*CustomerProfileBrand `json:"brands,omitempty"`
 	// Citations: Optional. Citations for the organization profile.
 	Citations []*CustomerProfileCitation `json:"citations,omitempty"`
 	// ContactInfo: Optional. Contact information for the organization.
@@ -694,17 +886,19 @@ type CustomerProfileConfig struct {
 	SecurityConsiderations *CustomerProfileSecurityConsiderations `json:"securityConsiderations,omitempty"`
 	// Summary: Optional. A summarized version of the customer profile.
 	Summary *CustomerProfileSummary `json:"summary,omitempty"`
+	// Technologies: Optional. Technologies associated with the organization.
+	Technologies []*CustomerProfileTechnology `json:"technologies,omitempty"`
 	// TechnologyPresence: Optional. Technology presence of the organization.
 	TechnologyPresence string `json:"technologyPresence,omitempty"`
 	// WebPresences: Optional. Web presence of the organization.
 	WebPresences []*CustomerProfileWebPresence `json:"webPresences,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Citations") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Brands") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Citations") to include in API
+	// NullFields is a list of field names (e.g. "Brands") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -924,6 +1118,30 @@ func (s CustomerProfileSummary) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomerProfileTechnology: Technology information for the customer profile.
+type CustomerProfileTechnology struct {
+	// CitationIds: Optional. The citation ids for the technology.
+	CitationIds []string `json:"citationIds,omitempty"`
+	// Technology: Required. The name of the technology.
+	Technology string `json:"technology,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CitationIds") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CitationIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomerProfileTechnology) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomerProfileTechnology
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CustomerProfileWebPresence: Web presence information for the customer
 // profile.
 type CustomerProfileWebPresence struct {
@@ -951,9 +1169,11 @@ func (s CustomerProfileWebPresence) MarshalJSON() ([]byte, error) {
 
 // DataLeakAlertDetail: Captures the specific details of Data Leak alert.
 type DataLeakAlertDetail struct {
-	// DiscoveryDocumentIds: Required. Array of ids to accommodate multiple
-	// discovery documents
+	// DiscoveryDocumentIds: Optional. Deprecated: Use `discovery_documents`
+	// instead. Array of ids to accommodate multiple discovery documents.
 	DiscoveryDocumentIds []string `json:"discoveryDocumentIds,omitempty"`
+	// DiscoveryDocuments: Output only. New structured metadata payload.
+	DiscoveryDocuments []*DiscoveryDocument `json:"discoveryDocuments,omitempty"`
 	// Severity: Required. The severity of the Data Leak alert. Allowed values are:
 	// * `LOW` * `MEDIUM` * `HIGH` * `CRITICAL`
 	Severity string `json:"severity,omitempty"`
@@ -977,9 +1197,12 @@ func (s DataLeakAlertDetail) MarshalJSON() ([]byte, error) {
 
 // DataLeakFindingDetail: A detail object for a Data Leak finding.
 type DataLeakFindingDetail struct {
-	// DocumentId: Required. The unique identifier of the document that triggered
-	// the Data Leak finding. This ID can be used to retrieve the content of the
-	// document for further analysis.
+	// DiscoveryDocument: Optional. The discovery document associated with the Data
+	// Leak finding.
+	DiscoveryDocument *DiscoveryDocument `json:"discoveryDocument,omitempty"`
+	// DocumentId: Optional. Deprecated: Use `discovery_document` instead. The
+	// unique identifier of the document that triggered the Data Leak finding. This
+	// ID can be used to retrieve the content of the document for further analysis.
 	DocumentId string `json:"documentId,omitempty"`
 	// MatchScore: Required. Reference to the match score of the Data Leak finding.
 	// This is a float value greater than 0 and less than or equal to 1 calculated
@@ -996,15 +1219,15 @@ type DataLeakFindingDetail struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "DiscoveryDocument") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DiscoveryDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1026,6 +1249,492 @@ func (s *DataLeakFindingDetail) UnmarshalJSON(data []byte) error {
 	}
 	s.MatchScore = float64(s1.MatchScore)
 	return nil
+}
+
+// DiscoveryDocument: Replaces the raw string ID to hold associated metadata.
+type DiscoveryDocument struct {
+	// CommunicationContext: Optional. Detailed communication context metadata for
+	// documents originating from deep and dark web communication channels.
+	CommunicationContext *CommunicationContext `json:"communicationContext,omitempty"`
+	// DocumentId: Output only. The identifier of the discovery document.
+	DocumentId string `json:"documentId,omitempty"`
+	// DocumentType: Output only. The classification/type of the document (e.g.
+	// `COMMUNICATION`, `DDW_COMMUNICATION`, `message`).
+	DocumentType string `json:"documentType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommunicationContext") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommunicationContext") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DiscoveryDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod DiscoveryDocument
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DnsRegistrationDetails: Extracted WHOIS and DNS registration details of the
+// domain.
+type DnsRegistrationDetails struct {
+	// ExpireTime: Optional. The specific timestamp when the current domain
+	// registration expires.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// PrivateRegistration: Optional. Indicates whether private registration is
+	// enabled on the WHOIS record.
+	PrivateRegistration bool `json:"privateRegistration,omitempty"`
+	// RegistrantCountry: Optional. The country code of the registrant (e.g., US).
+	// Use ISO 3166-1 alpha-2 codes
+	RegistrantCountry string `json:"registrantCountry,omitempty"`
+	// Registrar: Optional. The registrar where the domain was registered (e.g.,
+	// NameCheap).
+	Registrar string `json:"registrar,omitempty"`
+	// RegistrationTime: Optional. The specific timestamp when the domain
+	// registration was created.
+	RegistrationTime string `json:"registrationTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DnsRegistrationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsRegistrationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DocumentQuery: Represents a query to match documents.
+type DocumentQuery struct {
+	// Query: Required. The query string.
+	Query string `json:"query,omitempty"`
+	// QueryType: Required. The type of query.
+	//
+	// Possible values:
+	//   "QUERY_TYPE_UNSPECIFIED" - Default value, should never be set.
+	//   "JSON" - Structured JSON condition tree built via query builder.
+	//   "STRING" - Raw search query string e.g., VTI search syntax.
+	QueryType string `json:"queryType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Query") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DocumentQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod DocumentQuery
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainConfiguration: Configuration holding settings for one or more
+// monitored domains.
+type DomainConfiguration struct {
+	// DomainSettings: Optional. A list of settings for individual domains.
+	DomainSettings []*DomainSetting `json:"domainSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DomainSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DomainSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringAlertDetail: A detailed object for a Domain or URL alert.
+type DomainMonitoringAlertDetail struct {
+	// DnsDetails: Optional. The DNS details of the domain or URL.
+	DnsDetails *DomainMonitoringDnsDetails `json:"dnsDetails,omitempty"`
+	// DomainDetails: Details specific to a monitored domain.
+	DomainDetails *DomainMonitoringDomainDetails `json:"domainDetails,omitempty"`
+	// GtiDetails: Optional. The GTI details of the domain or URL.
+	GtiDetails *DomainMonitoringGtiDetails `json:"gtiDetails,omitempty"`
+	// Infrastructure: Optional. The infrastructure of the domain or URL.
+	Infrastructure *Infrastructure `json:"infrastructure,omitempty"`
+	// MatchedDomain: Optional. The matched domain.
+	MatchedDomain string `json:"matchedDomain,omitempty"`
+	// ProtectedBrand: The protected brand name that triggered the alert.
+	ProtectedBrand string `json:"protectedBrand,omitempty"`
+	// ProtectedDomain: The protected domain that triggered the alert.
+	ProtectedDomain *DomainMonitoringDomainDetails `json:"protectedDomain,omitempty"`
+	// RegistrationDetails: Optional. Extracted WHOIS and DNS registration details.
+	RegistrationDetails *DnsRegistrationDetails `json:"registrationDetails,omitempty"`
+	// Relationships: Optional. The relationships of the domain or URL.
+	Relationships *Relationships `json:"relationships,omitempty"`
+	// ThreatAttributionDetails: Optional. The threat attribution details of the
+	// domain or URL.
+	ThreatAttributionDetails *ThreatAttributionDetails `json:"threatAttributionDetails,omitempty"`
+	// UrlDetails: Details specific to a monitored URL.
+	UrlDetails *DomainMonitoringUrlDetails `json:"urlDetails,omitempty"`
+	// WhoisDetails: Optional. The whois details of the domain or URL.
+	WhoisDetails *DomainMonitoringWhoIsDetails `json:"whoisDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsDetails") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringAlertDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringAlertDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringConfig: Any account-level configuration options will go
+// here.
+type DomainMonitoringConfig struct {
+	// Domains: The domains to use as "seeds" for Suspicious Domain Monitoring.
+	Domains []*DomainMonitoringDomain `json:"domains,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domains") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domains") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringDnsDetails: The DNS details of the domain.
+type DomainMonitoringDnsDetails struct {
+	// DnsRecords: Optional. The DNS records of the domain.
+	DnsRecords []*DomainMonitoringDnsRecord `json:"dnsRecords,omitempty"`
+	// RetrievalTime: Optional. The time the DNS details were retrieved.
+	RetrievalTime string `json:"retrievalTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsRecords") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsRecords") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringDnsDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringDnsDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringDnsRecord: The DNS record of the domain.
+type DomainMonitoringDnsRecord struct {
+	// AsnHosting: Optional. The ASN hosting the domain.
+	AsnHosting string `json:"asnHosting,omitempty"`
+	// AsnRegionCode: Optional. The region code of the ASN. Use ISO 3166-1 alpha-2
+	// codes.
+	AsnRegionCode string `json:"asnRegionCode,omitempty"`
+	// IpRegionCode: Optional. The region code associated with the resolved IP. Use
+	// ISO 3166-1 alpha-2 codes.
+	IpRegionCode string `json:"ipRegionCode,omitempty"`
+	// RecordData: Optional. The value of the DNS record.
+	RecordData string `json:"recordData,omitempty"`
+	// ResolvedIp: Optional. The resolved IP address.
+	ResolvedIp string `json:"resolvedIp,omitempty"`
+	// Ttl: Optional. The TTL of the DNS record.
+	Ttl int64 `json:"ttl,omitempty"`
+	// Type: Optional. The type of the DNS record.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AsnHosting") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AsnHosting") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringDnsRecord) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringDnsRecord
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringDomain: A Domain Monitoring "domain"
+type DomainMonitoringDomain struct {
+	// Domain: The domain name to match against.
+	Domain string `json:"domain,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringDomain) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringDomain
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringDomainDetails: Details specific to a monitored domain.
+type DomainMonitoringDomainDetails struct {
+	// Domain: Required. The domain name to match against.
+	Domain string `json:"domain,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringDomainDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringDomainDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringFeatureConfig: Specific configuration for the Domain
+// Monitoring feature.
+type DomainMonitoringFeatureConfig struct {
+	// Disabled: Optional. Whether the Domain Monitoring feature is disabled for
+	// the domain.
+	Disabled bool `json:"disabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringFeatureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringFeatureConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringFindingDetail: A detailed object for a Domain or URL
+// finding.
+type DomainMonitoringFindingDetail struct {
+	// DnsDetails: Optional. The DNS details of the domain or URL.
+	DnsDetails *DomainMonitoringDnsDetails `json:"dnsDetails,omitempty"`
+	// DomainDetails: Details specific to a monitored domain.
+	DomainDetails *DomainMonitoringDomainDetails `json:"domainDetails,omitempty"`
+	// GtiDetails: Optional. The GTI details of the domain or URL.
+	GtiDetails *DomainMonitoringGtiDetails `json:"gtiDetails,omitempty"`
+	// Infrastructure: Optional. The infrastructure of the domain or URL.
+	Infrastructure *Infrastructure `json:"infrastructure,omitempty"`
+	// MatchedDomain: Optional. The matched domain.
+	MatchedDomain string `json:"matchedDomain,omitempty"`
+	// ProtectedBrand: The protected brand name that triggered the alert.
+	ProtectedBrand string `json:"protectedBrand,omitempty"`
+	// ProtectedDomain: The protected domain that triggered the alert.
+	ProtectedDomain *DomainMonitoringDomainDetails `json:"protectedDomain,omitempty"`
+	// RegistrationDetails: Optional. Extracted WHOIS and DNS registration details.
+	RegistrationDetails *DnsRegistrationDetails `json:"registrationDetails,omitempty"`
+	// Relationships: Optional. The relationships of the domain or URL.
+	Relationships *Relationships `json:"relationships,omitempty"`
+	// ThreatAttributionDetails: Optional. The threat attribution details of the
+	// domain or URL.
+	ThreatAttributionDetails *ThreatAttributionDetails `json:"threatAttributionDetails,omitempty"`
+	// UrlDetails: Details specific to a monitored URL.
+	UrlDetails *DomainMonitoringUrlDetails `json:"urlDetails,omitempty"`
+	// WhoisDetails: Optional. The whois details of the domain or URL.
+	WhoisDetails *DomainMonitoringWhoIsDetails `json:"whoisDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsDetails") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringFindingDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringFindingDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringGtiDetails: The GTI details of the domain.
+type DomainMonitoringGtiDetails struct {
+	// AvDetections: Optional. Detection counts across vendor feeds.
+	AvDetections *AVDetections `json:"avDetections,omitempty"`
+	// DomainPermutation: Optional. The permutation technique used for the domain
+	// (e.g., dictionary, homoglyph).
+	DomainPermutation string `json:"domainPermutation,omitempty"`
+	// GtiDomainUri: Optional. The GTI link for the domain.
+	GtiDomainUri string `json:"gtiDomainUri,omitempty"`
+	// GtiScore: Optional. The GTI score of the domain. The threat score is a
+	// number between 0 and 100.
+	GtiScore int64 `json:"gtiScore,omitempty"`
+	// ThreatClassification: Optional. The threat classification of the domain,
+	// obtained from the domain report (e.g. DomainMonitoring).
+	ThreatClassification string `json:"threatClassification,omitempty"`
+	// Verdict: Output only. The verdict of the domain.
+	//
+	// Possible values:
+	//   "DOMAIN_MONITORING_GTI_VERDICT_UNSPECIFIED" - Default value. The verdict
+	// is not set or unspecified.
+	//   "DOMAIN_MONITORING_GTI_VERDICT_BENIGN" - Verdict is clean; the entity is
+	// considered harmless.
+	//   "DOMAIN_MONITORING_GTI_VERDICT_UNDETECTED" - Verdict is undetected; no
+	// immediate evidence of malicious intent.
+	//   "DOMAIN_MONITORING_GTI_VERDICT_SUSPICIOUS" - Verdict is suspicious;
+	// possible malicious activity detected.
+	//   "DOMAIN_MONITORING_GTI_VERDICT_MALICIOUS" - Verdict is malicious; high
+	// confidence that the entity poses a threat.
+	//   "DOMAIN_MONITORING_GTI_VERDICT_UNKNOWN" - Verdict is not applicable; not
+	// able to generate a verdict for this entity.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvDetections") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvDetections") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringGtiDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringGtiDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringUrlDetails: Details specific to a monitored URL.
+type DomainMonitoringUrlDetails struct {
+	// Url: Required. The URL to match against.
+	Url string `json:"url,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Url") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Url") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringUrlDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringUrlDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainMonitoringWhoIsDetails: The whois details of the domain.
+type DomainMonitoringWhoIsDetails struct {
+	// RetrievalTime: Optional. The time the whois details were retrieved.
+	RetrievalTime string `json:"retrievalTime,omitempty"`
+	// Whois: Optional. The whois details of the domain.
+	Whois string `json:"whois,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetrievalTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetrievalTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainMonitoringWhoIsDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainMonitoringWhoIsDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DomainSetting: Feature settings and toggles for a single specific domain.
+type DomainSetting struct {
+	// Domain: Required. The domain name to match against.
+	Domain string `json:"domain,omitempty"`
+	// DomainMonitoringConfig: Optional. If not present, Domain Monitoring is
+	// enabled.
+	DomainMonitoringConfig *DomainMonitoringFeatureConfig `json:"domainMonitoringConfig,omitempty"`
+	// State: Output only. The verification state of the domain.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "PENDING" - Verification is pending. The customer needs to add the TXT
+	// record.
+	//   "VERIFIED" - Verification succeeded.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DomainSetting) MarshalJSON() ([]byte, error) {
+	type NoMethod DomainSetting
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // EnumerateAlertFacetsResponse: Response message for EnumerateAlertFacets.
@@ -1221,6 +1930,8 @@ type FindingDetail struct {
 	// DetailType: Output only. Name of the detail type. Will be set by the server
 	// during creation to the name of the field that is set in the detail union.
 	DetailType string `json:"detailType,omitempty"`
+	// DomainMonitoring: Domain Monitoring finding detail type.
+	DomainMonitoring *DomainMonitoringFindingDetail `json:"domainMonitoring,omitempty"`
 	// InitialAccessBroker: Initial Access Broker finding detail type.
 	InitialAccessBroker *InitialAccessBrokerFindingDetail `json:"initialAccessBroker,omitempty"`
 	// InsiderThreat: Insider Threat finding detail type.
@@ -1272,12 +1983,64 @@ func (s GenerateOrgProfileConfigurationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GetPasswordResponse: Response message for GetPassword.
+type GetPasswordResponse struct {
+	// Password: The decrypted cleartext password for the compromised credential.
+	Password string `json:"password,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Password") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Password") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetPasswordResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetPasswordResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Infrastructure: Core infrastructure observations associated with the URL or
+// Domain.
+type Infrastructure struct {
+	// CertificateDetails: Optional. SSL certificate details.
+	CertificateDetails *CertificateDetails `json:"certificateDetails,omitempty"`
+	// UrlResponse: Optional. The raw URL response string.
+	UrlResponse string `json:"urlResponse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CertificateDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CertificateDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Infrastructure) MarshalJSON() ([]byte, error) {
+	type NoMethod Infrastructure
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // InitialAccessBrokerAlertDetail: Captures the specific details of
 // InitialAccessBroker (IAB) alert.
 type InitialAccessBrokerAlertDetail struct {
-	// DiscoveryDocumentIds: Required. Array of ids to accommodate multiple
-	// discovery documents
+	// DiscoveryDocumentIds: Optional. Deprecated: Use `discovery_documents`
+	// instead. Array of ids to accommodate multiple discovery documents.
 	DiscoveryDocumentIds []string `json:"discoveryDocumentIds,omitempty"`
+	// DiscoveryDocuments: Output only. New structured metadata payload.
+	DiscoveryDocuments []*DiscoveryDocument `json:"discoveryDocuments,omitempty"`
 	// Severity: Required. The severity of the Initial Access Broker (IAB) alert.
 	// Allowed values are: * `LOW` * `MEDIUM` * `HIGH` * `CRITICAL`
 	Severity string `json:"severity,omitempty"`
@@ -1302,9 +2065,12 @@ func (s InitialAccessBrokerAlertDetail) MarshalJSON() ([]byte, error) {
 // InitialAccessBrokerFindingDetail: A detail object for an Initial Access
 // Broker (IAB) finding.
 type InitialAccessBrokerFindingDetail struct {
-	// DocumentId: Required. The unique identifier of the document that triggered
-	// the IAB finding. This ID can be used to retrieve the content of the document
-	// for further analysis.
+	// DiscoveryDocument: Optional. The discovery document associated with the IAB
+	// finding.
+	DiscoveryDocument *DiscoveryDocument `json:"discoveryDocument,omitempty"`
+	// DocumentId: Optional. Deprecated: Use `discovery_document` instead. The
+	// unique identifier of the document that triggered the IAB finding. This ID
+	// can be used to retrieve the content of the document for further analysis.
 	DocumentId string `json:"documentId,omitempty"`
 	// MatchScore: Required. Reference to the match score of the IAB finding. This
 	// is a float value between 0 and 1 calculated by the matching engine based on
@@ -1314,21 +2080,21 @@ type InitialAccessBrokerFindingDetail struct {
 	// potential impact of the threat.
 	//
 	// Possible values:
-	//   "SEVERITY_UNSPECIFIED"
-	//   "LOW"
-	//   "MEDIUM"
-	//   "HIGH"
-	//   "CRITICAL"
+	//   "SEVERITY_UNSPECIFIED" - Default value, should never be set.
+	//   "LOW" - Low severity.
+	//   "MEDIUM" - Medium severity.
+	//   "HIGH" - High severity.
+	//   "CRITICAL" - Critical severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "DiscoveryDocument") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DiscoveryDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1355,9 +2121,11 @@ func (s *InitialAccessBrokerFindingDetail) UnmarshalJSON(data []byte) error {
 // InsiderThreatAlertDetail: Captures the specific details of InsiderThreat
 // alert.
 type InsiderThreatAlertDetail struct {
-	// DiscoveryDocumentIds: Required. Array of ids to accommodate multiple
-	// discovery documents
+	// DiscoveryDocumentIds: Optional. Deprecated: Use `discovery_documents`
+	// instead. Array of ids to accommodate multiple discovery documents.
 	DiscoveryDocumentIds []string `json:"discoveryDocumentIds,omitempty"`
+	// DiscoveryDocuments: Output only. New structured metadata payload.
+	DiscoveryDocuments []*DiscoveryDocument `json:"discoveryDocuments,omitempty"`
 	// Severity: Required. The severity of the Insider Threat alert. Allowed values
 	// are: * `LOW` * `MEDIUM` * `HIGH` * `CRITICAL`
 	Severity string `json:"severity,omitempty"`
@@ -1381,9 +2149,13 @@ func (s InsiderThreatAlertDetail) MarshalJSON() ([]byte, error) {
 
 // InsiderThreatFindingDetail: A detail object for a InsiderThreat finding.
 type InsiderThreatFindingDetail struct {
-	// DocumentId: Required. The unique identifier of the document that triggered
-	// the InsiderThreat finding. This ID can be used to retrieve the content of
-	// the document for further analysis.
+	// DiscoveryDocument: Optional. The discovery document associated with the
+	// Insider Threat finding.
+	DiscoveryDocument *DiscoveryDocument `json:"discoveryDocument,omitempty"`
+	// DocumentId: Optional. Deprecated: Use `discovery_document` instead. The
+	// unique identifier of the document that triggered the InsiderThreat finding.
+	// This ID can be used to retrieve the content of the document for further
+	// analysis.
 	DocumentId string `json:"documentId,omitempty"`
 	// MatchScore: Required. Reference to the match score of the InsiderThreat
 	// finding. This is a float value greater than 0 and less than or equal to 1
@@ -1400,15 +2172,15 @@ type InsiderThreatFindingDetail struct {
 	//   "HIGH" - High severity.
 	//   "CRITICAL" - Critical severity.
 	Severity string `json:"severity,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "DiscoveryDocument") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DocumentId") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DiscoveryDocument") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1429,6 +2201,79 @@ func (s *InsiderThreatFindingDetail) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.MatchScore = float64(s1.MatchScore)
+	return nil
+}
+
+// LegacyMetadata: Legacy metadata associated with this scenario/monitor.
+type LegacyMetadata struct {
+	// AggregationEnabled: Output only. Whether aggregation is enabled for alerts
+	// from this monitor.
+	AggregationEnabled bool `json:"aggregationEnabled,omitempty"`
+	// AggregationSimilarity: Output only. Similarity threshold for aggregation.
+	AggregationSimilarity float64 `json:"aggregationSimilarity,omitempty"`
+	// ConditionVersion: Output only. Version of the condition schema.
+	ConditionVersion int64 `json:"conditionVersion,omitempty"`
+	// CreatorUserId: Output only. User ID who created the monitor.
+	CreatorUserId string `json:"creatorUserId,omitempty"`
+	// Description: Output only. Description of the legacy monitor.
+	Description string `json:"description,omitempty"`
+	// DisabledCode: Output only. Code indicating why the monitor is disabled (if
+	// applicable).
+	DisabledCode string `json:"disabledCode,omitempty"`
+	// DisabledReason: Output only. Reason why the monitor is disabled (if
+	// applicable).
+	DisabledReason string `json:"disabledReason,omitempty"`
+	// DisplayName: Output only. Name of the legacy monitor.
+	DisplayName string `json:"displayName,omitempty"`
+	// EmailNotificationEnabled: Output only. Deprecated: Whether email
+	// notifications are enabled. This field will not be used as email
+	// notifications are handled through the GTI Mail Hub.
+	EmailNotificationEnabled bool `json:"emailNotificationEnabled,omitempty"`
+	// EmailNotificationImmediate: Output only. Deprecated: Whether email
+	// notifications are intermediate/immediate. This field will not be used as
+	// email notifications are handled through the GTI Mail Hub.
+	EmailNotificationImmediate bool `json:"emailNotificationImmediate,omitempty"`
+	// LegacyMonitorId: Output only. Unique identifier of the legacy monitor.
+	LegacyMonitorId string `json:"legacyMonitorId,omitempty"`
+	// StaleTime: Output only. Time the legacy monitor was considered stale.
+	StaleTime string `json:"staleTime,omitempty"`
+	// TemplateId: Output only. ID of the template this monitor was created from.
+	TemplateId string `json:"templateId,omitempty"`
+	// TenantId: Output only. ID of the tenant owning the monitor.
+	TenantId string `json:"tenantId,omitempty"`
+	// UpdaterUserId: Output only. User ID who last updated the monitor.
+	UpdaterUserId string `json:"updaterUserId,omitempty"`
+	// Version: Output only. Version of the monitor configuration.
+	Version int64 `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AggregationEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AggregationEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LegacyMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LegacyMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *LegacyMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod LegacyMetadata
+	var s1 struct {
+		AggregationSimilarity gensupport.JSONFloat64 `json:"aggregationSimilarity"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AggregationSimilarity = float64(s1.AggregationSimilarity)
 	return nil
 }
 
@@ -1765,6 +2610,32 @@ func (s PublicExploit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Relationships: Related entities and domains observed for the target.
+type Relationships struct {
+	// RelatedUrls: Optional. Related URLs associated with the domain.
+	RelatedUrls []string `json:"relatedUrls,omitempty"`
+	// SiblingDomains: Optional. Sibling domains sharing the same IP address.
+	SiblingDomains []string `json:"siblingDomains,omitempty"`
+	// Subdomains: Optional. Subdomains associated with the target domain or URL.
+	Subdomains []string `json:"subdomains,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RelatedUrls") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RelatedUrls") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Relationships) MarshalJSON() ([]byte, error) {
+	type NoMethod Relationships
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // RelevanceAnalysis: Structured relevance analysis for a threat.
 type RelevanceAnalysis struct {
 	// Confidence: The level of confidence in the given verdict.
@@ -2038,9 +2909,13 @@ func (s *TechnologyWatchListAlertThreshold) UnmarshalJSON(data []byte) error {
 type TechnologyWatchListConfig struct {
 	// AlertThreshold: Optional. Alert thresholds to effectively reduce noise.
 	AlertThreshold *TechnologyWatchListAlertThreshold `json:"alertThreshold,omitempty"`
-	// Technologies: Optional. List of vendor, technology or cpe fingerprint.
-	// example: Microsoft office 360 Apache Server 3.5
-	// cpe:2.3:a:microsoft:outlook:*:*:*:*:*:*:*:*
+	// Technologies: Optional. List of technologies to watch, one per entry, in the
+	// form ` [version]`, using the vendor and product names from the Google Threat
+	// Intelligence products and fixes section. example: `microsoft outlook`
+	// `apache http_server 2.4.54` CPE strings such as
+	// `cpe:2.3:a:microsoft:outlook:*:*:*:*:*:*:*:*` are only parsed through the
+	// Google Threat Intelligence interface and are not available through the API.
+	// Send the vendor and product pair instead.
 	Technologies []string `json:"technologies,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AlertThreshold") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2057,6 +2932,33 @@ type TechnologyWatchListConfig struct {
 
 func (s TechnologyWatchListConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TechnologyWatchListConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ThreatAttributionDetails: Threat attribution information (actor, campaign,
+// etc.).
+type ThreatAttributionDetails struct {
+	// Actors: Optional. The threat actors associated with the target.
+	Actors []string `json:"actors,omitempty"`
+	// Collections: Optional. The threat collections detected.
+	Collections []string `json:"collections,omitempty"`
+	// Malware: Optional. The malware associated with the threat.
+	Malware []string `json:"malware,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Actors") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Actors") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ThreatAttributionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ThreatAttributionDetails
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2161,8 +3063,9 @@ type VulnerabilityMatch struct {
 	//   "VPN_ACCESS" - VPN access vector.
 	//   "WIFI_ACCESS" - WiFi access vector.
 	ExploitationVectors []string `json:"exploitationVectors,omitempty"`
-	// MatchedTechnologies: Optional. The specific technologies from the configured
-	// watchlist that triggered the match. Ex: "Apache Struts".
+	// MatchedTechnologies: Optional. The entries from the configured watchlist
+	// that triggered the match, exactly as written in
+	// `TechnologyWatchListConfig.technologies`. Ex: `apache http_server 2.4.54`.
 	MatchedTechnologies []string `json:"matchedTechnologies,omitempty"`
 	// Priority: Optional. The priority level of the vulnerability data. Ex: "P1".
 	//
@@ -2193,8 +3096,9 @@ type VulnerabilityMatch struct {
 	//   "UNRATED" - The vulnerability has been assessed, but a specific risk
 	// rating could not be determined or assigned.
 	RiskRating string `json:"riskRating,omitempty"`
-	// Technologies: Required. All technologies affected by the vulnerability. Ex:
-	// "Apache Struts".
+	// Technologies: Required. All technologies affected by the vulnerability,
+	// using the vendor and product names of its affected products, optionally
+	// followed by a version. Ex: `Apache Struts 2.2.3`.
 	Technologies []string `json:"technologies,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Associations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2975,6 +3879,117 @@ func (c *ProjectsAlertsGetCall) Do(opts ...googleapi.CallOption) (*Alert, error)
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "threatintelligence.projects.alerts.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsAlertsGetPasswordCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetPassword: Get the decrypted password of an alert.
+//
+//   - name: Name of the alert to get password for. Format:
+//     projects/{project}/alerts/{alert}.
+func (r *ProjectsAlertsService) GetPassword(name string) *ProjectsAlertsGetPasswordCall {
+	c := &ProjectsAlertsGetPasswordCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAlertsGetPasswordCall) Fields(s ...googleapi.Field) *ProjectsAlertsGetPasswordCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsAlertsGetPasswordCall) IfNoneMatch(entityTag string) *ProjectsAlertsGetPasswordCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAlertsGetPasswordCall) Context(ctx context.Context) *ProjectsAlertsGetPasswordCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAlertsGetPasswordCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAlertsGetPasswordCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:getPassword")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "threatintelligence.projects.alerts.getPassword", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "threatintelligence.projects.alerts.getPassword" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetPasswordResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAlertsGetPasswordCall) Do(opts ...googleapi.CallOption) (*GetPasswordResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GetPasswordResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "threatintelligence.projects.alerts.getPassword", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

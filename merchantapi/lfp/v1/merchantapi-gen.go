@@ -320,7 +320,9 @@ func (s InventoryStats) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LfpInventory: Local Inventory for the merchant.
+// LfpInventory: Local Inventory for the merchant. For more information, see
+// Manage local feeds partnership
+// (https://developers.google.com/merchant/api/guides/local-feeds-partnership/overview).
 type LfpInventory struct {
 	// Availability: Required. Availability of the product at this store. For
 	// accepted attribute values, see the local product inventory data
@@ -333,7 +335,7 @@ type LfpInventory struct {
 	// item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 	// FeedLabel: Optional. The feed label
-	// (https://developers.google.com/shopping-content/guides/products/feed-labels)
+	// (https://developers.google.com/merchant/api/guides/data-sources/api-sources)
 	// for the product. If this is not set, it will default to `regionCode`.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Gtin: Optional. The Global Trade Item Number of the product.
@@ -394,7 +396,9 @@ func (s LfpInventory) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LfpMerchantState: The LFP state of a merchant.
+// LfpMerchantState: The LFP state of a merchant. For more information, see
+// Manage local feeds partnership
+// (https://developers.google.com/merchant/api/guides/local-feeds-partnership/overview).
 type LfpMerchantState struct {
 	// CountrySettings: Country-specific settings for the merchant.
 	CountrySettings []*CountrySettings `json:"countrySettings,omitempty"`
@@ -433,13 +437,15 @@ func (s LfpMerchantState) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LfpSale: A sale for the merchant.
+// LfpSale: A sale for the merchant. For more information, see Manage local
+// feeds partnership
+// (https://developers.google.com/merchant/api/guides/local-feeds-partnership/overview).
 type LfpSale struct {
 	// ContentLanguage: Required. The two-letter ISO 639-1 language code for the
 	// item.
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 	// FeedLabel: Optional. The feed label
-	// (https://developers.google.com/shopping-content/guides/products/feed-labels)
+	// (https://developers.google.com/merchant/api/guides/data-sources/api-sources)
 	// for the product. If this is not set, it will default to `regionCode`.
 	FeedLabel string `json:"feedLabel,omitempty"`
 	// Gtin: Required. The Global Trade Item Number of the sold product.
@@ -496,7 +502,8 @@ func (s LfpSale) MarshalJSON() ([]byte, error) {
 // LfpStore: A store for the merchant. This will be used to match to a store
 // under the Google Business Profile of the target merchant. If a matching
 // store can't be found, the inventories or sales submitted with the store code
-// will not be used.
+// will not be used. For more information, see Manage local feeds partnership
+// (https://developers.google.com/merchant/api/guides/local-feeds-partnership/overview).
 type LfpStore struct {
 	// GcidCategory: Optional. Google My Business category id
 	// (https://support.google.com/business/answer/7249669).
@@ -718,6 +725,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -738,7 +746,9 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`

@@ -121,11 +121,38 @@ const (
 	// Manage drafts and send emails
 	GmailComposeScope = "https://www.googleapis.com/auth/gmail.compose"
 
+	// Read, compose, send, update, and permanently delete your draft emails
+	GmailDraftsScope = "https://www.googleapis.com/auth/gmail.drafts"
+
+	// Compose new draft emails
+	GmailDraftsCreateScope = "https://www.googleapis.com/auth/gmail.drafts.create"
+
+	// Read your draft emails
+	GmailDraftsReadonlyScope = "https://www.googleapis.com/auth/gmail.drafts.readonly"
+
 	// Add emails into your Gmail mailbox
 	GmailInsertScope = "https://www.googleapis.com/auth/gmail.insert"
 
 	// See and edit your email labels
 	GmailLabelsScope = "https://www.googleapis.com/auth/gmail.labels"
+
+	// Create new email labels
+	GmailLabelsCreateScope = "https://www.googleapis.com/auth/gmail.labels.create"
+
+	// Read your email labels
+	GmailLabelsReadonlyScope = "https://www.googleapis.com/auth/gmail.labels.readonly"
+
+	// Read, update, and permanently delete all your emails
+	GmailMessagesScope = "https://www.googleapis.com/auth/gmail.messages"
+
+	// Permanently delete all your emails
+	GmailMessagesDeleteScope = "https://www.googleapis.com/auth/gmail.messages.delete"
+
+	// Update but not delete your emails
+	GmailMessagesModifyScope = "https://www.googleapis.com/auth/gmail.messages.modify"
+
+	// Read your emails
+	GmailMessagesReadonlyScope = "https://www.googleapis.com/auth/gmail.messages.readonly"
 
 	// View your email message metadata such as labels and headers, but not the
 	// email body
@@ -140,8 +167,17 @@ const (
 	// Send email on your behalf
 	GmailSendScope = "https://www.googleapis.com/auth/gmail.send"
 
+	// Send email to yourself
+	GmailSendSelfScope = "https://www.googleapis.com/auth/gmail.send.self"
+
 	// See, edit, create, or change your email settings and filters in Gmail
 	GmailSettingsBasicScope = "https://www.googleapis.com/auth/gmail.settings.basic"
+
+	// Read, create, and delete your filters
+	GmailSettingsFiltersScope = "https://www.googleapis.com/auth/gmail.settings.filters"
+
+	// Read your filters
+	GmailSettingsFiltersReadonlyScope = "https://www.googleapis.com/auth/gmail.settings.filters.readonly"
 
 	// Manage your sensitive mail settings, including who can manage your mail
 	GmailSettingsSharingScope = "https://www.googleapis.com/auth/gmail.settings.sharing"
@@ -156,13 +192,25 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/gmail.addons.current.message.metadata",
 		"https://www.googleapis.com/auth/gmail.addons.current.message.readonly",
 		"https://www.googleapis.com/auth/gmail.compose",
+		"https://www.googleapis.com/auth/gmail.drafts",
+		"https://www.googleapis.com/auth/gmail.drafts.create",
+		"https://www.googleapis.com/auth/gmail.drafts.readonly",
 		"https://www.googleapis.com/auth/gmail.insert",
 		"https://www.googleapis.com/auth/gmail.labels",
+		"https://www.googleapis.com/auth/gmail.labels.create",
+		"https://www.googleapis.com/auth/gmail.labels.readonly",
+		"https://www.googleapis.com/auth/gmail.messages",
+		"https://www.googleapis.com/auth/gmail.messages.delete",
+		"https://www.googleapis.com/auth/gmail.messages.modify",
+		"https://www.googleapis.com/auth/gmail.messages.readonly",
 		"https://www.googleapis.com/auth/gmail.metadata",
 		"https://www.googleapis.com/auth/gmail.modify",
 		"https://www.googleapis.com/auth/gmail.readonly",
 		"https://www.googleapis.com/auth/gmail.send",
+		"https://www.googleapis.com/auth/gmail.send.self",
 		"https://www.googleapis.com/auth/gmail.settings.basic",
+		"https://www.googleapis.com/auth/gmail.settings.filters",
+		"https://www.googleapis.com/auth/gmail.settings.filters.readonly",
 		"https://www.googleapis.com/auth/gmail.settings.sharing",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -674,7 +722,8 @@ type CsePrivateKeyMetadata struct {
 	// HardwareKeyMetadata: Metadata for hardware keys.
 	HardwareKeyMetadata *HardwareKeyMetadata `json:"hardwareKeyMetadata,omitempty"`
 	// KaclsKeyMetadata: Metadata for a private key instance managed by an external
-	// key access control list service.
+	// key access control list service. The maximum size of the KACLS data field is
+	// 8 KiB.
 	KaclsKeyMetadata *KaclsKeyMetadata `json:"kaclsKeyMetadata,omitempty"`
 	// PrivateKeyMetadataId: Output only. The immutable ID for the private key
 	// metadata instance.
@@ -1108,16 +1157,16 @@ func (s ImapSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// KaclsKeyMetadata: Metadata for private keys managed by an external key
-// access control list service. For details about managing key access, see
+// KaclsKeyMetadata: Metadata for a cryptographic key managed by an external
+// key access control list service. For details about managing key access, see
 // Google Workspace CSE API Reference
 // (https://developers.google.com/workspace/cse/reference).
 type KaclsKeyMetadata struct {
 	// KaclsData: Opaque data generated and used by the key access control list
-	// service. Maximum size: 8 KiB.
+	// service.
 	KaclsData string `json:"kaclsData,omitempty"`
 	// KaclsUri: The URI of the key access control list service that manages the
-	// private key.
+	// key.
 	KaclsUri string `json:"kaclsUri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KaclsData") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7617,6 +7666,28 @@ func (r *UsersSettingsCseKeypairsService) Create(userId string, csekeypair *CseK
 	c := &UsersSettingsCseKeypairsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userId = userId
 	c.csekeypair = csekeypair
+	return c
+}
+
+// ChainValidation sets the optional parameter "chainValidation": The type of
+// certificate chain validation to perform at creation. The request will be
+// rejected if the uploaded chain fails to satisfy the requested validation
+// checks. When unspecified, this parameter defaults to `all`.
+//
+// Possible values:
+//
+//	"all" (default) - Enable all certificate chain validation and certificate
+//
+// revocation checks. Recommended for normal use.
+//
+//	"none" - Disable all certificate chain validation and certificate
+//
+// revocation checks. This may be useful when deliberately creating key pairs
+// with invalid, out-of-use certificate chains to be used only for decryption
+// of historical S/MIME messages. Key pairs created with invalid or revoked
+// certificates cannot be used in a CseIdentity object.
+func (c *UsersSettingsCseKeypairsCreateCall) ChainValidation(chainValidation string) *UsersSettingsCseKeypairsCreateCall {
+	c.urlParams_.Set("chainValidation", chainValidation)
 	return c
 }
 

@@ -154,6 +154,9 @@ const (
 	// See and download any calendar you can access using your Google Calendar
 	CalendarReadonlyScope = "https://www.googleapis.com/auth/calendar.readonly"
 
+	// View and edit your Calendar settings
+	CalendarSettingsScope = "https://www.googleapis.com/auth/calendar.settings"
+
 	// View your Calendar settings
 	CalendarSettingsReadonlyScope = "https://www.googleapis.com/auth/calendar.settings.readonly"
 )
@@ -177,6 +180,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/calendar.events.readonly",
 		"https://www.googleapis.com/auth/calendar.freebusy",
 		"https://www.googleapis.com/auth/calendar.readonly",
+		"https://www.googleapis.com/auth/calendar.settings",
 		"https://www.googleapis.com/auth/calendar.settings.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
@@ -461,6 +465,14 @@ type Calendar struct {
 	// TimeZone: The time zone of the calendar. (Formatted as an IANA Time Zone
 	// Database name, e.g. "Europe/Zurich".) Optional.
 	TimeZone string `json:"timeZone,omitempty"`
+	// WorkingHours: Represents the information about the user's working hours.
+	// Only available for primary calendars of Google Workspace users. To update
+	// the working hours, the entire working hours object must be passed. If not
+	// specified (or passed as null or an empty object), the existing working hours
+	// remain unchanged. To disable working hours or clear the schedule, set
+	// workingHoursEnabled to false (and omit availableTimes or pass an empty
+	// list).
+	WorkingHours *CalendarWorkingHours `json:"workingHours,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -479,6 +491,72 @@ type Calendar struct {
 
 func (s Calendar) MarshalJSON() ([]byte, error) {
 	type NoMethod Calendar
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CalendarWorkingHours: Represents the information about the user's working
+// hours. Only available for primary calendars of Google Workspace users. To
+// update the working hours, the entire working hours object must be passed. If
+// not specified (or passed as null or an empty object), the existing working
+// hours remain unchanged. To disable working hours or clear the schedule, set
+// workingHoursEnabled to false (and omit availableTimes or pass an empty
+// list).
+type CalendarWorkingHours struct {
+	// AvailableTimes: Working hours. Each availability period represents the
+	// user's working hours block during one day.
+	AvailableTimes []*CalendarWorkingHoursAvailableTimes `json:"availableTimes,omitempty"`
+	// WorkingHoursEnabled: Whether the working hours are enabled for this
+	// calendar. Cannot be set to true when availableTimes is empty.
+	WorkingHoursEnabled bool `json:"workingHoursEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AvailableTimes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AvailableTimes") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CalendarWorkingHours) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarWorkingHours
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CalendarWorkingHoursAvailableTimes struct {
+	// DayOfWeek: Day of the week. Required. Possible values are:
+	// - "monday"
+	// - "tuesday"
+	// - "wednesday"
+	// - "thursday"
+	// - "friday"
+	// - "saturday"
+	// - "sunday"
+	DayOfWeek string `json:"dayOfWeek,omitempty"`
+	// PeriodEnd: Period end, in minutes from the start of the day, exclusive.
+	// Required.
+	PeriodEnd int64 `json:"periodEnd,omitempty"`
+	// PeriodStart: Period start, in minutes from the start of the day, inclusive.
+	// Required.
+	PeriodStart int64 `json:"periodStart,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DayOfWeek") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CalendarWorkingHoursAvailableTimes) MarshalJSON() ([]byte, error) {
+	type NoMethod CalendarWorkingHoursAvailableTimes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

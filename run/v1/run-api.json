@@ -3652,7 +3652,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20261108",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
     "Addressable": {
@@ -3746,6 +3746,25 @@
         },
         "role": {
           "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the IAM roles and permissions, see the [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see [here](https://cloud.google.com/iam/docs/understanding-roles).",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BuildStatus": {
+      "description": "BuildStatus holds the status of a build.",
+      "id": "BuildStatus",
+      "properties": {
+        "cloudBuildLogUrl": {
+          "description": "The log URL for the Cloud Build execution.",
+          "type": "string"
+        },
+        "message": {
+          "description": "The message details of the build.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the build.",
           "type": "string"
         }
       },
@@ -4061,6 +4080,26 @@
       },
       "type": "object"
     },
+    "ContainerStatus": {
+      "description": "ContainerStatus holds the information of container name and image digest value.",
+      "id": "ContainerStatus",
+      "properties": {
+        "buildStatus": {
+          "$ref": "BuildStatus",
+          "description": "Output only. The build status of the container image.",
+          "readOnly": true
+        },
+        "imageDigest": {
+          "description": "ImageDigest holds the resolved digest for the image specified and resolved during the creation of Revision. This field holds the digest value regardless of whether a tag or digest was originally specified in the Container object.",
+          "type": "string"
+        },
+        "name": {
+          "description": "The name of the container, if specified.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "DomainMapping": {
       "description": "Resource to hold the state and status of a user's domain mapping. NOTE: This resource is currently in Beta.",
       "id": "DomainMapping",
@@ -4158,15 +4197,15 @@
       "type": "object"
     },
     "EmptyDirVolumeSource": {
-      "description": "In memory (tmpfs) ephemeral storage. It is ephemeral in the sense that when the sandbox is taken down, the data is destroyed with it (it does not persist across sandbox runs).",
+      "description": "In memory or disk-backed ephemeral storage. It is ephemeral in the sense that when the sandbox is taken down, the data is destroyed with it (it does not persist across sandbox runs).",
       "id": "EmptyDirVolumeSource",
       "properties": {
         "medium": {
-          "description": "The medium on which the data is stored. The default is \"\" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir",
+          "description": "The medium on which the data is stored. The default is `\"\"` which means to use the node's default medium. Must be an empty string (default), `Memory`, or `Disk`. For more information, see the [Kubernetes `emptyDir` volume documentation](https://kubernetes.io/docs/concepts/storage/volumes#emptydir).",
           "type": "string"
         },
         "sizeLimit": {
-          "description": "Limit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers. The default is nil which means that the limit is undefined. More info: https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume. Info in Kubernetes: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir",
+          "description": "Limit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers. The default is nil which means that the limit is undefined. For more information, see [Configure in-memory volume mounts](https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume) and the [Kubernetes `emptyDir` volume documentation](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir).",
           "type": "string"
         }
       },
@@ -4317,6 +4356,10 @@
       "description": "ExecutionSpec describes how the execution will look.",
       "id": "ExecutionSpec",
       "properties": {
+        "delayExecution": {
+          "description": "Optional. If true, the system will start the execution within the next 12 hours depending on available capacity.",
+          "type": "boolean"
+        },
         "parallelism": {
           "description": "Optional. Specifies the maximum desired number of tasks the execution should run at given time. When the job is run, if this field is 0 or unset, the maximum possible value will be used for that execution. The actual number of tasks running in steady state will be less than this number when there are fewer tasks waiting to be completed, i.e. when the work left to do is less than max parallelism.",
           "format": "int32",
@@ -4874,10 +4917,15 @@
             "REGIONAL_USER_OWNED_BUCKET",
             "LEGACY_BUCKET"
           ],
+          "enumDeprecated": [
+            false,
+            false,
+            true
+          ],
           "enumDescriptions": [
             "Unspecified.",
             "Bucket is located in user-owned project in the same region as the build. The builder service account must have access to create and write to Cloud Storage buckets in the build project.",
-            "Bucket is located in a Google-owned project and is not regionalized."
+            "Deprecated: Use `REGIONAL_USER_OWNED_BUCKET` instead. Bucket is located in a Google-owned project and is not regionalized."
           ],
           "type": "string"
         },
@@ -4982,16 +5030,43 @@
           "description": "Optional. Option to specify the Pub/Sub topic to receive build status updates.",
           "type": "string"
         },
+        "rankedMachineSeries": {
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use PrivatePoolV1Config.WorkerConfig.ranked_machine_series instead. This field has no effect.",
+          "items": {
+            "enum": [
+              "MACHINE_SERIES_UNSPECIFIED",
+              "MACHINE_SERIES_E",
+              "MACHINE_SERIES_N",
+              "MACHINE_SERIES_C"
+            ],
+            "enumDescriptions": [
+              "Should not be used.",
+              "Cost-optimized machines such as E2.",
+              "General-purpose machines such as N4.",
+              "Performance-optimized machines such as C4."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
         "requestedVerifyOption": {
           "description": "Requested verifiability options.",
           "enum": [
             "NOT_VERIFIED",
-            "VERIFIED"
+            "VERIFIED",
+            "BEST_EFFORT"
           ],
           "enumDescriptions": [
             "Not a verifiable build (the default).",
-            "Build must be verified."
+            "Build must be verified.",
+            "Build verification is best effort. If provenance generation fails, the build will still succeed."
           ],
+          "type": "string"
+        },
+        "resolvedWorkerRelease": {
+          "description": "Output only. Worker release resolved from the release channel.",
+          "readOnly": true,
           "type": "string"
         },
         "secretEnv": {
@@ -5046,6 +5121,47 @@
         "workerPool": {
           "deprecated": true,
           "description": "This field deprecated; please use `pool.name` instead.",
+          "type": "string"
+        },
+        "workerRelease": {
+          "description": "Optional. Option to specify which release or release channel (rapid|regular|stable) to use to run this build.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevtoolsCloudbuildV1BuildResourceUsage": {
+      "description": "Aggregated/summary metrics over the entire build lifecycle.",
+      "id": "GoogleDevtoolsCloudbuildV1BuildResourceUsage",
+      "properties": {
+        "averageCpuUtilization": {
+          "description": "Output only. The average CPU utilization ratio across all vCPUs over the duration of the build, expressed as a fraction in the range [0.0, 1.0].",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "averageMemoryUtilization": {
+          "description": "Output only. The average memory utilization ratio over the duration of the build, expressed as a fraction in the range [0.0, 1.0].",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "peakCpuUtilization": {
+          "description": "Output only. The highest CPU utilization ratio across all vCPUs observed over the duration of the build, expressed as a fraction in the range [0.0, 1.0].",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "peakMemoryUtilization": {
+          "description": "Output only. The highest memory utilization ratio observed over the duration of the build, expressed as a fraction in the range [0.0, 1.0].",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "totalCpuDuration": {
+          "description": "Output only. Total CPU execution time consumed across all cores during build execution.",
+          "format": "google-duration",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -5364,7 +5480,7 @@
       "id": "GoogleDevtoolsCloudbuildV1GenericArtifactDependency",
       "properties": {
         "destPath": {
-          "description": "Required. Where the artifact files should be placed on the worker.",
+          "description": "Optional. Where the artifact files should be placed on the worker. Required when specified in `Build.dependencies`.",
           "type": "string"
         },
         "resource": {
@@ -5416,6 +5532,10 @@
         "destPath": {
           "description": "Required. Where should the files be placed on the worker.",
           "type": "string"
+        },
+        "fetchTags": {
+          "description": "Optional. True if remote tags should be fetched too (default false). Note: when depth is 1 (default), git fetch only retrieves tags pointing to commits within the shallow boundary. Set depth to -1 to fetch all historical tags.",
+          "type": "boolean"
         },
         "recurseSubmodules": {
           "description": "Optional. True if submodules should be fetched too (default false).",
@@ -5615,6 +5735,16 @@
         "name": {
           "description": "The `WorkerPool` resource to execute the build on. You must have `cloudbuild.workerpools.use` on the project hosting the WorkerPool. Format projects/{project}/locations/{location}/workerPools/{workerPoolId}",
           "type": "string"
+        },
+        "resolvedWorkerRelease": {
+          "description": "Output only. OUTPUT_ONLY. Worker release resolved from the release channel.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "workerRelease": {
+          "description": "Output only. OUTPUT_ONLY. The release or release channel used to run the Build. This is set to the same value as `PrivatePoolV1Config.WorkerConfig.worker_release` for the UI to easily access.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -5760,6 +5890,11 @@
             "$ref": "GoogleDevtoolsCloudbuildV1UploadedPythonPackage"
           },
           "type": "array"
+        },
+        "resourceUsage": {
+          "$ref": "GoogleDevtoolsCloudbuildV1BuildResourceUsage",
+          "description": "Output only. Aggregated metrics for the build.",
+          "readOnly": true
         }
       },
       "type": "object"
@@ -6348,6 +6483,10 @@
         "restartPolicy": {
           "description": "Optional. Restart policy for the Instance. Allowable values are 'Always', 'OnFailure', or 'Never'.",
           "type": "string"
+        },
+        "sandboxes": {
+          "$ref": "SandboxConfiguration",
+          "description": "Optional. Sandbox configuration that can be launched through the `sandbox` CLI."
         },
         "serviceAccountName": {
           "description": "Optional. Email address of the IAM service account associated with the Instance. The service account represents the identity of the running container, and determines what permissions the Instance has. If not provided, the Instance will use the project's default service account.",
@@ -6968,7 +7107,7 @@
           "additionalProperties": {
             "type": "string"
           },
-          "description": "Unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. In Cloud Run, annotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted, and the accepted annotations will be different depending on the resource type. * `autoscaling.knative.dev/maxScale`: Revision. * `autoscaling.knative.dev/minScale`: Revision. * `run.googleapis.com/base-images`: Service, Revision. * `run.googleapis.com/binary-authorization-breakglass`: Service, Job, * `run.googleapis.com/binary-authorization`: Service, Job, Execution. * `run.googleapis.com/build-base-image`: Service. * `run.googleapis.com/build-enable-automatic-updates`: Service. * `run.googleapis.com/build-environment-variables`: Service. * `run.googleapis.com/build-function-target`: Service, Revision. * `run.googleapis.com/build-id`: Service, Revision. * `run.googleapis.com/build-image-uri`: Service. * `run.googleapis.com/build-name`: Service. * `run.googleapis.com/build-service-account`: Service. * `run.googleapis.com/build-source-location`: Service, Revision. * `run.googleapis.com/build-worker-pool`: Service. * `run.googleapis.com/client-name`: All resources. * `run.googleapis.com/cloudsql-instances`: Revision, Execution, Instance. * `run.googleapis.com/container-dependencies`: Revision . * `run.googleapis.com/cpu-throttling`: Revision. * `run.googleapis.com/custom-audiences`: Service. * `run.googleapis.com/default-url-disabled`: Service. * `run.googleapis.com/description`: Service. * `run.googleapis.com/encryption-key-shutdown-hours`: Revision * `run.googleapis.com/encryption-key`: Revision, Execution, Instance. * `run.googleapis.com/execution-environment`: Revision, Execution. * `run.googleapis.com/gc-traffic-tags`: Service. * `run.googleapis.com/gpu-zonal-redundancy-disabled`: Revision. * `run.googleapis.com/health-check-disabled`: Revision. * `run.googleapis.com/ingress`: Service, Instance. * `run.googleapis.com/invoker-iam-disabled`: Service, Instance. * `run.googleapis.com/launch-stage`: Service, Job. * `run.googleapis.com/minScale`: Service. * `run.googleapis.com/maxScale`: Service. * `run.googleapis.com/manualInstanceCount`: Service. * `run.googleapis.com/network-interfaces`: Revision, Execution, Instance. * `run.googleapis.com/post-key-revocation-action-type`: Revision. `run.googleapis.com/scalingMode`: Service. * `run.googleapis.com/secrets`: Revision, Execution. * `run.googleapis.com/secure-session-agent`: Revision. * `run.googleapis.com/sessionAffinity`: Revision. * `run.googleapis.com/startup-cpu-boost`: Revision. * `run.googleapis.com/vpc-access-connector`: Revision, Execution. * `run.googleapis.com/vpc-access-egress`: Revision, Execution, Instance.",
+          "description": "Unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. In Cloud Run, annotations with 'run.googleapis.com/' and 'autoscaling.knative.dev' are restricted, and the accepted annotations will be different depending on the resource type. * `autoscaling.knative.dev/maxScale`: Revision. * `autoscaling.knative.dev/minScale`: Revision. * `run.googleapis.com/base-images`: Service, Revision. * `run.googleapis.com/binary-authorization-breakglass`: Service, Job, * `run.googleapis.com/binary-authorization`: Service, Job, Execution. * `run.googleapis.com/build-base-image`: Service. * `run.googleapis.com/build-enable-automatic-updates`: Service. * `run.googleapis.com/build-environment-variables`: Service. * `run.googleapis.com/build-function-target`: Service, Revision. * `run.googleapis.com/build-id`: Service, Revision. * `run.googleapis.com/build-image-uri`: Service. * `run.googleapis.com/build-name`: Service. * `run.googleapis.com/build-service-account`: Service. * `run.googleapis.com/build-source-location`: Service, Revision. * `run.googleapis.com/build-worker-pool`: Service. * `run.googleapis.com/client-name`: All resources. * `run.googleapis.com/cloudsql-instances`: Revision, Execution, Instance. * `run.googleapis.com/container-dependencies`: Revision, Instance. * `run.googleapis.com/cpu-throttling`: Revision. * `run.googleapis.com/custom-audiences`: Service. * `run.googleapis.com/default-url-disabled`: Service. * `run.googleapis.com/description`: Service. * `run.googleapis.com/encryption-key-shutdown-hours`: Revision. * `run.googleapis.com/encryption-key`: Revision, Execution, Instance. * `run.googleapis.com/execution-environment`: Revision, Execution. * `run.googleapis.com/gc-traffic-tags`: Service. * `run.googleapis.com/gpu-zonal-redundancy-disabled`: Revision. * `run.googleapis.com/health-check-disabled`: Revision. * `run.googleapis.com/ingress`: Service, Instance. * `run.googleapis.com/invoker-iam-disabled`: Service, Instance. * `run.googleapis.com/launch-stage`: Service, Job. * `run.googleapis.com/minScale`: Service. * `run.googleapis.com/maxScale`: Service. * `run.googleapis.com/manualInstanceCount`: Service. * `run.googleapis.com/network-interfaces`: Revision, Execution, Instance. * `run.googleapis.com/post-key-revocation-action-type`: Revision. * `run.googleapis.com/scalingMode`: Service. * `run.googleapis.com/secrets`: Revision, Execution. * `run.googleapis.com/secure-session-agent`: Revision. * `run.googleapis.com/sessionAffinity`: Revision. * `run.googleapis.com/startup-cpu-boost`: Revision. * `run.googleapis.com/vpc-access-connector`: Revision, Execution. * `run.googleapis.com/vpc-access-egress`: Revision, Execution, Instance.",
           "type": "object"
         },
         "clusterName": {
@@ -7053,6 +7192,10 @@
             "$ref": "ContainerOverride"
           },
           "type": "array"
+        },
+        "delayExecution": {
+          "description": "Optional. If true, the system will start the execution within the next 12 hours depending on available capacity.",
+          "type": "boolean"
         },
         "taskCount": {
           "description": "The desired number of tasks the execution should run. Will replace existing task_count value.",
@@ -7182,7 +7325,7 @@
       "id": "ResourceRecord",
       "properties": {
         "name": {
-          "description": "Relative name of the object affected by this record. Only applicable for `CNAME` records. Example: 'www'.",
+          "description": "Name of the resource record relative to its apex domain, e.g. `www` for `www.example.com`. Omitted for apex records.",
           "type": "string"
         },
         "rrdata": {
@@ -7294,6 +7437,10 @@
           "description": "Optional. Runtime. Leave unset for default.",
           "type": "string"
         },
+        "sandboxes": {
+          "$ref": "SandboxConfiguration",
+          "description": "Optional. Sandbox configuration that can be launched through the `sandbox` CLI."
+        },
         "serviceAccountName": {
           "description": "Email address of the IAM service account associated with the revision of the service. The service account represents the identity of the running revision, and determines what permissions the revision has. If not provided, the revision will use the project's default service account.",
           "type": "string"
@@ -7321,6 +7468,14 @@
           "items": {
             "$ref": "GoogleCloudRunV1Condition"
           },
+          "type": "array"
+        },
+        "containerStatuses": {
+          "description": "Output only. Status information for each of the specified containers. The status includes the resolved digest for specified images.",
+          "items": {
+            "$ref": "ContainerStatus"
+          },
+          "readOnly": true,
           "type": "array"
         },
         "desiredReplicas": {
@@ -7446,6 +7601,67 @@
         "overrides": {
           "$ref": "Overrides",
           "description": "Optional. Overrides existing job configuration for one specific new job execution only, using the specified values to update the job configuration for the new execution."
+        }
+      },
+      "type": "object"
+    },
+    "SandboxConfiguration": {
+      "description": "Configuration for sandboxes.",
+      "id": "SandboxConfiguration",
+      "properties": {
+        "templates": {
+          "description": "Required. Sandbox templates that can be launched through the `sandbox` CLI.",
+          "items": {
+            "$ref": "SandboxTemplate"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SandboxTemplate": {
+      "description": "Template for a single sandbox.",
+      "id": "SandboxTemplate",
+      "properties": {
+        "args": {
+          "description": "Optional. Arguments to the entrypoint. The docker image's CMD is used if this is not provided.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "command": {
+          "description": "Optional. Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "env": {
+          "description": "Optional. List of environment variables to set in the sandbox.",
+          "items": {
+            "$ref": "EnvVar"
+          },
+          "type": "array"
+        },
+        "image": {
+          "description": "Required. Name of the container image in Dockerhub or Artifact Registry. If the host is not provided, Dockerhub is assumed.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Required. Name of the sandbox specified as a DNS_LABEL (RFC 1123).",
+          "type": "string"
+        },
+        "volumeMounts": {
+          "description": "Optional. Volume to mount into the container's filesystem.",
+          "items": {
+            "$ref": "VolumeMount"
+          },
+          "type": "array"
+        },
+        "workingDir": {
+          "description": "Optional. Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -7831,6 +8047,10 @@
           },
           "description": "Optional. The Node Selector configuration. Map of selector key to a value which matches a node.",
           "type": "object"
+        },
+        "sandboxes": {
+          "$ref": "SandboxConfiguration",
+          "description": "Optional. Sandbox configuration that can be launched through the `sandbox` CLI."
         },
         "serviceAccountName": {
           "description": "Optional. Email address of the IAM service account associated with the task of a job execution. The service account represents the identity of the running task, and determines what permissions the task has. If not provided, the task will use the project's default service account.",

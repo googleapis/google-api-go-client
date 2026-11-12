@@ -504,9 +504,9 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudSQLSingleUserCredentials: These are the credentials required for Cloud
+// CloudSqlSingleUserCredentials: These are the credentials required for Cloud
 // SQL DB for Single user Managed Rotation.
-type CloudSQLSingleUserCredentials struct {
+type CloudSqlSingleUserCredentials struct {
 	// InstanceId: Required. Instance ID of the Cloud SQL instance.
 	InstanceId string `json:"instanceId,omitempty"`
 	// Password: Optional. Password of the Cloud SQL instance. If this is not
@@ -527,8 +527,8 @@ type CloudSQLSingleUserCredentials struct {
 	NullFields []string `json:"-"`
 }
 
-func (s CloudSQLSingleUserCredentials) MarshalJSON() ([]byte, error) {
-	type NoMethod CloudSQLSingleUserCredentials
+func (s CloudSqlSingleUserCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlSingleUserCredentials
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -649,7 +649,7 @@ type Empty struct {
 type EnableManagedRotationRequest struct {
 	// CloudSqlSingleUserCredentials: Credentials required for Cloud SQL DB for
 	// Single user Managed Rotation.
-	CloudSqlSingleUserCredentials *CloudSQLSingleUserCredentials `json:"cloudSqlSingleUserCredentials,omitempty"`
+	CloudSqlSingleUserCredentials *CloudSqlSingleUserCredentials `json:"cloudSqlSingleUserCredentials,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "CloudSqlSingleUserCredentials") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API

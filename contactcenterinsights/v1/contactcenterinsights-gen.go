@@ -399,22 +399,10 @@ type ProjectsLocationsConversationsSegmentsService struct {
 
 func NewProjectsLocationsDashboardsService(s *Service) *ProjectsLocationsDashboardsService {
 	rs := &ProjectsLocationsDashboardsService{s: s}
-	rs.Charts = NewProjectsLocationsDashboardsChartsService(s)
 	return rs
 }
 
 type ProjectsLocationsDashboardsService struct {
-	s *Service
-
-	Charts *ProjectsLocationsDashboardsChartsService
-}
-
-func NewProjectsLocationsDashboardsChartsService(s *Service) *ProjectsLocationsDashboardsChartsService {
-	rs := &ProjectsLocationsDashboardsChartsService{s: s}
-	return rs
-}
-
-type ProjectsLocationsDashboardsChartsService struct {
 	s *Service
 }
 
@@ -695,20 +683,22 @@ func (s GoogleCloudCesV1mainEndSession) MarshalJSON() ([]byte, error) {
 // GoogleCloudCesV1mainImage: Represents an image input or output in the
 // conversation.
 type GoogleCloudCesV1mainImage struct {
+	// AltText: Optional. The alternative text for the image.
+	AltText string `json:"altText,omitempty"`
 	// Data: Required. Raw bytes of the image.
 	Data string `json:"data,omitempty"`
 	// MimeType: Required. The IANA standard MIME type of the source data.
 	// Supported image types includes: * image/png * image/jpeg * image/webp
 	MimeType string `json:"mimeType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Data") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AltText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -781,6 +771,9 @@ func (s GoogleCloudCesV1mainSpan) MarshalJSON() ([]byte, error) {
 // GoogleCloudCesV1mainToolCall: Request for the client or the agent to execute
 // the specified tool.
 type GoogleCloudCesV1mainToolCall struct {
+	// AgentName: Output only. Human-readable name of the agent that issued this
+	// call, e.g. "Contract Architect". Empty when the root agent issued it.
+	AgentName string `json:"agentName,omitempty"`
 	// Args: Optional. The input parameters and values for the tool in JSON object
 	// format.
 	Args googleapi.RawMessage `json:"args,omitempty"`
@@ -790,20 +783,30 @@ type GoogleCloudCesV1mainToolCall struct {
 	// client should return the execution result with the matching ID in
 	// ToolResponse.
 	Id string `json:"id,omitempty"`
+	// ParentToolCallId: Output only. The id of the tool call that caused this one,
+	// when it was issued by a sub-agent working on behalf of a parent call. Empty
+	// for top-level calls. Lets a client group a sub-agent's work under the call
+	// that started it instead of rendering every step as a sibling.
+	ParentToolCallId string `json:"parentToolCallId,omitempty"`
+	// TargetApp: Output only. The app this call targets, derived by the assistant
+	// from the call's resource arguments: an app resource name, `PROJECT` for
+	// location-scoped tools, or empty for session-local tools. Set only in
+	// project-scoped assistant sessions.
+	TargetApp string `json:"targetApp,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
 	// ToolsetTool: Optional. The toolset tool to execute.
 	ToolsetTool *GoogleCloudCesV1mainToolsetTool `json:"toolsetTool,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AgentName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Args") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AgentName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -816,27 +819,38 @@ func (s GoogleCloudCesV1mainToolCall) MarshalJSON() ([]byte, error) {
 // GoogleCloudCesV1mainToolResponse: The execution result of a specific tool
 // from the client or the agent.
 type GoogleCloudCesV1mainToolResponse struct {
+	// AgentName: Output only. Human-readable name of the agent that issued this
+	// call, e.g. "Contract Architect". Empty when the root agent issued it.
+	AgentName string `json:"agentName,omitempty"`
 	// DisplayName: Output only. Display name of the tool.
 	DisplayName string `json:"displayName,omitempty"`
 	// Id: Optional. The matching ID of the tool call the response is for.
 	Id string `json:"id,omitempty"`
+	// ParentToolCallId: Output only. The id of the tool call that caused this one,
+	// when it was issued by a sub-agent working on behalf of a parent call. Empty
+	// for top-level calls. Lets a client group a sub-agent's work under the call
+	// that started it instead of rendering every step as a sibling.
+	ParentToolCallId string `json:"parentToolCallId,omitempty"`
 	// Response: Required. The tool execution result in JSON object format. Use
 	// "output" key to specify tool response and "error" key to specify error
 	// details (if any). If "output" and "error" keys are not specified, then whole
 	// "response" is treated as tool execution result.
 	Response googleapi.RawMessage `json:"response,omitempty"`
+	// TargetApp: Output only. The app the executed tool targeted; mirrors
+	// ToolCall.target_app.
+	TargetApp string `json:"targetApp,omitempty"`
 	// Tool: Optional. The name of the tool to execute. Format:
 	// `projects/{project}/locations/{location}/apps/{app}/tools/{tool}`
 	Tool string `json:"tool,omitempty"`
 	// ToolsetTool: Optional. The toolset tool that got executed.
 	ToolsetTool *GoogleCloudCesV1mainToolsetTool `json:"toolsetTool,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "AgentName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// NullFields is a list of field names (e.g. "AgentName") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -892,6 +906,10 @@ type GoogleCloudContactcenterinsightsV1Analysis struct {
 	Name string `json:"name,omitempty"`
 	// RequestTime: Output only. The time at which the analysis was requested.
 	RequestTime string `json:"requestTime,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -1007,6 +1025,10 @@ type GoogleCloudContactcenterinsightsV1AnalysisRule struct {
 	// Name: Identifier. The resource name of the analysis rule. Format:
 	// projects/{project}/locations/{location}/analysisRules/{analysis_rule}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which this analysis rule
 	// was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1370,6 +1392,10 @@ type GoogleCloudContactcenterinsightsV1AssessmentRule struct {
 	Name string `json:"name,omitempty"`
 	// SampleRule: The sample rule for the assessment rule.
 	SampleRule *GoogleCloudContactcenterinsightsV1SampleRule `json:"sampleRule,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScheduleInfo: Schedule info for the assessment rule.
 	ScheduleInfo *GoogleCloudContactcenterinsightsV1ScheduleInfo `json:"scheduleInfo,omitempty"`
 	// UpdateTime: Output only. The most recent time at which this assessment rule
@@ -1418,6 +1444,10 @@ type GoogleCloudContactcenterinsightsV1AuthorizedView struct {
 	// projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_s
 	// et}/authorizedViews/{authorized_view}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the authorized view
 	// was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -1453,6 +1483,10 @@ type GoogleCloudContactcenterinsightsV1AuthorizedViewSet struct {
 	// projects/{project}/locations/{location}/authorizedViewSets/{authorized_view_s
 	// et}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Update time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1570,8 +1604,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsMetadata struct {
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -1611,8 +1646,9 @@ type GoogleCloudContactcenterinsightsV1BulkAnalyzeConversationsRequest struct {
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2382,9 +2418,6 @@ type GoogleCloudContactcenterinsightsV1Chart struct {
 	UpdateTime string `json:"updateTime,omitempty"`
 	// Width: The width of the chart in grid units.
 	Width int64 `json:"width,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
 	// ForceSendFields is a list of field names (e.g. "Action") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2601,6 +2634,10 @@ type GoogleCloudContactcenterinsightsV1Conversation struct {
 	// RuntimeAnnotations: Output only. The annotations that were generated during
 	// the customer and agent interaction.
 	RuntimeAnnotations []*GoogleCloudContactcenterinsightsV1RuntimeAnnotation `json:"runtimeAnnotations,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: The time at which the conversation started.
 	StartTime string `json:"startTime,omitempty"`
 	// Transcript: Output only. The conversation transcript.
@@ -3014,6 +3051,12 @@ type GoogleCloudContactcenterinsightsV1ConversationQualityMetadataAgentInfo stru
 	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
+	// StudyArmId: The study arm ID associated with the conversation. Only
+	// applicable to automated agents.
+	StudyArmId string `json:"studyArmId,omitempty"`
+	// StudyId: The study ID associated with the conversation. Only applicable to
+	// automated agents.
+	StudyId string `json:"studyId,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
 	// favor of the `teams` field.
 	Team string `json:"team,omitempty"`
@@ -3142,6 +3185,8 @@ type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegment s
 	LanguageCode string `json:"languageCode,omitempty"`
 	// MessageTime: The time that the message occurred, if provided.
 	MessageTime string `json:"messageTime,omitempty"`
+	// Parts: Optional. The structured parts that make up this transcript segment.
+	Parts []*GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPart `json:"parts,omitempty"`
 	// SegmentParticipant: The participant of this segment.
 	SegmentParticipant *GoogleCloudContactcenterinsightsV1ConversationParticipant `json:"segmentParticipant,omitempty"`
 	// Sentiment: The sentiment for this transcript segment.
@@ -3206,6 +3251,408 @@ type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentDi
 
 func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPart: A structured component/part of a transcript segment.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPart struct {
+	// Citation: Optional. Citation or reference to grounding material.
+	Citation *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart `json:"citation,omitempty"`
+	// CustomPayload: Optional. Generic custom structured payload.
+	CustomPayload *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart `json:"customPayload,omitempty"`
+	// Image: Optional. Image media.
+	Image *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart `json:"image,omitempty"`
+	// Link: Optional. Web link or URL.
+	Link *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart `json:"link,omitempty"`
+	// List: Optional. Ordered or unordered list.
+	List *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListPart `json:"list,omitempty"`
+	// ProductCollection: Optional. Product collection or carousel.
+	ProductCollection *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart `json:"productCollection,omitempty"`
+	// SuggestionChips: Optional. Suggestion chips or interactive buttons.
+	SuggestionChips *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart `json:"suggestionChips,omitempty"`
+	// Table: Optional. Tabular data.
+	Table *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart `json:"table,omitempty"`
+	// Text: Optional. Plain text content.
+	Text *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart `json:"text,omitempty"`
+	// Thought: Optional. Model thought or internal reasoning.
+	Thought *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart `json:"thought,omitempty"`
+	// Video: Optional. Video media.
+	Video *GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart `json:"video,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Citation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Citation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartChip: A suggestion chip.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartChip struct {
+	// ActionUri: Optional. Optional action or destination URI triggered by the
+	// chip.
+	ActionUri string `json:"actionUri,omitempty"`
+	// Text: Optional. The chip label or text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartChip) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartChip
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartCitationPart: A citation part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart struct {
+	// Snippet: Optional. Snippet of the cited text.
+	Snippet string `json:"snippet,omitempty"`
+	// SourceTitle: Optional. The cited source title.
+	SourceTitle string `json:"sourceTitle,omitempty"`
+	// SourceUri: Optional. The cited source URI.
+	SourceUri string `json:"sourceUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Snippet") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Snippet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartCustomPayloadPart: A custom payload part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart struct {
+	// Payload: Optional. Arbitrary structured payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// PayloadType: Optional. Type identifier for the payload.
+	PayloadType string `json:"payloadType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Payload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartLinkPart: A link part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart struct {
+	// Text: Optional. Anchor or display text.
+	Text string `json:"text,omitempty"`
+	// Uri: Optional. Target URI.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartListItem: An item in a list.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem struct {
+	// SubItems: Optional. Nested sub-items.
+	SubItems []*GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem `json:"subItems,omitempty"`
+	// Text: Optional. The text of the list item.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SubItems") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SubItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartListPart: A list part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListPart struct {
+	// Items: Optional. List items.
+	Items []*GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListItem `json:"items,omitempty"`
+	// ListType: Optional. The type of list.
+	//
+	// Possible values:
+	//   "LIST_TYPE_UNSPECIFIED" - Unspecified list type.
+	//   "UNORDERED" - Unordered list.
+	//   "ORDERED_NUMBER" - Ordered numbered list.
+	//   "ORDERED_ALPHA" - Ordered alphabetic list.
+	ListType string `json:"listType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartListPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartMediaPart: A media part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart struct {
+	// AlternativeText: Optional. Alternative text description.
+	AlternativeText string `json:"alternativeText,omitempty"`
+	// Uri: Optional. URI or URL to the media.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlternativeText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlternativeText") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartProduct: A product in a product collection.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProduct struct {
+	// Description: Optional. Product description.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. Product display name.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Optional. Product ID.
+	Id string `json:"id,omitempty"`
+	// ImageUris: Optional. Product image URLs.
+	ImageUris []string `json:"imageUris,omitempty"`
+	// Price: Optional. Product price.
+	Price *GoogleTypeMoney `json:"price,omitempty"`
+	// Uri: Optional. Product URL or deep link.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProduct) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartProductCollectionPart: A product collection part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart struct {
+	// Products: Optional. List of products.
+	Products []*GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProduct `json:"products,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Products") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Products") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartSuggestionChipsPart: A suggestion chips part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart struct {
+	// Chips: Optional. List of suggestion chips.
+	Chips []*GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartChip `json:"chips,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chips") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Chips") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartTablePart: A table part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart struct {
+	// Headers: Optional. Table column headers.
+	Headers []string `json:"headers,omitempty"`
+	// Rows: Optional. Table rows.
+	Rows []*GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow `json:"rows,omitempty"`
+	// Title: Optional. Optional title for the table.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartTableRow: A row in a table.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow struct {
+	// Cells: Optional. The cell values in the row.
+	Cells []string `json:"cells,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cells") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cells") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartTextPart: A text part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart struct {
+	// Text: Optional. The text content.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTran
+// scriptPartThoughtPart: A thought part.
+type GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart struct {
+	// Text: Optional. The thought or reasoning text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3547,6 +3994,10 @@ type GoogleCloudContactcenterinsightsV1Dataset struct {
 	// Name: Immutable. Identifier. Resource name of the dataset. Format:
 	// projects/{project}/locations/{location}/datasets/{dataset}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Ttl: Optional. Option TTL for the dataset.
 	Ttl string `json:"ttl,omitempty"`
 	// Type: Dataset usage type.
@@ -4301,6 +4752,10 @@ type GoogleCloudContactcenterinsightsV1EncryptionSpec struct {
 	// Name: Immutable. The resource name of the encryption key specification
 	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -4523,6 +4978,8 @@ type GoogleCloudContactcenterinsightsV1ExportInsightsDataRequest struct {
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_V17" - Export schema version 17.
+	//   "EXPORT_V18" - Export schema version 18.
+	//   "EXPORT_V19" - Export schema version 19.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -4758,6 +5215,10 @@ type GoogleCloudContactcenterinsightsV1FeedbackLabel struct {
 	Name string `json:"name,omitempty"`
 	// QaAnswerLabel: QaAnswer label used for Quality AI example conversations.
 	QaAnswerLabel *GoogleCloudContactcenterinsightsV1QaAnswerAnswerValue `json:"qaAnswerLabel,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Update time of the label.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -4790,9 +5251,13 @@ type GoogleCloudContactcenterinsightsV1FinalizeAssessmentRequest struct {
 // GoogleCloudContactcenterinsightsV1GcsSource: A Cloud Storage source of
 // conversation data.
 type GoogleCloudContactcenterinsightsV1GcsSource struct {
-	// AudioUri: Cloud Storage URI that points to a file that contains the
-	// conversation audio.
+	// AudioUri: Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI
+	// that points to a file that contains the conversation audio.
 	AudioUri string `json:"audioUri,omitempty"`
+	// AudioUris: Immutable. Cloud Storage URIs that point to files that contain
+	// the conversation audio. Supports both single audio files and multi-leg
+	// session recordings (e.g., call transfers, rolling recording buffers).
+	AudioUris []string `json:"audioUris,omitempty"`
 	// TranscriptUri: Immutable. Cloud Storage URI that points to a file that
 	// contains the conversation transcript.
 	TranscriptUri string `json:"transcriptUri,omitempty"`
@@ -5281,6 +5746,12 @@ type GoogleCloudContactcenterinsightsV1GenerativeInsightsRequest struct {
 	// in BigQuery SQL dialect. The `filter` field will also be ignored, as it is
 	// assumed that any filtering is already included in the SQL query.
 	SqlQuery string `json:"sqlQuery,omitempty"`
+	// TimeZone: Optional. The time zone name from the IANA Time Zone Database
+	// (https://www.iana.org/time-zones) (for example, "America/Los_Angeles")
+	// used to group daily time-series results. If empty, or if the name is
+	// well-formed but not known to the server, `UTC` is used. Malformed values are
+	// rejected with `INVALID_ARGUMENT`.
+	TimeZone string `json:"timeZone,omitempty"`
 	// UserProvidedChartSpec: Optional. The user provided chart spec for the chart.
 	// This will be used to override the visual spec generated by the LLM.
 	UserProvidedChartSpec googleapi.RawMessage `json:"userProvidedChartSpec,omitempty"`
@@ -5308,6 +5779,11 @@ type GoogleCloudContactcenterinsightsV1GenerativeInsightsResponse struct {
 	// GenerativeResponses: The full list of generative responses. Each response is
 	// ordered by time.
 	GenerativeResponses []*GoogleCloudContactcenterinsightsV1GenerativeInsightsResponseGenerativeResponse `json:"generativeResponses,omitempty"`
+	// TimeZone: The time zone name from the IANA Time Zone Database
+	// (https://www.iana.org/time-zones) that the query actually used to group
+	// results. Equals the requested `time_zone` when the chart SQL supports time
+	// zones, otherwise "UTC".
+	TimeZone string `json:"timeZone,omitempty"`
 	// Transcript: The transcript of the generative insights conversation.
 	Transcript *GoogleCloudContactcenterinsightsV1GenerativeInsightConversationTranscript `json:"transcript,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GenerativeResponses") to
@@ -6385,36 +6861,6 @@ func (s GoogleCloudContactcenterinsightsV1ListAutoLabelingRulesResponse) Marshal
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudContactcenterinsightsV1ListChartsResponse: The response of
-// listing charts.
-type GoogleCloudContactcenterinsightsV1ListChartsResponse struct {
-	// Charts: The charts under the parent.
-	Charts []*GoogleCloudContactcenterinsightsV1Chart `json:"charts,omitempty"`
-	// NextPageToken: The value returned by the last `ListChartsResponse`. This
-	// value indicates that this is a continuation of a prior `ListCharts` call and
-	// that the system should return the next page of data.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the server.
-	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Charts") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Charts") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudContactcenterinsightsV1ListChartsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudContactcenterinsightsV1ListChartsResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudContactcenterinsightsV1ListConversationsResponse: The response of
 // listing conversations.
 type GoogleCloudContactcenterinsightsV1ListConversationsResponse struct {
@@ -7281,6 +7727,10 @@ type GoogleCloudContactcenterinsightsV1QaQuestion struct {
 	// upload feedback labels for the question nor fine-tune the question. However,
 	// users may edit other fields like question tags, question order, etc.
 	QuestionType string `json:"questionType,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Tags: Questions are tagged for categorization and scoring. Tags can either
 	// be: - Default Tags: These are predefined categories. They are identified by
 	// their string value (e.g., "BUSINESS", "COMPLIANCE", and "CUSTOMER"). -
@@ -7424,6 +7874,11 @@ type GoogleCloudContactcenterinsightsV1QaQuestionPredefinedQuestionConfig struct
 	//   "CONVERSATION_OUTCOME_ESCALATION_INITIATOR_ROLE" - A prebuilt classifier
 	// classfying the initiator of the conversation escalation. For example, if it
 	// was initiated by the customer or the agent.
+	//   "CONVERSATION_OUTCOME_AI_AVERSION" - Classifies whether the customer
+	// demonstrates AI aversion by instantly requesting escalation to a human agent
+	// without attempting to work with the AI agent.
+	//   "CONVERSATION_OUTCOME_ESCALATION_REASON" - Classifies the primary reason
+	// for escalating the conversation to a human agent.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7485,6 +7940,10 @@ type GoogleCloudContactcenterinsightsV1QaQuestionTag struct {
 	// containing the Question ID. Lastly, Since a tag may not necessarily be
 	// referenced by any Scorecard Questions, we treat this field as optional.
 	QaQuestionIds []string `json:"qaQuestionIds,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the question tag was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -7568,6 +8027,10 @@ type GoogleCloudContactcenterinsightsV1QaScorecard struct {
 	// Name: Identifier. The scorecard name. Format:
 	// projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Source: Output only. The source of the scorecard.
 	//
 	// Possible values:
@@ -7577,6 +8040,9 @@ type GoogleCloudContactcenterinsightsV1QaScorecard struct {
 	// scorecard created by the user.
 	//   "QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
 	// created through discovery engine deployment.
+	//   "QA_SCORECARD_SOURCE_INTENT_TAXONOMY" - The scorecard is derived from the
+	// custom intent taxonomy. Customers can edit question content, but cannot
+	// delete the scorecard or add/remove questions.
 	Source string `json:"source,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the scorecard was
 	// updated.
@@ -7791,6 +8257,10 @@ type GoogleCloudContactcenterinsightsV1QaScorecardRevision struct {
 	// projects/{project}/locations/{location}/qaScorecards/{qa_scorecard}/revisions
 	// /{revision}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Snapshot: The snapshot of the scorecard at the time of this revision's
 	// creation.
 	Snapshot *GoogleCloudContactcenterinsightsV1QaScorecard `json:"snapshot,omitempty"`
@@ -9028,6 +9498,10 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// `UploadConversation` and `IngestConversations` endpoints, including
 	// conversations coming from CCAI Platform.
 	RedactionConfig *GoogleCloudContactcenterinsightsV1RedactionConfig `json:"redactionConfig,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScreenRecordingBucketUri: Optional. The path to a Cloud Storage bucket
 	// containing conversation screen recordings. If provided, Insights will search
 	// in the bucket for a screen recording file matching the conversation data
@@ -9149,6 +9623,10 @@ type GoogleCloudContactcenterinsightsV1SignedAudioUris struct {
 	// SignedGcsAudioUri: The signed URI for the audio from the Cloud Storage
 	// conversation source.
 	SignedGcsAudioUri string `json:"signedGcsAudioUri,omitempty"`
+	// SignedGcsAudioUris: Output only. The signed URIs for the audio from the
+	// Cloud Storage conversation source when multiple audio files exist (e.g.
+	// multi-leg conversations).
+	SignedGcsAudioUris []string `json:"signedGcsAudioUris,omitempty"`
 	// SignedTurnLevelAudios: The signed URI for the audio corresponding to each
 	// turn in the conversation.
 	SignedTurnLevelAudios []*GoogleCloudContactcenterinsightsV1ConversationDataSourceTurnLevelAudio `json:"signedTurnLevelAudios,omitempty"`
@@ -9873,6 +10351,10 @@ type GoogleCloudContactcenterinsightsV1alpha1Analysis struct {
 	Name string `json:"name,omitempty"`
 	// RequestTime: Output only. The time at which the analysis was requested.
 	RequestTime string `json:"requestTime,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisResult") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -10230,8 +10712,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsMetadata st
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -10271,8 +10754,9 @@ type GoogleCloudContactcenterinsightsV1alpha1BulkAnalyzeConversationsRequest str
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10664,6 +11148,10 @@ type GoogleCloudContactcenterinsightsV1alpha1Conversation struct {
 	// RuntimeAnnotations: Output only. The annotations that were generated during
 	// the customer and agent interaction.
 	RuntimeAnnotations []*GoogleCloudContactcenterinsightsV1alpha1RuntimeAnnotation `json:"runtimeAnnotations,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: The time at which the conversation started.
 	StartTime string `json:"startTime,omitempty"`
 	// Transcript: Output only. The conversation transcript.
@@ -11049,6 +11537,12 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationQualityMetadataAgentInf
 	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
+	// StudyArmId: The study arm ID associated with the conversation. Only
+	// applicable to automated agents.
+	StudyArmId string `json:"studyArmId,omitempty"`
+	// StudyId: The study ID associated with the conversation. Only applicable to
+	// automated agents.
+	StudyId string `json:"studyId,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
 	// favor of the `teams` field.
 	Team string `json:"team,omitempty"`
@@ -11177,6 +11671,8 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSeg
 	LanguageCode string `json:"languageCode,omitempty"`
 	// MessageTime: The time that the message occurred, if provided.
 	MessageTime string `json:"messageTime,omitempty"`
+	// Parts: Optional. The structured parts that make up this transcript segment.
+	Parts []*GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPart `json:"parts,omitempty"`
 	// SegmentParticipant: The participant of this segment.
 	SegmentParticipant *GoogleCloudContactcenterinsightsV1alpha1ConversationParticipant `json:"segmentParticipant,omitempty"`
 	// Sentiment: The sentiment for this transcript segment.
@@ -11241,6 +11737,408 @@ type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSeg
 
 func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPart: A structured component/part of a transcript segment.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPart struct {
+	// Citation: Optional. Citation or reference to grounding material.
+	Citation *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart `json:"citation,omitempty"`
+	// CustomPayload: Optional. Generic custom structured payload.
+	CustomPayload *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart `json:"customPayload,omitempty"`
+	// Image: Optional. Image media.
+	Image *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart `json:"image,omitempty"`
+	// Link: Optional. Web link or URL.
+	Link *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart `json:"link,omitempty"`
+	// List: Optional. Ordered or unordered list.
+	List *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListPart `json:"list,omitempty"`
+	// ProductCollection: Optional. Product collection or carousel.
+	ProductCollection *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart `json:"productCollection,omitempty"`
+	// SuggestionChips: Optional. Suggestion chips or interactive buttons.
+	SuggestionChips *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart `json:"suggestionChips,omitempty"`
+	// Table: Optional. Tabular data.
+	Table *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart `json:"table,omitempty"`
+	// Text: Optional. Plain text content.
+	Text *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart `json:"text,omitempty"`
+	// Thought: Optional. Model thought or internal reasoning.
+	Thought *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart `json:"thought,omitempty"`
+	// Video: Optional. Video media.
+	Video *GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart `json:"video,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Citation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Citation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartChip: A suggestion chip.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartChip struct {
+	// ActionUri: Optional. Optional action or destination URI triggered by the
+	// chip.
+	ActionUri string `json:"actionUri,omitempty"`
+	// Text: Optional. The chip label or text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartChip) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartChip
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartCitationPart: A citation part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart struct {
+	// Snippet: Optional. Snippet of the cited text.
+	Snippet string `json:"snippet,omitempty"`
+	// SourceTitle: Optional. The cited source title.
+	SourceTitle string `json:"sourceTitle,omitempty"`
+	// SourceUri: Optional. The cited source URI.
+	SourceUri string `json:"sourceUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Snippet") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Snippet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCitationPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartCustomPayloadPart: A custom payload part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart struct {
+	// Payload: Optional. Arbitrary structured payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// PayloadType: Optional. Type identifier for the payload.
+	PayloadType string `json:"payloadType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Payload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartLinkPart: A link part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart struct {
+	// Text: Optional. Anchor or display text.
+	Text string `json:"text,omitempty"`
+	// Uri: Optional. Target URI.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartLinkPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartListItem: An item in a list.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem struct {
+	// SubItems: Optional. Nested sub-items.
+	SubItems []*GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem `json:"subItems,omitempty"`
+	// Text: Optional. The text of the list item.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SubItems") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SubItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartListPart: A list part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListPart struct {
+	// Items: Optional. List items.
+	Items []*GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListItem `json:"items,omitempty"`
+	// ListType: Optional. The type of list.
+	//
+	// Possible values:
+	//   "LIST_TYPE_UNSPECIFIED" - Unspecified list type.
+	//   "UNORDERED" - Unordered list.
+	//   "ORDERED_NUMBER" - Ordered numbered list.
+	//   "ORDERED_ALPHA" - Ordered alphabetic list.
+	ListType string `json:"listType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartListPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartMediaPart: A media part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart struct {
+	// AlternativeText: Optional. Alternative text description.
+	AlternativeText string `json:"alternativeText,omitempty"`
+	// Uri: Optional. URI or URL to the media.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlternativeText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlternativeText") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartMediaPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartProduct: A product in a product collection.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProduct struct {
+	// Description: Optional. Product description.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. Product display name.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Optional. Product ID.
+	Id string `json:"id,omitempty"`
+	// ImageUris: Optional. Product image URLs.
+	ImageUris []string `json:"imageUris,omitempty"`
+	// Price: Optional. Product price.
+	Price *GoogleTypeMoney `json:"price,omitempty"`
+	// Uri: Optional. Product URL or deep link.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProduct) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartProductCollectionPart: A product collection part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart struct {
+	// Products: Optional. List of products.
+	Products []*GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProduct `json:"products,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Products") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Products") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartSuggestionChipsPart: A suggestion chips part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart struct {
+	// Chips: Optional. List of suggestion chips.
+	Chips []*GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartChip `json:"chips,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chips") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Chips") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartTablePart: A table part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart struct {
+	// Headers: Optional. Table column headers.
+	Headers []string `json:"headers,omitempty"`
+	// Rows: Optional. Table rows.
+	Rows []*GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow `json:"rows,omitempty"`
+	// Title: Optional. Optional title for the table.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTablePart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartTableRow: A row in a table.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow struct {
+	// Cells: Optional. The cell values in the row.
+	Cells []string `json:"cells,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cells") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cells") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTableRow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartTextPart: A text part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart struct {
+	// Text: Optional. The text content.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartTextPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegme
+// ntTranscriptPartThoughtPart: A thought part.
+type GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart struct {
+	// Text: Optional. The thought or reasoning text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1alpha1ConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11439,6 +12337,10 @@ type GoogleCloudContactcenterinsightsV1alpha1Dataset struct {
 	// Name: Immutable. Identifier. Resource name of the dataset. Format:
 	// projects/{project}/locations/{location}/datasets/{dataset}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Ttl: Optional. Option TTL for the dataset.
 	Ttl string `json:"ttl,omitempty"`
 	// Type: Dataset usage type.
@@ -12127,6 +13029,10 @@ type GoogleCloudContactcenterinsightsV1alpha1EncryptionSpec struct {
 	// Name: Immutable. The resource name of the encryption key specification
 	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -12322,6 +13228,8 @@ type GoogleCloudContactcenterinsightsV1alpha1ExportInsightsDataRequest struct {
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_V17" - Export schema version 17.
+	//   "EXPORT_V18" - Export schema version 18.
+	//   "EXPORT_V19" - Export schema version 19.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -12557,6 +13465,10 @@ type GoogleCloudContactcenterinsightsV1alpha1FeedbackLabel struct {
 	Name string `json:"name,omitempty"`
 	// QaAnswerLabel: QaAnswer label used for Quality AI example conversations.
 	QaAnswerLabel *GoogleCloudContactcenterinsightsV1alpha1QaAnswerAnswerValue `json:"qaAnswerLabel,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Update time of the label.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -12580,9 +13492,13 @@ func (s GoogleCloudContactcenterinsightsV1alpha1FeedbackLabel) MarshalJSON() ([]
 // GoogleCloudContactcenterinsightsV1alpha1GcsSource: A Cloud Storage source of
 // conversation data.
 type GoogleCloudContactcenterinsightsV1alpha1GcsSource struct {
-	// AudioUri: Cloud Storage URI that points to a file that contains the
-	// conversation audio.
+	// AudioUri: Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI
+	// that points to a file that contains the conversation audio.
 	AudioUri string `json:"audioUri,omitempty"`
+	// AudioUris: Immutable. Cloud Storage URIs that point to files that contain
+	// the conversation audio. Supports both single audio files and multi-leg
+	// session recordings (e.g., call transfers, rolling recording buffers).
+	AudioUris []string `json:"audioUris,omitempty"`
 	// TranscriptUri: Immutable. Cloud Storage URI that points to a file that
 	// contains the conversation transcript.
 	TranscriptUri string `json:"transcriptUri,omitempty"`
@@ -12807,6 +13723,11 @@ type GoogleCloudContactcenterinsightsV1alpha1GenerativeInsightsResponse struct {
 	// GenerativeResponses: The full list of generative responses. Each response is
 	// ordered by time.
 	GenerativeResponses []*GoogleCloudContactcenterinsightsV1alpha1GenerativeInsightsResponseGenerativeResponse `json:"generativeResponses,omitempty"`
+	// TimeZone: The time zone name from the IANA Time Zone Database
+	// (https://www.iana.org/time-zones) that the query actually used to group
+	// results. Equals the requested `time_zone` when the chart SQL supports time
+	// zones, otherwise "UTC".
+	TimeZone string `json:"timeZone,omitempty"`
 	// Transcript: The transcript of the generative insights conversation.
 	Transcript *GoogleCloudContactcenterinsightsV1alpha1GenerativeInsightConversationTranscript `json:"transcript,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GenerativeResponses") to
@@ -13883,6 +14804,10 @@ type GoogleCloudContactcenterinsightsV1alpha1QaQuestionTag struct {
 	// containing the Question ID. Lastly, Since a tag may not necessarily be
 	// referenced by any Scorecard Questions, we treat this field as optional.
 	QaQuestionIds []string `json:"qaQuestionIds,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the question tag was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -15440,6 +16365,10 @@ type GoogleCloudContactcenterinsightsV1mainAnalysis struct {
 	Name string `json:"name,omitempty"`
 	// RequestTime: Output only. The time at which the analysis was requested.
 	RequestTime string `json:"requestTime,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisResult") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15797,8 +16726,9 @@ type GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsMetadata stru
 	// PartialErrors: Output only. Partial errors during bulk analyze operation
 	// that might cause the operation output to be incomplete.
 	PartialErrors []*GoogleRpcStatus `json:"partialErrors,omitempty"`
-	// Relabel: Output only. If true, the labeling rules will be re-evaluated for
-	// the conversations.
+	// Relabel: Output only. Deprecated: Use
+	// `request.annotator_selector.run_auto_labeling_annotator` instead. If true,
+	// the labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// Request: The original request for bulk analyze.
 	Request *GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsRequest `json:"request,omitempty"`
@@ -15838,8 +16768,9 @@ type GoogleCloudContactcenterinsightsV1mainBulkAnalyzeConversationsRequest struc
 	Filter string `json:"filter,omitempty"`
 	// Parent: Required. The parent resource to create analyses in.
 	Parent string `json:"parent,omitempty"`
-	// Relabel: Optional. If true, the labeling rules will be re-evaluated for the
-	// conversations.
+	// Relabel: Optional. Deprecated: Use
+	// `annotator_selector.run_auto_labeling_annotator` instead. If true, the
+	// labeling rules will be re-evaluated for the conversations.
 	Relabel bool `json:"relabel,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnalysisPercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16435,6 +17366,10 @@ type GoogleCloudContactcenterinsightsV1mainConversation struct {
 	// RuntimeAnnotations: Output only. The annotations that were generated during
 	// the customer and agent interaction.
 	RuntimeAnnotations []*GoogleCloudContactcenterinsightsV1mainRuntimeAnnotation `json:"runtimeAnnotations,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// StartTime: The time at which the conversation started.
 	StartTime string `json:"startTime,omitempty"`
 	// Transcript: Output only. The conversation transcript.
@@ -16818,6 +17753,12 @@ type GoogleCloudContactcenterinsightsV1mainConversationQualityMetadataAgentInfo 
 	EntrySubagentId string `json:"entrySubagentId,omitempty"`
 	// Location: The agent's location.
 	Location string `json:"location,omitempty"`
+	// StudyArmId: The study arm ID associated with the conversation. Only
+	// applicable to automated agents.
+	StudyArmId string `json:"studyArmId,omitempty"`
+	// StudyId: The study ID associated with the conversation. Only applicable to
+	// automated agents.
+	StudyId string `json:"studyId,omitempty"`
 	// Team: A user-specified string representing the agent's team. Deprecated in
 	// favor of the `teams` field.
 	Team string `json:"team,omitempty"`
@@ -16946,6 +17887,8 @@ type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegme
 	LanguageCode string `json:"languageCode,omitempty"`
 	// MessageTime: The time that the message occurred, if provided.
 	MessageTime string `json:"messageTime,omitempty"`
+	// Parts: Optional. The structured parts that make up this transcript segment.
+	Parts []*GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPart `json:"parts,omitempty"`
 	// SegmentParticipant: The participant of this segment.
 	SegmentParticipant *GoogleCloudContactcenterinsightsV1mainConversationParticipant `json:"segmentParticipant,omitempty"`
 	// Sentiment: The sentiment for this transcript segment.
@@ -17010,6 +17953,408 @@ type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegme
 
 func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentDialogflowSegmentMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPart: A structured component/part of a transcript segment.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPart struct {
+	// Citation: Optional. Citation or reference to grounding material.
+	Citation *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCitationPart `json:"citation,omitempty"`
+	// CustomPayload: Optional. Generic custom structured payload.
+	CustomPayload *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart `json:"customPayload,omitempty"`
+	// Image: Optional. Image media.
+	Image *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart `json:"image,omitempty"`
+	// Link: Optional. Web link or URL.
+	Link *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartLinkPart `json:"link,omitempty"`
+	// List: Optional. Ordered or unordered list.
+	List *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListPart `json:"list,omitempty"`
+	// ProductCollection: Optional. Product collection or carousel.
+	ProductCollection *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart `json:"productCollection,omitempty"`
+	// SuggestionChips: Optional. Suggestion chips or interactive buttons.
+	SuggestionChips *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart `json:"suggestionChips,omitempty"`
+	// Table: Optional. Tabular data.
+	Table *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTablePart `json:"table,omitempty"`
+	// Text: Optional. Plain text content.
+	Text *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTextPart `json:"text,omitempty"`
+	// Thought: Optional. Model thought or internal reasoning.
+	Thought *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart `json:"thought,omitempty"`
+	// Video: Optional. Video media.
+	Video *GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart `json:"video,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Citation") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Citation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartChip: A suggestion chip.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartChip struct {
+	// ActionUri: Optional. Optional action or destination URI triggered by the
+	// chip.
+	ActionUri string `json:"actionUri,omitempty"`
+	// Text: Optional. The chip label or text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActionUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActionUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartChip) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartChip
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartCitationPart: A citation part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCitationPart struct {
+	// Snippet: Optional. Snippet of the cited text.
+	Snippet string `json:"snippet,omitempty"`
+	// SourceTitle: Optional. The cited source title.
+	SourceTitle string `json:"sourceTitle,omitempty"`
+	// SourceUri: Optional. The cited source URI.
+	SourceUri string `json:"sourceUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Snippet") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Snippet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCitationPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCitationPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartCustomPayloadPart: A custom payload part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart struct {
+	// Payload: Optional. Arbitrary structured payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+	// PayloadType: Optional. Type identifier for the payload.
+	PayloadType string `json:"payloadType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Payload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartCustomPayloadPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartLinkPart: A link part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartLinkPart struct {
+	// Text: Optional. Anchor or display text.
+	Text string `json:"text,omitempty"`
+	// Uri: Optional. Target URI.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartLinkPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartLinkPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartListItem: An item in a list.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem struct {
+	// SubItems: Optional. Nested sub-items.
+	SubItems []*GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem `json:"subItems,omitempty"`
+	// Text: Optional. The text of the list item.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SubItems") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SubItems") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartListPart: A list part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListPart struct {
+	// Items: Optional. List items.
+	Items []*GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListItem `json:"items,omitempty"`
+	// ListType: Optional. The type of list.
+	//
+	// Possible values:
+	//   "LIST_TYPE_UNSPECIFIED" - Unspecified list type.
+	//   "UNORDERED" - Unordered list.
+	//   "ORDERED_NUMBER" - Ordered numbered list.
+	//   "ORDERED_ALPHA" - Ordered alphabetic list.
+	ListType string `json:"listType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Items") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartListPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartMediaPart: A media part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart struct {
+	// AlternativeText: Optional. Alternative text description.
+	AlternativeText string `json:"alternativeText,omitempty"`
+	// Uri: Optional. URI or URL to the media.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlternativeText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlternativeText") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartMediaPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartProduct: A product in a product collection.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProduct struct {
+	// Description: Optional. Product description.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. Product display name.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Optional. Product ID.
+	Id string `json:"id,omitempty"`
+	// ImageUris: Optional. Product image URLs.
+	ImageUris []string `json:"imageUris,omitempty"`
+	// Price: Optional. Product price.
+	Price *GoogleTypeMoney `json:"price,omitempty"`
+	// Uri: Optional. Product URL or deep link.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProduct) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartProductCollectionPart: A product collection part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart struct {
+	// Products: Optional. List of products.
+	Products []*GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProduct `json:"products,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Products") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Products") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartProductCollectionPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartSuggestionChipsPart: A suggestion chips part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart struct {
+	// Chips: Optional. List of suggestion chips.
+	Chips []*GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartChip `json:"chips,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Chips") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Chips") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartSuggestionChipsPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartTablePart: A table part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTablePart struct {
+	// Headers: Optional. Table column headers.
+	Headers []string `json:"headers,omitempty"`
+	// Rows: Optional. Table rows.
+	Rows []*GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTableRow `json:"rows,omitempty"`
+	// Title: Optional. Optional title for the table.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTablePart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTablePart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartTableRow: A row in a table.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTableRow struct {
+	// Cells: Optional. The cell values in the row.
+	Cells []string `json:"cells,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Cells") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Cells") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTableRow) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTableRow
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartTextPart: A text part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTextPart struct {
+	// Text: Optional. The text content.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTextPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartTextPart
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegment
+// TranscriptPartThoughtPart: A thought part.
+type GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart struct {
+	// Text: Optional. The thought or reasoning text.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudContactcenterinsightsV1mainConversationTranscriptTranscriptSegmentTranscriptPartThoughtPart
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -17208,6 +18553,10 @@ type GoogleCloudContactcenterinsightsV1mainDataset struct {
 	// Name: Immutable. Identifier. Resource name of the dataset. Format:
 	// projects/{project}/locations/{location}/datasets/{dataset}
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Ttl: Optional. Option TTL for the dataset.
 	Ttl string `json:"ttl,omitempty"`
 	// Type: Dataset usage type.
@@ -17895,6 +19244,10 @@ type GoogleCloudContactcenterinsightsV1mainEncryptionSpec struct {
 	// Name: Immutable. The resource name of the encryption key specification
 	// resource. Format: projects/{project}/locations/{location}/encryptionSpec
 	Name string `json:"name,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -18090,6 +19443,8 @@ type GoogleCloudContactcenterinsightsV1mainExportInsightsDataRequest struct {
 	//   "EXPORT_V15" - Export schema version 15.
 	//   "EXPORT_V16" - Export schema version 16.
 	//   "EXPORT_V17" - Export schema version 17.
+	//   "EXPORT_V18" - Export schema version 18.
+	//   "EXPORT_V19" - Export schema version 19.
 	//   "EXPORT_VERSION_LATEST_AVAILABLE" - Export schema version latest
 	// available.
 	ExportSchemaVersion string `json:"exportSchemaVersion,omitempty"`
@@ -18325,6 +19680,10 @@ type GoogleCloudContactcenterinsightsV1mainFeedbackLabel struct {
 	Name string `json:"name,omitempty"`
 	// QaAnswerLabel: QaAnswer label used for Quality AI example conversations.
 	QaAnswerLabel *GoogleCloudContactcenterinsightsV1mainQaAnswerAnswerValue `json:"qaAnswerLabel,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. Update time of the label.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -18348,9 +19707,13 @@ func (s GoogleCloudContactcenterinsightsV1mainFeedbackLabel) MarshalJSON() ([]by
 // GoogleCloudContactcenterinsightsV1mainGcsSource: A Cloud Storage source of
 // conversation data.
 type GoogleCloudContactcenterinsightsV1mainGcsSource struct {
-	// AudioUri: Cloud Storage URI that points to a file that contains the
-	// conversation audio.
+	// AudioUri: Immutable. Deprecated: Use `audio_uris` instead. Cloud Storage URI
+	// that points to a file that contains the conversation audio.
 	AudioUri string `json:"audioUri,omitempty"`
+	// AudioUris: Immutable. Cloud Storage URIs that point to files that contain
+	// the conversation audio. Supports both single audio files and multi-leg
+	// session recordings (e.g., call transfers, rolling recording buffers).
+	AudioUris []string `json:"audioUris,omitempty"`
 	// TranscriptUri: Immutable. Cloud Storage URI that points to a file that
 	// contains the conversation transcript.
 	TranscriptUri string `json:"transcriptUri,omitempty"`
@@ -18575,6 +19938,11 @@ type GoogleCloudContactcenterinsightsV1mainGenerativeInsightsResponse struct {
 	// GenerativeResponses: The full list of generative responses. Each response is
 	// ordered by time.
 	GenerativeResponses []*GoogleCloudContactcenterinsightsV1mainGenerativeInsightsResponseGenerativeResponse `json:"generativeResponses,omitempty"`
+	// TimeZone: The time zone name from the IANA Time Zone Database
+	// (https://www.iana.org/time-zones) that the query actually used to group
+	// results. Equals the requested `time_zone` when the chart SQL supports time
+	// zones, otherwise "UTC".
+	TimeZone string `json:"timeZone,omitempty"`
 	// Transcript: The transcript of the generative insights conversation.
 	Transcript *GoogleCloudContactcenterinsightsV1mainGenerativeInsightConversationTranscript `json:"transcript,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "GenerativeResponses") to
@@ -19650,6 +21018,10 @@ type GoogleCloudContactcenterinsightsV1mainQaQuestionTag struct {
 	// containing the Question ID. Lastly, Since a tag may not necessarily be
 	// referenced by any Scorecard Questions, we treat this field as optional.
 	QaQuestionIds []string `json:"qaQuestionIds,omitempty"`
+	// SatisfiesPzi: Output only. Whether this resource is zone isolated.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+	// SatisfiesPzs: Output only. Whether this resource is zone separated.
+	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// UpdateTime: Output only. The most recent time at which the question tag was
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
@@ -21740,6 +23112,37 @@ type GoogleTypeInterval struct {
 
 func (s GoogleTypeInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeInterval
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleTypeMoney: Represents an amount of money with its currency type.
+type GoogleTypeMoney struct {
+	// CurrencyCode: The three-letter currency code defined in ISO 4217.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be between
+	// -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos`
+	// must be positive or zero. If `units` is zero, `nanos` can be positive, zero,
+	// or negative. If `units` is negative, `nanos` must be negative or zero. For
+	// example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
+	Nanos int64 `json:"nanos,omitempty"`
+	// Units: The whole units of the amount. For example if `currencyCode` is
+	// "USD", then 1 unit is one US dollar.
+	Units int64 `json:"units,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleTypeMoney) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleTypeMoney
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -26771,6 +28174,9 @@ func (r *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsService)
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall) View(view string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -26936,6 +28342,9 @@ func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall) View(view string) *ProjectsLocationsAuthorizedViewSetsAuthorizedViewsConversationsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -30668,6 +32077,9 @@ func (r *ProjectsLocationsConversationsService) Get(name string) *ProjectsLocati
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsConversationsGetCall) View(view string) *ProjectsLocationsConversationsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -30938,6 +32350,9 @@ func (c *ProjectsLocationsConversationsListCall) PageToken(pageToken string) *Pr
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsConversationsListCall) View(view string) *ProjectsLocationsConversationsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -34426,552 +35841,6 @@ func (c *ProjectsLocationsDashboardsPatchCall) Do(opts ...googleapi.CallOption) 
 	return ret, nil
 }
 
-type ProjectsLocationsDashboardsChartsCreateCall struct {
-	s                                       *Service
-	parent                                  string
-	googlecloudcontactcenterinsightsv1chart *GoogleCloudContactcenterinsightsV1Chart
-	urlParams_                              gensupport.URLParams
-	ctx_                                    context.Context
-	header_                                 http.Header
-}
-
-// Create: Creates a Chart.
-//
-// - parent: The parent resource of the chart.
-func (r *ProjectsLocationsDashboardsChartsService) Create(parent string, googlecloudcontactcenterinsightsv1chart *GoogleCloudContactcenterinsightsV1Chart) *ProjectsLocationsDashboardsChartsCreateCall {
-	c := &ProjectsLocationsDashboardsChartsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.googlecloudcontactcenterinsightsv1chart = googlecloudcontactcenterinsightsv1chart
-	return c
-}
-
-// ChartId sets the optional parameter "chartId": A unique ID for the new
-// Chart. This ID will become the final component of the Chart's resource name.
-// If no ID is specified, a server-generated ID will be used. This value should
-// be 4-64 characters and must match the regular expression `^a-z
-// ([a-z0-9-]{0,61}[a-z0-9])?$`.
-func (c *ProjectsLocationsDashboardsChartsCreateCall) ChartId(chartId string) *ProjectsLocationsDashboardsChartsCreateCall {
-	c.urlParams_.Set("chartId", chartId)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsDashboardsChartsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDashboardsChartsCreateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsDashboardsChartsCreateCall) Context(ctx context.Context) *ProjectsLocationsDashboardsChartsCreateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsDashboardsChartsCreateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDashboardsChartsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1chart)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/charts")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.create", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "contactcenterinsights.projects.locations.dashboards.charts.create" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudContactcenterinsightsV1Chart.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsDashboardsChartsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1Chart, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudContactcenterinsightsV1Chart{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.create", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsDashboardsChartsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a Chart.
-//
-// - name: The name of the chart to delete.
-func (r *ProjectsLocationsDashboardsChartsService) Delete(name string) *ProjectsLocationsDashboardsChartsDeleteCall {
-	c := &ProjectsLocationsDashboardsChartsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsDashboardsChartsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDashboardsChartsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsDashboardsChartsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDashboardsChartsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsDashboardsChartsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDashboardsChartsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.delete", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "contactcenterinsights.projects.locations.dashboards.charts.delete" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsDashboardsChartsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleProtobufEmpty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.delete", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsDashboardsChartsGetCall struct {
-	s            *Service
-	name         string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Get: Gets a Chart.
-//
-// - name: The name of the chart to get.
-func (r *ProjectsLocationsDashboardsChartsService) Get(name string) *ProjectsLocationsDashboardsChartsGetCall {
-	c := &ProjectsLocationsDashboardsChartsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsDashboardsChartsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDashboardsChartsGetCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsDashboardsChartsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDashboardsChartsGetCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsDashboardsChartsGetCall) Context(ctx context.Context) *ProjectsLocationsDashboardsChartsGetCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsDashboardsChartsGetCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDashboardsChartsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.get", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "contactcenterinsights.projects.locations.dashboards.charts.get" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudContactcenterinsightsV1Chart.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsDashboardsChartsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1Chart, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudContactcenterinsightsV1Chart{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.get", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsDashboardsChartsListCall struct {
-	s            *Service
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// List: Lists Charts.
-//
-// - parent: The parent resource of the charts.
-func (r *ProjectsLocationsDashboardsChartsService) List(parent string) *ProjectsLocationsDashboardsChartsListCall {
-	c := &ProjectsLocationsDashboardsChartsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsDashboardsChartsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDashboardsChartsListCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets an optional parameter which makes the operation fail if the
-// object's ETag matches the given value. This is useful for getting updates
-// only after the object has changed since the last request.
-func (c *ProjectsLocationsDashboardsChartsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDashboardsChartsListCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsDashboardsChartsListCall) Context(ctx context.Context) *ProjectsLocationsDashboardsChartsListCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsDashboardsChartsListCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDashboardsChartsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/charts")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, nil)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.list", "request", internallog.HTTPRequest(req, nil))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "contactcenterinsights.projects.locations.dashboards.charts.list" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudContactcenterinsightsV1ListChartsResponse.ServerResponse.Header
-// or (if a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsDashboardsChartsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1ListChartsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudContactcenterinsightsV1ListChartsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.list", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
-type ProjectsLocationsDashboardsChartsPatchCall struct {
-	s                                       *Service
-	name                                    string
-	googlecloudcontactcenterinsightsv1chart *GoogleCloudContactcenterinsightsV1Chart
-	urlParams_                              gensupport.URLParams
-	ctx_                                    context.Context
-	header_                                 http.Header
-}
-
-// Patch: Updates a Chart.
-//
-//   - name: Identifier. Chart resource name. Format:
-//     projects/{project}/locations/{location}/dashboards/{dashboard}/charts/{char
-//     t}.
-func (r *ProjectsLocationsDashboardsChartsService) Patch(name string, googlecloudcontactcenterinsightsv1chart *GoogleCloudContactcenterinsightsV1Chart) *ProjectsLocationsDashboardsChartsPatchCall {
-	c := &ProjectsLocationsDashboardsChartsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	c.googlecloudcontactcenterinsightsv1chart = googlecloudcontactcenterinsightsv1chart
-	return c
-}
-
-// UpdateMask sets the optional parameter "updateMask": List of fields to be
-// updated. All possible fields can be updated by passing `*`, or a subset of
-// the following updateable fields can be provided: * `display_name`
-func (c *ProjectsLocationsDashboardsChartsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDashboardsChartsPatchCall {
-	c.urlParams_.Set("updateMask", updateMask)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
-// details.
-func (c *ProjectsLocationsDashboardsChartsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDashboardsChartsPatchCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method.
-func (c *ProjectsLocationsDashboardsChartsPatchCall) Context(ctx context.Context) *ProjectsLocationsDashboardsChartsPatchCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns a http.Header that can be modified by the caller to add
-// headers to the request.
-func (c *ProjectsLocationsDashboardsChartsPatchCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDashboardsChartsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
-	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudcontactcenterinsightsv1chart)
-	if err != nil {
-		return nil, err
-	}
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("PATCH", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "contactcenterinsights.projects.locations.dashboards.charts.patch" call.
-// Any non-2xx status code is an error. Response headers are in either
-// *GoogleCloudContactcenterinsightsV1Chart.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was because
-// http.StatusNotModified was returned.
-func (c *ProjectsLocationsDashboardsChartsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudContactcenterinsightsV1Chart, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GoogleCloudContactcenterinsightsV1Chart{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	b, err := gensupport.DecodeResponseBytes(target, res)
-	if err != nil {
-		return nil, err
-	}
-	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenterinsights.projects.locations.dashboards.charts.patch", "response", internallog.HTTPResponse(res, b))
-	return ret, nil
-}
-
 type ProjectsLocationsDatasetsBulkDeleteFeedbackLabelsCall struct {
 	s                                                                 *Service
 	parent                                                            string
@@ -36495,6 +37364,9 @@ func (r *ProjectsLocationsDatasetsConversationsService) Get(name string) *Projec
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsDatasetsConversationsGetCall) View(view string) *ProjectsLocationsDatasetsConversationsGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -36765,6 +37637,9 @@ func (c *ProjectsLocationsDatasetsConversationsListCall) PageToken(pageToken str
 //
 //	"FULL" - Populates all fields in the conversation.
 //	"BASIC" - Populates all fields in the conversation except the transcript.
+//	"FULL_WITH_STRUCTURED_TRANSCRIPT" - Populates all fields in the
+//
+// conversation, including the structured transcript parts.
 func (c *ProjectsLocationsDatasetsConversationsListCall) View(view string) *ProjectsLocationsDatasetsConversationsListCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -41410,6 +42285,11 @@ func (c *ProjectsLocationsQaScorecardsListCall) PageToken(pageToken string) *Pro
 //	"QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
 //
 // created through discovery engine deployment.
+//
+//	"QA_SCORECARD_SOURCE_INTENT_TAXONOMY" - The scorecard is derived from the
+//
+// custom intent taxonomy. Customers can edit question content, but cannot
+// delete the scorecard or add/remove questions.
 func (c *ProjectsLocationsQaScorecardsListCall) QaScorecardSources(qaScorecardSources ...string) *ProjectsLocationsQaScorecardsListCall {
 	c.urlParams_.SetMulti("qaScorecardSources", append([]string{}, qaScorecardSources...))
 	return c
@@ -42142,6 +43022,11 @@ func (c *ProjectsLocationsQaScorecardsRevisionsListCall) PageToken(pageToken str
 //	"QA_SCORECARD_SOURCE_DISCOVERY_ENGINE" - The scorecard is a scorecard
 //
 // created through discovery engine deployment.
+//
+//	"QA_SCORECARD_SOURCE_INTENT_TAXONOMY" - The scorecard is derived from the
+//
+// custom intent taxonomy. Customers can edit question content, but cannot
+// delete the scorecard or add/remove questions.
 func (c *ProjectsLocationsQaScorecardsRevisionsListCall) QaScorecardSources(qaScorecardSources ...string) *ProjectsLocationsQaScorecardsRevisionsListCall {
 	c.urlParams_.SetMulti("qaScorecardSources", append([]string{}, qaScorecardSources...))
 	return c

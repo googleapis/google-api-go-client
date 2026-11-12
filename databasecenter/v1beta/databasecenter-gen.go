@@ -251,6 +251,8 @@ type AdditionalDetail struct {
 	//   "SIGNAL_TYPE_GROUP_MULTIREGIONAL" - Represents if a group is replicating
 	// across regions. Checks for resources that are configured to have redundancy,
 	// and ongoing replication, across regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Deprecated: This signal is not
+	// supported. Represents if a resource has a promotable replica.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has an
 	// automated backup policy.
 	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources has a
@@ -349,6 +351,9 @@ type AdditionalDetail struct {
 	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if The
 	// contained database authentication database flag for a Cloud SQL for SQL
 	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Deprecated: This signal is
+	// not supported. Represents if the cross_db_ownership_chaining database flag
+	// for a Cloud SQL for SQL Server instance is not set to off.
 	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he external
 	// scripts enabled database flag for a Cloud SQL for SQL Server instance is not
 	// set to off.
@@ -450,12 +455,18 @@ type AdditionalDetail struct {
 	// satisfied.
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
 	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
+	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - Deprecated: This signal is not
+	// supported. High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
+	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Deprecated: This signal is not supported.
+	// Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
+	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Represents a change in performance
+	// KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
 	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
@@ -1152,6 +1163,12 @@ type Dimension struct {
 	//   "ENGINE_SQL_SERVER" - SQLServer binary running as engine in database
 	// instance.
 	//   "ENGINE_NATIVE" - Native database binary running as engine in instance.
+	//   "ENGINE_CLOUD_SPANNER_WITH_POSTGRES_DIALECT" - Deprecated: Use
+	// ENGINE_NATIVE instead for PRODUCT_TYPE_SPANNER. Cloud Spanner with
+	// PostgreSQL dialect.
+	//   "ENGINE_CLOUD_SPANNER_WITH_GOOGLESQL_DIALECT" - Deprecated: Use
+	// ENGINE_NATIVE instead for PRODUCT_TYPE_SPANNER. Cloud Spanner with Google
+	// SQL dialect.
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS" - Memorystore with Redis dialect.
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS_CLUSTER" - Memorystore with Redis cluster
 	// dialect.
@@ -1175,6 +1192,8 @@ type Dimension struct {
 	//   "PRODUCT_TYPE_CLOUD_SQL" - Cloud SQL product area in Google Cloud
 	//   "PRODUCT_TYPE_ALLOYDB" - AlloyDB product area in Google Cloud
 	//   "PRODUCT_TYPE_SPANNER" - Spanner product area in Google Cloud
+	//   "PRODUCT_TYPE_ON_PREM" - Deprecated: Use PRODUCT_TYPE_CLOUDSQL with
+	// instance type as EXTERNAL_PRIMARY instead. On premises database product.
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in Google Cloud
 	//   "PRODUCT_TYPE_MEMORYSTORE" - Memorystore product area in Google Cloud
 	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in Google Cloud
@@ -1371,6 +1390,8 @@ type IssueStats struct {
 	//   "SIGNAL_TYPE_GROUP_MULTIREGIONAL" - Represents if a group is replicating
 	// across regions. Checks for resources that are configured to have redundancy,
 	// and ongoing replication, across regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Deprecated: This signal is not
+	// supported. Represents if a resource has a promotable replica.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has an
 	// automated backup policy.
 	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources has a
@@ -1469,6 +1490,9 @@ type IssueStats struct {
 	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if The
 	// contained database authentication database flag for a Cloud SQL for SQL
 	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Deprecated: This signal is
+	// not supported. Represents if the cross_db_ownership_chaining database flag
+	// for a Cloud SQL for SQL Server instance is not set to off.
 	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he external
 	// scripts enabled database flag for a Cloud SQL for SQL Server instance is not
 	// set to off.
@@ -1570,12 +1594,18 @@ type IssueStats struct {
 	// satisfied.
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
 	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
+	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - Deprecated: This signal is not
+	// supported. High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
+	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Deprecated: This signal is not supported.
+	// Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
+	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Represents a change in performance
+	// KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
 	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
@@ -1920,6 +1950,12 @@ type Product struct {
 	//   "ENGINE_SQL_SERVER" - SQLServer binary running as engine in database
 	// instance.
 	//   "ENGINE_NATIVE" - Native database binary running as engine in instance.
+	//   "ENGINE_CLOUD_SPANNER_WITH_POSTGRES_DIALECT" - Deprecated: Use
+	// ENGINE_NATIVE instead for PRODUCT_TYPE_SPANNER. Cloud Spanner with
+	// PostgreSQL dialect.
+	//   "ENGINE_CLOUD_SPANNER_WITH_GOOGLESQL_DIALECT" - Deprecated: Use
+	// ENGINE_NATIVE instead for PRODUCT_TYPE_SPANNER. Cloud Spanner with Google
+	// SQL dialect.
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS" - Memorystore with Redis dialect.
 	//   "ENGINE_MEMORYSTORE_FOR_REDIS_CLUSTER" - Memorystore with Redis cluster
 	// dialect.
@@ -1948,6 +1984,8 @@ type Product struct {
 	//   "PRODUCT_TYPE_CLOUD_SQL" - Cloud SQL product area in Google Cloud
 	//   "PRODUCT_TYPE_ALLOYDB" - AlloyDB product area in Google Cloud
 	//   "PRODUCT_TYPE_SPANNER" - Spanner product area in Google Cloud
+	//   "PRODUCT_TYPE_ON_PREM" - Deprecated: Use PRODUCT_TYPE_CLOUDSQL with
+	// instance type as EXTERNAL_PRIMARY instead. On premises database product.
 	//   "PRODUCT_TYPE_BIGTABLE" - Bigtable product area in Google Cloud
 	//   "PRODUCT_TYPE_MEMORYSTORE" - Memorystore product area in Google Cloud
 	//   "PRODUCT_TYPE_FIRESTORE" - Firestore product area in Google Cloud
@@ -1987,8 +2025,8 @@ type QueryDatabaseResourceGroupsRequest struct {
 	// product.type * product.engine * product.version * location * labels *
 	// resource_category * machine_config.cpu_count *
 	// machine_config.memory_size_bytes * machine_config.shard_count *
-	// resource_name * tags * backupdr_config.backupdr_managed * edition The
-	// expression is a list of zero or more restrictions combined via logical
+	// resource_name * tags * backupdr_config.backupdr_managed * edition * modes
+	// The expression is a list of zero or more restrictions combined via logical
 	// operators `AND` and `OR`. When `AND` and `OR` are both used in the
 	// expression, parentheses must be appropriately used to group the
 	// combinations. Example: `location="us-east1" Example:
@@ -2002,7 +2040,7 @@ type QueryDatabaseResourceGroupsRequest struct {
 	// product.engine * product.version * container * issue_count *
 	// machine_config.vcpu_count * machine_config.memory_size_bytes *
 	// machine_config.shard_count * resource_name * issue_severity * signal_type *
-	// location * resource_type * instance_type * edition *
+	// location * resource_type * instance_type * edition * modes *
 	// metrics.p99_cpu_utilization * metrics.p95_cpu_utilization *
 	// metrics.current_storage_used_bytes * metrics.node_count *
 	// metrics.processing_unit_count * metrics.current_memory_used_bytes *
@@ -2644,6 +2682,8 @@ type Signal struct {
 	//   "SIGNAL_TYPE_GROUP_MULTIREGIONAL" - Represents if a group is replicating
 	// across regions. Checks for resources that are configured to have redundancy,
 	// and ongoing replication, across regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Deprecated: This signal is not
+	// supported. Represents if a resource has a promotable replica.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has an
 	// automated backup policy.
 	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources has a
@@ -2742,6 +2782,9 @@ type Signal struct {
 	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if The
 	// contained database authentication database flag for a Cloud SQL for SQL
 	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Deprecated: This signal is
+	// not supported. Represents if the cross_db_ownership_chaining database flag
+	// for a Cloud SQL for SQL Server instance is not set to off.
 	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he external
 	// scripts enabled database flag for a Cloud SQL for SQL Server instance is not
 	// set to off.
@@ -2843,12 +2886,18 @@ type Signal struct {
 	// satisfied.
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
 	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
+	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - Deprecated: This signal is not
+	// supported. High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
+	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Deprecated: This signal is not supported.
+	// Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
+	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Represents a change in performance
+	// KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
 	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
@@ -2905,6 +2954,8 @@ type SignalFilter struct {
 	//   "SIGNAL_TYPE_GROUP_MULTIREGIONAL" - Represents if a group is replicating
 	// across regions. Checks for resources that are configured to have redundancy,
 	// and ongoing replication, across regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Deprecated: This signal is not
+	// supported. Represents if a resource has a promotable replica.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has an
 	// automated backup policy.
 	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources has a
@@ -3003,6 +3054,9 @@ type SignalFilter struct {
 	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if The
 	// contained database authentication database flag for a Cloud SQL for SQL
 	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Deprecated: This signal is
+	// not supported. Represents if the cross_db_ownership_chaining database flag
+	// for a Cloud SQL for SQL Server instance is not set to off.
 	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he external
 	// scripts enabled database flag for a Cloud SQL for SQL Server instance is not
 	// set to off.
@@ -3104,12 +3158,18 @@ type SignalFilter struct {
 	// satisfied.
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
 	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
+	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - Deprecated: This signal is not
+	// supported. High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
+	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Deprecated: This signal is not supported.
+	// Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
+	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Represents a change in performance
+	// KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
 	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
@@ -3182,6 +3242,8 @@ type SignalProductsFilters struct {
 	//   "SIGNAL_TYPE_GROUP_MULTIREGIONAL" - Represents if a group is replicating
 	// across regions. Checks for resources that are configured to have redundancy,
 	// and ongoing replication, across regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Deprecated: This signal is not
+	// supported. Represents if a resource has a promotable replica.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has an
 	// automated backup policy.
 	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources has a
@@ -3280,6 +3342,9 @@ type SignalProductsFilters struct {
 	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if The
 	// contained database authentication database flag for a Cloud SQL for SQL
 	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Deprecated: This signal is
+	// not supported. Represents if the cross_db_ownership_chaining database flag
+	// for a Cloud SQL for SQL Server instance is not set to off.
 	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he external
 	// scripts enabled database flag for a Cloud SQL for SQL Server instance is not
 	// set to off.
@@ -3381,12 +3446,18 @@ type SignalProductsFilters struct {
 	// satisfied.
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
 	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
+	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - Deprecated: This signal is not
+	// supported. High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
+	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Deprecated: This signal is not supported.
+	// Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
+	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Represents a change in performance
+	// KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
 	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of
@@ -3431,6 +3502,8 @@ type SignalTypeGroup struct {
 	//   "SIGNAL_TYPE_GROUP_MULTIREGIONAL" - Represents if a group is replicating
 	// across regions. Checks for resources that are configured to have redundancy,
 	// and ongoing replication, across regions.
+	//   "SIGNAL_TYPE_NO_PROMOTABLE_REPLICA" - Deprecated: This signal is not
+	// supported. Represents if a resource has a promotable replica.
 	//   "SIGNAL_TYPE_NO_AUTOMATED_BACKUP_POLICY" - Represents if a resource has an
 	// automated backup policy.
 	//   "SIGNAL_TYPE_SHORT_BACKUP_RETENTION" - Represents if a resources has a
@@ -3529,6 +3602,9 @@ type SignalTypeGroup struct {
 	//   "SIGNAL_TYPE_SERVER_AUTHENTICATION_NOT_REQUIRED" - Represents if The
 	// contained database authentication database flag for a Cloud SQL for SQL
 	// Server instance is not set to off.
+	//   "SIGNAL_TYPE_EXPOSED_BY_OWNERSHIP_CHAINING" - Deprecated: This signal is
+	// not supported. Represents if the cross_db_ownership_chaining database flag
+	// for a Cloud SQL for SQL Server instance is not set to off.
 	//   "SIGNAL_TYPE_EXPOSED_TO_EXTERNAL_SCRIPTS" - Represents if he external
 	// scripts enabled database flag for a Cloud SQL for SQL Server instance is not
 	// set to off.
@@ -3630,12 +3706,18 @@ type SignalTypeGroup struct {
 	// satisfied.
 	//   "SIGNAL_TYPE_OUTDATED_MINOR_VERSION" - Outdated DB minor version.
 	//   "SIGNAL_TYPE_SCHEMA_NOT_OPTIMIZED" - Schema not optimized.
+	//   "SIGNAL_TYPE_MANY_IDLE_CONNECTIONS" - Deprecated: This signal is not
+	// supported. High number of idle connections.
 	//   "SIGNAL_TYPE_REPLICATION_LAG" - Replication delay.
+	//   "SIGNAL_TYPE_OUTDATED_VERSION" - Deprecated: This signal is not supported.
+	// Outdated version.
 	//   "SIGNAL_TYPE_OUTDATED_CLIENT" - Outdated client.
 	//   "SIGNAL_TYPE_DATABOOST_DISABLED" - Databoost is disabled.
 	//   "SIGNAL_TYPE_RECOMMENDED_MAINTENANCE_POLICIES" - Recommended maintenance
 	// policy.
 	//   "SIGNAL_TYPE_EXTENDED_SUPPORT" - Resource version is in extended support.
+	//   "SIGNAL_TYPE_PERFORMANCE_KPI_CHANGE" - Represents a change in performance
+	// KPIs.
 	//   "SIGNAL_TYPE_VERSION_NEARING_END_OF_LIFE" - Represents a database version
 	// nearing end of life.
 	//   "SIGNAL_TYPE_HIGH_MAINTENANCE_DOWNTIME_RISK" - Indicates a high risk of

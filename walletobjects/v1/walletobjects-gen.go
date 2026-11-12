@@ -1924,7 +1924,10 @@ type EventTicketClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#eventTicketClass".
@@ -1934,7 +1937,7 @@ type EventTicketClass struct {
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
@@ -2671,7 +2674,10 @@ type FlightClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#flightClass".
@@ -2745,7 +2751,7 @@ type FlightClass struct {
 	LocalScheduledDepartureDateTime string `json:"localScheduledDepartureDateTime,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
@@ -3673,7 +3679,10 @@ type GiftCardClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#giftCardClass".
@@ -3687,7 +3696,7 @@ type GiftCardClass struct {
 	LocalizedEventNumberLabel *LocalizedString `json:"localizedEventNumberLabel,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// LocalizedMerchantName: Translated strings for the merchant_name. The app may
 	// display an ellipsis after the first 20 characters to ensure full string is
@@ -4354,6 +4363,32 @@ func (s IssuerToUserInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// JsonResource: A JSON representation of a pass.
+type JsonResource struct {
+	// Json: Required. A JSON string representing the unencoded JWT payload for a
+	// pass of the format described at
+	// https://developers.google.com/wallet/reference/rest/v1/Jwt. This can be set
+	// to either the entire JSON representation described at this link or just the
+	// contents of the payload field holding the relevant classes and objects.
+	Json string `json:"json,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Json") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Json") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s JsonResource) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonResource
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type JwtInsertResponse struct {
 	// Resources: Data that corresponds to the ids of the provided classes and
 	// objects in the JWT. resources will only include the non-empty arrays (i.e.
@@ -4405,6 +4440,42 @@ type JwtResource struct {
 func (s JwtResource) MarshalJSON() ([]byte, error) {
 	type NoMethod JwtResource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// JwtValidateRequest: Request to validate the JWT or JSON representation of a
+// pass.
+type JwtValidateRequest struct {
+	// JsonResource: Optional. A JSON representation of a pass to be validated.
+	// Either this or jwt_resource should be set. Requests setting both or neither
+	// will be rejected.
+	JsonResource *JsonResource `json:"jsonResource,omitempty"`
+	// JwtResource: Optional. A JWT representation of a pass to be validated.
+	// Either this or json_resource should be set. Requests setting both or neither
+	// will be rejected.
+	JwtResource *JwtResource `json:"jwtResource,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JsonResource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JsonResource") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s JwtValidateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod JwtValidateRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// JwtValidateResponse: Empty if the resource in the request is valid. Returns
+// exception if invalid.
+type JwtValidateResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // LabelValue: A pair of text strings to be displayed in the details view. Note
@@ -4656,7 +4727,10 @@ type LoyaltyClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#loyaltyClass".
@@ -4674,7 +4748,7 @@ type LoyaltyClass struct {
 	LocalizedAccountNameLabel *LocalizedString `json:"localizedAccountNameLabel,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// LocalizedProgramName: Translated strings for the program_name. The app may
 	// display an ellipsis after the first 20 characters to ensure full string is
@@ -5743,7 +5817,10 @@ type OfferClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#offerClass".
@@ -5757,7 +5834,7 @@ type OfferClass struct {
 	LocalizedFinePrint *LocalizedString `json:"localizedFinePrint,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// LocalizedProvider: Translated strings for the provider. Recommended maximum
 	// length is 12 characters to ensure full string is displayed on smaller
@@ -7250,7 +7327,10 @@ type TransitClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// LanguageOverride: If this field is present, transit tickets served to a
 	// user's device will always be in this language. Represents the BCP 47
@@ -7261,7 +7341,7 @@ type TransitClass struct {
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
@@ -13972,6 +14052,104 @@ func (c *JwtInsertCall) Do(opts ...googleapi.CallOption) (*JwtInsertResponse, er
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.jwt.insert", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type JwtValidateCall struct {
+	s                  *Service
+	jwtvalidaterequest *JwtValidateRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// Validate: Checks that the JWT or JSON string in the request represents a
+// valid pass to be saved.
+func (r *JwtService) Validate(jwtvalidaterequest *JwtValidateRequest) *JwtValidateCall {
+	c := &JwtValidateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.jwtvalidaterequest = jwtvalidaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *JwtValidateCall) Fields(s ...googleapi.Field) *JwtValidateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *JwtValidateCall) Context(ctx context.Context) *JwtValidateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *JwtValidateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *JwtValidateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.jwtvalidaterequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/jwt/validate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "walletobjects.jwt.validate", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "walletobjects.jwt.validate" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *JwtValidateResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *JwtValidateCall) Do(opts ...googleapi.CallOption) (*JwtValidateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &JwtValidateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "walletobjects.jwt.validate", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

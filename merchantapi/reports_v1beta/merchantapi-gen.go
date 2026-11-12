@@ -514,7 +514,7 @@ type CompetitiveVisibilityCompetitorView struct {
 	// Date: Date of this row. A condition on `date` is required in the `WHERE`
 	// clause.
 	Date *Date `json:"date,omitempty"`
-	// Domain: Domain of your competitor or your domain, if 'is_your_domain' is
+	// Domain: Domain of your competitor or your domain, if `is_your_domain` is
 	// true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE'
 	// clause.
 	Domain string `json:"domain,omitempty"`
@@ -616,7 +616,7 @@ type CompetitiveVisibilityTopMerchantView struct {
 	// Date: Date of this row. Cannot be selected in the `SELECT` clause. A
 	// condition on `date` is required in the `WHERE` clause.
 	Date *Date `json:"date,omitempty"`
-	// Domain: Domain of your competitor or your domain, if 'is_your_domain' is
+	// Domain: Domain of your competitor or your domain, if `is_your_domain` is
 	// true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE'
 	// clause.
 	Domain string `json:"domain,omitempty"`
@@ -780,6 +780,7 @@ type IssueSeverityPerReportingContext struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DemotedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1216,6 +1217,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1310,7 +1312,28 @@ type ProductPerformanceView struct {
 	//   "MARKETING_METHOD_ENUM_UNSPECIFIED" - Not specified.
 	//   "ORGANIC" - Organic marketing.
 	//   "ADS" - Ads-based marketing.
+	//   "AFFILIATE" - [YouTube Shopping Affiliate
+	// marketing](https://support.google.com/merchants/answer/14815513).
 	MarketingMethod string `json:"marketingMethod,omitempty"`
+	// Network: Network to which metrics apply. Segment.
+	//
+	// Possible values:
+	//   "NETWORK_ENUM_UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - The value is unknown in this version.
+	//   "SEARCH" - Google search.
+	//   "SEARCH_PARTNERS" - Search partners.
+	//   "CONTENT" - Display Network.
+	//   "MIXED" - Cross-network.
+	//   "YOUTUBE" - YouTube
+	//   "GOOGLE_TV" - Google TV
+	//   "GOOGLE_OWNED_CHANNELS" - This network is used for Google Owned channels
+	// such as Discover feed, Gmail, YouTube. Demand Gen stats are attributed to
+	// more granular network types such as GMAIL, DISCOVER, MAPS, YOUTUBE; this
+	// value is only used for historical data.
+	//   "GMAIL" - Gmail
+	//   "DISCOVER" - Discover Feed
+	//   "MAPS" - Maps
+	Network string `json:"network,omitempty"`
 	// OfferId: Merchant-provided id of the product. Segment.
 	OfferId string `json:"offerId,omitempty"`
 	// ProductTypeL1: Product type (1st level)
@@ -1599,6 +1622,7 @@ type ProductView struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ShippingLabel: Normalized shipping label
 	// (https://support.google.com/merchants/answer/6324504) specified in the data
@@ -1805,6 +1829,7 @@ type StatusPerReportingContext struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or

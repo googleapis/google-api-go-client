@@ -1052,7 +1052,7 @@
                   ]
                 },
                 "testIamPermissions": {
-                  "description": "Returns permissions that a caller has on the specified Project. There are no permissions required for making this API call.",
+                  "description": "Returns permissions that a caller has on the specified Instance. There are no permissions required for making this API call.",
                   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/instances/{instancesId}:testIamPermissions",
                   "httpMethod": "POST",
                   "id": "run.projects.locations.instances.testIamPermissions",
@@ -2215,6 +2215,52 @@
                 }
               }
             },
+            "sourceUploads": {
+              "methods": {
+                "upload": {
+                  "description": "Uploads a source archive to a Google Cloud Storage bucket through Cloud Run. The uploaded source object should be used for Cloud Run resource deployments. User is responsible for managing the lifecycle of the uploaded object. If uploading through the Cloud Run API to Cloud Storage is not desired, you can use the IAM Deny Policy to deny the `run.locations.uploadSource` permission for all principals.",
+                  "flatPath": "v2/projects/{projectsId}/locations/{locationsId}:uploadSource",
+                  "httpMethod": "POST",
+                  "id": "run.projects.locations.sourceUploads.upload",
+                  "mediaUpload": {
+                    "accept": [
+                      "*/*"
+                    ],
+                    "maxSize": "262144000",
+                    "protocols": {
+                      "simple": {
+                        "multipart": true,
+                        "path": "/upload/v2/{+parent}:uploadSource"
+                      }
+                    }
+                  },
+                  "parameterOrder": [
+                    "parent"
+                  ],
+                  "parameters": {
+                    "parent": {
+                      "description": "Required. The project and location in which the source archive should be uploaded to, specified in the format `projects/*/locations/*`.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v2/{+parent}:uploadSource",
+                  "request": {
+                    "$ref": "GoogleCloudRunV2UploadSourceRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleCloudRunV2UploadSourceResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform",
+                    "https://www.googleapis.com/auth/run"
+                  ],
+                  "supportsMediaUpload": true
+                }
+              }
+            },
             "workerPools": {
               "methods": {
                 "create": {
@@ -2623,9 +2669,34 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20261108",
   "rootUrl": "https://run.googleapis.com/",
   "schemas": {
+    "GoogleCloudRunV2AmbientNetworking": {
+      "description": "Configuration for Ambient Networking.",
+      "id": "GoogleCloudRunV2AmbientNetworking",
+      "properties": {
+        "ambientScope": {
+          "description": "The ambient networking scope of the instance.",
+          "enum": [
+            "AMBIENT_SCOPE_UNSPECIFIED",
+            "AMBIENT_SCOPE_REGIONAL",
+            "AMBIENT_SCOPE_GLOBAL"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Regional ambient networking.",
+            "Global ambient networking."
+          ],
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Optional. Whether ambient networking is enabled.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudRunV2BinaryAuthorization": {
       "description": "Settings for Binary Authorization feature.",
       "id": "GoogleCloudRunV2BinaryAuthorization",
@@ -2686,10 +2757,80 @@
           "type": "string"
         },
         "workerPool": {
-          "description": "Optional. Name of the Cloud Build Custom Worker Pool that should be used to build the Cloud Run function. The format of this field is `projects/{project}/locations/{region}/workerPools/{workerPool}` where `{project}` and `{region}` are the project id and region respectively where the worker pool is defined and `{workerPool}` is the short name of the worker pool.",
+          "description": "Optional. Name of the Cloud Build private pool that should be used to build the Cloud Run function. The format of this field is `projects/{project}/locations/{region}/workerPools/{workerPool}` where `{project}` and `{region}` are the project id and region respectively where the worker pool is defined and `{workerPool}` is the short name of the worker pool.",
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudRunV2BuildConfiguration": {
+      "description": "Build configuration for a container.",
+      "id": "GoogleCloudRunV2BuildConfiguration",
+      "properties": {
+        "buildpacksBuild": {
+          "$ref": "GoogleCloudRunV2BuildConfigurationBuildpacksBuild",
+          "description": "Optional. Builds the source using Buildpacks."
+        },
+        "dockerBuild": {
+          "$ref": "GoogleCloudRunV2BuildConfigurationDockerBuild",
+          "description": "Optional. Builds the source using Docker."
+        },
+        "environmentVariables": {
+          "description": "Optional. Environment variables for the build.",
+          "items": {
+            "$ref": "GoogleCloudRunV2EnvVar"
+          },
+          "type": "array"
+        },
+        "imageRepositoryUri": {
+          "description": "Required. Artifact Registry URI to store the built image.",
+          "type": "string"
+        },
+        "serviceAccount": {
+          "description": "Optional. The service account to use for the build. Its resource name in the format `projects/{project}/serviceAccounts/{email}`.",
+          "type": "string"
+        },
+        "tags": {
+          "description": "Optional. Tags to add to the build.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "workerConfiguration": {
+          "$ref": "GoogleCloudRunV2WorkerConfiguration",
+          "description": "Optional. Configuration for the worker."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2BuildConfigurationBuildpacksBuild": {
+      "description": "Buildpacks build configuration.",
+      "id": "GoogleCloudRunV2BuildConfigurationBuildpacksBuild",
+      "properties": {
+        "buildBaseImageUri": {
+          "description": "Optional. Specify base image other than the default.",
+          "type": "string"
+        },
+        "cacheImageUri": {
+          "description": "Optional. Cache image URI.",
+          "type": "string"
+        },
+        "environmentVariables": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use environment_variables in BuildConfiguration instead.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2BuildConfigurationDockerBuild": {
+      "description": "Docker build configuration.",
+      "id": "GoogleCloudRunV2BuildConfigurationDockerBuild",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudRunV2BuildInfo": {
@@ -2704,6 +2845,25 @@
         "sourceLocation": {
           "description": "Output only. Source code location of the image.",
           "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2BuildStatus": {
+      "description": "BuildStatus holds the status of a build.",
+      "id": "GoogleCloudRunV2BuildStatus",
+      "properties": {
+        "cloudBuildLogUrl": {
+          "description": "The log URL for the Cloud Build execution.",
+          "type": "string"
+        },
+        "message": {
+          "description": "The message details of the build.",
+          "type": "string"
+        },
+        "status": {
+          "description": "The status of the build.",
           "type": "string"
         }
       },
@@ -2763,6 +2923,21 @@
       },
       "type": "object"
     },
+    "GoogleCloudRunV2CloudBuildWorkerConfiguration": {
+      "description": "Configuration for Cloud Build worker.",
+      "id": "GoogleCloudRunV2CloudBuildWorkerConfiguration",
+      "properties": {
+        "machineType": {
+          "description": "Optional. The machine type for the Cloud Build worker.",
+          "type": "string"
+        },
+        "workerPool": {
+          "description": "Optional. The name of the Cloud Build worker pool.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudRunV2CloudSqlInstance": {
       "description": "Represents a set of Cloud SQL instances. Each one will be available under /cloudsql/[instance]. Visit https://cloud.google.com/sql/docs/mysql/connect-run for more information on how to connect Cloud SQL and Cloud Run.",
       "id": "GoogleCloudRunV2CloudSqlInstance",
@@ -2810,7 +2985,8 @@
             "CANCELLED",
             "CANCELLING",
             "DELETED",
-            "DELAYED_START_PENDING"
+            "DELAYED_START_PENDING",
+            "DELAYED_EXECUTION_EXCEEDING_DURATION_LIMIT"
           ],
           "enumDescriptions": [
             "Default value.",
@@ -2819,7 +2995,8 @@
             "The execution was cancelled by users.",
             "The execution is in the process of being cancelled.",
             "The execution was deleted.",
-            "A delayed execution is waiting for a start time."
+            "A delayed execution is waiting for a start time.",
+            "A delayed execution exceeded the maximum runtime duration."
           ],
           "readOnly": true,
           "type": "string"
@@ -2844,12 +3021,14 @@
           "type": "string"
         },
         "lastTransitionTime": {
-          "description": "Last time the condition transitioned from one status to another.",
+          "description": "Output only. Last time the condition transitioned from one status to another.",
           "format": "google-datetime",
+          "readOnly": true,
           "type": "string"
         },
         "message": {
-          "description": "Human readable message indicating details about the current status.",
+          "description": "Output only. Human readable message indicating details about the current status.",
+          "readOnly": true,
           "type": "string"
         },
         "reason": {
@@ -2929,7 +3108,7 @@
           "type": "string"
         },
         "severity": {
-          "description": "How to interpret failures of this condition, one of Error, Warning, Info",
+          "description": "Output only. How to interpret failures of this condition, one of Error, Warning, Info",
           "enum": [
             "SEVERITY_UNSPECIFIED",
             "ERROR",
@@ -2942,10 +3121,11 @@
             "Warning severity.",
             "Info severity."
           ],
+          "readOnly": true,
           "type": "string"
         },
         "state": {
-          "description": "State of the condition.",
+          "description": "Output only. State of the condition.",
           "enum": [
             "STATE_UNSPECIFIED",
             "CONDITION_PENDING",
@@ -2960,10 +3140,12 @@
             "Terminal state: Reconciliation did not succeed.",
             "Terminal state: Reconciliation completed successfully."
           ],
+          "readOnly": true,
           "type": "string"
         },
         "type": {
-          "description": "type is used to communicate the status of the reconciliation process. See also: https://github.com/knative/serving/blob/main/docs/spec/errors.md#error-conditions-and-reporting Types common to all resources include: * \"Ready\": True when the Resource is ready.",
+          "description": "Output only. type is used to communicate the status of the reconciliation process. See also: https://github.com/knative/serving/blob/main/docs/spec/errors.md#error-conditions-and-reporting Types common to all resources include: * \"Ready\": True when the Resource is ready.",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -2983,6 +3165,10 @@
         "baseImageUri": {
           "description": "Base image for this container. Only supported for services. If set, it indicates that the service is enrolled into automatic base image update.",
           "type": "string"
+        },
+        "buildConfig": {
+          "$ref": "GoogleCloudRunV2BuildConfiguration",
+          "description": "Optional. The build configuration for the container image."
         },
         "buildInfo": {
           "$ref": "GoogleCloudRunV2BuildInfo",
@@ -3043,7 +3229,7 @@
         },
         "sourceCode": {
           "$ref": "GoogleCloudRunV2SourceCode",
-          "description": "Optional. Location of the source."
+          "description": "Optional. Location of the source. This field is only supported in Cloud Run Service."
         },
         "startupProbe": {
           "$ref": "GoogleCloudRunV2Probe",
@@ -3112,6 +3298,11 @@
       "description": "ContainerStatus holds the information of container name and image digest value.",
       "id": "GoogleCloudRunV2ContainerStatus",
       "properties": {
+        "buildStatus": {
+          "$ref": "GoogleCloudRunV2BuildStatus",
+          "description": "Output only. The build status of the container image.",
+          "readOnly": true
+        },
         "imageDigest": {
           "description": "ImageDigest holds the resolved digest for the image specified and resolved during the creation of Revision. This field holds the digest value regardless of whether a tag or digest was originally specified in the Container object.",
           "type": "string"
@@ -3123,6 +3314,18 @@
       },
       "type": "object"
     },
+    "GoogleCloudRunV2CpuScaling": {
+      "description": "Represents CPU-related scaling settings.",
+      "id": "GoogleCloudRunV2CpuScaling",
+      "properties": {
+        "cpuUtilization": {
+          "description": "Optional. Determines a threshold for CPU utilization before scaling begins. Accepted values are between `0.1` and `0.90` (inclusive) or `0.0` to disable CPU utilization as threshold for scaling.",
+          "format": "float",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudRunV2DockerBuild": {
       "description": "Build the source using Docker. This means the source has a Dockerfile.",
       "id": "GoogleCloudRunV2DockerBuild",
@@ -3130,11 +3333,11 @@
       "type": "object"
     },
     "GoogleCloudRunV2EmptyDirVolumeSource": {
-      "description": "In memory (tmpfs) ephemeral storage. It is ephemeral in the sense that when the sandbox is taken down, the data is destroyed with it (it does not persist across sandbox runs).",
+      "description": "Represents in-memory (tmpfs) or disk-backed ephemeral storage. It is ephemeral in the sense that when the sandbox is taken down, the data is destroyed with it (it does not persist across sandbox runs).",
       "id": "GoogleCloudRunV2EmptyDirVolumeSource",
       "properties": {
         "medium": {
-          "description": "The medium on which the data is stored. Acceptable values today is only MEMORY or none. When none, the default will currently be backed by memory but could change over time. +optional",
+          "description": "The medium on which the data is stored. Acceptable values are `MEMORY`, `DISK`, or unset (`MEDIUM_UNSPECIFIED`). When unset, the default is currently memory-backed but could change over time.",
           "enum": [
             "MEDIUM_UNSPECIFIED",
             "MEMORY",
@@ -3148,7 +3351,7 @@
           "type": "string"
         },
         "sizeLimit": {
-          "description": "Limit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers. The default is nil which means that the limit is undefined. More info: https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume. Info in Kubernetes: https://kubernetes.io/docs/concepts/storage/volumes/#emptydir",
+          "description": "Limit on the storage usable by this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers. The default is nil which means that the limit is undefined. For more information, see [Configure in-memory volume mounts](https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume) and the [Kubernetes `emptyDir` volume documentation](https://kubernetes.io/docs/concepts/storage/volumes/#emptydir).",
           "type": "string"
         }
       },
@@ -3449,6 +3652,10 @@
           "description": "Optional. Arbitrary version identifier for the API client.",
           "type": "string"
         },
+        "delayExecution": {
+          "description": "Optional. If true, the system will start the execution within the next 12 hours depending on available capacity.",
+          "type": "boolean"
+        },
         "labels": {
           "additionalProperties": {
             "type": "string"
@@ -3529,7 +3736,7 @@
       "type": "object"
     },
     "GoogleCloudRunV2GCSVolumeSource": {
-      "description": "Represents a volume backed by a Cloud Storage bucket using Cloud Storage FUSE.",
+      "description": "Represents a volume backed by a Cloud Storage bucket (mounted via Cloud Storage FUSE or as a block device disk).",
       "id": "GoogleCloudRunV2GCSVolumeSource",
       "properties": {
         "bucket": {
@@ -3866,6 +4073,10 @@
           ],
           "type": "string"
         },
+        "sandboxes": {
+          "$ref": "GoogleCloudRunV2SandboxConfiguration",
+          "description": "Optional. Configuration for sandboxes."
+        },
         "satisfiesPzs": {
           "description": "Output only. Reserved for future use.",
           "readOnly": true,
@@ -3873,6 +4084,10 @@
         },
         "serviceAccount": {
           "type": "string"
+        },
+        "sshEnabled": {
+          "description": "Optional. Enables SSH access to the Instance.",
+          "type": "boolean"
         },
         "terminalCondition": {
           "$ref": "GoogleCloudRunV2Condition",
@@ -4034,6 +4249,20 @@
           "description": "Output only. For a deleted resource, the time after which it will be permamently deleted.",
           "format": "google-datetime",
           "readOnly": true,
+          "type": "string"
+        },
+        "functionalType": {
+          "description": "Optional. The functional type of the Job.",
+          "enum": [
+            "FUNCTIONAL_TYPE_UNSPECIFIED",
+            "FUNCTIONAL_TYPE_AGENT",
+            "FUNCTIONAL_TYPE_MCP_SERVER"
+          ],
+          "enumDescriptions": [
+            "Specifies that the functional type is unspecified.",
+            "Represents an AGENT functional type.",
+            "Represents an MCP_SERVER functional type."
+          ],
           "type": "string"
         },
         "generation": {
@@ -4360,6 +4589,10 @@
           },
           "type": "array"
         },
+        "delayExecution": {
+          "description": "Optional. If true, the system will start the execution within the next 12 hours depending on available capacity.",
+          "type": "boolean"
+        },
         "taskCount": {
           "description": "Optional. The desired number of tasks the execution should run. Will replace existing task_count value.",
           "format": "int32",
@@ -4438,6 +4671,11 @@
       "description": "A Revision is an immutable snapshot of code and configuration. A Revision references a container image. Revisions are only created by updates to its parent Service.",
       "id": "GoogleCloudRunV2Revision",
       "properties": {
+        "ambientNetworking": {
+          "$ref": "GoogleCloudRunV2AmbientNetworking",
+          "description": "Output only. The ambient networking configuration for this revision.",
+          "readOnly": true
+        },
         "annotations": {
           "additionalProperties": {
             "type": "string"
@@ -4460,6 +4698,14 @@
           "description": "Output only. The Condition of this Revision, containing its readiness status, and detailed error information in case it did not reach a serving state.",
           "items": {
             "$ref": "GoogleCloudRunV2Condition"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
+        "containerStatuses": {
+          "description": "Output only. Status information for each of the specified containers. The status includes the resolved digest for specified images.",
+          "items": {
+            "$ref": "GoogleCloudRunV2ContainerStatus"
           },
           "readOnly": true,
           "type": "array"
@@ -4609,6 +4855,11 @@
           "readOnly": true,
           "type": "boolean"
         },
+        "sandboxes": {
+          "$ref": "GoogleCloudRunV2SandboxConfiguration",
+          "description": "Output only. Configuration for sandboxes.",
+          "readOnly": true
+        },
         "satisfiesPzs": {
           "description": "Output only. Reserved for future use.",
           "readOnly": true,
@@ -4666,6 +4917,10 @@
         "vpcAccess": {
           "$ref": "GoogleCloudRunV2VpcAccess",
           "description": "VPC Access configuration for this Revision. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc."
+        },
+        "workloadIdentityConfig": {
+          "$ref": "GoogleCloudRunV2WorkloadIdentityConfig",
+          "description": "Optional. The Revision's workload identity settings."
         }
       },
       "type": "object"
@@ -4680,7 +4935,7 @@
           "type": "number"
         },
         "cpuUtilization": {
-          "description": "Optional. Determines a threshold for CPU utilization before scaling begins. Accepted values are between `0.1` and `0.95` (inclusive) or `0.0` to disable CPU utilization as threshold for scaling. CPU and concurrency scaling cannot both be disabled.",
+          "description": "Optional. Determines a threshold for CPU utilization before scaling begins. Accepted values are between `0.1` and `0.90` (inclusive) or `0.0` to disable CPU utilization as threshold for scaling. CPU and concurrency scaling cannot both be disabled.",
           "format": "float",
           "type": "number"
         },
@@ -4713,6 +4968,10 @@
       "description": "RevisionTemplate describes the data a revision should have when created from a template.",
       "id": "GoogleCloudRunV2RevisionTemplate",
       "properties": {
+        "ambientNetworking": {
+          "$ref": "GoogleCloudRunV2AmbientNetworking",
+          "description": "Optional. The ambient networking configuration for this revision."
+        },
         "annotations": {
           "additionalProperties": {
             "type": "string"
@@ -4800,6 +5059,10 @@
           "description": "Optional. The unique name for the revision. If this field is omitted, it will be automatically generated based on the Service name.",
           "type": "string"
         },
+        "sandboxes": {
+          "$ref": "GoogleCloudRunV2SandboxConfiguration",
+          "description": "Optional. Configuration for sandboxes."
+        },
         "scaling": {
           "$ref": "GoogleCloudRunV2RevisionScaling",
           "description": "Optional. Scaling settings for this Revision."
@@ -4831,6 +5094,10 @@
         "vpcAccess": {
           "$ref": "GoogleCloudRunV2VpcAccess",
           "description": "Optional. VPC Access configuration to use for this Revision. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc."
+        },
+        "workloadIdentityConfig": {
+          "$ref": "GoogleCloudRunV2WorkloadIdentityConfig",
+          "description": "Optional. The Revision's workload identity settings."
         }
       },
       "type": "object"
@@ -4850,6 +5117,67 @@
         "validateOnly": {
           "description": "Indicates that the request should be validated without actually deleting any resources.",
           "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2SandboxConfiguration": {
+      "description": "Configuration for sandboxes.",
+      "id": "GoogleCloudRunV2SandboxConfiguration",
+      "properties": {
+        "templates": {
+          "description": "Required. Sandbox templates that can be launched through the `sandbox` CLI.",
+          "items": {
+            "$ref": "GoogleCloudRunV2SandboxTemplate"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2SandboxTemplate": {
+      "description": "Template for a single sandbox.",
+      "id": "GoogleCloudRunV2SandboxTemplate",
+      "properties": {
+        "args": {
+          "description": "Optional. Arguments to the entrypoint. The docker image's CMD is used if this is not provided.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "command": {
+          "description": "Optional. Entrypoint array. Not executed within a shell. The docker image's ENTRYPOINT is used if this is not provided.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "env": {
+          "description": "Optional. List of environment variables to set in the sandbox.",
+          "items": {
+            "$ref": "GoogleCloudRunV2EnvVar"
+          },
+          "type": "array"
+        },
+        "image": {
+          "description": "Required. Name of the container image in Dockerhub or Artifact Registry. If the host is not provided, Dockerhub is assumed.",
+          "type": "string"
+        },
+        "name": {
+          "description": "Required. Name of the sandbox specified as a DNS_LABEL (RFC 1123).",
+          "type": "string"
+        },
+        "volumeMounts": {
+          "description": "Optional. Volume to mount into the container's filesystem.",
+          "items": {
+            "$ref": "GoogleCloudRunV2VolumeMount"
+          },
+          "type": "array"
+        },
+        "workingDir": {
+          "description": "Optional. Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -4967,6 +5295,20 @@
           "description": "Output only. For a deleted resource, the time after which it will be permanently deleted.",
           "format": "google-datetime",
           "readOnly": true,
+          "type": "string"
+        },
+        "functionalType": {
+          "description": "Optional. The functional type of the Service.",
+          "enum": [
+            "FUNCTIONAL_TYPE_UNSPECIFIED",
+            "FUNCTIONAL_TYPE_AGENT",
+            "FUNCTIONAL_TYPE_MCP_SERVER"
+          ],
+          "enumDescriptions": [
+            "Specifies that the functional type is unspecified.",
+            "Represents an AGENT functional type.",
+            "Represents an MCP_SERVER functional type."
+          ],
           "type": "string"
         },
         "generation": {
@@ -5192,7 +5534,7 @@
         },
         "inlinedSource": {
           "$ref": "GoogleCloudRunV2InlinedSource",
-          "description": "Optional. Input only. Source code inlined in the request. Cloud Run will store the inlined_source to Cloud Storage and replace the field with cloud_storage_source."
+          "description": "Optional. Input only. Source code inlined in the request. Cloud Run will store the inlined_source to Cloud Storage and replace the field with cloud_storage_source. This field is only supported in Cloud Run Service."
         }
       },
       "type": "object"
@@ -5326,7 +5668,7 @@
           "type": "array"
         },
         "workerPool": {
-          "description": "Optional. Name of the Cloud Build Custom Worker Pool that should be used to build the function. The format of this field is `projects/{project}/locations/{region}/workerPools/{workerPool}` where `{project}` and `{region}` are the project id and region respectively where the worker pool is defined and `{workerPool}` is the short name of the worker pool.",
+          "description": "Optional. Name of the Cloud Build private pool that should be used to build the function. The format of this field is `projects/{project}/locations/{region}/workerPools/{workerPool}` where `{project}` and `{region}` are the project id and region respectively where the worker pool is defined and `{workerPool}` is the short name of the worker pool.",
           "type": "string"
         }
       },
@@ -5515,6 +5857,10 @@
           "readOnly": true,
           "type": "integer"
         },
+        "sandboxes": {
+          "$ref": "GoogleCloudRunV2SandboxConfiguration",
+          "description": "Configuration for sandboxes."
+        },
         "satisfiesPzs": {
           "description": "Output only. Reserved for future use.",
           "readOnly": true,
@@ -5563,6 +5909,10 @@
           "$ref": "GoogleCloudRunV2VpcAccess",
           "description": "Output only. VPC Access configuration to use for this Task. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc.",
           "readOnly": true
+        },
+        "workloadIdentityConfig": {
+          "$ref": "GoogleCloudRunV2WorkloadIdentityConfig",
+          "description": "Optional. The Task's workload identity settings."
         }
       },
       "type": "object"
@@ -5633,6 +5983,10 @@
           "$ref": "GoogleCloudRunV2NodeSelector",
           "description": "Optional. The node selector for the task template."
         },
+        "sandboxes": {
+          "$ref": "GoogleCloudRunV2SandboxConfiguration",
+          "description": "Optional. Configuration for sandboxes."
+        },
         "serviceAccount": {
           "description": "Optional. Email address of the IAM service account associated with the Task of a Job. The service account represents the identity of the running task, and determines what permissions the task has. If not provided, the task will use the project's default service account.",
           "type": "string"
@@ -5652,6 +6006,10 @@
         "vpcAccess": {
           "$ref": "GoogleCloudRunV2VpcAccess",
           "description": "Optional. VPC Access configuration to use for this Task. For more information, visit https://cloud.google.com/run/docs/configuring/connecting-vpc."
+        },
+        "workloadIdentityConfig": {
+          "$ref": "GoogleCloudRunV2WorkloadIdentityConfig",
+          "description": "Optional. The Task's workload identity settings."
         }
       },
       "type": "object"
@@ -5724,6 +6082,28 @@
         "uri": {
           "description": "Displays the target URI.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2UploadSourceRequest": {
+      "description": "The request message for the UploadSource method.",
+      "id": "GoogleCloudRunV2UploadSourceRequest",
+      "properties": {
+        "service": {
+          "description": "The name of Cloud Run Service upload source archive will be used for.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2UploadSourceResponse": {
+      "description": "The response message for the UploadSource method.",
+      "id": "GoogleCloudRunV2UploadSourceResponse",
+      "properties": {
+        "cloudStorageSource": {
+          "$ref": "GoogleCloudRunV2CloudStorageSource",
+          "description": "The Cloud Storage object path the source archive is uploaded to."
         }
       },
       "type": "object"
@@ -5826,6 +6206,17 @@
             "$ref": "GoogleCloudRunV2NetworkInterface"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2WorkerConfiguration": {
+      "description": "Configuration for the worker.",
+      "id": "GoogleCloudRunV2WorkerConfiguration",
+      "properties": {
+        "cloudBuildWorkerConfiguration": {
+          "$ref": "GoogleCloudRunV2CloudBuildWorkerConfiguration",
+          "description": "Optional. Cloud Build worker configuration."
         }
       },
       "type": "object"
@@ -6087,6 +6478,10 @@
           "description": "Optional. The unique name for the revision. If this field is omitted, it will be automatically generated based on the WorkerPool name.",
           "type": "string"
         },
+        "sandboxes": {
+          "$ref": "GoogleCloudRunV2SandboxConfiguration",
+          "description": "Optional. Configuration for sandboxes."
+        },
         "serviceAccount": {
           "description": "Optional. Email address of the IAM service account associated with the revision of the service. The service account represents the identity of the running revision, and determines what permissions the revision has. If not provided, the revision will use the project's default service account.",
           "type": "string"
@@ -6113,10 +6508,67 @@
       "description": "Worker pool scaling settings.",
       "id": "GoogleCloudRunV2WorkerPoolScaling",
       "properties": {
+        "cpuScaling": {
+          "$ref": "GoogleCloudRunV2CpuScaling",
+          "description": "Optional. The CPU scaling settings for the worker pool."
+        },
         "manualInstanceCount": {
           "description": "Optional. The total number of instances in manual scaling mode.",
           "format": "int32",
           "type": "integer"
+        },
+        "maxInstanceCount": {
+          "description": "Optional. The maximum count of instances distributed among revisions based on the specified instance split percentages.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "minInstanceCount": {
+          "description": "Optional. The minimum count of instances distributed among revisions based on the specified instance split percentages.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "scalingMode": {
+          "description": "Optional. The scaling mode for the worker pool.",
+          "enum": [
+            "SCALING_MODE_UNSPECIFIED",
+            "AUTOMATIC",
+            "MANUAL"
+          ],
+          "enumDescriptions": [
+            "Unspecified.",
+            "Automatically scale between min and max instances.",
+            "Scale to manual instance count."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudRunV2WorkloadIdentityConfig": {
+      "description": "Workload identity settings.",
+      "id": "GoogleCloudRunV2WorkloadIdentityConfig",
+      "properties": {
+        "identity": {
+          "description": "Optional. The Revision's SPIFFE workload identity. Enables provisioning of SPIFFE workload certificates.",
+          "type": "string"
+        },
+        "identityCertificateEnabled": {
+          "description": "Optional. Controls whether an instance receives a MWLID certificate. Corresponds to the intention of the original --[no-]identity-certificate flag.",
+          "type": "boolean"
+        },
+        "identityType": {
+          "description": "Optional. The type of identity to use.",
+          "enum": [
+            "IDENTITY_TYPE_UNSPECIFIED",
+            "IDENTITY_TYPE_SERVICE_ACCOUNT",
+            "IDENTITY_TYPE_AGENT_IDENTITY"
+          ],
+          "enumDescriptions": [
+            "Unspecified",
+            "Service account identity.",
+            "Agent identity."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -6517,10 +6969,15 @@
             "REGIONAL_USER_OWNED_BUCKET",
             "LEGACY_BUCKET"
           ],
+          "enumDeprecated": [
+            false,
+            false,
+            true
+          ],
           "enumDescriptions": [
             "Unspecified.",
             "Bucket is located in user-owned project in the same region as the build. The builder service account must have access to create and write to Cloud Storage buckets in the build project.",
-            "Bucket is located in a Google-owned project and is not regionalized."
+            "Deprecated: Use `REGIONAL_USER_OWNED_BUCKET` instead. Bucket is located in a Google-owned project and is not regionalized."
           ],
           "type": "string"
         },
@@ -6625,16 +7082,43 @@
           "description": "Optional. Option to specify the Pub/Sub topic to receive build status updates.",
           "type": "string"
         },
+        "rankedMachineSeries": {
+          "deprecated": true,
+          "description": "Optional. Deprecated: Use PrivatePoolV1Config.WorkerConfig.ranked_machine_series instead. This field has no effect.",
+          "items": {
+            "enum": [
+              "MACHINE_SERIES_UNSPECIFIED",
+              "MACHINE_SERIES_E",
+              "MACHINE_SERIES_N",
+              "MACHINE_SERIES_C"
+            ],
+            "enumDescriptions": [
+              "Should not be used.",
+              "Cost-optimized machines such as E2.",
+              "General-purpose machines such as N4.",
+              "Performance-optimized machines such as C4."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
         "requestedVerifyOption": {
           "description": "Requested verifiability options.",
           "enum": [
             "NOT_VERIFIED",
-            "VERIFIED"
+            "VERIFIED",
+            "BEST_EFFORT"
           ],
           "enumDescriptions": [
             "Not a verifiable build (the default).",
-            "Build must be verified."
+            "Build must be verified.",
+            "Build verification is best effort. If provenance generation fails, the build will still succeed."
           ],
+          "type": "string"
+        },
+        "resolvedWorkerRelease": {
+          "description": "Output only. Worker release resolved from the release channel.",
+          "readOnly": true,
           "type": "string"
         },
         "secretEnv": {
@@ -6689,6 +7173,47 @@
         "workerPool": {
           "deprecated": true,
           "description": "This field deprecated; please use `pool.name` instead.",
+          "type": "string"
+        },
+        "workerRelease": {
+          "description": "Optional. Option to specify which release or release channel (rapid|regular|stable) to use to run this build.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevtoolsCloudbuildV1BuildResourceUsage": {
+      "description": "Aggregated/summary metrics over the entire build lifecycle.",
+      "id": "GoogleDevtoolsCloudbuildV1BuildResourceUsage",
+      "properties": {
+        "averageCpuUtilization": {
+          "description": "Output only. The average CPU utilization ratio across all vCPUs over the duration of the build, expressed as a fraction in the range [0.0, 1.0].",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "averageMemoryUtilization": {
+          "description": "Output only. The average memory utilization ratio over the duration of the build, expressed as a fraction in the range [0.0, 1.0].",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "peakCpuUtilization": {
+          "description": "Output only. The highest CPU utilization ratio across all vCPUs observed over the duration of the build, expressed as a fraction in the range [0.0, 1.0].",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "peakMemoryUtilization": {
+          "description": "Output only. The highest memory utilization ratio observed over the duration of the build, expressed as a fraction in the range [0.0, 1.0].",
+          "format": "float",
+          "readOnly": true,
+          "type": "number"
+        },
+        "totalCpuDuration": {
+          "description": "Output only. Total CPU execution time consumed across all cores during build execution.",
+          "format": "google-duration",
+          "readOnly": true,
           "type": "string"
         }
       },
@@ -7007,7 +7532,7 @@
       "id": "GoogleDevtoolsCloudbuildV1GenericArtifactDependency",
       "properties": {
         "destPath": {
-          "description": "Required. Where the artifact files should be placed on the worker.",
+          "description": "Optional. Where the artifact files should be placed on the worker. Required when specified in `Build.dependencies`.",
           "type": "string"
         },
         "resource": {
@@ -7059,6 +7584,10 @@
         "destPath": {
           "description": "Required. Where should the files be placed on the worker.",
           "type": "string"
+        },
+        "fetchTags": {
+          "description": "Optional. True if remote tags should be fetched too (default false). Note: when depth is 1 (default), git fetch only retrieves tags pointing to commits within the shallow boundary. Set depth to -1 to fetch all historical tags.",
+          "type": "boolean"
         },
         "recurseSubmodules": {
           "description": "Optional. True if submodules should be fetched too (default false).",
@@ -7258,6 +7787,16 @@
         "name": {
           "description": "The `WorkerPool` resource to execute the build on. You must have `cloudbuild.workerpools.use` on the project hosting the WorkerPool. Format projects/{project}/locations/{location}/workerPools/{workerPoolId}",
           "type": "string"
+        },
+        "resolvedWorkerRelease": {
+          "description": "Output only. OUTPUT_ONLY. Worker release resolved from the release channel.",
+          "readOnly": true,
+          "type": "string"
+        },
+        "workerRelease": {
+          "description": "Output only. OUTPUT_ONLY. The release or release channel used to run the Build. This is set to the same value as `PrivatePoolV1Config.WorkerConfig.worker_release` for the UI to easily access.",
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"
@@ -7403,6 +7942,11 @@
             "$ref": "GoogleDevtoolsCloudbuildV1UploadedPythonPackage"
           },
           "type": "array"
+        },
+        "resourceUsage": {
+          "$ref": "GoogleDevtoolsCloudbuildV1BuildResourceUsage",
+          "description": "Output only. Aggregated metrics for the build.",
+          "readOnly": true
         }
       },
       "type": "object"

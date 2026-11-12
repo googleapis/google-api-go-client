@@ -15,6 +15,68 @@
   "description": "This API enables connectivity with and between Google Cloud resources.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/network-connectivity/docs/reference/networkconnectivity/rest",
+  "endpoints": [
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-central1.rep.googleapis.com/",
+      "location": "us-central1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-central2.rep.googleapis.com/",
+      "location": "us-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-east1.rep.googleapis.com/",
+      "location": "us-east1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-east4.rep.googleapis.com/",
+      "location": "us-east4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-east5.rep.googleapis.com/",
+      "location": "us-east5"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-east7.rep.googleapis.com/",
+      "location": "us-east7"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-south1.rep.googleapis.com/",
+      "location": "us-south1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-west1.rep.googleapis.com/",
+      "location": "us-west1"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-west2.rep.googleapis.com/",
+      "location": "us-west2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-west3.rep.googleapis.com/",
+      "location": "us-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-west4.rep.googleapis.com/",
+      "location": "us-west4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://networkconnectivity.us-west8.rep.googleapis.com/",
+      "location": "us-west8"
+    }
+  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -1127,7 +1189,7 @@
       }
     }
   },
-  "revision": "20260701",
+  "revision": "20261029",
   "rootUrl": "https://networkconnectivity.googleapis.com/",
   "schemas": {
     "AllocationOptions": {
@@ -1508,6 +1570,20 @@
           "description": "Optional. An alternative to ip_cidr_range. Can be set when trying to create an IPv4 reservation that automatically finds a free range of the given size. If both ip_cidr_range and prefix_length are set, there is an error if the range sizes do not match. Can also be used during updates to change the range size. NOTE: For IPv6 this field only works if ip_cidr_range is set as well, and both fields must match. In other words, with IPv6 this field only works as a redundant parameter.",
           "format": "int32",
           "type": "integer"
+        },
+        "purpose": {
+          "description": "Optional. The purpose of this internal range. Defines the intended use of the range and any restrictions associated with it. If not specified, it defaults to VPC_SUBNET.",
+          "enum": [
+            "PURPOSE_UNSPECIFIED",
+            "VPC_SUBNET",
+            "INTERNAL_ADDRESS"
+          ],
+          "enumDescriptions": [
+            "If purpose is left unspecified in CreateInternalRange or UpdateInternalRange, it will be defaulted to VPC_SUBNET.",
+            "The internal range is used for VPC subnetworks.",
+            "The internal range is used exclusively for allocating individual IP addresses (e.g., for global PSC endpoints). Child ranges or subnetworks cannot be created from a range with this purpose."
+          ],
+          "type": "string"
         },
         "rangeStatus": {
           "description": "Output only. Status of the Internal Range.",

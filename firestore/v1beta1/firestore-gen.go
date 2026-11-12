@@ -341,6 +341,8 @@ type BatchGetDocumentsRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Transaction: Reads documents in a transaction.
 	Transaction string `json:"transaction,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Documents") to
@@ -403,6 +405,8 @@ func (s BatchGetDocumentsResponse) MarshalJSON() ([]byte, error) {
 type BatchWriteRequest struct {
 	// Labels: Labels associated with this batch write.
 	Labels map[string]string `json:"labels,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Writes: The writes to apply. Method does not apply writes atomically and
 	// does not guarantee ordering. Each write succeeds or fails independently. You
 	// cannot write to the same document more than once per request.
@@ -459,6 +463,8 @@ type BeginTransactionRequest struct {
 	// Options: The options for the transaction. Defaults to a read-write
 	// transaction.
 	Options *TransactionOptions `json:"options,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -599,19 +605,21 @@ func (s CollectionSelector) MarshalJSON() ([]byte, error) {
 
 // CommitRequest: The request for Firestore.Commit.
 type CommitRequest struct {
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// Transaction: If set, applies all writes in this transaction, and commits it.
 	Transaction string `json:"transaction,omitempty"`
 	// Writes: The writes to apply. Always executed atomically and in order.
 	Writes []*Write `json:"writes,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Transaction") to
+	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Transaction") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "RequestOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -984,6 +992,8 @@ type ExecutePipelineRequest struct {
 	// if Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StructuredPipeline: A pipelined operation.
 	StructuredPipeline *StructuredPipeline `json:"structuredPipeline,omitempty"`
 	// Transaction: Run the query within an already active transaction. The value
@@ -1007,7 +1017,7 @@ func (s ExecutePipelineRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ExecutePipelineResponse: The response for Firestore.Execute.
+// ExecutePipelineResponse: The response for Firestore.ExecutePipeline.
 type ExecutePipelineResponse struct {
 	// ExecutionTime: The time at which the results are valid. This is a (not
 	// strictly) monotonically increasing value across multiple responses in the
@@ -1720,6 +1730,42 @@ func (s GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, er
 // GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the update
 // database operation.
 type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
+	EndTime string `json:"endTime,omitempty"`
+	// StartTime: The time this operation started.
+	StartTime string `json:"startTime,omitempty"`
+	// State: The state of the operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
+	//   "INITIALIZING" - Request is being prepared for processing.
+	//   "PROCESSING" - Request is actively being processed.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
+	//   "SUCCESSFUL" - Request has completed successfully.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
+	State string `json:"state,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirestoreAdminV1UpdateDatabaseMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1UpdateDatabaseMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta1ExportDocumentsMetadata: Metadata for
@@ -2193,6 +2239,8 @@ type ListCollectionIdsRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2274,6 +2322,8 @@ type ListenRequest struct {
 	Labels map[string]string `json:"labels,omitempty"`
 	// RemoveTarget: The ID of a target to remove from this stream.
 	RemoveTarget int64 `json:"removeTarget,omitempty"`
+	// RequestOptions: Optional. The request options for the request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AddTarget") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2413,6 +2463,8 @@ type PartitionQueryRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for the request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StructuredQuery: A structured query. Query must specify collection with all
 	// descendants and be ordered by name ascending. Other filters, order bys,
 	// limits, offsets, and start/end cursors are not supported.
@@ -2658,19 +2710,64 @@ func (s ReadWrite) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RollbackRequest: The request for Firestore.Rollback.
-type RollbackRequest struct {
-	// Transaction: Required. The transaction to roll back.
-	Transaction string `json:"transaction,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Transaction") to
+// RequestOptions: Options for a request.
+type RequestOptions struct {
+	// RequestTags: Optional. The request tags for the request. Request tags are
+	// user-provided strings used for usage monitoring, cost management, and
+	// observability. Callers can associate custom application context (such as
+	// component, microservice, feature name, or operation type) with database
+	// requests. These tags are collected and aggregated in usage and monitoring
+	// reports, allowing billable operations and usage metrics to be sliced and
+	// analyzed by tag. These tags *only* show up in monitoring and are visible in
+	// administrative operations (such as usage reports). They do not affect data
+	// storage, query semantics, or request execution. Cardinality and Best
+	// Practices: - Request tags are most effective when using a bounded set of
+	// distinct values (e.g., fewer than 100 distinct tags across an entire
+	// database). Using a large number of distinct tags may result in tags being
+	// omitted from top usage dashboards. - Use structured identifiers (for
+	// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+	// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+	// document keys. - Do not include sensitive data or personally identifiable
+	// information (PII) in request tags, as they show up in administrative
+	// monitoring. The tags are processed as follows: - Leading and trailing
+	// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+	// Truncated to a maximum of 510 characters. - Deduplicated within the same
+	// request. - Limited to a maximum of 50 tags per request (excess tags are
+	// silently discarded).
+	RequestTags []string `json:"requestTags,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestTags") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Transaction") to include in API
+	// NullFields is a list of field names (e.g. "RequestTags") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RequestOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod RequestOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RollbackRequest: The request for Firestore.Rollback.
+type RollbackRequest struct {
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
+	// Transaction: Required. The transaction to roll back.
+	Transaction string `json:"transaction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestOptions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2695,6 +2792,8 @@ type RunAggregationQueryRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for the request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StructuredAggregationQuery: An aggregation query.
 	StructuredAggregationQuery *StructuredAggregationQuery `json:"structuredAggregationQuery,omitempty"`
 	// Transaction: Run the aggregation within an already active transaction. The
@@ -2774,6 +2873,8 @@ type RunQueryRequest struct {
 	// Point-in-Time Recovery is enabled, can additionally be a whole minute
 	// timestamp within the past 7 days.
 	ReadTime string `json:"readTime,omitempty"`
+	// RequestOptions: Optional. The request options for this request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StructuredQuery: A structured query.
 	StructuredQuery *StructuredQuery `json:"structuredQuery,omitempty"`
 	// Transaction: Run the query within an already active transaction. The value
@@ -3252,13 +3353,18 @@ func (s UnaryFilter) MarshalJSON() ([]byte, error) {
 
 // Value: A message that can hold any of the supported value types.
 type Value struct {
-	// ArrayValue: An array value. Cannot directly contain another array value,
-	// though can contain a map which contains another array.
+	// ArrayValue: An array value. In Standard edition databases, an array value
+	// cannot directly contain another array value, though it can contain a map
+	// which contains another array. In Enterprise edition databases, an array
+	// value can contain another array value.
 	ArrayValue *ArrayValue `json:"arrayValue,omitempty"`
 	// BooleanValue: A boolean value.
 	BooleanValue bool `json:"booleanValue,omitempty"`
-	// BytesValue: A bytes value. Must not exceed 1 MiB - 89 bytes. Only the first
-	// 1,500 bytes are considered by queries.
+	// BytesValue: A bytes value. In Standard edition databases: * The value must
+	// not exceed 1 MiB - 89 bytes. * Only the first 1,500 bytes are considered by
+	// queries. In Enterprise edition databases, there is no limit on the size of
+	// the value. However, it is still subject to document and index entry size
+	// limits.
 	BytesValue string `json:"bytesValue,omitempty"`
 	// DoubleValue: A double value.
 	DoubleValue float64 `json:"doubleValue,omitempty"`
@@ -3288,9 +3394,11 @@ type Value struct {
 	// ReferenceValue: A reference to a document. For example:
 	// `projects/{project_id}/databases/{database_id}/documents/{document_path}`.
 	ReferenceValue string `json:"referenceValue,omitempty"`
-	// StringValue: A string value. The string, represented as UTF-8, must not
-	// exceed 1 MiB - 89 bytes. Only the first 1,500 bytes of the UTF-8
-	// representation are considered by queries.
+	// StringValue: A string value. In Standard edition databases: * The string,
+	// represented as UTF-8, must not exceed 1 MiB - 89 bytes. * Only the first
+	// 1,500 bytes of the UTF-8 representation are considered by queries. In
+	// Enterprise edition databases, there is no limit on the size of the value.
+	// However, it is still subject to document and index entry size limits.
 	StringValue string `json:"stringValue,omitempty"`
 	// TimestampValue: A timestamp value. Precise only to microseconds. When
 	// stored, any additional precision is rounded down.
@@ -3384,6 +3492,8 @@ func (s Write) MarshalJSON() ([]byte, error) {
 type WriteRequest struct {
 	// Labels: Labels associated with this write request.
 	Labels map[string]string `json:"labels,omitempty"`
+	// RequestOptions: Optional. The request options for the request.
+	RequestOptions *RequestOptions `json:"requestOptions,omitempty"`
 	// StreamId: The ID of the write stream to resume. This may only be set in the
 	// first message. When left empty, a new write stream will be created.
 	StreamId string `json:"streamId,omitempty"`
@@ -4170,6 +4280,34 @@ func (c *ProjectsDatabasesDocumentsCreateDocumentCall) MaskFieldPaths(maskFieldP
 	return c
 }
 
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
+func (c *ProjectsDatabasesDocumentsCreateDocumentCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsCreateDocumentCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -4286,6 +4424,34 @@ func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentExists(currentDocu
 // have been last updated at that time. Timestamp must be microsecond aligned.
 func (c *ProjectsDatabasesDocumentsDeleteCall) CurrentDocumentUpdateTime(currentDocumentUpdateTime string) *ProjectsDatabasesDocumentsDeleteCall {
 	c.urlParams_.Set("currentDocument.updateTime", currentDocumentUpdateTime)
+	return c
+}
+
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
+func (c *ProjectsDatabasesDocumentsDeleteCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsDeleteCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
 }
 
@@ -4510,6 +4676,34 @@ func (c *ProjectsDatabasesDocumentsGetCall) ReadTime(readTime string) *ProjectsD
 	return c
 }
 
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
+func (c *ProjectsDatabasesDocumentsGetCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsGetCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
+	return c
+}
+
 // Transaction sets the optional parameter "transaction": Reads the document in
 // a transaction.
 func (c *ProjectsDatabasesDocumentsGetCall) Transaction(transaction string) *ProjectsDatabasesDocumentsGetCall {
@@ -4688,6 +4882,34 @@ func (c *ProjectsDatabasesDocumentsListCall) ReadTime(readTime string) *Projects
 // under the parent. Requests with `recursive` may not specify `show_missing`.
 func (c *ProjectsDatabasesDocumentsListCall) Recursive(recursive bool) *ProjectsDatabasesDocumentsListCall {
 	c.urlParams_.Set("recursive", fmt.Sprint(recursive))
+	return c
+}
+
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
+func (c *ProjectsDatabasesDocumentsListCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsListCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
 }
 
@@ -5033,6 +5255,34 @@ func (c *ProjectsDatabasesDocumentsListDocumentsCall) ReadTime(readTime string) 
 // under the parent. Requests with `recursive` may not specify `show_missing`.
 func (c *ProjectsDatabasesDocumentsListDocumentsCall) Recursive(recursive bool) *ProjectsDatabasesDocumentsListDocumentsCall {
 	c.urlParams_.Set("recursive", fmt.Sprint(recursive))
+	return c
+}
+
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
+func (c *ProjectsDatabasesDocumentsListDocumentsCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsListDocumentsCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
 }
 
@@ -5445,6 +5695,34 @@ func (c *ProjectsDatabasesDocumentsPatchCall) CurrentDocumentUpdateTime(currentD
 // reference.
 func (c *ProjectsDatabasesDocumentsPatchCall) MaskFieldPaths(maskFieldPaths ...string) *ProjectsDatabasesDocumentsPatchCall {
 	c.urlParams_.SetMulti("mask.fieldPaths", append([]string{}, maskFieldPaths...))
+	return c
+}
+
+// RequestOptionsRequestTags sets the optional parameter
+// "requestOptions.requestTags": The request tags for the request. Request tags
+// are user-provided strings used for usage monitoring, cost management, and
+// observability. Callers can associate custom application context (such as
+// component, microservice, feature name, or operation type) with database
+// requests. These tags are collected and aggregated in usage and monitoring
+// reports, allowing billable operations and usage metrics to be sliced and
+// analyzed by tag. These tags *only* show up in monitoring and are visible in
+// administrative operations (such as usage reports). They do not affect data
+// storage, query semantics, or request execution. Cardinality and Best
+// Practices: - Request tags are most effective when using a bounded set of
+// distinct values (e.g., fewer than 100 distinct tags across an entire
+// database). Using a large number of distinct tags may result in tags being
+// omitted from top usage dashboards. - Use structured identifiers (for
+// example: `app=cart`, `env=prod`, `service=checkout`) and avoid
+// high-cardinality values such as UUIDs, request IDs, timestamps, user IDs, or
+// document keys. - Do not include sensitive data or personally identifiable
+// information (PII) in request tags, as they show up in administrative
+// monitoring. The tags are processed as follows: - Leading and trailing
+// whitespace is trimmed. - Empty tags (after trimming) are filtered out. -
+// Truncated to a maximum of 510 characters. - Deduplicated within the same
+// request. - Limited to a maximum of 50 tags per request (excess tags are
+// silently discarded).
+func (c *ProjectsDatabasesDocumentsPatchCall) RequestOptionsRequestTags(requestOptionsRequestTags ...string) *ProjectsDatabasesDocumentsPatchCall {
+	c.urlParams_.SetMulti("requestOptions.requestTags", append([]string{}, requestOptionsRequestTags...))
 	return c
 }
 

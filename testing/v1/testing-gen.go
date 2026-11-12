@@ -1062,7 +1062,7 @@ type DeviceSession struct {
 	// ActiveStartTime: Output only. The timestamp that the session first became
 	// ACTIVE.
 	ActiveStartTime string `json:"activeStartTime,omitempty"`
-	// AndroidDevice: Required. The requested device
+	// AndroidDevice: Required. The requested device.
 	AndroidDevice *AndroidDevice `json:"androidDevice,omitempty"`
 	// CreateTime: Output only. The time that the Session was created.
 	CreateTime string `json:"createTime,omitempty"`

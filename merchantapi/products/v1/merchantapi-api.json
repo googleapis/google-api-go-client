@@ -140,7 +140,7 @@
               ]
             },
             "insert": {
-              "description": "[Uploads a product input to your Merchant Center account](/merchant/api/guides/products/add-manage#add_a_product). You must have a products [data source](/merchant/api/guides/data-sources/api-sources#create-primary-data-source) to be able to insert a product. The unique identifier of the data source is passed as a query parameter in the request URL. If a product input with the same contentLanguage, offerId, and dataSource already exists, then the product input inserted by this method replaces that entry. After inserting, updating, or deleting a product input, it may take several minutes before the processed product can be retrieved.",
+              "description": "[Uploads a product input to your Merchant Center account](https://developers.google.com/merchant/api/guides/products/add-manage#add_a_product). You must have a products [data source](https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source) to be able to insert a product. The unique identifier of the data source is passed as a query parameter in the request URL. If a product input with the same contentLanguage, offerId, and dataSource already exists, then the product input inserted by this method replaces that entry. After inserting, updating, or deleting a product input, it may take several minutes before the processed product can be retrieved.",
               "flatPath": "products/v1/accounts/{accountsId}/productInputs:insert",
               "httpMethod": "POST",
               "id": "merchantapi.accounts.productInputs.insert",
@@ -149,7 +149,7 @@
               ],
               "parameters": {
                 "dataSource": {
-                  "description": "Required. The primary or supplemental product data source name. If the product already exists and data source provided is different, then the product will be moved to a new data source. For more information, see [Create a primary data source](/merchant/api/guides/data-sources/api-sources#create-primary-data-source). Only API data sources are supported. Format: `accounts/{account}/dataSources/{datasource}`. For example, `accounts/123456/dataSources/104628`.",
+                  "description": "Required. The primary or supplemental product data source name. If the product already exists and data source provided is different, then the product will be moved to a new data source. For more information, see [Create a primary data source](https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source). Only API data sources are supported. Format: `accounts/{account}/dataSources/{datasource}`. For example, `accounts/123456/dataSources/104628`.",
                   "location": "query",
                   "type": "string"
                 },
@@ -173,7 +173,7 @@
               ]
             },
             "patch": {
-              "description": "Updates the existing product input in your Merchant Center account. The name of the product input to update is taken from the `name` field within the `ProductInput` resource. After inserting, updating, or deleting a product input, it may take several minutes before the processed product can be retrieved.",
+              "description": "Updates the existing product input in your Merchant Center account. The name of the product input to update is taken from the `name` field within the `ProductInput` resource. After inserting, updating, or deleting a product input, it may take several minutes before the processed product can be retrieved. For more information, see [Add and manage products](https://developers.google.com/merchant/api/guides/products/add-manage) and [Make frequent updates to your products](https://developers.google.com/merchant/api/guides/products/frequent-updates).",
               "flatPath": "products/v1/accounts/{accountsId}/productInputs/{productInputsId}",
               "httpMethod": "PATCH",
               "id": "merchantapi.accounts.productInputs.patch",
@@ -241,7 +241,7 @@
               ]
             },
             "list": {
-              "description": "Lists the processed products in your Merchant Center account. The response might contain fewer items than specified by `pageSize`. Rely on `pageToken` to determine if there are more items to be requested. After inserting, updating, or deleting a product input, it may take several minutes before the updated processed product can be retrieved.",
+              "description": "Lists the processed products in your Merchant Center account. The response might contain fewer items than specified by `pageSize`. Rely on `pageToken` to determine if there are more items to be requested. After inserting, updating, or deleting a product input, it may take several minutes before the updated processed product can be retrieved. For more information, see [List your products data and product issues](https://developers.google.com/merchant/api/guides/products/list-products-data-issues).",
               "flatPath": "products/v1/accounts/{accountsId}/products",
               "httpMethod": "GET",
               "id": "merchantapi.accounts.products.list",
@@ -281,7 +281,7 @@
       }
     }
   },
-  "revision": "20260715",
+  "revision": "20261110",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "AutomatedDiscounts": {
@@ -724,12 +724,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -768,7 +770,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         }
@@ -966,12 +969,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -1010,7 +1015,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         },
@@ -1031,6 +1037,44 @@
             "This issue represents a warning and does not have a direct affect on the product.",
             "The product is demoted and most likely have limited performance in search results",
             "Issue disapproves the product."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "LeaseTerm": {
+      "description": "The lease term of the property.",
+      "id": "LeaseTerm",
+      "properties": {
+        "durationUnit": {
+          "description": "The duration unit of the lease term.",
+          "enum": [
+            "DURATION_UNIT_UNSPECIFIED",
+            "MONTHS",
+            "WEEKS"
+          ],
+          "enumDescriptions": [
+            "Unspecified duration unit.",
+            "Month.",
+            "Week."
+          ],
+          "type": "string"
+        },
+        "durationValue": {
+          "description": "The duration value of the lease term.",
+          "format": "int64",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of lease term.",
+          "enum": [
+            "LEASE_TERM_TYPE_UNSPECIFIED",
+            "FIXED_TERM"
+          ],
+          "enumDescriptions": [
+            "Unspecified lease term type.",
+            "Fixed term."
           ],
           "type": "string"
         }
@@ -1077,7 +1121,7 @@
       "type": "object"
     },
     "LoyaltyProgram": {
-      "description": "A message that represents loyalty program.",
+      "description": "A message that represents loyalty program. For more information on loyalty programs, see [Overview of loyalty programs](/merchant/api/guides/loyalty/loyalty-programs).",
       "id": "LoyaltyProgram",
       "properties": {
         "cashbackForFutureUse": {
@@ -1200,7 +1244,7 @@
       "type": "object"
     },
     "Product": {
-      "description": "The processed product, built from multiple product inputs after applying rules and supplemental data sources. This processed product matches what is shown in your Merchant Center account. Each product is built from exactly one primary data source product input, and multiple supplemental data source inputs. After inserting, updating, or deleting a product input, it may take several minutes before the updated processed product can be retrieved. All fields in the processed product and its sub-messages match the name of their corresponding attribute in the [Product data specification](https://support.google.com/merchants/answer/7052112) with some exceptions.",
+      "description": "The processed product, built from multiple product inputs after applying rules and supplemental data sources. This processed product matches what is shown in your Merchant Center account. Each product is built from exactly one primary data source product input, and multiple supplemental data source inputs. After inserting, updating, or deleting a product input, it may take several minutes before the updated processed product can be retrieved. All fields in the processed product and its sub-messages match the name of their corresponding attribute in the [Product data specification](https://support.google.com/merchants/answer/7052112) with some exceptions. For product ingestion workflows and status checks, see [Manage products](https://developers.google.com/merchant/api/guides/products/overview), [Add and manage products](https://developers.google.com/merchant/api/guides/products/add-manage), and [List your products data and product issues](https://developers.google.com/merchant/api/guides/products/list-products-data-issues).",
       "id": "Product",
       "properties": {
         "archived": {
@@ -1522,7 +1566,7 @@
           "type": "array"
         },
         "certifications": {
-          "description": "Product Certifications, for example for energy efficiency labeling of products recorded in the [EU EPREL](https://eprel.ec.europa.eu/screen/home) database. See the [Help Center](https://support.google.com/merchants/answer/13528839) article for more information.",
+          "description": "Product Certifications, for example for energy efficiency labeling of products recorded in the [EU EPREL](https://eprel.ec.europa.eu/screen/home) database. For more information, see [Certification](https://support.google.com/merchants/answer/13528839).",
           "items": {
             "$ref": "ProductCertification"
           },
@@ -1751,7 +1795,8 @@
               "FREE_VEHICLE_LISTINGS",
               "VEHICLE_ADS",
               "CLOUD_RETAIL",
-              "LOCAL_CLOUD_RETAIL"
+              "LOCAL_CLOUD_RETAIL",
+              "RENTAL_ADS"
             ],
             "enumDescriptions": [
               "Not specified.",
@@ -1766,7 +1811,8 @@
               "[Free vehicle listings](https://support.google.com/merchants/answer/11189169).",
               "[Vehicle ads](https://support.google.com/merchants/answer/11189169).",
               "[Cloud retail](https://cloud.google.com/solutions/retail).",
-              "[Local cloud retail](https://cloud.google.com/solutions/retail)."
+              "[Local cloud retail](https://cloud.google.com/solutions/retail).",
+              "Real Estate Rental Ads. ."
             ],
             "type": "string"
           },
@@ -1854,7 +1900,8 @@
               "FREE_VEHICLE_LISTINGS",
               "VEHICLE_ADS",
               "CLOUD_RETAIL",
-              "LOCAL_CLOUD_RETAIL"
+              "LOCAL_CLOUD_RETAIL",
+              "RENTAL_ADS"
             ],
             "enumDescriptions": [
               "Not specified.",
@@ -1869,7 +1916,8 @@
               "[Free vehicle listings](https://support.google.com/merchants/answer/11189169).",
               "[Vehicle ads](https://support.google.com/merchants/answer/11189169).",
               "[Cloud retail](https://cloud.google.com/solutions/retail).",
-              "[Local cloud retail](https://cloud.google.com/solutions/retail)."
+              "[Local cloud retail](https://cloud.google.com/solutions/retail).",
+              "Real Estate Rental Ads. ."
             ],
             "type": "string"
           },
@@ -1895,6 +1943,10 @@
           "description": "The latitude of the property. The value must be between -90 (inclusive) and 90 (inclusive), up to 6 decimal places.",
           "format": "double",
           "type": "number"
+        },
+        "leaseTerm": {
+          "$ref": "LeaseTerm",
+          "description": "The lease term of the property."
         },
         "lifestyleImageLinks": {
           "description": "Additional URLs of lifestyle images of the item, used to explicitly identify images that showcase your item in a real-world context. See the [Help Center article](https://support.google.com/merchants/answer/9103186) for more information.",
@@ -2345,7 +2397,7 @@
           "type": "string"
         },
         "sizeTypes": {
-          "description": "The cut of the item. It can be used to represent combined size types for apparel items. Maximum two of size types can be provided, see [Size type](https://support.google.com/merchants/answer/6324497).",
+          "description": "The cut of the item. It can be used to represent combined size types for apparel items. You can provide up to two `SizeType` values, for example, `[\"PETITE\", \"MATERNITY\"]` or `[\"BIG\", \"TALL\"]`. For more information, see [Size type](https://support.google.com/merchants/answer/6324497).",
           "items": {
             "enum": [
               "SIZE_TYPE_UNSPECIFIED",
@@ -2517,7 +2569,7 @@
         },
         "warranty": {
           "$ref": "Warranty",
-          "description": "The [warranty](https://support.google.com/google-ads/answer/15957626) of the vehicle."
+          "description": "The [`warranty`](https://support.google.com/merchants/answer/18562485) of the product."
         },
         "year": {
           "description": "The [Year](https://support.google.com/google-ads/answer/14152816) of the vehicle model.",
@@ -2538,19 +2590,29 @@
             "ADEME",
             "BMWK",
             "EPA",
-            "EC"
+            "EC",
+            "DESNZ"
           ],
           "enumDescriptions": [
             "Certification authority is not specified.",
             "For the French CO2 emissions class for vehicles.",
             "For the German CO2 emissions classes for vehicles.",
             "Environment Protection Agency.",
-            "European Commission for energy labels in the EU."
+            "European Commission for energy labels in the EU.",
+            "Department for Energy Security and Net Zero."
           ],
           "type": "string"
         },
         "certificationCode": {
           "description": "The certification code. Maximum length is 2000 characters.",
+          "type": "string"
+        },
+        "certificationDocumentLink": {
+          "description": "Optional. URL to the certification document (eg. `https://www.example.com/document`), for example, the product data sheet or fiche required by UK's DESNZ or EU's EPREL. Maximum length is 2000 characters. For more information, see [Certification](https://support.google.com/merchants/answer/13528839).",
+          "type": "string"
+        },
+        "certificationLabelLink": {
+          "description": "Optional. URL to the certification label (eg. `https://www.example.com/label`), for example, the energy efficiency label required by UK's DESNZ or EU's EPREL. Maximum length is 2000 characters. For more information, see [Certification](https://support.google.com/merchants/answer/13528839).",
           "type": "string"
         },
         "certificationName": {
@@ -2562,7 +2624,8 @@
             "EPREL",
             "EU_ECOLABEL",
             "VEHICLE_ENERGY_EFFICIENCY",
-            "VEHICLE_ENERGY_EFFICIENCY_DISCHARGED_BATTERY"
+            "VEHICLE_ENERGY_EFFICIENCY_DISCHARGED_BATTERY",
+            "GB_ENERGY_INFO"
           ],
           "enumDescriptions": [
             "Certification name is not specified.",
@@ -2571,7 +2634,8 @@
             "Represents energy efficiency certifications in the EU European Registry for Energy Labeling (EPREL) database.",
             "EU Ecolabel.",
             "The overall CO2 class of a vehicle",
-            "For the CO2 class of a vehicle with a discharged battery."
+            "For the CO2 class of a vehicle with a discharged battery.",
+            "Great Britain Energy Information."
           ],
           "type": "string"
         },
@@ -2620,12 +2684,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -2664,7 +2730,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         }
@@ -2734,7 +2801,7 @@
       "type": "object"
     },
     "ProductInput": {
-      "description": "This resource represents input data you submit for a product, not the processed product that you see in Merchant Center, in Shopping ads, or across Google surfaces. Product inputs, rules and supplemental data source data are combined to create the processed Product. For more information, see [Manage products](/merchant/api/guides/products/overview). Required product input attributes to pass data validation checks are primarily defined in the [Products Data Specification](https://support.google.com/merchants/answer/188494). The following attributes are required: feedLabel, contentLanguage and offerId. After inserting, updating, or deleting a product input, it may take several minutes before the processed product can be retrieved. All fields in the product input and its sub-messages match the English name of their corresponding attribute in the [Products Data Specification](https://support.google.com/merchants/answer/188494) with [some exceptions](https://support.google.com/merchants/answer/7052112). The following reference documentation lists the field names in the **camelCase** casing style while the Products Data Specification lists the names in the **snake_case** casing style.",
+      "description": "This resource represents input data you submit for a product, not the processed product that you see in Merchant Center, in Shopping ads, or across Google surfaces. Product inputs, rules and supplemental data source data are combined to create the processed Product. For more information, see [Manage products](https://developers.google.com/merchant/api/guides/products/overview), [Add and manage products](https://developers.google.com/merchant/api/guides/products/add-manage), [Make frequent updates to your products](https://developers.google.com/merchant/api/guides/products/frequent-updates), and [Manage API data sources](https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source). Required product input attributes to pass data validation checks are primarily defined in the [Products Data Specification](https://support.google.com/merchants/answer/188494). The following attributes are required: feedLabel, contentLanguage and offerId. After inserting, updating, or deleting a product input, it may take several minutes before the processed product can be retrieved. All fields in the product input and its sub-messages match the English name of their corresponding attribute in the [Products Data Specification](https://support.google.com/merchants/answer/188494) with [some exceptions](https://support.google.com/merchants/answer/7052112). The following reference documentation lists the field names in the **camelCase** casing style while the Products Data Specification lists the names in the **snake_case** casing style.",
       "id": "ProductInput",
       "properties": {
         "base64EncodedName": {
@@ -2822,6 +2889,10 @@
           "$ref": "Price",
           "description": "The up-front down payment amount the buyer has to pay."
         },
+        "mileageAllowance": {
+          "$ref": "Mileage",
+          "description": "Optional. The mileage allowance for the lease of the vehicle. Only applicable to vehicle products."
+        },
         "months": {
           "description": "The number of installments the buyer has to pay.",
           "format": "int64",
@@ -2835,7 +2906,7 @@
       "type": "object"
     },
     "ProductMinimumOrderValue": {
-      "description": "The minimum order value in the cart before the checkout is permitted.",
+      "description": "[Minimum order value](https://support.google.com/merchants/answer/16989009) in the cart before the checkout is permitted.",
       "id": "ProductMinimumOrderValue",
       "properties": {
         "country": {
@@ -2859,10 +2930,10 @@
             "ONLINE_LOCAL"
           ],
           "enumDescriptions": [
-            "Surface is unspecified.",
-            "Surface value to indicate online purchases.",
-            "Surface value to indicate local purchases.",
-            "Surface value to indicate online and local purchases."
+            "Indicates that the surface is unspecified. Defaults to `ONLINE_LOCAL`.",
+            "Applies exclusively to delivery/shipping orders (all delivery routes).",
+            "Applies exclusively to local in-store pickup (buy online, pickup in store). See [in-store pickup](https://support.google.com/merchants/answer/14634021).",
+            "Applies to both delivery/shipping and local in-store pickup."
           ],
           "type": "string"
         }
@@ -2906,7 +2977,7 @@
       "type": "object"
     },
     "ProductStatusChangeMessage": {
-      "description": "The message that the merchant will receive to notify about product status change event",
+      "description": "The message that the merchant will receive to notify about product status change event. For more information, see [Product status changes](https://developers.google.com/merchant/api/guides/notifications/product-status-changes).",
       "id": "ProductStatusChangeMessage",
       "properties": {
         "account": {
@@ -3481,17 +3552,31 @@
       "type": "object"
     },
     "Warranty": {
-      "description": "The warranty of the vehicle.",
+      "description": "The warranty of the product.",
       "id": "Warranty",
       "properties": {
         "duration": {
-          "description": "The warranty duration in months.",
+          "description": "The warranty duration in units. Default is in months, can be overridden by the `duration_unit` field.",
           "format": "int64",
+          "type": "string"
+        },
+        "durationUnit": {
+          "description": "The unit for the warranty duration. Assumed to be `MONTH` if equal to `WARRANTY_DURATION_UNIT_UNSPECIFIED`.",
+          "enum": [
+            "WARRANTY_DURATION_UNIT_UNSPECIFIED",
+            "MONTH",
+            "YEAR"
+          ],
+          "enumDescriptions": [
+            "Indicates that the warranty duration unit is unspecified.",
+            "Indicates that the warranty duration unit is month.",
+            "Indicates that the warranty duration unit is year."
+          ],
           "type": "string"
         },
         "mileage": {
           "$ref": "Mileage",
-          "description": "The warranty mileage."
+          "description": "The warranty mileage (only applies to vehicles)."
         }
       },
       "type": "object"

@@ -213,7 +213,7 @@ type ProjectsLocationsOperationsService struct {
 
 // AdminSettings: Looker instance Admin settings fields.
 type AdminSettings struct {
-	// AllowedEmailDomains: Email domain allowlist for the instance.
+	// AllowedEmailDomains: Optional. Email domain allowlist for the instance.
 	AllowedEmailDomains []string `json:"allowedEmailDomains,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AllowedEmailDomains") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -233,8 +233,88 @@ func (s AdminSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AuthType: Auth type for the Looker instance.
+type AuthType struct {
+	// GoogleAuthEnabled: Optional. Whether google auth is enabled on the Looker
+	// instance.
+	GoogleAuthEnabled bool `json:"googleAuthEnabled,omitempty"`
+	// WorkforceAuthEnabled: Optional. Whether Workforce auth is enabled on the
+	// Looker instance.
+	WorkforceAuthEnabled bool `json:"workforceAuthEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GoogleAuthEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GoogleAuthEnabled") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AuthType) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// ComponentMetrics: ComponentMetrics contains sizing, timing, retries, and
+// metrics for an exported component.
+type ComponentMetrics struct {
+	// ComponentType: Type of the exported component.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified component type.
+	//   "BQ_ESA" - BigQuery Elite System Activity component.
+	//   "DB" - Database component.
+	//   "FS" - File system component.
+	//   "ALL" - Overall Export Job.
+	ComponentType string `json:"componentType,omitempty"`
+	// Duration: Duration of the component export.
+	Duration string `json:"duration,omitempty"`
+	// EndTime: End timestamp of the component export.
+	EndTime string `json:"endTime,omitempty"`
+	// RetryCount: Number of retries during the component export.
+	RetryCount int64 `json:"retryCount,omitempty"`
+	// SizeGb: Size of the exported component in gigabytes.
+	SizeGb float64 `json:"sizeGb,omitempty"`
+	// StartTime: Start timestamp of the component export.
+	StartTime string `json:"startTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComponentType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComponentMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod ComponentMetrics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ComponentMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod ComponentMetrics
+	var s1 struct {
+		SizeGb gensupport.JSONFloat64 `json:"sizeGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SizeGb = float64(s1.SizeGb)
+	return nil
 }
 
 // ControlledEgressConfig: Controlled egress configuration.
@@ -267,9 +347,9 @@ func (s ControlledEgressConfig) MarshalJSON() ([]byte, error) {
 
 // CustomDomain: Custom domain information.
 type CustomDomain struct {
-	// Domain: Domain name.
+	// Domain: Optional. Domain name.
 	Domain string `json:"domain,omitempty"`
-	// State: Domain state.
+	// State: Output only. Domain state.
 	//
 	// Possible values:
 	//   "CUSTOM_DOMAIN_STATE_UNSPECIFIED" - Unspecified state.
@@ -373,7 +453,8 @@ type Empty struct {
 
 // EncryptionConfig: Encryption configuration (i.e. CMEK).
 type EncryptionConfig struct {
-	// KmsKeyName: Name of the CMEK key in KMS (input parameter).
+	// KmsKeyName: Optional. Immutable. Name of the CMEK key in KMS (input
+	// parameter).
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyNameVersion: Output only. Full name and version of the CMEK key
 	// currently in use to encrypt Looker data. Format:
@@ -458,9 +539,25 @@ func (s ExportInstanceRequest) MarshalJSON() ([]byte, error) {
 // artifacts. The metadata.json file in export artifact can be parsed as this
 // message
 type ExportMetadata struct {
+	// EsaMigrationToken: Opaque capability token for O2C Elite System Activity
+	// (ESA) direct dataset migration. It is minted by the exporter together with
+	// the cloned source dataset and presented back to Looker Original when the
+	// import requests access to that dataset.
+	EsaMigrationToken string `json:"esaMigrationToken,omitempty"`
+	// EsaSourceDatasetId: Source BigQuery dataset (formatted as
+	// `project_id:dataset_id`) for O2C Elite System Activity (ESA) direct dataset
+	// migration.
+	EsaSourceDatasetId string `json:"esaSourceDatasetId,omitempty"`
 	// ExportEncryptionKey: Encryption key that was used to encrypt the export
 	// artifacts.
 	ExportEncryptionKey *ExportMetadataEncryptionKey `json:"exportEncryptionKey,omitempty"`
+	// ExportMetrics: Overall export metrics, timing, and component telemetry.
+	ExportMetrics *ExportMetrics `json:"exportMetrics,omitempty"`
+	// ExportTime: A string of digits representing the number of microseconds since
+	// the Unix epoch when the export was created. Used to identify the cloned
+	// source Elite System Activity (ESA) BigQuery dataset for O2C direct dataset
+	// migration.
+	ExportTime string `json:"exportTime,omitempty"`
 	// FilePaths: List of files created as part of export artifact (excluding the
 	// metadata). The paths are relative to the folder containing the metadata.
 	FilePaths []string `json:"filePaths,omitempty"`
@@ -481,16 +578,17 @@ type ExportMetadata struct {
 	//   "SOURCE_UNSPECIFIED" - Source not specified
 	//   "LOOKER_CORE" - Source of export is Looker Core
 	//   "LOOKER_ORIGINAL" - Source of export is Looker Original
+	//   "LOOKER_SELF_HOSTED" - Source of export is Self-Hosted Looker
 	Source string `json:"source,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExportEncryptionKey") to
+	// ForceSendFields is a list of field names (e.g. "EsaMigrationToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExportEncryptionKey") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EsaMigrationToken") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -522,6 +620,31 @@ type ExportMetadataEncryptionKey struct {
 
 func (s ExportMetadataEncryptionKey) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportMetadataEncryptionKey
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExportMetrics: ExportMetrics contains overall export execution metrics,
+// timing, and component telemetry.
+type ExportMetrics struct {
+	// ComponentMetrics: Metrics and telemetry for each exported component.
+	ComponentMetrics []*ComponentMetrics `json:"componentMetrics,omitempty"`
+	// InstanceInternalName: Internal name of the instance being exported.
+	InstanceInternalName string `json:"instanceInternalName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ComponentMetrics") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ComponentMetrics") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportMetrics
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -606,8 +729,10 @@ type Instance struct {
 	// AcceleratedSecurityPatchEnabled: Optional. Accelerated security patch
 	// enabled for the instance.
 	AcceleratedSecurityPatchEnabled bool `json:"acceleratedSecurityPatchEnabled,omitempty"`
-	// AdminSettings: Looker Instance Admin settings.
+	// AdminSettings: Optional. Looker Instance Admin settings.
 	AdminSettings *AdminSettings `json:"adminSettings,omitempty"`
+	// AuthType: Optional. Auth type for the Looker instance.
+	AuthType *AuthType `json:"authType,omitempty"`
 	// CatalogIntegrationOptOut: Optional. Indicates whether catalog integration is
 	// disabled for the Looker instance.
 	CatalogIntegrationOptOut bool `json:"catalogIntegrationOptOut,omitempty"`
@@ -618,7 +743,7 @@ type Instance struct {
 	//   "R1" - Filestore.
 	//   "P1" - PD SSD.
 	ClassType string `json:"classType,omitempty"`
-	// ConsumerNetwork: Network name in the consumer project. Format:
+	// ConsumerNetwork: Optional. Network name in the consumer project. Format:
 	// `projects/{project}/global/networks/{network}`. Note that the consumer
 	// network may be in a different GCP project than the consumer project that is
 	// hosting the Looker Instance.
@@ -631,14 +756,15 @@ type Instance struct {
 	// CreateTime: Output only. The time when the Looker instance provisioning was
 	// first requested.
 	CreateTime string `json:"createTime,omitempty"`
-	// CustomDomain: Custom domain configuration for the instance.
+	// CustomDomain: Optional. Custom domain configuration for the instance.
 	CustomDomain *CustomDomain `json:"customDomain,omitempty"`
-	// DenyMaintenancePeriod: Maintenance denial period for this instance.
+	// DenyMaintenancePeriod: Optional. Maintenance denial period for this
+	// instance.
 	DenyMaintenancePeriod *DenyMaintenancePeriod `json:"denyMaintenancePeriod,omitempty"`
 	// EgressPublicIp: Output only. Public Egress IP (IPv4).
 	EgressPublicIp string `json:"egressPublicIp,omitempty"`
-	// EncryptionConfig: Encryption configuration (CMEK). Only set if CMEK has been
-	// enabled on the instance.
+	// EncryptionConfig: Optional. Encryption configuration (CMEK). Only set if
+	// CMEK has been enabled on the instance.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
 	// FipsEnabled: Optional. Whether FIPS is enabled on the Looker instance.
 	FipsEnabled bool `json:"fipsEnabled,omitempty"`
@@ -663,18 +789,19 @@ type Instance struct {
 	LookerUri string `json:"lookerUri,omitempty"`
 	// LookerVersion: Output only. The Looker version that the instance is using.
 	LookerVersion string `json:"lookerVersion,omitempty"`
-	// MaintenanceSchedule: Maintenance schedule for this instance.
+	// MaintenanceSchedule: Output only. Maintenance schedule for this instance.
 	MaintenanceSchedule *MaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
-	// MaintenanceWindow: Maintenance window for this instance.
+	// MaintenanceWindow: Optional. Maintenance window for this instance.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 	// Name: Output only. Format:
 	// `projects/{project}/locations/{location}/instances/{instance}`.
 	Name string `json:"name,omitempty"`
-	// OauthConfig: Looker instance OAuth login settings.
+	// OauthConfig: Optional. Looker instance OAuth login settings.
 	OauthConfig *OAuthConfig `json:"oauthConfig,omitempty"`
 	// PeriodicExportConfig: Optional. Configuration for periodic export.
 	PeriodicExportConfig *PeriodicExportConfig `json:"periodicExportConfig,omitempty"`
-	// PlatformEdition: Platform edition.
+	// PlatformEdition: Optional. Platform edition. Marked as OPTIONAL for backward
+	// compatibility, though it is required during instance creation.
 	//
 	// Possible values:
 	//   "PLATFORM_EDITION_UNSPECIFIED" - Represents an unspecified platform
@@ -700,7 +827,8 @@ type Instance struct {
 	//   "LOOKER_CORE_TRIAL_EMBED" - Represents the Looker Core Trial Embed
 	// edition.
 	PlatformEdition string `json:"platformEdition,omitempty"`
-	// PrivateIpEnabled: Whether private IP is enabled on the Looker instance.
+	// PrivateIpEnabled: Optional. Whether private IP is enabled on the Looker
+	// instance.
 	PrivateIpEnabled bool `json:"privateIpEnabled,omitempty"`
 	// PscConfig: Optional. PSC configuration. Used when `psc_enabled` is true.
 	PscConfig *PscConfig `json:"pscConfig,omitempty"`
@@ -708,7 +836,8 @@ type Instance struct {
 	// private IP connectivity. If true, neither `public_ip_enabled` nor
 	// `private_ip_enabled` can be true.
 	PscEnabled bool `json:"pscEnabled,omitempty"`
-	// PublicIpEnabled: Whether public IP is enabled on the Looker instance.
+	// PublicIpEnabled: Optional. Whether public IP is enabled on the Looker
+	// instance.
 	PublicIpEnabled bool `json:"publicIpEnabled,omitempty"`
 	// ReleaseChannel: Optional. The selected release channel for the instance.
 	//
@@ -718,7 +847,7 @@ type Instance struct {
 	//   "REGULAR" - Regular: Balanced, default for production.
 	//   "STABLE" - Stable: Least frequent, for maximum stability.
 	ReleaseChannel string `json:"releaseChannel,omitempty"`
-	// ReservedRange: Name of a reserved IP address range within the
+	// ReservedRange: Optional. Name of a reserved IP address range within the
 	// Instance.consumer_network, to be used for private services access
 	// connection. May or may not be specified in a create request.
 	ReservedRange string `json:"reservedRange,omitempty"`
@@ -856,11 +985,10 @@ func (s ListInstanceBackupsResponse) MarshalJSON() ([]byte, error) {
 // ListInstancesResponse: Response from ListInstances.
 type ListInstancesResponse struct {
 	// Instances: The list of instances matching the request filters, up to the
-	// requested ListInstancesRequest.pageSize.
+	// requested `pageSize`.
 	Instances []*Instance `json:"instances,omitempty"`
 	// NextPageToken: If provided, a page token that can look up the next
-	// ListInstancesRequest.pageSize results. If empty, the results list is
-	// exhausted.
+	// `pageSize` results. If empty, the results list is exhausted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`

@@ -73,6 +73,11 @@
     },
     {
       "description": "Regional Endpoint",
+      "endpointUrl": "https://osconfig.asia-southeast4.rep.googleapis.com/",
+      "location": "asia-southeast4"
+    },
+    {
+      "description": "Regional Endpoint",
       "endpointUrl": "https://osconfig.australia-southeast1.rep.googleapis.com/",
       "location": "australia-southeast1"
     },
@@ -356,7 +361,7 @@
               "methods": {
                 "get": {
                   "deprecated": true,
-                  "description": "Get OS policies compliance data for the specified Compute Engine VM instance.",
+                  "description": "Deprecated: Use GetOSPolicyAssignmentReport instead. Get OS policies compliance data for the specified Compute Engine VM instance.",
                   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instanceOSPoliciesCompliances/{instanceOSPoliciesCompliancesId}",
                   "httpMethod": "GET",
                   "id": "osconfig.projects.locations.instanceOSPoliciesCompliances.get",
@@ -382,7 +387,7 @@
                 },
                 "list": {
                   "deprecated": true,
-                  "description": "List OS policies compliance data for all Compute Engine VM instances in the specified zone.",
+                  "description": "Deprecated: Use ListOSPolicyAssignmentReports instead. List OS policies compliance data for all Compute Engine VM instances in the specified zone.",
                   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/instanceOSPoliciesCompliances",
                   "httpMethod": "GET",
                   "id": "osconfig.projects.locations.instanceOSPoliciesCompliances.list",
@@ -445,7 +450,7 @@
                           "type": "string"
                         },
                         "view": {
-                          "description": "Inventory view indicating what information should be included in the inventory resource. If unspecified, the default view is BASIC.",
+                          "description": "Optional. Inventory view indicating what information should be included in the inventory resource. If unspecified, the default view is BASIC.",
                           "enum": [
                             "INVENTORY_VIEW_UNSPECIFIED",
                             "BASIC",
@@ -478,18 +483,18 @@
                       ],
                       "parameters": {
                         "filter": {
-                          "description": "If provided, this field specifies the criteria that must be met by a `Inventory` API resource to be included in the response.",
+                          "description": "Optional. If provided, this field specifies the criteria that must be met by a `Inventory` API resource to be included in the response.",
                           "location": "query",
                           "type": "string"
                         },
                         "pageSize": {
-                          "description": "The maximum number of results to return.",
+                          "description": "Optional. The maximum number of results to return.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
                         },
                         "pageToken": {
-                          "description": "A pagination token returned from a previous call to `ListInventories` that indicates where this listing should continue from.",
+                          "description": "Optional. A pagination token returned from a previous call to `ListInventories` that indicates where this listing should continue from.",
                           "location": "query",
                           "type": "string"
                         },
@@ -501,7 +506,7 @@
                           "type": "string"
                         },
                         "view": {
-                          "description": "Inventory view indicating what information should be included in the inventory resource. If unspecified, the default view is BASIC.",
+                          "description": "Optional. Inventory view indicating what information should be included in the inventory resource. If unspecified, the default view is BASIC.",
                           "enum": [
                             "INVENTORY_VIEW_UNSPECIFIED",
                             "BASIC",
@@ -949,7 +954,7 @@
       }
     }
   },
-  "revision": "20260611",
+  "revision": "20261022",
   "rootUrl": "https://osconfig.googleapis.com/",
   "schemas": {
     "CVSSv3": {

@@ -183,10 +183,22 @@ type ProjectsLocationsService struct {
 
 func NewProjectsLocationsContactCentersService(s *Service) *ProjectsLocationsContactCentersService {
 	rs := &ProjectsLocationsContactCentersService{s: s}
+	rs.PhoneNumbers = NewProjectsLocationsContactCentersPhoneNumbersService(s)
 	return rs
 }
 
 type ProjectsLocationsContactCentersService struct {
+	s *Service
+
+	PhoneNumbers *ProjectsLocationsContactCentersPhoneNumbersService
+}
+
+func NewProjectsLocationsContactCentersPhoneNumbersService(s *Service) *ProjectsLocationsContactCentersPhoneNumbersService {
+	rs := &ProjectsLocationsContactCentersPhoneNumbersService{s: s}
+	return rs
+}
+
+type ProjectsLocationsContactCentersPhoneNumbersService struct {
 	s *Service
 }
 
@@ -852,6 +864,33 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListPhoneNumbersResponse: Response message for ListPhoneNumbers.
+type ListPhoneNumbersResponse struct {
+	// NextPageToken: Token identifying the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// PhoneNumbers: The list of phone numbers allocated to the ContactCenter.
+	PhoneNumbers []*PhoneNumber `json:"phoneNumbers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListPhoneNumbersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPhoneNumbersResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby city
@@ -979,6 +1018,92 @@ type OperationMetadata struct {
 
 func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PhoneNumber: Message describing a phone number allocated to a ContactCenter
+// tenant.
+type PhoneNumber struct {
+	// AssignmentState: Output only. Current assignment and lifecycle state.
+	//
+	// Possible values:
+	//   "ASSIGNMENT_STATE_UNSPECIFIED" - Unspecified assignment state.
+	//   "ASSIGNMENT_STATE_UNASSIGNED" - Unassigned / in inventory pool.
+	//   "ASSIGNMENT_STATE_ASSIGNED" - Actively assigned to the tenant.
+	//   "ASSIGNMENT_STATE_COOLING_OFF" - Soft-deleted / in cooling-off period
+	// (still billed).
+	//   "ASSIGNMENT_STATE_PORTING_IN" - Port-in in progress.
+	//   "ASSIGNMENT_STATE_RELEASED" - Permanently released from active use.
+	AssignmentState string `json:"assignmentState,omitempty"`
+	// Carrier: Output only. Underlying carrier hosting the number.
+	//
+	// Possible values:
+	//   "CARRIER_UNSPECIFIED" - Unspecified carrier.
+	//   "CARRIER_TWILIO" - Twilio carrier.
+	//   "CARRIER_VONAGE" - Vonage (Nexmo) carrier.
+	//   "CARRIER_TELNYX" - Telnyx carrier.
+	//   "CARRIER_GTP" - Google Telephony Platform (GTP) carrier.
+	Carrier string `json:"carrier,omitempty"`
+	// ComplianceState: Output only. Regulatory compliance state.
+	//
+	// Possible values:
+	//   "COMPLIANCE_STATE_UNSPECIFIED" - Unspecified compliance state.
+	//   "COMPLIANCE_STATE_VERIFIED" - Regulatory bundle verified and approved.
+	//   "COMPLIANCE_STATE_LEGACY_VERIFIED" - Pre-existing phone number exempt from
+	// document backfill.
+	//   "COMPLIANCE_STATE_PENDING" - Regulatory bundle pending review.
+	//   "COMPLIANCE_STATE_REJECTED" - Regulatory bundle rejected.
+	ComplianceState string `json:"complianceState,omitempty"`
+	// CountryCode: Output only. ISO 3166-1 alpha-2 country code (e.g., "US", "GB",
+	// "IT").
+	CountryCode string `json:"countryCode,omitempty"`
+	// CreateTime: Output only. Timestamp when the phone number was added to the
+	// tenant.
+	CreateTime string `json:"createTime,omitempty"`
+	// NumberType: Output only. Tariff and routing classification.
+	//
+	// Possible values:
+	//   "NUMBER_TYPE_UNSPECIFIED" - Unspecified number type.
+	//   "NUMBER_TYPE_LOCAL" - Local / geographic number.
+	//   "NUMBER_TYPE_TOLL_FREE" - Toll-free number.
+	//   "NUMBER_TYPE_MOBILE" - Mobile number.
+	//   "NUMBER_TYPE_NATIONAL" - National non-geographic number.
+	NumberType string `json:"numberType,omitempty"`
+	// PhoneNumber: Output only. E.164 formatted phone number (e.g.,
+	// "+16502530000").
+	PhoneNumber string `json:"phoneNumber,omitempty"`
+	// RegulatoryBundleId: Output only. Reference ID for the country-specific
+	// regulatory bundle, or "LEGACY_VERIFIED".
+	RegulatoryBundleId string `json:"regulatoryBundleId,omitempty"`
+	// SmsState: Output only. SMS capability state.
+	//
+	// Possible values:
+	//   "SMS_STATE_UNSPECIFIED" - Unspecified SMS state.
+	//   "SMS_STATE_DISABLED" - SMS is disabled.
+	//   "SMS_STATE_ENABLED" - SMS is enabled and active.
+	//   "SMS_STATE_PENDING_REGISTRATION" - SMS is pending campaign registration.
+	SmsState string `json:"smsState,omitempty"`
+	// UpdateTime: Output only. Timestamp when the phone number record was last
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// VoiceEnabled: Output only. Whether voice capabilities are enabled for this
+	// phone number.
+	VoiceEnabled bool `json:"voiceEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AssignmentState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssignmentState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PhoneNumber) MarshalJSON() ([]byte, error) {
+	type NoMethod PhoneNumber
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2733,6 +2858,153 @@ func (c *ProjectsLocationsContactCentersPatchCall) Do(opts ...googleapi.CallOpti
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenteraiplatform.projects.locations.contactCenters.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type ProjectsLocationsContactCentersPhoneNumbersListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists phone numbers allocated to a single ContactCenter.
+//
+//   - parent: The parent ContactCenter resource name. Format:
+//     projects/{project}/locations/{location}/contactCenters/{contact_center}.
+func (r *ProjectsLocationsContactCentersPhoneNumbersService) List(parent string) *ProjectsLocationsContactCentersPhoneNumbersListCall {
+	c := &ProjectsLocationsContactCentersPhoneNumbersListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// maximum value is 1000; values above 1000 will be coerced to 1000. If
+// unspecified, the default page size is 500.
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) PageSize(pageSize int64) *ProjectsLocationsContactCentersPhoneNumbersListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from a
+// previous ListPhoneNumbers call.
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) PageToken(pageToken string) *ProjectsLocationsContactCentersPhoneNumbersListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) Fields(s ...googleapi.Field) *ProjectsLocationsContactCentersPhoneNumbersListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) IfNoneMatch(entityTag string) *ProjectsLocationsContactCentersPhoneNumbersListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) Context(ctx context.Context) *ProjectsLocationsContactCentersPhoneNumbersListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/phoneNumbers")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "contactcenteraiplatform.projects.locations.contactCenters.phoneNumbers.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "contactcenteraiplatform.projects.locations.contactCenters.phoneNumbers.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPhoneNumbersResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) Do(opts ...googleapi.CallOption) (*ListPhoneNumbersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPhoneNumbersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "contactcenteraiplatform.projects.locations.contactCenters.phoneNumbers.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsContactCentersPhoneNumbersListCall) Pages(ctx context.Context, f func(*ListPhoneNumbersResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 type ProjectsLocationsOperationsCancelCall struct {

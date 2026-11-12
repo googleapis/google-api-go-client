@@ -747,33 +747,35 @@ func (s AppList) MarshalJSON() ([]byte, error) {
 type Approval struct {
 	// ApprovalId: The approval ID.
 	ApprovalId string `json:"approvalId,omitempty"`
-	// CompleteTime: Output only. The time the approval was completed.
+	// ApprovedRevisionId: The revision ID of the file when the approval completed
+	// successfully. This is only set when the approval status is APPROVED.
+	ApprovedRevisionId string `json:"approvedRevisionId,omitempty"`
+	// CompleteTime: The time the approval was completed.
 	CompleteTime string `json:"completeTime,omitempty"`
-	// CreateTime: Output only. The time the approval was created.
+	// CreateTime: The time the approval was created.
 	CreateTime string `json:"createTime,omitempty"`
 	// DueTime: The time that the approval is due.
 	DueTime string `json:"dueTime,omitempty"`
-	// FileContentChangeBehavior: Output only. The behavior of the approval when
-	// the file content changes.
+	// FileContentChangeBehavior: The behavior of the approval when the file
+	// content changes.
 	//
 	// Possible values:
 	//   "FILE_CONTENT_CHANGE_BEHAVIOR_UNSPECIFIED" - The behavior is unspecified.
-	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of APPROVED will
-	// be reset to NO_DECISION when the file content changes while the approval has
-	// a Status of IN_PROGRESS. When the approval has a Status of APPROVED and
-	// RESET_APPROVAL is selected, the file is locked.
+	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of `APPROVED` will
+	// be reset to `NO_DECISION` when the file content changes while the approval
+	// has a Status of `IN_PROGRESS`. When the approval has a Status of `APPROVED`
+	// and `RESET_APPROVAL` is selected, the file is locked.
 	//   "NO_APPROVAL_ACTION" - No action is taken when the file content changes.
 	FileContentChangeBehavior string `json:"fileContentChangeBehavior,omitempty"`
 	// Initiator: The user that requested the approval.
 	Initiator *User `json:"initiator,omitempty"`
 	// Kind: This is always drive#approval.
 	Kind string `json:"kind,omitempty"`
-	// ModifyTime: Output only. The most recent time the approval was modified.
+	// ModifyTime: The most recent time the approval was modified.
 	ModifyTime string `json:"modifyTime,omitempty"`
 	// ReviewerResponses: The responses made on the approval by reviewers.
 	ReviewerResponses []*ReviewerResponse `json:"reviewerResponses,omitempty"`
-	// Status: Output only. The status of the approval at the time this resource
-	// was requested.
+	// Status: The status of the approval at the time this resource was requested.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - The approval status has not been set or was set to
@@ -1922,7 +1924,8 @@ type FileCapabilities struct {
 	// owner of the file. Not populated for shared drive files.
 	CanAcceptOwnership bool `json:"canAcceptOwnership,omitempty"`
 	// CanAccessViaGenAi: Whether the current user can access this file via Gen AI
-	// features.
+	// features. For more information, see Drive MCP file eligibility
+	// (https://developers.google.com/workspace/drive/api/guides/drive-mcp-server-file-eligibility).
 	CanAccessViaGenAi bool `json:"canAccessViaGenAi,omitempty"`
 	// CanAddChildren: Output only. Whether the current user can add children to
 	// this folder. This is always `false` when the item isn't a folder.
@@ -3326,10 +3329,10 @@ type StartApprovalRequest struct {
 	//
 	// Possible values:
 	//   "FILE_CONTENT_CHANGE_BEHAVIOR_UNSPECIFIED" - The behavior is unspecified.
-	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of APPROVED will
-	// be reset to NO_DECISION when the file content changes while the approval has
-	// a Status of IN_PROGRESS. When the approval has a Status of APPROVED and
-	// RESET_APPROVAL is selected, the file is locked.
+	//   "RESET_APPROVAL" - Any ReviewerResponse with a Response of `APPROVED` will
+	// be reset to `NO_DECISION` when the file content changes while the approval
+	// has a Status of `IN_PROGRESS`. When the approval has a Status of `APPROVED`
+	// and `RESET_APPROVAL` is selected, the file is locked.
 	//   "NO_APPROVAL_ACTION" - No action is taken when the file content changes.
 	FileContentChangeBehavior string `json:"fileContentChangeBehavior,omitempty"`
 	// LockFile: Optional. Whether to lock the file when starting the approval.
@@ -4760,7 +4763,12 @@ type ApprovalsListCall struct {
 
 // List: Lists the approvals on a file. For more information, see Manage
 // approvals
-// (https://developers.google.com/workspace/drive/api/guides/approvals).
+// (https://developers.google.com/workspace/drive/api/guides/approvals). By
+// default, this method returns a minimal response that may not include the
+// items array. To retrieve approval details, you must explicitly specify the
+// fields you want using the `fields` query parameter. To return the exact
+// fields you need, see Return specific fields
+// (https://developers.google.com/workspace/drive/api/guides/fields-parameter).
 //
 // - fileId: The ID of the file that the approval is on.
 func (r *ApprovalsService) List(fileId string) *ApprovalsListCall {
@@ -7384,6 +7392,13 @@ func (r *FilesService) Copy(fileId string, file *File) *FilesCopyCall {
 	return c
 }
 
+// CopyComments sets the optional parameter "copyComments": Whether to copy the
+// open (unresolved) comments associated with the file.
+func (c *FilesCopyCall) CopyComments(copyComments bool) *FilesCopyCall {
+	c.urlParams_.Set("copyComments", fmt.Sprint(copyComments))
+	return c
+}
+
 // EnforceSingleParent sets the optional parameter "enforceSingleParent":
 // Deprecated: Copying files into multiple folders is no longer supported. Use
 // shortcuts instead.
@@ -9667,8 +9682,9 @@ type PermissionsCreateCall struct {
 // Create: Creates a permission for a file or shared drive. For more
 // information, see Share files, folders, and drives
 // (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
-// **Warning:** Concurrent permissions operations on the same file aren't
-// supported; only the last update is applied.
+// **Warning:** Concurrent permission modifications (such as update or delete)
+// on the same file, folder, or shared drive aren't supported across any users
+// or clients; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 func (r *PermissionsService) Create(fileId string, permission *Permission) *PermissionsCreateCall {
@@ -9850,8 +9866,9 @@ type PermissionsDeleteCall struct {
 // Delete: Deletes a permission. For more information, see Share files,
 // folders, and drives
 // (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
-// **Warning:** Concurrent permissions operations on the same file aren't
-// supported; only the last update is applied.
+// **Warning:** Concurrent permission modifications (such as update or delete)
+// on the same file, folder, or shared drive aren't supported across any users
+// or clients; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 // - permissionId: The ID of the permission.
@@ -10290,8 +10307,9 @@ type PermissionsUpdateCall struct {
 // Update: Updates a permission with patch semantics. For more information, see
 // Share files, folders, and drives
 // (https://developers.google.com/workspace/drive/api/guides/manage-sharing).
-// **Warning:** Concurrent permissions operations on the same file aren't
-// supported; only the last update is applied.
+// **Warning:** Concurrent permission modifications (such as update or delete)
+// on the same file, folder, or shared drive aren't supported across any users
+// or clients; only the last update is applied.
 //
 // - fileId: The ID of the file or shared drive.
 // - permissionId: The ID of the permission.

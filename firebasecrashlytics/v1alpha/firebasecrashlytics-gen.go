@@ -375,6 +375,30 @@ func (s Browser) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CustomAttribute: Developer-provided custom key-value pair metadata.
+type CustomAttribute struct {
+	// Key: Output only. Custom attribute key name.
+	Key string `json:"key,omitempty"`
+	// Value: Output only. Custom attribute value.
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CustomAttribute) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomAttribute
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeleteUserCrashReportsResponse: Response message for the
 // DeleteUserCrashReports method. All crash reports associated with the
 // specified user will be deleted typically within 24 hours of receiving the
@@ -721,27 +745,104 @@ func (s Frame) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenerateAlertPolicyRequest: Request message for the GenerateAlertPolicy
+// method.
+type GenerateAlertPolicyRequest struct {
+	// AlertType: Required. The type of alert to create.
+	//
+	// Possible values:
+	//   "ALERT_TYPE_UNSPECIFIED" - Unknown.
+	//   "ALERT_TYPE_NEW_ISSUE" - Alert for newly detected issues.
+	//   "ALERT_TYPE_REGRESSED_ISSUE" - Alert for regressed (reopened) issues.
+	AlertType string `json:"alertType,omitempty"`
+	// Language: Optional. Language to use for the alert policy. Defaults to
+	// USER_PREFERENCE.
+	//
+	// Possible values:
+	//   "USER_PREFERENCE" - Use the requester's language preference, falling back
+	// to en-US if unavailable or unsupported.
+	//   "EN_US" - Force the alert policy to be created in en-US.
+	Language string `json:"language,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateAlertPolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateAlertPolicyRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenerateAlertPolicyResponse: Response message for the GenerateAlertPolicy
+// method.
+type GenerateAlertPolicyResponse struct {
+	// AlertPolicy: The created Cloud Monitoring AlertPolicy resource name. Format:
+	// "projects/{project}/alertPolicies/{alert_policy_id}".
+	AlertPolicy string `json:"alertPolicy,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AlertPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertPolicy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenerateAlertPolicyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenerateAlertPolicyResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IntervalMetrics: A set of computed metric values for a time interval
 type IntervalMetrics struct {
+	// CrashFreeSessionsPercentage: Mobile only. Percentage of crash-free sessions.
+	// (total_sessions_count - impacted_sessions_count) / total_sessions_count *
+	// 100.
+	CrashFreeSessionsPercentage float64 `json:"crashFreeSessionsPercentage,omitempty"`
+	// CrashFreeUsersPercentage: Mobile only. Percentage of crash-free users.
+	// (total_users_count - impacted_users_count) / total_users_count * 100
+	CrashFreeUsersPercentage float64 `json:"crashFreeUsersPercentage,omitempty"`
 	// EndTime: The end of the interval covered by the computation.
 	EndTime string `json:"endTime,omitempty"`
 	// EventsCount: The total count of events in the interval.
 	EventsCount int64 `json:"eventsCount,omitempty,string"`
+	// ImpactedSessionsCount: The number of distinct sessions in the set of events.
+	ImpactedSessionsCount int64 `json:"impactedSessionsCount,omitempty,string"`
 	// ImpactedUsersCount: The number of distinct users in the set of events.
 	ImpactedUsersCount int64 `json:"impactedUsersCount,omitempty,string"`
-	// SessionsCount: The number of distinct sessions in the set of events.
+	// SessionsCount: Deprecated: Prefer `impacted_sessions_count`. The number of
+	// distinct sessions in the set of events.
 	SessionsCount int64 `json:"sessionsCount,omitempty,string"`
 	// StartTime: The start of the interval covered by the computation.
 	StartTime string `json:"startTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
+	// TotalSessionsCount: The number of distinct sessions.
+	TotalSessionsCount int64 `json:"totalSessionsCount,omitempty,string"`
+	// TotalUsersCount: The number of distinct users.
+	TotalUsersCount int64 `json:"totalUsersCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CrashFreeSessionsPercentage") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EndTime") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CrashFreeSessionsPercentage") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -749,6 +850,22 @@ type IntervalMetrics struct {
 func (s IntervalMetrics) MarshalJSON() ([]byte, error) {
 	type NoMethod IntervalMetrics
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *IntervalMetrics) UnmarshalJSON(data []byte) error {
+	type NoMethod IntervalMetrics
+	var s1 struct {
+		CrashFreeSessionsPercentage gensupport.JSONFloat64 `json:"crashFreeSessionsPercentage"`
+		CrashFreeUsersPercentage    gensupport.JSONFloat64 `json:"crashFreeUsersPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CrashFreeSessionsPercentage = float64(s1.CrashFreeSessionsPercentage)
+	s.CrashFreeUsersPercentage = float64(s1.CrashFreeUsersPercentage)
+	return nil
 }
 
 // Issue: An issue describes a set of similar events that have been analyzed by
@@ -1140,6 +1257,42 @@ func (s PlayTrack) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProfilingManagerConfig: Represents the Android Profiling Manager
+// configuration for a Firebase application, used to manage Crashlytics heap
+// dump collection.
+type ProfilingManagerConfig struct {
+	// Bucket: Optional. Resource name of the Google Cloud Storage bucket where
+	// enriched heap dumps are stored. Format:
+	// "projects/{project}/buckets/{bucket}" (use `_` as `{project}` for global
+	// buckets, for example "projects/_/buckets/my-global-bucket").
+	Bucket string `json:"bucket,omitempty"`
+	// HeapDumpCollectionEnabled: Optional. Whether Crashlytics heap dump
+	// collection is enabled for the app.
+	HeapDumpCollectionEnabled bool `json:"heapDumpCollectionEnabled,omitempty"`
+	// Name: Identifier. The resource name of the Profiling Manager configuration.
+	// Format: "projects/{project}/apps/{app}/profilingManagerConfig".
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProfilingManagerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ProfilingManagerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Report: Response message for the GetReport method. A report consists of the
 // results of a query over an application's events. The events may be filtered
 // by various criteria defined in the filters proto. The result will consist of
@@ -1195,6 +1348,8 @@ func (s Report) MarshalJSON() ([]byte, error) {
 type ReportGroup struct {
 	// Browser: Browser metrics group.
 	Browser *Browser `json:"browser,omitempty"`
+	// CustomAttribute: Custom attribute metrics group.
+	CustomAttribute *CustomAttribute `json:"customAttribute,omitempty"`
 	// Device: Device metrics group.
 	Device *Device `json:"device,omitempty"`
 	// Issue: Issue metrics group.
@@ -1426,6 +1581,342 @@ type WebMetricsGroup struct {
 func (s WebMetricsGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod WebMetricsGroup
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ProjectsAppsGenerateAlertPolicyCall struct {
+	s                          *Service
+	name                       string
+	generatealertpolicyrequest *GenerateAlertPolicyRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// GenerateAlertPolicy: Creates a Cloud Monitoring AlertPolicy for the
+// requested Crashlytics Web alert type and returns the created resource
+// reference.
+//
+//   - name: The firebase application. Format:
+//     "projects/{project}/apps/{app_id}".
+func (r *ProjectsAppsService) GenerateAlertPolicy(name string, generatealertpolicyrequest *GenerateAlertPolicyRequest) *ProjectsAppsGenerateAlertPolicyCall {
+	c := &ProjectsAppsGenerateAlertPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.generatealertpolicyrequest = generatealertpolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsGenerateAlertPolicyCall) Fields(s ...googleapi.Field) *ProjectsAppsGenerateAlertPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsGenerateAlertPolicyCall) Context(ctx context.Context) *ProjectsAppsGenerateAlertPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsGenerateAlertPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsGenerateAlertPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.generatealertpolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:generateAlertPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasecrashlytics.projects.apps.generateAlertPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasecrashlytics.projects.apps.generateAlertPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateAlertPolicyResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsGenerateAlertPolicyCall) Do(opts ...googleapi.CallOption) (*GenerateAlertPolicyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenerateAlertPolicyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasecrashlytics.projects.apps.generateAlertPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsAppsGetProfilingManagerConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetProfilingManagerConfig: Retrieves the Android Profiling Manager
+// configuration for an app.
+//
+//   - name: The resource name of the Profiling Manager configuration to
+//     retrieve. Format: "projects/{project}/apps/{app}/profilingManagerConfig".
+func (r *ProjectsAppsService) GetProfilingManagerConfig(name string) *ProjectsAppsGetProfilingManagerConfigCall {
+	c := &ProjectsAppsGetProfilingManagerConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsGetProfilingManagerConfigCall) Fields(s ...googleapi.Field) *ProjectsAppsGetProfilingManagerConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsAppsGetProfilingManagerConfigCall) IfNoneMatch(entityTag string) *ProjectsAppsGetProfilingManagerConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsGetProfilingManagerConfigCall) Context(ctx context.Context) *ProjectsAppsGetProfilingManagerConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsGetProfilingManagerConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsGetProfilingManagerConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasecrashlytics.projects.apps.getProfilingManagerConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasecrashlytics.projects.apps.getProfilingManagerConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProfilingManagerConfig.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAppsGetProfilingManagerConfigCall) Do(opts ...googleapi.CallOption) (*ProfilingManagerConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProfilingManagerConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasecrashlytics.projects.apps.getProfilingManagerConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsAppsUpdateProfilingManagerConfigCall struct {
+	s                      *Service
+	name                   string
+	profilingmanagerconfig *ProfilingManagerConfig
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// UpdateProfilingManagerConfig: Updates the Android Profiling Manager
+// configuration for an app.
+//
+//   - name: Identifier. The resource name of the Profiling Manager
+//     configuration. Format:
+//     "projects/{project}/apps/{app}/profilingManagerConfig".
+func (r *ProjectsAppsService) UpdateProfilingManagerConfig(name string, profilingmanagerconfig *ProfilingManagerConfig) *ProjectsAppsUpdateProfilingManagerConfigCall {
+	c := &ProjectsAppsUpdateProfilingManagerConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.profilingmanagerconfig = profilingmanagerconfig
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// ProfilingManagerConfig fields to update (`gcs_bucket`,
+// `heap_dump_collection_enabled`). If omitted, all populated (non-default)
+// fields are updated; specify an explicit `update_mask` (or `*`) when clearing
+// a field to its default value (such as "" or `false`).
+func (c *ProjectsAppsUpdateProfilingManagerConfigCall) UpdateMask(updateMask string) *ProjectsAppsUpdateProfilingManagerConfigCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsUpdateProfilingManagerConfigCall) Fields(s ...googleapi.Field) *ProjectsAppsUpdateProfilingManagerConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsUpdateProfilingManagerConfigCall) Context(ctx context.Context) *ProjectsAppsUpdateProfilingManagerConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsUpdateProfilingManagerConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsUpdateProfilingManagerConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.profilingmanagerconfig)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebasecrashlytics.projects.apps.updateProfilingManagerConfig", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebasecrashlytics.projects.apps.updateProfilingManagerConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProfilingManagerConfig.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAppsUpdateProfilingManagerConfigCall) Do(opts ...googleapi.CallOption) (*ProfilingManagerConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProfilingManagerConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebasecrashlytics.projects.apps.updateProfilingManagerConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsAppsEventsBatchGetCall struct {
@@ -1754,6 +2245,26 @@ func (c *ProjectsAppsEventsListCall) FilterOperatingSystemDisplayNames(filterOpe
 // (build_version)" e.g. "1.2.3 (456)".
 func (c *ProjectsAppsEventsListCall) FilterVersionDisplayNames(filterVersionDisplayNames ...string) *ProjectsAppsEventsListCall {
 	c.urlParams_.SetMulti("filter.version.displayNames", append([]string{}, filterVersionDisplayNames...))
+	return c
+}
+
+// FilterExpression sets the optional parameter "filterExpression": Filters
+// events by custom keys
+// (https://firebase.google.com/docs/crashlytics/customize-crash-reports#add-keys).
+// Supported forms: * Equality: `custom_keys.level = "vip" * Has:
+// `custom_keys.level:"vip" (matches the same events as equality) * Presence:
+// `custom_keys.level:*` * OR across values of one key: `custom_keys.level =
+// "vip" OR custom_keys.level = "enterprise" * AND across different keys:
+// `custom_keys.level = "vip" AND custom_keys.region = "us" Keys are
+// case-sensitive. Keys and values containing spaces must be double-quoted, for
+// example `custom_keys."app state" = "background". OR across different keys,
+// repeating a key within an AND, NOT, and comparators other than `=` and `:`
+// are rejected with INVALID_ARGUMENT. Wildcards are not supported in values;
+// use `custom_keys.:*` to match events that set a key to any value. This
+// filter expression applies in addition to the `filter` field above. The
+// syntax is a subset of AIP-160 (https://google.aip.dev/160).
+func (c *ProjectsAppsEventsListCall) FilterExpression(filterExpression string) *ProjectsAppsEventsListCall {
+	c.urlParams_.Set("filterExpression", filterExpression)
 	return c
 }
 
@@ -2770,6 +3281,28 @@ func (c *ProjectsAppsReportsGetCall) FilterVersionDisplayNames(filterVersionDisp
 	return c
 }
 
+// FilterExpression sets the optional parameter "filterExpression": Filters the
+// events counted in the report by custom keys. Not all reports support this
+// filter. It is currently only supported for web apps; see the report's
+// `usage` field for whether `filter_expression` is supported. Requests for
+// other apps or unsupported reports that set this field are rejected with
+// `INVALID_ARGUMENT`. Supported forms: * Equality: `custom_keys.level = "vip"
+// * Has: `custom_keys.level:"vip" (matches the same events as equality) *
+// Presence: `custom_keys.level:*` * OR across values of one key:
+// `custom_keys.level = "vip" OR custom_keys.level = "enterprise" * AND across
+// different keys: `custom_keys.level = "vip" AND custom_keys.region = "us"
+// Keys are case-sensitive. Keys and values containing spaces must be
+// double-quoted, for example `custom_keys."app state" = "background". OR
+// across different keys, repeating a key within an AND, NOT, and comparators
+// other than `=` and `:` are rejected with INVALID_ARGUMENT. Wildcards are not
+// supported in values; use `custom_keys.:*` to match events that set a key to
+// any value. This filter expression applies in addition to the `filter` field
+// above. The syntax is a subset of AIP-160 (https://google.aip.dev/160).
+func (c *ProjectsAppsReportsGetCall) FilterExpression(filterExpression string) *ProjectsAppsReportsGetCall {
+	c.urlParams_.Set("filterExpression", filterExpression)
+	return c
+}
+
 // Granularity sets the optional parameter "granularity": The report response
 // will contain one data point per time grain. If omitted, the report will
 // contain a single data point for the complete interval.
@@ -2788,8 +3321,28 @@ func (c *ProjectsAppsReportsGetCall) Granularity(granularity string) *ProjectsAp
 	return c
 }
 
+// MetricsMode sets the optional parameter "metricsMode": Controls whether
+// metrics are raw observed values (mobile and web) or extrapolated values (web
+// only). If omitted, defaults to OBSERVED.
+//
+// Possible values:
+//
+//	"METRICS_MODE_UNSPECIFIED" - Unknown.
+//	"METRICS_MODE_OBSERVED" - Raw counts of the events, sessions, and users
+//
+// that were actually collected.
+//
+//	"METRICS_MODE_EXTRAPOLATED" - Web only. Estimated event counts based on
+//
+// the per-session sampling rate recorded on each event.
+func (c *ProjectsAppsReportsGetCall) MetricsMode(metricsMode string) *ProjectsAppsReportsGetCall {
+	c.urlParams_.Set("metricsMode", metricsMode)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// result groups to return. If omitted, defaults to 25.
+// result groups to return. The maximum value is 100; values above 100 will be
+// coerced to 100. If omitted, defaults to 25.
 func (c *ProjectsAppsReportsGetCall) PageSize(pageSize int64) *ProjectsAppsReportsGetCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -2801,6 +3354,28 @@ func (c *ProjectsAppsReportsGetCall) PageSize(pageSize int64) *ProjectsAppsRepor
 // for 10 minutes after the first request.
 func (c *ProjectsAppsReportsGetCall) PageToken(pageToken string) *ProjectsAppsReportsGetCall {
 	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Response view. If not set, defaults
+// to `REPORT_VIEW_FULL`.
+//
+// Possible values:
+//
+//	"REPORT_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+// default to `REPORT_VIEW_BASIC` view for `ListReports` and `REPORT_VIEW_FULL`
+// for `GetReport`.
+//
+//	"REPORT_VIEW_BASIC" - Only includes the report `display_name` and optional
+//
+// `usage`. This is the default view for `ListReports`.
+//
+//	"REPORT_VIEW_FULL" - Includes all fields on report. This is the default
+//
+// view for `GetReport`.
+func (c *ProjectsAppsReportsGetCall) View(view string) *ProjectsAppsReportsGetCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 
@@ -2932,6 +3507,29 @@ type ProjectsAppsReportsListCall struct {
 func (r *ProjectsAppsReportsService) List(parent string) *ProjectsAppsReportsListCall {
 	c := &ProjectsAppsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// View sets the optional parameter "view": Response view. If not set, defaults
+// to `REPORT_VIEW_BASIC`. `REPORT_VIEW_FULL` is not supported for list
+// operations.
+//
+// Possible values:
+//
+//	"REPORT_VIEW_UNSPECIFIED" - The default / unset value. The API will
+//
+// default to `REPORT_VIEW_BASIC` view for `ListReports` and `REPORT_VIEW_FULL`
+// for `GetReport`.
+//
+//	"REPORT_VIEW_BASIC" - Only includes the report `display_name` and optional
+//
+// `usage`. This is the default view for `ListReports`.
+//
+//	"REPORT_VIEW_FULL" - Includes all fields on report. This is the default
+//
+// view for `GetReport`.
+func (c *ProjectsAppsReportsListCall) View(view string) *ProjectsAppsReportsListCall {
+	c.urlParams_.Set("view", view)
 	return c
 }
 

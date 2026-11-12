@@ -110,7 +110,7 @@
         "notificationsubscriptions": {
           "methods": {
             "create": {
-              "description": "Creates a notification subscription for a business. For standalone or sub-accounts, the business can create a subscription for self. For advanced accounts, the business can create a subscription for all managed accounts or for a specific subaccount. See [Decode notifications](/merchant/api/guides/accounts/notifications#decode_notifications) for information on how to decode the notification payload and how to interpret its contents. We will allow the following types of notification subscriptions to exist together (per business as a subscriber per event type): 1. Subscription for all managed accounts + subscription for self. 2. Multiple \"partial\" subscriptions for managed accounts + subscription for self. we will not allow (per business as a subscriber per event type): 1. Multiple self subscriptions. 2. Multiple \"all managed accounts\" subscriptions. 3. \"All managed accounts\" subscription and partial subscriptions at the same time. 4. Multiple partial subscriptions for the same target account.",
+              "description": "Creates a notification subscription for a business. For standalone or sub-accounts, the business can create a subscription for self. For advanced accounts, the business can create a subscription for all managed accounts or for a specific subaccount. See [Decode notifications](https://developers.google.com/merchant/api/guides/notifications/overview#decode_notifications) for information on how to decode the notification payload and how to interpret its contents. We will allow the following types of notification subscriptions to exist together (per business as a subscriber per event type): 1. Subscription for all managed accounts + subscription for self. 2. Multiple \"partial\" subscriptions for managed accounts + subscription for self. we will not allow (per business as a subscriber per event type): 1. Multiple self subscriptions. 2. Multiple \"all managed accounts\" subscriptions. 3. \"All managed accounts\" subscription and partial subscriptions at the same time. 4. Multiple partial subscriptions for the same target account.",
               "flatPath": "notifications/v1/accounts/{accountsId}/notificationsubscriptions",
               "httpMethod": "POST",
               "id": "merchantapi.accounts.notificationsubscriptions.create",
@@ -197,13 +197,13 @@
               ],
               "parameters": {
                 "pageSize": {
-                  "description": "The maximum number of notification subscriptions to return in a page. The default value for `page_size` is 100. The maximum value is `200`. Values above `200` will be coerced to `200`.",
+                  "description": "Optional. The maximum number of notification subscriptions to return in a page. The default value for `page_size` is 100. The maximum value is `200`. Values above `200` will be coerced to `200`.",
                   "format": "int32",
                   "location": "query",
                   "type": "integer"
                 },
                 "pageToken": {
-                  "description": "Token (if provided) to retrieve the subsequent page. All other parameters must match the original call that provided the page token.",
+                  "description": "Optional. Token (if provided) to retrieve the subsequent page. All other parameters must match the original call that provided the page token.",
                   "location": "query",
                   "type": "string"
                 },
@@ -262,7 +262,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20261110",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "Empty": {
@@ -290,7 +290,7 @@
       "type": "object"
     },
     "NotificationSubscription": {
-      "description": "Represents a notification subscription owned by a Merchant account. See [Decode notifications](/merchant/api/guides/accounts/notifications#decode_notifications) for information on how to decode the notification payload and how to interpret its contents.",
+      "description": "Represents a notification subscription owned by a Merchant account. For more information, see [Notifications overview](https://developers.google.com/merchant/api/guides/notifications/overview). See [Decode notifications](https://developers.google.com/merchant/api/guides/notifications/overview#decode_notifications) for information on how to decode the notification payload and how to interpret its contents.",
       "id": "NotificationSubscription",
       "properties": {
         "allManagedAccounts": {
@@ -310,11 +310,13 @@
           "description": "The event that the merchant wants to be notified about.",
           "enum": [
             "NOTIFICATION_EVENT_TYPE_UNSPECIFIED",
-            "PRODUCT_STATUS_CHANGE"
+            "PRODUCT_STATUS_CHANGE",
+            "ACCOUNT_SERVICE_CHANGE"
           ],
           "enumDescriptions": [
             "Notifications event type is unspecified.",
-            "Notification of product status changes, for example when product becomes disapproved."
+            "Notification of product status changes, for example when product becomes disapproved.",
+            "Notification of account service changes."
           ],
           "type": "string"
         },
@@ -363,12 +365,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -407,7 +411,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         }
@@ -415,7 +420,7 @@
       "type": "object"
     },
     "ProductStatusChangeMessage": {
-      "description": "The message that the merchant will receive to notify about product status change event",
+      "description": "The message that the merchant will receive to notify about product status change event. For more information, see [Product status changes](https://developers.google.com/merchant/api/guides/notifications/product-status-changes).",
       "id": "ProductStatusChangeMessage",
       "properties": {
         "account": {

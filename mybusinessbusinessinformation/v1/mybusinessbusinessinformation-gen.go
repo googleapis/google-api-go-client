@@ -962,7 +962,7 @@ type Location struct {
 	// MoreHours: Optional. More hours for a business's different departments or
 	// specific customers.
 	MoreHours []*MoreHours `json:"moreHours,omitempty"`
-	// Name: Google identifier for this location in the form:
+	// Name: Identifier. Google identifier for this location in the form:
 	// `locations/{location_id}`.
 	Name string `json:"name,omitempty"`
 	// OpenInfo: Optional. A flag that indicates whether the location is currently
@@ -1045,8 +1045,9 @@ type Metadata struct {
 	// CanDelete: Output only. Indicates whether the location can be deleted using
 	// the API.
 	CanDelete bool `json:"canDelete,omitempty"`
-	// CanHaveBusinessCalls: Output only. Indicates if the listing is eligible for
-	// business calls.
+	// CanHaveBusinessCalls: Output only. Deprecated: Relates to the Call Tracking
+	// feature which is no longer supported. Indicates whether the location is
+	// eligible for business calls.
 	CanHaveBusinessCalls bool `json:"canHaveBusinessCalls,omitempty"`
 	// CanHaveFoodMenus: Output only. Indicates if the listing is eligible for food
 	// menu.
@@ -1057,9 +1058,8 @@ type Metadata struct {
 	// CanOperateHealthData: Output only. Indicates whether the location can
 	// operate on Health data.
 	CanOperateHealthData bool `json:"canOperateHealthData,omitempty"`
-	// CanOperateLocalPost: Output only. Indicates if the listing can manage local
-	// posts. Deprecated: This field is no longer populated and will be removed in
-	// a future version.
+	// CanOperateLocalPost: Output only. Deprecated: This field is no longer
+	// populated and will be removed in a future version.
 	CanOperateLocalPost bool `json:"canOperateLocalPost,omitempty"`
 	// CanOperateLodgingData: Output only. Indicates whether the location can
 	// operate on Lodging data.
@@ -1080,14 +1080,18 @@ type Metadata struct {
 	// locations.getVoiceOfMerchantState API to get details as to why they do not
 	// have Voice of Merchant.
 	HasVoiceOfMerchant bool `json:"hasVoiceOfMerchant,omitempty"`
-	// IsParticularlyPersonalPlace: Output only.
+	// IsParticularlyPersonalPlace: Output only. Indicates whether the location is
+	// classified as a particularly personal place. This means there are
+	// restrictions on Location History features. If you believe this was a
+	// mistake, see the help center article
+	// (https://support.google.com/business/answer/3480441).
 	IsParticularlyPersonalPlace bool `json:"isParticularlyPersonalPlace,omitempty"`
 	// MapsUri: Output only. A link to the location on Maps.
 	MapsUri string `json:"mapsUri,omitempty"`
 	// NewReviewUri: Output only. A link to the page on Google Search where a
 	// customer can leave a review for the location.
 	NewReviewUri string `json:"newReviewUri,omitempty"`
-	// PlaceId: Output only. If this locationappears on Google Maps, this field is
+	// PlaceId: Output only. If this location appears on Google Maps, this field is
 	// populated with the place ID for the location. This ID can be used in various
 	// Places APIs. This field can be set during Create calls, but not for Update.
 	PlaceId string `json:"placeId,omitempty"`
@@ -1298,8 +1302,8 @@ func (s PlaceInfo) MarshalJSON() ([]byte, error) {
 
 // Places: Defines the union of areas represented by a set of places.
 type Places struct {
-	// PlaceInfos: The areas represented by place IDs. Limited to a maximum of 20
-	// places.
+	// PlaceInfos: Optional. The areas represented by place IDs. Limited to a
+	// maximum of 20 places.
 	PlaceInfos []*PlaceInfo `json:"placeInfos,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlaceInfos") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1445,13 +1449,14 @@ func (s Profile) MarshalJSON() ([]byte, error) {
 // RelationshipData: Information of all parent and children locations related
 // to this one.
 type RelationshipData struct {
-	// ChildrenLocations: The list of children locations that this location has
-	// relations with.
+	// ChildrenLocations: Optional. The list of children locations that this
+	// location has relations with.
 	ChildrenLocations []*RelevantLocation `json:"childrenLocations,omitempty"`
-	// ParentChain: The resource name of the Chain that this location is member of.
-	// How to find Chain ID
+	// ParentChain: Optional. The resource name of the Chain that this location is
+	// member of. How to find Chain ID
 	ParentChain string `json:"parentChain,omitempty"`
-	// ParentLocation: The parent location that this location has relations with.
+	// ParentLocation: Optional. The parent location that this location has
+	// relations with.
 	ParentLocation *RelevantLocation `json:"parentLocation,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ChildrenLocations") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1638,7 +1643,8 @@ type ServiceAreaBusiness struct {
 	//   "CUSTOMER_AND_BUSINESS_LOCATION" - Offers service at the business address
 	// and the surrounding area.
 	BusinessType string `json:"businessType,omitempty"`
-	// Places: The area that this business serves defined through a set of places.
+	// Places: Optional. The area that this business serves defined through a set
+	// of places.
 	Places *Places `json:"places,omitempty"`
 	// RegionCode: Immutable. CLDR region code of the country/region that this
 	// service area business is based in. See http://cldr.unicode.org/ and
@@ -1886,7 +1892,9 @@ type TimePeriod struct {
 	//   "SUNDAY" - Sunday
 	CloseDay string `json:"closeDay,omitempty"`
 	// CloseTime: Required. Valid values are 00:00-24:00, where 24:00 represents
-	// midnight at the end of the specified day field.
+	// midnight at the end of the specified day field. Note: In Proto3 JSON
+	// mapping, default zero values (00:00) are omitted, producing `{}` for
+	// close_time.
 	CloseTime *TimeOfDay `json:"closeTime,omitempty"`
 	// OpenDay: Required. Indicates the day of the week this period starts on.
 	//
@@ -1901,7 +1909,9 @@ type TimePeriod struct {
 	//   "SUNDAY" - Sunday
 	OpenDay string `json:"openDay,omitempty"`
 	// OpenTime: Required. Valid values are 00:00-24:00, where 24:00 represents
-	// midnight at the end of the specified day field.
+	// midnight at the end of the specified day field. Note: In Proto3 JSON
+	// mapping, default zero values (00:00) are omitted, producing `{}` for
+	// open_time.
 	OpenTime *TimeOfDay `json:"openTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloseDay") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2262,7 +2272,8 @@ func (r *AttributesService) List() *AttributesListCall {
 
 // CategoryName sets the optional parameter "categoryName": The primary
 // category stable ID to find available attributes. Must be of the format
-// categories/{category_id}.
+// `categories/{category_id}` (e.g., `categories/gcid:restaurant`). Required if
+// `parent` is not set and `show_all` is false.
 func (c *AttributesListCall) CategoryName(categoryName string) *AttributesListCall {
 	c.urlParams_.Set("categoryName", categoryName)
 	return c
@@ -2291,25 +2302,25 @@ func (c *AttributesListCall) PageToken(pageToken string) *AttributesListCall {
 }
 
 // Parent sets the optional parameter "parent": Resource name of the location
-// to look up available attributes. If this field is set, category_name,
-// region_code, language_code and show_all are not required and must not be
-// set.
+// to look up available attributes. If this field is set, `category_name`,
+// `region_code`, `language_code` and `show_all` are not required and must not
+// be set. Format: `locations/{location_id}` (e.g., `locations/1234567890`).
 func (c *AttributesListCall) Parent(parent string) *AttributesListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
 // RegionCode sets the optional parameter "regionCode": The ISO 3166-1 alpha-2
-// country code to find available attributes.
+// country code to find available attributes. Required if `parent` is not set.
 func (c *AttributesListCall) RegionCode(regionCode string) *AttributesListCall {
 	c.urlParams_.Set("regionCode", regionCode)
 	return c
 }
 
-// ShowAll sets the optional parameter "showAll": Metadata for all available
-// attributes are returned when this field is set to true, disregarding parent
-// and category_name fields. language_code and region_code are required when
-// show_all is set to true.
+// ShowAll sets the optional parameter "showAll": If set to true, metadata for
+// all available attributes are returned, disregarding `parent` and
+// `category_name` fields. `language_code` and `region_code` are required when
+// `show_all` is set to true.
 func (c *AttributesListCall) ShowAll(showAll bool) *AttributesListCall {
 	c.urlParams_.Set("showAll", fmt.Sprint(showAll))
 	return c
@@ -3543,7 +3554,7 @@ type LocationsPatchCall struct {
 
 // Patch: Updates the specified location.
 //
-//   - name: Google identifier for this location in the form:
+//   - name: Identifier. Google identifier for this location in the form:
 //     `locations/{location_id}`.
 func (r *LocationsService) Patch(nameid string, location *Location) *LocationsPatchCall {
 	c := &LocationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}

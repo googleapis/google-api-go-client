@@ -26,8 +26,17 @@
         "https://www.googleapis.com/auth/googlehealth.location.readonly": {
           "description": "See exercise GPS location data in Google Health"
         },
-        "https://www.googleapis.com/auth/googlehealth.location.writeonly": {
-          "description": "Add exercise GPS location data to Google Health, and edit or delete the data it adds."
+        "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly": {
+          "description": "See your Google Health logged symptoms data"
+        },
+        "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly": {
+          "description": "Add logged symptoms data to Google Health, and edit or delete the data it adds"
+        },
+        "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly": {
+          "description": "See your Google Health mindfulness data"
+        },
+        "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly": {
+          "description": "Add mindfulness data to Google Health, and edit or delete the data it adds"
         },
         "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly": {
           "description": "Add nutrition data to Google Health, and edit or delete the data it adds."
@@ -37,6 +46,12 @@
         },
         "https://www.googleapis.com/auth/googlehealth.profile.writeonly": {
           "description": "Add profile data to Google Health, and edit or delete the data it adds."
+        },
+        "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly": {
+          "description": "See your Google Health reproductive health data"
+        },
+        "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly": {
+          "description": "Add reproductive health data to Google Health, and edit or delete the data it adds"
         },
         "https://www.googleapis.com/auth/googlehealth.settings.readonly": {
           "description": "See your Google Health settings"
@@ -519,12 +534,25 @@
           },
           "scopes": [
             "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+            "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
             "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
             "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+            "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
             "https://www.googleapis.com/auth/googlehealth.irn.readonly",
+            "https://www.googleapis.com/auth/googlehealth.location.readonly",
+            "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
+            "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+            "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly",
+            "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
+            "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
             "https://www.googleapis.com/auth/googlehealth.profile.readonly",
+            "https://www.googleapis.com/auth/googlehealth.profile.writeonly",
+            "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly",
+            "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
             "https://www.googleapis.com/auth/googlehealth.settings.readonly",
-            "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
+            "https://www.googleapis.com/auth/googlehealth.settings.writeonly",
+            "https://www.googleapis.com/auth/googlehealth.sleep.readonly",
+            "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
           ]
         },
         "getIrnProfile": {
@@ -612,7 +640,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Identifier. The resource name of this Profile resource. Format: `users/{user}/profile` Example: `users/1234567890/profile` or `users/me/profile` The {user} ID is a system-generated Google Health API user ID, a string of 1-63 characters consisting of lowercase and uppercase letters, numbers, and hyphens. The literal `me` can also be used to refer to the authenticated user.",
+              "description": "Identifier. The resource name of this Profile resource. Format: `users/{user}/profile` Example: `users/1234567890/profile` or `users/me/profile` The {user} ID is a system-generated Google Health API user ID, a string of 1-63 characters consisting of lowercase and uppercase letters, numbers, and hyphens. The literal `me` can also be used to refer to the authenticated user. This field is read-only.",
               "location": "path",
               "pattern": "^users/[^/]+/profile$",
               "required": true,
@@ -646,7 +674,7 @@
           ],
           "parameters": {
             "name": {
-              "description": "Identifier. The resource name of this Settings resource. Format: `users/{user}/settings` Example: `users/1234567890/settings` or `users/me/settings` The {user} ID is a system-generated Google Health API user ID, a string of 1-63 characters consisting of lowercase and uppercase letters, numbers, and hyphens. The literal `me` can also be used to refer to the authenticated user.",
+              "description": "Identifier. The resource name of this Settings resource. Format: `users/{user}/settings` Example: `users/1234567890/settings` or `users/me/settings` The {user} ID is a system-generated Google Health API user ID, a string of 1-63 characters consisting of lowercase and uppercase letters, numbers, and hyphens. The literal `me` can also be used to refer to the authenticated user. This field is read-only.",
               "location": "path",
               "pattern": "^users/[^/]+/settings$",
               "required": true,
@@ -686,7 +714,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Optional. Parent (data type) for the Data Point collection Format: `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/me/dataTypes/-` For a list of the supported data types see the DataPoint data union field. Deleting data points across multiple data type collections is supported following https://aip.dev/159. If this is set, the parent of all of the data points specified in `names` must match this field.",
+                      "description": "Optional. Parent (data type) for the Data Point collection Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` - `users/me/dataTypes/-` - `users/1234567890/dataTypes/-` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). For a list of the supported data types see the DataPoint data union field. Deleting data points across multiple data type collections is supported following https://aip.dev/159. If this is set, the parent of all of the data points specified in `names` must match this field.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+$",
                       "required": true,
@@ -703,8 +731,10 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
-                    "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
@@ -718,7 +748,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. The parent resource name where the data point will be created. Format: `users/{user}/dataTypes/{data_type}`",
+                      "description": "Required. The parent resource name where the data point will be created. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity).",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+$",
                       "required": true,
@@ -735,8 +765,10 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
-                    "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
@@ -750,7 +782,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Parent data type of the Data Point collection. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/me/dataTypes/distance` For a list of the supported data types see the DailyRollupDataPoint value union field.",
+                      "description": "Required. Parent data type of the Data Point collection. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` - `users/me/dataTypes/distance` - `users/1234567890/dataTypes/distance` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). For a list of the supported data types see the DailyRollupDataPoint value union field.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+$",
                       "required": true,
@@ -766,13 +798,25 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
-                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
                 "exportExerciseTcx": {
-                  "description": "Exports exercise data in TCX format. **IMPORTANT:** HTTP clients must append `?alt=media` to the request URL to download the raw TCX file. Example: `https://health.googleapis.com/v4/users/me/dataTypes/exercise/dataPoints/EXERCISE_ID:exportExerciseTcx?alt=media` Without `alt=media`, the server returns a JSON response (`ExportExerciseTcxResponse`) which is intended primarily for gRPC clients. **Note:** While the Authorization section below states that any one of the listed scopes is accepted, this specific method requires the user to provide both one of the `activity_and_fitness` scopes (`normal` or `readonly`) AND one of the `location` scopes (`normal` or `readonly`) in their access token to succeed.",
+                  "description": "Exports exercise data in TCX format. **IMPORTANT:** HTTP clients must append `?alt=media` to the request URL to download the raw TCX file. ## Examples: ## `https://health.googleapis.com/v4/users/me/dataTypes/exercise/dataPoints/EXERCISE_ID:exportExerciseTcx?alt=media` `https://health.googleapis.com/v4/users/1234567890/dataTypes/exercise/dataPoints/EXERCISE_ID:exportExerciseTcx?alt=media` Without `alt=media`, the server returns a JSON response (`ExportExerciseTcxResponse`) which is intended primarily for gRPC clients. **Note:** While the Authorization section below states that any one of the listed scopes is accepted, this specific method requires the user to provide both one of the `activity_and_fitness` scopes (`normal` or `readonly`) AND one of the `location` scopes (`normal` or `readonly`) in their access token to succeed.",
                   "flatPath": "v4/users/{usersId}/dataTypes/{dataTypesId}/dataPoints/{dataPointsId}:exportExerciseTcx",
                   "httpMethod": "GET",
                   "id": "health.users.dataTypes.dataPoints.exportExerciseTcx",
@@ -781,7 +825,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The resource name of the exercise data point to export. Format: `users/{user}/dataTypes/exercise/dataPoints/{data_point}` Example: `users/me/dataTypes/exercise/dataPoints/2026443605080188808` The `{user}` is the alias `\"me\"` currently. Future versions may support user IDs. The `{data_point}` ID maps to the exercise ID, which is a long integer.",
+                      "description": "Required. The resource name of the exercise data point to export. Format: `users/{user}/dataTypes/exercise/dataPoints/{data_point}` Examples: - `users/me/dataTypes/exercise/dataPoints/2026443605080188808` - `users/1234567890/dataTypes/exercise/dataPoints/2026443605080188808` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). The `{data_point}` ID maps to the exercise ID, which is a long integer.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+/dataPoints/[^/]+$",
                       "required": true,
@@ -814,7 +858,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Required. The name of the data point to retrieve. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` See DataPoint.name for examples and possible values.",
+                      "description": "Required. The name of the data point to retrieve. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples: ## `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). See DataPoint.name for examples and possible values.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+/dataPoints/[^/]+$",
                       "required": true,
@@ -827,9 +871,21 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
-                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
                 "list": {
@@ -841,6 +897,11 @@
                     "parent"
                   ],
                   "parameters": {
+                    "dataSourceFamily": {
+                      "description": "Optional. The data source family name to filter by. If empty, data points from all available data sources will be returned. Format: `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID, retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or `users/1234567890/dataSourceFamilies/...`). The supported values are: - `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data from all available data sources. - `users/{user}/dataSourceFamilies/google-wearables` - Includes data from Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch). Excludes manually logged data. - `users/{user}/dataSourceFamilies/google-sources` - Includes first-party Google data, such as data from tracker devices, manually logged data, and Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes only the data the calling client wrote through this API, that is, data points whose data source was registered through this API with the same OAuth client ID as the caller. Callers that were only granted write scopes for the requested data types may only read the data they wrote themselves: their requests are implicitly restricted to `self-sources`, and requesting any other data source family fails with `PERMISSION_DENIED`. If no data point matches the requested data source family, the response is an empty list rather than an error. Filtering by data source family is not supported for the `sleep`, `food` and `food-measurement-unit` data types, because the underlying listing implementation cannot restrict results by data source. Such requests fail with `INVALID_ARGUMENT` when the data source family is set explicitly, and with `PERMISSION_DENIED` when the restriction is only implied by the caller's scopes. For `sleep`, use ReconcileDataPoints instead.",
+                      "location": "query",
+                      "type": "string"
+                    },
                     "filter": {
                       "description": "Optional. Filter expression following https://google.aip.dev/160. A time range (either physical or civil) can be specified. The supported filter fields are: - Interval start time: - Pattern: `{interval_data_type}.interval.start_time` - Supported comparison operators: `\u003e=`, `\u003c` - Timestamp literal expected in RFC-3339 format - Supported logical operators: `AND` - Example: - `steps.interval.start_time \u003e= \"2023-11-24T00:00:00Z\" AND steps.interval.start_time \u003c \"2023-11-25T00:00:00Z\"` - `distance.interval.start_time \u003e= \"2024-08-14T12:34:56Z\"` - Interval civil start time: - Pattern: `{interval_data_type}.interval.civil_start_time` - Supported comparison operators: `\u003e=`, `\u003c` - Date with optional time literal expected in ISO 8601 `YYYY-MM-DD[THH:mm:ss]` format - Supported logical operators: `AND` - Example: - `steps.interval.civil_start_time \u003e= \"2023-11-24\" AND steps.interval.civil_start_time \u003c \"2023-11-25\"` - `distance.interval.civil_start_time \u003e= \"2024-08-14T12:34:56\"` - Sample observation physical time: - Pattern: `{sample_data_type}.sample_time.physical_time` - Supported comparison operators: `\u003e=`, `\u003c` - Timestamp literal expected in RFC-3339 format - Supported logical operators: `AND` - Example: - `weight.sample_time.physical_time \u003e= \"2023-11-24T00:00:00Z\" AND weight.sample_time.physical_time \u003c \"2023-11-25T00:00:00Z\"` - `weight.sample_time.physical_time \u003e= \"2024-08-14T12:34:56Z\"` - Sample observation civil time: - Pattern: `{sample_data_type}.sample_time.civil_time` - Supported comparison operators: `\u003e=`, `\u003c` - Date with optional time literal expected in ISO 8601 `YYYY-MM-DD[THH:mm:ss]` format - Supported logical operators: `AND` - Example: - `weight.sample_time.civil_time \u003e= \"2023-11-24\" AND weight.sample_time.civil_time \u003c \"2023-11-25\"` - `weight.sample_time.civil_time \u003e= \"2024-08-14T12:34:56\"` - Daily summary date: - Pattern: `{daily_summary_data_type}.date` - Supported comparison operators: `\u003e=`, `\u003c` - Date literal expected in ISO 8601 `YYYY-MM-DD` format - Supported logical operators: `AND` - Example: - `daily_heart_rate_variability.date \u003c \"2024-08-15\"` - Session civil start time (**Excluding Sleep and ECG**): - Pattern: `{session_data_type}.interval.civil_start_time` - Supported comparison operators: `\u003e=`, `\u003c` - Date with optional time literal expected in ISO 8601 `YYYY-MM-DD[THH:mm:ss]` format - Supported logical operators: `AND` - Example: - `exercise.interval.civil_start_time \u003e= \"2023-11-24\" AND exercise.interval.civil_start_time \u003c \"2023-11-25\"` - `exercise.interval.civil_start_time \u003e= \"2024-08-14T12:34:56\"` - Session start time (**ECG specific**): - Pattern: `electrocardiogram.interval.start_time` - Supported comparison operators: `\u003e=` - Timestamp literal expected in RFC-3339 format - Example: - `electrocardiogram.interval.start_time \u003e= \"2024-08-14T12:34:56Z\"` - Note: Only filtering by start time is supported for ECG. Filtering by end time (e.g., `electrocardiogram.interval.end_time`) is not supported. - Session end time (**Sleep specific**): - Pattern: `sleep.interval.end_time` - Supported comparison operators: `\u003e=`, `\u003c` - Timestamp literal expected in RFC-3339 format - Supported logical operators: `AND`, `OR` - Example: - `sleep.interval.end_time \u003e= \"2023-11-24T00:00:00Z\" AND sleep.interval.end_time \u003c \"2023-11-25T00:00:00Z\"` - Session civil end time (**Sleep specific**): - Pattern: `sleep.interval.civil_end_time` - Supported comparison operators: `\u003e=`, `\u003c` - Date with optional time literal expected in ISO 8601 `YYYY-MM-DD[THH:mm:ss]` format - Supported logical operators: `AND`, `OR` - Example: - `sleep.interval.civil_end_time \u003e= \"2023-11-24\" AND sleep.interval.civil_end_time \u003c \"2023-11-25\"` Data points in the response will be ordered by the interval start time in descending order.",
                       "location": "query",
@@ -858,7 +919,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. Parent data type of the Data Point collection. Format: `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/me/dataTypes/weight` For a list of the supported data types see the DataPoint data union field.",
+                      "description": "Required. Parent data type of the Data Point collection. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` - `users/me/dataTypes/weight` - `users/1234567890/dataTypes/weight` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). For a list of the supported data types see the DataPoint data union field.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+$",
                       "required": true,
@@ -871,9 +932,21 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
-                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
                 "patch": {
@@ -886,7 +959,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
+                      "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples: ## `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID, which can be retrieved by calling GetIdentity (see Identity.health_user_id). The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+/dataPoints/[^/]+$",
                       "required": true,
@@ -903,8 +976,10 @@
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
-                    "https://www.googleapis.com/auth/googlehealth.location.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
                     "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
@@ -918,7 +993,7 @@
                   ],
                   "parameters": {
                     "dataSourceFamily": {
-                      "description": "Optional. The data source family name to reconcile. If empty, data points from all data sources will be reconciled. Format: `users/me/dataSourceFamilies/{data_source_family}` The supported values are: - `users/me/dataSourceFamilies/all-sources` - default value - `users/me/dataSourceFamilies/google-wearables` - tracker devices - `users/me/dataSourceFamilies/google-sources` - Google first party sources",
+                      "description": "Optional. The data source family name to reconcile. If empty, data points from all data sources will be reconciled. Format: `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID, retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or `users/1234567890/dataSourceFamilies/...`). The supported values are: - `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data from all available data sources. - `users/{user}/dataSourceFamilies/google-wearables` - Includes data from Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch). Excludes manually logged data. - `users/{user}/dataSourceFamilies/google-sources` - Includes first-party Google data, such as data from tracker devices, manually logged data, and Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes only the data the calling client wrote through this API, that is, data points whose data source was registered through this API with the same OAuth client ID as the caller. Callers that were only granted write scopes for the requested data type may only read the data they wrote themselves: their requests are implicitly restricted to `self-sources`, and requesting any other data source family fails with `PERMISSION_DENIED`. If no data point matches the requested data source family, the response is an empty list rather than an error.",
                       "location": "query",
                       "type": "string"
                     },
@@ -939,7 +1014,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "Required. Parent data type of the Data Point collection. Format: `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/me/dataTypes/heart-rate` For a list of the supported data types see the DataPoint data union field.",
+                      "description": "Required. Parent data type of the Data Point collection. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` - `users/me/dataTypes/heart-rate` - `users/1234567890/dataTypes/heart-rate` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). For a list of the supported data types see the DataPoint data union field.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+$",
                       "required": true,
@@ -952,9 +1027,21 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
-                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 },
                 "rollUp": {
@@ -967,7 +1054,7 @@
                   ],
                   "parameters": {
                     "parent": {
-                      "description": "Required. Parent data type of the Data Point collection. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/me/dataTypes/distance` For a list of the supported data types see the RollupDataPoint value union field.",
+                      "description": "Required. Parent data type of the Data Point collection. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` - `users/me/dataTypes/distance` - `users/1234567890/dataTypes/distance` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). For a list of the supported data types see the RollupDataPoint value union field.",
                       "location": "path",
                       "pattern": "^users/[^/]+/dataTypes/[^/]+$",
                       "required": true,
@@ -983,9 +1070,21 @@
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.activity_and_fitness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.ecg.readonly",
                     "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.irn.readonly",
                     "https://www.googleapis.com/auth/googlehealth.location.readonly",
-                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly"
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.readonly",
+                    "https://www.googleapis.com/auth/googlehealth.sleep.writeonly"
                   ]
                 }
               }
@@ -1060,7 +1159,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20261030",
   "rootUrl": "https://health.googleapis.com/",
   "schemas": {
     "ActiveEnergyBurned": {
@@ -1072,7 +1171,7 @@
           "description": "Required. Observed interval"
         },
         "kcal": {
-          "description": "Required. Energy burned during an activity, measured in kilocalories.",
+          "description": "Required. Energy burned during an activity, measured in kilocalories. Must be in the range `[0, 1000000]`.",
           "format": "double",
           "type": "number"
         }
@@ -1360,7 +1459,7 @@
       "id": "Altitude",
       "properties": {
         "gainMillimeters": {
-          "description": "Required. Altitude gain in millimeters over the observed interval.",
+          "description": "Required. Altitude gain in millimeters over the observed interval. Must be in the range `[-1000000000, 1000000000]`.",
           "format": "int64",
           "type": "string"
         },
@@ -1440,7 +1539,7 @@
       "id": "BloodGlucose",
       "properties": {
         "bloodGlucoseMilligramsPerDeciliter": {
-          "description": "Required. Blood glucose level concentration in mg/dL.",
+          "description": "Required. Blood glucose level concentration in mg/dL. Must be in the range `[0, 900]`.",
           "format": "double",
           "type": "number"
         },
@@ -1550,7 +1649,7 @@
       "id": "BodyFat",
       "properties": {
         "percentage": {
-          "description": "Required. Body fat percentage, in range [0, 100].",
+          "description": "Required. Body fat percentage. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         },
@@ -1704,7 +1803,7 @@
           "description": "Required. The time at which core body temperature was measured."
         },
         "temperatureCelsius": {
-          "description": "Required. The core body temperature in Celsius.",
+          "description": "Required. The core body temperature in Celsius. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         }
@@ -1827,7 +1926,7 @@
       "id": "DailyOxygenSaturation",
       "properties": {
         "averagePercentage": {
-          "description": "Required. The average value of the oxygen saturation samples during the sleep.",
+          "description": "Required. The average value of the oxygen saturation samples during the sleep. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         },
@@ -1836,7 +1935,7 @@
           "description": "Required. Date (in user's timezone) of the daily oxygen saturation record."
         },
         "lowerBoundPercentage": {
-          "description": "Required. The lower bound of the confidence interval of oxygen saturation samples during sleep.",
+          "description": "Required. The lower bound of the confidence interval of oxygen saturation samples during sleep. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         },
@@ -1846,7 +1945,7 @@
           "type": "number"
         },
         "upperBoundPercentage": {
-          "description": "Required. The upper bound of the confidence interval of oxygen saturation samples during sleep.",
+          "description": "Required. The upper bound of the confidence interval of oxygen saturation samples during sleep. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         }
@@ -1915,16 +2014,16 @@
       "id": "DailyRollUpDataPointsRequest",
       "properties": {
         "dataSourceFamily": {
-          "description": "Optional. The data source family name to roll up. If empty, data points from all available data sources will be rolled up. Format: `users/me/dataSourceFamilies/{data_source_family}` The supported values are: - `users/me/dataSourceFamilies/all-sources` - default value - `users/me/dataSourceFamilies/google-wearables` - tracker devices - `users/me/dataSourceFamilies/google-sources` - Google first party sources",
+          "description": "Optional. The data source family name to roll up. If empty, data points from all available data sources will be rolled up. Format: `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID, retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or `users/1234567890/dataSourceFamilies/...`). The supported values are: - `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data from all available data sources. - `users/{user}/dataSourceFamilies/google-wearables` - Includes data from Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch). Excludes manually logged data. - `users/{user}/dataSourceFamilies/google-sources` - Includes first-party Google data, such as data from tracker devices, manually logged data, and Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes only the data the calling client wrote through this API, that is, data points whose data source was registered through this API with the same OAuth client ID as the caller. Callers that were only granted write scopes for the requested data type may only read the data they wrote themselves: their requests are implicitly restricted to `self-sources`, and requesting any other data source family fails with `PERMISSION_DENIED`. If no data point matches the requested data source family, the response is an empty list rather than an error.",
           "type": "string"
         },
         "pageSize": {
-          "description": "Optional. The maximum number of data points to return. If unspecified, at most 1440 data points will be returned. The maximum page size is 10000; values above that will be truncated accordingly.",
+          "description": "Optional. The maximum number of data points to return. If unspecified, at most `90` data points will be returned. The maximum page size is `90`. For `calories-in-heart-rate-zone`, `heart-rate`, `active-minutes`, and `total-calories`, the default and maximum page size is `14`.",
           "format": "int32",
           "type": "integer"
         },
         "pageToken": {
-          "description": "Optional. The `next_page_token` from a previous request, if any. All other request fields need to be the same as in the initial request when the page token is specified.",
+          "description": "Optional. The next_page_token from a previous request, if any. All other request fields need to be the same as in the initial request when the page token is specified.",
           "type": "string"
         },
         "range": {
@@ -1932,7 +2031,7 @@
           "description": "Required. Closed-open range of data points that will be rolled up. The start time must be aligned with the aggregation window. The maximum range for `calories-in-heart-rate-zone`, `heart-rate`, `active-minutes` and `total-calories` is 14 days. The maximum range for all other data types is 90 days."
         },
         "windowSizeDays": {
-          "description": "Optional. Aggregation window size, in number of days. Defaults to 1 if not specified.",
+          "description": "Optional. Aggregation window size, in number of days. Defaults to 1 if not specified. If the requested range is not an exact multiple of `window_size_days`, the final bucket chronologically will be truncated at the upper endpoint of the range and will cover a duration shorter than `window_size_days`.",
           "format": "int32",
           "type": "integer"
         }
@@ -1943,6 +2042,10 @@
       "description": "Response containing the list of rolled up data points.",
       "id": "DailyRollUpDataPointsResponse",
       "properties": {
+        "nextPageToken": {
+          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
+          "type": "string"
+        },
         "rollupDataPoints": {
           "description": "Values for each aggregation time window.",
           "items": {
@@ -2121,7 +2224,7 @@
           "type": "boolean"
         },
         "vo2Max": {
-          "description": "Required. Daily VO2 max value measured as in ml consumed oxygen / kg of body weight / min.",
+          "description": "Required. Daily VO2 max value measured as in ml consumed oxygen / kg of body weight / min. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         },
@@ -2249,13 +2352,25 @@
           "$ref": "IrregularRhythmNotification",
           "description": "Optional. Data for points in the `irregular-rhythm-notification` session data type collection."
         },
+        "menstrualPeriod": {
+          "$ref": "MenstrualPeriod",
+          "description": "Optional. Data for points in the `menstrual-period` interval data type collection."
+        },
+        "moods": {
+          "$ref": "Moods",
+          "description": "Optional. Data for points in the `moods` sample data type collection."
+        },
         "name": {
-          "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
+          "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples: ## `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID, which can be retrieved by calling GetIdentity (see Identity.health_user_id). The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
           "type": "string"
         },
         "nutritionLog": {
           "$ref": "NutritionLog",
           "description": "Optional. Data for points in the `nutrition-log` session data type collection."
+        },
+        "ovulationTest": {
+          "$ref": "OvulationTest",
+          "description": "Optional. Data for points in the `ovulation-test` sample data type collection."
         },
         "oxygenSaturation": {
           "$ref": "OxygenSaturation",
@@ -2284,6 +2399,10 @@
         "swimLengthsData": {
           "$ref": "SwimLengthsData",
           "description": "Optional. Data for points in the `swim-lengths-data` interval data type collection."
+        },
+        "symptoms": {
+          "$ref": "Symptoms",
+          "description": "Optional. Data for points in the `symptoms` sample data type collection."
         },
         "timeInHeartRateZone": {
           "$ref": "TimeInHeartRateZone",
@@ -2488,7 +2607,7 @@
           "description": "Required. Observed interval."
         },
         "millimeters": {
-          "description": "Required. Distance in millimeters over the observed interval.",
+          "description": "Required. Distance in millimeters over the observed interval. Must be in the range `[0, 1000000000]`.",
           "format": "int64",
           "type": "string"
         }
@@ -2602,7 +2721,7 @@
       "id": "EnergyQuantity",
       "properties": {
         "kcal": {
-          "description": "Required. The energy value in kilocalories.",
+          "description": "Required. The energy value in kilocalories. Must be in the range `[0, 100000]`.",
           "format": "double",
           "type": "number"
         },
@@ -2677,7 +2796,7 @@
           "type": "string"
         },
         "displayName": {
-          "description": "Required. Exercise display name.",
+          "description": "Required. The localized, human-readable name of the exercise. For all exercise types other than `OTHER`, the system ignores client input and overrides this field with a generated name based on `exercise_type` (e.g., \"Walking\" for `WALKING`). If `exercise_type` is `OTHER`, this field can contain the user's custom, free-form display name.",
           "type": "string"
         },
         "exerciseEvents": {
@@ -3169,7 +3288,7 @@
       "id": "Floors",
       "properties": {
         "count": {
-          "description": "Required. Number of floors in the recorded interval",
+          "description": "Required. Number of floors in the recorded interval. Must be in the range `[0, 1000000]`.",
           "format": "int64",
           "type": "string"
         },
@@ -3350,7 +3469,7 @@
       "id": "GoogleDevicesandservicesHealthV4DataType",
       "properties": {
         "name": {
-          "description": "Identifier. The resource name of the data type. Format: `users/{user}/dataTypes/{data_type}` See DataPoint.name for examples and possible values.",
+          "description": "Identifier. The resource name of the data type. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). See DataPoint.name for examples and possible values.",
           "type": "string"
         }
       },
@@ -3370,6 +3489,39 @@
     "GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog": {
       "description": "Log message for a webhook notification sent by the Google Health API to a subscriber's endpoint. Includes the HTTP response received from the endpoint.",
       "id": "GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog",
+      "properties": {
+        "httpResponse": {
+          "$ref": "HttpResponse",
+          "description": "Required. Represents the HTTP response. This message includes the status code, reason phrase, headers, and body."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevicesandservicesHealthV4betaDataType": {
+      "description": "Represents a type of health data a user can have data points recorded for. It matches the parent resource of collection containing data points of the given type. Clients currently do not need to interact with this resource directly.",
+      "id": "GoogleDevicesandservicesHealthV4betaDataType",
+      "properties": {
+        "name": {
+          "description": "Identifier. The resource name of the data type. Format: `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID (retrieved via GetIdentity). See DataPoint.name for examples and possible values.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevicesandservicesHealthV4betaUser": {
+      "description": "Represents a user in the Google Health API. It matches the parent resource of collections owned by the user. Clients currently do not need to interact with this resource directly.",
+      "id": "GoogleDevicesandservicesHealthV4betaUser",
+      "properties": {
+        "name": {
+          "description": "Identifier. The resource name of the user. The `{user}` ID is a system-generated identifier, as described in Identity.health_user_id. Format: `users/{user}`",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog": {
+      "description": "Log message for a webhook notification sent by the Google Health API to a subscriber's endpoint. Includes the HTTP response received from the endpoint.",
+      "id": "GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog",
       "properties": {
         "httpResponse": {
           "$ref": "HttpResponse",
@@ -3410,7 +3562,7 @@
       "id": "HeartRate",
       "properties": {
         "beatsPerMinute": {
-          "description": "Required. The heart rate value in beats per minute.",
+          "description": "Required. The heart rate value in beats per minute. Must be in the range `[1, 300]`.",
           "format": "int64",
           "type": "string"
         },
@@ -3494,8 +3646,12 @@
       "description": "Captures user's heart rate variability (HRV) as measured by the root mean square of successive differences (RMSSD) between normal heartbeats or by standard deviation of the inter-beat intervals (SDNN).",
       "id": "HeartRateVariability",
       "properties": {
+        "metadata": {
+          "$ref": "HeartRateVariabilityMetadata",
+          "description": "Optional. Additional information about the heart rate variability measurement."
+        },
         "rootMeanSquareOfSuccessiveDifferencesMilliseconds": {
-          "description": "Optional. The root mean square of successive differences between normal heartbeats. This is a measure of heart rate variability used by Google Health.",
+          "description": "Optional. The root mean square of successive differences between normal heartbeats. This is a measure of heart rate variability used by Google Health. Must be in the range `[1, 200]`.",
           "format": "double",
           "type": "number"
         },
@@ -3505,6 +3661,23 @@
         },
         "standardDeviationMilliseconds": {
           "description": "Optional. The standard deviation of the heart rate variability measurement.",
+          "format": "double",
+          "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "HeartRateVariabilityMetadata": {
+      "description": "Metadata for HeartRateVariability.",
+      "id": "HeartRateVariabilityMetadata",
+      "properties": {
+        "highFrequencyPower": {
+          "description": "Optional. The power in interbeat interval fluctuations within the high frequency band (0.15 Hz - 0.4 Hz).",
+          "format": "double",
+          "type": "number"
+        },
+        "lowFrequencyPower": {
+          "description": "Optional. The power in interbeat interval fluctuations within the low frequency band (0.04 Hz - 0.15 Hz).",
           "format": "double",
           "type": "number"
         }
@@ -3568,7 +3741,7 @@
       "id": "Height",
       "properties": {
         "heightMillimeters": {
-          "description": "Required. Height of the user in millimeters.",
+          "description": "Required. Height of the user in millimeters. Must be in the range `[0, 3000]`.",
           "format": "int64",
           "type": "string"
         },
@@ -3890,6 +4063,21 @@
       },
       "type": "object"
     },
+    "MenstrualPeriod": {
+      "description": "Menstrual period record.",
+      "id": "MenstrualPeriod",
+      "properties": {
+        "interval": {
+          "$ref": "ObservationTimeInterval",
+          "description": "Required. Observed interval."
+        },
+        "notes": {
+          "description": "Optional. Standard free-form notes captured at manual logging.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "MetricsSummary": {
       "description": "Summary metrics for an exercise.",
       "id": "MetricsSummary",
@@ -3983,6 +4171,185 @@
           "description": "Optional. Vertical oscillation/stride length between [5.0, 11.0].",
           "format": "double",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "Moods": {
+      "description": "Moods record.",
+      "id": "Moods",
+      "properties": {
+        "moods": {
+          "description": "Required. The moods logged.",
+          "items": {
+            "enum": [
+              "MOOD_UNSPECIFIED",
+              "AMAZED",
+              "AMUSED",
+              "ANGRY",
+              "ANNOYED",
+              "ANXIOUS",
+              "HAPPY",
+              "CONTENT",
+              "SAD",
+              "WORRIED",
+              "FRUSTRATED",
+              "EXCITED",
+              "CALM",
+              "STRESSED",
+              "ASHAMED",
+              "BRAVE",
+              "CONFIDENT",
+              "DISAPPOINTED",
+              "DISCOURAGED",
+              "DISGUSTED",
+              "DRAINED",
+              "EMBARRASSED",
+              "GRATEFUL",
+              "GUILTY",
+              "HOPEFUL",
+              "HOPELESS",
+              "INDIFFERENT",
+              "IRRITATED",
+              "JEALOUS",
+              "JOYFUL",
+              "LONELY",
+              "OVERWHELMED",
+              "PASSIONATE",
+              "PEACEFUL",
+              "PROUD",
+              "RELIEVED",
+              "SATISFIED",
+              "SCARED",
+              "SURPRISED",
+              "ENERGIZED",
+              "FATIGUED",
+              "VERY_CALM",
+              "VERY_STRESSED",
+              "NEUTRAL",
+              "AFRAID",
+              "HURTING",
+              "BORED",
+              "BITTER",
+              "ENVIOUS",
+              "CONFUSED",
+              "CURIOUS",
+              "AWESTRUCK",
+              "INSPIRED",
+              "LONGING",
+              "ACCOMPLISHED",
+              "LOVING",
+              "COMPASSIONATE",
+              "DEPRESSED",
+              "GOOD",
+              "LOW_ENERGY",
+              "OBSESSIVE_THOUGHTS",
+              "PANIC",
+              "PLAYFUL",
+              "PLEASED",
+              "SENSITIVE",
+              "SLEEPY",
+              "SWINGS",
+              "UNHAPPY",
+              "VERY_SELF_CRITICAL"
+            ],
+            "enumDescriptions": [
+              "Unspecified mood.",
+              "Amazed.",
+              "Amused.",
+              "Angry.",
+              "Annoyed.",
+              "Anxious.",
+              "Happy.",
+              "Content.",
+              "Sad.",
+              "Worried.",
+              "Frustrated.",
+              "Excited.",
+              "Calm.",
+              "Stressed.",
+              "Ashamed.",
+              "Brave.",
+              "Confident.",
+              "Disappointed.",
+              "Discouraged.",
+              "Disgusted.",
+              "Drained.",
+              "Embarrassed.",
+              "Grateful.",
+              "Guilty.",
+              "Hopeful.",
+              "Hopeless.",
+              "Indifferent.",
+              "Irritated.",
+              "Jealous.",
+              "Joyful.",
+              "Lonely.",
+              "Overwhelmed.",
+              "Passionate.",
+              "Peaceful.",
+              "Proud.",
+              "Relieved.",
+              "Satisfied.",
+              "Scared.",
+              "Surprised.",
+              "Energized.",
+              "Fatigued.",
+              "Very calm.",
+              "Very stressed.",
+              "Neutral.",
+              "Afraid.",
+              "Hurting.",
+              "Bored.",
+              "Bitter.",
+              "Envious.",
+              "Confused.",
+              "Curious.",
+              "Awestruck.",
+              "Inspired.",
+              "Longing.",
+              "Accomplished.",
+              "Loving.",
+              "Compassionate.",
+              "Depressed.",
+              "Good.",
+              "Low energy.",
+              "Obsessive thoughts.",
+              "Panic.",
+              "Playful.",
+              "Pleased.",
+              "Sensitive.",
+              "Sleepy.",
+              "Mood swings.",
+              "Unhappy.",
+              "Very self-critical."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "sampleTime": {
+          "$ref": "ObservationSampleTime",
+          "description": "Required. The time at which moods were measured."
+        },
+        "valences": {
+          "description": "Optional. The valences.",
+          "items": {
+            "enum": [
+              "VALENCE_UNSPECIFIED",
+              "UNPLEASANT",
+              "BASELINE",
+              "PLEASANT"
+            ],
+            "enumDescriptions": [
+              "Unspecified valence.",
+              "Unpleasant.",
+              "Baseline.",
+              "Pleasant."
+            ],
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -4410,12 +4777,43 @@
       },
       "type": "object"
     },
+    "OvulationTest": {
+      "description": "Ovulation test record.",
+      "id": "OvulationTest",
+      "properties": {
+        "result": {
+          "description": "Required. The result of the ovulation test.",
+          "enum": [
+            "OVULATION_TEST_RESULT_UNSPECIFIED",
+            "NEGATIVE",
+            "LUTEINIZING_HORMONE_SURGE",
+            "ESTROGEN_SURGE",
+            "POSITIVE",
+            "INDETERMINATE"
+          ],
+          "enumDescriptions": [
+            "Unspecified result.",
+            "Negative result.",
+            "Luteinizing hormone surge.",
+            "Estrogen surge.",
+            "Positive result.",
+            "Indeterminate result."
+          ],
+          "type": "string"
+        },
+        "sampleTime": {
+          "$ref": "ObservationSampleTime",
+          "description": "Required. The time at which ovulation test was measured."
+        }
+      },
+      "type": "object"
+    },
     "OxygenSaturation": {
       "description": "Captures the user's instantaneous oxygen saturation percentage (SpO2).",
       "id": "OxygenSaturation",
       "properties": {
         "percentage": {
-          "description": "Required. The oxygen saturation percentage. Valid values are from 0 to 100.",
+          "description": "Required. The oxygen saturation percentage. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         },
@@ -4497,13 +4895,13 @@
           "type": "integer"
         },
         "autoRunningStrideLengthMm": {
-          "description": "Output only. The automatically calculated running stride length, in millimeters. The user must consent to one of the following access scopes to access this field: - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly` - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`",
+          "description": "Output only. The automatically calculated running stride length, in millimeters. The user must consent to the following access scope to access this field: - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`",
           "format": "int32",
           "readOnly": true,
           "type": "integer"
         },
         "autoWalkingStrideLengthMm": {
-          "description": "Output only. The automatically calculated walking stride length, in millimeters. The user must consent to one of the following access scopes to access this field: - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly` - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`",
+          "description": "Output only. The automatically calculated walking stride length, in millimeters. The user must consent to the following access scope to access this field: - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`",
           "format": "int32",
           "readOnly": true,
           "type": "integer"
@@ -4514,16 +4912,16 @@
           "readOnly": true
         },
         "name": {
-          "description": "Identifier. The resource name of this Profile resource. Format: `users/{user}/profile` Example: `users/1234567890/profile` or `users/me/profile` The {user} ID is a system-generated Google Health API user ID, a string of 1-63 characters consisting of lowercase and uppercase letters, numbers, and hyphens. The literal `me` can also be used to refer to the authenticated user.",
+          "description": "Identifier. The resource name of this Profile resource. Format: `users/{user}/profile` Example: `users/1234567890/profile` or `users/me/profile` The {user} ID is a system-generated Google Health API user ID, a string of 1-63 characters consisting of lowercase and uppercase letters, numbers, and hyphens. The literal `me` can also be used to refer to the authenticated user. This field is read-only.",
           "type": "string"
         },
         "userConfiguredRunningStrideLengthMm": {
-          "description": "Optional. The user's user configured running stride length, in millimeters. The user must consent to one of the following access scopes to access this field: - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly` - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`",
+          "description": "Optional. The user's user configured running stride length, in millimeters. The user must consent to the following access scope to access this field: - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`",
           "format": "int32",
           "type": "integer"
         },
         "userConfiguredWalkingStrideLengthMm": {
-          "description": "Optional. The user's user configured walking stride length, in millimeters. The user must consent to one of the following access scopes to access this field: - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly` - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`",
+          "description": "Optional. The user's user configured walking stride length, in millimeters. The user must consent to the following access scope to access this field: - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`",
           "format": "int32",
           "type": "integer"
         }
@@ -4617,7 +5015,7 @@
           "description": "Data for points in the `daily-vo2-max` daily data type collection."
         },
         "dataPointName": {
-          "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example: `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` ID is a system-generated identifier, as described in Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
+          "description": "Identifier. Data point name, only supported for the subset of identifiable data types. For the majority of the data types, individual data points do not need to be identified and this field would be empty. Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples: ## `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID, which can be retrieved by calling GetIdentity (see Identity.health_user_id). The `{data_type}` ID corresponds to the kebab-case version of the field names in the DataPoint data union field, e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be client-provided or system-generated. If client-provided, it must be a string of 4-63 characters, containing only lowercase letters, numbers, and hyphens.",
           "type": "string"
         },
         "distance": {
@@ -4766,7 +5164,7 @@
       "id": "RollUpDataPointsRequest",
       "properties": {
         "dataSourceFamily": {
-          "description": "Optional. The data source family name to roll up. If empty, data points from all available data sources will be rolled up. Format: `users/me/dataSourceFamilies/{data_source_family}` The supported values are: - `users/me/dataSourceFamilies/all-sources` - default value - `users/me/dataSourceFamilies/google-wearables` - tracker devices - `users/me/dataSourceFamilies/google-sources` - Google first party sources",
+          "description": "Optional. The data source family name to roll up. If empty, data points from all available data sources will be rolled up. Format: `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}` can be either the alias `me` or the authenticated user's numeric Health User ID, retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or `users/1234567890/dataSourceFamilies/...`). The supported values are: - `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data from all available data sources. - `users/{user}/dataSourceFamilies/google-wearables` - Includes data from Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch). Excludes manually logged data. - `users/{user}/dataSourceFamilies/google-sources` - Includes first-party Google data, such as data from tracker devices, manually logged data, and Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes only the data the calling client wrote through this API, that is, data points whose data source was registered through this API with the same OAuth client ID as the caller. Callers that were only granted write scopes for the requested data type may only read the data they wrote themselves: their requests are implicitly restricted to `self-sources`, and requesting any other data source family fails with `PERMISSION_DENIED`. If no data point matches the requested data source family, the response is an empty list rather than an error.",
           "type": "string"
         },
         "pageSize": {
@@ -4783,7 +5181,7 @@
           "description": "Required. Closed-open range of data points that will be rolled up. The maximum range for `calories-in-heart-rate-zone`, `heart-rate`, `active-minutes` and `total-calories` is 14 days. The maximum range for all other data types is 90 days."
         },
         "windowSize": {
-          "description": "Required. The size of the time window to group data points into before applying the aggregation functions. Must be at least 1 second.",
+          "description": "Required. The size of the time window to group data points into before applying the aggregation functions. Must be at least 1 second. If the requested range is not an exact multiple of `window_size`, the final bucket chronologically will be truncated at the upper endpoint of the range and will cover a duration shorter than `window_size`.",
           "format": "google-duration",
           "type": "string"
         }
@@ -4914,7 +5312,7 @@
       "id": "RunVO2Max",
       "properties": {
         "runVo2Max": {
-          "description": "Required. Run VO2 max value in ml/kg/min.",
+          "description": "Required. Run VO2 max value in ml/kg/min. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         },
@@ -5037,7 +5435,7 @@
           "type": "boolean"
         },
         "distanceUnit": {
-          "description": "Optional. The measurement unit defined in the user's account settings. Updates to this field are currently not supported.",
+          "description": "Optional. The measurement unit defined in the user's account settings.",
           "enum": [
             "DISTANCE_UNIT_UNSPECIFIED",
             "DISTANCE_UNIT_MILES",
@@ -5088,7 +5486,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Identifier. The resource name of this Settings resource. Format: `users/{user}/settings` Example: `users/1234567890/settings` or `users/me/settings` The {user} ID is a system-generated Google Health API user ID, a string of 1-63 characters consisting of lowercase and uppercase letters, numbers, and hyphens. The literal `me` can also be used to refer to the authenticated user.",
+          "description": "Identifier. The resource name of this Settings resource. Format: `users/{user}/settings` Example: `users/1234567890/settings` or `users/me/settings` The {user} ID is a system-generated Google Health API user ID, a string of 1-63 characters consisting of lowercase and uppercase letters, numbers, and hyphens. The literal `me` can also be used to refer to the authenticated user. This field is read-only.",
           "type": "string"
         },
         "strideLengthRunningType": {
@@ -5211,13 +5609,21 @@
         },
         "metadata": {
           "$ref": "SleepMetadata",
-          "description": "Optional. Sleep metadata: processing, main, manually edited, stages status."
+          "description": "Optional. Sleep metadata: `processed`, `main_sleep`, `manually_edited`, and `stages_status`."
         },
         "outOfBedSegments": {
           "description": "Optional. “Out of bed” segments that can overlap with sleep stages.",
           "items": {
             "$ref": "OutOfBedSegment"
           },
+          "type": "array"
+        },
+        "shortAwakenings": {
+          "description": "Output only. List of short awake segments (under a set threshold) that are part of the sleep session. These can overlap with sleep stages.",
+          "items": {
+            "$ref": "SleepStage"
+          },
+          "readOnly": true,
           "type": "array"
         },
         "stages": {
@@ -5262,6 +5668,11 @@
         "externalId": {
           "description": "Optional. Sleep identifier relevant in the context of the data source.",
           "type": "string"
+        },
+        "mainSleep": {
+          "description": "Output only. `main_sleep`: the longest sleep session with stages within one day. If no sleep session has stages, then the longest sleep is the `main_sleep`. If there are multiple days of sleep in the response, there is one `main_sleep` per day.",
+          "readOnly": true,
+          "type": "boolean"
         },
         "manuallyEdited": {
           "description": "Output only. Some sleeps autodetected by algorithms can be manually edited by users.",
@@ -5545,7 +5956,7 @@
       "id": "Steps",
       "properties": {
         "count": {
-          "description": "Required. Number of steps in the recorded interval.",
+          "description": "Required. Number of steps in the recorded interval. Must be in the range `[0, 1000000]`.",
           "format": "int64",
           "type": "string"
         },
@@ -5715,6 +6126,160 @@
           "description": "Total number of swim strokes in the interval.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "Symptoms": {
+      "description": "Symptoms logged by the user.",
+      "id": "Symptoms",
+      "properties": {
+        "sampleTime": {
+          "$ref": "ObservationSampleTime",
+          "description": "Required. Time when the symptoms were logged."
+        },
+        "symptoms": {
+          "description": "Required. List of symptoms experienced.",
+          "items": {
+            "enum": [
+              "SYMPTOM_VALUE_UNSPECIFIED",
+              "CRAMPS",
+              "HEADACHE",
+              "TENDER_BREASTS",
+              "ACNE",
+              "SICK",
+              "BLOATED",
+              "HOT_FLASHES",
+              "PMS",
+              "COUGH",
+              "FEVER",
+              "DIFFICULTY_BREATHING",
+              "BACK_PAIN",
+              "SHAKINESS",
+              "HUNGER",
+              "SWEATING",
+              "ANXIETY",
+              "THIRST",
+              "FREQUENT_URINATION",
+              "BLURRED_VISION",
+              "OTHER",
+              "SEX_DRIVE_HIGH",
+              "SEX_DRIVE_MEDIUM",
+              "SEX_DRIVE_LOW",
+              "HEART_PALPITATIONS",
+              "FAINTING",
+              "CHEST_PAIN",
+              "FATIGUE",
+              "CONFUSION",
+              "DIZZINESS",
+              "ABDOMINAL_PAIN",
+              "BLADDER_LEAKS",
+              "BLEEDING_GUMS",
+              "BRAIN_FOG",
+              "BURNING_MOUTH",
+              "CONSTIPATION",
+              "CRAVINGS",
+              "DECREASED_APPETITE",
+              "DIARRHEA",
+              "DRAWING_PAIN",
+              "DRY_EYES",
+              "DRY_HAIR",
+              "DRY_SKIN",
+              "EXHAUSTION",
+              "FEEL_GOOD",
+              "FOOD_AVERSIONS",
+              "HAIR_LOSS",
+              "HEARTBURN",
+              "HYPERPIGMENTATION",
+              "INCREASED_APPETITE",
+              "INCREASED_APPETITE_V2",
+              "INSOMNIA",
+              "JOINT_PAIN",
+              "LEG_CRAMPS",
+              "MILKY_NIPPLE_DISCHARGE",
+              "NAUSEA",
+              "NIGHT_SWEATS",
+              "NORMAL_DIGESTION",
+              "NORMAL_STOOL",
+              "PERINEUM_PAIN",
+              "SLEEPINESS",
+              "STRETCH_MARKS",
+              "SWELLING",
+              "VAGINAL_DRYNESS",
+              "VAGINAL_ITCHING",
+              "VOMITING"
+            ],
+            "enumDescriptions": [
+              "Unspecified symptom value.",
+              "Abdominal cramps.",
+              "Headache.",
+              "Tender breasts.",
+              "Acne.",
+              "Feeling sick or unwell.",
+              "Bloating or abdominal swelling.",
+              "Hot flashes.",
+              "Premenstrual syndrome symptoms.",
+              "Coughing.",
+              "Fever or elevated body temperature.",
+              "Difficulty breathing or shortness of breath.",
+              "Back pain.",
+              "Shakiness or tremors.",
+              "Excessive hunger.",
+              "Excessive sweating.",
+              "Anxiety or nervousness.",
+              "Excessive thirst.",
+              "Frequent urination.",
+              "Blurred vision.",
+              "Other symptoms.",
+              "High sex drive.",
+              "Medium sex drive.",
+              "Low sex drive.",
+              "Heart palpitations or racing heart.",
+              "Fainting or loss of consciousness.",
+              "Chest pain or discomfort.",
+              "Fatigue or extreme tiredness.",
+              "Confusion or mental fogginess.",
+              "Dizziness or lightheadedness.",
+              "Abdominal pain.",
+              "Bladder leaks.",
+              "Bleeding gums.",
+              "Brain fog.",
+              "Burning mouth.",
+              "Constipation.",
+              "Food cravings.",
+              "Decreased appetite.",
+              "Diarrhea.",
+              "Drawing pain.",
+              "Dry eyes.",
+              "Dry hair.",
+              "Dry skin.",
+              "Exhaustion.",
+              "Feeling good or well.",
+              "Food aversions.",
+              "Hair loss.",
+              "Heartburn.",
+              "Hyperpigmentation.",
+              "Increased appetite.",
+              "Increased appetite V2.",
+              "Insomnia or difficulty sleeping.",
+              "Joint pain.",
+              "Leg cramps.",
+              "Milky nipple discharge.",
+              "Nausea.",
+              "Night sweats.",
+              "Normal digestion.",
+              "Normal stool.",
+              "Perineum pain.",
+              "Sleepiness or drowsiness.",
+              "Stretch marks.",
+              "Swelling.",
+              "Vaginal dryness.",
+              "Vaginal itching.",
+              "Vomiting."
+            ],
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -5914,7 +6479,7 @@
           "description": "Required. The time at which VO2 max was measured."
         },
         "vo2Max": {
-          "description": "Required. VO2 max value measured as in ml consumed oxygen / kg of body weight / min.",
+          "description": "Required. VO2 max value measured as in ml consumed oxygen / kg of body weight / min. Must be in the range `[0, 100]`.",
           "format": "double",
           "type": "number"
         }
@@ -5926,7 +6491,7 @@
       "id": "VolumeQuantity",
       "properties": {
         "milliliters": {
-          "description": "Required. Value representing the volume in milliliters.",
+          "description": "Required. Value representing the volume in milliliters. Must be in the range `[0, 100000]`.",
           "format": "double",
           "type": "number"
         },
@@ -6010,7 +6575,7 @@
           "description": "Required. The time at which the weight was measured"
         },
         "weightGrams": {
-          "description": "Required. Weight of a user in grams.",
+          "description": "Required. Weight of a user in grams. Must be in the range `[0, 1000000]`.",
           "format": "double",
           "type": "number"
         }
@@ -6022,7 +6587,7 @@
       "id": "WeightQuantity",
       "properties": {
         "grams": {
-          "description": "Required. The weight value in grams.",
+          "description": "Required. The weight value in grams. Must be in the range `[0, 100000]`.",
           "format": "double",
           "type": "number"
         },

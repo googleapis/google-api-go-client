@@ -178,7 +178,8 @@ type AccountsReportsService struct {
 // `best_sellers_brand_view` table. Best sellers
 // (https://support.google.com/merchants/answer/9488679) report with top
 // brands. Values are only set for fields requested explicitly in the request's
-// search query.
+// search query. For more information, see Understand the market
+// (https://developers.google.com/merchant/api/guides/reports/understand-the-market).
 type BestSellersBrandView struct {
 	// Brand: Name of the brand.
 	Brand string `json:"brand,omitempty"`
@@ -278,7 +279,8 @@ func (s BestSellersBrandView) MarshalJSON() ([]byte, error) {
 // product clusters. A product cluster is a grouping for different offers and
 // variants that represent the same product, for example, Google Pixel 7.
 // Values are only set for fields requested explicitly in the request's search
-// query.
+// query. For more information, see Understand the market
+// (https://developers.google.com/merchant/api/guides/reports/understand-the-market).
 type BestSellersProductClusterView struct {
 	// Brand: Brand of the product cluster.
 	Brand string `json:"brand,omitempty"`
@@ -429,7 +431,9 @@ func (s BestSellersProductClusterView) MarshalJSON() ([]byte, error) {
 // `competitive_visibility_benchmark_view` table. Competitive visibility
 // (https://support.google.com/merchants/answer/11366442) report with the
 // category benchmark. Values are only set for fields requested explicitly in
-// the request's search query.
+// the request's search query. For more information, see Explore your
+// competitive landscape
+// (https://developers.google.com/merchant/api/guides/reports/explore-competitive-landscape).
 type CompetitiveVisibilityBenchmarkView struct {
 	// CategoryBenchmarkVisibilityTrend: Change in visibility based on impressions
 	// with respect to the start of the selected time range (or first day with
@@ -503,7 +507,9 @@ func (s *CompetitiveVisibilityBenchmarkView) UnmarshalJSON(data []byte) error {
 // `competitive_visibility_competitor_view` table. Competitive visibility
 // (https://support.google.com/merchants/answer/11366442) report with
 // businesses with similar visibility. Values are only set for fields requested
-// explicitly in the request's search query.
+// explicitly in the request's search query. For more information, see Explore
+// your competitive landscape
+// (https://developers.google.com/merchant/api/guides/reports/explore-competitive-landscape).
 type CompetitiveVisibilityCompetitorView struct {
 	// AdsOrganicRatio: [Ads / organic ratio]
 	// (https://support.google.com/merchants/answer/11366442#zippy=%2Cads-free-ratio)
@@ -514,7 +520,7 @@ type CompetitiveVisibilityCompetitorView struct {
 	// Date: Date of this row. A condition on `date` is required in the `WHERE`
 	// clause.
 	Date *Date `json:"date,omitempty"`
-	// Domain: Domain of your competitor or your domain, if 'is_your_domain' is
+	// Domain: Domain of your competitor or your domain, if `is_your_domain` is
 	// true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE'
 	// clause.
 	Domain string `json:"domain,omitempty"`
@@ -605,7 +611,9 @@ func (s *CompetitiveVisibilityCompetitorView) UnmarshalJSON(data []byte) error {
 // `competitive_visibility_top_merchant_view` table. Competitive visibility
 // (https://support.google.com/merchants/answer/11366442) report with business
 // with highest visibility. Values are only set for fields requested explicitly
-// in the request's search query.
+// in the request's search query. For more information, see Explore your
+// competitive landscape
+// (https://developers.google.com/merchant/api/guides/reports/explore-competitive-landscape).
 type CompetitiveVisibilityTopMerchantView struct {
 	// AdsOrganicRatio: [Ads / organic ratio]
 	// (https://support.google.com/merchants/answer/11366442#zippy=%2Cads-free-ratio)
@@ -616,7 +624,7 @@ type CompetitiveVisibilityTopMerchantView struct {
 	// Date: Date of this row. Cannot be selected in the `SELECT` clause. A
 	// condition on `date` is required in the `WHERE` clause.
 	Date *Date `json:"date,omitempty"`
-	// Domain: Domain of your competitor or your domain, if 'is_your_domain' is
+	// Domain: Domain of your competitor or your domain, if `is_your_domain` is
 	// true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE'
 	// clause.
 	Domain string `json:"domain,omitempty"`
@@ -780,6 +788,7 @@ type IssueSeverityPerReportingContext struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DemotedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -876,7 +885,7 @@ type ItemIssueType struct {
 	// CanonicalAttribute: Canonical attribute name for attribute-specific issues.
 	CanonicalAttribute string `json:"canonicalAttribute,omitempty"`
 	// Code: Error code of the issue, equivalent to the `code` of Product issues
-	// (https://developers.google.com/shopping-content/guides/product-issues).
+	// (https://developers.google.com/merchant/api/guides/products/list-products-data-issues).
 	Code string `json:"code,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CanonicalAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -903,7 +912,8 @@ func (s ItemIssueType) MarshalJSON() ([]byte, error) {
 // performance metrics are segmented (for example, `date`). Segment fields
 // cannot be selected in queries without also selecting at least one metric
 // field. Values are only set for fields requested explicitly in the request's
-// search query.
+// search query. For more information, see Performance reports
+// (https://developers.google.com/merchant/api/guides/reports/performance-reports).
 type NonProductPerformanceView struct {
 	// ClickThroughRate: Click-through rate - the number of clicks (`clicks`)
 	// divided by the number of impressions (`impressions`) of images and online
@@ -983,7 +993,9 @@ func (s Price) MarshalJSON() ([]byte, error) {
 // PriceCompetitivenessProductView: Fields available for query in
 // `price_competitiveness_product_view` table. Price competitiveness
 // (https://support.google.com/merchants/answer/9626903) report. Values are
-// only set for fields requested explicitly in the request's search query.
+// only set for fields requested explicitly in the request's search query. For
+// more information, see Understand the market
+// (https://developers.google.com/merchant/api/guides/reports/understand-the-market).
 type PriceCompetitivenessProductView struct {
 	// BenchmarkPrice: Latest available price benchmark for the product's catalog
 	// in the benchmark country.
@@ -1054,7 +1066,9 @@ func (s PriceCompetitivenessProductView) MarshalJSON() ([]byte, error) {
 // PriceInsightsProductView: Fields available for query in
 // `price_insights_product_view` table. Price insights
 // (https://support.google.com/merchants/answer/11916926) report. Values are
-// only set for fields requested explicitly in the request's search query.
+// only set for fields requested explicitly in the request's search query. For
+// more information, see Understand the market
+// (https://developers.google.com/merchant/api/guides/reports/understand-the-market).
 type PriceInsightsProductView struct {
 	// Brand: Brand of the product.
 	Brand string `json:"brand,omitempty"`
@@ -1216,6 +1230,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1243,27 +1258,29 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 // state of a product at the time of the impression. Segment fields cannot be
 // selected in queries without also selecting at least one metric field. Values
 // are only set for fields requested explicitly in the request's search query.
+// For more information, see Performance reports
+// (https://developers.google.com/merchant/api/guides/reports/performance-reports).
 type ProductPerformanceView struct {
 	// Brand: Brand of the product. Segment.
 	Brand string `json:"brand,omitempty"`
 	// CategoryL1: Product category (1st level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in Google's product taxonomy. Segment.
 	CategoryL1 string `json:"categoryL1,omitempty"`
 	// CategoryL2: Product category (2nd level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in Google's product taxonomy. Segment.
 	CategoryL2 string `json:"categoryL2,omitempty"`
 	// CategoryL3: Product category (3rd level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in Google's product taxonomy. Segment.
 	CategoryL3 string `json:"categoryL3,omitempty"`
 	// CategoryL4: Product category (4th level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in Google's product taxonomy. Segment.
 	CategoryL4 string `json:"categoryL4,omitempty"`
 	// CategoryL5: Product category (5th level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in Google's product taxonomy. Segment.
 	CategoryL5 string `json:"categoryL5,omitempty"`
 	// ClickThroughRate: Click-through rate - the number of clicks merchant's
@@ -1310,27 +1327,48 @@ type ProductPerformanceView struct {
 	//   "MARKETING_METHOD_ENUM_UNSPECIFIED" - Not specified.
 	//   "ORGANIC" - Organic marketing.
 	//   "ADS" - Ads-based marketing.
+	//   "AFFILIATE" - [YouTube Shopping Affiliate
+	// marketing](https://support.google.com/merchants/answer/14815513).
 	MarketingMethod string `json:"marketingMethod,omitempty"`
+	// Network: Network to which metrics apply. Segment.
+	//
+	// Possible values:
+	//   "NETWORK_ENUM_UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - The value is unknown in this version.
+	//   "SEARCH" - Google search.
+	//   "SEARCH_PARTNERS" - Search partners.
+	//   "CONTENT" - Display Network.
+	//   "MIXED" - Cross-network.
+	//   "YOUTUBE" - YouTube
+	//   "GOOGLE_TV" - Google TV
+	//   "GOOGLE_OWNED_CHANNELS" - This network is used for Google Owned channels
+	// such as Discover feed, Gmail, YouTube. Demand Gen stats are attributed to
+	// more granular network types such as GMAIL, DISCOVER, MAPS, YOUTUBE; this
+	// value is only used for historical data.
+	//   "GMAIL" - Gmail
+	//   "DISCOVER" - Discover Feed
+	//   "MAPS" - Maps
+	Network string `json:"network,omitempty"`
 	// OfferId: Merchant-provided id of the product. Segment.
 	OfferId string `json:"offerId,omitempty"`
 	// ProductTypeL1: Product type (1st level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in merchant's own product taxonomy. Segment.
 	ProductTypeL1 string `json:"productTypeL1,omitempty"`
 	// ProductTypeL2: Product type (2nd level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in merchant's own product taxonomy. Segment.
 	ProductTypeL2 string `json:"productTypeL2,omitempty"`
 	// ProductTypeL3: Product type (3rd level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in merchant's own product taxonomy. Segment.
 	ProductTypeL3 string `json:"productTypeL3,omitempty"`
 	// ProductTypeL4: Product type (4th level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in merchant's own product taxonomy. Segment.
 	ProductTypeL4 string `json:"productTypeL4,omitempty"`
 	// ProductTypeL5: Product type (5th level)
-	// (https://developers.google.com/shopping-content/guides/reports/segmentation#category_and_product_type)
+	// (https://developers.google.com/merchant/api/guides/reports/performance-reports#category_and_product_type)
 	// in merchant's own product taxonomy. Segment.
 	ProductTypeL5 string `json:"productTypeL5,omitempty"`
 	// StoreType: Store type to which metrics apply. Can be `ONLINE_STORE` or
@@ -1384,7 +1422,9 @@ func (s *ProductPerformanceView) UnmarshalJSON(data []byte) error {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -1448,7 +1488,8 @@ func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 // the returned list of products by product attributes. To retrieve a single
 // product by `id` or list all products, Products sub-API should be used.
 // Values are only set for fields requested explicitly in the request's search
-// query.
+// query. For more information, see Evaluate your products
+// (https://developers.google.com/merchant/api/guides/reports/evaluate-products).
 type ProductView struct {
 	// AggregatedReportingContextStatus: Aggregated status across all reporting
 	// contexts. Reporting contexts included in the computation of the aggregated
@@ -1599,6 +1640,7 @@ type ProductView struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ShippingLabel: Normalized shipping label
 	// (https://support.google.com/merchants/answer/6324504) specified in the data
@@ -1638,7 +1680,10 @@ func (s ProductView) MarshalJSON() ([]byte, error) {
 // ReportRow: Result row returned from the search query. Only the message
 // corresponding to the queried table is populated in the response. Within the
 // populated message, only the fields requested explicitly in the query are
-// populated.
+// populated. For more information, see Reports overview
+// (https://developers.google.com/merchant/api/guides/reports/overview) and Use
+// Merchant Center Query Language
+// (https://developers.google.com/merchant/api/guides/reports/query-language).
 type ReportRow struct {
 	// BestSellersBrandView: Fields available for query in
 	// `best_sellers_brand_view` table.
@@ -1699,8 +1744,8 @@ type SearchRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 	// Query: Required. Query that defines a report to be retrieved. For details on
 	// how to construct your query, see the Query Language guide
-	// (/merchant/api/guides/reports/query-language). For the full list of
-	// available tables and fields, see the Available fields.
+	// (https://developers.google.com/merchant/api/guides/reports/query-language).
+	// For the full list of available tables and fields, see the Available fields.
 	Query string `json:"query,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PageSize") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1805,6 +1850,7 @@ type StatusPerReportingContext struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1835,7 +1881,13 @@ type AccountsReportsSearchCall struct {
 
 // Search: Retrieves a report defined by a search query. The response might
 // contain fewer rows than specified by `page_size`. Rely on `next_page_token`
-// to determine if there are more rows to be requested.
+// to determine if there are more rows to be requested. For more information,
+// see Get started
+// (https://developers.google.com/merchant/api/guides/reports/get-started), Use
+// Merchant Center Query Language
+// (https://developers.google.com/merchant/api/guides/reports/query-language),
+// and Paginate query results
+// (https://developers.google.com/merchant/api/guides/reports/paging).
 //
 //   - parent: Id of the account making the call. Must be a standalone account or
 //     a subaccount of an advanced account. Format: accounts/{account}.

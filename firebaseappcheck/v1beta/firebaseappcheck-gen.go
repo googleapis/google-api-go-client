@@ -297,6 +297,7 @@ type ProjectsAppsRecaptchaV3ConfigService struct {
 
 func NewProjectsServicesService(s *Service) *ProjectsServicesService {
 	rs := &ProjectsServicesService{s: s}
+	rs.Automations = NewProjectsServicesAutomationsService(s)
 	rs.ResourcePolicies = NewProjectsServicesResourcePoliciesService(s)
 	return rs
 }
@@ -304,15 +305,38 @@ func NewProjectsServicesService(s *Service) *ProjectsServicesService {
 type ProjectsServicesService struct {
 	s *Service
 
+	Automations *ProjectsServicesAutomationsService
+
 	ResourcePolicies *ProjectsServicesResourcePoliciesService
+}
+
+func NewProjectsServicesAutomationsService(s *Service) *ProjectsServicesAutomationsService {
+	rs := &ProjectsServicesAutomationsService{s: s}
+	return rs
+}
+
+type ProjectsServicesAutomationsService struct {
+	s *Service
 }
 
 func NewProjectsServicesResourcePoliciesService(s *Service) *ProjectsServicesResourcePoliciesService {
 	rs := &ProjectsServicesResourcePoliciesService{s: s}
+	rs.Automations = NewProjectsServicesResourcePoliciesAutomationsService(s)
 	return rs
 }
 
 type ProjectsServicesResourcePoliciesService struct {
+	s *Service
+
+	Automations *ProjectsServicesResourcePoliciesAutomationsService
+}
+
+func NewProjectsServicesResourcePoliciesAutomationsService(s *Service) *ProjectsServicesResourcePoliciesAutomationsService {
+	rs := &ProjectsServicesResourcePoliciesAutomationsService{s: s}
+	return rs
+}
+
+type ProjectsServicesResourcePoliciesAutomationsService struct {
 	s *Service
 }
 
@@ -358,18 +382,18 @@ func (s GoogleFirebaseAppcheckV1betaAppAttestConfig) MarshalJSON() ([]byte, erro
 // token*, which are used to access backend services protected by App Check.
 type GoogleFirebaseAppcheckV1betaAppCheckToken struct {
 	// AttestationToken: The App Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
-	// attested app and GCP project. This token is used to access Google services
-	// protected by App Check. These tokens can also be verified by your own custom
-	// backends
+	// (https://www.rfc-editor.org/info/rfc7519/) containing claims that identify
+	// the attested app and GCP project. This token is used to access Google
+	// services protected by App Check. These tokens can also be verified by your
+	// own custom backends
 	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
 	// the Firebase Admin SDK or third-party libraries.
 	AttestationToken string `json:"attestationToken,omitempty"`
 	// Token: The App Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
-	// attested app and GCP project. This token is used to access Google services
-	// protected by App Check. These tokens can also be verified by your own custom
-	// backends
+	// (https://www.rfc-editor.org/info/rfc7519/) containing claims that identify
+	// the attested app and GCP project. This token is used to access Google
+	// services protected by App Check. These tokens can also be verified by your
+	// own custom backends
 	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
 	// the Firebase Admin SDK or third-party libraries.
 	Token string `json:"token,omitempty"`
@@ -404,8 +428,8 @@ func (s GoogleFirebaseAppcheckV1betaAppCheckToken) MarshalJSON() ([]byte, error)
 // Check.
 type GoogleFirebaseAppcheckV1betaAttestationTokenResponse struct {
 	// AttestationToken: An App Check token. App Check tokens are signed JWTs
-	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
-	// attested app and Firebase project. This token is used to access Firebase
+	// (https://www.rfc-editor.org/info/rfc7519/) containing claims that identify
+	// the attested app and Firebase project. This token is used to access Firebase
 	// services protected by App Check.
 	AttestationToken string `json:"attestationToken,omitempty"`
 	// Ttl: The duration from the time this token is minted until its expiration.
@@ -428,6 +452,109 @@ type GoogleFirebaseAppcheckV1betaAttestationTokenResponse struct {
 
 func (s GoogleFirebaseAppcheckV1betaAttestationTokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1betaAttestationTokenResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1betaAutomation: An **enforcement automation** is
+// useful for automatically enforcing a service or a resource policy within a
+// service when a certain condition is met. For example, you may create an
+// automation that automatically turns on enforcement for your Cloud Firestore
+// service at a specified timestamp in the future. For your security, an
+// automation object may be created by the system in order to protect sensitive
+// services by default. These *system-created* automations can be opted out, if
+// you so choose, by calling the SuspendAutomation method on them. Suspending a
+// system-created automation is not recommended, but is supported for advanced
+// use cases. The system will not execute nor modify any suspended automations.
+// Also, system-created automations **cannot** be deleted, but can be freely
+// modified, which is also not recommended, as the system may later overwrite
+// your changes with its own default settings without notice (assuming it has
+// not been suspended). An automation's condition is evaluated periodically;
+// the frequency of this periodic evaluation depends on the exact condition.
+// While the details are unspecified, evaluations will be conducted reasonably
+// frequently so that a satisfied condition will be detected in a timely
+// fashion. Once a condition has been detected to be satisfied, the enforcement
+// action will be executed immediately. Currently, the only enforcement action
+// supported is to **enforce** App Check protections on the associated parent
+// service or parent resource policy. Once executed, the automation becomes
+// immutable, and serves as a historical record of that execution. Its
+// `update_time` field will be populated with the timestamp at which the
+// execution occurred, and its `state` field will be set to `SUCCEEDED`.
+// Successful automations not created by the system can still be deleted. If,
+// during the evaluation or execution of an automation, App Check discovers
+// that it is no longer possible for the service or resource to receive App
+// Check protection, App Check may suspend your automation without warning. For
+// example, if you have disabled a service, or have deleted all resources
+// within a service, and that service does not support storing your App Check
+// preferences while it is in such a state, then an automation created for this
+// service may be suspended. Please ensure that the service or resource is
+// correctly configured and operating normally throughout the lifetime of the
+// automation to avoid suspension.
+type GoogleFirebaseAppcheckV1betaAutomation struct {
+	// CreateTime: Output only. Timestamp at which this automation object was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Etag: This checksum is computed by the server based on the value of other
+	// fields, and may be sent on update and delete requests to ensure the client
+	// has an up-to-date value before proceeding. This etag is strongly validated
+	// as defined by RFC 7232.
+	Etag string `json:"etag,omitempty"`
+	// Name: Identifier. The relative resource name of the automation object, in
+	// one of the following supported formats: ```
+	// projects/{project_number}/services/{service_id}/automations/{automation_id}
+	// projects/{project_number}/services/{service_id}/resourcePolicies/{resource_po
+	// licy_id}/automations/{automation_id} ```
+	Name string `json:"name,omitempty"`
+	// Origin: Output only. The original creator of this automation object.
+	//
+	// Possible values:
+	//   "ORIGIN_UNSPECIFIED" - A placeholder default value. This value should
+	// never appear in actual responses.
+	//   "SYSTEM" - Indicates that the automation object was created by the service
+	// being protected by App Check. These automations cannot be deleted, but can
+	// be suspended in order to opt out.
+	//   "USER" - Indicates that a user created the automation object.
+	Origin string `json:"origin,omitempty"`
+	// State: Output only. The state that this automation object is currently in.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - A placeholder default value. This value should never
+	// appear in actual responses.
+	//   "EVALUATING" - An automation in this state is being actively evaluated.
+	// When its condition is met, its enforcement action will be executed.
+	//   "SUCCEEDED" - An automation in this state has already been successfully
+	// executed. It serves as a historical record of the execution, and it can no
+	// longer be modified in any way except be deleted.
+	//   "SUSPENDED" - An Automation in this state has been paused. Its enforcement
+	// action will not be executed, and its conditions will no longer be actively
+	// evaluated until it is resumed. System-created automations in this state will
+	// no longer be modified by the system.
+	State string `json:"state,omitempty"`
+	// TriggerTime: A condition that is satisfied if the current time is greater
+	// than or equal to the specified timestamp.
+	TriggerTime string `json:"triggerTime,omitempty"`
+	// UpdateTime: Output only. Timestamp at which this automation object was most
+	// recently updated, either by the system or by the user. If this automation
+	// has already been executed, this field indicates the exact timestamp at which
+	// it was executed.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1betaAutomation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1betaAutomation
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -909,10 +1036,10 @@ type GoogleFirebaseAppcheckV1betaExchangeCustomTokenRequest struct {
 	// token. *Limited use* App Check tokens with the same `jti` will be counted as
 	// the same token for the purposes of replay protection. An error is returned
 	// if this field is specified without setting `limited_use` to `true`. The size
-	// of this field is limited to 500 bytes. If specified, its length must be at
+	// of this field is limited to 250 bytes. If specified, its length must be at
 	// least 16 bytes. If this field is omitted or is empty and `limited_use` is
 	// set to `true`, a randomly generated `jti` claim with length between 16 and
-	// 500 bytes (inclusive) will be used in the returned App Check token. Leaving
+	// 250 bytes (inclusive) will be used in the returned App Check token. Leaving
 	// this field empty is only recommended if your custom attestation provider
 	// itself is not vulnerable to replay attacks. When `limited_use` is set to
 	// `false`, the presence and the contents of the `jti` claim in the returned
@@ -1191,6 +1318,69 @@ func (s GoogleFirebaseAppcheckV1betaGeneratePlayIntegrityChallengeResponse) Mars
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirebaseAppcheckV1betaLimitedUseConfig: Configuration for a
+// limited-use App Check token.
+type GoogleFirebaseAppcheckV1betaLimitedUseConfig struct {
+	// Jti: Optional. Specifies the desired `jti` claim (Section 4.1.7 of RFC 7519)
+	// in the returned App Check token. Limited-use App Check tokens with the same
+	// `jti` will be counted as the same token for the purposes of replay
+	// protection. The size of this field is limited to 250 bytes. If specified,
+	// its length must be at least 16 bytes. If this field is omitted or is empty,
+	// a randomly generated `jti` claim with length between 16 and 250 bytes
+	// (inclusive) will be used in the returned App Check token. Leaving this field
+	// empty is only recommended if your custom attestation provider itself is not
+	// vulnerable to replay attacks.
+	Jti string `json:"jti,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Jti") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Jti") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1betaLimitedUseConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1betaLimitedUseConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1betaListAutomationsResponse: Response message for
+// the ListAutomations method.
+type GoogleFirebaseAppcheckV1betaListAutomationsResponse struct {
+	// Automations: The Automations retrieved.
+	Automations []*GoogleFirebaseAppcheckV1betaAutomation `json:"automations,omitempty"`
+	// NextPageToken: If the result list is too large to fit in a single response,
+	// then a token is returned. If the string is empty or omitted, then this
+	// response is the last page of results. This token can be used in a subsequent
+	// call to ListAutomations to find the next group of Automations. Page tokens
+	// are short-lived and should not be persisted.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Automations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Automations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1betaListAutomationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1betaListAutomationsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirebaseAppcheckV1betaListDebugTokensResponse: Response message for
 // the ListDebugTokens method.
 type GoogleFirebaseAppcheckV1betaListDebugTokensResponse struct {
@@ -1284,6 +1474,73 @@ type GoogleFirebaseAppcheckV1betaListServicesResponse struct {
 
 func (s GoogleFirebaseAppcheckV1betaListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirebaseAppcheckV1betaListServicesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1betaMintAppCheckTokenRequest: Request message for
+// the MintAppCheckToken method.
+type GoogleFirebaseAppcheckV1betaMintAppCheckTokenRequest struct {
+	// LimitedUseConfig: Optional. If specified, the returned App Check token will
+	// be a limited-use token minted according to the specified configuration
+	// options.
+	LimitedUseConfig *GoogleFirebaseAppcheckV1betaLimitedUseConfig `json:"limitedUseConfig,omitempty"`
+	// TokenTtl: Optional. If specified, the returned App Check token will be a
+	// session token, valid for the specified duration. Must be between 30 minutes
+	// and 7 days, inclusive.
+	TokenTtl string `json:"tokenTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "LimitedUseConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "LimitedUseConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1betaMintAppCheckTokenRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1betaMintAppCheckTokenRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFirebaseAppcheckV1betaMintAppCheckTokenResponse: Response message for
+// the MintAppCheckToken method.
+type GoogleFirebaseAppcheckV1betaMintAppCheckTokenResponse struct {
+	// Token: The App Check token, used to access backend services protected by App
+	// Check. App Check tokens are signed JWTs
+	// (https://tools.ietf.org/html/rfc7519) containing claims that identify the
+	// attested app and GCP project. This token is used to access Google services
+	// protected by App Check. These tokens can also be verified by your own custom
+	// backends
+	// (https://firebase.google.com/docs/app-check/custom-resource-backend) using
+	// the Firebase Admin SDK or third-party libraries.
+	Token string `json:"token,omitempty"`
+	// Ttl: The duration from the time this token is minted until its expiration.
+	// This field is intended to ease client-side token management, since the
+	// client may have clock skew, but is still able to accurately measure a
+	// duration.
+	Ttl string `json:"ttl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Token") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Token") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleFirebaseAppcheckV1betaMintAppCheckTokenResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirebaseAppcheckV1betaMintAppCheckTokenResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1456,8 +1713,8 @@ type GoogleFirebaseAppcheckV1betaPlayIntegrityConfigDeviceIntegrity struct {
 	//
 	// Possible values:
 	//   "DEVICE_RECOGNITION_LEVEL_UNSPECIFIED" - Default value. Do not specify
-	// this value directly. When this default value is detected in a configuration,
-	// the `NO_INTEGRITY` default level takes effect.
+	// this value directly. If this value is detected in a configuration, it will
+	// have the same effect as the value `NO_INTEGRITY`.
 	//   "NO_INTEGRITY" - If this level is set, no explicit device integrity label
 	// requirements will be checked. However, because Play Integrity's other
 	// features may perform (and require) their own intrinsic device integrity
@@ -1514,26 +1771,26 @@ func (s GoogleFirebaseAppcheckV1betaPlayIntegrityConfigDeviceIntegrity) MarshalJ
 }
 
 // GoogleFirebaseAppcheckV1betaPublicJwk: A JWK as specified by section 4 of
-// RFC 7517 (https://tools.ietf.org/html/rfc7517#section-4) and section 6.3.1
-// of RFC 7518 (https://tools.ietf.org/html/rfc7518#section-6.3.1).
+// RFC 7517 (https://www.rfc-editor.org/info/rfc7517/#section-4) and section
+// 6.3.1 of RFC 7518 (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1).
 type GoogleFirebaseAppcheckV1betaPublicJwk struct {
 	// Alg: See section 4.4 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.4).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.4).
 	Alg string `json:"alg,omitempty"`
 	// E: See section 6.3.1.2 of RFC 7518
-	// (https://tools.ietf.org/html/rfc7518#section-6.3.1.2).
+	// (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1.2).
 	E string `json:"e,omitempty"`
 	// Kid: See section 4.5 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.5).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.5).
 	Kid string `json:"kid,omitempty"`
 	// Kty: See section 4.1 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.1).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.1).
 	Kty string `json:"kty,omitempty"`
 	// N: See section 6.3.1.1 of RFC 7518
-	// (https://tools.ietf.org/html/rfc7518#section-6.3.1.1).
+	// (https://www.rfc-editor.org/info/rfc7518/#section-6.3.1.1).
 	N string `json:"n,omitempty"`
 	// Use: See section 4.2 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-4.2).
+	// (https://www.rfc-editor.org/info/rfc7517/#section-4.2).
 	Use string `json:"use,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Alg") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1556,11 +1813,11 @@ func (s GoogleFirebaseAppcheckV1betaPublicJwk) MarshalJSON() ([]byte, error) {
 // GoogleFirebaseAppcheckV1betaPublicJwkSet: The currently active set of public
 // keys that can be used to verify App Check tokens. This object is a JWK set
 // as specified by section 5 of RFC 7517
-// (https://tools.ietf.org/html/rfc7517#section-5). For security, the response
-// **must not** be cached for longer than six hours.
+// (https://www.rfc-editor.org/info/rfc7517#section-5). For security, the
+// response **must not** be cached for longer than six hours.
 type GoogleFirebaseAppcheckV1betaPublicJwkSet struct {
 	// Keys: The set of public keys. See section 5.1 of RFC 7517
-	// (https://tools.ietf.org/html/rfc7517#section-5).
+	// (https://www.rfc-editor.org/info/rfc7517#section-5).
 	Keys []*GoogleFirebaseAppcheckV1betaPublicJwk `json:"keys,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1837,19 +2094,19 @@ type GoogleFirebaseAppcheckV1betaResourcePolicy struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
 	// fields, and may be sent on update and delete requests to ensure the client
@@ -1932,19 +2189,19 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	EnforcementMode string `json:"enforcementMode,omitempty"`
 	// Etag: This checksum is computed by the server based on the value of other
 	// fields, and may be sent on update and delete requests to ensure the client
@@ -1963,7 +2220,13 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform
 	// services: * `maps-backend.googleapis.com` (Maps JavaScript API) *
 	// `places.googleapis.com` (Places API (New)) Other supported Google services:
-	// * `oauth2.googleapis.com` (Google Identity for iOS)
+	// * `oauth2.googleapis.com` (Google Identity for iOS) Note: While all the
+	// supported `service_id`s may appear to be subdomains of `googleapis.com`, the
+	// `service_id` has no semantic meaning beyond identifying the service to App
+	// Check. It is not intended to represent the actual domain to which your apps
+	// send traffic, nor is it necessarily the API that should be enabled to use
+	// the service. For information on using these Google services, consult their
+	// documentation.
 	Name string `json:"name,omitempty"`
 	// ReplayProtection: Optional. The replay protection EnforcementMode for this
 	// service. Note that this field cannot be set to a level higher than that of
@@ -2005,19 +2268,19 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// credentials without an App Check token. App Check metrics continue to be
 	// collected to help you detect issues with your App Check integration and
 	// monitor the composition of your callers. While the service is protected by
-	// App Check, other applicable protections outside of App check, such as user
+	// App Check, other applicable protections outside of App Check, such as user
 	// authorization, continue to be applied at the same time. Use caution when
 	// choosing to enforce App Check protections. If your users have not updated to
 	// a version of your app that meets the requirements of the relevant App Check
 	// protection, their app may stop working. App Check metrics can help you
-	// decide when to enforce App Check on your services and resources. If your app
-	// has not launched yet, you should enable enforcement as soon as you verify
-	// that your App Check implementation is correct, since there are no outdated
-	// clients in use. Some services require certain conditions to be met before
-	// they will work with App Check, such as requiring you to upgrade to a
-	// specific service tier. Until those requirements are met for a service, this
-	// `ENFORCED` setting will have no effect and App Check will not work with that
-	// service.
+	// decide when to enforce that protection on your services and resources. If
+	// you have not yet published your app, you should enable enforcement as soon
+	// as you verify that your App Check implementation is correct, since there are
+	// no outdated clients in use. Some services require certain conditions to be
+	// met before they will work with App Check, such as requiring you to upgrade
+	// to a specific service tier. Until those requirements are met for a service,
+	// this `ENFORCED` setting will have no effect and App Check will not work with
+	// that service.
 	ReplayProtection string `json:"replayProtection,omitempty"`
 	// UpdateTime: Output only. Timestamp when this service configuration object
 	// was most recently updated.
@@ -2184,9 +2447,9 @@ type JwksGetCall struct {
 }
 
 // Get: Returns a public JWK set as specified by RFC 7517
-// (https://tools.ietf.org/html/rfc7517) that can be used to verify App Check
-// tokens. Exactly one of the public keys in the returned set will successfully
-// validate any App Check token that is currently valid.
+// (https://www.rfc-editor.org/info/rfc7517/) that can be used to verify App
+// Check tokens. Exactly one of the public keys in the returned set will
+// successfully validate any App Check token that is currently valid.
 //
 //   - name: The relative resource name to the public JWK set. Must always be
 //     exactly the string `jwks`.
@@ -4142,6 +4405,120 @@ func (c *ProjectsAppsGeneratePlayIntegrityChallengeCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.generatePlayIntegrityChallenge", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsAppsMintAppCheckTokenCall struct {
+	s                                                    *Service
+	appid                                                string
+	googlefirebaseappcheckv1betamintappchecktokenrequest *GoogleFirebaseAppcheckV1betaMintAppCheckTokenRequest
+	urlParams_                                           gensupport.URLParams
+	ctx_                                                 context.Context
+	header_                                              http.Header
+}
+
+// MintAppCheckToken: Mints a new App Check token for the specified Firebase
+// App. This method is intended to be called from a privileged environment
+// where the caller can be authorized via Cloud IAM; for example, using a
+// service account. To call this method, the caller must have the
+// `firebaseappcheck.googleapis.com/tokens.mint`
+// (https://firebase.google.com/docs/projects/iam/permissions#app-check)
+// permission. Returns a MintAppCheckTokenResponse.
+//
+//   - app: The relative resource name of the app, in the format: ```
+//     projects/{project_number}/apps/{app_id} ``` If necessary, the
+//     `project_number` element can be replaced with the project ID of the
+//     Firebase project. Learn more about using project identifiers in Google's
+//     AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+func (r *ProjectsAppsService) MintAppCheckToken(appid string, googlefirebaseappcheckv1betamintappchecktokenrequest *GoogleFirebaseAppcheckV1betaMintAppCheckTokenRequest) *ProjectsAppsMintAppCheckTokenCall {
+	c := &ProjectsAppsMintAppCheckTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.appid = appid
+	c.googlefirebaseappcheckv1betamintappchecktokenrequest = googlefirebaseappcheckv1betamintappchecktokenrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsAppsMintAppCheckTokenCall) Fields(s ...googleapi.Field) *ProjectsAppsMintAppCheckTokenCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsAppsMintAppCheckTokenCall) Context(ctx context.Context) *ProjectsAppsMintAppCheckTokenCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsAppsMintAppCheckTokenCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAppsMintAppCheckTokenCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirebaseappcheckv1betamintappchecktokenrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+app}:mintAppCheckToken")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"app": c.appid,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.mintAppCheckToken", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.apps.mintAppCheckToken" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1betaMintAppCheckTokenResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsAppsMintAppCheckTokenCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaMintAppCheckTokenResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaMintAppCheckTokenResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.apps.mintAppCheckToken", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -7260,7 +7637,13 @@ type ProjectsServicesPatchCall struct {
 //     `firebaseml.googleapis.com` (Firebase AI Logic) Google Maps Platform
 //     services: * `maps-backend.googleapis.com` (Maps JavaScript API) *
 //     `places.googleapis.com` (Places API (New)) Other supported Google
-//     services: * `oauth2.googleapis.com` (Google Identity for iOS).
+//     services: * `oauth2.googleapis.com` (Google Identity for iOS) Note: While
+//     all the supported `service_id`s may appear to be subdomains of
+//     `googleapis.com`, the `service_id` has no semantic meaning beyond
+//     identifying the service to App Check. It is not intended to represent the
+//     actual domain to which your apps send traffic, nor is it necessarily the
+//     API that should be enabled to use the service. For information on using
+//     these Google services, consult their documentation.
 func (r *ProjectsServicesService) Patch(name string, googlefirebaseappcheckv1betaservice *GoogleFirebaseAppcheckV1betaService) *ProjectsServicesPatchCall {
 	c := &ProjectsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7358,6 +7741,394 @@ func (c *ProjectsServicesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFir
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsServicesAutomationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified Automation configuration.
+//
+//   - name: The relative resource name of the Automation to retrieve, in one of
+//     the following supported formats: ```
+//     projects/{project_number}/services/{service_id}/automations/{automation_id}
+//
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id}/automations/{automation_id} ```.
+func (r *ProjectsServicesAutomationsService) Get(name string) *ProjectsServicesAutomationsGetCall {
+	c := &ProjectsServicesAutomationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesAutomationsGetCall) Fields(s ...googleapi.Field) *ProjectsServicesAutomationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsServicesAutomationsGetCall) IfNoneMatch(entityTag string) *ProjectsServicesAutomationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesAutomationsGetCall) Context(ctx context.Context) *ProjectsServicesAutomationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesAutomationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesAutomationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.automations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.automations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1betaAutomation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesAutomationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaAutomation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaAutomation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.automations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsServicesAutomationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Automations for the specified service or resource policy.
+//
+//   - parent: The relative resource name of the parent service or resource
+//     policy for which to list each associated Automation, in one of the
+//     following formats: ``` projects/{project_number}/services/{service_id}
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id} ```.
+func (r *ProjectsServicesAutomationsService) List(parent string) *ProjectsServicesAutomationsListCall {
+	c := &ProjectsServicesAutomationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Automations to return in the response. Note that a service or resource
+// policy can have at most 10 automations. The server may return fewer than
+// this at its own discretion. If no value is specified (or too large a value
+// is specified), the server will impose its own limit.
+func (c *ProjectsServicesAutomationsListCall) PageSize(pageSize int64) *ProjectsServicesAutomationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned from a
+// previous call to ListAutomations indicating where in the set of Automations
+// to resume listing. Provide this to retrieve the subsequent page. When
+// paginating, all other parameters provided to ListAutomations must match the
+// call that provided the page token; if they do not match, the result is
+// undefined.
+func (c *ProjectsServicesAutomationsListCall) PageToken(pageToken string) *ProjectsServicesAutomationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesAutomationsListCall) Fields(s ...googleapi.Field) *ProjectsServicesAutomationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsServicesAutomationsListCall) IfNoneMatch(entityTag string) *ProjectsServicesAutomationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesAutomationsListCall) Context(ctx context.Context) *ProjectsServicesAutomationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesAutomationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesAutomationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/automations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.automations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.automations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1betaListAutomationsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesAutomationsListCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaListAutomationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaListAutomationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.automations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsServicesAutomationsListCall) Pages(ctx context.Context, f func(*GoogleFirebaseAppcheckV1betaListAutomationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsServicesAutomationsPatchCall struct {
+	s                                      *Service
+	name                                   string
+	googlefirebaseappcheckv1betaautomation *GoogleFirebaseAppcheckV1betaAutomation
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Patch: Updates the specified Automation.
+//
+//   - name: Identifier. The relative resource name of the automation object, in
+//     one of the following supported formats: ```
+//     projects/{project_number}/services/{service_id}/automations/{automation_id}
+//
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id}/automations/{automation_id} ```.
+func (r *ProjectsServicesAutomationsService) Patch(name string, googlefirebaseappcheckv1betaautomation *GoogleFirebaseAppcheckV1betaAutomation) *ProjectsServicesAutomationsPatchCall {
+	c := &ProjectsServicesAutomationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirebaseappcheckv1betaautomation = googlefirebaseappcheckv1betaautomation
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A
+// comma-separated list of names of fields in the Automation to update.
+// Example: `timestamp_condition.enforce_time`.
+func (c *ProjectsServicesAutomationsPatchCall) UpdateMask(updateMask string) *ProjectsServicesAutomationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesAutomationsPatchCall) Fields(s ...googleapi.Field) *ProjectsServicesAutomationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesAutomationsPatchCall) Context(ctx context.Context) *ProjectsServicesAutomationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesAutomationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesAutomationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirebaseappcheckv1betaautomation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.automations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.automations.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1betaAutomation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesAutomationsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaAutomation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaAutomation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.automations.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -8091,5 +8862,393 @@ func (c *ProjectsServicesResourcePoliciesPatchCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsServicesResourcePoliciesAutomationsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the specified Automation configuration.
+//
+//   - name: The relative resource name of the Automation to retrieve, in one of
+//     the following supported formats: ```
+//     projects/{project_number}/services/{service_id}/automations/{automation_id}
+//
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id}/automations/{automation_id} ```.
+func (r *ProjectsServicesResourcePoliciesAutomationsService) Get(name string) *ProjectsServicesResourcePoliciesAutomationsGetCall {
+	c := &ProjectsServicesResourcePoliciesAutomationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesAutomationsGetCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesAutomationsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsServicesResourcePoliciesAutomationsGetCall) IfNoneMatch(entityTag string) *ProjectsServicesResourcePoliciesAutomationsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesAutomationsGetCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesAutomationsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesAutomationsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesAutomationsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.automations.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.automations.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1betaAutomation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesResourcePoliciesAutomationsGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaAutomation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaAutomation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.automations.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsServicesResourcePoliciesAutomationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all Automations for the specified service or resource policy.
+//
+//   - parent: The relative resource name of the parent service or resource
+//     policy for which to list each associated Automation, in one of the
+//     following formats: ``` projects/{project_number}/services/{service_id}
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id} ```.
+func (r *ProjectsServicesResourcePoliciesAutomationsService) List(parent string) *ProjectsServicesResourcePoliciesAutomationsListCall {
+	c := &ProjectsServicesResourcePoliciesAutomationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// Automations to return in the response. Note that a service or resource
+// policy can have at most 10 automations. The server may return fewer than
+// this at its own discretion. If no value is specified (or too large a value
+// is specified), the server will impose its own limit.
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) PageSize(pageSize int64) *ProjectsServicesResourcePoliciesAutomationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned from a
+// previous call to ListAutomations indicating where in the set of Automations
+// to resume listing. Provide this to retrieve the subsequent page. When
+// paginating, all other parameters provided to ListAutomations must match the
+// call that provided the page token; if they do not match, the result is
+// undefined.
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) PageToken(pageToken string) *ProjectsServicesResourcePoliciesAutomationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesAutomationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) IfNoneMatch(entityTag string) *ProjectsServicesResourcePoliciesAutomationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesAutomationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/automations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.automations.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.automations.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1betaListAutomationsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaListAutomationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaListAutomationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.automations.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsServicesResourcePoliciesAutomationsListCall) Pages(ctx context.Context, f func(*GoogleFirebaseAppcheckV1betaListAutomationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsServicesResourcePoliciesAutomationsPatchCall struct {
+	s                                      *Service
+	name                                   string
+	googlefirebaseappcheckv1betaautomation *GoogleFirebaseAppcheckV1betaAutomation
+	urlParams_                             gensupport.URLParams
+	ctx_                                   context.Context
+	header_                                http.Header
+}
+
+// Patch: Updates the specified Automation.
+//
+//   - name: Identifier. The relative resource name of the automation object, in
+//     one of the following supported formats: ```
+//     projects/{project_number}/services/{service_id}/automations/{automation_id}
+//
+//     projects/{project_number}/services/{service_id}/resourcePolicies/{resource_
+//     policy_id}/automations/{automation_id} ```.
+func (r *ProjectsServicesResourcePoliciesAutomationsService) Patch(name string, googlefirebaseappcheckv1betaautomation *GoogleFirebaseAppcheckV1betaAutomation) *ProjectsServicesResourcePoliciesAutomationsPatchCall {
+	c := &ProjectsServicesResourcePoliciesAutomationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlefirebaseappcheckv1betaautomation = googlefirebaseappcheckv1betaautomation
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. A
+// comma-separated list of names of fields in the Automation to update.
+// Example: `timestamp_condition.enforce_time`.
+func (c *ProjectsServicesResourcePoliciesAutomationsPatchCall) UpdateMask(updateMask string) *ProjectsServicesResourcePoliciesAutomationsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsServicesResourcePoliciesAutomationsPatchCall) Fields(s ...googleapi.Field) *ProjectsServicesResourcePoliciesAutomationsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsServicesResourcePoliciesAutomationsPatchCall) Context(ctx context.Context) *ProjectsServicesResourcePoliciesAutomationsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsServicesResourcePoliciesAutomationsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsServicesResourcePoliciesAutomationsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlefirebaseappcheckv1betaautomation)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.automations.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "firebaseappcheck.projects.services.resourcePolicies.automations.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirebaseAppcheckV1betaAutomation.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsServicesResourcePoliciesAutomationsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleFirebaseAppcheckV1betaAutomation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFirebaseAppcheckV1betaAutomation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "firebaseappcheck.projects.services.resourcePolicies.automations.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }

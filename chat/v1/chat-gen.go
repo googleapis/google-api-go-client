@@ -122,6 +122,21 @@ const (
 	// conversations owned by your organization
 	ChatAdminSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.admin.spaces.readonly"
 
+	// On their own behalf, apps in Google Chat can see all members in Google Chat
+	// spaces and conversations throughout your Workspace organization, even when
+	// the Chat app isn't a member
+	ChatAppAllMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.memberships.readonly"
+
+	// On their own behalf, apps in Google Chat can see all messages and reactions
+	// throughout your Workspace organization, even when the Chat app isn't a
+	// member of a space or conversation
+	ChatAppAllMessagesReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.messages.readonly"
+
+	// On their own behalf, apps in Google Chat can see metadata about all spaces
+	// and conversations in Google Chat throughout your Workspace organization,
+	// even when the Chat app isn't a member
+	ChatAppAllSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.app.all.spaces.readonly"
+
 	// On their own behalf, apps in Google Chat can delete conversations and spaces
 	// and remove access to associated files
 	ChatAppDeleteScope = "https://www.googleapis.com/auth/chat.app.delete"
@@ -176,11 +191,11 @@ const (
 	// View members in Google Chat conversations.
 	ChatMembershipsReadonlyScope = "https://www.googleapis.com/auth/chat.memberships.readonly"
 
-	// See, compose, send, update, and delete messages as well as their message
-	// content; add, see, and delete reactions to messages.
+	// See, compose, send, update, and delete messages, their content, and attached
+	// cards; add, see, and delete reactions to messages.
 	ChatMessagesScope = "https://www.googleapis.com/auth/chat.messages"
 
-	// Compose and send messages in Google Chat
+	// Compose and send messages and attach cards
 	ChatMessagesCreateScope = "https://www.googleapis.com/auth/chat.messages.create"
 
 	// See, add, and delete reactions as well as their reaction content to messages
@@ -202,6 +217,12 @@ const (
 
 	// Create new conversations and spaces in Google Chat
 	ChatSpacesCreateScope = "https://www.googleapis.com/auth/chat.spaces.create"
+
+	// See, add, and remove pins in your Google Chat spaces
+	ChatSpacesPinsScope = "https://www.googleapis.com/auth/chat.spaces.pins"
+
+	// See pins in your Google Chat spaces
+	ChatSpacesPinsReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.pins.readonly"
 
 	// View chat and spaces in Google Chat
 	ChatSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.readonly"
@@ -237,6 +258,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.admin.memberships.readonly",
 		"https://www.googleapis.com/auth/chat.admin.spaces",
 		"https://www.googleapis.com/auth/chat.admin.spaces.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.memberships.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.messages.readonly",
+		"https://www.googleapis.com/auth/chat.app.all.spaces.readonly",
 		"https://www.googleapis.com/auth/chat.app.delete",
 		"https://www.googleapis.com/auth/chat.app.memberships",
 		"https://www.googleapis.com/auth/chat.app.memberships.readonly",
@@ -260,6 +284,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.messages.readonly",
 		"https://www.googleapis.com/auth/chat.spaces",
 		"https://www.googleapis.com/auth/chat.spaces.create",
+		"https://www.googleapis.com/auth/chat.spaces.pins",
+		"https://www.googleapis.com/auth/chat.spaces.pins.readonly",
 		"https://www.googleapis.com/auth/chat.spaces.readonly",
 		"https://www.googleapis.com/auth/chat.users.availability",
 		"https://www.googleapis.com/auth/chat.users.availability.readonly",
@@ -345,6 +371,7 @@ type MediaService struct {
 func NewSpacesService(s *Service) *SpacesService {
 	rs := &SpacesService{s: s}
 	rs.Members = NewSpacesMembersService(s)
+	rs.MessagePins = NewSpacesMessagePinsService(s)
 	rs.Messages = NewSpacesMessagesService(s)
 	rs.SpaceEvents = NewSpacesSpaceEventsService(s)
 	return rs
@@ -354,6 +381,8 @@ type SpacesService struct {
 	s *Service
 
 	Members *SpacesMembersService
+
+	MessagePins *SpacesMessagePinsService
 
 	Messages *SpacesMessagesService
 
@@ -366,6 +395,15 @@ func NewSpacesMembersService(s *Service) *SpacesMembersService {
 }
 
 type SpacesMembersService struct {
+	s *Service
+}
+
+func NewSpacesMessagePinsService(s *Service) *SpacesMessagePinsService {
+	rs := &SpacesMessagePinsService{s: s}
+	return rs
+}
+
+type SpacesMessagePinsService struct {
 	s *Service
 }
 
@@ -522,6 +560,16 @@ type AccessPermissionSettings struct {
 	DiscoverSpaceSetting *AccessPermissionSetting `json:"discoverSpaceSetting,omitempty"`
 	// JoinSpaceSetting: Optional. Access permission setting for joining the space.
 	JoinSpaceSetting *AccessPermissionSetting `json:"joinSpaceSetting,omitempty"`
+	// ViewSpaceMembershipSetting: Optional. Access permission setting for viewing
+	// space membership. Must be specified together with
+	// `PermissionSettings.view_space_membership` in the update mask and request
+	// body when updating who can view space membership. When granting view access
+	// to a target audience, you must also grant
+	// `PermissionSettings.view_space_membership` to all members in the same
+	// request. To remove an existing target audience (for example, to restrict
+	// view access to space managers or assistant managers only), specify an empty
+	// `AccessPermissionSetting` (with no `principals`).
+	ViewSpaceMembershipSetting *AccessPermissionSetting `json:"viewSpaceMembershipSetting,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiscoverSpaceSetting") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -807,10 +855,10 @@ func (s ActionStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Annotation: Output only. Annotations can be associated with the plain-text
-// body of the message or with chips that link to Google Workspace resources
-// like Google Docs or Sheets with `start_index` and `length` of 0. To add
-// basic formatting to a text message, see Format text messages
+// Annotation: Annotations can be associated with the plain-text body of the
+// message or with chips that link to Google Workspace resources like Google
+// Docs or Sheets with `start_index` and `length` of 0. To add basic formatting
+// to a text message, see Format text messages
 // (https://developers.google.com/workspace/chat/format-messages). Example
 // plain-text message body: ``` Hello @FooBot how are you!" ``` The
 // corresponding annotations metadata: ``` "annotations":[{
@@ -874,6 +922,8 @@ type AppCommandMetadata struct {
 	// message.
 	//   "QUICK_COMMAND" - A quick command. The user selects the command from the
 	// Chat menu in the message reply area.
+	//   "MESSAGE_ACTION" - A message action. The user selects the command from the
+	// message context menu in Chat.
 	AppCommandType string `json:"appCommandType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppCommandId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1241,6 +1291,8 @@ type CardWithId struct {
 	// CardId: Required if the message contains multiple cards. A unique identifier
 	// for a card in a message.
 	CardId string `json:"cardId,omitempty"`
+	// OwnerUser: Output only. The app that owns the card.
+	OwnerUser *User `json:"ownerUser,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Card") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -1340,6 +1392,71 @@ type ChatSpaceLinkData struct {
 
 func (s ChatSpaceLinkData) MarshalJSON() ([]byte, error) {
 	type NoMethod ChatSpaceLinkData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Citation: Citations are inline references that can provide users more
+// detailed information about the inline reference. Corresponding inline
+// citations should be present in the message text in a markup format of
+// `{text}`. Citations are only supported when the message's `markup_syntax` is
+// set to `MARKDOWN`. Unreferenced citations in `Elements.citations` (those
+// without a matching “ tag in the message text) are ignored and do not cause
+// the message to be rejected.
+type Citation struct {
+	// CitedSources: Optional. A list of sources that are relevant to the citation.
+	// Sources are displayed in the citation hover card.
+	CitedSources []*CitedSource `json:"citedSources,omitempty"`
+	// Id: Required. The ID of the citation. This ID is defined by the app creating
+	// the citation and must match the `data-id` attribute of the `` tag in the
+	// message text. Must contain only ASCII letters and numbers, and less than 63
+	// characters.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CitedSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CitedSources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Citation) MarshalJSON() ([]byte, error) {
+	type NoMethod Citation
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CitedSource: A reference to a source of information.
+type CitedSource struct {
+	// Footer: Optional. Additional information to show alongside the snippet in
+	// the form of a footer.
+	Footer *Footer `json:"footer,omitempty"`
+	// Snippet: Optional. Snippet containing information directly from the source.
+	Snippet *Snippet `json:"snippet,omitempty"`
+	// Title: Required. The plaintext title of the `CitedSource`. Does not support
+	// markdown format.
+	Title string `json:"title,omitempty"`
+	// Uri: Required. The URI pointing to the resource referenced by this
+	// `CitedSource`.
+	Uri string `json:"uri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Footer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Footer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CitedSource) MarshalJSON() ([]byte, error) {
+	type NoMethod CitedSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1463,39 +1580,51 @@ func (s *Color) UnmarshalJSON(data []byte) error {
 // widget.
 type CommonEventObject struct {
 	// FormInputs: A map containing the current values of the widgets in the
-	// displayed card. The map keys are the string IDs assigned with each widget.
-	// The structure of the map value object is dependent on the widget type:
-	// **Note**: The following examples are formatted for Apps Script's V8 runtime.
-	// If you're using Rhino runtime, you must add `[""]` after the value. For
-	// example, instead of
+	// displayed card. The map keys are the string `name` values assigned to each
+	// input widget (such as `TextInput.name`, `SelectionInput.name`,
+	// `DateTimePicker.name`, or `DecoratedText.SwitchControl.name`). The structure
+	// of the map value object is dependent on the widget type: **Note**: The
+	// following examples are formatted for Apps Script's V8 runtime. If you're
+	// using Rhino runtime, you must add `[""]` after the value. For example,
+	// instead of
 	// `e.commonEventObject.formInputs.employeeName.stringInputs.value[0]`, format
 	// the event object as
 	// `e.commonEventObject.formInputs.employeeName[""].stringInputs.value[0]`. To
 	// learn more about runtimes in Apps Script, see the V8 Runtime Overview
 	// (https://developers.google.com/apps-script/guides/v8-runtime). *
-	// Single-valued widgets (for example, a text box): a list of strings (only one
-	// element). **Example**: for a text input widget with `employeeName` as its
-	// ID, access the text input value with:
+	// Single-valued widgets (for example, a `TextInput` widget, or a
+	// `SelectionInput` widget of type `DROPDOWN` or `RADIO_BUTTON`): a
+	// `StringInputs` object containing a single-element list (or an empty list if
+	// no selection is made). **Example**: for a text input widget with
+	// `employeeName` as its `name`, access the text input value with:
 	// `e.commonEventObject.formInputs.employeeName.stringInputs.value[0]`. *
-	// Multi-valued widgets (for example, checkbox groups): a list of strings.
-	// **Example**: for a multi-value widget with `participants` as its ID, access
-	// the value array with:
-	// `e.commonEventObject.formInputs.participants.stringInputs.value`. * **A
-	// date-time picker**: a `DateTimeInput object`
+	// Multi-valued widgets (for example, a `SelectionInput` widget of type
+	// `CHECK_BOX`, `SWITCH`, or `MULTI_SELECT`): a `StringInputs` object
+	// containing the list of selected item `value` strings. **Example**: for a
+	// multi-value widget with `participants` as its `name`, access the value array
+	// with: `e.commonEventObject.formInputs.participants.stringInputs.value`. *
+	// **A `DecoratedText.SwitchControl` widget**: a `StringInputs` object. When
+	// `selected` is `true`, `stringInputs.value` contains the switch's `value`
+	// field (or "" if `value` was not specified; if multiple switches share the
+	// same `name`, each selected switch's `value` is included in the list). When
+	// `selected` is `false`, the switch's `value` is omitted from
+	// `stringInputs.value`. * **A date-time picker
+	// (`DateTimePickerType.DATE_AND_TIME`)**: a `DateTimeInput object`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#date-time-input).
-	// **Example**: For a picker with an ID of `myDTPicker`, access the
+	// **Example**: For a picker with a `name` of `myDTPicker`, access the
 	// `DateTimeInput`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#date-time-input)
 	// object using `e.commonEventObject.formInputs.myDTPicker.dateTimeInput`. *
-	// **A date-only picker**: a `DateInput object`
+	// **A date-only picker (`DateTimePickerType.DATE_ONLY`)**: a `DateInput
+	// object`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#date-input).
-	// **Example**: For a picker with an ID of `myDatePicker`, access the
+	// **Example**: For a picker with a `name` of `myDatePicker`, access the
 	// `DateInput`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#date-input)
 	// object using `e.commonEventObject.formInputs.myDatePicker.dateInput`. * **A
-	// time-only picker**: a `TimeInput object`
+	// time-only picker (`DateTimePickerType.TIME_ONLY`)**: a `TimeInput object`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#time-input).
-	// **Example**: For a picker with an ID of `myTimePicker`, access the
+	// **Example**: For a picker with a `name` of `myTimePicker`, access the
 	// `TimeInput`
 	// (https://developers.google.com/workspace/add-ons/concepts/event-objects#time-input)
 	// object using `e.commonEventObject.formInputs.myTimePicker.timeInput`.
@@ -1839,14 +1968,16 @@ func (s DeletionMetadata) MarshalJSON() ([]byte, error) {
 // In addition to receiving events from user interactions, Chat apps can
 // receive events about changes to spaces, such as when a new member is added
 // to a space. To learn about space events, see Work with events from Google
-// Chat (https://developers.google.com/workspace/chat/events-overview). Note:
-// This event is only used for Chat interaction events
-// (https://developers.google.com/workspace/chat/receive-respond-interactions).
+// Chat (https://developers.google.com/workspace/chat/events-overview).
+// Warning: This event object is only used for Chat apps that aren't add-ons
+// (https://developers.google.com/workspace/chat/receive-respond-interactions#not-add-on-interaction-events).
 // If your Chat app is built as a Google Workspace add-on
-// (https://developers.google.com/workspace/add-ons/chat/build), see Chat event
-// objects
+// (https://developers.google.com/workspace/add-ons/chat/build), instead see
+// Add-on event objects
 // (https://developers.google.com/workspace/add-ons/concepts/event-objects#chat-event-object)
-// in the add-ons documentation.
+// in the add-ons documentation. To confirm which type of event your app
+// receives, see Determine your event type
+// (https://developers.google.com/workspace/chat/receive-respond-interactions#determine-event-type).
 type DeprecatedEvent struct {
 	// Action: For `CARD_CLICKED` interaction events, the form action data
 	// associated when a user clicks a card or dialog. To learn more, see Read form
@@ -1984,9 +2115,7 @@ func (s DeprecatedEvent) MarshalJSON() ([]byte, error) {
 
 // Dialog: Wrapper around the card body of the dialog.
 type Dialog struct {
-	// Body: Input only. Body of the dialog, which is rendered in a modal. Google
-	// Chat apps don't support the following card entities: `DateTimePicker`,
-	// `OnChangeAction`.
+	// Body: Input only. Body of the dialog, which is rendered in a modal.
 	Body *GoogleAppsCardV1Card `json:"body,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2108,6 +2237,64 @@ func (s DriveLinkData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Elements: Elements are additional message components, including inline
+// `citations` (where each citation is associated with a specific portion of
+// the message text) and `cited_sources` (which are general references used to
+// generate the response and are not directly linked to specific segments of
+// the text). Both `citations` and `cited_sources` can be provided as input
+// when creating or updating a message and are populated on output when reading
+// a message.
+type Elements struct {
+	// Citations: Optional. A list of inline citations referenced within the
+	// message text (via `` tags) that render as interactive hover cards.
+	Citations []*Citation `json:"citations,omitempty"`
+	// CitedSources: Optional. A list of sources to be displayed under the message
+	// as footer links. These are not referenced inline. For inline references, use
+	// `citations`.
+	CitedSources []*CitedSource `json:"citedSources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Citations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Citations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Elements) MarshalJSON() ([]byte, error) {
+	type NoMethod Elements
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ElementsImage: An object encapsulating different ways of representing an
+// image. Currently supported representations: * An image fetched from a URI.
+// Additional representations might be supported in the future.
+type ElementsImage struct {
+	// ImageUri: Required. The URI of the image. Must be a publicly accessible URI
+	// so that Chat can fetch and display it.
+	ImageUri string `json:"imageUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImageUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImageUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ElementsImage) MarshalJSON() ([]byte, error) {
+	type NoMethod ElementsImage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Emoji: An emoji that is used as a reaction to a message.
 type Emoji struct {
 	// CustomEmoji: A custom emoji.
@@ -2193,6 +2380,29 @@ type FindGroupChatsResponse struct {
 
 func (s FindGroupChatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FindGroupChatsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Footer: A footer for a source, used for attribution.
+type Footer struct {
+	// Text: Optional. The plaintext to display in the footer. Does not support
+	// markdown format.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Text") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Text") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Footer) MarshalJSON() ([]byte, error) {
+	type NoMethod Footer
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2384,7 +2594,7 @@ type GoogleAppsCardV1BorderStyle struct {
 	// value, where `0` (0/255) represents the absence of color and `1` (255/255)
 	// represents the maximum intensity of the color. For example, the following
 	// sets the color to red at its maximum intensity: ``` "color": { "red": 1,
-	// "green": 0, "blue": 0, } ``` The `alpha` field is unavailable for stroke
+	// "green": 0, "blue": 0 } ``` The `alpha` field is unavailable for stroke
 	// color. If specified, this field is ignored.
 	StrokeColor *Color `json:"strokeColor,omitempty"`
 	// Type: The border type.
@@ -2433,9 +2643,9 @@ type GoogleAppsCardV1Button struct {
 	// must be a float number between 0 and 1 based on the RGB color value, where
 	// `0` (0/255) represents the absence of color and `1` (255/255) represents the
 	// maximum intensity of the color. For example, the following sets the color to
-	// red at its maximum intensity: ``` "color": { "red": 1, "green": 0, "blue":
-	// 0, } ``` The `alpha` field is unavailable for button color. If specified,
-	// this field is ignored.
+	// red at its maximum intensity: ``` "color": { "red": 1, "green": 0, "blue": 0
+	// } ``` The `alpha` field is unavailable for button color. If specified, this
+	// field is ignored.
 	Color *Color `json:"color,omitempty"`
 	// Disabled: If `true`, the button is displayed in an inactive state and
 	// doesn't respond to user actions.
@@ -2545,14 +2755,14 @@ func (s GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // } ] } ```
 type GoogleAppsCardV1Card struct {
 	// CardActions: The card's actions. Actions are added to the card's toolbar
-	// menu. Google Workspace add-ons
+	// menu. Supports up to 10 `CardAction` items. Google Workspace add-ons
 	// (https://developers.google.com/workspace/add-ons): For example, the
 	// following JSON constructs a card action menu with `Settings` and `Send
-	// Feedback` options: ``` "card_actions": [ { "actionLabel": "Settings",
-	// "onClick": { "action": { "functionName": "goToView", "parameters": [ {
-	// "key": "viewType", "value": "SETTING" } ], "loadIndicator":
-	// "LoadIndicator.SPINNER" } } }, { "actionLabel": "Send Feedback", "onClick":
-	// { "openLink": { "url": "https://example.com/feedback" } } } ] ```
+	// Feedback` options: ``` "cardActions": [ { "actionLabel": "Settings",
+	// "onClick": { "action": { "function": "goToView", "parameters": [ { "key":
+	// "viewType", "value": "SETTING" } ], "loadIndicator": "SPINNER" } } }, {
+	// "actionLabel": "Send Feedback", "onClick": { "openLink": { "url":
+	// "https://example.com/feedback" } } } ] ```
 	CardActions []*GoogleAppsCardV1CardAction `json:"cardActions,omitempty"`
 	// DisplayStyle: In Google Workspace add-ons, sets the display properties of
 	// the `peekCardHeader`. Google Workspace add-ons
@@ -2733,14 +2943,14 @@ func (s GoogleAppsCardV1CardHeader) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAppsCardV1Carousel: A carousel, also known as a slider, rotates and
-// displays a list of widgets in a slideshow format, with buttons navigating to
-// the previous or next widget. For example, this is a JSON representation of a
-// carousel that contains three text paragraph widgets. ``` { "carouselCards":
-// [ { "widgets": [ { "textParagraph": { "text": "First text paragraph in
-// carousel", } } ] }, { "widgets": [ { "textParagraph": { "text": "Second text
-// paragraph in carousel", } } ] }, { "widgets": [ { "textParagraph": { "text":
-// "Third text paragraph in carousel", } } ] } ] } ``` Google Chat apps
+// GoogleAppsCardV1Carousel: Rotates and displays a list of carousel cards in a
+// slideshow format, with buttons navigating to the previous or next card. For
+// example, this is a JSON representation of a carousel that contains three
+// text paragraph widgets. ``` { "carouselCards": [ { "widgets": [ {
+// "textParagraph": { "text": "First text paragraph in carousel" } } ] }, {
+// "widgets": [ { "textParagraph": { "text": "Second text paragraph in
+// carousel" } } ] }, { "widgets": [ { "textParagraph": { "text": "Third text
+// paragraph in carousel" } } ] } ] } ``` Google Chat apps
 // (https://developers.google.com/workspace/chat):
 type GoogleAppsCardV1Carousel struct {
 	// CarouselCards: A list of cards included in the carousel.
@@ -2802,11 +3012,11 @@ type GoogleAppsCardV1Chip struct {
 	// Disabled: Whether the chip is in an inactive state and ignores user actions.
 	// Defaults to `false`.
 	Disabled bool `json:"disabled,omitempty"`
-	// Enabled: Whether the chip is in an active state and responds to user
-	// actions. Defaults to `true`. Deprecated. Use `disabled` instead.
+	// Enabled: Deprecated: Use `disabled` instead. Whether the chip is in an
+	// active state and responds to user actions.
 	Enabled bool `json:"enabled,omitempty"`
-	// Icon: The icon image. If both `icon` and `text` are set, then the icon
-	// appears before the text.
+	// Icon: The icon image. If both `icon` and `label` are set, then the icon
+	// appears before the label.
 	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
 	// Label: The text displayed inside the chip.
 	Label string `json:"label,omitempty"`
@@ -3119,7 +3329,9 @@ type GoogleAppsCardV1DateTimePicker struct {
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
 	// TimezoneOffsetDate: The number representing the time zone offset from UTC,
 	// in minutes. If set, the `value_ms_epoch` is displayed in the specified time
-	// zone. If unset, the value defaults to the user's time zone setting.
+	// zone. If unset, the value defaults to the user's time zone setting. Note:
+	// This field is in minutes, whereas user interaction event payloads typically
+	// provide time zone offsets in milliseconds (divide by `60000` to convert).
 	TimezoneOffsetDate int64 `json:"timezoneOffsetDate,omitempty"`
 	// Type: Whether the widget supports inputting a date, a time, or the date and
 	// time.
@@ -3184,8 +3396,10 @@ type GoogleAppsCardV1DecoratedText struct {
 	EndIcon *GoogleAppsCardV1Icon `json:"endIcon,omitempty"`
 	// Icon: Deprecated in favor of `startIcon`.
 	Icon *GoogleAppsCardV1Icon `json:"icon,omitempty"`
-	// OnClick: This action is triggered when users click `topLabel` or
-	// `bottomLabel`.
+	// OnClick: This action is triggered when users click anywhere on the
+	// `DecoratedText` widget (including `text`, `top_label`, `bottom_label`, and
+	// icons), except when clicking a separate interactive control (`button` or
+	// `switch_control`).
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 	// StartIcon: The icon displayed in front of the text.
 	StartIcon *GoogleAppsCardV1Icon `json:"startIcon,omitempty"`
@@ -3351,8 +3565,8 @@ func (s GoogleAppsCardV1ExpressionDataCondition) MarshalJSON() ([]byte, error) {
 // "borderStyle": { "type": "STROKE", "cornerRadius": 4 }, "items": [ {
 // "image": { "imageUri": "https://www.example.com/image.png", "cropStyle": {
 // "type": "SQUARE" }, "borderStyle": { "type": "STROKE" } }, "title": "An
-// item", "textAlignment": "CENTER" } ], "onClick": { "openLink": { "url":
-// "https://www.example.com" } } } ```
+// item" } ], "onClick": { "openLink": { "url": "https://www.example.com" } } }
+// ```
 type GoogleAppsCardV1Grid struct {
 	// BorderStyle: The border style to apply to each grid item.
 	BorderStyle *GoogleAppsCardV1BorderStyle `json:"borderStyle,omitempty"`
@@ -3363,8 +3577,8 @@ type GoogleAppsCardV1Grid struct {
 	// Items: The items to display in the grid.
 	Items []*GoogleAppsCardV1GridItem `json:"items,omitempty"`
 	// OnClick: This callback is reused by each individual grid item, but with the
-	// item's identifier and index in the items list added to the callback's
-	// parameters.
+	// item's identifier added to the callback's parameters (under the key
+	// "grid_item_identifier").
 	OnClick *GoogleAppsCardV1OnClick `json:"onClick,omitempty"`
 	// Title: The text that displays in the grid header.
 	Title string `json:"title,omitempty"`
@@ -3468,7 +3682,7 @@ type GoogleAppsCardV1Icon struct {
 	// MaterialIcon: Display one of the Google Material Icons
 	// (https://fonts.google.com/icons). For example, to display a checkbox icon
 	// (https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048),
-	// use ``` "material_icon": { "name": "check_box" } ``` Google Chat apps
+	// use ``` "materialIcon": { "name": "check_box" } ``` Google Chat apps
 	// (https://developers.google.com/workspace/chat):
 	MaterialIcon *GoogleAppsCardV1MaterialIcon `json:"materialIcon,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AltText") to unconditionally
@@ -3890,7 +4104,8 @@ type GoogleAppsCardV1Section struct {
 	// default. The `uncollapsibleWidgetsCount` is taken into account only when
 	// `collapsible` is `true`.
 	UncollapsibleWidgetsCount int64 `json:"uncollapsibleWidgetsCount,omitempty"`
-	// Widgets: All the widgets in the section. Must contain at least one widget.
+	// Widgets: All the widgets in the section. Must contain at least one widget. A
+	// card supports up to 100 widgets across all sections.
 	Widgets []*GoogleAppsCardV1Widget `json:"widgets,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CollapseControl") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4144,16 +4359,22 @@ type GoogleAppsCardV1SwitchControl struct {
 	//   "CHECK_BOX" - A checkbox.
 	ControlType string `json:"controlType,omitempty"`
 	// Name: The name by which the switch widget is identified in a form input
-	// event. For details about working with form inputs, see Receive form data
+	// event (as the key in `CommonEventObject.form_inputs`). For details about
+	// working with form inputs, see Receive form data
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Name string `json:"name,omitempty"`
 	// OnChangeAction: The action to perform when the switch state is changed, such
 	// as what function to run.
 	OnChangeAction *GoogleAppsCardV1Action `json:"onChangeAction,omitempty"`
-	// Selected: When `true`, the switch is selected.
+	// Selected: When `true`, the switch is selected, and its `value` is included
+	// in `CommonEventObject.form_inputs[name].string_inputs.value`.
 	Selected bool `json:"selected,omitempty"`
-	// Value: The value entered by a user, returned as part of a form input event.
-	// For details about working with form inputs, see Receive form data
+	// Value: The value returned in
+	// `CommonEventObject.form_inputs[name].string_inputs` when the switch is
+	// selected (`selected` is `true`). If `selected` is `true` and `value` is
+	// unset, an empty string ("") is returned in `string_inputs.value`. When
+	// `selected` is `false`, this value is omitted from `string_inputs.value`. For
+	// details about working with form inputs, see Receive form data
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Value string `json:"value,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ControlType") to
@@ -4416,19 +4637,20 @@ type GoogleAppsCardV1Widget struct {
 	// ButtonList: A list of buttons. For example, the following JSON creates two
 	// buttons. The first is a blue text button and the second is an image button
 	// that opens a link: ``` "buttonList": { "buttons": [ { "text": "Edit",
-	// "color": { "red": 0, "green": 0, "blue": 1, }, "disabled": true, }, {
-	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
+	// "color": { "red": 0, "green": 0, "blue": 1 }, "disabled": true }, { "icon":
+	// { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
 	// "openLink": { "url": "https://example.com/calendar" } } } ] } ```
 	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
-	// Carousel: A carousel contains a collection of nested widgets. For example,
-	// this is a JSON representation of a carousel that contains two text
-	// paragraphs. ``` { "widgets": [ { "textParagraph": { "text": "First text
-	// paragraph in the carousel." } }, { "textParagraph": { "text": "Second text
-	// paragraph in the carousel." } } ] } ```
+	// Carousel: Contains a collection of `CarouselCard` items, each of which
+	// contains nested widgets. For example, this is a JSON representation of a
+	// carousel that contains two carousel cards, each with a text paragraph: ``` {
+	// "carouselCards": [ { "widgets": [ { "textParagraph": { "text": "First text
+	// paragraph in the carousel." } } ] }, { "widgets": [ { "textParagraph": {
+	// "text": "Second text paragraph in the carousel." } } ] } ] } ```
 	Carousel *GoogleAppsCardV1Carousel `json:"carousel,omitempty"`
 	// ChipList: A list of chips. For example, the following JSON creates two
 	// chips. The first is a text chip and the second is an icon chip that opens a
-	// link: ``` "chipList": { "chips": [ { "text": "Edit", "disabled": true, }, {
+	// link: ``` "chipList": { "chips": [ { "label": "Edit", "disabled": true }, {
 	// "icon": { "knownIcon": "INVITE", "altText": "check calendar" }, "onClick": {
 	// "openLink": { "url": "https://example.com/calendar" } } } ] } ```
 	ChipList *GoogleAppsCardV1ChipList `json:"chipList,omitempty"`
@@ -4450,10 +4672,10 @@ type GoogleAppsCardV1Widget struct {
 	DateTimePicker *GoogleAppsCardV1DateTimePicker `json:"dateTimePicker,omitempty"`
 	// DecoratedText: Displays a decorated text item. For example, the following
 	// JSON creates a decorated text widget showing email address: ```
-	// "decoratedText": { "icon": { "knownIcon": "EMAIL" }, "topLabel": "Email
+	// "decoratedText": { "startIcon": { "knownIcon": "EMAIL" }, "topLabel": "Email
 	// Address", "text": "sasha@example.com", "bottomLabel": "This is a new Email
 	// address!", "switchControl": { "name": "has_send_welcome_email_to_sasha",
-	// "selected": false, "controlType": "CHECKBOX" } } ```
+	// "selected": false, "controlType": "CHECK_BOX" } } ```
 	DecoratedText *GoogleAppsCardV1DecoratedText `json:"decoratedText,omitempty"`
 	// Divider: Displays a horizontal line divider between widgets. For example,
 	// the following JSON creates a divider: ``` "divider": { } ```
@@ -4472,9 +4694,8 @@ type GoogleAppsCardV1Widget struct {
 	// fine collection of items", "columnCount": 2, "borderStyle": { "type":
 	// "STROKE", "cornerRadius": 4 }, "items": [ { "image": { "imageUri":
 	// "https://www.example.com/image.png", "cropStyle": { "type": "SQUARE" },
-	// "borderStyle": { "type": "STROKE" } }, "title": "An item", "textAlignment":
-	// "CENTER" } ], "onClick": { "openLink": { "url": "https://www.example.com" }
-	// } } ```
+	// "borderStyle": { "type": "STROKE" } }, "title": "An item" } ], "onClick": {
+	// "openLink": { "url": "https://www.example.com" } } } ```
 	Grid *GoogleAppsCardV1Grid `json:"grid,omitempty"`
 	// HorizontalAlignment: Specifies whether widgets align to the left, right, or
 	// center of a column.
@@ -4502,10 +4723,10 @@ type GoogleAppsCardV1Widget struct {
 	// SelectionInput: Displays a selection control that lets users select items.
 	// Selection controls can be checkboxes, radio buttons, switches, or dropdown
 	// menus. For example, the following JSON creates a dropdown menu that lets
-	// users choose a size: ``` "selectionInput": { "name": "size", "label": "Size"
-	// "type": "DROPDOWN", "items": [ { "text": "S", "value": "small", "selected":
-	// false }, { "text": "M", "value": "medium", "selected": true }, { "text":
-	// "L", "value": "large", "selected": false }, { "text": "XL", "value":
+	// users choose a size: ``` "selectionInput": { "name": "size", "label":
+	// "Size", "type": "DROPDOWN", "items": [ { "text": "S", "value": "small",
+	// "selected": false }, { "text": "M", "value": "medium", "selected": true }, {
+	// "text": "L", "value": "large", "selected": false }, { "text": "XL", "value":
 	// "extra_large", "selected": false } ] } ```
 	SelectionInput *GoogleAppsCardV1SelectionInput `json:"selectionInput,omitempty"`
 	// TextInput: Displays a text box that users can type into. For example, the
@@ -4995,6 +5216,34 @@ func (s ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListMessagePinsResponse: Response message for listing message pins.
+type ListMessagePinsResponse struct {
+	// MessagePins: The pinned messages from the specified space.
+	MessagePins []*MessagePin `json:"messagePins,omitempty"`
+	// NextPageToken: You can send a token as `pageToken` to retrieve the next page
+	// of results. If empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "MessagePins") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MessagePins") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListMessagePinsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMessagePinsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListMessagesResponse: Response message for listing messages.
 type ListMessagesResponse struct {
 	// Messages: List of messages.
@@ -5348,9 +5597,11 @@ type Membership struct {
 	// Member: Optional. The Google Chat user or app the membership corresponds to.
 	// If your Chat app authenticates as a user
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
-	// the output populates the user
+	// the output only populates the user
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/User)
-	// `name` and `type`.
+	// `name` and `type` fields for both internal and external users, unless they
+	// are members of the space or have a prior affinity, like a direct message
+	// (DM) conversation, with the calling user.
 	Member *User `json:"member,omitempty"`
 	// Name: Identifier. Resource name of the membership, assigned by the server.
 	// Format: `spaces/{space}/members/{member}`
@@ -5651,6 +5902,18 @@ type Message struct {
 	// DeletionMetadata: Output only. Information about a deleted message. A
 	// message is deleted when `delete_time` is set.
 	DeletionMetadata *DeletionMetadata `json:"deletionMetadata,omitempty"`
+	// Elements: Optional. Additional message components, including inline
+	// `citations` (where each citation is associated with a specific portion of
+	// the message text) and `cited_sources` (which are general references used to
+	// generate the response and are not directly linked to specific segments of
+	// the text). On input, provide `elements` when creating or updating a message.
+	// On output, both `citations` and `cited_sources` are populated when reading a
+	// message that contains them. Callers can read structured citation metadata
+	// from `elements`, while `formatted_text` also includes inline citation tags
+	// or source links depending on `markup_syntax`. These differ from
+	// `annotations`, which are output-only and offer supplementary information
+	// tied to message fragments or the entire message text.
+	Elements *Elements `json:"elements,omitempty"`
 	// EmojiReactionSummaries: Output only. The list of emoji reaction summaries on
 	// the message.
 	EmojiReactionSummaries []*EmojiReactionSummary `json:"emojiReactionSummaries,omitempty"`
@@ -5677,6 +5940,23 @@ type Message struct {
 	// LastUpdateTime: Output only. The time at which the message was last edited
 	// by a user. If the message has never been edited, this field is empty.
 	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+	// MarkupSyntax: Optional. Specifies how the server interprets the message
+	// `text` field content when creating a message or updating the `text` field of
+	// a message. When calling `UpdateMessage`, set `markup_syntax` and `text` on
+	// the `Message` resource and include `text` (not `markup_syntax`) in
+	// `update_mask`.
+	//
+	// Possible values:
+	//   "MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.
+	//   "MARKUP_SYNTAX_CHAT" - Uses Google Chat's markup syntax. See
+	// https://developers.google.com/workspace/chat/format-messages#format-texts
+	// for more information.
+	//   "MARKUP_SYNTAX_MARKDOWN" - Uses Markdown syntax. This syntax is based on
+	// the [CommonMark](https://commonmark.org/help/) specification, with
+	// additional extensions. See
+	// https://developers.google.com/workspace/chat/format-messages#format-texts
+	// for more information.
+	MarkupSyntax string `json:"markupSyntax,omitempty"`
 	// MatchedUrl: Output only. A URL in the Chat message `text` field that matches
 	// a link preview pattern. For more information, see Preview links
 	// (https://developers.google.com/workspace/chat/preview-links).
@@ -5714,9 +5994,11 @@ type Message struct {
 	// Sender: Output only. The user who created the message. If your Chat app
 	// authenticates as a user
 	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
-	// the output populates the user
+	// the output only populates the user
 	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/User)
-	// `name` and `type`.
+	// `name` and `type` fields for both internal and external users, unless they
+	// are members of the space or have a prior affinity, like a direct message
+	// (DM) conversation, with the calling user.
 	Sender *User `json:"sender,omitempty"`
 	// Silent: Output only. Whether this is a silent message. Silent messages are
 	// messages where Chat suppresses push notifications for recipients.
@@ -5881,6 +6163,39 @@ type MessageDeletedEventData struct {
 
 func (s MessageDeletedEventData) MarshalJSON() ([]byte, error) {
 	type NoMethod MessageDeletedEventData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MessagePin: A pin on a Chat message. For more information see Pin a message
+// (https://support.google.com/chat?p=chat-board-hc).
+type MessagePin struct {
+	// Message: Required. Immutable. The resource name of the message that is
+	// pinned. Format: `spaces/{space}/messages/{message}`
+	Message string `json:"message,omitempty"`
+	// Name: Identifier. The resource name of the message pin. Format:
+	// `spaces/{space}/messagePins/{message_pin}` The resource ID component matches
+	// the resource ID component of the message. For example, a message with
+	// `spaces/AAA/messages/bbb.ccc` corresponds to the message pin with the
+	// resource name `spaces/AAA/messagePins/bbb.ccc`.
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MessagePin) MarshalJSON() ([]byte, error) {
+	type NoMethod MessagePin
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6054,6 +6369,17 @@ type PermissionSettings struct {
 	ToggleHistory *PermissionSetting `json:"toggleHistory,omitempty"`
 	// UseAtMentionAll: Optional. Setting for using @all in a space.
 	UseAtMentionAll *PermissionSetting `json:"useAtMentionAll,omitempty"`
+	// ViewSpaceMembership: Optional. Setting for viewing space membership. Must be
+	// specified together with
+	// `AccessPermissionSettings.view_space_membership_setting` in the update mask
+	// and request body when updating who can view space membership. When
+	// restricting view access to specific roles (for example, space managers or
+	// assistant managers only), specify the desired role permissions here and
+	// provide an empty `AccessPermissionSettings.view_space_membership_setting` in
+	// the same request. If a target audience is configured in
+	// `AccessPermissionSettings.view_space_membership_setting`, this setting must
+	// be granted to all members.
+	ViewSpaceMembership *PermissionSetting `json:"viewSpaceMembership,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ManageApps") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6365,6 +6691,39 @@ func (s ReactionDeletedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ReplaceMessageCardsRequest: Request message for ReplaceMessageCards API
+// method.
+type ReplaceMessageCardsRequest struct {
+	// CardsV2: Optional. An array of cards
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/cards)
+	// to be included in the message. These cards will replace the existing cards
+	// of the message. If empty, the original cards included in the message will be
+	// cleared.
+	CardsV2 []*CardWithId `json:"cardsV2,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CardsV2") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CardsV2") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReplaceMessageCardsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplaceMessageCardsRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReplaceMessageCardsResponse: Response message for ReplaceMessageCards API.
+type ReplaceMessageCardsResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // RichLinkMetadata: A rich link to a resource. Rich links can be associated
 // with the plain-text body of the message or represent chips that link to
 // Google Workspace resources like Google Docs or Sheets with `start_index` and
@@ -6412,19 +6771,266 @@ func (s RichLinkMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SearchMessageResult: A single result item from a message search.
+type SearchMessageResult struct {
+	// Message: The matched message.
+	Message *Message `json:"message,omitempty"`
+	// Read: Indicates if the matched message is read by the calling user. Only
+	// returned if the request view is `SEARCH_MESSAGES_VIEW_FULL` and the calling
+	// credentials include one of the following authorization scopes
+	// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+	// - `https://www.googleapis.com/auth/chat.users.readstate.readonly` -
+	// `https://www.googleapis.com/auth/chat.users.readstate`
+	Read bool `json:"read,omitempty"`
+	// SpaceMuteSetting: The mute setting of the calling user for the space where
+	// the message is posted. The caller app can use this information to decide how
+	// to process the message depending on whether the space is muted for the user
+	// or not. Only returned if the request view is `SEARCH_MESSAGES_VIEW_FULL` and
+	// the calling credentials include the following authorization scope
+	// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+	// - `https://www.googleapis.com/auth/chat.users.spacesettings`
+	//
+	// Possible values:
+	//   "MUTE_SETTING_UNSPECIFIED" - Reserved.
+	//   "UNMUTED" - The user will receive notifications for the space based on the
+	// notification setting.
+	//   "MUTED" - The user will not receive any notifications for the space,
+	// regardless of the notification setting.
+	SpaceMuteSetting string `json:"spaceMuteSetting,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Message") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Message") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchMessageResult) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchMessageResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchMessagesRequest: Request message for searching messages.
+type SearchMessagesRequest struct {
+	// Filter: Required. A search query. The query can specify one or more search
+	// keywords, which are used to filter the results, You can also filter the
+	// results using the following message fields: - `create_time`: Accepts a
+	// timestamp in RFC-3339 (https://www.rfc-editor.org/rfc/rfc3339) format and
+	// the supported comparison operators are: `<` and `>=`. - `sender.name`: The
+	// resource name of the sender (`users/{user}`). Only supports `=`. You can use
+	// the e-mail as an alias for `{user}`. For example, `users/example@gmail.com`,
+	// where `example@gmail.com` is the e-mail of the Google Chat user. -
+	// `space.name`: The resource name of the space where the message is posted.
+	// (`spaces/{space}`). Only supports `=`. If this filter is not set, the search
+	// is performed across all direct messages and spaces the user has access to as
+	// a space member. - `space.display_name`: Supports the operator `:` (has) and
+	// filters spaces based on a partial match of their display name. Results are
+	// limited to the top five space matches. For example,
+	// `space.display_name:Project` searches for messages in the top five spaces
+	// that contain the word "Project" in their display names. -
+	// `space.space_type`: The type of the space. Only supports `=`. For example,
+	// `space.space_type="DIRECT_MESSAGE" returns only messages from direct
+	// messages. The possible values are `DIRECT_MESSAGE`, `GROUP_CHAT`, and
+	// `SPACE`. - `attachment`: Supports the operator `:*` (has any) to check for
+	// the presence of attachments. If `attachment:*` is specified, only messages
+	// that have at least one attachment are returned. -
+	// `annotations.user_mentions.user.name`: The resource name of the mentioned
+	// user (`users/{user}`). Only supports `:` (has). For example:
+	// `annotations.user_mentions.user.name:"users/1234567890" returns only
+	// messages that contain a mention to the specified user. Alternatively, the
+	// alias `me` can be used to filter for messages that mention the caller user,
+	// for example: `annotations.user_mentions.user.name:users/me`. You can also
+	// use the e-mail as an alias for `{user}`, for example,
+	// `users/example@gmail.com`. For advanced filtering, the following functions
+	// are also available: - `has_link()`: Returns only messages that have at least
+	// one hyperlink in the message text. - `is_unread()`: Filters out messages
+	// that have been read by the calling user. Using the `space.display_name` or
+	// the `space.space_type` filters requires that the calling credentials include
+	// one of the following authorization scopes
+	// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+	// - `https://www.googleapis.com/auth/chat.spaces.readonly` -
+	// `https://www.googleapis.com/auth/chat.spaces` Using the `is_unread()` filter
+	// requires that the calling credentials include one of the following
+	// authorization scopes
+	// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+	// - `https://www.googleapis.com/auth/chat.users.readstate.readonly` -
+	// `https://www.googleapis.com/auth/chat.users.readstate` Across different
+	// fields, only `AND` operators are supported. A valid example is `sender.name
+	// = "users/1234567890" AND is_unread()`. The word `AND` is optional and is
+	// implied if omitted. For example, `sender.name = "users/1234567890"
+	// is_unread()` is valid and is equivalent to the previous example. An invalid
+	// example is `sender.name = "users/1234567890" OR is_unread()` because `OR` is
+	// not supported between different fields. Among the same field: -
+	// `create_time` supports only `AND`, and can only be used to represent an
+	// interval, such as `create_time >= "2022-01-01T00:00:00+00:00" AND
+	// create_time < "2023-01-01T00:00:00+00:00". - `sender.name` supports only
+	// the `OR` operator, for example: `sender.name = "users/1234567890" OR
+	// sender.name = "users/0987654321". - `space.name` supports only the `OR`
+	// operator, for example: `space.name = "spaces/ABCDEFGH" OR space.name =
+	// "spaces/QWERTYUI". - `space.display_name` supports the operators `AND` and
+	// `OR`, but not a mix of both. For example: `space.display_name:Project AND
+	// space.display_name:Tasks` returns messages that are in spaces with display
+	// names containing both `Project` and `Tasks`, whereas
+	// `space.display_name:Project OR space.display_name:Tasks` returns messages
+	// that are in spaces with display names containing either `Project` or `Tasks`
+	// or both. - `space.space_type` supports only the `OR` operator, for example:
+	// `space.space_type = "DIRECT_MESSAGE" OR space.space_type = "GROUP_CHAT". -
+	// `annotations.user_mentions.user.name` supports the operators `AND` and `OR`,
+	// but not a mix of both. For example:
+	// `annotations.user_mentions.user.name:"users/1234567890" AND
+	// annotations.user_mentions.user.name:"users/0987654321" returns only
+	// messages that mentions both users, whereas
+	// `annotations.user_mentions.user.name:"users/1234567890" OR
+	// annotations.user_mentions.user.name:"users/0987654321" returns messages
+	// that mention either user or both. Parentheses are required to disambiguate
+	// operator precedence when combining `AND` and `OR` operators in the same
+	// query. For example: `(sender.name="users/me" OR sender.name="users/123456")
+	// AND is_unread()`. Otherwise, parentheses are optional. The following example
+	// queries are valid: ``` "Pending reports" AND create_time >=
+	// "2023-01-01T00:00:00Z" sender.name = "users/example@gmail.com"
+	// annotations.user_mentions.user.name:"users/0987654321" attachment:* AND
+	// space.name = "spaces/ABCDEFGH" tasks AND is_unread() AND sender.name =
+	// "users/1234567890" "things to do" "urgent" (sender.name =
+	// "users/1234567890") AND (create_time < "2023-05-01T00:00:00Z") tasks AND
+	// space.name = "spaces/ABCDEFGH" AND has_link() "project one" is_unread()
+	// space.display_name:Project tasks ``` The maximum query length is 1,000
+	// characters. Invalid queries are rejected by the server with an
+	// `INVALID_ARGUMENT` error.
+	Filter string `json:"filter,omitempty"`
+	// MarkupSyntax: Optional. Specifies the desired output syntax for the Chat
+	// message `formatted_text` field.
+	//
+	// Possible values:
+	//   "MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.
+	//   "MARKUP_SYNTAX_CHAT" - Uses Google Chat's markup syntax. See
+	// https://developers.google.com/workspace/chat/format-messages#format-texts
+	// for more information.
+	//   "MARKUP_SYNTAX_MARKDOWN" - Uses Markdown syntax. This syntax is based on
+	// the [CommonMark](https://commonmark.org/help/) specification, with
+	// additional extensions. See
+	// https://developers.google.com/workspace/chat/format-messages#format-texts
+	// for more information.
+	MarkupSyntax string `json:"markupSyntax,omitempty"`
+	// OrderBy: Optional. How the results list is ordered. Supported attributes to
+	// order by are: - `create_time`: Sorts the results by the time of the message
+	// creation. Default value. - `relevance`: Sorts the results by relevance.
+	// Developer Preview (https://developers.google.com/workspace/preview). The
+	// default ordering is `create_time desc`. Only a single order per query
+	// (`create_time` or `relevance`) is supported. Only descending order (`desc`)
+	// is supported, and it must be specified after the order attribute.
+	OrderBy string `json:"orderBy,omitempty"`
+	// PageSize: Optional. The maximum number of results to return. The service may
+	// return fewer than this value. If unspecified, at most 25 are returned. The
+	// maximum value is 100. If you use a value more than 100, it's automatically
+	// changed to 100.
+	PageSize int64 `json:"pageSize,omitempty"`
+	// PageToken: Optional. A token, received from the previous search messages
+	// call. Provide this parameter to retrieve the subsequent page. When
+	// paginating, all other parameters provided should match the call that
+	// provided the page token. Passing different values to the other parameters
+	// might lead to unexpected results.
+	PageToken string `json:"pageToken,omitempty"`
+	// View: Optional. Specifies what kind of search results view to return. The
+	// default is `SEARCH_MESSAGES_VIEW_BASIC`.
+	//
+	// Possible values:
+	//   "SEARCH_MESSAGES_VIEW_UNSPECIFIED" - The default / unset value. The API
+	// will default to the BASIC view.
+	//   "SEARCH_MESSAGES_VIEW_BASIC" - Includes only the matched messages in the
+	// results, but no additional metadata. This is the default value.
+	//   "SEARCH_MESSAGES_VIEW_FULL" - Includes everything in the results: the
+	// matched messages and additional metadata.
+	View string `json:"view,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchMessagesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchMessagesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchMessagesResponse: Response message for searching messages.
+type SearchMessagesResponse struct {
+	// NextPageToken: A token that can be used to retrieve the next page. If this
+	// field is empty, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Results: The list of search results that matched the query.
+	Results []*SearchMessageResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchMessagesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchMessagesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchSpaceResult: A single result item from a space search.
+type SearchSpaceResult struct {
+	// Space: Output only. The matched space.
+	Space *Space `json:"space,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Space") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchSpaceResult) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchSpaceResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchSpacesResponse: Response with a list of spaces corresponding to the
 // search spaces request.
 type SearchSpacesResponse struct {
 	// NextPageToken: A token that can be used to retrieve the next page. If this
-	// field is empty, there are no subsequent pages.
+	// field is empty, there are no subsequent pages. Only populated when
+	// `useAdminAccess` is set to `true`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Results: Output only. The list of search results that matched the query.
+	Results []*SearchSpaceResult `json:"results,omitempty"`
 	// Spaces: Deprecated: Please use the new `results` field instead. A page of
 	// the requested spaces. This field will be populated only when
 	// `useAdminAccess` is set to `true` and deprecated in favor of the new
 	// `results` field.
 	Spaces []*Space `json:"spaces,omitempty"`
 	// TotalSize: The total number of spaces that match the query, across all
-	// pages. If the result is over 10,000 spaces, this value is an estimate.
+	// pages. If the result is over 10,000 spaces, this value is an estimate. Only
+	// populated when `useAdminAccess` is set to `true`.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6549,11 +7155,20 @@ type SetUpSpaceRequest struct {
 	// `Space.spaceType` to `DIRECT_MESSAGE` and `Space.singleUserBotDm` to
 	// `true`).
 	Memberships []*Membership `json:"memberships,omitempty"`
-	// RequestId: Optional. A unique identifier for this request. A random UUID is
-	// recommended. Specifying an existing request ID returns the space created
-	// with that ID instead of creating a new space. Specifying an existing request
-	// ID from the same Chat app with a different authenticated user returns an
-	// error.
+	// RequestId: Optional. A unique ID for this request. A random UUID is
+	// recommended. Specifying a request ID makes the request idempotent, which
+	// ensures that multiple identical requests with the same request ID result in
+	// only a single space being created. Subsequent requests with the same request
+	// ID return the existing space and do not update the space, even if the
+	// requested details differ from the current state. To use this field
+	// effectively: - Ensure that subsequent requests are identical and use the
+	// same authentication credentials as the original request. - If a space was
+	// already created with the provided request ID, the request returns that
+	// space. Note that the returned space might not be fully populated; the API
+	// echoes the space in your request with the system-assigned resource name
+	// populated. To retrieve the latest metadata for the space, call `GetSpace`. -
+	// Reusing an existing request ID with a different authenticated user results
+	// in an error.
 	RequestId string `json:"requestId,omitempty"`
 	// Space: Required. The `Space.spaceType` field is required. To create a space,
 	// set `Space.spaceType` to `SPACE` and set `Space.displayName`. If you receive
@@ -6642,6 +7257,36 @@ type SlashCommandMetadata struct {
 
 func (s SlashCommandMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod SlashCommandMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Snippet: A snippet object representing an excerpt from a larger corpus.
+type Snippet struct {
+	// ImagePreview: Optional. Image preview of the snippet provided as an input
+	// when creating the citation.
+	ImagePreview *ElementsImage `json:"imagePreview,omitempty"`
+	// Text: Optional. A short plaintext excerpt directly from the corpus that is
+	// rendered in the citation hover card or source preview. When footer sources
+	// are automatically populated from inline `citations` (because
+	// `Elements.cited_sources` is not set), snippets are omitted from the
+	// deduplicated footer sources. Does not support markdown format, and must not
+	// exceed 1,000 characters.
+	Text string `json:"text,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ImagePreview") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ImagePreview") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Snippet) MarshalJSON() ([]byte, error) {
+	type NoMethod Snippet
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6880,7 +7525,7 @@ func (s SpaceDataSource) MarshalJSON() ([]byte, error) {
 type SpaceDetails struct {
 	// Description: Optional. A description of the space. For example, describe the
 	// space's discussion topic, functional purpose, or participants. Supports up
-	// to 150 characters.
+	// to 4,096 characters.
 	Description string `json:"description,omitempty"`
 	// Guidelines: Optional. The space's rules, expectations, and etiquette.
 	// Supports up to 5,000 characters.
@@ -7425,18 +8070,45 @@ func (s UploadAttachmentResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// User: A user in Google Chat. When returned as an output from a request, if
-// your Chat app authenticates as a user
+// User: If your Chat app authenticates as a user
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
-// the output for a `User` resource only populates the user's `name` and
-// `type`.
+// the output for a `User` resource (such as in the Messages and Memberships
+// APIs) only populates the `name` and `type` fields for both internal and
+// external users, unless they are members of the space or have prior affinity
+// with the calling user.
 type User struct {
-	// DisplayName: Output only. The user's display name.
+	// AvatarUrl: Output only. The user's avatar image URL. When calling the
+	// Messages and Memberships APIs with user authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
+	// this field is populated for both internal and external users for the
+	// `sender` of a message, users within `annotations` (such as user mentions),
+	// and within `Membership` resources, provided the user is a member of the
+	// space or has prior affinity with the calling user.
+	AvatarUrl string `json:"avatarUrl,omitempty"`
+	// DisplayName: Output only. The user's display name. Populated for both app
+	// authentication and user authentication. This field is always populated for
+	// requests made with app authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app).
+	// When calling the Messages and Memberships APIs with user authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
+	// this field is populated for both internal and external users for the
+	// `sender` of a message, users within `annotations` (such as user mentions),
+	// and within `Membership` resources, provided the user is a member of the
+	// space or has prior affinity with the calling user.
 	DisplayName string `json:"displayName,omitempty"`
 	// DomainId: Unique identifier of the user's Google Workspace domain.
 	DomainId string `json:"domainId,omitempty"`
+	// Email: Output only. The user's email address. When calling the Messages and
+	// Memberships APIs with user authentication
+	// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
+	// this field is populated for both internal and external users for the
+	// `sender` of a message, users within `annotations` (such as user mentions),
+	// and within `Membership` resources, provided the user is a member of the
+	// space or has prior affinity with the calling user.
+	Email string `json:"email,omitempty"`
 	// IsAnonymous: Output only. When `true`, the user is deleted or their profile
-	// is not visible.
+	// is not visible, such as when a user is mentioned in a space without being a
+	// member and without prior affinity with the calling user.
 	IsAnonymous bool `json:"isAnonymous,omitempty"`
 	// Name: Resource name for a Google Chat user. Format: `users/{user}`.
 	// `users/app` can be used as an alias for the calling app bot user. For human
@@ -7459,13 +8131,13 @@ type User struct {
 	//   "HUMAN" - Human user.
 	//   "BOT" - Chat app user.
 	Type string `json:"type,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "AvatarUrl") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// NullFields is a list of field names (e.g. "AvatarUrl") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -8541,11 +9213,20 @@ func (r *SpacesService) Create(space *Space) *SpacesCreateCall {
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A unique identifier for
-// this request. A random UUID is recommended. Specifying an existing request
-// ID returns the space created with that ID instead of creating a new space.
-// Specifying an existing request ID from the same Chat app with a different
-// authenticated user returns an error.
+// RequestId sets the optional parameter "requestId": A unique ID for this
+// request. A random UUID is recommended. Specifying a request ID makes the
+// request idempotent, which ensures that multiple identical requests with the
+// same request ID result in only a single space being created. Subsequent
+// requests with the same request ID return the existing space and do not
+// update the space, even if the requested details differ from the current
+// state. To use this field effectively: - Ensure that subsequent requests are
+// identical and use the same authentication credentials as the original
+// request. - If a space was already created with the provided request ID, the
+// request returns that space. Note that the returned space might not be fully
+// populated; the API echoes the space in your request with the system-assigned
+// resource name populated. To retrieve the latest metadata for the space, call
+// `GetSpace`. - Reusing an existing request ID with a different authenticated
+// user results in an error.
 func (c *SpacesCreateCall) RequestId(requestId string) *SpacesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -9507,7 +10188,8 @@ func (r *SpacesService) Patch(name string, space *Space) *SpacesPatchCall {
 // `access_settings.access_permission_settings` is not supported with
 // `useAdminAccess`. The supported field masks include: -
 // `access_settings.access_permission_settings.discoverSpaceSetting` -
-// `access_settings.access_permission_settings.joinSpaceSetting`
+// `access_settings.access_permission_settings.joinSpaceSetting` -
+// `access_settings.access_permission_settings.viewSpaceMembershipSetting`
 // `permission_settings`: Supports changing the permission settings
 // (https://support.google.com/chat/answer/13340792) of a space. When updating
 // permission settings, you can only specify `permissionSettings` field masks;
@@ -9516,7 +10198,8 @@ func (r *SpacesService) Patch(name string, space *Space) *SpacesPatchCall {
 // `permission_settings.modifySpaceDetails` -
 // `permission_settings.toggleHistory` - `permission_settings.useAtMentionAll`
 // - `permission_settings.manageApps` - `permission_settings.manageWebhooks` -
-// `permission_settings.replyMessages`
+// `permission_settings.replyMessages` -
+// `permission_settings.viewSpaceMembership`
 func (c *SpacesPatchCall) UpdateMask(updateMask string) *SpacesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -9633,8 +10316,7 @@ type SpacesSearchCall struct {
 // (https://developers.google.com/workspace/chat/search-manage-admin). When
 // `use_admin_access` is set to `false`, the results are limited to spaces
 // where the calling user is a joined member. To search with administrator
-// privileges, set `use_admin_access` to `true`. Setting `use_admin_access` to
-// `false` is available under Developer Preview. Supports the following types
+// privileges, set `use_admin_access` to `true`. Supports the following types
 // of authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize): -
 // User authentication
@@ -9668,6 +10350,7 @@ func (r *SpacesService) Search() *SpacesSearchCall {
 // `membership_count.joined_direct_human_user_count ASC` - `last_active_time
 // DESC` - `last_active_time ASC` - `create_time DESC` - `create_time ASC` When
 // `useAdminAccess` is set to `false`: - `create_time DESC` - `relevance DESC`
+// Developer Preview (https://developers.google.com/workspace/preview).
 func (c *SpacesSearchCall) OrderBy(orderBy string) *SpacesSearchCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -9675,8 +10358,10 @@ func (c *SpacesSearchCall) OrderBy(orderBy string) *SpacesSearchCall {
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
 // spaces to return. The service may return fewer than this value. If
-// unspecified, at most 100 spaces are returned. The maximum value is 1000. If
-// you use a value more than 1000, it's automatically changed to 1000.
+// unspecified, at most 100 spaces are returned. The maximum value is 1000 when
+// `useAdminAccess` is set to `true`. Otherwise, the maximum value is 100. If
+// you use a value more than the maximum value, it's automatically changed to
+// the maximum value.
 func (c *SpacesSearchCall) PageSize(pageSize int64) *SpacesSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -9740,7 +10425,9 @@ func (c *SpacesSearchCall) PageToken(pageToken string) *SpacesSearchCall {
 // space_type = "SPACE" (display_name:"Hello" OR display_name:"Fun") AND
 // space_type = "SPACE" (external_user_allowed = "true" AND space_type =
 // "SPACE") // Returns an empty response. (external_user_allowed = "true" AND
-// display_name:"Hello" AND space_type = "SPACE") ```
+// display_name:"Hello" AND space_type = "SPACE") ``` The maximum query length
+// is 1,000 characters. Invalid queries are rejected by the server with an
+// `INVALID_ARGUMENT` error.
 func (c *SpacesSearchCall) Query(query string) *SpacesSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
@@ -9753,8 +10440,6 @@ func (c *SpacesSearchCall) Query(query string) *SpacesSearchCall {
 // (https://support.google.com/a/answer/13369245). Requires either the
 // `chat.admin.spaces.readonly` or `chat.admin.spaces` OAuth 2.0 scope
 // (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes).
-// Setting `use_admin_access` to `false` is available under Developer Preview.
-// Developer Preview (https://developers.google.com/workspace/preview).
 func (c *SpacesSearchCall) UseAdminAccess(useAdminAccess bool) *SpacesSearchCall {
 	c.urlParams_.Set("useAdminAccess", fmt.Sprint(useAdminAccess))
 	return c
@@ -10829,6 +11514,381 @@ func (c *SpacesMembersPatchCall) Do(opts ...googleapi.CallOption) (*Membership, 
 	return ret, nil
 }
 
+type SpacesMessagePinsCreateCall struct {
+	s          *Service
+	parent     string
+	messagepin *MessagePin
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a message pin. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.spaces.pins` -
+// `https://www.googleapis.com/auth/chat.spaces`
+//
+//   - parent: The parent space in which to create the message pin. Format:
+//     spaces/{space}.
+func (r *SpacesMessagePinsService) Create(parent string, messagepin *MessagePin) *SpacesMessagePinsCreateCall {
+	c := &SpacesMessagePinsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.messagepin = messagepin
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagePinsCreateCall) Fields(s ...googleapi.Field) *SpacesMessagePinsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagePinsCreateCall) Context(ctx context.Context) *SpacesMessagePinsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagePinsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagePinsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.messagepin)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messagePins")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messagePins.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *MessagePin.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *SpacesMessagePinsCreateCall) Do(opts ...googleapi.CallOption) (*MessagePin, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MessagePin{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type SpacesMessagePinsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a message pin. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.spaces.pins` -
+// `https://www.googleapis.com/auth/chat.spaces`
+//
+//   - name: The resource name of the message pin to remove. Format:
+//     spaces/{space}/messagePins/{message_pin}.
+func (r *SpacesMessagePinsService) Delete(name string) *SpacesMessagePinsDeleteCall {
+	c := &SpacesMessagePinsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagePinsDeleteCall) Fields(s ...googleapi.Field) *SpacesMessagePinsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagePinsDeleteCall) Context(ctx context.Context) *SpacesMessagePinsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagePinsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagePinsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messagePins.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *SpacesMessagePinsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type SpacesMessagePinsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists message pins in a space. Users can pin important messages in
+// spaces for easy access. For more information, see Pin or unpin a
+// conversation in Google Chat
+// (https://support.google.com/chat/answer/15622437). Requires user
+// authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.spaces.pins.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces.pins` -
+// `https://www.googleapis.com/auth/chat.spaces.readonly` -
+// `https://www.googleapis.com/auth/chat.spaces`
+//
+//   - parent: The parent space which owns the collection of pinned items Format:
+//     `spaces/{space}`.
+func (r *SpacesMessagePinsService) List(parent string) *SpacesMessagePinsListCall {
+	c := &SpacesMessagePinsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// message pins returned. The service might return fewer messages than this
+// value. The maximum value is 100. If you use a value more than 100, it's
+// automatically changed to 100. If unspecified, at most 100 message pins will
+// be returned. Negative values return an `INVALID_ARGUMENT` error.
+func (c *SpacesMessagePinsListCall) PageSize(pageSize int64) *SpacesMessagePinsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous list message pins call. Provide this parameter to retrieve
+// the subsequent page. When paginating, all other parameters provided should
+// match the call that provided the page token. Passing different values to the
+// other parameters might lead to unexpected results.
+func (c *SpacesMessagePinsListCall) PageToken(pageToken string) *SpacesMessagePinsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagePinsListCall) Fields(s ...googleapi.Field) *SpacesMessagePinsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *SpacesMessagePinsListCall) IfNoneMatch(entityTag string) *SpacesMessagePinsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagePinsListCall) Context(ctx context.Context) *SpacesMessagePinsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagePinsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagePinsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messagePins")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messagePins.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMessagePinsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SpacesMessagePinsListCall) Do(opts ...googleapi.CallOption) (*ListMessagePinsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMessagePinsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messagePins.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SpacesMessagePinsListCall) Pages(ctx context.Context, f func(*ListMessagePinsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type SpacesMessagesCreateCall struct {
 	s          *Service
 	parent     string
@@ -10953,9 +12013,20 @@ func (c *SpacesMessagesCreateCall) MessageReplyOption(messageReplyOption string)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A unique request ID for
-// this message. Specifying an existing request ID returns the message created
-// with that ID instead of creating a new message.
+// RequestId sets the optional parameter "requestId": A unique ID for this
+// request. A random UUID is recommended. Specifying a request ID makes the
+// request idempotent, which ensures that multiple identical requests with the
+// same request ID result in only a single message being created. Subsequent
+// requests with the same request ID return the existing message and do not
+// update the message, even if the requested details differ from the current
+// state. To use this field effectively: - Ensure that subsequent requests are
+// identical and use the same authentication credentials as the original
+// request. - If a message was already created with the provided request ID,
+// the request returns that message. Note that the returned message might not
+// be fully populated; the API echoes the message in your request with the
+// system-assigned resource names populated. To retrieve the latest metadata
+// for the message, call `GetMessage`. - Reusing an existing request ID with a
+// different authenticated user results in an error.
 func (c *SpacesMessagesCreateCall) RequestId(requestId string) *SpacesMessagesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -11222,6 +12293,28 @@ func (r *SpacesMessagesService) Get(name string) *SpacesMessagesGetCall {
 	return c
 }
 
+// MarkupSyntax sets the optional parameter "markupSyntax": Specifies the
+// desired output syntax for the Chat message `formatted_text` field.
+//
+// Possible values:
+//
+//	"MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.
+//	"MARKUP_SYNTAX_CHAT" - Uses Google Chat's markup syntax. See
+//
+// https://developers.google.com/workspace/chat/format-messages#format-texts
+// for more information.
+//
+//	"MARKUP_SYNTAX_MARKDOWN" - Uses Markdown syntax. This syntax is based on
+//
+// the [CommonMark](https://commonmark.org/help/) specification, with
+// additional extensions. See
+// https://developers.google.com/workspace/chat/format-messages#format-texts
+// for more information.
+func (c *SpacesMessagesGetCall) MarkupSyntax(markupSyntax string) *SpacesMessagesGetCall {
+	c.urlParams_.Set("markupSyntax", markupSyntax)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
 // details.
@@ -11372,6 +12465,28 @@ func (r *SpacesMessagesService) List(parent string) *SpacesMessagesListCall {
 // rejected by the server with an `INVALID_ARGUMENT` error.
 func (c *SpacesMessagesListCall) Filter(filter string) *SpacesMessagesListCall {
 	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// MarkupSyntax sets the optional parameter "markupSyntax": Specifies the
+// desired output syntax for the Chat message `formatted_text` field.
+//
+// Possible values:
+//
+//	"MARKUP_SYNTAX_UNSPECIFIED" - Represents the unspecified value.
+//	"MARKUP_SYNTAX_CHAT" - Uses Google Chat's markup syntax. See
+//
+// https://developers.google.com/workspace/chat/format-messages#format-texts
+// for more information.
+//
+//	"MARKUP_SYNTAX_MARKDOWN" - Uses Markdown syntax. This syntax is based on
+//
+// the [CommonMark](https://commonmark.org/help/) specification, with
+// additional extensions. See
+// https://developers.google.com/workspace/chat/format-messages#format-texts
+// for more information.
+func (c *SpacesMessagesListCall) MarkupSyntax(markupSyntax string) *SpacesMessagesListCall {
+	c.urlParams_.Set("markupSyntax", markupSyntax)
 	return c
 }
 
@@ -11676,6 +12791,264 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messages.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
+}
+
+type SpacesMessagesReplaceCardsCall struct {
+	s                          *Service
+	name                       string
+	replacemessagecardsrequest *ReplaceMessageCardsRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// ReplaceCards: Replaces the cards included in a message. A Chat app can only
+// replace cards on a human-created message if the message already contains
+// cards, and the cards were created by the app. If the app replaces the cards
+// with an empty list, the cards are removed. After removing the cards, the app
+// cannot add cards back to the message. Requires app authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
+// with the authorization scope
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.bot`
+//
+//   - name: The resource name of the message. Format:
+//     `spaces/{space}/messages/{message}`.
+func (r *SpacesMessagesService) ReplaceCards(name string, replacemessagecardsrequest *ReplaceMessageCardsRequest) *SpacesMessagesReplaceCardsCall {
+	c := &SpacesMessagesReplaceCardsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.replacemessagecardsrequest = replacemessagecardsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagesReplaceCardsCall) Fields(s ...googleapi.Field) *SpacesMessagesReplaceCardsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagesReplaceCardsCall) Context(ctx context.Context) *SpacesMessagesReplaceCardsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagesReplaceCardsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagesReplaceCardsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.replacemessagecardsrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:replaceCards")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messages.replaceCards", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messages.replaceCards" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ReplaceMessageCardsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SpacesMessagesReplaceCardsCall) Do(opts ...googleapi.CallOption) (*ReplaceMessageCardsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ReplaceMessageCardsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messages.replaceCards", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type SpacesMessagesSearchCall struct {
+	s                     *Service
+	parent                string
+	searchmessagesrequest *SearchMessagesRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// Search: Searches for messages in Google Chat that the calling user has
+// access to. Returns a list of messages matching the search criteria. To
+// search across all spaces the user has access to, set `parent` to `spaces/-`.
+// Using any other value for `parent` results in an `INVALID_ARGUMENT` error.
+// The returned messages have their `name` field populated with the full
+// resource name, which includes the specific `space` in which the message
+// resides. This API doesn't return all message types. The types of messages
+// listed below aren't included in the response. Use ListMessages to list all
+// messages. - Private Messages that are visible to the authenticated user. -
+// Messages posted by Chat apps in spaces or group chats. - Messages in a Chat
+// app DM. - Messages from blocked users. - Messages in spaces that the caller
+// has muted. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user)
+// with one of the following authorization scopes
+// (https://developers.google.com/workspace/chat/authenticate-authorize#chat-api-scopes):
+// - `https://www.googleapis.com/auth/chat.messages.readonly` -
+// `https://www.googleapis.com/auth/chat.messages`
+//
+//   - parent: The resource name of the space to search within. To search across
+//     all spaces the user has access to, set this field to `spaces/-`. Using any
+//     other value for `parent` results in an `INVALID_ARGUMENT` error. To limit
+//     the search to one or more spaces, use `space.name` or `space.display_name`
+//     in the `filter`.
+func (r *SpacesMessagesService) Search(parent string, searchmessagesrequest *SearchMessagesRequest) *SpacesMessagesSearchCall {
+	c := &SpacesMessagesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.searchmessagesrequest = searchmessagesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *SpacesMessagesSearchCall) Fields(s ...googleapi.Field) *SpacesMessagesSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *SpacesMessagesSearchCall) Context(ctx context.Context) *SpacesMessagesSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *SpacesMessagesSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMessagesSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.searchmessagesrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/messages:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chat.spaces.messages.search", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.messages.search" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchMessagesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *SpacesMessagesSearchCall) Do(opts ...googleapi.CallOption) (*SearchMessagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchMessagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chat.spaces.messages.search", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SpacesMessagesSearchCall) Pages(ctx context.Context, f func(*SearchMessagesResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.searchmessagesrequest.PageToken = pt }(c.searchmessagesrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.searchmessagesrequest.PageToken = x.NextPageToken
+	}
 }
 
 type SpacesMessagesUpdateCall struct {

@@ -464,6 +464,74 @@ func (s BigQueryAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// BigQueryUnitTest: Represents a BigQuery unit test.
+type BigQueryUnitTest struct {
+	// DependencyTargets: A list of actions that this action depends on.
+	DependencyTargets []*Target `json:"dependencyTargets,omitempty"`
+	// Disabled: Whether this action is disabled (i.e. should not be run).
+	Disabled bool `json:"disabled,omitempty"`
+	// DisplayName: The name of the unit test.
+	DisplayName string `json:"displayName,omitempty"`
+	// ExpectedOutputQuery: Expected output query to compare against the test
+	// query.
+	ExpectedOutputQuery string `json:"expectedOutputQuery,omitempty"`
+	// Tags: Arbitrary, user-defined tags on this action.
+	Tags []string `json:"tags,omitempty"`
+	// TestQuery: Test query to execute.
+	TestQuery string `json:"testQuery,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DependencyTargets") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DependencyTargets") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigQueryUnitTest) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryUnitTest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// BigQueryUnitTestAction: Represents a workflow action that will run a
+// BigQuery unit test.
+type BigQueryUnitTestAction struct {
+	// ActualResultsJobId: Output only. Job ID for the actual results.
+	ActualResultsJobId string `json:"actualResultsJobId,omitempty"`
+	// ActualResultsSqlScript: Output only. SQL script for the actual results.
+	ActualResultsSqlScript string `json:"actualResultsSqlScript,omitempty"`
+	// ExpectedResultsJobId: Output only. Job ID for the expected results.
+	ExpectedResultsJobId string `json:"expectedResultsJobId,omitempty"`
+	// ExpectedResultsSqlScript: Output only. SQL script for the expected results.
+	ExpectedResultsSqlScript string `json:"expectedResultsSqlScript,omitempty"`
+	// TotalBilledBytes: Output only. Total bytes billed for this action. Combined
+	// total for actual and expected jobs.
+	TotalBilledBytes int64 `json:"totalBilledBytes,omitempty,string"`
+	// TotalProcessedBytes: Output only. Total bytes processed for this action.
+	// Combined total for actual and expected jobs.
+	TotalProcessedBytes int64 `json:"totalProcessedBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ActualResultsJobId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActualResultsJobId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s BigQueryUnitTestAction) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryUnitTestAction
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -601,6 +669,9 @@ type CodeCompilationConfig struct {
 	DefaultNotebookRuntimeOptions *NotebookRuntimeOptions `json:"defaultNotebookRuntimeOptions,omitempty"`
 	// DefaultSchema: Optional. The default schema (BigQuery dataset ID).
 	DefaultSchema string `json:"defaultSchema,omitempty"`
+	// PipelineConfig: Optional. The pipeline options which defines the pipeline
+	// type and path within the Git repository.
+	PipelineConfig *PipelineConfig `json:"pipelineConfig,omitempty"`
 	// SchemaSuffix: Optional. The suffix that should be appended to all schema
 	// (BigQuery dataset ID) names.
 	SchemaSuffix string `json:"schemaSuffix,omitempty"`
@@ -868,6 +939,9 @@ type CompilationResult struct {
 	// DataformCoreVersion: Output only. The version of `@dataform/core` that was
 	// used for compilation.
 	DataformCoreVersion string `json:"dataformCoreVersion,omitempty"`
+	// GcsRepositorySnapshotMetadata: Output only. Metadata about the repository
+	// snapshot used by scheduled notebooks.
+	GcsRepositorySnapshotMetadata *GcsRepositorySnapshotMetadata `json:"gcsRepositorySnapshotMetadata,omitempty"`
 	// GitCommitish: Immutable. Git commit/tag/branch name at which the repository
 	// should be compiled. Must exist in the remote repository. Examples: - a
 	// commit SHA: `12ade345` - a tag: `tag1` - a branch name: `branch1`
@@ -918,6 +992,8 @@ func (s CompilationResult) MarshalJSON() ([]byte, error) {
 type CompilationResultAction struct {
 	// Assertion: The assertion executed by this action.
 	Assertion *Assertion `json:"assertion,omitempty"`
+	// BigqueryUnitTest: The unit test executed by this action.
+	BigqueryUnitTest *BigQueryUnitTest `json:"bigqueryUnitTest,omitempty"`
 	// CanonicalTarget: The action's identifier if the project had been compiled
 	// without any overrides configured. Unique within the compilation result.
 	CanonicalTarget *Target `json:"canonicalTarget,omitempty"`
@@ -1258,6 +1334,56 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// EndUserAuthConfig: Includes configuration options for repository end user
+// authentication.
+type EndUserAuthConfig struct {
+	// OauthConfig: Optional. OAuth configuration for repository end user
+	// authentication.
+	OauthConfig *OAuthConfig `json:"oauthConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OauthConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OauthConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EndUserAuthenticationConfig: Includes configuration options for end user
+// authentication.
+type EndUserAuthenticationConfig struct {
+	// OauthConfig: Optional. OAuth configuration for end user authentication.
+	OauthConfig *OAuthConfig `json:"oauthConfig,omitempty"`
+	// UserEmail: Output only. Email address of the user to run workflow
+	// invocations under.
+	UserEmail string `json:"userEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OauthConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OauthConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EndUserAuthenticationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EndUserAuthenticationConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ErrorTable: Error table information, used to write error data into a
 // BigQuery table.
 type ErrorTable struct {
@@ -1492,7 +1618,7 @@ func (s FileOperation) MarshalJSON() ([]byte, error) {
 // FileSearchResult: Client-facing representation of a file entry in search
 // results.
 type FileSearchResult struct {
-	// Path: File system path relative to the workspace root.
+	// Path: File system path relative to the file tree root.
 	Path string `json:"path,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1609,6 +1735,60 @@ type FolderContentsEntry struct {
 
 func (s FolderContentsEntry) MarshalJSON() ([]byte, error) {
 	type NoMethod FolderContentsEntry
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GcsRepositorySnapshotDestination: Configures the destination for a
+// repository snapshot.
+type GcsRepositorySnapshotDestination struct {
+	// RepositorySnapshotUri: Optional. The Google Cloud Storage destination to
+	// upload the repository snapshot to. Format: `gs://bucket-name/path/`.
+	RepositorySnapshotUri string `json:"repositorySnapshotUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RepositorySnapshotUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RepositorySnapshotUri") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcsRepositorySnapshotDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsRepositorySnapshotDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GcsRepositorySnapshotMetadata: Metadata about a repository snapshot stored
+// in Google Cloud Storage.
+type GcsRepositorySnapshotMetadata struct {
+	// Crc32cChecksum: Output only. The crc32c checksum of the repository snapshot,
+	// big-endian base64 encoded.
+	Crc32cChecksum string `json:"crc32cChecksum,omitempty"`
+	// Generation: Output only. The generation number of the Cloud Storage object.
+	// See https://cloud.google.com/storage/docs/metadata#generation-number.
+	Generation int64 `json:"generation,omitempty,string"`
+	// RepositorySnapshotUri: Output only. The Google Cloud Storage URI of the
+	// repository snapshot.
+	RepositorySnapshotUri string `json:"repositorySnapshotUri,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Crc32cChecksum") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Crc32cChecksum") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GcsRepositorySnapshotMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GcsRepositorySnapshotMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1759,6 +1939,25 @@ func (s IncrementalTableConfig) MarshalJSON() ([]byte, error) {
 
 // InstallNpmPackagesRequest: `InstallNpmPackages` request message.
 type InstallNpmPackagesRequest struct {
+	// PipelineConfig: Optional. The pipeline options which defines the pipeline
+	// type and path within the Git repository.
+	PipelineConfig *PipelineConfig `json:"pipelineConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PipelineConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PipelineConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstallNpmPackagesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InstallNpmPackagesRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // InstallNpmPackagesResponse: `InstallNpmPackages` response message.
@@ -1802,6 +2001,22 @@ func (s Interval) MarshalJSON() ([]byte, error) {
 // invocation. If both `included_targets` and `included_tags` are unset, all
 // actions will be included.
 type InvocationConfig struct {
+	// ConcurrentActionsLimit: Optional. Maximum number of actions that can be
+	// executed concurrently.
+	ConcurrentActionsLimit int64 `json:"concurrentActionsLimit,omitempty"`
+	// EndUserAuthConfig: Optional. Configuration for end user authentication. Do
+	// not set if `service_account` is used.
+	EndUserAuthConfig *EndUserAuthenticationConfig `json:"endUserAuthConfig,omitempty"`
+	// ExecutionMode: Optional. Specifies the execution mode for the workflow
+	// invocation.
+	//
+	// Possible values:
+	//   "EXECUTION_MODE_UNSPECIFIED" - Default value.
+	//   "DEFAULT" - Default execution mode, which runs all actions except unit
+	// tests. Same as ALL_EXCEPT_UNIT_TESTS.
+	//   "ALL_EXCEPT_UNIT_TESTS" - Run all actions except unit tests.
+	//   "UNIT_TESTS_ONLY" - Run unit tests only.
+	ExecutionMode string `json:"executionMode,omitempty"`
 	// FullyRefreshIncrementalTablesEnabled: Optional. When set to true, any
 	// incremental tables will be fully refreshed.
 	FullyRefreshIncrementalTablesEnabled bool `json:"fullyRefreshIncrementalTablesEnabled,omitempty"`
@@ -1831,18 +2046,16 @@ type InvocationConfig struct {
 	// TransitiveDependentsIncluded: Optional. When set to true, transitive
 	// dependents of included actions will be executed.
 	TransitiveDependentsIncluded bool `json:"transitiveDependentsIncluded,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "FullyRefreshIncrementalTablesEnabled") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted from
-	// API requests. See
+	// ForceSendFields is a list of field names (e.g. "ConcurrentActionsLimit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "FullyRefreshIncrementalTablesEnabled") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted from API
-	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for
-	// more details.
+	// NullFields is a list of field names (e.g. "ConcurrentActionsLimit") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
@@ -2336,6 +2549,8 @@ func (s Notebook) MarshalJSON() ([]byte, error) {
 type NotebookAction struct {
 	// Contents: Output only. The code contents of a Notebook to be run.
 	Contents string `json:"contents,omitempty"`
+	// FilePath: Output only. The path to the notebook file in the repository.
+	FilePath string `json:"filePath,omitempty"`
 	// JobId: Output only. The ID of the Gemini Enterprise Agent Platform job that
 	// executed the notebook in contents and also the ID used for the outputs
 	// created in Google Cloud Storage buckets. Only set once the job has started
@@ -2370,6 +2585,10 @@ type NotebookRuntimeOptions struct {
 	// GcsOutputBucket: Optional. The Google Cloud Storage location to upload the
 	// result to. Format: `gs://bucket-name`.
 	GcsOutputBucket string `json:"gcsOutputBucket,omitempty"`
+	// GcsRepositorySnapshotDestination: Optional. The Google Cloud Storage
+	// destination to upload the snapshot to. For empty URI it defaults to the
+	// provided gcs_output_bucket. Format: `gs://bucket-name/path/`.
+	GcsRepositorySnapshotDestination *GcsRepositorySnapshotDestination `json:"gcsRepositorySnapshotDestination,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "AiPlatformNotebookRuntimeTemplate") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted from
@@ -2387,6 +2606,29 @@ type NotebookRuntimeOptions struct {
 
 func (s NotebookRuntimeOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod NotebookRuntimeOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// OAuthConfig: OAuth configuration for end user authentication.
+type OAuthConfig struct {
+	// AdditionalOauthScopes: Optional. Additional OAuth scopes to use for BigQuery
+	// executions. Scopes always in use: `https://www.googleapis.com/auth/bigquery`
+	AdditionalOauthScopes []string `json:"additionalOauthScopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalOauthScopes") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalOauthScopes") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod OAuthConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2506,6 +2748,39 @@ type Operations struct {
 
 func (s Operations) MarshalJSON() ([]byte, error) {
 	type NoMethod Operations
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PipelineConfig: Defines the pipeline type and path within the Git
+// repository.
+type PipelineConfig struct {
+	// Path: Required. The relative path within the Git repository where the
+	// pipeline is defined. For example, for a Dataform pipeline, it is a path to
+	// the folder where `workflow_settings.yaml` or `dataform.json` is located.
+	Path string `json:"path,omitempty"`
+	// PipelineType: Required. The type of the pipeline.
+	//
+	// Possible values:
+	//   "PIPELINE_TYPE_UNSPECIFIED" - Default value. This value is unused.
+	//   "DATAFORM" - Regular Dataform pipeline.
+	//   "SQL" - SQL single file asset.
+	//   "NOTEBOOK" - Notebook single file asset.
+	PipelineType string `json:"pipelineType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PipelineConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PipelineConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3120,7 +3395,7 @@ type ReleaseConfig struct {
 	// TimeZone: Optional. Specifies the time zone to be used when interpreting
 	// cron_schedule. Must be a time zone name from the time zone database
 	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left
-	// unspecified, the default is UTC.
+	// unspecified, the default is `UTC`.
 	TimeZone string `json:"timeZone,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -3215,6 +3490,9 @@ type Repository struct {
 	DataEncryptionState *DataEncryptionState `json:"dataEncryptionState,omitempty"`
 	// DisplayName: Optional. The repository's user-friendly name.
 	DisplayName string `json:"displayName,omitempty"`
+	// EndUserAuthConfig: Optional. Includes configuration options for end user
+	// authentication.
+	EndUserAuthConfig *EndUserAuthConfig `json:"endUserAuthConfig,omitempty"`
 	// GitRemoteSettings: Optional. If set, configures this repository to be linked
 	// to a Git remote.
 	GitRemoteSettings *GitRemoteSettings `json:"gitRemoteSettings,omitempty"`
@@ -3824,7 +4102,7 @@ type WorkflowConfig struct {
 	// TimeZone: Optional. Specifies the time zone to be used when interpreting
 	// cron_schedule. Must be a time zone name from the time zone database
 	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones). If left
-	// unspecified, the default is UTC.
+	// unspecified, the default is `UTC`.
 	TimeZone string `json:"timeZone,omitempty"`
 	// UpdateTime: Output only. The timestamp of when the WorkflowConfig was last
 	// updated.
@@ -3869,6 +4147,9 @@ type WorkflowInvocation struct {
 	InvocationTiming *Interval `json:"invocationTiming,omitempty"`
 	// Name: Output only. The workflow invocation's name.
 	Name string `json:"name,omitempty"`
+	// PipelineConfig: Output only. The pipeline options which defines the pipeline
+	// type and path within the Git repository.
+	PipelineConfig *PipelineConfig `json:"pipelineConfig,omitempty"`
 	// PrivateResourceMetadata: Output only. Metadata indicating whether this
 	// resource is user-scoped. `WorkflowInvocation` resource is `user_scoped` only
 	// if it is sourced from a compilation result and the compilation result is
@@ -3918,6 +4199,9 @@ func (s WorkflowInvocation) MarshalJSON() ([]byte, error) {
 type WorkflowInvocationAction struct {
 	// BigqueryAction: Output only. The workflow action's bigquery action details.
 	BigqueryAction *BigQueryAction `json:"bigqueryAction,omitempty"`
+	// BigqueryUnitTestAction: Output only. The workflow action's unit test
+	// details.
+	BigqueryUnitTestAction *BigQueryUnitTestAction `json:"bigqueryUnitTestAction,omitempty"`
 	// CanonicalTarget: Output only. The action's identifier if the project had
 	// been compiled without any overrides configured. Unique within the
 	// compilation result.
@@ -3951,6 +4235,8 @@ type WorkflowInvocationAction struct {
 	//   "SUCCEEDED" - The action succeeded. A terminal state.
 	//   "CANCELLED" - The action was cancelled. A terminal state.
 	//   "FAILED" - The action failed. A terminal state.
+	//   "QUEUED" - Execution of the action was queued waiting for an available
+	// concurrency slot.
 	State string `json:"state,omitempty"`
 	// Target: Output only. This action's identifier. Unique within the workflow
 	// invocation.
@@ -8328,6 +8614,111 @@ func (c *ProjectsLocationsRepositoriesCompilationResultsCreateCall) Do(opts ...g
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.compilationResults.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall struct {
+	s                 *Service
+	parent            string
+	compilationresult *CompilationResult
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// CreateLongRunning: Creates a new CompilationResult in a given project and
+// location asynchronously.
+//
+//   - parent: The repository in which to create the compilation result. Must be
+//     in the format `projects/*/locations/*/repositories/*`.
+func (r *ProjectsLocationsRepositoriesCompilationResultsService) CreateLongRunning(parent string, compilationresult *CompilationResult) *ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall {
+	c := &ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.compilationresult = compilationresult
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.compilationresult)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/compilationResults:createLongRunning")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.compilationResults.createLongRunning", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataform.projects.locations.repositories.compilationResults.createLongRunning" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRepositoriesCompilationResultsCreateLongRunningCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataform.projects.locations.repositories.compilationResults.createLongRunning", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

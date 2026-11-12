@@ -623,6 +623,7 @@ type DestinationStatus struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApprovedCountries") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -922,6 +923,7 @@ type ItemLevelIssue struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Resolution: Whether the issue can be resolved by the business.
 	Resolution string `json:"resolution,omitempty"`
@@ -950,6 +952,41 @@ type ItemLevelIssue struct {
 
 func (s ItemLevelIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ItemLevelIssue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// LeaseTerm: The lease term of the property.
+type LeaseTerm struct {
+	// DurationUnit: The duration unit of the lease term.
+	//
+	// Possible values:
+	//   "DURATION_UNIT_UNSPECIFIED" - Unspecified duration unit.
+	//   "MONTHS" - Month.
+	//   "WEEKS" - Week.
+	DurationUnit string `json:"durationUnit,omitempty"`
+	// DurationValue: The duration value of the lease term.
+	DurationValue int64 `json:"durationValue,omitempty,string"`
+	// Type: The type of lease term.
+	//
+	// Possible values:
+	//   "LEASE_TERM_TYPE_UNSPECIFIED" - Unspecified lease term type.
+	//   "FIXED_TERM" - Fixed term.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DurationUnit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DurationUnit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s LeaseTerm) MarshalJSON() ([]byte, error) {
+	type NoMethod LeaseTerm
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1025,7 +1062,9 @@ func (s *LoyaltyPoints) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// LoyaltyProgram: A message that represents loyalty program.
+// LoyaltyProgram: A message that represents loyalty program. For more
+// information on loyalty programs, see Overview of loyalty programs
+// (/merchant/api/guides/loyalty/loyalty-programs).
 type LoyaltyProgram struct {
 	// CashbackForFutureUse: The cashback that can be used for future purchases.
 	CashbackForFutureUse *Price `json:"cashbackForFutureUse,omitempty"`
@@ -1190,6 +1229,12 @@ func (s Price) MarshalJSON() ([]byte, error) {
 // retrieved. All fields in the processed product and its sub-messages match
 // the name of their corresponding attribute in the Product data specification
 // (https://support.google.com/merchants/answer/7052112) with some exceptions.
+// For product ingestion workflows and status checks, see Manage products
+// (https://developers.google.com/merchant/api/guides/products/overview), Add
+// and manage products
+// (https://developers.google.com/merchant/api/guides/products/add-manage), and
+// List your products data and product issues
+// (https://developers.google.com/merchant/api/guides/products/list-products-data-issues).
 type Product struct {
 	// Archived: Output only. Determines whether the product is archived
 	// (https://support.google.com/merchants/answer/11909930). To archive or
@@ -1414,9 +1459,8 @@ type ProductAttributes struct {
 	CarrierShipping []*CarrierShipping `json:"carrierShipping,omitempty"`
 	// Certifications: Product Certifications, for example for energy efficiency
 	// labeling of products recorded in the EU EPREL
-	// (https://eprel.ec.europa.eu/screen/home) database. See the Help Center
-	// (https://support.google.com/merchants/answer/13528839) article for more
-	// information.
+	// (https://eprel.ec.europa.eu/screen/home) database. For more information, see
+	// Certification (https://support.google.com/merchants/answer/13528839).
 	Certifications []*ProductCertification `json:"certifications,omitempty"`
 	// CertifiedPreOwned: Whether the vehicle is OEM certified pre-owned
 	// (https://support.google.com/google-ads/answer/14156475).
@@ -1587,6 +1631,7 @@ type ProductAttributes struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 	// ExpirationDate: Date on which the item should expire, as specified upon
 	// insertion, in ISO 8601 (http://en.wikipedia.org/wiki/ISO_8601) format. The
@@ -1669,6 +1714,7 @@ type ProductAttributes struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	IncludedDestinations []string `json:"includedDestinations,omitempty"`
 	// Installment: Number and amount of installments to pay for an item.
 	Installment *ProductInstallment `json:"installment,omitempty"`
@@ -1688,6 +1734,8 @@ type ProductAttributes struct {
 	// Latitude: The latitude of the property. The value must be between -90
 	// (inclusive) and 90 (inclusive), up to 6 decimal places.
 	Latitude float64 `json:"latitude,omitempty"`
+	// LeaseTerm: The lease term of the property.
+	LeaseTerm *LeaseTerm `json:"leaseTerm,omitempty"`
 	// LifestyleImageLinks: Additional URLs of lifestyle images of the item, used
 	// to explicitly identify images that showcase your item in a real-world
 	// context. See the Help Center article
@@ -1971,8 +2019,10 @@ type ProductAttributes struct {
 	//   "US" - US.
 	SizeSystem string `json:"sizeSystem,omitempty"`
 	// SizeTypes: The cut of the item. It can be used to represent combined size
-	// types for apparel items. Maximum two of size types can be provided, see Size
-	// type (https://support.google.com/merchants/answer/6324497).
+	// types for apparel items. You can provide up to two `SizeType` values, for
+	// example, `["PETITE", "MATERNITY"]` or `["BIG", "TALL"]`. For more
+	// information, see Size type
+	// (https://support.google.com/merchants/answer/6324497).
 	//
 	// Possible values:
 	//   "SIZE_TYPE_UNSPECIFIED" - The size type is not specified.
@@ -2082,8 +2132,8 @@ type ProductAttributes struct {
 	// article (https://support.google.com/merchants/answer/13674896) for more
 	// information.
 	VirtualModelLink string `json:"virtualModelLink,omitempty"`
-	// Warranty: The warranty
-	// (https://support.google.com/google-ads/answer/15957626) of the vehicle.
+	// Warranty: The `warranty`
+	// (https://support.google.com/merchants/answer/18562485) of the product.
 	Warranty *Warranty `json:"warranty,omitempty"`
 	// Year: The Year (https://support.google.com/google-ads/answer/14152816) of
 	// the vehicle model.
@@ -2143,10 +2193,23 @@ type ProductCertification struct {
 	//   "BMWK" - For the German CO2 emissions classes for vehicles.
 	//   "EPA" - Environment Protection Agency.
 	//   "EC" - European Commission for energy labels in the EU.
+	//   "DESNZ" - Department for Energy Security and Net Zero.
 	CertificationAuthority string `json:"certificationAuthority,omitempty"`
 	// CertificationCode: The certification code. Maximum length is 2000
 	// characters.
 	CertificationCode string `json:"certificationCode,omitempty"`
+	// CertificationDocumentLink: Optional. URL to the certification document (eg.
+	// `https://www.example.com/document`), for example, the product data sheet or
+	// fiche required by UK's DESNZ or EU's EPREL. Maximum length is 2000
+	// characters. For more information, see Certification
+	// (https://support.google.com/merchants/answer/13528839).
+	CertificationDocumentLink string `json:"certificationDocumentLink,omitempty"`
+	// CertificationLabelLink: Optional. URL to the certification label (eg.
+	// `https://www.example.com/label`), for example, the energy efficiency label
+	// required by UK's DESNZ or EU's EPREL. Maximum length is 2000 characters. For
+	// more information, see Certification
+	// (https://support.google.com/merchants/answer/13528839).
+	CertificationLabelLink string `json:"certificationLabelLink,omitempty"`
 	// CertificationName: The name of the certification.
 	//
 	// Possible values:
@@ -2159,6 +2222,7 @@ type ProductCertification struct {
 	//   "VEHICLE_ENERGY_EFFICIENCY" - The overall CO2 class of a vehicle
 	//   "VEHICLE_ENERGY_EFFICIENCY_DISCHARGED_BATTERY" - For the CO2 class of a
 	// vehicle with a discharged battery.
+	//   "GB_ENERGY_INFO" - Great Britain Energy Information.
 	CertificationName string `json:"certificationName,omitempty"`
 	// CertificationValue: The certification value (also known as class, level or
 	// grade), for example "A+", "C", "gold". Maximum length is 2000 characters.
@@ -2240,6 +2304,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2359,7 +2424,14 @@ func (s ProductFee) MarshalJSON() ([]byte, error) {
 // not the processed product that you see in Merchant Center, in Shopping ads,
 // or across Google surfaces. Product inputs, rules and supplemental data
 // source data are combined to create the processed Product. For more
-// information, see Manage products (/merchant/api/guides/products/overview).
+// information, see Manage products
+// (https://developers.google.com/merchant/api/guides/products/overview), Add
+// and manage products
+// (https://developers.google.com/merchant/api/guides/products/add-manage),
+// Make frequent updates to your products
+// (https://developers.google.com/merchant/api/guides/products/frequent-updates),
+// and Manage API data sources
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source).
 // Required product input attributes to pass data validation checks are
 // primarily defined in the Products Data Specification
 // (https://support.google.com/merchants/answer/188494). The following
@@ -2505,6 +2577,9 @@ type ProductInstallment struct {
 	CreditType string `json:"creditType,omitempty"`
 	// Downpayment: The up-front down payment amount the buyer has to pay.
 	Downpayment *Price `json:"downpayment,omitempty"`
+	// MileageAllowance: Optional. The mileage allowance for the lease of the
+	// vehicle. Only applicable to vehicle products.
+	MileageAllowance *Mileage `json:"mileageAllowance,omitempty"`
 	// Months: The number of installments the buyer has to pay.
 	Months int64 `json:"months,omitempty,string"`
 	// TotalAmount: Optional. Total amount the buyer has to pay, including
@@ -2542,8 +2617,9 @@ func (s *ProductInstallment) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ProductMinimumOrderValue: The minimum order value in the cart before the
-// checkout is permitted.
+// ProductMinimumOrderValue: Minimum order value
+// (https://support.google.com/merchants/answer/16989009) in the cart before
+// the checkout is permitted.
 type ProductMinimumOrderValue struct {
 	// Country: Required. The CLDR territory code
 	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of the
@@ -2560,10 +2636,15 @@ type ProductMinimumOrderValue struct {
 	// `ONLINE_LOCAL` if not configured.
 	//
 	// Possible values:
-	//   "SURFACE_UNSPECIFIED" - Surface is unspecified.
-	//   "ONLINE" - Surface value to indicate online purchases.
-	//   "LOCAL" - Surface value to indicate local purchases.
-	//   "ONLINE_LOCAL" - Surface value to indicate online and local purchases.
+	//   "SURFACE_UNSPECIFIED" - Indicates that the surface is unspecified.
+	// Defaults to `ONLINE_LOCAL`.
+	//   "ONLINE" - Applies exclusively to delivery/shipping orders (all delivery
+	// routes).
+	//   "LOCAL" - Applies exclusively to local in-store pickup (buy online, pickup
+	// in store). See [in-store
+	// pickup](https://support.google.com/merchants/answer/14634021).
+	//   "ONLINE_LOCAL" - Applies to both delivery/shipping and local in-store
+	// pickup.
 	Surface string `json:"surface,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Country") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2618,7 +2699,9 @@ func (s ProductStatus) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -3366,11 +3449,21 @@ func (s VariantOption) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Warranty: The warranty of the vehicle.
+// Warranty: The warranty of the product.
 type Warranty struct {
-	// Duration: The warranty duration in months.
+	// Duration: The warranty duration in units. Default is in months, can be
+	// overridden by the `duration_unit` field.
 	Duration int64 `json:"duration,omitempty,string"`
-	// Mileage: The warranty mileage.
+	// DurationUnit: The unit for the warranty duration. Assumed to be `MONTH` if
+	// equal to `WARRANTY_DURATION_UNIT_UNSPECIFIED`.
+	//
+	// Possible values:
+	//   "WARRANTY_DURATION_UNIT_UNSPECIFIED" - Indicates that the warranty
+	// duration unit is unspecified.
+	//   "MONTH" - Indicates that the warranty duration unit is month.
+	//   "YEAR" - Indicates that the warranty duration unit is year.
+	DurationUnit string `json:"durationUnit,omitempty"`
+	// Mileage: The warranty mileage (only applies to vehicles).
 	Mileage *Mileage `json:"mileage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3533,9 +3626,9 @@ type AccountsProductInputsInsertCall struct {
 }
 
 // Insert: Uploads a product input to your Merchant Center account
-// (/merchant/api/guides/products/add-manage#add_a_product). You must have a
-// products data source
-// (/merchant/api/guides/data-sources/api-sources#create-primary-data-source)
+// (https://developers.google.com/merchant/api/guides/products/add-manage#add_a_product).
+// You must have a products data source
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source)
 // to be able to insert a product. The unique identifier of the data source is
 // passed as a query parameter in the request URL. If a product input with the
 // same contentLanguage, offerId, and dataSource already exists, then the
@@ -3556,7 +3649,7 @@ func (r *AccountsProductInputsService) Insert(parent string, productinput *Produ
 // or supplemental product data source name. If the product already exists and
 // data source provided is different, then the product will be moved to a new
 // data source. For more information, see Create a primary data source
-// (/merchant/api/guides/data-sources/api-sources#create-primary-data-source).
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source).
 // Only API data sources are supported. Format:
 // `accounts/{account}/dataSources/{datasource}`. For example,
 // `accounts/123456/dataSources/104628`.
@@ -3662,7 +3755,10 @@ type AccountsProductInputsPatchCall struct {
 // The name of the product input to update is taken from the `name` field
 // within the `ProductInput` resource. After inserting, updating, or deleting a
 // product input, it may take several minutes before the processed product can
-// be retrieved.
+// be retrieved. For more information, see Add and manage products
+// (https://developers.google.com/merchant/api/guides/products/add-manage) and
+// Make frequent updates to your products
+// (https://developers.google.com/merchant/api/guides/products/frequent-updates).
 //
 //   - name: Identifier. The name of the product. Format:
 //     `accounts/{account}/productInputs/{productinput}` The {productinput}
@@ -3955,7 +4051,9 @@ type AccountsProductsListCall struct {
 // response might contain fewer items than specified by `pageSize`. Rely on
 // `pageToken` to determine if there are more items to be requested. After
 // inserting, updating, or deleting a product input, it may take several
-// minutes before the updated processed product can be retrieved.
+// minutes before the updated processed product can be retrieved. For more
+// information, see List your products data and product issues
+// (https://developers.google.com/merchant/api/guides/products/list-products-data-issues).
 //
 //   - parent: The account to list processed products for. Format:
 //     `accounts/{account}`.

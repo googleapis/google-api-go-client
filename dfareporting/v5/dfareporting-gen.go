@@ -1643,6 +1643,40 @@ func (s AdBlockingConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AdditionalAsset: Additional assets for a creative.
+type AdditionalAsset struct {
+	// CallToActions: Optional. Call to actions for the creative.
+	CallToActions []string `json:"callToActions,omitempty"`
+	// CoverImages: Optional. Cover images for the creative.
+	CoverImages []*CreativeAsset `json:"coverImages,omitempty"`
+	// Descriptions: Optional. Descriptions for the creative.
+	Descriptions []string `json:"descriptions,omitempty"`
+	// DisplayUrl: Optional. Display URL for the creative.
+	DisplayUrl string `json:"displayUrl,omitempty"`
+	// Headlines: Optional. Headlines for the creative.
+	Headlines []string `json:"headlines,omitempty"`
+	// LongDescriptions: Optional. Long descriptions for the creative.
+	LongDescriptions []string `json:"longDescriptions,omitempty"`
+	// LongHeadlines: Optional. Long headlines for the creative.
+	LongHeadlines []string `json:"longHeadlines,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CallToActions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CallToActions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AdditionalAsset) MarshalJSON() ([]byte, error) {
+	type NoMethod AdditionalAsset
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AdsListResponse: Ad List Response
 type AdsListResponse struct {
 	// Ads: Ad collection.
@@ -3692,6 +3726,10 @@ type Creative struct {
 	// look or functionality of a creative. Applicable to the following creative
 	// types: all RICH_MEDIA, and all VPAID.
 	AdTagKeys []string `json:"adTagKeys,omitempty"`
+	// AdditionalAsset: Optional. Additional asset for the creative. This field
+	// captures additional assets that are associated with the creative and used in
+	// the context of the social/native and YouTube platforms.
+	AdditionalAsset *AdditionalAsset `json:"additionalAsset,omitempty"`
 	// AdditionalSizes: Additional sizes associated with a responsive creative.
 	// When inserting or updating a creative either the size ID field or size width
 	// and height fields can be used. Applicable to DISPLAY creatives when the
@@ -4030,6 +4068,17 @@ type Creative struct {
 	// will be auto-generated for both insert and update operations. Applicable to
 	// all creative types.
 	SubaccountId int64 `json:"subaccountId,omitempty,string"`
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// creative as created or edited using AI when served in regions with local AI
+	// labeling regulations. Learn more about labeling requirements in AI
+	// regulations. (https://support.google.com/campaignmanager/answer/17232030)
+	//
+	// Possible values:
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ThirdPartyBackupImageImpressionsUrl: Third-party URL used to record backup
 	// image impressions. Applicable to the following creative types: all
 	// RICH_MEDIA.
@@ -4448,6 +4497,12 @@ type CreativeAsset struct {
 	//   "ALTERNATE_VIDEO"
 	//   "PARENT_AUDIO"
 	//   "TRANSCODED_AUDIO"
+	//   "COVER_IMAGE" - Cover image.
+	//   "HEADLINE" - Headline.
+	//   "LONG_HEADLINE" - Long headline.
+	//   "DESCRIPTION" - Description.
+	//   "LONG_DESCRIPTION" - Long description.
+	//   "CALL_TO_ACTION" - Call to action.
 	Role string `json:"role,omitempty"`
 	// Size: Size associated with this creative asset. This is a required field
 	// when applicable; however for IMAGE and FLASH_INPAGE, creatives if left
@@ -37081,7 +37136,18 @@ type StudioCreativeAssetsInsertCall struct {
 	header_                                       http.Header
 }
 
-// Insert: Inserts a new studio creative asset.
+// Insert: Inserts a new studio creative asset. Requests to upload an asset
+// file must be sent to the upload URI using multipart media upload (or
+// resumable media upload). For multipart uploads
+// (https://developers.google.com/doubleclick-advertisers/upload#multipart)
+// (`uploadType=multipart`), the request uses `multipart/related` and includes
+// two parts: * **Metadata**: A JSON object representing
+// DfareportingStudioCreativeAssetsInsertRequest with `studioAdvertiserId`, and
+// optional `studioAccountId` and `studioCreativeId`. * **Media**: The binary
+// data of the asset file, specifying the `Content-Type` of the asset and a
+// `Content-Disposition` header with `name="media" and `filename="" (for
+// example, `Content-Disposition: form-data; name="media";
+// filename="asset.jpg").
 func (r *StudioCreativeAssetsService) Insert(dfareportingstudiocreativeassetsinsertrequest *DfareportingStudioCreativeAssetsInsertRequest) *StudioCreativeAssetsInsertCall {
 	c := &StudioCreativeAssetsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.dfareportingstudiocreativeassetsinsertrequest = dfareportingstudiocreativeassetsinsertrequest

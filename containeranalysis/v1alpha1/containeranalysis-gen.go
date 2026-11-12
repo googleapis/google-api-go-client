@@ -276,6 +276,8 @@ type AISkillAnalysisOccurrence struct {
 	//   "CRITICAL" - Critical severity.
 	//   "HIGH" - High severity.
 	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// PerScannerVerdict: Optional. Per scanner verdict.
+	PerScannerVerdict *PerScannerVerdict `json:"perScannerVerdict,omitempty"`
 	// SkillName: Optional. Name of the skill that produced this analysis.
 	SkillName string `json:"skillName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Findings") to
@@ -2143,7 +2145,12 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// Possible values:
 	//   "NOT_VERIFIED" - Not a verifiable build (the default).
 	//   "VERIFIED" - Build must be verified.
+	//   "BEST_EFFORT" - Build verification is best effort. If provenance
+	// generation fails, the build will still succeed.
 	RequestedVerifyOption string `json:"requestedVerifyOption,omitempty"`
+	// ResolvedWorkerRelease: Output only. Worker release resolved from the release
+	// channel.
+	ResolvedWorkerRelease string `json:"resolvedWorkerRelease,omitempty"`
 	// SecretEnv: A list of global environment variables, which are encrypted using
 	// a Cloud Key Management Service crypto key. These values must be specified in
 	// the build's `Secret`. These variables will be available to all build steps
@@ -2178,6 +2185,9 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptions struct {
 	Volumes []*ContaineranalysisGoogleDevtoolsCloudbuildV1Volume `json:"volumes,omitempty"`
 	// WorkerPool: This field deprecated; please use `pool.name` instead.
 	WorkerPool string `json:"workerPool,omitempty"`
+	// WorkerRelease: Optional. Option to specify which release or release channel
+	// (rapid|regular|stable) to use to run this build.
+	WorkerRelease string `json:"workerRelease,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutomapSubstitutions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2206,6 +2216,14 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption struct {
 	// `cloudbuild.workerpools.use` on the project hosting the WorkerPool. Format
 	// projects/{project}/locations/{location}/workerPools/{workerPoolId}
 	Name string `json:"name,omitempty"`
+	// ResolvedWorkerRelease: Output only. OUTPUT_ONLY. Worker release resolved
+	// from the release channel.
+	ResolvedWorkerRelease string `json:"resolvedWorkerRelease,omitempty"`
+	// WorkerRelease: Output only. OUTPUT_ONLY. The release or release channel used
+	// to run the Build. This is set to the same value as
+	// `PrivatePoolV1Config.WorkerConfig.worker_release` for the UI to easily
+	// access.
+	WorkerRelease string `json:"workerRelease,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -2222,6 +2240,66 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption struct {
 func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption) MarshalJSON() ([]byte, error) {
 	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildOptionsPoolOption
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ContaineranalysisGoogleDevtoolsCloudbuildV1BuildResourceUsage:
+// Aggregated/summary metrics over the entire build lifecycle.
+type ContaineranalysisGoogleDevtoolsCloudbuildV1BuildResourceUsage struct {
+	// AverageCpuUtilization: Output only. The average CPU utilization ratio across
+	// all vCPUs over the duration of the build, expressed as a fraction in the
+	// range [0.0, 1.0].
+	AverageCpuUtilization float64 `json:"averageCpuUtilization,omitempty"`
+	// AverageMemoryUtilization: Output only. The average memory utilization ratio
+	// over the duration of the build, expressed as a fraction in the range [0.0,
+	// 1.0].
+	AverageMemoryUtilization float64 `json:"averageMemoryUtilization,omitempty"`
+	// PeakCpuUtilization: Output only. The highest CPU utilization ratio across
+	// all vCPUs observed over the duration of the build, expressed as a fraction
+	// in the range [0.0, 1.0].
+	PeakCpuUtilization float64 `json:"peakCpuUtilization,omitempty"`
+	// PeakMemoryUtilization: Output only. The highest memory utilization ratio
+	// observed over the duration of the build, expressed as a fraction in the
+	// range [0.0, 1.0].
+	PeakMemoryUtilization float64 `json:"peakMemoryUtilization,omitempty"`
+	// TotalCpuDuration: Output only. Total CPU execution time consumed across all
+	// cores during build execution.
+	TotalCpuDuration string `json:"totalCpuDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AverageCpuUtilization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AverageCpuUtilization") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ContaineranalysisGoogleDevtoolsCloudbuildV1BuildResourceUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildResourceUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildResourceUsage) UnmarshalJSON(data []byte) error {
+	type NoMethod ContaineranalysisGoogleDevtoolsCloudbuildV1BuildResourceUsage
+	var s1 struct {
+		AverageCpuUtilization    gensupport.JSONFloat64 `json:"averageCpuUtilization"`
+		AverageMemoryUtilization gensupport.JSONFloat64 `json:"averageMemoryUtilization"`
+		PeakCpuUtilization       gensupport.JSONFloat64 `json:"peakCpuUtilization"`
+		PeakMemoryUtilization    gensupport.JSONFloat64 `json:"peakMemoryUtilization"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AverageCpuUtilization = float64(s1.AverageCpuUtilization)
+	s.AverageMemoryUtilization = float64(s1.AverageMemoryUtilization)
+	s.PeakCpuUtilization = float64(s1.PeakCpuUtilization)
+	s.PeakMemoryUtilization = float64(s1.PeakMemoryUtilization)
+	return nil
 }
 
 // ContaineranalysisGoogleDevtoolsCloudbuildV1BuildStep: A step in the build
@@ -2535,6 +2613,11 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1DependencyGitSourceDependency st
 	Depth int64 `json:"depth,omitempty,string"`
 	// DestPath: Required. Where should the files be placed on the worker.
 	DestPath string `json:"destPath,omitempty"`
+	// FetchTags: Optional. True if remote tags should be fetched too (default
+	// false). Note: when depth is 1 (default), git fetch only retrieves tags
+	// pointing to commits within the shallow boundary. Set depth to -1 to fetch
+	// all historical tags.
+	FetchTags bool `json:"fetchTags,omitempty"`
 	// RecurseSubmodules: Optional. True if submodules should be fetched too
 	// (default false).
 	RecurseSubmodules bool `json:"recurseSubmodules,omitempty"`
@@ -2878,6 +2961,8 @@ type ContaineranalysisGoogleDevtoolsCloudbuildV1Results struct {
 	// PythonPackages: Python artifacts uploaded to Artifact Registry at the end of
 	// the build.
 	PythonPackages []*ContaineranalysisGoogleDevtoolsCloudbuildV1UploadedPythonPackage `json:"pythonPackages,omitempty"`
+	// ResourceUsage: Output only. Aggregated metrics for the build.
+	ResourceUsage *ContaineranalysisGoogleDevtoolsCloudbuildV1BuildResourceUsage `json:"resourceUsage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArtifactManifest") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -5341,6 +5426,113 @@ func (s Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MaliciousContentLLMResult: Result of Malicious Content LLM scan.
+type MaliciousContentLLMResult struct {
+	// MaxSeverity: Optional. Tracks max severity found.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// ModelId: Optional. The base name of the model that performed the scan.
+	ModelId string `json:"modelId,omitempty"`
+	// ScanState: Output only. State of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATE_UNSPECIFIED" - Unspecified scan state.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanState string `json:"scanState,omitempty"`
+	// TokenUsage: Output only. Telemetry metrics tracking token usage for the AI
+	// scan.
+	TokenUsage *TokenUsage `json:"tokenUsage,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxSeverity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxSeverity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MaliciousContentLLMResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MaliciousContentLLMResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MaliciousContentStaticResult: Result of Malicious Content Static scan.
+type MaliciousContentStaticResult struct {
+	// MaxSeverity: Optional. Tracks max severity found.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity.
+	//   "CRITICAL" - Critical severity.
+	//   "HIGH" - High severity.
+	MaxSeverity string `json:"maxSeverity,omitempty"`
+	// ScanState: Output only. State of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATE_UNSPECIFIED" - Unspecified scan state.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanState string `json:"scanState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxSeverity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxSeverity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MaliciousContentStaticResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MaliciousContentStaticResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MalwareScanResult: Result of Malware scan.
+type MalwareScanResult struct {
+	// ScanState: Output only. State of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATE_UNSPECIFIED" - Unspecified scan state.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanState string `json:"scanState,omitempty"`
+	// Verdict: Optional. Verdict of the scan.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unspecified verdict.
+	//   "PASSED" - Scanner passed.
+	//   "FAILED" - Scanner failed.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScanState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScanState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MalwareScanResult) MarshalJSON() ([]byte, error) {
+	type NoMethod MalwareScanResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Material: Material is a material used in the generation of the provenance
 type Material struct {
 	// Digest: digest is a map from a hash algorithm (e.g. sha256) to the value in
@@ -5910,6 +6102,35 @@ type PackageIssue struct {
 
 func (s PackageIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod PackageIssue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PerScannerVerdict: Per scanner verdict details.
+type PerScannerVerdict struct {
+	// MaliciousContentLlmResult: Optional. Malicious Content LLM scan result.
+	MaliciousContentLlmResult *MaliciousContentLLMResult `json:"maliciousContentLlmResult,omitempty"`
+	// MaliciousContentStaticResult: Optional. Malicious Content Static scan
+	// result.
+	MaliciousContentStaticResult *MaliciousContentStaticResult `json:"maliciousContentStaticResult,omitempty"`
+	// MalwareScan: Optional. Malware scan result.
+	MalwareScan *MalwareScanResult `json:"malwareScan,omitempty"`
+	// WorkspacePolicy: Optional. Workspace Policy scan result.
+	WorkspacePolicy *WorkspacePolicyResult `json:"workspacePolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaliciousContentLlmResult")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaliciousContentLlmResult") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PerScannerVerdict) MarshalJSON() ([]byte, error) {
+	type NoMethod PerScannerVerdict
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7422,6 +7643,36 @@ func (s TimeSpan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TokenUsage: Token usage associated with an AI scan.
+type TokenUsage struct {
+	// CacheCount: Output only. Cache matched tokens for implicit cache.
+	CacheCount int64 `json:"cacheCount,omitempty,string"`
+	// CandidateCount: Output only. Tokens in the model response.
+	CandidateCount int64 `json:"candidateCount,omitempty,string"`
+	// PromptCount: Output only. Tokens in the user request.
+	PromptCount int64 `json:"promptCount,omitempty,string"`
+	// ThinkingCount: Output only. Tokens in the thinking output.
+	ThinkingCount int64 `json:"thinkingCount,omitempty,string"`
+	// ToolUsePromptCount: Output only. Prompt tokens for using tools.
+	ToolUsePromptCount int64 `json:"toolUsePromptCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "CacheCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CacheCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TokenUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod TokenUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // URI: An URI message.
 type URI struct {
 	// Label: A label for the URI.
@@ -7964,6 +8215,40 @@ func (s *VulnerabilityType) UnmarshalJSON(data []byte) error {
 	}
 	s.CvssScore = float64(s1.CvssScore)
 	return nil
+}
+
+// WorkspacePolicyResult: Result of Workspace Policy scan.
+type WorkspacePolicyResult struct {
+	// ScanState: Output only. State of the scan.
+	//
+	// Possible values:
+	//   "SCAN_STATE_UNSPECIFIED" - Unspecified scan state.
+	//   "PERFORMED" - Scan was performed.
+	//   "NOT_PERFORMED" - Scan was not performed.
+	ScanState string `json:"scanState,omitempty"`
+	// Verdict: Optional. Verdict of the scan.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Unspecified verdict.
+	//   "PASSED" - Scanner passed.
+	//   "FAILED" - Scanner failed.
+	Verdict string `json:"verdict,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ScanState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ScanState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s WorkspacePolicyResult) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkspacePolicyResult
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 type ProjectsNotesCreateCall struct {

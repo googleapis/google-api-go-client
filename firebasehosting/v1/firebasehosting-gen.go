@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithScopes(firebasehosting.FirebaseScope))
+//	firebasehostingService, err := firebasehosting.NewService(ctx, option.WithScopes(firebasehosting.FirebaseReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -107,15 +107,24 @@ const (
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
+	// View your data across Google Cloud services and see the email address of
+	// your Google Account
+	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
+
 	// View and administer all your Firebase data and settings
 	FirebaseScope = "https://www.googleapis.com/auth/firebase"
+
+	// View all your Firebase data and settings
+	FirebaseReadonlyScope = "https://www.googleapis.com/auth/firebase.readonly"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
+		"https://www.googleapis.com/auth/cloud-platform.read-only",
 		"https://www.googleapis.com/auth/firebase",
+		"https://www.googleapis.com/auth/firebase.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

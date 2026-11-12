@@ -328,7 +328,9 @@ func (s AdditionalContent) MarshalJSON() ([]byte, error) {
 }
 
 // AggregateProductStatus: Aggregate product statuses for a given reporting
-// context and country.
+// context and country. For more information, see View Aggregate Product
+// Statuses
+// (https://developers.google.com/merchant/api/guides/accounts/aggregate-product-statuses).
 type AggregateProductStatus struct {
 	// Country: The country of the aggregate product statuses. Represented as a
 	// CLDR territory code
@@ -382,6 +384,7 @@ type AggregateProductStatus struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Stats: Products statistics for the given reporting context and country.
 	Stats *Stats `json:"stats,omitempty"`
@@ -977,6 +980,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -997,7 +1001,9 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -1217,7 +1223,9 @@ func (s RenderProductIssuesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// RenderedIssue: An issue affecting specific business or their product.
+// RenderedIssue: An issue affecting specific business or their product. For
+// more information, see Display issues and solutions to businesses
+// (https://developers.google.com/merchant/api/guides/accounts/render-issues).
 type RenderedIssue struct {
 	// Actions: A list of actionable steps that can be executed to solve the issue.
 	// An example is requesting a re-review or providing arguments when business
@@ -1696,7 +1704,9 @@ type IssueresolutionRenderaccountissuesCall struct {
 
 // Renderaccountissues: Provide a list of business's account issues with an
 // issue resolution content and available actions. This content and actions are
-// meant to be rendered and shown in third-party applications.
+// meant to be rendered and shown in third-party applications. For more
+// information, see Display issues and solutions to businesses
+// (https://developers.google.com/merchant/api/guides/accounts/render-issues).
 //
 // - name: The account to fetch issues for. Format: `accounts/{account}`.
 func (r *IssueresolutionService) Renderaccountissues(name string, renderissuesrequestpayload *RenderIssuesRequestPayload) *IssueresolutionRenderaccountissuesCall {
@@ -1820,7 +1830,9 @@ type IssueresolutionRenderproductissuesCall struct {
 
 // Renderproductissues: Provide a list of issues for business's product with an
 // issue resolution content and available actions. This content and actions are
-// meant to be rendered and shown in third-party applications.
+// meant to be rendered and shown in third-party applications. For more
+// information, see Display issues and solutions to businesses
+// (https://developers.google.com/merchant/api/guides/accounts/render-issues).
 //
 //   - name: The name of the product. Format:
 //     `accounts/{account}/products/{product}` The `{product}` segment is a
@@ -1978,7 +1990,9 @@ type IssueresolutionTriggeractionCall struct {
 // provided. If any `required` input is missing, or invalid value was provided,
 // the service will return 400 error. Validation errors will contain Ids for
 // all problematic field together with translated, human readable error
-// messages that can be shown to the user.
+// messages that can be shown to the user. For more information, see Display
+// issues and solutions to businesses
+// (https://developers.google.com/merchant/api/guides/accounts/render-issues).
 //
 //   - name: The business's account that is triggering the action. Format:
 //     `accounts/{account}`.

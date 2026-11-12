@@ -537,6 +537,8 @@ type Account struct {
 	AccountName string `json:"accountName,omitempty"`
 	// AdultContent: Optional. Whether this account contains adult content.
 	AdultContent bool `json:"adultContent,omitempty"`
+	// HomePageUri: Output only. URI (typically a URL) of the store's homepage.
+	HomePageUri string `json:"homePageUri,omitempty"`
 	// LanguageCode: Required. The account's BCP-47 language code
 	// (https://tools.ietf.org/html/bcp47), such as `en-US` or `sr-Latn`.
 	LanguageCode string `json:"languageCode,omitempty"`
@@ -692,11 +694,12 @@ func (s AccountRelationship) MarshalJSON() ([]byte, error) {
 // other systems or APIs, and you cannot alter them through this API.
 type AccountService struct {
 	// AccountAggregation: Service type for account aggregation. This enables the
-	// provider, which is an advanced account, to manage multiple sub-accounts
-	// (client accounts). Through this service, the advanced account provider can
-	// perform administrative and operational tasks across all linked sub-accounts.
-	// This is useful for agencies, aggregators, or large retailers that need
-	// centralized control over many Merchant Center accounts.
+	// provider, which is a multi-client advanced account, to manage multiple
+	// sub-accounts (client accounts). Through this service, the service provider
+	// can perform administrative and operational tasks across all linked
+	// sub-accounts. This is used by store builders (ecommerce platforms), channel
+	// partners, marketplaces, multi-brand retailers, and international retailers
+	// that need centralized control over sub-accounts in Merchant Center.
 	AccountAggregation *AccountAggregation `json:"accountAggregation,omitempty"`
 	// AccountManagement: Service type for account management. Enables the provider
 	// to perform administrative actions on the business's account, such as
@@ -1373,6 +1376,7 @@ type CheckoutSettings struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	EligibleDestinations []string `json:"eligibleDestinations,omitempty"`
 	// EnrollmentState: Output only. Reflects the merchant enrollment state in
 	// `Checkout` program.
@@ -2046,8 +2050,11 @@ func (s Headers) MarshalJSON() ([]byte, error) {
 // online store URL verification
 // (//support.google.com/merchants/answer/176793).
 type Homepage struct {
-	// Claimed: Output only. Whether the homepage is claimed. See
-	// https://support.google.com/merchants/answer/176793.
+	// Claimed: Output only. Whether the homepage is claimed. See About online
+	// store URL verification (https://support.google.com/merchants/answer/176793).
+	// This field is also `true` if the account inherits the claim from its
+	// advanced account, or if the account is exempted from claiming, even when the
+	// homepage isn't claimed directly on the account.
 	Claimed bool `json:"claimed,omitempty"`
 	// Name: Identifier. The resource name of the store's homepage. Format:
 	// `accounts/{account}/homepage`
@@ -2207,6 +2214,7 @@ type ImpactedDestination struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Impacts") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3566,6 +3574,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3651,8 +3660,14 @@ type ProductsManagement struct {
 // (https://support.google.com/merchants/answer/13889434) program, which
 // enables products from a business's store to be shown across Google for free.
 // The following list is the available set of program resource IDs accessible
-// through the API: * `checkout` * `free-listings` * `product-ratings` *
-// `shopping-ads` * `youtube-affiliate` * `youtube-shopping-checkout`
+// through the API: * `checkout`
+// (https://developers.google.com/merchant/api/guides/products/checkout-settings)
+// * `free-listings` * `loyalty`
+// (https://developers.google.com/merchant/api/guides/loyalty/loyalty-programs)
+// * `product-ratings` * `shopping-ads` * `ucp-integration` (limited access)
+// (https://developers.google.com/merchant/api/reference/rest/accounts_v1alpha/accounts.programs.ucpSettings)
+// * `youtube-affiliate` (https://support.google.com/merchants/answer/14815513)
+// * `youtube-shopping-checkout`
 type Program struct {
 	// ActiveRegionCodes: Output only. The regions in which the account is actively
 	// participating in the program. Active regions are defined as those where all
@@ -4401,7 +4416,7 @@ type TermsOfService struct {
 	//
 	// Possible values:
 	//   "TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-	//   "MERCHANT_CENTER" - Terms of service for the Merchant Center application.
+	//   "MERCHANT_CENTER" - Terms of Service for the Merchant Center application.
 	Kind string `json:"kind,omitempty"`
 	// Name: Identifier. The resource name of the terms of service version. Format:
 	// `termsOfService/{version}`
@@ -4467,7 +4482,7 @@ type TermsOfServiceAgreementState struct {
 	//
 	// Possible values:
 	//   "TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-	//   "MERCHANT_CENTER" - Terms of service for the Merchant Center application.
+	//   "MERCHANT_CENTER" - Terms of Service for the Merchant Center application.
 	TermsOfServiceKind string `json:"termsOfServiceKind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -7832,7 +7847,12 @@ type AccountsHomepageUnclaimCall struct {
 }
 
 // Unclaim: Unclaims a store's homepage. Executing this method requires admin
-// access.
+// access. This method only removes a claim made directly on the account. If
+// the account inherits the claim from its advanced account (for example, from
+// an advanced account that is exempted from claiming), the homepage stays
+// claimed: the method returns a successful response and `claimed` remains
+// `true`. If the account itself is exempted from claiming, the method returns
+// a `FAILED_PRECONDITION` error.
 //
 //   - name: The name of the homepage to unclaim. Format:
 //     `accounts/{account}/homepage`.
@@ -13456,7 +13476,7 @@ func (r *TermsOfServiceService) RetrieveLatest() *TermsOfServiceRetrieveLatestCa
 // Possible values:
 //
 //	"TERMS_OF_SERVICE_KIND_UNSPECIFIED" - Default value. This value is unused.
-//	"MERCHANT_CENTER" - Terms of service for the Merchant Center application.
+//	"MERCHANT_CENTER" - Terms of Service for the Merchant Center application.
 func (c *TermsOfServiceRetrieveLatestCall) Kind(kind string) *TermsOfServiceRetrieveLatestCall {
 	c.urlParams_.Set("kind", kind)
 	return c

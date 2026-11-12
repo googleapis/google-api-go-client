@@ -3840,6 +3840,9 @@ type GoogleCloudApigeeV1ControlPlaneAccess struct {
 	// service accounts
 	// (https://cloud.google.com/apigee/docs/hybrid/latest/sa-about#create-the-service-accounts).
 	SynchronizerIdentities []string `json:"synchronizerIdentities,omitempty"`
+	// WatcherIdentities: Optional. Service accounts granted access to control
+	// plane resources for the apigee-watcher component.
+	WatcherIdentities []string `json:"watcherIdentities,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -8054,6 +8057,54 @@ func (s GoogleCloudApigeeV1MaintenanceUpdatePolicyMaintenanceWindow) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1McpServerConfig: Deployed MCP server configuration for an
+// organization. Response for GetMcpServerConfig. Org-scoped singleton: each
+// organization has exactly one McpServerConfig. Multiple logical MCP servers
+// within the same org are expressed inside the Cloud Storage blob
+// (McpServerConfigData.hosts map), not as multiple McpServerConfig resources.
+type GoogleCloudApigeeV1McpServerConfig struct {
+	// McpServerConfigDataLocation: Output only. Cloud Storage URI to the
+	// McpServerConfigData blob in the Apigee tenant project bucket. The sidecar
+	// fetches this URI using Cloud Storage, and deserializes the. protojson blob
+	// to McpServerConfigData. Treat this as an opaque URI — its format may
+	// change. Example:
+	// gs://{apigee-tp-bucket}/apigee-mcp-config-{org}-{revision_id}.json
+	McpServerConfigDataLocation string `json:"mcpServerConfigDataLocation,omitempty"`
+	// Name: Identifier. Resource name in the singleton form:
+	// organizations/{org}/mcpServerConfig
+	Name string `json:"name,omitempty"`
+	// RevisionCreateTime: Output only. Time at which this McpServerConfig revision
+	// was created. Mirrors IngressConfig.revision_create_time.
+	RevisionCreateTime string `json:"revisionCreateTime,omitempty"`
+	// RevisionId: Output only. Revision ID that defines the ordering on
+	// McpServerConfig revisions. Higher values indicate more recently deployed
+	// configurations. Monotonically non-decreasing per organization. Mirrors
+	// IngressConfig.revision_id.
+	RevisionId int64 `json:"revisionId,omitempty,string"`
+	// Uid: Output only. Unique ID for the McpServerConfig that will only change if
+	// the organization is deleted and recreated.
+	Uid string `json:"uid,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "McpServerConfigDataLocation") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "McpServerConfigDataLocation") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1McpServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1McpServerConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1Metadata: Encapsulates additional information about query
 // execution.
 type GoogleCloudApigeeV1Metadata struct {
@@ -10128,6 +10179,8 @@ type GoogleCloudApigeeV1RuntimeAddonsConfig struct {
 	Name string `json:"name,omitempty"`
 	// RevisionId: Revision number used by the runtime to detect config changes.
 	RevisionId string `json:"revisionId,omitempty"`
+	// SpecGenerationConfig: Runtime configuration for Spec Generation add-on.
+	SpecGenerationConfig *GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig `json:"specGenerationConfig,omitempty"`
 	// Uid: UID is to detect if config is recreated after deletion. The add-on
 	// config will only be deleted when the environment itself gets deleted, thus
 	// it will always be the same as the UID of EnvironmentConfig.
@@ -10237,7 +10290,70 @@ func (s GoogleCloudApigeeV1RuntimeConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 11 RuntimeTraceConfig
+// GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig: Runtime configuration
+// for the Spec Generation add-on. All fields are proto3 primitives (bool,
+// string, double) rather than google.protobuf.*Value wrappers because the
+// runtime consumer deserializes the JSON via Gson field reflection with no
+// registered type adapters. Wrapper types would serialize as JSON objects/null
+// that Gson cannot bind to Java primitive fields.
+type GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig struct {
+	// ApiObservationsPubsubTopic: Full Pub/Sub topic path in the Apigee Runtime
+	// Tenant Project where the Schema Inferring Engine publishes inferred
+	// ApiObservation messages. Format: projects/{project}/topics/{topic}. Same
+	// sentinel semantics as raw_observations_pubsub_topic. Default: empty string.
+	ApiObservationsPubsubTopic string `json:"apiObservationsPubsubTopic,omitempty"`
+	// Enabled: Whether the Spec Generation add-on is active for this environment.
+	// Default: false.
+	Enabled bool `json:"enabled,omitempty"`
+	// EnabledUntil: ISO-8601 timestamp until which Spec Generation remains active
+	// (e.g. "2026-12-31T23:59:59Z"). Empty string is the canonical "not
+	// configured" sentinel and MUST be treated by the consumer as "expired"
+	// (short-circuit before parsing). Default: empty string.
+	EnabledUntil string `json:"enabledUntil,omitempty"`
+	// RawObservationsPubsubTopic: Full Pub/Sub topic path in the Apigee Runtime
+	// Tenant Project where the message processor publishes captured RawObservation
+	// messages. Format: projects/{project}/topics/{topic}. Empty string is the
+	// "not configured" sentinel; the consumer short-circuits publishing when
+	// empty. Default: empty string.
+	RawObservationsPubsubTopic string `json:"rawObservationsPubsubTopic,omitempty"`
+	// SamplingRate: Fraction of eligible transactions to capture, in [0.0, 1.0].
+	// The consumer enforces an internal upper-bound clamp independently of this
+	// field. Default: 0.0 (omitted from JSON per proto3 default-scalar-omission;
+	// the consumer's field initializer supplies the effective 0.01 fallback).
+	SamplingRate float64 `json:"samplingRate,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApiObservationsPubsubTopic")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApiObservationsPubsubTopic") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudApigeeV1RuntimeSpecGenerationAddonConfig
+	var s1 struct {
+		SamplingRate gensupport.JSONFloat64 `json:"samplingRate"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SamplingRate = float64(s1.SamplingRate)
+	return nil
+}
+
+// GoogleCloudApigeeV1RuntimeTraceConfig: NEXT ID: 13 RuntimeTraceConfig
 // defines the configurations for distributed trace in an environment.
 type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	// Endpoint: Endpoint of the exporter.
@@ -10256,6 +10372,10 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	//   "OPEN_TELEMETRY_CLOUD_TRACE" - Exports events to Cloud Trace. Compatible
 	// with OpenTelemetry protocol.
 	Exporter string `json:"exporter,omitempty"`
+	// MTlsConfig: Optional. mTLS configuration for the OTel Collector endpoint.
+	// Required when `otel_collector_security_scheme` is `MTLS`; must be absent
+	// otherwise.
+	MTlsConfig *GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig `json:"mTlsConfig,omitempty"`
 	// Name: Name of the trace config in the following format:
 	// `organizations/{org}/environment/{env}/traceConfig`
 	Name string `json:"name,omitempty"`
@@ -10267,6 +10387,21 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 	// URL. - If `Exporter` is `CLOUD_TRACE`: - `endpoint` refers to a valid
 	// project ID Deprecated: Use trace_protocol instead.
 	OpenTelemetryProtocolEnabled bool `json:"openTelemetryProtocolEnabled,omitempty"`
+	// OtelCollectorSecurityScheme: Optional. Security scheme for the outbound
+	// connection to the customer-owned OpenTelemetry Collector. Only meaningful
+	// when `exporter` is `OPEN_TELEMETRY_COLLECTOR`. Runtime consumers unaware of
+	// a value should treat it as `OTEL_COLLECTOR_SECURITY_SCHEME_UNSPECIFIED` (==
+	// NONE).
+	//
+	// Possible values:
+	//   "OTEL_COLLECTOR_SECURITY_SCHEME_UNSPECIFIED" - Unspecified. Behavior is
+	// identical to NONE.
+	//   "NONE" - Default. Unauthenticated OTLP/HTTP export. Preserves today's
+	// behavior byte-for-byte for existing configurations.
+	//   "MTLS" - Mutual TLS via customer PKI. Cert material is stored in Apigee
+	// Keystores/Truststores and referenced by resource ID in `mtls_config` (same
+	// mechanism as TargetServer.tls_info).
+	OtelCollectorSecurityScheme string `json:"otelCollectorSecurityScheme,omitempty"`
 	// Overrides: List of trace configuration overrides for spicific API proxies.
 	Overrides []*GoogleCloudApigeeV1RuntimeTraceConfigOverride `json:"overrides,omitempty"`
 	// RevisionCreateTime: The timestamp that the revision was created or updated.
@@ -10309,6 +10444,55 @@ type GoogleCloudApigeeV1RuntimeTraceConfig struct {
 
 func (s GoogleCloudApigeeV1RuntimeTraceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1RuntimeTraceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig: Runtime-side view of
+// `TraceConfig.OtelMtlsConfig` for the outbound OTel Collector mTLS
+// connection. Shape mirrors `TlsInfoConfig` (in this same file, above)
+// exactly. The oneof discriminates between a direct keystore reference and a
+// `ref://`-indirected reference; both are surfaced on the wire without
+// flattening. The referenced keystore must also appear in
+// `EnvironmentConfig.keystores[]` so the underlying alias bytes are available
+// at runtime. Referential integrity is enforced at trace-config update time:
+// any PATCH that references a keystore not already present is rejected in the
+// same transaction that would persist the update, and keystore/alias/reference
+// deletion is blocked while a trace-config references it.
+type GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig struct {
+	// KeyAlias: Full alias resource name of the client-side key/cert alias.
+	// Format:
+	// `organizations/{org}/environments/{env}/keystores/{keystore}/aliases/{alias}`
+	//  Set when the customer supplied a plain keystore ID in
+	// `TraceConfig.OtelMtlsConfig.key_store`.
+	KeyAlias string `json:"keyAlias,omitempty"`
+	// KeyAliasReference: Reference name and alias-id pair. Set when the customer
+	// supplied a `ref://{referenceID}` URI in
+	// `TraceConfig.OtelMtlsConfig.key_store`. Resolved via the References catalog
+	// the same way as `TlsInfoConfig.key_alias_reference` in target-server TLS.
+	// Reuses the top-level `KeyAliasReference` message defined for `TlsInfoConfig`
+	// above; no new message.
+	KeyAliasReference *GoogleCloudApigeeV1KeyAliasReference `json:"keyAliasReference,omitempty"`
+	// TrustStore: Full resource name of the truststore holding the CA(s) that
+	// signed the OTel Collector's server certificate. Either a keystore or a
+	// reference resource name, mirroring `TlsInfoConfig.trust_store` above:
+	// `organizations/{org}/environments/{env}/keystores/{keystore}`
+	// `organizations/{org}/environments/{env}/references/{reference}`
+	TrustStore string `json:"trustStore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyAlias") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyAlias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1RuntimeTraceConfigOtelMtlsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11477,7 +11661,9 @@ type GoogleCloudApigeeV1SecurityProfileEnvironmentAssociation struct {
 	// AttachTime: Output only. The time when environment was attached to the
 	// security profile.
 	AttachTime string `json:"attachTime,omitempty"`
-	// Name: Immutable. Name of the environment that the profile is attached to.
+	// Name: Immutable. The environment ID that the profile is attached to, e.g.
+	// `prod`. This is the bare environment ID, not a full resource name; see
+	// b/288477507.
 	Name string `json:"name,omitempty"`
 	// SecurityProfileRevisionId: DEPRECATED: DO NOT USE Revision ID of the
 	// security profile.
@@ -12339,8 +12525,7 @@ type GoogleCloudApigeeV1TargetServer struct {
 	// TargetServers are used in load balancing configurations, and one or more
 	// TargetServers need to taken out of rotation periodically. Defaults to true.
 	IsEnabled bool `json:"isEnabled,omitempty"`
-	// Name: Required. The resource id of this target server. Values must match the
-	// regular expression
+	// Name: Required. The resource id of this target server.
 	Name string `json:"name,omitempty"`
 	// Port: Required. The port number this target connects to on the given host.
 	// Value must be between 1 and 65535, inclusive.
@@ -12354,8 +12539,7 @@ type GoogleCloudApigeeV1TargetServer struct {
 	//   "HTTP2" - The TargetSever uses HTTP2.
 	//   "GRPC_TARGET" - The TargetServer uses GRPC.
 	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy. Prefer to
-	// use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate once EXTERNAL
-	// _CALLOUT generally available.
+	// use EXTERNAL_CALLOUT instead.
 	//   "EXTERNAL_CALLOUT" - The TargetServer is to be used in the ExternalCallout
 	// Policy
 	Protocol string `json:"protocol,omitempty"`
@@ -12406,8 +12590,7 @@ type GoogleCloudApigeeV1TargetServerConfig struct {
 	//   "HTTP2" - The TargetSever uses HTTP2.
 	//   "GRPC_TARGET" - The TargetServer uses GRPC.
 	//   "GRPC" - GRPC TargetServer to be used in ExternalCallout Policy. Prefer to
-	// use EXTERNAL_CALLOUT instead. TODO(b/266125112) deprecate once EXTERNAL
-	// _CALLOUT generally available.
+	// use EXTERNAL_CALLOUT instead.
 	//   "EXTERNAL_CALLOUT" - The TargetServer is to be used in the ExternalCallout
 	// Policy
 	Protocol string `json:"protocol,omitempty"`
@@ -12605,6 +12788,24 @@ type GoogleCloudApigeeV1TraceConfig struct {
 	//   "OPEN_TELEMETRY_CLOUD_TRACE" - Exports events to Cloud Trace. Compatible
 	// with OpenTelemetry protocol.
 	Exporter string `json:"exporter,omitempty"`
+	// MtlsConfig: Optional. mTLS configuration for the OTel Collector endpoint.
+	// Required when `otel_collector_security_scheme` == MTLS; must not be set
+	// otherwise.
+	MtlsConfig *GoogleCloudApigeeV1TraceConfigOtelMtlsConfig `json:"mtlsConfig,omitempty"`
+	// OtelCollectorSecurityScheme: Optional. The security scheme for the OTel
+	// Collector endpoint. Defaults to NONE (unauthenticated OTLP/HTTP), preserving
+	// today's behavior for existing configurations. Only applicable when
+	// `exporter` == OPEN_TELEMETRY_COLLECTOR.
+	//
+	// Possible values:
+	//   "OTEL_COLLECTOR_SECURITY_SCHEME_UNSPECIFIED" - Unspecified. Behavior is
+	// identical to NONE.
+	//   "NONE" - Default. Unauthenticated OTLP/HTTP export. Preserves today's
+	// behavior byte-for-byte for existing configurations.
+	//   "MTLS" - Mutual TLS via customer PKI. Cert material is stored in Apigee
+	// Keystores/Truststores and referenced by resource ID in `mtls_config` (same
+	// mechanism as TargetServer.tls_info).
+	OtelCollectorSecurityScheme string `json:"otelCollectorSecurityScheme,omitempty"`
 	// SamplingConfig: Distributed trace configuration for all API proxies in an
 	// environment. You can also override the configuration for a specific API
 	// proxy using the distributed trace configuration overrides API.
@@ -12648,6 +12849,59 @@ type GoogleCloudApigeeV1TraceConfig struct {
 
 func (s GoogleCloudApigeeV1TraceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1TraceConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1TraceConfigOtelMtlsConfig: OtelMtlsConfig configures
+// mutual TLS for the outbound OTel Collector connection by referencing
+// already-uploaded Keystore/Truststore aliases. Key/cert material is uploaded
+// via the existing Keystore Alias APIs (POST .../keystores/{ks}/aliases), the
+// same APIs used to configure mTLS for `TargetServer.tls_info`. Only the
+// resource IDs of those aliases live in this message; no secret material is
+// inlined into TraceConfig. Field shape mirrors `TlsInfo` used by
+// `TargetServer.tls_info`: - `key_store` and `trust_store` accept either a
+// plain keystore ID or a `ref://{referenceID}` URI (an environment-scoped
+// Reference whose `resource_type` is `KeyStore`/`TrustStore`). References
+// enable rotation without editing the TraceConfig itself. - `key_alias` is the
+// plain alias ID within `key_store`. Fields that would normally appear on
+// `TlsInfo` (enabled, client_auth_enabled, protocols, enforce,
+// ignore_validation_errors) are intentionally omitted from this customer
+// surface. The runtime enforces secure defaults: - Mutual TLS is always
+// required (both server AND client cert exchanged). - Server certificate
+// validation is always strict (no ignoring errors). - TLS 1.2 and TLS 1.3 are
+// enabled; older versions are rejected.
+type GoogleCloudApigeeV1TraceConfigOtelMtlsConfig struct {
+	// KeyAlias: Required. Plain alias ID within `key_store` that contains the
+	// client key/cert used for mTLS.
+	KeyAlias string `json:"keyAlias,omitempty"`
+	// KeyStore: Required. Keystore holding the client-side key/cert alias. Accepts
+	// either a plain keystore ID (e.g. `my-keystore`) resolving to
+	// `organizations/{org}/environments/{env}/keystores/{key_store}`, or a
+	// reference URI of the form `ref://{referenceID}` that points to a Reference
+	// whose `resource_type` is `KeyStore`.
+	KeyStore string `json:"keyStore,omitempty"`
+	// TrustStore: Required. Truststore holding the CA(s) that signed the OTel
+	// Collector's server certificate. Accepts either a plain keystore ID (e.g.
+	// `my-truststore`) resolving to
+	// `organizations/{org}/environments/{env}/keystores/{trust_store}`, or a
+	// reference URI of the form `ref://{referenceID}` that points to a Reference
+	// whose `resource_type` is `KeyStore` (used as a truststore).
+	TrustStore string `json:"trustStore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "KeyAlias") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "KeyAlias") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudApigeeV1TraceConfigOtelMtlsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1TraceConfigOtelMtlsConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13815,8 +14069,8 @@ type OrganizationsDeleteCall struct {
 
 // Delete: Delete an Apigee organization. For organizations with BillingType
 // EVALUATION, an immediate deletion is performed. For paid organizations
-// (Subscription or Pay-as-you-go), a soft-deletion is performed. The
-// organization can be restored within the soft-deletion period, which is
+// (Subscription or Pay-as-you-go), a soft-deletion is performed by default.
+// The organization can be restored within the soft-deletion period, which is
 // specified using the `retention` field in the request or by filing a support
 // ticket with Apigee. During the data retention period specified in the
 // request, the Apigee organization cannot be recreated in the same Google
@@ -13850,6 +14104,11 @@ func (r *OrganizationsService) Delete(name string) *OrganizationsDeleteCall {
 //	"MINIMUM" - Organization data will be retained for the minimum period of
 //
 // 24 hours.
+//
+//	"NO_RETENTION" - Does not retain organization data and permanently deletes
+//
+// the organization immediately. **Warning:** You will NOT be able to restore
+// the Apigee organization when using this option.
 func (c *OrganizationsDeleteCall) Retention(retention string) *OrganizationsDeleteCall {
 	c.urlParams_.Set("retention", retention)
 	return c
@@ -14295,6 +14554,120 @@ func (c *OrganizationsGetDeployedIngressConfigCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.getDeployedIngressConfig", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type OrganizationsGetMcpServerConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetMcpServerConfig: Gets the deployed MCP server configuration for an
+// organization. McpServerConfig is an org-scoped singleton (one per
+// organization). The returned configuration may be up to 30 seconds out of
+// date by default.
+//
+//   - name: Name of the deployed MCP server configuration for the organization
+//     in the singleton form: `organizations/{org}/mcpServerConfig`.
+func (r *OrganizationsService) GetMcpServerConfig(name string) *OrganizationsGetMcpServerConfigCall {
+	c := &OrganizationsGetMcpServerConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *OrganizationsGetMcpServerConfigCall) Fields(s ...googleapi.Field) *OrganizationsGetMcpServerConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *OrganizationsGetMcpServerConfigCall) IfNoneMatch(entityTag string) *OrganizationsGetMcpServerConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *OrganizationsGetMcpServerConfigCall) Context(ctx context.Context) *OrganizationsGetMcpServerConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *OrganizationsGetMcpServerConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsGetMcpServerConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "apigee.organizations.getMcpServerConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.getMcpServerConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudApigeeV1McpServerConfig.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsGetMcpServerConfigCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1McpServerConfig, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1McpServerConfig{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "apigee.organizations.getMcpServerConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15211,7 +15584,7 @@ func (r *OrganizationsService) UpdateControlPlaneAccess(name string, googlecloud
 
 // UpdateMask sets the optional parameter "updateMask": List of fields to be
 // updated. Fields that can be updated: synchronizer_identities,
-// publisher_identities.
+// analytics_publisher_identities, watcher_identities.
 func (c *OrganizationsUpdateControlPlaneAccessCall) UpdateMask(updateMask string) *OrganizationsUpdateControlPlaneAccessCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

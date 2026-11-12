@@ -461,6 +461,58 @@ func (s AccessSessionSparkApplicationJobResponse) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AccessSessionSparkApplicationNativeBuildInfoResponse: Details of a native
+// build info for a Spark Application
+type AccessSessionSparkApplicationNativeBuildInfoResponse struct {
+	// ExecutionData: Native SQL Execution Data
+	ExecutionData *NativeBuildInfoUiData `json:"executionData,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessSessionSparkApplicationNativeBuildInfoResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSessionSparkApplicationNativeBuildInfoResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AccessSessionSparkApplicationNativeSqlQueryResponse: Details of a native
+// query for a Spark Application
+type AccessSessionSparkApplicationNativeSqlQueryResponse struct {
+	// ExecutionData: Native SQL Execution Data
+	ExecutionData *NativeSqlExecutionUiData `json:"executionData,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessSessionSparkApplicationNativeSqlQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSessionSparkApplicationNativeSqlQueryResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AccessSessionSparkApplicationResponse: A summary of Spark Application
 type AccessSessionSparkApplicationResponse struct {
 	// Application: Output only. High level information corresponding to an
@@ -641,6 +693,58 @@ type AccessSparkApplicationJobResponse struct {
 
 func (s AccessSparkApplicationJobResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod AccessSparkApplicationJobResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AccessSparkApplicationNativeBuildInfoResponse: Details of Native Build Info
+// for a Spark Application
+type AccessSparkApplicationNativeBuildInfoResponse struct {
+	// BuildInfo: Native Build Info Data
+	BuildInfo *NativeBuildInfoUiData `json:"buildInfo,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "BuildInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildInfo") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessSparkApplicationNativeBuildInfoResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSparkApplicationNativeBuildInfoResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AccessSparkApplicationNativeSqlQueryResponse: Details of a query for a Spark
+// Application
+type AccessSparkApplicationNativeSqlQueryResponse struct {
+	// ExecutionData: Native SQL Execution Data
+	ExecutionData *NativeSqlExecutionUiData `json:"executionData,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExecutionData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExecutionData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AccessSparkApplicationNativeSqlQueryResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessSparkApplicationNativeSqlQueryResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -899,9 +1003,11 @@ type ApplicationAttemptInfo struct {
 	Completed       bool   `json:"completed,omitempty"`
 	DurationMillis  int64  `json:"durationMillis,omitempty,string"`
 	EndTime         string `json:"endTime,omitempty"`
-	LastUpdated     string `json:"lastUpdated,omitempty"`
-	SparkUser       string `json:"sparkUser,omitempty"`
-	StartTime       string `json:"startTime,omitempty"`
+	// EventLogPath: Output only. The event log path for the application attempt.
+	EventLogPath string `json:"eventLogPath,omitempty"`
+	LastUpdated  string `json:"lastUpdated,omitempty"`
+	SparkUser    string `json:"sparkUser,omitempty"`
+	StartTime    string `json:"startTime,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppSparkVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -991,14 +1097,14 @@ func (s ApplicationInfo) MarshalJSON() ([]byte, error) {
 type AttachedDiskConfig struct {
 	// DiskSizeGb: Optional. Disk size in GB.
 	DiskSizeGb int64 `json:"diskSizeGb,omitempty"`
-	// DiskType: Optional. Disk type.
+	// DiskType: Optional. Deprecated: Use type instead.
 	//
 	// Possible values:
-	//   "DISK_TYPE_UNSPECIFIED" - Required unspecified disk type.
-	//   "HYPERDISK_BALANCED" - Hyperdisk Balanced disk type.
-	//   "HYPERDISK_EXTREME" - Hyperdisk Extreme disk type.
-	//   "HYPERDISK_ML" - Hyperdisk ML disk type.
-	//   "HYPERDISK_THROUGHPUT" - Hyperdisk Throughput disk type.
+	//   "DISK_TYPE_UNSPECIFIED" - Disk type is not specified.
+	//   "HYPERDISK_BALANCED" - Hyperdisk Balanced.
+	//   "HYPERDISK_EXTREME" - Hyperdisk Extreme.
+	//   "HYPERDISK_ML" - Hyperdisk ML.
+	//   "HYPERDISK_THROUGHPUT" - Hyperdisk Throughput.
 	DiskType string `json:"diskType,omitempty"`
 	// ProvisionedIops: Optional. Indicates how many IOPS to provision for the
 	// attached disk. This sets the number of I/O operations per second that the
@@ -1010,6 +1116,11 @@ type AttachedDiskConfig struct {
 	// the disk can handle. See
 	// https://cloud.google.com/compute/docs/disks/hyperdisks#hyperdisk-features
 	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
+	// Type: Optional. Attached disk type. Currently only supports Hyperdisks. See
+	// https://cloud.google.com/compute/docs/disks/hyperdisks. Note: Hyperdisk
+	// Balanced High Availability is not supported.Allowed values are:
+	// hyperdisk-balanced hyperdisk-extreme hyperdisk-ml hyperdisk-throughput
+	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DiskSizeGb") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1025,6 +1136,49 @@ type AttachedDiskConfig struct {
 
 func (s AttachedDiskConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AttachedDiskConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AttachmentOperationMetadata: Metadata describing the Attachment operation.
+type AttachmentOperationMetadata struct {
+	// Attachment: Output only. Name of the attachment for the operation.
+	Attachment string `json:"attachment,omitempty"`
+	// AttachmentUuid: Output only. Attachment UUID for the operation.
+	AttachmentUuid string `json:"attachmentUuid,omitempty"`
+	// CreateTime: Output only. The time when the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Output only. Short description of the operation.
+	Description string `json:"description,omitempty"`
+	// DoneTime: Output only. The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
+	// Labels: Output only. Labels associated with the operation.
+	Labels map[string]string `json:"labels,omitempty"`
+	// OperationType: Output only. The operation type.
+	//
+	// Possible values:
+	//   "ATTACHMENT_OPERATION_TYPE_UNSPECIFIED" - Attachment operation type is
+	// unknown.
+	//   "CREATE" - Create Attachment operation type.
+	//   "UPDATE" - Update Attachment operation type.
+	//   "DELETE" - Delete Attachment operation type.
+	OperationType string `json:"operationType,omitempty"`
+	// Warnings: Output only. Warnings encountered during operation execution.
+	Warnings []string `json:"warnings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Attachment") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Attachment") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AttachmentOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AttachmentOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1722,11 +1876,35 @@ type ClusterConfig struct {
 	// MasterConfig: Optional. The Compute Engine config settings for the cluster's
 	// master instance.
 	MasterConfig *InstanceGroupConfig `json:"masterConfig,omitempty"`
+	// MasterFlexibleConfig: Optional. The High Obtainability (HO) config settings
+	// for the cluster's master instances.In High Obtainability (HO) mode, flexible
+	// configs are the single source of truth for desired cluster configuration
+	// across node groups: * For single-node clusters: master_flexible_config must
+	// be specified, and no worker configs should be set. * For multi-node
+	// (standard) clusters: both master_flexible_config and worker_flexible_config
+	// must be specified. Mixing standard and flexible configs across node groups
+	// is not allowed.Only one of master_config or master_flexible_config can be
+	// set.
+	MasterFlexibleConfig *FlexibleInstanceGroupConfig `json:"masterFlexibleConfig,omitempty"`
 	// MetastoreConfig: Optional. Metastore configuration.
 	MetastoreConfig *MetastoreConfig `json:"metastoreConfig,omitempty"`
+	// SchedulingConfig: Optional. Config for scheduling the resources to be
+	// allocated when available.
+	SchedulingConfig *SchedulingConfig `json:"schedulingConfig,omitempty"`
 	// SecondaryWorkerConfig: Optional. The Compute Engine config settings for a
 	// cluster's secondary worker instances
 	SecondaryWorkerConfig *InstanceGroupConfig `json:"secondaryWorkerConfig,omitempty"`
+	// SecondaryWorkerFlexibleConfig: Optional. The High Obtainability (HO) config
+	// settings for a cluster's secondary worker instances.In High Obtainability
+	// (HO) mode, flexible configs are the single source of truth for desired
+	// cluster configuration. num_instances represents the desired capacity of the
+	// secondary worker group and is mutable via cluster updates and
+	// autoscaling.Only one of secondary_worker_config or
+	// secondary_worker_flexible_config can be set.In High Obtainability (HO) mode,
+	// secondary workers are optional. If secondary workers are used in an HO
+	// cluster, they must be configured using secondary_worker_flexible_config (not
+	// secondary_worker_config).
+	SecondaryWorkerFlexibleConfig *FlexibleInstanceGroupConfig `json:"secondaryWorkerFlexibleConfig,omitempty"`
 	// SecurityConfig: Optional. Security settings for the cluster.
 	SecurityConfig *SecurityConfig `json:"securityConfig,omitempty"`
 	// SoftwareConfig: Optional. The config settings for cluster software.
@@ -1746,6 +1924,17 @@ type ClusterConfig struct {
 	// WorkerConfig: Optional. The Compute Engine config settings for the cluster's
 	// worker instances.
 	WorkerConfig *InstanceGroupConfig `json:"workerConfig,omitempty"`
+	// WorkerFlexibleConfig: Optional. The High Obtainability (HO) config settings
+	// for the cluster's worker instances.In High Obtainability (HO) mode, flexible
+	// configs are the single source of truth for desired cluster configuration.
+	// num_instances represents the desired capacity of the worker group and is
+	// mutable via cluster updates and autoscaling.Only one of worker_config or
+	// worker_flexible_config can be set.In High Obtainability (HO) mode, for
+	// multi-node (standard) clusters, both master_flexible_config and
+	// worker_flexible_config must be specified. Mixing standard and flexible
+	// configs across node groups is not allowed. Single-node clusters do not
+	// specify worker configs.
+	WorkerFlexibleConfig *FlexibleInstanceGroupConfig `json:"workerFlexibleConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoscalingConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1918,7 +2107,7 @@ func (s ClusterSelector) MarshalJSON() ([]byte, error) {
 
 // ClusterStatus: The status of a cluster and its instances.
 type ClusterStatus struct {
-	// Detail: Optional. Output only. Details of cluster's state.
+	// Detail: Optional. Details of cluster's state.
 	Detail string `json:"detail,omitempty"`
 	// State: Output only. The cluster's state.
 	//
@@ -2032,6 +2221,32 @@ type CohortInfo struct {
 
 func (s CohortInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod CohortInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComputeTuningConfigResponse: Response for ComputeTuningConfig RPC.
+type ComputeTuningConfigResponse struct {
+	// RecommendedProperties: Recommended Spark properties for the query (e.g.,
+	// {"spark.sql.shuffle.partitions": "500"}).
+	RecommendedProperties map[string]string `json:"recommendedProperties,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "RecommendedProperties") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RecommendedProperties") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComputeTuningConfigResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ComputeTuningConfigResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2835,6 +3050,64 @@ func (s FallbackReason) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// FlexibleInstanceGroupConfig: The configuration for High Obtainability (HO)
+// flexible instance groups. Flexible instance group configs serve as the
+// single source of truth for desired state.
+type FlexibleInstanceGroupConfig struct {
+	// BootDiskSizeGb: Optional. The boot disk size in GB. This is a create-time
+	// specification and is not currently mutable via update masks.
+	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
+	// CoreCount: Optional. The number of vCPUs per instance. Must be a power of 2
+	// (2, 4, 8, 16, 32). This is a create-time specification and is not currently
+	// mutable via update masks.
+	CoreCount int64 `json:"coreCount,omitempty"`
+	// HardwareClass: Optional. The hardware class of the instances. This is a
+	// create-time specification and is not currently mutable via update masks.
+	//
+	// Possible values:
+	//   "HARDWARE_CLASS_UNSPECIFIED" - Unspecified hardware class.
+	//   "STANDARD" - Standard hardware class. Provides a balanced compute
+	// configuration with approximately 4GB of memory per vCPU and standard disk
+	// storage tiers.Candidate machine types include n4-standard, n4d-standard,
+	// n2-standard, and n2d-standard (Rank 0), and c4-standard and c4d-standard
+	// (Rank 1) (for requested core counts 2, 4, 8, 16, 32).Warning: The specific
+	// machine families and types selected for this hardware class are subject to
+	// change. Users should not take a dependency on the underlying machine type
+	// selection.
+	//   "PERFORMANCE" - Performance hardware class. Provides a high-performance
+	// configuration with approximately 8GB of memory per vCPU (e.g. high-memory
+	// machine types) and higher-tier disk configurations (e.g. higher IOPS and
+	// throughput).Candidate machine types include n4-highmem, n4d-highmem,
+	// n2-highmem, and n2d-highmem (Rank 0), and c4-highmem and c4d-highmem (Rank
+	// 1) (for requested core counts 2, 4, 8, 16, 32). n4, n4d, c4, and c4d use
+	// Hyperdisk Balanced with provisioned storage, whereas n2 and n2d use SSD
+	// persistent disks.Warning: The specific machine families and types selected
+	// for this hardware class are subject to change. Users should not take a
+	// dependency on the underlying machine type selection.
+	HardwareClass string `json:"hardwareClass,omitempty"`
+	// NumInstances: Optional. The number of VM instances requested.For master
+	// instances, this must be 1. For worker and secondary worker instances, this
+	// represents the desired capacity of the group and is mutable via cluster
+	// update operations and autoscaling.
+	NumInstances int64 `json:"numInstances,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BootDiskSizeGb") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s FlexibleInstanceGroupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod FlexibleInstanceGroupConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FlinkJob: A Dataproc job for running Apache Flink applications on YARN.
 type FlinkJob struct {
 	// Args: Optional. The arguments to pass to the driver. Do not include
@@ -2909,6 +3182,10 @@ type GceClusterConfig struct {
 	// instances (see Project and instance metadata
 	// (https://cloud.google.com/compute/docs/storing-retrieving-metadata#project_and_instance_metadata)).
 	Metadata map[string]string `json:"metadata,omitempty"`
+	// MultiZoneConfig: Optional. Controls how instances within this Cluster are
+	// allowed to exist in multiple Zones within the Region. Only one of zone_uri
+	// or multi_zone_config must be set.
+	MultiZoneConfig *MultiZoneConfig `json:"multiZoneConfig,omitempty"`
 	// NetworkUri: Optional. The Compute Engine network to be used for machine
 	// communications. Cannot be specified with subnetwork_uri. If neither
 	// network_uri nor subnetwork_uri is specified, the "default" network of the
@@ -3439,17 +3716,22 @@ func (s HiveJob) MarshalJSON() ([]byte, error) {
 // IdentityConfig: Identity related configuration, including service account
 // based secure multi-tenancy user mappings.
 type IdentityConfig struct {
+	// EnableSsh: Optional. Whether to enable SSH access for the cluster. The
+	// default is true for image versions prior to 3.1 and false for image versions
+	// 3.1 and later. The default behavior can be changed when creating clusters
+	// using image versions 2.3.30 and later.
+	EnableSsh bool `json:"enableSsh,omitempty"`
 	// UserServiceAccountMapping: Required. Map of user to service account.
 	UserServiceAccountMapping map[string]string `json:"userServiceAccountMapping,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "UserServiceAccountMapping")
-	// to unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "EnableSsh") to
+	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "UserServiceAccountMapping") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "EnableSsh") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4128,8 +4410,8 @@ func (s JobScheduling) MarshalJSON() ([]byte, error) {
 
 // JobStatus: Dataproc job status.
 type JobStatus struct {
-	// Details: Optional. Output only. Job state details, such as an error
-	// description if the state is ERROR.
+	// Details: Optional. Job state details, such as an error description if the
+	// state is ERROR.
 	Details string `json:"details,omitempty"`
 	// State: Output only. A state message specifying the overall job state.
 	//
@@ -4826,8 +5108,8 @@ type Metric struct {
 	// (https://cloud.google.com/dataproc/docs/guides/dataproc-metrics#custom_metrics)
 	// to collect for the metric course (for the SPARK metric source (any Spark
 	// metric (https://spark.apache.org/docs/latest/monitoring.html#metrics) can be
-	// specified).Provide metrics in the following format: METRIC_SOURCE:
-	// INSTANCE:GROUP:METRIC Use camelcase as appropriate.Examples:
+	// specified).Provide metrics in the following format:METRIC_SOURCE:INSTANCE
+	// :GROUP:METRIC Use camelcase as appropriate.Examples:
 	// yarn:ResourceManager:QueueMetrics:AppsCompleted
 	// spark:driver:DAGScheduler:job.allJobs
 	// sparkHistoryServer:JVM:Memory:NonHeapMemoryUsage.committed
@@ -4873,6 +5155,35 @@ type Metric struct {
 
 func (s Metric) MarshalJSON() ([]byte, error) {
 	type NoMethod Metric
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MultiZoneConfig: Configuration for multi-zonal clusters that can create
+// instances across multiple Zones within the Region.
+type MultiZoneConfig struct {
+	// TargetShape: Optional. The distribution shape of the nodes in the
+	// multi-zonal cluster.
+	//
+	// Possible values:
+	//   "TARGET_SHAPE_UNSPECIFIED" - Target shape is unspecified. Setting this
+	// will cause error.
+	//   "ANY" - Instances may exist in any Zones within the Region.
+	TargetShape string `json:"targetShape,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TargetShape") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TargetShape") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MultiZoneConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod MultiZoneConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6369,6 +6680,37 @@ func (s RuntimeInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SchedulingConfig: Config for scheduling the request to create Compute Engine
+// resources for the cluster, when available.
+type SchedulingConfig struct {
+	// RequestedRunDuration: Optional. Required lifetime of the resources, once
+	// provisioned. Min 10 mins, Max/Default 7 days . Note that the cluster can
+	// still be deleted before reaching this time. This time is a maximum amount of
+	// time before the cluster is forcibly deleted. Lower times are more likely to
+	// start running sooner.
+	RequestedRunDuration string `json:"requestedRunDuration,omitempty"`
+	// SchedulingTimeout: Optional. How long to wait for worker resources to be
+	// allocated before failing the cluster creation request. Max/Default value: 13
+	// days
+	SchedulingTimeout string `json:"schedulingTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestedRunDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestedRunDuration") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchedulingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SchedulingConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchSessionSparkApplicationExecutorStageSummaryResponse: List of Executors
 // associated with a Spark Application Stage.
 type SearchSessionSparkApplicationExecutorStageSummaryResponse struct {
@@ -6458,6 +6800,36 @@ type SearchSessionSparkApplicationJobsResponse struct {
 
 func (s SearchSessionSparkApplicationJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchSessionSparkApplicationJobsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchSessionSparkApplicationNativeSqlQueriesResponse: List of all Native
+// queries for a Spark Application.
+type SearchSessionSparkApplicationNativeSqlQueriesResponse struct {
+	// NextPageToken: This token is included in the response if there are more
+	// results to fetch. To fetch additional results, provide this value as the
+	// page_token in a subsequent SearchSessionSparkApplicationSqlQueriesRequest.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SparkApplicationNativeSqlQueries: Output only. Native SQL Execution Data
+	SparkApplicationNativeSqlQueries []*NativeSqlExecutionUiData `json:"sparkApplicationNativeSqlQueries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchSessionSparkApplicationNativeSqlQueriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchSessionSparkApplicationNativeSqlQueriesResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6707,6 +7079,36 @@ func (s SearchSparkApplicationJobsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SearchSparkApplicationNativeSqlQueriesResponse: List of all Native SQL
+// queries details for a Spark Application.
+type SearchSparkApplicationNativeSqlQueriesResponse struct {
+	// NextPageToken: This token is included in the response if there are more
+	// results to fetch. To fetch additional results, provide this value as the
+	// page_token in a subsequent SearchSparkApplicationNativeSqlQueriesRequest.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// SparkApplicationNativeSqlQueries: Output only. Native SQL Execution Data
+	SparkApplicationNativeSqlQueries []*NativeSqlExecutionUiData `json:"sparkApplicationNativeSqlQueries,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchSparkApplicationNativeSqlQueriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchSparkApplicationNativeSqlQueriesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SearchSparkApplicationSqlQueriesResponse: List of all queries for a Spark
 // Application.
 type SearchSparkApplicationSqlQueriesResponse struct {
@@ -6909,13 +7311,11 @@ type Session struct {
 	RuntimeConfig *RuntimeConfig `json:"runtimeConfig,omitempty"`
 	// RuntimeInfo: Output only. Runtime information about session execution.
 	RuntimeInfo *RuntimeInfo `json:"runtimeInfo,omitempty"`
-	// SessionTemplate: Optional. The session template used by the session.Only
-	// resource names, including project ID and location, are valid.Example: *
-	// https://www.googleapis.com/compute/v1/projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_id]
-	// *
+	// SessionTemplate: Optional. The session template used by the session.Resource
+	// names and short template IDs are valid. Examples: *
 	// projects/[project_id]/locations/[dataproc_region]/sessionTemplates/[template_
-	// id]The template must be in the same project and Dataproc region as the
-	// session.
+	// id] * [template_id]The template must be in the same project and Dataproc
+	// region as the session.
 	SessionTemplate string `json:"sessionTemplate,omitempty"`
 	// SparkConnectSession: Optional. Spark connect session config.
 	SparkConnectSession *SparkConnectConfig `json:"sparkConnectSession,omitempty"`
@@ -7050,6 +7450,9 @@ type SessionTemplate struct {
 	Creator string `json:"creator,omitempty"`
 	// Description: Optional. Brief description of the template.
 	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. User-friendly display name for the session template.
+	// Can be up to 63 characters.
+	DisplayName string `json:"displayName,omitempty"`
 	// EnvironmentConfig: Optional. Environment configuration for session
 	// execution.
 	EnvironmentConfig *EnvironmentConfig `json:"environmentConfig,omitempty"`
@@ -7347,6 +7750,7 @@ type SoftwareConfig struct {
 	// Possible values:
 	//   "COMPONENT_UNSPECIFIED" - Unspecified component. Specifying this will
 	// cause Cluster creation to fail.
+	//   "ALLOYDB_CONNECTOR" - The AlloyDB Connector.
 	//   "ANACONDA" - The Anaconda component is no longer supported or applicable
 	// to supported Dataproc on Compute Engine image versions
 	// (https://cloud.google.com/dataproc/docs/concepts/versioning/dataproc-version-clusters#supported-dataproc-image-versions).
@@ -9524,6 +9928,50 @@ type VirtualClusterConfig struct {
 
 func (s VirtualClusterConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod VirtualClusterConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VirtualClusterOperationMetadata: Metadata describing the VirtualCluster
+// operation.
+type VirtualClusterOperationMetadata struct {
+	// CreateTime: Output only. The time when the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Output only. Short description of the operation.
+	Description string `json:"description,omitempty"`
+	// DoneTime: Output only. The time when the operation finished.
+	DoneTime string `json:"doneTime,omitempty"`
+	// Labels: Output only. Labels associated with the operation.
+	Labels map[string]string `json:"labels,omitempty"`
+	// OperationType: Output only. The operation type.
+	//
+	// Possible values:
+	//   "VIRTUAL_CLUSTER_OPERATION_TYPE_UNSPECIFIED" - VirtualCluster operation
+	// type is unknown.
+	//   "CREATE" - Create VirtualCluster operation type.
+	//   "UPDATE" - Update VirtualCluster operation type.
+	//   "DELETE" - Delete VirtualCluster operation type.
+	OperationType string `json:"operationType,omitempty"`
+	// VirtualCluster: Output only. Name of the virtual cluster for the operation.
+	VirtualCluster string `json:"virtualCluster,omitempty"`
+	// VirtualClusterUuid: Output only. VirtualCluster UUID for the operation.
+	VirtualClusterUuid string `json:"virtualClusterUuid,omitempty"`
+	// Warnings: Output only. Warnings encountered during operation execution.
+	Warnings []string `json:"warnings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VirtualClusterOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod VirtualClusterOperationMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11784,6 +12232,252 @@ func (c *ProjectsLocationsBatchesSparkApplicationsAccessJobCall) Do(opts ...goog
 	return ret, nil
 }
 
+type ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AccessNativeBuildInfo: Obtain build data for Native Job
+//
+//   - name: The fully qualified name of the batch to retrieve in the format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID/sparkApplic
+//     ations/APPLICATION_ID".
+func (r *ProjectsLocationsBatchesSparkApplicationsService) AccessNativeBuildInfo(name string) *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall {
+	c := &ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. Parent (Batch)
+// resource reference.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall) Parent(parent string) *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall) Fields(s ...googleapi.Field) *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall) IfNoneMatch(entityTag string) *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall) Context(ctx context.Context) *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:accessNativeBuildInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.accessNativeBuildInfo", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.batches.sparkApplications.accessNativeBuildInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AccessSparkApplicationNativeBuildInfoResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeBuildInfoCall) Do(opts ...googleapi.CallOption) (*AccessSparkApplicationNativeBuildInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccessSparkApplicationNativeBuildInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.accessNativeBuildInfo", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AccessNativeSqlQuery: Obtain data corresponding to a particular Native SQL
+// Query for a Spark Application.
+//
+//   - name: The fully qualified name of the batch to retrieve in the format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID/sparkApplic
+//     ations/APPLICATION_ID".
+func (r *ProjectsLocationsBatchesSparkApplicationsService) AccessNativeSqlQuery(name string) *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall {
+	c := &ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ExecutionId sets the optional parameter "executionId": Required. Execution
+// ID
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall) ExecutionId(executionId int64) *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall {
+	c.urlParams_.Set("executionId", fmt.Sprint(executionId))
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. Parent (Batch)
+// resource reference.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall) Parent(parent string) *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall) Fields(s ...googleapi.Field) *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall) IfNoneMatch(entityTag string) *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall) Context(ctx context.Context) *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:accessNativeSqlQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.accessNativeSqlQuery", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.batches.sparkApplications.accessNativeSqlQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AccessSparkApplicationNativeSqlQueryResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBatchesSparkApplicationsAccessNativeSqlQueryCall) Do(opts ...googleapi.CallOption) (*AccessSparkApplicationNativeSqlQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccessSparkApplicationNativeSqlQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.accessNativeSqlQuery", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsBatchesSparkApplicationsAccessSqlPlanCall struct {
 	s            *Service
 	name         string
@@ -12319,6 +13013,141 @@ func (c *ProjectsLocationsBatchesSparkApplicationsAccessStageRddGraphCall) Do(op
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.accessStageRddGraph", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ComputeTuningConfig: Returns autotuning configuration for a specific query
+// plan id and cohort id. Called by Spark during query planning.
+//
+//   - name: The fully qualified name of the spark application to retrieve
+//     autotuning configuration for in the format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID/sparkApplic
+//     ations/APPLICATION_ID".
+func (r *ProjectsLocationsBatchesSparkApplicationsService) ComputeTuningConfig(name string) *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall {
+	c := &ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ExecutionId sets the optional parameter "executionId": Required. Spark
+// execution ID for the query.
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) ExecutionId(executionId int64) *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall {
+	c.urlParams_.Set("executionId", fmt.Sprint(executionId))
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. Parent (Batch)
+// resource reference.
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) Parent(parent string) *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// SemanticQueryId sets the optional parameter "semanticQueryId": Required.
+// Spark semantic query ID.
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) SemanticQueryId(semanticQueryId string) *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall {
+	c.urlParams_.Set("semanticQueryId", semanticQueryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) Context(ctx context.Context) *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:computeTuningConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.computeTuningConfig", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.batches.sparkApplications.computeTuningConfig" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ComputeTuningConfigResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBatchesSparkApplicationsComputeTuningConfigCall) Do(opts ...googleapi.CallOption) (*ComputeTuningConfigResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ComputeTuningConfigResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.computeTuningConfig", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -13006,6 +13835,163 @@ func (c *ProjectsLocationsBatchesSparkApplicationsSearchJobsCall) Do(opts ...goo
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsBatchesSparkApplicationsSearchJobsCall) Pages(ctx context.Context, f func(*SearchSparkApplicationJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// SearchNativeSqlQueries: Obtain data corresponding to Native SQL Queries for
+// a Spark Application.
+//
+//   - name: The fully qualified name of the batch to retrieve in the format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/batches/BATCH_ID/sparkApplic
+//     ations/APPLICATION_ID".
+func (r *ProjectsLocationsBatchesSparkApplicationsService) SearchNativeSqlQueries(name string) *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall {
+	c := &ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of queries
+// to return in each response. The service may return fewer than this. The
+// default page size is 10; the maximum page size is 100.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) PageSize(pageSize int64) *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous SearchSparkApplicationNativeSqlQueries call. Provide this
+// token to retrieve the subsequent page.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) PageToken(pageToken string) *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. Parent (Batch)
+// resource reference.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) Parent(parent string) *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) Fields(s ...googleapi.Field) *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) IfNoneMatch(entityTag string) *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) Context(ctx context.Context) *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:searchNativeSqlQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.searchNativeSqlQueries", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.batches.sparkApplications.searchNativeSqlQueries" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchSparkApplicationNativeSqlQueriesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) Do(opts ...googleapi.CallOption) (*SearchSparkApplicationNativeSqlQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchSparkApplicationNativeSqlQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataproc.projects.locations.batches.sparkApplications.searchNativeSqlQueries", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsBatchesSparkApplicationsSearchNativeSqlQueriesCall) Pages(ctx context.Context, f func(*SearchSparkApplicationNativeSqlQueriesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
@@ -16370,6 +17356,253 @@ func (c *ProjectsLocationsSessionsSparkApplicationsAccessJobCall) Do(opts ...goo
 	return ret, nil
 }
 
+type ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AccessNativeBuildInfo: Obtain data corresponding to Native Build Information
+// for a Spark Application.
+//
+//   - name: The fully qualified name of the session to retrieve in the format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/sessions/SESSION_ID/sparkApp
+//     lications/APPLICATION_ID".
+func (r *ProjectsLocationsSessionsSparkApplicationsService) AccessNativeBuildInfo(name string) *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall {
+	c := &ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. Parent (Session)
+// resource reference.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall) Parent(parent string) *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall) IfNoneMatch(entityTag string) *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall) Context(ctx context.Context) *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:accessNativeBuildInfo")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataproc.projects.locations.sessions.sparkApplications.accessNativeBuildInfo", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.sparkApplications.accessNativeBuildInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AccessSessionSparkApplicationNativeBuildInfoResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeBuildInfoCall) Do(opts ...googleapi.CallOption) (*AccessSessionSparkApplicationNativeBuildInfoResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccessSessionSparkApplicationNativeBuildInfoResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataproc.projects.locations.sessions.sparkApplications.accessNativeBuildInfo", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// AccessNativeSqlQuery: Obtain data corresponding to a particular Native SQL
+// Query for a Spark Application.
+//
+//   - name: The fully qualified name of the session to retrieve in the format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/sessions/SESSION_ID/sparkApp
+//     lications/APPLICATION_ID".
+func (r *ProjectsLocationsSessionsSparkApplicationsService) AccessNativeSqlQuery(name string) *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall {
+	c := &ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ExecutionId sets the optional parameter "executionId": Required. Execution
+// ID
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall) ExecutionId(executionId int64) *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall {
+	c.urlParams_.Set("executionId", fmt.Sprint(executionId))
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. Parent (Session)
+// resource reference.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall) Parent(parent string) *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall) IfNoneMatch(entityTag string) *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall) Context(ctx context.Context) *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:accessNativeSqlQuery")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataproc.projects.locations.sessions.sparkApplications.accessNativeSqlQuery", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.sparkApplications.accessNativeSqlQuery" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AccessSessionSparkApplicationNativeSqlQueryResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionsSparkApplicationsAccessNativeSqlQueryCall) Do(opts ...googleapi.CallOption) (*AccessSessionSparkApplicationNativeSqlQueryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AccessSessionSparkApplicationNativeSqlQueryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataproc.projects.locations.sessions.sparkApplications.accessNativeSqlQuery", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsSessionsSparkApplicationsAccessSqlPlanCall struct {
 	s            *Service
 	name         string
@@ -17605,6 +18838,163 @@ func (c *ProjectsLocationsSessionsSparkApplicationsSearchJobsCall) Do(opts ...go
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsSessionsSparkApplicationsSearchJobsCall) Pages(ctx context.Context, f func(*SearchSessionSparkApplicationJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// SearchNativeSqlQueries: Obtain data corresponding to Native SQL Queries for
+// a Spark Application.
+//
+//   - name: The fully qualified name of the session to retrieve in the format
+//     "projects/PROJECT_ID/locations/DATAPROC_REGION/sessions/SESSION_ID/sparkApp
+//     lications/APPLICATION_ID".
+func (r *ProjectsLocationsSessionsSparkApplicationsService) SearchNativeSqlQueries(name string) *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall {
+	c := &ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of queries
+// to return in each response. The service may return fewer than this. The
+// default page size is 10; the maximum page size is 100.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) PageSize(pageSize int64) *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token received
+// from a previous SearchSessionSparkApplicationSqlQueries call. Provide this
+// token to retrieve the subsequent page.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) PageToken(pageToken string) *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Parent sets the optional parameter "parent": Required. Parent (Session)
+// resource reference.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) Parent(parent string) *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall {
+	c.urlParams_.Set("parent", parent)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) Fields(s ...googleapi.Field) *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) IfNoneMatch(entityTag string) *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) Context(ctx context.Context) *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:searchNativeSqlQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "dataproc.projects.locations.sessions.sparkApplications.searchNativeSqlQueries", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dataproc.projects.locations.sessions.sparkApplications.searchNativeSqlQueries" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchSessionSparkApplicationNativeSqlQueriesResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) Do(opts ...googleapi.CallOption) (*SearchSessionSparkApplicationNativeSqlQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SearchSessionSparkApplicationNativeSqlQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "dataproc.projects.locations.sessions.sparkApplications.searchNativeSqlQueries", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSessionsSparkApplicationsSearchNativeSqlQueriesCall) Pages(ctx context.Context, f func(*SearchSessionSparkApplicationNativeSqlQueriesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {

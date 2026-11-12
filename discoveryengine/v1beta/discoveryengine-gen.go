@@ -112,7 +112,8 @@ const (
 
 	// View your Agentspace chat history, including uploaded files and generated
 	// reports and visualizations, and interact with the Agentspace assistant on
-	// your behalf.
+	// your behalf. Also view the artifacts you access through NotebookLM
+	// Enterprise.
 	DiscoveryengineAssistReadwriteScope = "https://www.googleapis.com/auth/discoveryengine.assist.readwrite"
 
 	// View, edit, create, and delete all your data associated with any Discovery
@@ -1164,6 +1165,72 @@ type ProjectsOperationsService struct {
 	s *Service
 }
 
+// ApiservingMcpMcpToolVisibility: Profile describing the visibility
+// restriction of an MCP tool. Key:
+// "google.com/tool.profiles/visibility.restriction"
+type ApiservingMcpMcpToolVisibility struct {
+	// FieldVisibility: A list of field-level visibility restrictions.
+	FieldVisibility []*ApiservingMcpMcpToolVisibilityFieldVisibility `json:"fieldVisibility,omitempty"`
+	// VisibilityEnforcementStrategy: The strategy used to enforce visibility
+	// restrictions. DO NOT USE. This field is not yet implemented.
+	//
+	// Possible values:
+	//   "VISIBILITY_ENFORCEMENT_STRATEGY_UNSPECIFIED" - Default. Equivalent to
+	// COMBINE.
+	//   "COMBINE" - The principal must satisfy both API-level tool-level)
+	// visibility restrictions.
+	//   "OVERRIDE" - Bypasses the API-level visibility restrictions check; access
+	// is determined solely by the tool-level visibility restrictions.
+	VisibilityEnforcementStrategy string `json:"visibilityEnforcementStrategy,omitempty"`
+	// VisibilityRestriction: The visibility restriction labels for the tool itself
+	// (e.g., "PRODUCER_DEFINED_PREVIEW"). Multiple labels can be provided as a
+	// comma-separated string.
+	VisibilityRestriction string `json:"visibilityRestriction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldVisibility") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldVisibility") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolVisibility
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApiservingMcpMcpToolVisibilityFieldVisibility: Visibility rules for
+// individual tool parameters (fields). This allows producers to hide specific
+// fields in tools/list and tools/call.
+type ApiservingMcpMcpToolVisibilityFieldVisibility struct {
+	// Restriction: The visibility restriction labels for this field
+	// (comma-separated).
+	Restriction string `json:"restriction,omitempty"`
+	// Selector: The name of the parameter in the input_schema or output_schema.
+	Selector string `json:"selector,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Restriction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Restriction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiservingMcpMcpToolVisibilityFieldVisibility) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiservingMcpMcpToolVisibilityFieldVisibility
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleApiDistribution: `Distribution` contains summary statistics for a
 // population of values. It optionally contains a histogram representing the
 // distribution of those values across a set of buckets. The summary statistics
@@ -1923,6 +1990,14 @@ type GoogleCloudDiscoveryengineV1ActionConfig struct {
 	// CreateBapConnection: Optional. Whether to create a BAP connection for the
 	// connector.
 	CreateBapConnection bool `json:"createBapConnection,omitempty"`
+	// CustomerManagedScopes: Optional. Customer-supplied OAuth scopes for
+	// connectors that opt into customer- managed scopes via
+	// ConnectorSource.enable_customer_managed_scopes. When non-empty on an
+	// opted-in connector, this list **replaces** the connector's built-in per-tool
+	// scopes: the OAuth authorization URL requests exactly these scopes for every
+	// operation, and the built-in scopes are never merged in. Ignored for
+	// connectors that do not opt in.
+	CustomerManagedScopes []string `json:"customerManagedScopes,omitempty"`
 	// IsActionConfigured: Output only. The connector contains the necessary
 	// parameters and is configured to support actions.
 	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
@@ -2219,15 +2294,16 @@ type GoogleCloudDiscoveryengineV1Assistant struct {
 	// DisplayName: Required. The assistant display name. It must be a UTF-8
 	// encoded string with a length limit of 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// EnabledTools: Optional. Note: not implemented yet. Use enabled_actions
-	// instead. The enabled tools on this assistant. The keys are connector name,
-	// for example
-	// "projects/{projectId}/locations/{locationId}/collections/{collectionId}/datac
-	// onnector The values consist of admin enabled tools towards the connector
-	// instance. Admin can selectively enable multiple tools on any of the
-	// connector instances that they created in the project. For example
-	// {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2,
-	// "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
+	// EnabledTools: Optional. The enabled tools on this assistant. The keys are
+	// data connector resource names, in the format
+	// `projects/{project}/locations/{location}/collections/{collection}/dataConnect
+	// or`. The values are the tools that the admin enabled on that connector.
+	// Admins can selectively enable tools on any of the connectors that they
+	// created in the project. For example: ``` {
+	// "projects/my-project/locations/global/collections/jira1/dataConnector": {
+	// "toolInfo": [ { "toolName": "create_jira_issue", "toolDisplayName": "Create
+	// Jira issue" }, { "toolName": "update_jira_issue", "toolDisplayName": "Update
+	// Jira issue" } ] } } ```
 	EnabledTools map[string]GoogleCloudDiscoveryengineV1AssistantToolList `json:"enabledTools,omitempty"`
 	// GenerationConfig: Optional. Configuration for the generation of the
 	// assistant response.
@@ -2274,6 +2350,9 @@ func (s GoogleCloudDiscoveryengineV1Assistant) MarshalJSON() ([]byte, error) {
 type GoogleCloudDiscoveryengineV1AssistantCustomerPolicy struct {
 	// BannedPhrases: Optional. List of banned phrases.
 	BannedPhrases []*GoogleCloudDiscoveryengineV1AssistantCustomerPolicyBannedPhrase `json:"bannedPhrases,omitempty"`
+	// DataProtectionPolicy: Optional. Data protection policy to be used for
+	// sanitizing file uploads.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1DataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// ModelArmorConfig: Optional. Model Armor configuration to be used for
 	// sanitizing user prompts and assistant responses.
 	ModelArmorConfig *GoogleCloudDiscoveryengineV1AssistantCustomerPolicyModelArmorConfig `json:"modelArmorConfig,omitempty"`
@@ -3463,19 +3542,13 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	CreateEuaSaas bool `json:"createEuaSaas,omitempty"`
 	// CreateTime: Output only. Timestamp the DataConnector was created at.
 	CreateTime string `json:"createTime,omitempty"`
-	// DataSource: Required. The identifier for the data source. This is a partial
-	// list of supported connectors. Please refer to the documentation
-	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores)
-	// for the full list of connectors. Supported first-party connectors include: *
-	// `gcs` * `bigquery` * `gcp_fhir` * `google_mail` * `google_drive` *
-	// `google_calendar` * `google_chat` Supported third-party connectors include:
-	// Generally available (GA) connectors: * `onedrive` * `outlook` * `confluence`
-	// * `jira` * `servicenow` * `sharepoint` Preview connectors: * `asana` *
-	// `azure_active_directory` * `box` * `canva` * `confluence_server` *
-	// `custom_connector` * `docusign` * `dropbox` * `dynamics365` * `github` *
-	// `gitlab` * `hubspot` * `jira_server` * `linear` * `native_cloud_identity` *
-	// `notion` * `okta` * `pagerduty` * `peoplesoft` * `salesforce` * `shopify` *
-	// `slack` * `snowflake` * `teams` * `trello` * `workday` * `zendesk`
+	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
+	// connector.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1DataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
+	// DataSource: Required. The identifier for the data source. For the full,
+	// up-to-date list of supported connectors and their values, see Connect a
+	// third-party data source
+	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/connect-third-party-data-source#sources-by-launch-stage).
 	DataSource string `json:"dataSource,omitempty"`
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
@@ -3544,6 +3617,9 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	// data synchronization job will be canceled. - No future data synchronization
 	// runs will be scheduled nor can be triggered.
 	LatestPauseTime string `json:"latestPauseTime,omitempty"`
+	// Metadata: Optional. User-facing metadata for the connector. Populated from
+	// the connector's generated metadata / registry `ConnectorSource`.
+	Metadata *GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata `json:"metadata,omitempty"`
 	// Name: Identifier. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
@@ -3634,6 +3710,19 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 	//   "STREAMING" - The data will be synced in real time.
 	//   "UNSPECIFIED" - Connector that doesn't ingest data will have this value
 	SyncMode string `json:"syncMode,omitempty"`
+	// Tag: Optional. Immutable. User-facing, version-independent label for this
+	// connector. May be shared by multiple connectors under the same (project,
+	// location, collection, data_source); tag-based lookup returns the one with
+	// the greatest create_time. Optional at Create time. If the caller omits
+	// `tag`, the server auto-derives one from the collection_id (falling back to
+	// data_source, else a time-based `t-` sentinel). The auto-derived tag is
+	// subject to the same immutability guarantee as a caller-supplied one, so
+	// callers who care about the exact tag value should provide it explicitly
+	// rather than relying on the server default. Agent Designer resolves
+	// connectors via (data_source, tag) when set, falling back to the legacy
+	// resource-name lookup when unset, so connectors created before the tag-write
+	// launch continue to work without a backfill.
+	Tag string `json:"tag,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
@@ -3654,6 +3743,42 @@ type GoogleCloudDiscoveryengineV1DataConnector struct {
 
 func (s GoogleCloudDiscoveryengineV1DataConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1DataConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata: User-facing
+// metadata for the connector, shown on the connector detail page (title,
+// description, short_description, author, note).
+type GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata struct {
+	// Author: Optional. The party that authored the connector, e.g. "Google" or a
+	// third-party provider name. Lets end users see who authored a connector.
+	Author string `json:"author,omitempty"`
+	// Description: Optional. Human-readable description of the connector, shown on
+	// the connector detail page. One connector has a single description.
+	Description string `json:"description,omitempty"`
+	// Note: Optional. Free-form, multi-line note about the connector's
+	// capabilities or a custom note that can be set for the connector.
+	Note string `json:"note,omitempty"`
+	// ShortDescription: Optional. Short, subtitle-length description of the
+	// connector (e.g. shown beneath the connector name in list and detail views).
+	ShortDescription string `json:"shortDescription,omitempty"`
+	// Title: Optional. Display title of the connector.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataConnectorConnectorMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3837,6 +3962,56 @@ func (s GoogleCloudDiscoveryengineV1DataConnectorSourceEntity) MarshalJSON() ([]
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1DataProtectionPolicy: Contains the data
+// protection policy config for a DataStore or a connector.
+type GoogleCloudDiscoveryengineV1DataProtectionPolicy struct {
+	// SensitiveDataProtectionPolicy: Optional. Specifies the sensitive data
+	// protection policy for the connector source.
+	SensitiveDataProtectionPolicy *GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy `json:"sensitiveDataProtectionPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "SensitiveDataProtectionPolicy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SensitiveDataProtectionPolicy")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy
+// : Specifies a Sensitive Data Protection
+// (https://cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview)
+// policy.
+type GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy struct {
+	// Policy: Optional. Specifies the resource name of the Sensitive Data
+	// Protection content policy.
+	Policy string `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1DataProtectionPolicySensitiveDataProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1DataStore: DataStore captures global settings
 // and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1DataStore struct {
@@ -3881,6 +4056,9 @@ type GoogleCloudDiscoveryengineV1DataStore struct {
 	ContentConfig string `json:"contentConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the DataStore was created at.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
+	// data store.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1DataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// DefaultSchemaId: Output only. The id of the default Schema associated to
 	// this data store.
 	DefaultSchemaId string `json:"defaultSchemaId,omitempty"`
@@ -4142,16 +4320,24 @@ func (s GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigAlloyDbConfigA
 // GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig:
 // Config for connecting to NotebookLM Enterprise.
 type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// Notebooks: Optional. Restricts this data store to the given notebooks. When
+	// empty, the data store covers every notebook the querying user can access,
+	// which is the existing behaviour. Each entry is a full notebook resource
+	// name, such as `projects/*/locations/*/notebooks/*`. Scoping is enforced on
+	// results as well as requested upstream, so a notebook outside this list
+	// cannot appear in a search response through this data store even if the
+	// backend returns one.
+	Notebooks []string `json:"notebooks,omitempty"`
 	// SearchConfig: Required. Search config name. Format:
 	// projects/*/locations/global/notebookLmSearchConfigs/*
 	SearchConfig string `json:"searchConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// ForceSendFields is a list of field names (e.g. "Notebooks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// NullFields is a list of field names (e.g. "Notebooks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -4169,8 +4355,8 @@ type GoogleCloudDiscoveryengineV1DataStoreFederatedSearchConfigThirdPartyOauthCo
 	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
 	AppName string `json:"appName,omitempty"`
 	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
-	// "vaissptbots-my". This is different from the instance_uri which is the full
-	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	// "-my". This is different from the instance_uri which is the full URL of the
+	// 3P app e.g., "https://-my.sharepoint.com".
 	InstanceName string `json:"instanceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -4732,6 +4918,9 @@ type GoogleCloudDiscoveryengineV1DynamicTool struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// Name: Required. The name of the tool.
 	Name string `json:"name,omitempty"`
+	// Readonly: Optional. Indicates whether the tool is read-only and does not
+	// perform write operations.
+	Readonly bool `json:"readonly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4832,27 +5021,58 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DelayedGlobalFeatureToggleStateAllowed: Output only. Whether the project is
+	// allowed to set `global_feature_toggle_state` to `DELAYED`.
+	DelayedGlobalFeatureToggleStateAllowed bool `json:"delayedGlobalFeatureToggleStateAllowed,omitempty"`
 	// DisableAnalytics: Optional. Whether to disable analytics for searches
 	// performed on this engine.
 	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveFeatures: Output only. The complete, server-resolved state of every
+	// known feature toggle. Unlike `features`, which stores only explicit admin
+	// overrides, this map always contains an entry for every toggle. Clients
+	// should read toggle state from this field.
+	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
+	// FeaturePolicies: Optional. Per-feature access policies, keyed by feature
+	// toggle name (see `features`). A feature with no entry is available to every
+	// user when it is on. Only features that support access policies are accepted.
+	FeaturePolicies map[string]GoogleCloudDiscoveryengineV1EngineFeaturePolicy `json:"featurePolicies,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `disable-projects` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
+	// `disable-video-generation` * `music-generation` * `speech-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `skill-sharing-without-admin-approval` * `skill-security-scan` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` *
+	// `code-extraction` * `remote-vm` * `license-tier-badge` *
+	// `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents` * `plugins`
 	Features map[string]string `json:"features,omitempty"`
+	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
+	// for the engine.
+	//
+	// Possible values:
+	//   "GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED" - Unspecified feature toggle
+	// state. Treated as `GENERAL`.
+	//   "DELAYED" - Gets features and models 4 weeks post GA. Features will be ON
+	// at the 4 weeks mark post GA.
+	//   "SCHEDULED" - Gets features and models 2 weeks post GA. Features will be
+	// ON at the 2 weeks mark post GA.
+	//   "GENERAL" - Gets features and models at GA. Features will be ON at GA.
+	//   "EARLY" - Gets features and models at EAP (if in EAP). Features will only
+	// be ON if the project is allowlisted.
+	GlobalFeatureToggleState string `json:"globalFeatureToggleState,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the
@@ -4913,6 +5133,8 @@ type GoogleCloudDiscoveryengineV1Engine struct {
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1EngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
+	// SessionConfig: Optional. Non-empty default. Session config for the engine.
+	SessionConfig *GoogleCloudDiscoveryengineV1SessionConfig `json:"sessionConfig,omitempty"`
 	// SolutionType: Required. The solutions of the engine.
 	//
 	// Possible values:
@@ -5077,6 +5299,90 @@ type GoogleCloudDiscoveryengineV1EngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1EngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1EngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineFeaturePolicy: Restricts which users may
+// use a feature that is turned on in `features`.
+type GoogleCloudDiscoveryengineV1EngineFeaturePolicy struct {
+	// AllowedMembers: Optional. Members who may use the feature.
+	AllowedMembers []*GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember `json:"allowedMembers,omitempty"`
+	// DefaultAccess: Optional. Access for users who match neither list.
+	//
+	// Possible values:
+	//   "DEFAULT_ACCESS_UNSPECIFIED" - Treated as `ALLOW`.
+	//   "ALLOW" - Users who match neither list may use the feature.
+	//   "DENY" - Users who match neither list may not use the feature.
+	DefaultAccess string `json:"defaultAccess,omitempty"`
+	// DeniedMembers: Optional. Members who may not use the feature. Takes
+	// precedence over `allowed_members`.
+	DeniedMembers []*GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember `json:"deniedMembers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedMembers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineFeaturePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineFeaturePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember: A user or group the
+// policy refers to.
+type GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember struct {
+	// DisplayName: Optional. Label shown in the console. Never used for
+	// evaluation.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Required. Identifier evaluated at serving time. Its format depends on
+	// the project's identity provider: * Google identity (`GSUITE`): the group or
+	// user email. For groups, the server resolves the email to a group ID on write
+	// and returns the email on read. * Workforce Identity Federation
+	// (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`.
+	// With SCIM this is the SCIM group ID; without SCIM and with the default
+	// Microsoft Entra mapping it is the Entra group object ID. * Workforce
+	// Identity Federation, users: the user's workforce identity subject.
+	Id string `json:"id,omitempty"`
+	// Type: Required. Kind of member.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not allowed.
+	//   "USER" - A single user.
+	//   "GROUP" - A group of users.
+	Type string `json:"type,omitempty"`
+	// Verification: Output only. Result of the server's directory check when the
+	// member was saved.
+	//
+	// Possible values:
+	//   "VERIFICATION_UNSPECIFIED" - Not checked.
+	//   "VERIFIED" - Found in the project's directory.
+	//   "NOT_FOUND" - Microsoft Graph has no such group. Saved anyway, because a
+	// custom `google.groups` mapping can emit IDs that Graph doesn't know.
+	//   "NOT_VERIFIABLE" - The project has no directory to check against.
+	//   "CHECK_FAILED" - The directory lookup failed. Saved anyway.
+	Verification string `json:"verification,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1EngineFeaturePolicyMember
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -5842,8 +6148,7 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	// it reaches the end date.
 	AutoRenew bool `json:"autoRenew,omitempty"`
 	// EarlyTerminated: Output only. Indication of whether the subscription is
-	// terminated earlier than the expiration date. This is usually terminated by
-	// pipeline once the subscription gets terminated from subsv3.
+	// terminated earlier than the expiration date.
 	EarlyTerminated bool `json:"earlyTerminated,omitempty"`
 	// EarlyTerminationDate: Output only. The date when the subscription is
 	// terminated earlier than the expiration date.
@@ -5878,10 +6183,10 @@ type GoogleCloudDiscoveryengineV1LicenseConfig struct {
 	// is in the future.
 	//   "WITHDRAWN" - This is when a sub license config has returned all its seats
 	// back to BillingAccountLicenseConfig that it belongs to. Similar to EXPIRED.
-	//   "DEACTIVATING" - The license config is terminated earlier than the
-	// expiration date and it is deactivating. The customer will still have access
-	// in this state. It will be converted to EXPIRED after the deactivating period
-	// ends (14 days) or when the end date is reached, whichever comes first.
+	//   "DEACTIVATING" - The license config is in a grace period. Its subscription
+	// has ended, either through early termination or by reaching its end date, but
+	// the customer keeps access for a limited time. It becomes EXPIRED when the
+	// grace period ends.
 	State string `json:"state,omitempty"`
 	// SubscriptionTerm: Required. Subscription term.
 	//
@@ -6006,6 +6311,16 @@ type GoogleCloudDiscoveryengineV1Project struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
 	CustomerProvidedConfig *GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfig `json:"customerProvidedConfig,omitempty"`
+	// ExperienceState: Output only. The current experience state of the project.
+	//
+	// Possible values:
+	//   "EXPERIENCE_STATE_UNSPECIFIED" - No experience is stated for this
+	// location.
+	//   "SOBI_ONLY" - Only the new Gemini Enterprise experience.
+	//   "LEGACY_ONLY" - Only the classic Gemini Enterprise experience.
+	//   "LEGACY_AND_SOBI" - Legacy engines serve the classic experience, the Sobi
+	// engine serves the Sobi experience.
+	ExperienceState string `json:"experienceState,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
 	// `projects/{project}`. Note that when making requests, project number and
 	// project id are both acceptable, but the server will always respond in
@@ -6192,6 +6507,9 @@ func (s GoogleCloudDiscoveryengineV1ProjectConfigurableBillingStatusAgentSearchT
 type GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfig struct {
 	// NotebooklmConfig: Optional. Configuration for NotebookLM settings.
 	NotebooklmConfig *GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ResourceAccessControlConfig: Optional. Resource-level access control config
+	// for Gemini Enterprise users.
+	ResourceAccessControlConfig *GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessControlConfig `json:"resourceAccessControlConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NotebooklmConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -6324,6 +6642,31 @@ func (s GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigNotebooklmConfi
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessContro
+// lConfig: Controls resource-level access control for Gemini Enterprise users.
+type GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessControlConfig struct {
+	// DataStoreAccessControlEnabled: Optional. If `true`, the data stores and data
+	// connectors shown to Gemini Enterprise users are filtered to those the user
+	// has the required resource-level `.get` IAM permission on.
+	DataStoreAccessControlEnabled bool `json:"dataStoreAccessControlEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DataStoreAccessControlEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStoreAccessControlEnabled")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessControlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1ProjectCustomerProvidedConfigResourceAccessControlConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1ProjectServiceTerms: Metadata about the terms of
 // service.
 type GoogleCloudDiscoveryengineV1ProjectServiceTerms struct {
@@ -6403,7 +6746,9 @@ func (s GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsMetadata) MarshalJ
 }
 
 // GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsResponse: Response
-// message for CompletionService.PurgeCompletionSuggestions method.
+// message for CompletionService.PurgeCompletionSuggestions method. If the long
+// running operation is successfully done, then this message is returned by the
+// google.longrunning.Operations.response field.
 type GoogleCloudDiscoveryengineV1PurgeCompletionSuggestionsResponse struct {
 	// ErrorSamples: A sample of errors encountered while processing the request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
@@ -7129,6 +7474,61 @@ func (s *GoogleCloudDiscoveryengineV1ServingConfigMediaConfig) UnmarshalJSON(dat
 	return nil
 }
 
+// GoogleCloudDiscoveryengineV1SessionConfig: Configuration for the session.
+type GoogleCloudDiscoveryengineV1SessionConfig struct {
+	// SessionManagementPolicy: Optional. Session management policy that defines
+	// who will manage the session.
+	//
+	// Possible values:
+	//   "SESSION_MANAGEMENT_POLICY_UNSPECIFIED" - Default value.
+	//   "NOT_MANAGED" - The session will be managed by the customer.
+	//   "VERTEX_AI_MANAGED" - Sessions multi-tenancy will be controlled by Google
+	// using 1P or 3P identity providers.
+	SessionManagementPolicy string `json:"sessionManagementPolicy,omitempty"`
+	// SessionTtl: Optional. The TTL for the session. If unset, the default value
+	// is 60 days.
+	SessionTtl *GoogleCloudDiscoveryengineV1SessionConfigSessionTtl `json:"sessionTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1SessionConfigSessionTtl: Defines the TTL for
+// sessions.
+type GoogleCloudDiscoveryengineV1SessionConfigSessionTtl struct {
+	// Days: Defines the number of days for session TTL.
+	Days int64 `json:"days,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Days") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Days") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1SessionConfigSessionTtl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1SessionConfigSessionTtl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1SetUpDataConnectorMetadata: Metadata for
 // DataConnectorService.SetUpDataConnector method.
 type GoogleCloudDiscoveryengineV1SetUpDataConnectorMetadata struct {
@@ -7699,6 +8099,14 @@ type GoogleCloudDiscoveryengineV1alphaActionConfig struct {
 	// CreateBapConnection: Optional. Whether to create a BAP connection for the
 	// connector.
 	CreateBapConnection bool `json:"createBapConnection,omitempty"`
+	// CustomerManagedScopes: Optional. Customer-supplied OAuth scopes for
+	// connectors that opt into customer- managed scopes via
+	// ConnectorSource.enable_customer_managed_scopes. When non-empty on an
+	// opted-in connector, this list **replaces** the connector's built-in per-tool
+	// scopes: the OAuth authorization URL requests exactly these scopes for every
+	// operation, and the built-in scopes are never merged in. Ignored for
+	// connectors that do not opt in.
+	CustomerManagedScopes []string `json:"customerManagedScopes,omitempty"`
 	// IsActionConfigured: Output only. The connector contains the necessary
 	// parameters and is configured to support actions.
 	IsActionConfigured bool `json:"isActionConfigured,omitempty"`
@@ -8331,6 +8739,16 @@ type GoogleCloudDiscoveryengineV1alphaAlphaEvolveExperimentConfigGenerationSetti
 	// `gemini-3.1-pro-preview`). See `model_mixture` for the list of allowed
 	// models.
 	Name string `json:"name,omitempty"`
+	// ThinkingLevel: Optional. Sent as Vertex `ThinkingConfig.thinking_level`.
+	//
+	// Possible values:
+	//   "THINKING_LEVEL_UNSPECIFIED" - Unset. The model applies its own default,
+	// which is not the same level for every model.
+	//   "MINIMAL" - Least thinking. Not offered by every model.
+	//   "LOW" - Vertex `LOW`.
+	//   "MEDIUM" - Vertex `MEDIUM`.
+	//   "HIGH" - Vertex `HIGH`.
+	ThinkingLevel string `json:"thinkingLevel,omitempty"`
 	// Weight: Optional. Relative weight for this model in the mixture. Must be a
 	// finite, strictly positive value. Weights across all entries are normalized
 	// server-side, so they need not sum to 1.0. Defaults to 1.0 when unset, which
@@ -9331,6 +9749,13 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswer struct {
 	// to answer because of a customer policy violation (e.g., the query or the
 	// answer contained a banned phrase).
 	AssistSkippedReasons []string `json:"assistSkippedReasons,omitempty"`
+	// ConnectorDisplayNames: Output only. Maps an internal connector agent name
+	// (the machine identifier embedded in tool names, e.g. `custom_mcp__agent`) to
+	// the connector's human-readable display name. Populated at serving time for
+	// custom MCP / agent gateway connectors so user-facing surfaces (e.g. the
+	// tool-call chip) can show the connector name instead of its internal
+	// identifier. Empty when there are no such connectors.
+	ConnectorDisplayNames map[string]string `json:"connectorDisplayNames,omitempty"`
 	// CustomerPolicyEnforcementResult: Optional. The field contains information
 	// about the various policy checks' results like the banned phrases or the
 	// Model Armor checks. This field is populated only if the assist call was
@@ -9354,6 +9779,13 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswer struct {
 	//   "CANCELLED" - Assist operation has been cancelled (e.g. client closed the
 	// stream). May contain a partial response.
 	State string `json:"state,omitempty"`
+	// ToolDisplayNames: Output only. Maps a tool name (for example,
+	// `Internal-KB-Search` or `custom_mcp__agent__Internal-KB-Search`) to its
+	// human-readable display title (for example, `@Internal-KB Search`), populated
+	// from MCP tool `title` or `annotations.title` metadata so user-facing
+	// surfaces can display the tool title instead of the raw function declaration
+	// identifier. Empty when no tool display titles are present.
+	ToolDisplayNames map[string]string `json:"toolDisplayNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssistSkippedReasons") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9382,14 +9814,23 @@ type GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResul
 	// assist call was skipped due to a policy violation. It contains results from
 	// those filters that blocked the processing of the query.
 	PolicyResults []*GoogleCloudDiscoveryengineV1alphaAssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult `json:"policyResults,omitempty"`
-	// Verdict: Final verdict of the customer policy enforcement. If only one
-	// policy blocked the processing, the verdict is BLOCK.
+	// Verdict: Final verdict of the customer policy enforcement. If at least one
+	// policy blocked the processing, the verdict is BLOCK. If no policy blocked
+	// the processing but at least one flagged it, the verdict is FLAG.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Unknown value.
 	//   "ALLOW" - There was no policy violation.
 	//   "BLOCK" - Processing was blocked by the customer policy.
 	Verdict string `json:"verdict,omitempty"`
+	// ViolationSource: Output only. The source of the violation.
+	//
+	// Possible values:
+	//   "VIOLATION_SOURCE_UNSPECIFIED" - Unknown value.
+	//   "SYSTEM" - Violation found in the system response.
+	//   "PROMPT" - Violation found in the user prompt.
+	//   "ATTACHMENT" - Violation found in the user attachment.
+	ViolationSource string `json:"violationSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PolicyResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9720,19 +10161,22 @@ func (s GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMe
 // GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadat
 // aReference: Referenced content and related document metadata.
 type GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReference struct {
+	// ChunkMetadata: Output only. Generic structured chunk metadata from upstream
+	// data source connectors.
+	ChunkMetadata googleapi.RawMessage `json:"chunkMetadata,omitempty"`
 	// CodeSnippet: Chunk of code snippet from the referenced document.
 	CodeSnippet string `json:"codeSnippet,omitempty"`
 	// Content: Referenced text content.
 	Content string `json:"content,omitempty"`
 	// DocumentMetadata: Document metadata.
 	DocumentMetadata *GoogleCloudDiscoveryengineV1alphaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata `json:"documentMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CodeSnippet") to
+	// ForceSendFields is a list of field names (e.g. "ChunkMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CodeSnippet") to include in API
+	// NullFields is a list of field names (e.g. "ChunkMetadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -11167,19 +11611,10 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
 	// connector.
 	DataProtectionPolicy *GoogleCloudDiscoveryengineV1alphaDataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
-	// DataSource: Required. The identifier for the data source. This is a partial
-	// list of supported connectors. Please refer to the documentation
-	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/introduction-to-connectors-and-data-stores)
-	// for the full list of connectors. Supported first-party connectors include: *
-	// `gcs` * `bigquery` * `gcp_fhir` * `google_mail` * `google_drive` *
-	// `google_calendar` * `google_chat` Supported third-party connectors include:
-	// Generally available (GA) connectors: * `onedrive` * `outlook` * `confluence`
-	// * `jira` * `servicenow` * `sharepoint` Preview connectors: * `asana` *
-	// `azure_active_directory` * `box` * `canva` * `confluence_server` *
-	// `custom_connector` * `docusign` * `dropbox` * `dynamics365` * `github` *
-	// `gitlab` * `hubspot` * `jira_server` * `linear` * `native_cloud_identity` *
-	// `notion` * `okta` * `pagerduty` * `peoplesoft` * `salesforce` * `shopify` *
-	// `slack` * `snowflake` * `teams` * `trello` * `workday` * `zendesk`
+	// DataSource: Required. The identifier for the data source. For the full,
+	// up-to-date list of supported connectors and their values, see Connect a
+	// third-party data source
+	// (https://docs.cloud.google.com/gemini/enterprise/docs/connectors/connect-third-party-data-source#sources-by-launch-stage).
 	DataSource string `json:"dataSource,omitempty"`
 	// DestinationConfigs: Optional. Any target destinations used to connect to
 	// third-party services.
@@ -11248,6 +11683,9 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	// data synchronization job will be canceled. - No future data synchronization
 	// runs will be scheduled nor can be triggered.
 	LatestPauseTime string `json:"latestPauseTime,omitempty"`
+	// Metadata: Optional. User-facing metadata for the connector. Populated from
+	// the connector's generated metadata / registry `ConnectorSource`.
+	Metadata *GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata `json:"metadata,omitempty"`
 	// Name: Identifier. The full resource name of the Data Connector. Format:
 	// `projects/*/locations/*/collections/*/dataConnector`.
 	Name string `json:"name,omitempty"`
@@ -11338,6 +11776,19 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 	//   "STREAMING" - The data will be synced in real time.
 	//   "UNSPECIFIED" - Connector that doesn't ingest data will have this value
 	SyncMode string `json:"syncMode,omitempty"`
+	// Tag: Optional. Immutable. User-facing, version-independent label for this
+	// connector. May be shared by multiple connectors under the same (project,
+	// location, collection, data_source); tag-based lookup returns the one with
+	// the greatest create_time. Optional at Create time. If the caller omits
+	// `tag`, the server auto-derives one from the collection_id (falling back to
+	// data_source, else a time-based `t-` sentinel). The auto-derived tag is
+	// subject to the same immutability guarantee as a caller-supplied one, so
+	// callers who care about the exact tag value should provide it explicitly
+	// rather than relying on the server default. Agent Designer resolves
+	// connectors via (data_source, tag) when set, falling back to the legacy
+	// resource-name lookup when unset, so connectors created before the tag-write
+	// launch continue to work without a backfill.
+	Tag string `json:"tag,omitempty"`
 	// UpdateTime: Output only. Timestamp the DataConnector was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 	// VpcscEnabled: Output only. Whether the connector is created with VPC-SC
@@ -11358,6 +11809,42 @@ type GoogleCloudDiscoveryengineV1alphaDataConnector struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaDataConnector) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnector
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata: User-facing
+// metadata for the connector, shown on the connector detail page (title,
+// description, short_description, author, note).
+type GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata struct {
+	// Author: Optional. The party that authored the connector, e.g. "Google" or a
+	// third-party provider name. Lets end users see who authored a connector.
+	Author string `json:"author,omitempty"`
+	// Description: Optional. Human-readable description of the connector, shown on
+	// the connector detail page. One connector has a single description.
+	Description string `json:"description,omitempty"`
+	// Note: Optional. Free-form, multi-line note about the connector's
+	// capabilities or a custom note that can be set for the connector.
+	Note string `json:"note,omitempty"`
+	// ShortDescription: Optional. Short, subtitle-length description of the
+	// connector (e.g. shown beneath the connector name in list and detail views).
+	ShortDescription string `json:"shortDescription,omitempty"`
+	// Title: Optional. Display title of the connector.
+	Title string `json:"title,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Author") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Author") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDataConnectorConnectorMetadata
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -11912,16 +12399,24 @@ func (s GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigAlloyDbCo
 // GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConf
 // ig: Config for connecting to NotebookLM Enterprise.
 type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// Notebooks: Optional. Restricts this data store to the given notebooks. When
+	// empty, the data store covers every notebook the querying user can access,
+	// which is the existing behaviour. Each entry is a full notebook resource
+	// name, such as `projects/*/locations/*/notebooks/*`. Scoping is enforced on
+	// results as well as requested upstream, so a notebook outside this list
+	// cannot appear in a search response through this data store even if the
+	// backend returns one.
+	Notebooks []string `json:"notebooks,omitempty"`
 	// SearchConfig: Required. Search config name. Format:
 	// projects/*/locations/global/notebookLmSearchConfigs/*
 	SearchConfig string `json:"searchConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// ForceSendFields is a list of field names (e.g. "Notebooks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// NullFields is a list of field names (e.g. "Notebooks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -11939,8 +12434,8 @@ type GoogleCloudDiscoveryengineV1alphaDataStoreFederatedSearchConfigThirdPartyOa
 	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
 	AppName string `json:"appName,omitempty"`
 	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
-	// "vaissptbots-my". This is different from the instance_uri which is the full
-	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	// "-my". This is different from the instance_uri which is the full URL of the
+	// 3P app e.g., "https://-my.sharepoint.com".
 	InstanceName string `json:"instanceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -12657,6 +13152,9 @@ type GoogleCloudDiscoveryengineV1alphaDynamicTool struct {
 	Enabled bool `json:"enabled,omitempty"`
 	// Name: Required. The name of the tool.
 	Name string `json:"name,omitempty"`
+	// Readonly: Optional. Indicates whether the tool is read-only and does not
+	// perform write operations.
+	Readonly bool `json:"readonly,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -12757,27 +13255,58 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DelayedGlobalFeatureToggleStateAllowed: Output only. Whether the project is
+	// allowed to set `global_feature_toggle_state` to `DELAYED`.
+	DelayedGlobalFeatureToggleStateAllowed bool `json:"delayedGlobalFeatureToggleStateAllowed,omitempty"`
 	// DisableAnalytics: Optional. Whether to disable analytics for searches
 	// performed on this engine.
 	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveFeatures: Output only. The complete, server-resolved state of every
+	// known feature toggle. Unlike `features`, which stores only explicit admin
+	// overrides, this map always contains an entry for every toggle. Clients
+	// should read toggle state from this field.
+	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
+	// FeaturePolicies: Optional. Per-feature access policies, keyed by feature
+	// toggle name (see `features`). A feature with no entry is available to every
+	// user when it is on. Only features that support access policies are accepted.
+	FeaturePolicies map[string]GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy `json:"featurePolicies,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `disable-projects` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
+	// `disable-video-generation` * `music-generation` * `speech-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `skill-sharing-without-admin-approval` * `skill-security-scan` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` *
+	// `code-extraction` * `remote-vm` * `license-tier-badge` *
+	// `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents` * `plugins`
 	Features map[string]string `json:"features,omitempty"`
+	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
+	// for the engine.
+	//
+	// Possible values:
+	//   "GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED" - Unspecified feature toggle
+	// state. Treated as `GENERAL`.
+	//   "DELAYED" - Gets features and models 4 weeks post GA. Features will be ON
+	// at the 4 weeks mark post GA.
+	//   "SCHEDULED" - Gets features and models 2 weeks post GA. Features will be
+	// ON at the 2 weeks mark post GA.
+	//   "GENERAL" - Gets features and models at GA. Features will be ON at GA.
+	//   "EARLY" - Gets features and models at EAP (if in EAP). Features will only
+	// be ON if the project is allowlisted.
+	GlobalFeatureToggleState string `json:"globalFeatureToggleState,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the
@@ -12842,6 +13371,8 @@ type GoogleCloudDiscoveryengineV1alphaEngine struct {
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1alphaEngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
+	// SessionConfig: Optional. Non-empty default. Session config for the engine.
+	SessionConfig *GoogleCloudDiscoveryengineV1alphaSessionConfig `json:"sessionConfig,omitempty"`
 	// SimilarDocumentsConfig: Additional config specs for a `similar-items`
 	// engine.
 	SimilarDocumentsConfig *GoogleCloudDiscoveryengineV1alphaEngineSimilarDocumentsEngineConfig `json:"similarDocumentsConfig,omitempty"`
@@ -13009,6 +13540,90 @@ type GoogleCloudDiscoveryengineV1alphaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy: Restricts which users
+// may use a feature that is turned on in `features`.
+type GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy struct {
+	// AllowedMembers: Optional. Members who may use the feature.
+	AllowedMembers []*GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember `json:"allowedMembers,omitempty"`
+	// DefaultAccess: Optional. Access for users who match neither list.
+	//
+	// Possible values:
+	//   "DEFAULT_ACCESS_UNSPECIFIED" - Treated as `ALLOW`.
+	//   "ALLOW" - Users who match neither list may use the feature.
+	//   "DENY" - Users who match neither list may not use the feature.
+	DefaultAccess string `json:"defaultAccess,omitempty"`
+	// DeniedMembers: Optional. Members who may not use the feature. Takes
+	// precedence over `allowed_members`.
+	DeniedMembers []*GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember `json:"deniedMembers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedMembers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember: A user or group
+// the policy refers to.
+type GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember struct {
+	// DisplayName: Optional. Label shown in the console. Never used for
+	// evaluation.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Required. Identifier evaluated at serving time. Its format depends on
+	// the project's identity provider: * Google identity (`GSUITE`): the group or
+	// user email. For groups, the server resolves the email to a group ID on write
+	// and returns the email on read. * Workforce Identity Federation
+	// (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`.
+	// With SCIM this is the SCIM group ID; without SCIM and with the default
+	// Microsoft Entra mapping it is the Entra group object ID. * Workforce
+	// Identity Federation, users: the user's workforce identity subject.
+	Id string `json:"id,omitempty"`
+	// Type: Required. Kind of member.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not allowed.
+	//   "USER" - A single user.
+	//   "GROUP" - A group of users.
+	Type string `json:"type,omitempty"`
+	// Verification: Output only. Result of the server's directory check when the
+	// member was saved.
+	//
+	// Possible values:
+	//   "VERIFICATION_UNSPECIFIED" - Not checked.
+	//   "VERIFIED" - Found in the project's directory.
+	//   "NOT_FOUND" - Microsoft Graph has no such group. Saved anyway, because a
+	// custom `google.groups` mapping can emit IDs that Graph doesn't know.
+	//   "NOT_VERIFIABLE" - The project has no directory to check against.
+	//   "CHECK_FAILED" - The directory lookup failed. Saved anyway.
+	Verification string `json:"verification,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaEngineFeaturePolicyMember
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -13681,6 +14296,34 @@ type GoogleCloudDiscoveryengineV1alphaFieldConfig struct {
 	// metatag. If the user does not define this field, the FieldConfig.field_path
 	// will be used to extract metatag.
 	MetatagName string `json:"metatagName,omitempty"`
+	// PartialMatchableOption: Optional. If partial_matchable_option is
+	// PARTIAL_MATCHABLE_OPTION_ENABLED, field values are partial matchable. If
+	// partial_matchable_option is unset, the server behavior defaults to
+	// PARTIAL_MATCHABLE_OPTION_DISABLED for fields that support setting partial
+	// matchable options. For those fields that do not support setting partial
+	// matchable options, the server will skip partial matchable option setting,
+	// and setting partial_matchable_option for those fields will throw
+	// `INVALID_ARGUMENT` error.
+	//
+	// Possible values:
+	//   "PARTIAL_MATCHABLE_OPTION_UNSPECIFIED" - Value used when unset.
+	//   "PARTIAL_MATCHABLE_OPTION_ENABLED" - Partial Matchable option enabled.
+	//   "PARTIAL_MATCHABLE_OPTION_DISABLED" - Partial Matchable option disabled.
+	PartialMatchableOption string `json:"partialMatchableOption,omitempty"`
+	// PrefixMatchableOption: Optional. If prefix_matchable_option is
+	// PREFIX_MATCHABLE_OPTION_ENABLED, field values are prefix matchable. If
+	// prefix_matchable_option is unset, the server behavior defaults to
+	// PREFIX_MATCHABLE_OPTION_DISABLED for fields that support setting prefix
+	// matchable options. For those fields that do not support setting prefix
+	// matchable options, the server will skip prefix matchable option setting, and
+	// setting prefix_matchable_option for those fields will throw
+	// `INVALID_ARGUMENT` error.
+	//
+	// Possible values:
+	//   "PREFIX_MATCHABLE_OPTION_UNSPECIFIED" - Value used when unset.
+	//   "PREFIX_MATCHABLE_OPTION_ENABLED" - Prefix Matchable option enabled.
+	//   "PREFIX_MATCHABLE_OPTION_DISABLED" - Prefix Matchable option disabled.
+	PrefixMatchableOption string `json:"prefixMatchableOption,omitempty"`
 	// RecsFilterableOption: If recs_filterable_option is FILTERABLE_ENABLED, field
 	// values are filterable by filter expression in
 	// RecommendationService.Recommend. If FILTERABLE_ENABLED but the field type is
@@ -14417,9 +15060,12 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	// AutoRenew: Optional. Whether the license config should be auto renewed when
 	// it reaches the end date.
 	AutoRenew bool `json:"autoRenew,omitempty"`
+	// BillingAccountLicenseConfig: Output only. The name of the
+	// BillingAccountLicenseConfig from which this LicenseConfig is assigned, if
+	// this field is set.
+	BillingAccountLicenseConfig string `json:"billingAccountLicenseConfig,omitempty"`
 	// EarlyTerminated: Output only. Indication of whether the subscription is
-	// terminated earlier than the expiration date. This is usually terminated by
-	// pipeline once the subscription gets terminated from subsv3.
+	// terminated earlier than the expiration date.
 	EarlyTerminated bool `json:"earlyTerminated,omitempty"`
 	// EarlyTerminationDate: Output only. The date when the subscription is
 	// terminated earlier than the expiration date.
@@ -14454,10 +15100,10 @@ type GoogleCloudDiscoveryengineV1alphaLicenseConfig struct {
 	// is in the future.
 	//   "WITHDRAWN" - This is when a sub license config has returned all its seats
 	// back to BillingAccountLicenseConfig that it belongs to. Similar to EXPIRED.
-	//   "DEACTIVATING" - The license config is terminated earlier than the
-	// expiration date and it is deactivating. The customer will still have access
-	// in this state. It will be converted to EXPIRED after the deactivating period
-	// ends (14 days) or when the end date is reached, whichever comes first.
+	//   "DEACTIVATING" - The license config is in a grace period. Its subscription
+	// has ended, either through early termination or by reaching its end date, but
+	// the customer keeps access for a limited time. It becomes EXPIRED when the
+	// grace period ends.
 	State string `json:"state,omitempty"`
 	// SubscriptionTerm: Required. Subscription term.
 	//
@@ -14760,6 +15406,16 @@ type GoogleCloudDiscoveryengineV1alphaProject struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
 	CustomerProvidedConfig *GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfig `json:"customerProvidedConfig,omitempty"`
+	// ExperienceState: Output only. The current experience state of the project.
+	//
+	// Possible values:
+	//   "EXPERIENCE_STATE_UNSPECIFIED" - No experience is stated for this
+	// location.
+	//   "SOBI_ONLY" - Only the new Gemini Enterprise experience.
+	//   "LEGACY_ONLY" - Only the classic Gemini Enterprise experience.
+	//   "LEGACY_AND_SOBI" - Legacy engines serve the classic experience, the Sobi
+	// engine serves the Sobi experience.
+	ExperienceState string `json:"experienceState,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
 	// `projects/{project}`. Note that when making requests, project number and
 	// project id are both acceptable, but the server will always respond in
@@ -14947,6 +15603,9 @@ func (s GoogleCloudDiscoveryengineV1alphaProjectConfigurableBillingStatusAgentSe
 type GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfig struct {
 	// NotebooklmConfig: Optional. Configuration for NotebookLM settings.
 	NotebooklmConfig *GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ResourceAccessControlConfig: Optional. Resource-level access control config
+	// for Gemini Enterprise users.
+	ResourceAccessControlConfig *GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessControlConfig `json:"resourceAccessControlConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NotebooklmConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15079,6 +15738,32 @@ func (s GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigNotebooklm
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessC
+// ontrolConfig: Controls resource-level access control for Gemini Enterprise
+// users.
+type GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessControlConfig struct {
+	// DataStoreAccessControlEnabled: Optional. If `true`, the data stores and data
+	// connectors shown to Gemini Enterprise users are filtered to those the user
+	// has the required resource-level `.get` IAM permission on.
+	DataStoreAccessControlEnabled bool `json:"dataStoreAccessControlEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DataStoreAccessControlEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStoreAccessControlEnabled")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessControlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaProjectCustomerProvidedConfigResourceAccessControlConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaProjectServiceTerms: Metadata about the
 // terms of service.
 type GoogleCloudDiscoveryengineV1alphaProjectServiceTerms struct {
@@ -15159,7 +15844,9 @@ func (s GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsMetadata) Mar
 }
 
 // GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsResponse:
-// Response message for CompletionService.PurgeCompletionSuggestions method.
+// Response message for CompletionService.PurgeCompletionSuggestions method. If
+// the long running operation is successfully done, then this message is
+// returned by the google.longrunning.Operations.response field.
 type GoogleCloudDiscoveryengineV1alphaPurgeCompletionSuggestionsResponse struct {
 	// ErrorSamples: A sample of errors encountered while processing the request.
 	ErrorSamples []*GoogleRpcStatus `json:"errorSamples,omitempty"`
@@ -15507,6 +16194,10 @@ type GoogleCloudDiscoveryengineV1alphaQueryPart struct {
 	// UiJsonPayload: This field is expected to be a ui message in JSON format. As
 	// of Q1 2026, ui_json_payload is only supported for A2UI messages.
 	UiJsonPayload string `json:"uiJsonPayload,omitempty"`
+	// UserSuppliedSobiArtifactReference: Reference to a user-supplied file
+	// attached to a long-running-agent (Sobi) task. See
+	// `UserSuppliedSobiArtifactReference` above.
+	UserSuppliedSobiArtifactReference *GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference `json:"userSuppliedSobiArtifactReference,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DocumentReference") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -15631,6 +16322,50 @@ type GoogleCloudDiscoveryengineV1alphaQueryPartPersonReference struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaQueryPartPersonReference) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaQueryPartPersonReference
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference:
+// Reference to a user-supplied file attached to a long-running-agent (Sobi)
+// task. Rendered by the client as an attachment chip on the user turn's
+// bubble. The file itself is stored on the task's `AgentArtifact` list; the
+// client resolves full metadata (source URI, size, ...) for download or
+// preview by calling `GetTask` on the Sobi Task API and matching
+// `AgentArtifact.name` against `file_name`. Only `file_name` and `mime_type`
+// appear on this wire deliberately: the backing `gs://` or Drive URI is not
+// exposed to conversation-history readers. Same variant is used for both
+// byte-uploaded and Drive-picked files -- "user attached a file" is one
+// concept regardless of source.
+type GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference struct {
+	// FileName: Required. Client-supplied filename. Unique per task within the
+	// user-supplied artifact set (UI dedupes before upload). Doubles as the
+	// artifact identifier used to look up the artifact on `Task.artifacts`. The
+	// `_name` suffix is deliberate and the AIP-122 lint is suppressed: this field
+	// is not a resource name (which is what AIP-122 reserves the bare `name` for).
+	// It is the literal filename, and it serves as the join key against
+	// `AgentArtifact.name` on the backing Sobi task -- a structural role that
+	// `title` or `display_name` would not communicate to a client picking what to
+	// send. The internal mirror
+	// (`cloud/ml/discoveryengine/schema/assistant.proto`) uses the same field name
+	// so the round-trip converter stays name-for-name.
+	FileName string `json:"fileName,omitempty"`
+	// MimeType: Optional. IANA MIME type. Used for icon/preview rendering.
+	MimeType string `json:"mimeType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FileName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FileName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaQueryPartUserSuppliedSobiArtifactReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -16128,7 +16863,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequest struct {
 	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
-	// data store, the specs directly under SearchRequest should be used.
+	// data store, the specs directly under SearchRequest should be used. On an
+	// engine with multiple data stores, this field is optional. If it's empty, all
+	// of the engine's data stores are searched (blended search). Unless it
+	// specifies exactly one data store, some request fields, such as `order_by`
+	// and `query_expansion_spec`, aren't supported and return an
+	// `INVALID_ARGUMENT` error.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1alphaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// DisplaySpec: Optional. Config for display feature, like match highlighting
 	// on search results.
@@ -17601,6 +18341,12 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec struct {
 	//   "AUTO" - Automatic switching between search-as-you-type and standard
 	// search modes, ideal for single-API implementations (e.g., debouncing).
 	Condition string `json:"condition,omitempty"`
+	// Fields: Optional. The list of fields to be used for Search As You Type
+	// scoring.
+	Fields []*GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField `json:"fields,omitempty"`
+	// ScoreThreshold: Optional. Search As You Type score threshold for filtering
+	// purpose. We keep the result if `score` >= `score_threshold`.
+	ScoreThreshold float64 `json:"scoreThreshold,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -17617,6 +18363,62 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec struct {
 func (s GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpec
+	var s1 struct {
+		ScoreThreshold gensupport.JSONFloat64 `json:"scoreThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScoreThreshold = float64(s1.ScoreThreshold)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField: A
+// schema field to be used for Search As You Type scoring on this request.
+// Overrides any data-store-level Search As You Type field configuration for
+// the duration of the request.
+type GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField struct {
+	// Key: Required. A field key that has been indexed for Search As You Type.
+	Key string `json:"key,omitempty"`
+	// Weight: Optional. Weight for scores from this field. Defaults to 1.0 if not
+	// specified.
+	Weight float64 `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSearchRequestSearchAsYouTypeSpecField
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1alphaSearchRequestSessionSpec: Session
@@ -17741,6 +18543,62 @@ type GoogleCloudDiscoveryengineV1alphaSession struct {
 
 func (s GoogleCloudDiscoveryengineV1alphaSession) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaSession
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSessionConfig: Configuration for the
+// session.
+type GoogleCloudDiscoveryengineV1alphaSessionConfig struct {
+	// SessionManagementPolicy: Optional. Session management policy that defines
+	// who will manage the session.
+	//
+	// Possible values:
+	//   "SESSION_MANAGEMENT_POLICY_UNSPECIFIED" - Default value.
+	//   "NOT_MANAGED" - The session will be managed by the customer.
+	//   "VERTEX_AI_MANAGED" - Sessions multi-tenancy will be controlled by Google
+	// using 1P or 3P identity providers.
+	SessionManagementPolicy string `json:"sessionManagementPolicy,omitempty"`
+	// SessionTtl: Optional. The TTL for the session. If unset, the default value
+	// is 60 days.
+	SessionTtl *GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl `json:"sessionTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl: Defines the TTL
+// for sessions.
+type GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl struct {
+	// Days: Defines the number of days for session TTL.
+	Days int64 `json:"days,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Days") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Days") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaSessionConfigSessionTtl
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -18448,11 +19306,10 @@ func (s GoogleCloudDiscoveryengineV1alphaUserInfo) MarshalJSON() ([]byte, error)
 }
 
 // GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation: Precise location
-// info with multiple representation options. Currently only latitude and
-// longitude point is supported.
+// info with multiple representation options.
 type GoogleCloudDiscoveryengineV1alphaUserInfoPreciseLocation struct {
-	// Address: Optional. Location represented by a natural language address. Will
-	// later be geocoded and converted to either a point or a polygon.
+	// Address: Location represented by a natural language address. Will later be
+	// geocoded and converted to either a point or a polygon.
 	Address string `json:"address,omitempty"`
 	// Point: Optional. Location represented by a latitude/longitude point.
 	Point *GoogleTypeLatLng `json:"point,omitempty"`
@@ -18909,6 +19766,8 @@ type GoogleCloudDiscoveryengineV1betaAdvancedCompleteQueryResponsePersonSuggesti
 	//   "CLOUD_IDENTITY" - The suggestion is from a GOOGLE_IDENTITY source.
 	//   "THIRD_PARTY_IDENTITY" - The suggestion is from a THIRD_PARTY_IDENTITY
 	// source.
+	//   "GOOGLE_GROUP" - The suggestion is a group (e.g. a Google Group), not an
+	// individual.
 	PersonType string `json:"personType,omitempty"`
 	// Score: The score of each suggestion. The score is in the range of [0, 1].
 	Score float64 `json:"score,omitempty"`
@@ -20904,6 +21763,13 @@ type GoogleCloudDiscoveryengineV1betaAssistAnswer struct {
 	// to answer because of a customer policy violation (e.g., the query or the
 	// answer contained a banned phrase).
 	AssistSkippedReasons []string `json:"assistSkippedReasons,omitempty"`
+	// ConnectorDisplayNames: Output only. Maps an internal connector agent name
+	// (the machine identifier embedded in tool names, e.g. `custom_mcp__agent`) to
+	// the connector's human-readable display name. Populated at serving time for
+	// custom MCP / agent gateway connectors so user-facing surfaces (e.g. the
+	// tool-call chip) can show the connector name instead of its internal
+	// identifier. Empty when there are no such connectors.
+	ConnectorDisplayNames map[string]string `json:"connectorDisplayNames,omitempty"`
 	// CustomerPolicyEnforcementResult: Optional. The field contains information
 	// about the various policy checks' results like the banned phrases or the
 	// Model Armor checks. This field is populated only if the assist call was
@@ -20927,6 +21793,13 @@ type GoogleCloudDiscoveryengineV1betaAssistAnswer struct {
 	//   "CANCELLED" - Assist operation has been cancelled (e.g. client closed the
 	// stream). May contain a partial response.
 	State string `json:"state,omitempty"`
+	// ToolDisplayNames: Output only. Maps a tool name (for example,
+	// `Internal-KB-Search` or `custom_mcp__agent__Internal-KB-Search`) to its
+	// human-readable display title (for example, `@Internal-KB Search`), populated
+	// from MCP tool `title` or `annotations.title` metadata so user-facing
+	// surfaces can display the tool title instead of the raw function declaration
+	// identifier. Empty when no tool display titles are present.
+	ToolDisplayNames map[string]string `json:"toolDisplayNames,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AssistSkippedReasons") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -20953,14 +21826,23 @@ type GoogleCloudDiscoveryengineV1betaAssistAnswerCustomerPolicyEnforcementResult
 	// assist call was skipped due to a policy violation. It contains results from
 	// those filters that blocked the processing of the query.
 	PolicyResults []*GoogleCloudDiscoveryengineV1betaAssistAnswerCustomerPolicyEnforcementResultPolicyEnforcementResult `json:"policyResults,omitempty"`
-	// Verdict: Final verdict of the customer policy enforcement. If only one
-	// policy blocked the processing, the verdict is BLOCK.
+	// Verdict: Final verdict of the customer policy enforcement. If at least one
+	// policy blocked the processing, the verdict is BLOCK. If no policy blocked
+	// the processing but at least one flagged it, the verdict is FLAG.
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Unknown value.
 	//   "ALLOW" - There was no policy violation.
 	//   "BLOCK" - Processing was blocked by the customer policy.
 	Verdict string `json:"verdict,omitempty"`
+	// ViolationSource: Output only. The source of the violation.
+	//
+	// Possible values:
+	//   "VIOLATION_SOURCE_UNSPECIFIED" - Unknown value.
+	//   "SYSTEM" - Violation found in the system response.
+	//   "PROMPT" - Violation found in the user prompt.
+	//   "ATTACHMENT" - Violation found in the user attachment.
+	ViolationSource string `json:"violationSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PolicyResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -21136,15 +22018,16 @@ type GoogleCloudDiscoveryengineV1betaAssistant struct {
 	// DisplayName: Required. The assistant display name. It must be a UTF-8
 	// encoded string with a length limit of 128 characters.
 	DisplayName string `json:"displayName,omitempty"`
-	// EnabledTools: Optional. Note: not implemented yet. Use enabled_actions
-	// instead. The enabled tools on this assistant. The keys are connector name,
-	// for example
-	// "projects/{projectId}/locations/{locationId}/collections/{collectionId}/datac
-	// onnector The values consist of admin enabled tools towards the connector
-	// instance. Admin can selectively enable multiple tools on any of the
-	// connector instances that they created in the project. For example
-	// {"jira1ConnectorName": [(toolId1, "createTicket"), (toolId2,
-	// "transferTicket")], "gmail1ConnectorName": [(toolId3, "sendEmail"),..] }
+	// EnabledTools: Optional. The enabled tools on this assistant. The keys are
+	// data connector resource names, in the format
+	// `projects/{project}/locations/{location}/collections/{collection}/dataConnect
+	// or`. The values are the tools that the admin enabled on that connector.
+	// Admins can selectively enable tools on any of the connectors that they
+	// created in the project. For example: ``` {
+	// "projects/my-project/locations/global/collections/jira1/dataConnector": {
+	// "toolInfo": [ { "toolName": "create_jira_issue", "toolDisplayName": "Create
+	// Jira issue" }, { "toolName": "update_jira_issue", "toolDisplayName": "Update
+	// Jira issue" } ] } } ```
 	EnabledTools map[string]GoogleCloudDiscoveryengineV1betaAssistantToolList `json:"enabledTools,omitempty"`
 	// GenerationConfig: Optional. Configuration for the generation of the
 	// assistant response.
@@ -21334,6 +22217,9 @@ func (s GoogleCloudDiscoveryengineV1betaAssistantContentFile) MarshalJSON() ([]b
 type GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicy struct {
 	// BannedPhrases: Optional. List of banned phrases.
 	BannedPhrases []*GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicyBannedPhrase `json:"bannedPhrases,omitempty"`
+	// DataProtectionPolicy: Optional. Data protection policy to be used for
+	// sanitizing file uploads.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1betaDataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// ModelArmorConfig: Optional. Model Armor configuration to be used for
 	// sanitizing user prompts and assistant responses.
 	ModelArmorConfig *GoogleCloudDiscoveryengineV1betaAssistantCustomerPolicyModelArmorConfig `json:"modelArmorConfig,omitempty"`
@@ -21555,19 +22441,22 @@ func (s GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMet
 // GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadata
 // Reference: Referenced content and related document metadata.
 type GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReference struct {
+	// ChunkMetadata: Output only. Generic structured chunk metadata from upstream
+	// data source connectors.
+	ChunkMetadata googleapi.RawMessage `json:"chunkMetadata,omitempty"`
 	// CodeSnippet: Chunk of code snippet from the referenced document.
 	CodeSnippet string `json:"codeSnippet,omitempty"`
 	// Content: Referenced text content.
 	Content string `json:"content,omitempty"`
 	// DocumentMetadata: Document metadata.
 	DocumentMetadata *GoogleCloudDiscoveryengineV1betaAssistantGroundedContentTextGroundingMetadataReferenceDocumentMetadata `json:"documentMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "CodeSnippet") to
+	// ForceSendFields is a list of field names (e.g. "ChunkMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CodeSnippet") to include in API
+	// NullFields is a list of field names (e.g. "ChunkMetadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -21952,8 +22841,8 @@ type GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequest struct {
 	// associated license config, the user license will be deleted. By default
 	// which is false, the user license will be updated to unassigned state.
 	DeleteUnassignedUserLicenses bool `json:"deleteUnassignedUserLicenses,omitempty"`
-	// InlineSource: The inline source for the input content for document
-	// embeddings.
+	// InlineSource: The inline source for the input content for license
+	// assignment.
 	InlineSource *GoogleCloudDiscoveryengineV1betaBatchUpdateUserLicensesRequestInlineSource `json:"inlineSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "DeleteUnassignedUserLicenses") to unconditionally include in API requests.
@@ -22925,7 +23814,7 @@ type GoogleCloudDiscoveryengineV1betaCompletionInfo struct {
 	// SelectedPosition: End user selected
 	// CompleteQueryResponse.QuerySuggestion.suggestion position, starting from 0.
 	SelectedPosition int64 `json:"selectedPosition,omitempty"`
-	// SelectedSuggestion: End user selected
+	// SelectedSuggestion: Optional. End user selected
 	// CompleteQueryResponse.QuerySuggestion.suggestion.
 	SelectedSuggestion string `json:"selectedSuggestion,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SelectedPosition") to
@@ -23917,6 +24806,56 @@ func (s GoogleCloudDiscoveryengineV1betaCustomTuningModel) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaDataProtectionPolicy: Contains the data
+// protection policy config for a DataStore or a connector.
+type GoogleCloudDiscoveryengineV1betaDataProtectionPolicy struct {
+	// SensitiveDataProtectionPolicy: Optional. Specifies the sensitive data
+	// protection policy for the connector source.
+	SensitiveDataProtectionPolicy *GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPolicy `json:"sensitiveDataProtectionPolicy,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "SensitiveDataProtectionPolicy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SensitiveDataProtectionPolicy")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPo
+// licy: Specifies a Sensitive Data Protection
+// (https://cloud.google.com/sensitive-data-protection/docs/sensitive-data-protection-overview)
+// policy.
+type GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPolicy struct {
+	// Policy: Optional. Specifies the resource name of the Sensitive Data
+	// Protection content policy.
+	Policy string `json:"policy,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Policy") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaDataProtectionPolicySensitiveDataProtectionPolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaDataStore: DataStore captures global
 // settings and configs at the DataStore level.
 type GoogleCloudDiscoveryengineV1betaDataStore struct {
@@ -23961,6 +24900,9 @@ type GoogleCloudDiscoveryengineV1betaDataStore struct {
 	ContentConfig string `json:"contentConfig,omitempty"`
 	// CreateTime: Output only. Timestamp the DataStore was created at.
 	CreateTime string `json:"createTime,omitempty"`
+	// DataProtectionPolicy: Optional. Specifies the data protection policy for the
+	// data store.
+	DataProtectionPolicy *GoogleCloudDiscoveryengineV1betaDataProtectionPolicy `json:"dataProtectionPolicy,omitempty"`
 	// DefaultSchemaId: Output only. The id of the default Schema associated to
 	// this data store.
 	DefaultSchemaId string `json:"defaultSchemaId,omitempty"`
@@ -24227,16 +25169,24 @@ func (s GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigAlloyDbCon
 // GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfi
 // g: Config for connecting to NotebookLM Enterprise.
 type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigNotebooklmConfig struct {
+	// Notebooks: Optional. Restricts this data store to the given notebooks. When
+	// empty, the data store covers every notebook the querying user can access,
+	// which is the existing behaviour. Each entry is a full notebook resource
+	// name, such as `projects/*/locations/*/notebooks/*`. Scoping is enforced on
+	// results as well as requested upstream, so a notebook outside this list
+	// cannot appear in a search response through this data store even if the
+	// backend returns one.
+	Notebooks []string `json:"notebooks,omitempty"`
 	// SearchConfig: Required. Search config name. Format:
 	// projects/*/locations/global/notebookLmSearchConfigs/*
 	SearchConfig string `json:"searchConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "SearchConfig") to
+	// ForceSendFields is a list of field names (e.g. "Notebooks") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "SearchConfig") to include in API
+	// NullFields is a list of field names (e.g. "Notebooks") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -24254,8 +25204,8 @@ type GoogleCloudDiscoveryengineV1betaDataStoreFederatedSearchConfigThirdPartyOau
 	// AppName: Optional. The type of the application. E.g., "jira", "box", etc.
 	AppName string `json:"appName,omitempty"`
 	// InstanceName: Optional. The instance name identifying the 3P app, e.g.,
-	// "vaissptbots-my". This is different from the instance_uri which is the full
-	// URL of the 3P app e.g., "https://vaissptbots-my.sharepoint.com".
+	// "-my". This is different from the instance_uri which is the full URL of the
+	// 3P app e.g., "https://-my.sharepoint.com".
 	InstanceName string `json:"instanceName,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AppName") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -25208,27 +26158,58 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// associated here. Note that when used in CreateEngineRequest, one DataStore
 	// id must be provided as the system will use it for necessary initializations.
 	DataStoreIds []string `json:"dataStoreIds,omitempty"`
+	// DelayedGlobalFeatureToggleStateAllowed: Output only. Whether the project is
+	// allowed to set `global_feature_toggle_state` to `DELAYED`.
+	DelayedGlobalFeatureToggleStateAllowed bool `json:"delayedGlobalFeatureToggleStateAllowed,omitempty"`
 	// DisableAnalytics: Optional. Whether to disable analytics for searches
 	// performed on this engine.
 	DisableAnalytics bool `json:"disableAnalytics,omitempty"`
 	// DisplayName: Required. The display name of the engine. Should be human
 	// readable. UTF-8 encoded string with limit of 1024 characters.
 	DisplayName string `json:"displayName,omitempty"`
+	// EffectiveFeatures: Output only. The complete, server-resolved state of every
+	// known feature toggle. Unlike `features`, which stores only explicit admin
+	// overrides, this map always contains an entry for every toggle. Clients
+	// should read toggle state from this field.
+	EffectiveFeatures map[string]string `json:"effectiveFeatures,omitempty"`
+	// FeaturePolicies: Optional. Per-feature access policies, keyed by feature
+	// toggle name (see `features`). A feature with no entry is available to every
+	// user when it is on. Only features that support access policies are accepted.
+	FeaturePolicies map[string]GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy `json:"featurePolicies,omitempty"`
 	// Features: Optional. Feature config for the engine to opt in or opt out of
 	// features. Supported keys: * `*`: all features, if it's present, all other
 	// feature state settings are ignored. * `agent-gallery` *
 	// `no-code-agent-builder` * `prompt-gallery` * `model-selector` *
 	// `notebook-lm` * `people-search` * `people-search-org-chart` *
-	// `bi-directional-audio` * `feedback` * `session-sharing` *
+	// `bi-directional-audio` * `speech-to-text` * `feedback` * `session-sharing` *
 	// `personalization-memory` * `personalization-suggested-highlights` *
 	// `mobile-app-access` * `disable-agent-sharing` * `disable-image-generation` *
-	// `disable-video-generation` * `disable-onedrive-upload` *
-	// `disable-talk-to-content` * `disable-google-drive-upload` *
-	// `disable-welcome-emails` * `disable-canvas` * `canvas-workspace` *
-	// `disable-skills` * `disable-projects` *
-	// `enable-end-user-sharing-with-groups` * `single-agent-orchestration` *
-	// `multi-agent-orchestration` * `cross-product-intelligence` * `deep-research`
+	// `disable-video-generation` * `music-generation` * `speech-generation` *
+	// `disable-onedrive-upload` * `disable-talk-to-content` *
+	// `disable-google-drive-upload` * `disable-welcome-emails` * `disable-canvas`
+	// * `canvas-workspace` * `canvas-app-builder` * `skills` * `skill-sharing` *
+	// `skill-sharing-without-admin-approval` * `skill-security-scan` *
+	// `disable-projects` * `sobi` * `enable-end-user-sharing-with-groups` *
+	// `single-agent-orchestration` * `multi-agent-orchestration` *
+	// `cross-product-intelligence` * `workflow-agents` * `in-app-notifications` *
+	// `code-extraction` * `remote-vm` * `license-tier-badge` *
+	// `canvas-app-sharing` * `agent-marketplace` * `agent-scheduling` *
+	// `preview-agents` * `plugins`
 	Features map[string]string `json:"features,omitempty"`
+	// GlobalFeatureToggleState: Optional. Controls the global feature toggle state
+	// for the engine.
+	//
+	// Possible values:
+	//   "GLOBAL_FEATURE_TOGGLE_STATE_UNSPECIFIED" - Unspecified feature toggle
+	// state. Treated as `GENERAL`.
+	//   "DELAYED" - Gets features and models 4 weeks post GA. Features will be ON
+	// at the 4 weeks mark post GA.
+	//   "SCHEDULED" - Gets features and models 2 weeks post GA. Features will be
+	// ON at the 2 weeks mark post GA.
+	//   "GENERAL" - Gets features and models at GA. Features will be ON at GA.
+	//   "EARLY" - Gets features and models at EAP (if in EAP). Features will only
+	// be ON if the project is allowlisted.
+	GlobalFeatureToggleState string `json:"globalFeatureToggleState,omitempty"`
 	// IndustryVertical: Optional. The industry vertical that the engine registers.
 	// The restriction of the Engine industry vertical is based on DataStore:
 	// Vertical on Engine has to match vertical of the DataStore linked to the
@@ -25289,6 +26270,8 @@ type GoogleCloudDiscoveryengineV1betaEngine struct {
 	// SearchEngineConfig: Configurations for the Search Engine. Only applicable if
 	// solution_type is SOLUTION_TYPE_SEARCH.
 	SearchEngineConfig *GoogleCloudDiscoveryengineV1betaEngineSearchEngineConfig `json:"searchEngineConfig,omitempty"`
+	// SessionConfig: Optional. Non-empty default. Session config for the engine.
+	SessionConfig *GoogleCloudDiscoveryengineV1betaSessionConfig `json:"sessionConfig,omitempty"`
 	// SolutionType: Required. The solutions of the engine.
 	//
 	// Possible values:
@@ -25456,6 +26439,90 @@ type GoogleCloudDiscoveryengineV1betaEngineCommonConfig struct {
 
 func (s GoogleCloudDiscoveryengineV1betaEngineCommonConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaEngineCommonConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy: Restricts which users
+// may use a feature that is turned on in `features`.
+type GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy struct {
+	// AllowedMembers: Optional. Members who may use the feature.
+	AllowedMembers []*GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember `json:"allowedMembers,omitempty"`
+	// DefaultAccess: Optional. Access for users who match neither list.
+	//
+	// Possible values:
+	//   "DEFAULT_ACCESS_UNSPECIFIED" - Treated as `ALLOW`.
+	//   "ALLOW" - Users who match neither list may use the feature.
+	//   "DENY" - Users who match neither list may not use the feature.
+	DefaultAccess string `json:"defaultAccess,omitempty"`
+	// DeniedMembers: Optional. Members who may not use the feature. Takes
+	// precedence over `allowed_members`.
+	DeniedMembers []*GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember `json:"deniedMembers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowedMembers") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineFeaturePolicy
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember: A user or group
+// the policy refers to.
+type GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember struct {
+	// DisplayName: Optional. Label shown in the console. Never used for
+	// evaluation.
+	DisplayName string `json:"displayName,omitempty"`
+	// Id: Required. Identifier evaluated at serving time. Its format depends on
+	// the project's identity provider: * Google identity (`GSUITE`): the group or
+	// user email. For groups, the server resolves the email to a group ID on write
+	// and returns the email on read. * Workforce Identity Federation
+	// (`THIRD_PARTY`), groups: the value the provider emits in `google.groups`.
+	// With SCIM this is the SCIM group ID; without SCIM and with the default
+	// Microsoft Entra mapping it is the Entra group object ID. * Workforce
+	// Identity Federation, users: the user's workforce identity subject.
+	Id string `json:"id,omitempty"`
+	// Type: Required. Kind of member.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Not allowed.
+	//   "USER" - A single user.
+	//   "GROUP" - A group of users.
+	Type string `json:"type,omitempty"`
+	// Verification: Output only. Result of the server's directory check when the
+	// member was saved.
+	//
+	// Possible values:
+	//   "VERIFICATION_UNSPECIFIED" - Not checked.
+	//   "VERIFIED" - Found in the project's directory.
+	//   "NOT_FOUND" - Microsoft Graph has no such group. Saved anyway, because a
+	// custom `google.groups` mapping can emit IDs that Graph doesn't know.
+	//   "NOT_VERIFIABLE" - The project has no directory to check against.
+	//   "CHECK_FAILED" - The directory lookup failed. Saved anyway.
+	Verification string `json:"verification,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaEngineFeaturePolicyMember
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -25922,8 +26989,7 @@ func (s GoogleCloudDiscoveryengineV1betaFactChunk) MarshalJSON() ([]byte, error)
 // GoogleCloudDiscoveryengineV1betaFeedback: Information about the user
 // feedback. This information will be used for logging and metrics purpose.
 type GoogleCloudDiscoveryengineV1betaFeedback struct {
-	// Comment: Optional. The additional user comment of the feedback if user gives
-	// a thumb down.
+	// Comment: Optional. The additional user comment of the feedback.
 	Comment string `json:"comment,omitempty"`
 	// ComponentVersion: Optional. The version of the component that this report is
 	// being sent from.
@@ -25943,10 +27009,11 @@ type GoogleCloudDiscoveryengineV1betaFeedback struct {
 	//   "GOOGLE_WEBAPP" - Feedback source is Google Webapp.
 	//   "GOOGLE_AGENTSPACE_MOBILE" - Feedback source is Google AgentSpace Mobile
 	// app.
+	//   "GOOGLE_AGENTSPACE_DESKTOP" - Feedback source is Google AgentSpace Desktop
+	// app.
 	FeedbackSource string `json:"feedbackSource,omitempty"`
-	// FeedbackType: Required. Indicate whether the user gives a positive or
-	// negative feedback. If the user gives a negative feedback, there might be
-	// more feedback details.
+	// FeedbackType: Required. Indicates whether the user gives a positive or
+	// negative feedback.
 	//
 	// Possible values:
 	//   "FEEDBACK_TYPE_UNSPECIFIED" - Unspecified feedback type.
@@ -25956,7 +27023,10 @@ type GoogleCloudDiscoveryengineV1betaFeedback struct {
 	// LlmModelVersion: The version of the LLM model that was used to generate the
 	// response.
 	LlmModelVersion string `json:"llmModelVersion,omitempty"`
-	// Reasons: Optional. The reason if user gives a thumb down.
+	// ModelArmorDisputeInfo: Optional. Optional Model Armor false-positive dispute
+	// metadata attached to feedback.
+	ModelArmorDisputeInfo *GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo `json:"modelArmorDisputeInfo,omitempty"`
+	// Reasons: Optional. The reasons why the user gives feedback.
 	//
 	// Possible values:
 	//   "REASON_UNSPECIFIED" - Unspecified reason.
@@ -25972,6 +27042,10 @@ type GoogleCloudDiscoveryengineV1betaFeedback struct {
 	// inaccurate, incomplete, poorly formatted).
 	//   "CANVAS_EXPORT_FAILED" - Exporting the generated canvas failed (e.g.
 	// download or external export action did not complete successfully).
+	//   "RELEVANT" - The response is relevant.
+	//   "COMPREHENSIVE" - The response is comprehensive.
+	//   "GOOD_CITATION" - The response is well-associated with the query.
+	//   "ACCURATE" - The response is accurate.
 	Reasons []string `json:"reasons,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Comment") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -26006,6 +27080,19 @@ type GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo struct {
 	QuestionIndex int64 `json:"questionIndex,omitempty"`
 	// Session: Name of the newly generated or continued session.
 	Session string `json:"session,omitempty"`
+	// StepSeqNum: Optional. The `TaskServerEvent.seq_num` of the step that opened
+	// the rated agent task reply.
+	StepSeqNum int64 `json:"stepSeqNum,omitempty,string"`
+	// TaskName: Optional. The full resource name of the Sobi task if the
+	// conversation was handled by a long-running agent task. Format (canonical, or
+	// the short alias the Task API also accepts):
+	// projects/{project}/locations/{location}/agents/{agent}/tasks/{task}
+	// projects/{project}/locations/{location}/tasks/{task}
+	TaskName string `json:"taskName,omitempty"`
+	// TrajectoryId: Optional. The runtime trajectory id of the rated agent task
+	// turn, as set on `TaskServerEvent.trajectory_id`. Shared by all steps of the
+	// turn.
+	TrajectoryId string `json:"trajectoryId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AnswerQueryToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -26021,6 +27108,37 @@ type GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo struct {
 
 func (s GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaFeedbackConversationInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo: Information
+// submitted when a user disputes a Model Armor `BLOCK` or `FLAG` verdict.
+type GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo struct {
+	// ExpectedLabel: Optional. The expected-label reason chip selected by the user
+	// (for example, "Everyday question" or "Legitimate work-related query").
+	ExpectedLabel string `json:"expectedLabel,omitempty"`
+	// SanitizationResultJson: Optional. The raw Model Armor `SanitizationResult`,
+	// serialized as JSON.
+	SanitizationResultJson string `json:"sanitizationResultJson,omitempty"`
+	// TemplateName: Optional. Resource name of the Model Armor template that
+	// produced the sanitization result, in the format
+	// `projects/{project}/locations/{location}/templates/{id}`.
+	TemplateName string `json:"templateName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpectedLabel") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpectedLabel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFeedbackModelArmorDisputeInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -27262,8 +28380,7 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	// it reaches the end date.
 	AutoRenew bool `json:"autoRenew,omitempty"`
 	// EarlyTerminated: Output only. Indication of whether the subscription is
-	// terminated earlier than the expiration date. This is usually terminated by
-	// pipeline once the subscription gets terminated from subsv3.
+	// terminated earlier than the expiration date.
 	EarlyTerminated bool `json:"earlyTerminated,omitempty"`
 	// EarlyTerminationDate: Output only. The date when the subscription is
 	// terminated earlier than the expiration date.
@@ -27298,10 +28415,10 @@ type GoogleCloudDiscoveryengineV1betaLicenseConfig struct {
 	// is in the future.
 	//   "WITHDRAWN" - This is when a sub license config has returned all its seats
 	// back to BillingAccountLicenseConfig that it belongs to. Similar to EXPIRED.
-	//   "DEACTIVATING" - The license config is terminated earlier than the
-	// expiration date and it is deactivating. The customer will still have access
-	// in this state. It will be converted to EXPIRED after the deactivating period
-	// ends (14 days) or when the end date is reached, whichever comes first.
+	//   "DEACTIVATING" - The license config is in a grace period. Its subscription
+	// has ended, either through early termination or by reaching its end date, but
+	// the customer keeps access for a limited time. It becomes EXPIRED when the
+	// grace period ends.
 	State string `json:"state,omitempty"`
 	// SubscriptionTerm: Required. Subscription term.
 	//
@@ -28350,6 +29467,16 @@ type GoogleCloudDiscoveryengineV1betaProject struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// CustomerProvidedConfig: Optional. Customer provided configurations.
 	CustomerProvidedConfig *GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfig `json:"customerProvidedConfig,omitempty"`
+	// ExperienceState: Output only. The current experience state of the project.
+	//
+	// Possible values:
+	//   "EXPERIENCE_STATE_UNSPECIFIED" - No experience is stated for this
+	// location.
+	//   "SOBI_ONLY" - Only the new Gemini Enterprise experience.
+	//   "LEGACY_ONLY" - Only the classic Gemini Enterprise experience.
+	//   "LEGACY_AND_SOBI" - Legacy engines serve the classic experience, the Sobi
+	// engine serves the Sobi experience.
+	ExperienceState string `json:"experienceState,omitempty"`
 	// Name: Output only. Full resource name of the project, for example
 	// `projects/{project}`. Note that when making requests, project number and
 	// project id are both acceptable, but the server will always respond in
@@ -28536,6 +29663,9 @@ func (s GoogleCloudDiscoveryengineV1betaProjectConfigurableBillingStatusAgentSea
 type GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfig struct {
 	// NotebooklmConfig: Optional. Configuration for NotebookLM settings.
 	NotebooklmConfig *GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigNotebooklmConfig `json:"notebooklmConfig,omitempty"`
+	// ResourceAccessControlConfig: Optional. Resource-level access control config
+	// for Gemini Enterprise users.
+	ResourceAccessControlConfig *GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessControlConfig `json:"resourceAccessControlConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NotebooklmConfig") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -28668,6 +29798,32 @@ func (s GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigNotebooklmC
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessCo
+// ntrolConfig: Controls resource-level access control for Gemini Enterprise
+// users.
+type GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessControlConfig struct {
+	// DataStoreAccessControlEnabled: Optional. If `true`, the data stores and data
+	// connectors shown to Gemini Enterprise users are filtered to those the user
+	// has the required resource-level `.get` IAM permission on.
+	DataStoreAccessControlEnabled bool `json:"dataStoreAccessControlEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "DataStoreAccessControlEnabled") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DataStoreAccessControlEnabled")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessControlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaProjectCustomerProvidedConfigResourceAccessControlConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaProjectServiceTerms: Metadata about the
 // terms of service.
 type GoogleCloudDiscoveryengineV1betaProjectServiceTerms struct {
@@ -28731,6 +29887,19 @@ type GoogleCloudDiscoveryengineV1betaProvisionProjectRequest struct {
 	// would like to give consent to. Acceptable version is `2022-11-23`, and this
 	// may change over time.
 	DataUseTermsVersion string `json:"dataUseTermsVersion,omitempty"`
+	// IdpConfig: Optional. The identity provider for this location. When provided,
+	// the location's AclConfig is set from it as part of provisioning.
+	IdpConfig *GoogleCloudDiscoveryengineV1betaIdpConfig `json:"idpConfig,omitempty"`
+	// ProvisionIntent: Optional. The caller states whether the provisioning is for
+	// the new or the classic Gemini Enterprise experience.
+	//
+	// Possible values:
+	//   "PROVISION_INTENT_UNSPECIFIED" - Unspecified.
+	//   "PROVISION_INTENT_SOBI" - The caller is provisioning for the new Gemini
+	// Enterprise experience.
+	//   "PROVISION_INTENT_LEGACY" - The caller is provisioning for the classic
+	// Gemini Enterprise experience.
+	ProvisionIntent string `json:"provisionIntent,omitempty"`
 	// SaasParams: Optional. Parameters for Agentspace.
 	SaasParams *GoogleCloudDiscoveryengineV1betaProvisionProjectRequestSaasParams `json:"saasParams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcceptDataUseTerms") to
@@ -30045,7 +31214,7 @@ type GoogleCloudDiscoveryengineV1betaSearchInfo struct {
 	// events. Other event types should not set this field. Otherwise, an
 	// `INVALID_ARGUMENT` error is returned.
 	OrderBy string `json:"orderBy,omitempty"`
-	// SearchQuery: The user's search query. See SearchRequest.query for
+	// SearchQuery: Optional. The user's search query. See SearchRequest.query for
 	// definition. The value must be a UTF-8 encoded string with a length limit of
 	// 5,000 characters. Otherwise, an `INVALID_ARGUMENT` error is returned. At
 	// least one of search_query or PageInfo.page_category is required for `search`
@@ -30147,7 +31316,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequest struct {
 	// DataStoreSpecs: Specifications that define the specific DataStores to be
 	// searched, along with configurations for those data stores. This is only
 	// considered for Engines with multiple data stores. For engines with a single
-	// data store, the specs directly under SearchRequest should be used.
+	// data store, the specs directly under SearchRequest should be used. On an
+	// engine with multiple data stores, this field is optional. If it's empty, all
+	// of the engine's data stores are searched (blended search). Unless it
+	// specifies exactly one data store, some request fields, such as `order_by`
+	// and `query_expansion_spec`, aren't supported and return an
+	// `INVALID_ARGUMENT` error.
 	DataStoreSpecs []*GoogleCloudDiscoveryengineV1betaSearchRequestDataStoreSpec `json:"dataStoreSpecs,omitempty"`
 	// DisplaySpec: Optional. Config for display feature, like match highlighting
 	// on search results.
@@ -31615,6 +32789,12 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec struct {
 	//   "AUTO" - Automatic switching between search-as-you-type and standard
 	// search modes, ideal for single-API implementations (e.g., debouncing).
 	Condition string `json:"condition,omitempty"`
+	// Fields: Optional. The list of fields to be used for Search As You Type
+	// scoring.
+	Fields []*GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField `json:"fields,omitempty"`
+	// ScoreThreshold: Optional. Search As You Type score threshold for filtering
+	// purpose. We keep the result if `score` >= `score_threshold`.
+	ScoreThreshold float64 `json:"scoreThreshold,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Condition") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -31631,6 +32811,62 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec struct {
 func (s GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpec
+	var s1 struct {
+		ScoreThreshold gensupport.JSONFloat64 `json:"scoreThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScoreThreshold = float64(s1.ScoreThreshold)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField: A
+// schema field to be used for Search As You Type scoring on this request.
+// Overrides any data-store-level Search As You Type field configuration for
+// the duration of the request.
+type GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField struct {
+	// Key: Required. A field key that has been indexed for Search As You Type.
+	Key string `json:"key,omitempty"`
+	// Weight: Optional. Weight for scores from this field. Defaults to 1.0 if not
+	// specified.
+	Weight float64 `json:"weight,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchRequestSearchAsYouTypeSpecField
+	var s1 struct {
+		Weight gensupport.JSONFloat64 `json:"weight"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Weight = float64(s1.Weight)
+	return nil
 }
 
 // GoogleCloudDiscoveryengineV1betaSearchRequestSessionSpec: Session
@@ -31708,7 +32944,7 @@ func (s GoogleCloudDiscoveryengineV1betaSearchRequestSpellCorrectionSpec) Marsha
 // GoogleCloudDiscoveryengineV1betaSearchResponse: Response message for
 // SearchService.Search method.
 type GoogleCloudDiscoveryengineV1betaSearchResponse struct {
-	// AppliedControls: Controls applied as part of the Control service.
+	// AppliedControls: Optional. Controls applied as part of the Control service.
 	AppliedControls []string `json:"appliedControls,omitempty"`
 	// AttributionToken: A unique search token. This should be included in the
 	// UserEvent logs resulting from this search, which enables accurate
@@ -32275,6 +33511,9 @@ type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResult struct {
 	ModelScores map[string]GoogleCloudDiscoveryengineV1betaDoubleList `json:"modelScores,omitempty"`
 	// RankSignals: Optional. A set of ranking signals associated with the result.
 	RankSignals *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignals `json:"rankSignals,omitempty"`
+	// RetrievalSignals: Optional. A set of signals used by the relevance filter
+	// meant for use to fine-tune the relevance filter thresholds.
+	RetrievalSignals *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals `json:"retrievalSignals,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Chunk") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -32406,6 +33645,51 @@ func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRankSignalsCu
 		return err
 	}
 	s.Value = float64(s1.Value)
+	return nil
+}
+
+// GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals:
+// Contains a set of signals used by the relevance filter.
+type GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals struct {
+	// RetrievalSources: Optional. Indicates how the result was retrieved.
+	//
+	// Possible values:
+	//   "RETRIEVAL_SOURCE_UNSPECIFIED" - Unspecified retrieval source.
+	//   "KEYWORD_SEARCH" - Indicates the result was retrieved by keyword search.
+	//   "SEMANTIC_SEARCH" - Indicates the result was retrieved by semantic search.
+	RetrievalSources []string `json:"retrievalSources,omitempty"`
+	// SemanticRelevanceScore: Optional. Relevance score used by the filter when
+	// semantic_relevance_threshold is set.
+	SemanticRelevanceScore float64 `json:"semanticRelevanceScore,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RetrievalSources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RetrievalSources") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSearchResponseSearchResultRetrievalSignals
+	var s1 struct {
+		SemanticRelevanceScore gensupport.JSONFloat64 `json:"semanticRelevanceScore"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.SemanticRelevanceScore = float64(s1.SemanticRelevanceScore)
 	return nil
 }
 
@@ -33055,6 +34339,62 @@ func (s GoogleCloudDiscoveryengineV1betaSession) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaSessionConfig: Configuration for the
+// session.
+type GoogleCloudDiscoveryengineV1betaSessionConfig struct {
+	// SessionManagementPolicy: Optional. Session management policy that defines
+	// who will manage the session.
+	//
+	// Possible values:
+	//   "SESSION_MANAGEMENT_POLICY_UNSPECIFIED" - Default value.
+	//   "NOT_MANAGED" - The session will be managed by the customer.
+	//   "VERTEX_AI_MANAGED" - Sessions multi-tenancy will be controlled by Google
+	// using 1P or 3P identity providers.
+	SessionManagementPolicy string `json:"sessionManagementPolicy,omitempty"`
+	// SessionTtl: Optional. The TTL for the session. If unset, the default value
+	// is 60 days.
+	SessionTtl *GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl `json:"sessionTtl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SessionManagementPolicy") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSessionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSessionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl: Defines the TTL for
+// sessions.
+type GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl struct {
+	// Days: Defines the number of days for session TTL.
+	Days int64 `json:"days,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Days") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Days") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSessionConfigSessionTtl
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaSessionTurn: Represents a turn, including a
 // query from the user and a answer from service.
 type GoogleCloudDiscoveryengineV1betaSessionTurn struct {
@@ -33367,6 +34707,9 @@ func (s GoogleCloudDiscoveryengineV1betaSpannerSource) MarshalJSON() ([]byte, er
 // GoogleCloudDiscoveryengineV1betaStreamAssistRequest: Request for the
 // AssistantService.StreamAssist method.
 type GoogleCloudDiscoveryengineV1betaStreamAssistRequest struct {
+	// AgentsSpec: Optional. Specification of agents that are used to serve the
+	// request.
+	AgentsSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec `json:"agentsSpec,omitempty"`
 	// GenerationSpec: Optional. Specification of the generation configuration for
 	// the request.
 	GenerationSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestGenerationSpec `json:"generationSpec,omitempty"`
@@ -33387,21 +34730,70 @@ type GoogleCloudDiscoveryengineV1betaStreamAssistRequest struct {
 	ToolsSpec *GoogleCloudDiscoveryengineV1betaStreamAssistRequestToolsSpec `json:"toolsSpec,omitempty"`
 	// UserMetadata: Optional. Information about the user initiating the query.
 	UserMetadata *GoogleCloudDiscoveryengineV1betaAssistUserMetadata `json:"userMetadata,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "GenerationSpec") to
+	// ForceSendFields is a list of field names (e.g. "AgentsSpec") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "GenerationSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentsSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec: Specification
+// of agents that are used to serve the request.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec struct {
+	// AgentSpecs: Optional. Specification of agents that are used to serve the
+	// request.
+	AgentSpecs []*GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec `json:"agentSpecs,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentSpecs") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentSpecs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec:
+// Specification of an agent.
+type GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec struct {
+	// AgentId: Required. ID to identify the agent resource serving the request.
+	// This field must conform to RFC-1034 (https://tools.ietf.org/html/rfc1034)
+	// with a length limit of 63 characters.
+	AgentId string `json:"agentId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AgentId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaStreamAssistRequestAgentsSpecAgentSpec
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -34118,15 +35510,15 @@ func (s GoogleCloudDiscoveryengineV1betaUpdateTargetSiteMetadata) MarshalJSON() 
 // information Discovery Engine API needs to know about how end users interact
 // with your website.
 type GoogleCloudDiscoveryengineV1betaUserEvent struct {
-	// Attributes: Extra user event features to include in the recommendation
-	// model. These attributes must NOT contain data that needs to be parsed or
-	// processed further, e.g. JSON or other encodings. If you provide custom
-	// attributes for ingested user events, also include them in the user events
-	// that you associate with prediction requests. Custom attribute formatting
-	// must be consistent between imported events and events provided with
-	// prediction requests. This lets the Discovery Engine API use those custom
-	// attributes when training models and serving predictions, which helps improve
-	// recommendation quality. This field needs to pass all below criteria,
+	// Attributes: Optional. Extra user event features to include in the
+	// recommendation model. These attributes must NOT contain data that needs to
+	// be parsed or processed further, e.g. JSON or other encodings. If you provide
+	// custom attributes for ingested user events, also include them in the user
+	// events that you associate with prediction requests. Custom attribute
+	// formatting must be consistent between imported events and events provided
+	// with prediction requests. This lets the Discovery Engine API use those
+	// custom attributes when training models and serving predictions, which helps
+	// improve recommendation quality. This field needs to pass all below criteria,
 	// otherwise an `INVALID_ARGUMENT` error is returned: * The key must be a UTF-8
 	// encoded string with a length limit of 5,000 characters. * For text
 	// attributes, at most 400 values are allowed. Empty values are not allowed.
@@ -34334,11 +35726,10 @@ func (s GoogleCloudDiscoveryengineV1betaUserInfo) MarshalJSON() ([]byte, error) 
 }
 
 // GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation: Precise location
-// info with multiple representation options. Currently only latitude and
-// longitude point is supported.
+// info with multiple representation options.
 type GoogleCloudDiscoveryengineV1betaUserInfoPreciseLocation struct {
-	// Address: Optional. Location represented by a natural language address. Will
-	// later be geocoded and converted to either a point or a polygon.
+	// Address: Location represented by a natural language address. Will later be
+	// geocoded and converted to either a point or a polygon.
 	Address string `json:"address,omitempty"`
 	// Point: Optional. Location represented by a latitude/longitude point.
 	Point *GoogleTypeLatLng `json:"point,omitempty"`
@@ -35924,6 +37315,114 @@ func (c *ProjectsLocationsObtainCrawlRateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.obtainCrawlRate", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsProvisionCall struct {
+	s                                                       *Service
+	name                                                    string
+	googleclouddiscoveryenginev1betaprovisionprojectrequest *GoogleCloudDiscoveryengineV1betaProvisionProjectRequest
+	urlParams_                                              gensupport.URLParams
+	ctx_                                                    context.Context
+	header_                                                 http.Header
+}
+
+// Provision: Provisions the project resource. During the process, related
+// systems will get prepared and initialized. Caller must read the Terms for
+// data use (https://cloud.google.com/retail/data-use-terms), and optionally
+// specify in request to provide consent to that service terms.
+//
+//   - name: Full resource name of a Project, such as
+//     `projects/{project_id_or_number}`.
+func (r *ProjectsLocationsService) Provision(name string, googleclouddiscoveryenginev1betaprovisionprojectrequest *GoogleCloudDiscoveryengineV1betaProvisionProjectRequest) *ProjectsLocationsProvisionCall {
+	c := &ProjectsLocationsProvisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleclouddiscoveryenginev1betaprovisionprojectrequest = googleclouddiscoveryenginev1betaprovisionprojectrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsProvisionCall) Fields(s ...googleapi.Field) *ProjectsLocationsProvisionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsProvisionCall) Context(ctx context.Context) *ProjectsLocationsProvisionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsProvisionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProvisionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleclouddiscoveryenginev1betaprovisionprojectrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:provision")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.provision", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.provision" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProvisionCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.provision", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -37622,6 +39121,138 @@ func (c *ProjectsLocationsCollectionsDataStoresGetCall) Do(opts ...googleapi.Cal
 	return ret, nil
 }
 
+type ProjectsLocationsCollectionsDataStoresGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the IAM access control policy for a DataStore. A
+// `NOT_FOUND` error is returned if the resource does not exist. An empty
+// policy is returned if the resource exists but does not have a policy set on
+// it.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsCollectionsDataStoresService) GetIamPolicy(resource string) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c := &ProjectsLocationsCollectionsDataStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsCollectionsDataStoresGetSiteSearchEngineCall struct {
 	s            *Service
 	name         string
@@ -38013,6 +39644,119 @@ func (c *ProjectsLocationsCollectionsDataStoresPatchCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsCollectionsDataStoresSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the IAM access control policy for a DataStore. A
+// `NOT_FOUND` error is returned if the resource does not exist. **Important:**
+// When setting a policy directly on a DataStore resource, the only recommended
+// roles in the bindings are: `roles/discoveryengine.admin`
+// `roles/discoveryengine.agentspaceAdmin` `roles/discoveryengine.viewer`
+// `roles/discoveryengine.agentspaceViewer` `roles/discoveryengine.user`
+// `roles/discoveryengine.agentspaceUser` Attempting to grant any other role
+// will result in a warning in logging.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsCollectionsDataStoresService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall {
+	c := &ProjectsLocationsCollectionsDataStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.collections.dataStores.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -53985,6 +55729,138 @@ func (c *ProjectsLocationsDataStoresGetCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 }
 
+type ProjectsLocationsDataStoresGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the IAM access control policy for a DataStore. A
+// `NOT_FOUND` error is returned if the resource does not exist. An empty
+// policy is returned if the resource exists but does not have a policy set on
+// it.
+//
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsDataStoresService) GetIamPolicy(resource string) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c := &ProjectsLocationsDataStoresGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDataStoresGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.getIamPolicy", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.getIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.getIamPolicy", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsDataStoresGetSiteSearchEngineCall struct {
 	s            *Service
 	name         string
@@ -54376,6 +56252,119 @@ func (c *ProjectsLocationsDataStoresPatchCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsDataStoresSetIamPolicyCall struct {
+	s                              *Service
+	resource                       string
+	googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// SetIamPolicy: Sets the IAM access control policy for a DataStore. A
+// `NOT_FOUND` error is returned if the resource does not exist. **Important:**
+// When setting a policy directly on a DataStore resource, the only recommended
+// roles in the bindings are: `roles/discoveryengine.admin`
+// `roles/discoveryengine.agentspaceAdmin` `roles/discoveryengine.viewer`
+// `roles/discoveryengine.agentspaceViewer` `roles/discoveryengine.user`
+// `roles/discoveryengine.agentspaceUser` Attempting to grant any other role
+// will result in a warning in logging.
+//
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
+func (r *ProjectsLocationsDataStoresService) SetIamPolicy(resource string, googleiamv1setiampolicyrequest *GoogleIamV1SetIamPolicyRequest) *ProjectsLocationsDataStoresSetIamPolicyCall {
+	c := &ProjectsLocationsDataStoresSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.googleiamv1setiampolicyrequest = googleiamv1setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsDataStoresSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googleiamv1setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.setIamPolicy", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.setIamPolicy" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleIamV1Policy.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*GoogleIamV1Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleIamV1Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "discoveryengine.projects.locations.dataStores.setIamPolicy", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

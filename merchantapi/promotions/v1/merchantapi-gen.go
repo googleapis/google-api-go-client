@@ -439,6 +439,7 @@ type Attributes struct {
 	// retail](https://cloud.google.com/solutions/retail).
 	//   "LOCAL_CLOUD_RETAIL" - [Local cloud
 	// retail](https://cloud.google.com/solutions/retail).
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	PromotionDestinations []string `json:"promotionDestinations,omitempty"`
 	// PromotionDisplayTimePeriod: Optional. `TimePeriod` representation of the
 	// promotion's display dates. This attribute specifies the date and time frame
@@ -473,6 +474,9 @@ type Attributes struct {
 	//   "CUSTOM" - The promotion can only be redeemed with a custom redemption
 	// restriction. In this case, the `custom_redemption_restriction` field must be
 	// set.
+	//   "FORMS_OF_PAYMENT" - The promotion is only available when the customer
+	// uses a specific form of payment, such as a specific credit card, bank card,
+	// or digital wallet.
 	RedemptionRestriction string `json:"redemptionRestriction,omitempty"`
 	// RegionIdInclusion: Optional. A list of regions
 	// (https://support.google.com/merchants/answer/15406457?#howregionswork) where
@@ -597,6 +601,7 @@ type DestinationStatus struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Status: Output only. The status for the specified destination.
 	//
@@ -743,6 +748,7 @@ type ItemLevelIssue struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// Resolution: Output only. Whether the issue can be resolved by the merchant.
 	Resolution string `json:"resolution,omitempty"`
@@ -888,6 +894,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -908,7 +915,9 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -969,14 +978,18 @@ func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 // (https://support.google.com/merchants/answer/2906014) * Local promotions
 // data specification (https://support.google.com/merchants/answer/10146130)
 // After inserting, updating a promotion input, it may take several minutes
-// before the final promotion can be retrieved.
+// before the final promotion can be retrieved. For more information, see
+// Manage promotions
+// (https://developers.google.com/merchant/api/guides/promotions/overview) and
+// Troubleshoot issues
+// (https://developers.google.com/merchant/api/guides/promotions/troubleshooting).
 type Promotion struct {
 	// Attributes: Optional. A list of promotion attributes.
 	Attributes *Attributes `json:"attributes,omitempty"`
 	// ContentLanguage: Required. The two-letter ISO 639-1
 	// (http://en.wikipedia.org/wiki/ISO_639-1) language code for the promotion.
 	// Promotions is only for selected languages
-	// (https://support.google.com/merchants/answer/4588281?ref_topic=6396150&sjid=18314938579342094533-NC#option3&zippy=).
+	// (https://support.google.com/merchants/answer/4588281#option3&zippy=).
 	ContentLanguage string `json:"contentLanguage,omitempty"`
 	// CustomAttributes: Optional. A list of custom (merchant-provided) attributes.
 	// It can also be used for submitting any attribute of the data specification
@@ -991,7 +1004,7 @@ type Promotion struct {
 	Name string `json:"name,omitempty"`
 	// PromotionId: Required. The user provided promotion ID to uniquely identify
 	// the promotion. Follow minimum requirements
-	// (https://support.google.com/merchants/answer/7050148?ref_topic=7322920&sjid=871860036916537104-NC#minimum_requirements)
+	// (https://support.google.com/merchants/answer/7050148#minimum_requirements)
 	// to prevent promotion disapprovals.
 	PromotionId string `json:"promotionId,omitempty"`
 	// PromotionStatus: Output only. The status of a promotion

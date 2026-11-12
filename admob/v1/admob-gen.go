@@ -774,6 +774,10 @@ type MediationReportSpec struct {
 	// mediation group and per ad source instance level is supported dating back to
 	// October 20, 2019. Third-party estimated average eCPM will show 0 for dates
 	// prior to October 20, 2019.
+	//   "AD_LOAD_LATENCY" - The ad load latency is the total time it takes for an
+	// ad to load measured in seconds. It starts when the ad is requested and ends
+	// when a response is received. See
+	// https://support.google.com/admob/answer/12571120 for additional information.
 	Metrics []string `json:"metrics,omitempty"`
 	// SortConditions: Describes the sorting of report rows. The order of the
 	// condition in the list defines its precedence; the earlier the condition, the
@@ -929,6 +933,10 @@ type MediationReportSpecSortCondition struct {
 	// mediation group and per ad source instance level is supported dating back to
 	// October 20, 2019. Third-party estimated average eCPM will show 0 for dates
 	// prior to October 20, 2019.
+	//   "AD_LOAD_LATENCY" - The ad load latency is the total time it takes for an
+	// ad to load measured in seconds. It starts when the ad is requested and ends
+	// when a response is received. See
+	// https://support.google.com/admob/answer/12571120 for additional information.
 	Metric string `json:"metric,omitempty"`
 	// Order: Sorting order of the dimension or metric.
 	//

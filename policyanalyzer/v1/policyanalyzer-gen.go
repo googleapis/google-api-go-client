@@ -6,7 +6,7 @@
 
 // Package policyanalyzer provides access to the Policy Analyzer API.
 //
-// For product documentation, see: https://www.google.com
+// For product documentation, see: https://cloud.google.com/policy-intelligence/docs/overview
 //
 // # Library status
 //

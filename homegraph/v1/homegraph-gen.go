@@ -220,6 +220,38 @@ func (s AgentOtherDeviceId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// CameraEventStreamTrait: This cluster defines the camera event stream used by
+// GHP for their Cloud-to-Cloud eventing flow
+type CameraEventStreamTrait struct {
+}
+
+// CommonEventDataStruct: Common camera event data.
+type CommonEventDataStruct struct {
+	// MediaUrls: Contains media urls for the event
+	MediaUrls *MediaUrlsStruct `json:"mediaUrls,omitempty"`
+	// SessionId: Camera event session id. Used for identifying a unique event
+	// session
+	SessionId string `json:"sessionId,omitempty"`
+	// TrackId: Id of the track this object belongs to
+	TrackId string `json:"trackId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MediaUrls") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MediaUrls") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CommonEventDataStruct) MarshalJSON() ([]byte, error) {
+	type NoMethod CommonEventDataStruct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Component: Component of a provider device.
 type Component struct {
 	// ChildComponents: Optional. Child components.
@@ -337,6 +369,38 @@ func (s Device) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeviceBlameStruct: Contains metadata about the cause of presence state
+// change attributed to a device.
+type DeviceBlameStruct struct {
+	// BlameType: Required. Specifies the device blame type.
+	//
+	// Possible values:
+	//   "DEVICE_BLAME_TYPE_ENUM_UNSPECIFIED" - Indicates an unspecified device
+	// blame type.
+	//   "LOCK" - Indicates lock interaction.
+	//   "UNLOCK" - Indicates unlock interaction.
+	//   "MOTION_DETECTION" - Indicates motion detection.
+	//   "TOUCH_INTERACTION" - Indicates touch interaction.
+	//   "VOICE_INTERACTION" - Indicates voice interaction.
+	BlameType string `json:"blameType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlameType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlameType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeviceBlameStruct) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceBlameStruct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // DeviceInfo: Device information.
 type DeviceInfo struct {
 	// HwVersion: Device hardware version.
@@ -426,14 +490,88 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+type EveUtilityTrait struct {
+	// AcceptedCommandList: Required. Output only. Accepted command list for this
+	// trait
+	//
+	// Possible values:
+	//   "COMMANDS_UNSPECIFIED" - Deprecated: This enum exists only to conform to
+	// AIP guidelines and should never be used.
+	AcceptedCommandList     []string `json:"acceptedCommandList,omitempty"`
+	AccumulatedControlPoint int64    `json:"accumulatedControlPoint,omitempty,string"`
+	AirPressure             float64  `json:"airPressure,omitempty"`
+	Altitude                float64  `json:"altitude,omitempty"`
+	ChildLock               bool     `json:"childLock,omitempty"`
+	Current                 float64  `json:"current,omitempty"`
+	GetConfig               string   `json:"getConfig,omitempty"`
+	HoldPosition            bool     `json:"holdPosition,omitempty"`
+	LastEventTime           int64    `json:"lastEventTime,omitempty,string"`
+	LoggingControlPoint     string   `json:"loggingControlPoint,omitempty"`
+	LoggingData             string   `json:"loggingData,omitempty"`
+	LoggingMetadata         string   `json:"loggingMetadata,omitempty"`
+	LoggingTime             string   `json:"loggingTime,omitempty"`
+	MotionSensitivity       int64    `json:"motionSensitivity,omitempty"`
+	ObstructionDetected     bool     `json:"obstructionDetected,omitempty"`
+	OpenCount               int64    `json:"openCount,omitempty,string"`
+	Rloc16                  int64    `json:"rloc16,omitempty"`
+	SetConfig               string   `json:"setConfig,omitempty"`
+	StatusFault             int64    `json:"statusFault,omitempty"`
+	Voltage                 float64  `json:"voltage,omitempty"`
+	Watt                    float64  `json:"watt,omitempty"`
+	WattAccumulated         float64  `json:"wattAccumulated,omitempty"`
+	WeatherTrend            int64    `json:"weatherTrend,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AcceptedCommandList") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AcceptedCommandList") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EveUtilityTrait) MarshalJSON() ([]byte, error) {
+	type NoMethod EveUtilityTrait
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *EveUtilityTrait) UnmarshalJSON(data []byte) error {
+	type NoMethod EveUtilityTrait
+	var s1 struct {
+		AirPressure     gensupport.JSONFloat64 `json:"airPressure"`
+		Altitude        gensupport.JSONFloat64 `json:"altitude"`
+		Current         gensupport.JSONFloat64 `json:"current"`
+		Voltage         gensupport.JSONFloat64 `json:"voltage"`
+		Watt            gensupport.JSONFloat64 `json:"watt"`
+		WattAccumulated gensupport.JSONFloat64 `json:"wattAccumulated"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AirPressure = float64(s1.AirPressure)
+	s.Altitude = float64(s1.Altitude)
+	s.Current = float64(s1.Current)
+	s.Voltage = float64(s1.Voltage)
+	s.Watt = float64(s1.Watt)
+	s.WattAccumulated = float64(s1.WattAccumulated)
+	return nil
+}
+
 // EventData: Contains the details for a single event.
 type EventData struct {
-	// Event: Required. The actual event payload.
+	// Event: Optional. The actual event payload.
 	Event googleapi.RawMessage `json:"event,omitempty"`
 	// EventId: Required. The unique event ID from the device provider.
 	EventId string `json:"eventId,omitempty"`
 	// EventTime: Required. The timestamp of the event.
 	EventTime string `json:"eventTime,omitempty"`
+	// JsonTraitEvent: Optional. Contains the dynamic JSON trait event payload.
+	JsonTraitEvent *JsonTraitEvent `json:"jsonTraitEvent,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Event") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -456,7 +594,7 @@ func (s EventData) MarshalJSON() ([]byte, error) {
 type Events struct {
 	// ComponentId: Optional. The ID of the provider component if the events are
 	// associated with a specific component. Optional for WHDM events, required for
-	// UDDM events.
+	// UDDM and JSON events.
 	ComponentId string `json:"componentId,omitempty"`
 	// Events: Required. List of events associated with the component.
 	Events []*EventData `json:"events,omitempty"`
@@ -502,7 +640,8 @@ func (s HomeEvents) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// HomeTraitPayload: Container for UDDM trait data associated with a device.
+// HomeTraitPayload: Container for UDDM or JSON trait data associated with a
+// device.
 type HomeTraitPayload struct {
 	// RootComponent: The root component of the device as reported by the provider.
 	RootComponent *Component `json:"rootComponent,omitempty"`
@@ -548,6 +687,152 @@ func (s HomeTraitUpdates) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// JsonTrait: Represents a dynamic JSON trait state payload that conforms to
+// `json_trait_schema.md`. This message is used for Category 2 (vendor Matter
+// clusters) and Category 3 (non-Matter capabilities) traits across all wire
+// and internal paths, and for Category 1 traits on external JSON-only wire
+// paths (for example, `Query` with `JSON_TRAIT_ONLY`).
+type JsonTrait struct {
+	// Data: Optional. Holds the trait attributes, which conform to the trait's
+	// registered JSON Schema.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+	// Id: Required. Identifies the trait by its canonical four-segment capability
+	// ID, `capability...`: * Standard or Google Matter (Category 1):
+	// `capability.matter.standard.` or `capability.matter.google.`, for example
+	// `capability.matter.standard.Thermostat`. * Vendor Matter (Category 2):
+	// `capability.matter..`. * Non-Matter (Category 3, from any provider including
+	// Google): `capability.generic..`, for example
+	// `capability.generic.acme.Warranty`.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s JsonTrait) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonTrait
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// JsonTraitEvent: Represents a dynamic JSON event payload that conforms to
+// `json_trait_schema.md`.
+type JsonTraitEvent struct {
+	// Data: Optional. Holds the event payload fields, which conform to the event's
+	// registered JSON Schema.
+	Data googleapi.RawMessage `json:"data,omitempty"`
+	// Id: Required. Identifies the event as `.`, where `` is the PascalCase key in
+	// the schema's `x-capability-info.events`, for example
+	// `capability.matter.standard.DoorLock.LockOperation` or
+	// `capability.generic.acme.Warranty.ClaimUpdated`.
+	Id string `json:"id,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Data") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s JsonTraitEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod JsonTraitEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type MediaUrlsStruct struct {
+	// DashManifestUrl: URL for a dash manifest for playback
+	DashManifestUrl string `json:"dashManifestUrl,omitempty"`
+	// HlsMasterPlaylistUrl: URL for a hls master playlist for playback
+	HlsMasterPlaylistUrl string `json:"hlsMasterPlaylistUrl,omitempty"`
+	// PreviewUrl: URL for animated preview clip representing the event session
+	PreviewUrl string `json:"previewUrl,omitempty"`
+	// ThumbnailUrl: URL for thumbnail image representing the event session
+	ThumbnailUrl string `json:"thumbnailUrl,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DashManifestUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DashManifestUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MediaUrlsStruct) MarshalJSON() ([]byte, error) {
+	type NoMethod MediaUrlsStruct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MotionEvent: Represents a newly detected motion event.
+type MotionEvent struct {
+	CommonEventData *CommonEventDataStruct `json:"commonEventData,omitempty"`
+	// Zones: Zones where events are detected in.
+	Zones []*ZoneStruct `json:"zones,omitempty"`
+	// ZonesIsEmpty: If set, zones is an empty list.
+	ZonesIsEmpty bool `json:"zonesIsEmpty,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommonEventData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommonEventData") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MotionEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod MotionEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// PartnerPresenceSignalTrait: Provides attributes and events related to
+// partner presence signals. See PartnerPresenceSignal trait:
+type PartnerPresenceSignalTrait struct {
+}
+
+// PersonEvent: Represents a newly detected person event.
+type PersonEvent struct {
+	CommonEventData *CommonEventDataStruct `json:"commonEventData,omitempty"`
+	// Zones: Zones where events are detected in.
+	Zones []*ZoneStruct `json:"zones,omitempty"`
+	// ZonesIsEmpty: If set, zones is an empty list.
+	ZonesIsEmpty bool `json:"zonesIsEmpty,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CommonEventData") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CommonEventData") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PersonEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod PersonEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // QueryRequest: Request type for the `Query`
 // (#google.home.graph.v1.HomeGraphApiService.Query) call.
 type QueryRequest struct {
@@ -556,17 +841,20 @@ type QueryRequest struct {
 	// DeviceView: Optional. Specifies the type of device data to be returned in
 	// the response. This allows callers to request traditional Smart Home traits,
 	// Unified Device Data Model (UDDM) traits, or both. If unspecified, defaults
-	// to SMART_HOME_TRAIT_ONLY.
+	// to `SMART_HOME_TRAIT_ONLY`.
 	//
 	// Possible values:
 	//   "DEVICE_VIEW_UNSPECIFIED" - Default value. Equivalent to
-	// SMART_HOME_TRAIT_ONLY.
+	// `SMART_HOME_TRAIT_ONLY`.
 	//   "SMART_HOME_TRAIT_ONLY" - Return only standard Smart Home traits in the
 	// `devices` map.
 	//   "HOME_TRAIT_ONLY" - Return only Unified Device Data Model (UDDM) traits in
 	// the `home_trait_payload` map.
 	//   "HOME_TRAIT_AND_SMART_HOME_TRAIT" - Return both standard Smart Home traits
 	// and UDDM traits.
+	//   "JSON_TRAIT_ONLY" - Return all component traits in `JsonTrait` format
+	// (`TraitData.json_trait` in `home_trait_payload`), converting persisted UDDM
+	// traits to `JsonTrait` on read.
 	DeviceView string `json:"deviceView,omitempty"`
 	// IncludeDeviceMetadata: Optional. If true, the response will include device
 	// metadata in the device_metadata field.
@@ -682,8 +970,9 @@ type QueryResponsePayload struct {
 	// device states.
 	Devices map[string]googleapi.RawMessage `json:"devices,omitempty"`
 	// HomeTraitPayload: Map of device IDs to their Unified Device Data Model
-	// (UDDM) trait payloads. This field is populated when `device_view` is set to
-	// HOME_TRAIT_ONLY or HOME_TRAIT_AND_SMART_HOME_TRAIT.
+	// (UDDM) or JSON trait payloads. This field is populated when `device_view` is
+	// set to `HOME_TRAIT_ONLY`, `HOME_TRAIT_AND_SMART_HOME_TRAIT`, or
+	// `JSON_TRAIT_ONLY`.
 	HomeTraitPayload map[string]HomeTraitPayload `json:"homeTraitPayload,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DeviceMetadata") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -789,18 +1078,21 @@ func (s ReportStateAndNotificationRequest) MarshalJSON() ([]byte, error) {
 // `ReportStateAndNotification`
 // (#google.home.graph.v1.HomeGraphApiService.ReportStateAndNotification) call.
 type ReportStateAndNotificationResponse struct {
+	// DeviceResults: Map from agent device ID to the result of reporting state and
+	// notifications. This is only populated for UDDM updates for now.
+	DeviceResults map[string]Result `json:"deviceResults,omitempty"`
 	// RequestId: Request ID copied from ReportStateAndNotificationRequest.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "RequestId") to
+	// ForceSendFields is a list of field names (e.g. "DeviceResults") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RequestId") to include in API
+	// NullFields is a list of field names (e.g. "DeviceResults") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -848,6 +1140,29 @@ type RequestSyncDevicesResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// Result: Result of reporting state and notifications for a single device.
+type Result struct {
+	// HomeTraitCommitTime: The trait commit timestamp of the state update in Home
+	// Graph.
+	HomeTraitCommitTime string `json:"homeTraitCommitTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HomeTraitCommitTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HomeTraitCommitTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Result) MarshalJSON() ([]byte, error) {
+	type NoMethod Result
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // StateAndNotificationPayload: Payload containing the state and notification
 // information for devices.
 type StateAndNotificationPayload struct {
@@ -868,6 +1183,64 @@ type StateAndNotificationPayload struct {
 
 func (s StateAndNotificationPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod StateAndNotificationPayload
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StructurePresenceStateChangeEvent: Sent when the structure presence state
+// changes.
+type StructurePresenceStateChangeEvent struct {
+	// PresenceState: Required. Specifies the presence state.
+	//
+	// Possible values:
+	//   "STRUCTURE_PRESENCE_STATE_ENUM_UNSPECIFIED" - Indicates an unknown
+	// presence state.
+	//   "HOME" - Indicates home presence state.
+	//   "AWAY" - Indicates away presence state.
+	PresenceState string `json:"presenceState,omitempty"`
+	// Reason: Optional. Specifies the presence state change reason.
+	Reason *StructurePresenceStateChangeReasonStruct `json:"reason,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "PresenceState") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PresenceState") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StructurePresenceStateChangeEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod StructurePresenceStateChangeEvent
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// StructurePresenceStateChangeReasonStruct: Contains the metadata about the
+// cause of the structure presence state change.
+type StructurePresenceStateChangeReasonStruct struct {
+	// DeviceBlame: Optional. Contains metadata about the cause of presence state
+	// change attributed to a device.
+	DeviceBlame *DeviceBlameStruct `json:"deviceBlame,omitempty"`
+	// UserBlame: Optional. Contains metadata about the cause of presence state
+	// change attributed to a user.
+	UserBlame *UserBlameStruct `json:"userBlame,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DeviceBlame") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DeviceBlame") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s StructurePresenceStateChangeReasonStruct) MarshalJSON() ([]byte, error) {
+	type NoMethod StructurePresenceStateChangeReasonStruct
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -958,17 +1331,48 @@ func (s SyncResponsePayload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ThermostatFanControlTrait: This cluster provides fan control capabilities
+// for thermostats.
+type ThermostatFanControlTrait struct {
+	TimerDuration int64 `json:"timerDuration,omitempty,string"`
+	TimerEnd      int64 `json:"timerEnd,omitempty,string"`
+	// Possible values:
+	//   "FAN_SPEED_SETTING_ENUM_UNSPECIFIED"
+	//   "FAN_SPEED_SETTING_OFF"
+	//   "FAN_SPEED_SETTING_STAGE1"
+	//   "FAN_SPEED_SETTING_STAGE2"
+	//   "FAN_SPEED_SETTING_STAGE3"
+	//   "FAN_SPEED_SETTING_AUTO"
+	TimerSpeed string `json:"timerSpeed,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TimerDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TimerDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ThermostatFanControlTrait) MarshalJSON() ([]byte, error) {
+	type NoMethod ThermostatFanControlTrait
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TraitData: Contains the trait payload for a single trait.
 type TraitData struct {
 	// CommitTime: Other metadata for the trait. The time the client update was
 	// committed in the server.
 	CommitTime string `json:"commitTime,omitempty"`
-	// ProviderVersionTime: Optional in write requests (e.g.
-	// ReportStateAndNotification). If set, represents the provider version
-	// timestamp of the existing trait in the database. The server will perform
-	// optimistic locking validation if this field is present and the experiment is
-	// enabled. It will not be persisted to the database.
-	ProviderVersionTime string `json:"providerVersionTime,omitempty"`
+	// JsonTrait: Contains the dynamic JSON trait payload.
+	JsonTrait *JsonTrait `json:"jsonTrait,omitempty"`
+	// ProviderUpdateTime: The custom timestamp supplied by the provider during a
+	// ReportStateAndNotification update (if provided). This field is returned as
+	// part of the `QueryResponse`.
+	ProviderUpdateTime string `json:"providerUpdateTime,omitempty"`
 	// Trait: The Provider Home API trait payload.
 	Trait googleapi.RawMessage `json:"trait,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommitTime") to
@@ -986,6 +1390,60 @@ type TraitData struct {
 
 func (s TraitData) MarshalJSON() ([]byte, error) {
 	type NoMethod TraitData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// UserBlameStruct: Contains metadata about the cause of presence state change
+// attributed to a user.
+type UserBlameStruct struct {
+	// BlameType: Required. Specifies the user blame type.
+	//
+	// Possible values:
+	//   "USER_BLAME_TYPE_ENUM_UNSPECIFIED" - Indicates an unspecified user blame
+	// type.
+	//   "PHONE_LOCATION" - Indicates phone location.
+	//   "MANUAL_CHANGE" - Indicates manual change.
+	BlameType string `json:"blameType,omitempty"`
+	// UserEmail: Required. Specifies the email of the user.
+	UserEmail string `json:"userEmail,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BlameType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BlameType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s UserBlameStruct) MarshalJSON() ([]byte, error) {
+	type NoMethod UserBlameStruct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type ZoneStruct struct {
+	// Label: Name of the zone.
+	Label string `json:"label,omitempty"`
+	// ZoneId: Id of the zone
+	ZoneId int64 `json:"zoneId,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "Label") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Label") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ZoneStruct) MarshalJSON() ([]byte, error) {
+	type NoMethod ZoneStruct
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

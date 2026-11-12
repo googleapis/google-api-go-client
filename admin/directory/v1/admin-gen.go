@@ -2828,6 +2828,54 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExpirationDetails: Details regarding the expiration of this role assignment.
+// Used to automatically revoke access when the time limit is reached.
+type ExpirationDetails struct {
+	// ExpireTime: The specific timestamp when the role assignment expires.
+	ExpireTime string `json:"expireTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpireTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpireTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExpirationDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ExpirationDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExternalId: External identifier used to link and identify this group across
+// external directory systems.
+type ExternalId struct {
+	// Id: The unique identifier string assigned by the external provider.
+	Id string `json:"id,omitempty"`
+	// Namespace: The system or identity provider managing this ID.
+	Namespace string `json:"namespace,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExternalId) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalId
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // FailureInfo: Info about failures
 type FailureInfo struct {
 	// ErrorCode: Canonical code for why the update failed to apply.
@@ -3101,6 +3149,10 @@ type Group struct {
 	Email string `json:"email,omitempty"`
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
+	// ExternalIds: Optional. The list of external IDs for the group, such as an
+	// immutable identifier from an external identity provider or directory sync
+	// client. Each entry contains a namespace and an ID value.
+	ExternalIds []*ExternalId `json:"externalIds,omitempty"`
 	// Id: Read-only. The unique ID of a group. A group `id` can be used as a group
 	// request URI's `groupKey`.
 	Id string `json:"id,omitempty"`
@@ -4188,6 +4240,9 @@ type RoleAssignment struct {
 	Condition string `json:"condition,omitempty"`
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
+	// ExpirationDetails: Optional. Details regarding the expiration of this role
+	// assignment.
+	ExpirationDetails *ExpirationDetails `json:"expirationDetails,omitempty"`
 	// Kind: The type of the API resource. This is always
 	// `admin#directory#roleAssignment`.
 	Kind string `json:"kind,omitempty"`
@@ -17559,8 +17614,7 @@ type UsersCreateGuestCall struct {
 }
 
 // CreateGuest: Create a guest user with access to a subset of Workspace
-// capabilities (https://support.google.com/a/answer/16558545). This feature is
-// currently in Open Beta.
+// capabilities (https://support.google.com/a/answer/16558545).
 func (r *UsersService) CreateGuest(directoryuserscreateguestrequest *DirectoryUsersCreateGuestRequest) *UsersCreateGuestCall {
 	c := &UsersCreateGuestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.directoryuserscreateguestrequest = directoryuserscreateguestrequest
@@ -17887,12 +17941,21 @@ type UsersInsertCall struct {
 // might sometimes fail as the user isn't fully created due to propagation
 // delay in our backends. Check the error details for the "User creation is not
 // complete" message to see if this is the case. Retrying the calls after some
-// time can help in this case. If `resolveConflictAccount` is set to `true`, a
-// `202` response code means that a conflicting unmanaged account exists and
-// was invited to join the organization. A `409` response code means that a
-// conflicting account exists so the user wasn't created based on the handling
-// unmanaged user accounts (https://support.google.com/a/answer/11112794)
-// option selected.
+// time can help in this case. If `resolve_conflict_account` is set to `true`,
+// the option selected for Find and add unmanaged users
+// (https://knowledge.workspace.google.com/admin/users/find-and-add-unmanaged-users)
+// will apply to resolve conflicting accounts: - A `200` response code
+// indicates the user was created (or replaced an existing unmanaged personal
+// account). - A `202` response code means that a conflicting unmanaged
+// personal account exists and was invited to join the organization. - A `409`
+// response code means that a conflicting account exists so the user wasn't
+// created (e.g. based on the option selected to preserve the account, or if
+// the email conflicts with an unmanaged work account or existing managed
+// user). For details on resolving duplicate account errors, see Resolve
+// duplicate account errors
+// (https://knowledge.workspace.google.com/p/duplicate-account-errors) and
+// Transfer unmanaged work accounts
+// (https://knowledge.workspace.google.com/p/unmanaged-work-accounts).
 func (r *UsersService) Insert(user *User) *UsersInsertCall {
 	c := &UsersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.user = user
@@ -17900,8 +17963,9 @@ func (r *UsersService) Insert(user *User) *UsersInsertCall {
 }
 
 // ResolveConflictAccount sets the optional parameter "resolveConflictAccount":
-// If set to `true`, the option selected for handling unmanaged user accounts
-// (https://support.google.com/a/answer/11112794) will apply. Default: `false`
+// Applies the option selected for Find and add unmanaged users
+// (https://knowledge.workspace.google.com/admin/users/find-and-add-unmanaged-users)
+// to resolve conflicting accounts when set to `true`. Default: `false`
 func (c *UsersInsertCall) ResolveConflictAccount(resolveConflictAccount bool) *UsersInsertCall {
 	c.urlParams_.Set("resolveConflictAccount", fmt.Sprint(resolveConflictAccount))
 	return c

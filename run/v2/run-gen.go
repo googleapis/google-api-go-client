@@ -187,6 +187,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Jobs = NewProjectsLocationsJobsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Services = NewProjectsLocationsServicesService(s)
+	rs.SourceUploads = NewProjectsLocationsSourceUploadsService(s)
 	rs.WorkerPools = NewProjectsLocationsWorkerPoolsService(s)
 	return rs
 }
@@ -203,6 +204,8 @@ type ProjectsLocationsService struct {
 	Operations *ProjectsLocationsOperationsService
 
 	Services *ProjectsLocationsServicesService
+
+	SourceUploads *ProjectsLocationsSourceUploadsService
 
 	WorkerPools *ProjectsLocationsWorkerPoolsService
 }
@@ -288,6 +291,15 @@ type ProjectsLocationsServicesRevisionsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsSourceUploadsService(s *Service) *ProjectsLocationsSourceUploadsService {
+	rs := &ProjectsLocationsSourceUploadsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSourceUploadsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsWorkerPoolsService(s *Service) *ProjectsLocationsWorkerPoolsService {
 	rs := &ProjectsLocationsWorkerPoolsService{s: s}
 	rs.Revisions = NewProjectsLocationsWorkerPoolsRevisionsService(s)
@@ -307,6 +319,35 @@ func NewProjectsLocationsWorkerPoolsRevisionsService(s *Service) *ProjectsLocati
 
 type ProjectsLocationsWorkerPoolsRevisionsService struct {
 	s *Service
+}
+
+// GoogleCloudRunV2AmbientNetworking: Configuration for Ambient Networking.
+type GoogleCloudRunV2AmbientNetworking struct {
+	// AmbientScope: The ambient networking scope of the instance.
+	//
+	// Possible values:
+	//   "AMBIENT_SCOPE_UNSPECIFIED" - Unspecified.
+	//   "AMBIENT_SCOPE_REGIONAL" - Regional ambient networking.
+	//   "AMBIENT_SCOPE_GLOBAL" - Global ambient networking.
+	AmbientScope string `json:"ambientScope,omitempty"`
+	// Enabled: Optional. Whether ambient networking is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AmbientScope") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AmbientScope") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2AmbientNetworking) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2AmbientNetworking
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudRunV2BinaryAuthorization: Settings for Binary Authorization
@@ -369,8 +410,8 @@ type GoogleCloudRunV2BuildConfig struct {
 	// SourceLocation: The Cloud Storage bucket URI where the function source code
 	// is located.
 	SourceLocation string `json:"sourceLocation,omitempty"`
-	// WorkerPool: Optional. Name of the Cloud Build Custom Worker Pool that should
-	// be used to build the Cloud Run function. The format of this field is
+	// WorkerPool: Optional. Name of the Cloud Build private pool that should be
+	// used to build the Cloud Run function. The format of this field is
 	// `projects/{project}/locations/{region}/workerPools/{workerPool}` where
 	// `{project}` and `{region}` are the project id and region respectively where
 	// the worker pool is defined and `{workerPool}` is the short name of the
@@ -392,6 +433,74 @@ type GoogleCloudRunV2BuildConfig struct {
 func (s GoogleCloudRunV2BuildConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2BuildConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildConfiguration: Build configuration for a container.
+type GoogleCloudRunV2BuildConfiguration struct {
+	// BuildpacksBuild: Optional. Builds the source using Buildpacks.
+	BuildpacksBuild *GoogleCloudRunV2BuildConfigurationBuildpacksBuild `json:"buildpacksBuild,omitempty"`
+	// DockerBuild: Optional. Builds the source using Docker.
+	DockerBuild *GoogleCloudRunV2BuildConfigurationDockerBuild `json:"dockerBuild,omitempty"`
+	// EnvironmentVariables: Optional. Environment variables for the build.
+	EnvironmentVariables []*GoogleCloudRunV2EnvVar `json:"environmentVariables,omitempty"`
+	// ImageRepositoryUri: Required. Artifact Registry URI to store the built
+	// image.
+	ImageRepositoryUri string `json:"imageRepositoryUri,omitempty"`
+	// ServiceAccount: Optional. The service account to use for the build. Its
+	// resource name in the format `projects/{project}/serviceAccounts/{email}`.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// Tags: Optional. Tags to add to the build.
+	Tags []string `json:"tags,omitempty"`
+	// WorkerConfiguration: Optional. Configuration for the worker.
+	WorkerConfiguration *GoogleCloudRunV2WorkerConfiguration `json:"workerConfiguration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuildpacksBuild") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildpacksBuild") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildConfigurationBuildpacksBuild: Buildpacks build
+// configuration.
+type GoogleCloudRunV2BuildConfigurationBuildpacksBuild struct {
+	// BuildBaseImageUri: Optional. Specify base image other than the default.
+	BuildBaseImageUri string `json:"buildBaseImageUri,omitempty"`
+	// CacheImageUri: Optional. Cache image URI.
+	CacheImageUri string `json:"cacheImageUri,omitempty"`
+	// EnvironmentVariables: Optional. Deprecated: Use environment_variables in
+	// BuildConfiguration instead.
+	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BuildBaseImageUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BuildBaseImageUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildConfigurationBuildpacksBuild) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildConfigurationBuildpacksBuild
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildConfigurationDockerBuild: Docker build configuration.
+type GoogleCloudRunV2BuildConfigurationDockerBuild struct {
 }
 
 // GoogleCloudRunV2BuildInfo: Build information of the image.
@@ -416,6 +525,32 @@ type GoogleCloudRunV2BuildInfo struct {
 
 func (s GoogleCloudRunV2BuildInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2BuildInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2BuildStatus: BuildStatus holds the status of a build.
+type GoogleCloudRunV2BuildStatus struct {
+	// CloudBuildLogUrl: The log URL for the Cloud Build execution.
+	CloudBuildLogUrl string `json:"cloudBuildLogUrl,omitempty"`
+	// Message: The message details of the build.
+	Message string `json:"message,omitempty"`
+	// Status: The status of the build.
+	Status string `json:"status,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CloudBuildLogUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudBuildLogUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2BuildStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2BuildStatus
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -488,6 +623,31 @@ type GoogleCloudRunV2CancelExecutionRequest struct {
 
 func (s GoogleCloudRunV2CancelExecutionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2CancelExecutionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2CloudBuildWorkerConfiguration: Configuration for Cloud Build
+// worker.
+type GoogleCloudRunV2CloudBuildWorkerConfiguration struct {
+	// MachineType: Optional. The machine type for the Cloud Build worker.
+	MachineType string `json:"machineType,omitempty"`
+	// WorkerPool: Optional. The name of the Cloud Build worker pool.
+	WorkerPool string `json:"workerPool,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MachineType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2CloudBuildWorkerConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2CloudBuildWorkerConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -566,6 +726,8 @@ type GoogleCloudRunV2Condition struct {
 	//   "CANCELLING" - The execution is in the process of being cancelled.
 	//   "DELETED" - The execution was deleted.
 	//   "DELAYED_START_PENDING" - A delayed execution is waiting for a start time.
+	//   "DELAYED_EXECUTION_EXCEEDING_DURATION_LIMIT" - A delayed execution
+	// exceeded the maximum runtime duration.
 	ExecutionReason string `json:"executionReason,omitempty"`
 	// InstanceReason: Output only. A reason for the instance condition.
 	//
@@ -576,10 +738,11 @@ type GoogleCloudRunV2Condition struct {
 	//   "INSTANCE_STOPPING" - Instance stopping.
 	//   "INSTANCE_NON_ZERO_EXIT_CODE" - Instance exited with a non-zero exit code.
 	InstanceReason string `json:"instanceReason,omitempty"`
-	// LastTransitionTime: Last time the condition transitioned from one status to
-	// another.
+	// LastTransitionTime: Output only. Last time the condition transitioned from
+	// one status to another.
 	LastTransitionTime string `json:"lastTransitionTime,omitempty"`
-	// Message: Human readable message indicating details about the current status.
+	// Message: Output only. Human readable message indicating details about the
+	// current status.
 	Message string `json:"message,omitempty"`
 	// Reason: Output only. A common (service-level) reason for this condition.
 	//
@@ -632,8 +795,8 @@ type GoogleCloudRunV2Condition struct {
 	//   "MIN_INSTANCES_WARMING" - A revision with min_instance_count > 0 was
 	// created and is waiting for enough instances to begin a traffic migration.
 	RevisionReason string `json:"revisionReason,omitempty"`
-	// Severity: How to interpret failures of this condition, one of Error,
-	// Warning, Info
+	// Severity: Output only. How to interpret failures of this condition, one of
+	// Error, Warning, Info
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Unspecified severity
@@ -641,7 +804,7 @@ type GoogleCloudRunV2Condition struct {
 	//   "WARNING" - Warning severity.
 	//   "INFO" - Info severity.
 	Severity string `json:"severity,omitempty"`
-	// State: State of the condition.
+	// State: Output only. State of the condition.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The default value. This value is used if the state
@@ -653,8 +816,8 @@ type GoogleCloudRunV2Condition struct {
 	//   "CONDITION_SUCCEEDED" - Terminal state: Reconciliation completed
 	// successfully.
 	State string `json:"state,omitempty"`
-	// Type: type is used to communicate the status of the reconciliation process.
-	// See also:
+	// Type: Output only. type is used to communicate the status of the
+	// reconciliation process. See also:
 	// https://github.com/knative/serving/blob/main/docs/spec/errors.md#error-conditions-and-reporting
 	// Types common to all resources include: * "Ready": True when the Resource is
 	// ready.
@@ -689,6 +852,8 @@ type GoogleCloudRunV2Container struct {
 	// set, it indicates that the service is enrolled into automatic base image
 	// update.
 	BaseImageUri string `json:"baseImageUri,omitempty"`
+	// BuildConfig: Optional. The build configuration for the container image.
+	BuildConfig *GoogleCloudRunV2BuildConfiguration `json:"buildConfig,omitempty"`
 	// BuildInfo: Output only. The build info of the container image.
 	BuildInfo *GoogleCloudRunV2BuildInfo `json:"buildInfo,omitempty"`
 	// Command: Entrypoint array. Not executed within a shell. The docker image's
@@ -720,7 +885,8 @@ type GoogleCloudRunV2Container struct {
 	// SandboxLauncher: Optional. Indicates that this container can act as a
 	// sandbox supervisor and launch sandboxes.
 	SandboxLauncher bool `json:"sandboxLauncher,omitempty"`
-	// SourceCode: Optional. Location of the source.
+	// SourceCode: Optional. Location of the source. This field is only supported
+	// in Cloud Run Service.
 	SourceCode *GoogleCloudRunV2SourceCode `json:"sourceCode,omitempty"`
 	// StartupProbe: Startup probe of application within the container. All other
 	// probes are disabled if a startup probe is provided, until it succeeds.
@@ -811,6 +977,8 @@ func (s GoogleCloudRunV2ContainerPort) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2ContainerStatus: ContainerStatus holds the information of
 // container name and image digest value.
 type GoogleCloudRunV2ContainerStatus struct {
+	// BuildStatus: Output only. The build status of the container image.
+	BuildStatus *GoogleCloudRunV2BuildStatus `json:"buildStatus,omitempty"`
 	// ImageDigest: ImageDigest holds the resolved digest for the image specified
 	// and resolved during the creation of Revision. This field holds the digest
 	// value regardless of whether a tag or digest was originally specified in the
@@ -818,13 +986,13 @@ type GoogleCloudRunV2ContainerStatus struct {
 	ImageDigest string `json:"imageDigest,omitempty"`
 	// Name: The name of the container, if specified.
 	Name string `json:"name,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ImageDigest") to
+	// ForceSendFields is a list of field names (e.g. "BuildStatus") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ImageDigest") to include in API
+	// NullFields is a list of field names (e.g. "BuildStatus") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -836,18 +1004,57 @@ func (s GoogleCloudRunV2ContainerStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2CpuScaling: Represents CPU-related scaling settings.
+type GoogleCloudRunV2CpuScaling struct {
+	// CpuUtilization: Optional. Determines a threshold for CPU utilization before
+	// scaling begins. Accepted values are between `0.1` and `0.90` (inclusive) or
+	// `0.0` to disable CPU utilization as threshold for scaling.
+	CpuUtilization float64 `json:"cpuUtilization,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CpuUtilization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CpuUtilization") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2CpuScaling) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2CpuScaling
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRunV2CpuScaling) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRunV2CpuScaling
+	var s1 struct {
+		CpuUtilization gensupport.JSONFloat64 `json:"cpuUtilization"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CpuUtilization = float64(s1.CpuUtilization)
+	return nil
+}
+
 // GoogleCloudRunV2DockerBuild: Build the source using Docker. This means the
 // source has a Dockerfile.
 type GoogleCloudRunV2DockerBuild struct {
 }
 
-// GoogleCloudRunV2EmptyDirVolumeSource: In memory (tmpfs) ephemeral storage.
-// It is ephemeral in the sense that when the sandbox is taken down, the data
-// is destroyed with it (it does not persist across sandbox runs).
+// GoogleCloudRunV2EmptyDirVolumeSource: Represents in-memory (tmpfs) or
+// disk-backed ephemeral storage. It is ephemeral in the sense that when the
+// sandbox is taken down, the data is destroyed with it (it does not persist
+// across sandbox runs).
 type GoogleCloudRunV2EmptyDirVolumeSource struct {
-	// Medium: The medium on which the data is stored. Acceptable values today is
-	// only MEMORY or none. When none, the default will currently be backed by
-	// memory but could change over time. +optional
+	// Medium: The medium on which the data is stored. Acceptable values are
+	// `MEMORY`, `DISK`, or unset (`MEDIUM_UNSPECIFIED`). When unset, the default
+	// is currently memory-backed but could change over time.
 	//
 	// Possible values:
 	//   "MEDIUM_UNSPECIFIED" - When not specified, falls back to the default
@@ -859,10 +1066,11 @@ type GoogleCloudRunV2EmptyDirVolumeSource struct {
 	// limit is also applicable for memory medium. The maximum usage on memory
 	// medium EmptyDir would be the minimum value between the SizeLimit specified
 	// here and the sum of memory limits of all containers. The default is nil
-	// which means that the limit is undefined. More info:
-	// https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume.
-	// Info in Kubernetes:
-	// https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+	// which means that the limit is undefined. For more information, see Configure
+	// in-memory volume mounts
+	// (https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume)
+	// and the Kubernetes `emptyDir` volume documentation
+	// (https://kubernetes.io/docs/concepts/storage/volumes/#emptydir).
 	SizeLimit string `json:"sizeLimit,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Medium") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1152,6 +1360,9 @@ type GoogleCloudRunV2ExecutionTemplate struct {
 	Client string `json:"client,omitempty"`
 	// ClientVersion: Optional. Arbitrary version identifier for the API client.
 	ClientVersion string `json:"clientVersion,omitempty"`
+	// DelayExecution: Optional. If true, the system will start the execution
+	// within the next 12 hours depending on available capacity.
+	DelayExecution bool `json:"delayExecution,omitempty"`
 	// Labels: Unstructured key value map that can be used to organize and
 	// categorize objects. User-provided labels are shared with Google's billing
 	// system, so they can be used to filter, or break down billing charges by
@@ -1282,7 +1493,7 @@ func (s GoogleCloudRunV2ExportStatusResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRunV2GCSVolumeSource: Represents a volume backed by a Cloud
-// Storage bucket using Cloud Storage FUSE.
+// Storage bucket (mounted via Cloud Storage FUSE or as a block device disk).
 type GoogleCloudRunV2GCSVolumeSource struct {
 	// Bucket: Cloud Storage Bucket name.
 	Bucket string `json:"bucket,omitempty"`
@@ -1613,9 +1824,13 @@ type GoogleCloudRunV2Instance struct {
 	//   "ON_FAILURE" - Restart if the instance terminates with non-zero exit code.
 	//   "NEVER" - Never restart the instance.
 	RestartPolicy string `json:"restartPolicy,omitempty"`
+	// Sandboxes: Optional. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs   bool   `json:"satisfiesPzs,omitempty"`
 	ServiceAccount string `json:"serviceAccount,omitempty"`
+	// SshEnabled: Optional. Enables SSH access to the Instance.
+	SshEnabled bool `json:"sshEnabled,omitempty"`
 	// TerminalCondition: Output only. The Condition of this Instance, containing
 	// its readiness status, and detailed error information in case it did not
 	// reach a serving state. See comments in `reconciling` for additional
@@ -1767,6 +1982,14 @@ type GoogleCloudRunV2Job struct {
 	// ExpireTime: Output only. For a deleted resource, the time after which it
 	// will be permamently deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// FunctionalType: Optional. The functional type of the Job.
+	//
+	// Possible values:
+	//   "FUNCTIONAL_TYPE_UNSPECIFIED" - Specifies that the functional type is
+	// unspecified.
+	//   "FUNCTIONAL_TYPE_AGENT" - Represents an AGENT functional type.
+	//   "FUNCTIONAL_TYPE_MCP_SERVER" - Represents an MCP_SERVER functional type.
+	FunctionalType string `json:"functionalType,omitempty"`
 	// Generation: Output only. A number that monotonically increases every time
 	// the user modifies the desired state.
 	Generation int64 `json:"generation,omitempty,string"`
@@ -2241,6 +2464,9 @@ func (s GoogleCloudRunV2NodeSelector) MarshalJSON() ([]byte, error) {
 type GoogleCloudRunV2Overrides struct {
 	// ContainerOverrides: Per container override specification.
 	ContainerOverrides []*GoogleCloudRunV2ContainerOverride `json:"containerOverrides,omitempty"`
+	// DelayExecution: Optional. If true, the system will start the execution
+	// within the next 12 hours depending on available capacity.
+	DelayExecution bool `json:"delayExecution,omitempty"`
 	// TaskCount: Optional. The desired number of tasks the execution should run.
 	// Will replace existing task_count value.
 	TaskCount int64 `json:"taskCount,omitempty"`
@@ -2355,6 +2581,9 @@ func (s GoogleCloudRunV2ResourceRequirements) MarshalJSON() ([]byte, error) {
 // configuration. A Revision references a container image. Revisions are only
 // created by updates to its parent Service.
 type GoogleCloudRunV2Revision struct {
+	// AmbientNetworking: Output only. The ambient networking configuration for
+	// this revision.
+	AmbientNetworking *GoogleCloudRunV2AmbientNetworking `json:"ambientNetworking,omitempty"`
 	// Annotations: Output only. Unstructured key value map that may be set by
 	// external tools to store and arbitrary metadata. They are not queryable and
 	// should be preserved when modifying objects.
@@ -2367,6 +2596,9 @@ type GoogleCloudRunV2Revision struct {
 	// readiness status, and detailed error information in case it did not reach a
 	// serving state.
 	Conditions []*GoogleCloudRunV2Condition `json:"conditions,omitempty"`
+	// ContainerStatuses: Output only. Status information for each of the specified
+	// containers. The status includes the resolved digest for specified images.
+	ContainerStatuses []*GoogleCloudRunV2ContainerStatus `json:"containerStatuses,omitempty"`
 	// Containers: Holds the list which define the units of execution for this
 	// Revision.
 	Containers []*GoogleCloudRunV2Container `json:"containers,omitempty"`
@@ -2479,6 +2711,8 @@ type GoogleCloudRunV2Revision struct {
 	// still in progress. See comments in `Service.reconciling` for additional
 	// information on reconciliation process in Cloud Run.
 	Reconciling bool `json:"reconciling,omitempty"`
+	// Sandboxes: Output only. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// Scaling: Scaling settings for this revision.
@@ -2509,18 +2743,20 @@ type GoogleCloudRunV2Revision struct {
 	// VpcAccess: VPC Access configuration for this Revision. For more information,
 	// visit https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+	// WorkloadIdentityConfig: Optional. The Revision's workload identity settings.
+	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// ForceSendFields is a list of field names (e.g. "AmbientNetworking") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AmbientNetworking") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2539,7 +2775,7 @@ type GoogleCloudRunV2RevisionScaling struct {
 	// for scaling. CPU and concurrency scaling cannot both be disabled.
 	ConcurrencyUtilization float64 `json:"concurrencyUtilization,omitempty"`
 	// CpuUtilization: Optional. Determines a threshold for CPU utilization before
-	// scaling begins. Accepted values are between `0.1` and `0.95` (inclusive) or
+	// scaling begins. Accepted values are between `0.1` and `0.90` (inclusive) or
 	// `0.0` to disable CPU utilization as threshold for scaling. CPU and
 	// concurrency scaling cannot both be disabled.
 	CpuUtilization float64 `json:"cpuUtilization,omitempty"`
@@ -2612,6 +2848,9 @@ func (s GoogleCloudRunV2RevisionScalingStatus) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2RevisionTemplate: RevisionTemplate describes the data a
 // revision should have when created from a template.
 type GoogleCloudRunV2RevisionTemplate struct {
+	// AmbientNetworking: Optional. The ambient networking configuration for this
+	// revision.
+	AmbientNetworking *GoogleCloudRunV2AmbientNetworking `json:"ambientNetworking,omitempty"`
 	// Annotations: Optional. Unstructured key value map that may be set by
 	// external tools to store and arbitrary metadata. They are not queryable and
 	// should be preserved when modifying objects. Cloud Run API v2 does not
@@ -2680,6 +2919,8 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// Revision: Optional. The unique name for the revision. If this field is
 	// omitted, it will be automatically generated based on the Service name.
 	Revision string `json:"revision,omitempty"`
+	// Sandboxes: Optional. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// Scaling: Optional. Scaling settings for this Revision.
 	Scaling *GoogleCloudRunV2RevisionScaling `json:"scaling,omitempty"`
 	// ServiceAccount: Optional. Email address of the IAM service account
@@ -2700,15 +2941,17 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// more information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// WorkloadIdentityConfig: Optional. The Revision's workload identity settings.
+	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AmbientNetworking") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Annotations") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AmbientNetworking") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -2745,6 +2988,68 @@ type GoogleCloudRunV2RunJobRequest struct {
 
 func (s GoogleCloudRunV2RunJobRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2RunJobRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2SandboxConfiguration: Configuration for sandboxes.
+type GoogleCloudRunV2SandboxConfiguration struct {
+	// Templates: Required. Sandbox templates that can be launched through the
+	// `sandbox` CLI.
+	Templates []*GoogleCloudRunV2SandboxTemplate `json:"templates,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Templates") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Templates") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2SandboxConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SandboxConfiguration
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2SandboxTemplate: Template for a single sandbox.
+type GoogleCloudRunV2SandboxTemplate struct {
+	// Args: Optional. Arguments to the entrypoint. The docker image's CMD is used
+	// if this is not provided.
+	Args []string `json:"args,omitempty"`
+	// Command: Optional. Entrypoint array. Not executed within a shell. The docker
+	// image's ENTRYPOINT is used if this is not provided.
+	Command []string `json:"command,omitempty"`
+	// Env: Optional. List of environment variables to set in the sandbox.
+	Env []*GoogleCloudRunV2EnvVar `json:"env,omitempty"`
+	// Image: Required. Name of the container image in Dockerhub or Artifact
+	// Registry. If the host is not provided, Dockerhub is assumed.
+	Image string `json:"image,omitempty"`
+	// Name: Required. Name of the sandbox specified as a DNS_LABEL (RFC 1123).
+	Name string `json:"name,omitempty"`
+	// VolumeMounts: Optional. Volume to mount into the container's filesystem.
+	VolumeMounts []*GoogleCloudRunV2VolumeMount `json:"volumeMounts,omitempty"`
+	// WorkingDir: Optional. Container's working directory. If not specified, the
+	// container runtime's default will be used, which might be configured in the
+	// container image.
+	WorkingDir string `json:"workingDir,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2SandboxTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2SandboxTemplate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2876,6 +3181,14 @@ type GoogleCloudRunV2Service struct {
 	// ExpireTime: Output only. For a deleted resource, the time after which it
 	// will be permanently deleted.
 	ExpireTime string `json:"expireTime,omitempty"`
+	// FunctionalType: Optional. The functional type of the Service.
+	//
+	// Possible values:
+	//   "FUNCTIONAL_TYPE_UNSPECIFIED" - Specifies that the functional type is
+	// unspecified.
+	//   "FUNCTIONAL_TYPE_AGENT" - Represents an AGENT functional type.
+	//   "FUNCTIONAL_TYPE_MCP_SERVER" - Represents an MCP_SERVER functional type.
+	FunctionalType string `json:"functionalType,omitempty"`
 	// Generation: Output only. A number that monotonically increases every time
 	// the user modifies the desired state. Please note that unlike v1, this is an
 	// int64 value. As with most Google APIs, its JSON representation will be a
@@ -3119,7 +3432,8 @@ type GoogleCloudRunV2SourceCode struct {
 	CloudStorageSource *GoogleCloudRunV2CloudStorageSource `json:"cloudStorageSource,omitempty"`
 	// InlinedSource: Optional. Input only. Source code inlined in the request.
 	// Cloud Run will store the inlined_source to Cloud Storage and replace the
-	// field with cloud_storage_source.
+	// field with cloud_storage_source. This field is only supported in Cloud Run
+	// Service.
 	InlinedSource *GoogleCloudRunV2InlinedSource `json:"inlinedSource,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CloudStorageSource") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -3316,8 +3630,8 @@ type GoogleCloudRunV2SubmitBuildRequest struct {
 	StorageSource *GoogleCloudRunV2StorageSource `json:"storageSource,omitempty"`
 	// Tags: Optional. Additional tags to annotate the build.
 	Tags []string `json:"tags,omitempty"`
-	// WorkerPool: Optional. Name of the Cloud Build Custom Worker Pool that should
-	// be used to build the function. The format of this field is
+	// WorkerPool: Optional. Name of the Cloud Build private pool that should be
+	// used to build the function. The format of this field is
 	// `projects/{project}/locations/{region}/workerPools/{workerPool}` where
 	// `{project}` and `{region}` are the project id and region respectively where
 	// the worker pool is defined and `{workerPool}` is the short name of the
@@ -3484,6 +3798,8 @@ type GoogleCloudRunV2Task struct {
 	// Retried: Output only. The number of times this Task was retried. Tasks are
 	// retried when they fail up to the maxRetries limit.
 	Retried int64 `json:"retried,omitempty"`
+	// Sandboxes: Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 	// ScheduledTime: Output only. Represents time when the task was scheduled to
@@ -3515,6 +3831,8 @@ type GoogleCloudRunV2Task struct {
 	// more information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+	// WorkloadIdentityConfig: Optional. The Task's workload identity settings.
+	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
@@ -3594,6 +3912,8 @@ type GoogleCloudRunV2TaskTemplate struct {
 	MaxRetries int64 `json:"maxRetries,omitempty"`
 	// NodeSelector: Optional. The node selector for the task template.
 	NodeSelector *GoogleCloudRunV2NodeSelector `json:"nodeSelector,omitempty"`
+	// Sandboxes: Optional. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// ServiceAccount: Optional. Email address of the IAM service account
 	// associated with the Task of a Job. The service account represents the
 	// identity of the running task, and determines what permissions the task has.
@@ -3610,6 +3930,8 @@ type GoogleCloudRunV2TaskTemplate struct {
 	// information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
+	// WorkloadIdentityConfig: Optional. The Task's workload identity settings.
+	WorkloadIdentityConfig *GoogleCloudRunV2WorkloadIdentityConfig `json:"workloadIdentityConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Containers") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3706,6 +4028,57 @@ type GoogleCloudRunV2TrafficTargetStatus struct {
 
 func (s GoogleCloudRunV2TrafficTargetStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2TrafficTargetStatus
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2UploadSourceRequest: The request message for the
+// UploadSource method.
+type GoogleCloudRunV2UploadSourceRequest struct {
+	// Service: The name of Cloud Run Service upload source archive will be used
+	// for.
+	Service string `json:"service,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Service") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Service") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2UploadSourceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2UploadSourceRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2UploadSourceResponse: The response message for the
+// UploadSource method.
+type GoogleCloudRunV2UploadSourceResponse struct {
+	// CloudStorageSource: The Cloud Storage object path the source archive is
+	// uploaded to.
+	CloudStorageSource *GoogleCloudRunV2CloudStorageSource `json:"cloudStorageSource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CloudStorageSource") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudStorageSource") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2UploadSourceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2UploadSourceResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3850,6 +4223,28 @@ type GoogleCloudRunV2VpcAccess struct {
 
 func (s GoogleCloudRunV2VpcAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2VpcAccess
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2WorkerConfiguration: Configuration for the worker.
+type GoogleCloudRunV2WorkerConfiguration struct {
+	// CloudBuildWorkerConfiguration: Optional. Cloud Build worker configuration.
+	CloudBuildWorkerConfiguration *GoogleCloudRunV2CloudBuildWorkerConfiguration `json:"cloudBuildWorkerConfiguration,omitempty"`
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudBuildWorkerConfiguration") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CloudBuildWorkerConfiguration")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2WorkerConfiguration) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2WorkerConfiguration
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4104,6 +4499,8 @@ type GoogleCloudRunV2WorkerPoolRevisionTemplate struct {
 	// Revision: Optional. The unique name for the revision. If this field is
 	// omitted, it will be automatically generated based on the WorkerPool name.
 	Revision string `json:"revision,omitempty"`
+	// Sandboxes: Optional. Configuration for sandboxes.
+	Sandboxes *GoogleCloudRunV2SandboxConfiguration `json:"sandboxes,omitempty"`
 	// ServiceAccount: Optional. Email address of the IAM service account
 	// associated with the revision of the service. The service account represents
 	// the identity of the running revision, and determines what permissions the
@@ -4138,24 +4535,73 @@ func (s GoogleCloudRunV2WorkerPoolRevisionTemplate) MarshalJSON() ([]byte, error
 
 // GoogleCloudRunV2WorkerPoolScaling: Worker pool scaling settings.
 type GoogleCloudRunV2WorkerPoolScaling struct {
+	// CpuScaling: Optional. The CPU scaling settings for the worker pool.
+	CpuScaling *GoogleCloudRunV2CpuScaling `json:"cpuScaling,omitempty"`
 	// ManualInstanceCount: Optional. The total number of instances in manual
 	// scaling mode.
 	ManualInstanceCount int64 `json:"manualInstanceCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ManualInstanceCount") to
+	// MaxInstanceCount: Optional. The maximum count of instances distributed among
+	// revisions based on the specified instance split percentages.
+	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
+	// MinInstanceCount: Optional. The minimum count of instances distributed among
+	// revisions based on the specified instance split percentages.
+	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
+	// ScalingMode: Optional. The scaling mode for the worker pool.
+	//
+	// Possible values:
+	//   "SCALING_MODE_UNSPECIFIED" - Unspecified.
+	//   "AUTOMATIC" - Automatically scale between min and max instances.
+	//   "MANUAL" - Scale to manual instance count.
+	ScalingMode string `json:"scalingMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CpuScaling") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ManualInstanceCount") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CpuScaling") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s GoogleCloudRunV2WorkerPoolScaling) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2WorkerPoolScaling
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2WorkloadIdentityConfig: Workload identity settings.
+type GoogleCloudRunV2WorkloadIdentityConfig struct {
+	// Identity: Optional. The Revision's SPIFFE workload identity. Enables
+	// provisioning of SPIFFE workload certificates.
+	Identity string `json:"identity,omitempty"`
+	// IdentityCertificateEnabled: Optional. Controls whether an instance receives
+	// a MWLID certificate. Corresponds to the intention of the original
+	// --[no-]identity-certificate flag.
+	IdentityCertificateEnabled bool `json:"identityCertificateEnabled,omitempty"`
+	// IdentityType: Optional. The type of identity to use.
+	//
+	// Possible values:
+	//   "IDENTITY_TYPE_UNSPECIFIED" - Unspecified
+	//   "IDENTITY_TYPE_SERVICE_ACCOUNT" - Service account identity.
+	//   "IDENTITY_TYPE_AGENT_IDENTITY" - Agent identity.
+	IdentityType string `json:"identityType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Identity") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Identity") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2WorkloadIdentityConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2WorkloadIdentityConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4535,8 +4981,8 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	//   "REGIONAL_USER_OWNED_BUCKET" - Bucket is located in user-owned project in
 	// the same region as the build. The builder service account must have access
 	// to create and write to Cloud Storage buckets in the build project.
-	//   "LEGACY_BUCKET" - Bucket is located in a Google-owned project and is not
-	// regionalized.
+	//   "LEGACY_BUCKET" - Deprecated: Use `REGIONAL_USER_OWNED_BUCKET` instead.
+	// Bucket is located in a Google-owned project and is not regionalized.
 	DefaultLogsBucketBehavior string `json:"defaultLogsBucketBehavior,omitempty"`
 	// DiskSizeGb: Requested disk size for the VM that runs the build. Note that
 	// this is *NOT* "disk free"; some of the space will be used by the operating
@@ -4603,12 +5049,27 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
 	// status updates.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
+	// RankedMachineSeries: Optional. Deprecated: Use
+	// PrivatePoolV1Config.WorkerConfig.ranked_machine_series instead. This field
+	// has no effect.
+	//
+	// Possible values:
+	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.
+	//   "MACHINE_SERIES_E" - Cost-optimized machines such as E2.
+	//   "MACHINE_SERIES_N" - General-purpose machines such as N4.
+	//   "MACHINE_SERIES_C" - Performance-optimized machines such as C4.
+	RankedMachineSeries []string `json:"rankedMachineSeries,omitempty"`
 	// RequestedVerifyOption: Requested verifiability options.
 	//
 	// Possible values:
 	//   "NOT_VERIFIED" - Not a verifiable build (the default).
 	//   "VERIFIED" - Build must be verified.
+	//   "BEST_EFFORT" - Build verification is best effort. If provenance
+	// generation fails, the build will still succeed.
 	RequestedVerifyOption string `json:"requestedVerifyOption,omitempty"`
+	// ResolvedWorkerRelease: Output only. Worker release resolved from the release
+	// channel.
+	ResolvedWorkerRelease string `json:"resolvedWorkerRelease,omitempty"`
 	// SecretEnv: A list of global environment variables, which are encrypted using
 	// a Cloud Key Management Service crypto key. These values must be specified in
 	// the build's `Secret`. These variables will be available to all build steps
@@ -4643,6 +5104,9 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	Volumes []*GoogleDevtoolsCloudbuildV1Volume `json:"volumes,omitempty"`
 	// WorkerPool: This field deprecated; please use `pool.name` instead.
 	WorkerPool string `json:"workerPool,omitempty"`
+	// WorkerRelease: Optional. Option to specify which release or release channel
+	// (rapid|regular|stable) to use to run this build.
+	WorkerRelease string `json:"workerRelease,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutomapSubstitutions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -4659,6 +5123,66 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 func (s GoogleDevtoolsCloudbuildV1BuildOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsCloudbuildV1BuildOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsCloudbuildV1BuildResourceUsage: Aggregated/summary metrics
+// over the entire build lifecycle.
+type GoogleDevtoolsCloudbuildV1BuildResourceUsage struct {
+	// AverageCpuUtilization: Output only. The average CPU utilization ratio across
+	// all vCPUs over the duration of the build, expressed as a fraction in the
+	// range [0.0, 1.0].
+	AverageCpuUtilization float64 `json:"averageCpuUtilization,omitempty"`
+	// AverageMemoryUtilization: Output only. The average memory utilization ratio
+	// over the duration of the build, expressed as a fraction in the range [0.0,
+	// 1.0].
+	AverageMemoryUtilization float64 `json:"averageMemoryUtilization,omitempty"`
+	// PeakCpuUtilization: Output only. The highest CPU utilization ratio across
+	// all vCPUs observed over the duration of the build, expressed as a fraction
+	// in the range [0.0, 1.0].
+	PeakCpuUtilization float64 `json:"peakCpuUtilization,omitempty"`
+	// PeakMemoryUtilization: Output only. The highest memory utilization ratio
+	// observed over the duration of the build, expressed as a fraction in the
+	// range [0.0, 1.0].
+	PeakMemoryUtilization float64 `json:"peakMemoryUtilization,omitempty"`
+	// TotalCpuDuration: Output only. Total CPU execution time consumed across all
+	// cores during build execution.
+	TotalCpuDuration string `json:"totalCpuDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AverageCpuUtilization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AverageCpuUtilization") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevtoolsCloudbuildV1BuildResourceUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsCloudbuildV1BuildResourceUsage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleDevtoolsCloudbuildV1BuildResourceUsage) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleDevtoolsCloudbuildV1BuildResourceUsage
+	var s1 struct {
+		AverageCpuUtilization    gensupport.JSONFloat64 `json:"averageCpuUtilization"`
+		AverageMemoryUtilization gensupport.JSONFloat64 `json:"averageMemoryUtilization"`
+		PeakCpuUtilization       gensupport.JSONFloat64 `json:"peakCpuUtilization"`
+		PeakMemoryUtilization    gensupport.JSONFloat64 `json:"peakMemoryUtilization"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AverageCpuUtilization = float64(s1.AverageCpuUtilization)
+	s.AverageMemoryUtilization = float64(s1.AverageMemoryUtilization)
+	s.PeakCpuUtilization = float64(s1.PeakCpuUtilization)
+	s.PeakMemoryUtilization = float64(s1.PeakMemoryUtilization)
+	return nil
 }
 
 // GoogleDevtoolsCloudbuildV1BuildStep: A step in the build pipeline.
@@ -5024,7 +5548,8 @@ func (s GoogleDevtoolsCloudbuildV1GenericArtifact) MarshalJSON() ([]byte, error)
 // GoogleDevtoolsCloudbuildV1GenericArtifactDependency: Represents a generic
 // artifact as a build dependency.
 type GoogleDevtoolsCloudbuildV1GenericArtifactDependency struct {
-	// DestPath: Required. Where the artifact files should be placed on the worker.
+	// DestPath: Optional. Where the artifact files should be placed on the worker.
+	// Required when specified in `Build.dependencies`.
 	DestPath string `json:"destPath,omitempty"`
 	// Resource: Required. The location to download the artifact files from. Ex:
 	// projects/p1/locations/us/repositories/r1/packages/p1/versions/v1
@@ -5114,6 +5639,11 @@ type GoogleDevtoolsCloudbuildV1GitSourceDependency struct {
 	Depth int64 `json:"depth,omitempty,string"`
 	// DestPath: Required. Where should the files be placed on the worker.
 	DestPath string `json:"destPath,omitempty"`
+	// FetchTags: Optional. True if remote tags should be fetched too (default
+	// false). Note: when depth is 1 (default), git fetch only retrieves tags
+	// pointing to commits within the shallow boundary. Set depth to -1 to fetch
+	// all historical tags.
+	FetchTags bool `json:"fetchTags,omitempty"`
 	// RecurseSubmodules: Optional. True if submodules should be fetched too
 	// (default false).
 	RecurseSubmodules bool `json:"recurseSubmodules,omitempty"`
@@ -5412,6 +5942,14 @@ type GoogleDevtoolsCloudbuildV1PoolOption struct {
 	// `cloudbuild.workerpools.use` on the project hosting the WorkerPool. Format
 	// projects/{project}/locations/{location}/workerPools/{workerPoolId}
 	Name string `json:"name,omitempty"`
+	// ResolvedWorkerRelease: Output only. OUTPUT_ONLY. Worker release resolved
+	// from the release channel.
+	ResolvedWorkerRelease string `json:"resolvedWorkerRelease,omitempty"`
+	// WorkerRelease: Output only. OUTPUT_ONLY. The release or release channel used
+	// to run the Build. This is set to the same value as
+	// `PrivatePoolV1Config.WorkerConfig.worker_release` for the UI to easily
+	// access.
+	WorkerRelease string `json:"workerRelease,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -5546,6 +6084,8 @@ type GoogleDevtoolsCloudbuildV1Results struct {
 	// PythonPackages: Python artifacts uploaded to Artifact Registry at the end of
 	// the build.
 	PythonPackages []*GoogleDevtoolsCloudbuildV1UploadedPythonPackage `json:"pythonPackages,omitempty"`
+	// ResourceUsage: Output only. Aggregated metrics for the build.
+	ResourceUsage *GoogleDevtoolsCloudbuildV1BuildResourceUsage `json:"resourceUsage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ArtifactManifest") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -8321,7 +8861,7 @@ type ProjectsLocationsInstancesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the specified
-// Project. There are no permissions required for making this API call.
+// Instance. There are no permissions required for making this API call.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is being
 //     requested. See Resource names
@@ -12359,6 +12899,179 @@ func (c *ProjectsLocationsServicesRevisionsListCall) Pages(ctx context.Context, 
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsSourceUploadsUploadCall struct {
+	s                                   *Service
+	parent                              string
+	googlecloudrunv2uploadsourcerequest *GoogleCloudRunV2UploadSourceRequest
+	urlParams_                          gensupport.URLParams
+	mediaInfo_                          *gensupport.MediaInfo
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// Upload: Uploads a source archive to a Google Cloud Storage bucket through
+// Cloud Run. The uploaded source object should be used for Cloud Run resource
+// deployments. User is responsible for managing the lifecycle of the uploaded
+// object. If uploading through the Cloud Run API to Cloud Storage is not
+// desired, you can use the IAM Deny Policy to deny the
+// `run.locations.uploadSource` permission for all principals.
+//
+//   - parent: The project and location in which the source archive should be
+//     uploaded to, specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsSourceUploadsService) Upload(parent string, googlecloudrunv2uploadsourcerequest *GoogleCloudRunV2UploadSourceRequest) *ProjectsLocationsSourceUploadsUploadCall {
+	c := &ProjectsLocationsSourceUploadsUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudrunv2uploadsourcerequest = googlecloudrunv2uploadsourcerequest
+	return c
+}
+
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
+// googleapi.ChunkSize. The chunk size defaults to
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
+// At most one of Media and ResumableMedia may be set.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *ProjectsLocationsSourceUploadsUploadCall {
+	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
+	return c
+}
+
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
+//
+// Deprecated: use Media instead.
+//
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
+func (c *ProjectsLocationsSourceUploadsUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *ProjectsLocationsSourceUploadsUploadCall {
+	c.ctx_ = ctx
+	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
+	return c
+}
+
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
+func (c *ProjectsLocationsSourceUploadsUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *ProjectsLocationsSourceUploadsUploadCall {
+	c.mediaInfo_.SetProgressUpdater(pu)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Fields(s ...googleapi.Field) *ProjectsLocationsSourceUploadsUploadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+// This context will supersede any context previously provided to the
+// ResumableMedia method.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Context(ctx context.Context) *ProjectsLocationsSourceUploadsUploadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSourceUploadsUploadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.googlecloudrunv2uploadsourcerequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}:uploadSource")
+	if c.mediaInfo_ != nil {
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/v2/{+parent}:uploadSource")
+		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
+	}
+	newBody, getBody, cleanup := c.mediaInfo_.UploadRequest(reqHeaders, body)
+	defer cleanup()
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, newBody)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	req.GetBody = getBody
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "run.projects.locations.sourceUploads.upload", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.sourceUploads.upload" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2UploadSourceResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSourceUploadsUploadCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2UploadSourceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	rx := c.mediaInfo_.ResumableUpload(res.Header.Get("Location"))
+	if rx != nil {
+		rx.Client = c.s.client
+		rx.UserAgent = c.s.userAgent()
+		ctx := c.ctx_
+		if ctx == nil {
+			ctx = context.TODO()
+		}
+		res, err = rx.Upload(ctx)
+		if err != nil {
+			return nil, err
+		}
+		defer res.Body.Close()
+		if err := googleapi.CheckResponse(res); err != nil {
+			return nil, gensupport.WrapError(err)
+		}
+	}
+	ret := &GoogleCloudRunV2UploadSourceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "run.projects.locations.sourceUploads.upload", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsWorkerPoolsCreateCall struct {

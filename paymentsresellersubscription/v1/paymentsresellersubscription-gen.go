@@ -446,8 +446,9 @@ func (s EntitleSubscriptionIntent) MarshalJSON() ([]byte, error) {
 // provisioned subscription to an end user. The end user identity is inferred
 // from the request OAuth context.
 type EntitleSubscriptionRequest struct {
-	// LineItemEntitlementDetails: Optional. The line items to be entitled. If
-	// unspecified, all line items will be entitled.
+	// LineItemEntitlementDetails: Optional. Deprecated: This field is no longer
+	// supported. All line items are entitled automatically. Optional. The line
+	// items to be entitled. If unspecified, all line items will be entitled.
 	LineItemEntitlementDetails []*EntitleSubscriptionRequestLineItemEntitlementDetails `json:"lineItemEntitlementDetails,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "LineItemEntitlementDetails")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -1570,6 +1571,16 @@ type SubscriptionLineItem struct {
 	// OneTimeRecurrenceDetails: Output only. Details only set for a ONE_TIME
 	// recurrence line item.
 	OneTimeRecurrenceDetails *SubscriptionLineItemOneTimeRecurrenceDetails `json:"oneTimeRecurrenceDetails,omitempty"`
+	// PlanType: Optional. Output only. The plan type of the line item.
+	//
+	// Possible values:
+	//   "LINE_ITEM_PLAN_TYPE_UNSPECIFIED" - The line item plan type is
+	// unspecified.
+	//   "LINE_ITEM_PLAN_TYPE_BASE" - The line item is the base plan in the
+	// subscription.
+	//   "LINE_ITEM_PLAN_TYPE_ADDON" - The line item is an add-on to the
+	// subscription.
+	PlanType string `json:"planType,omitempty"`
 	// Product: Required. Product resource name that identifies the product
 	// associated with this line item. The format is
 	// 'partners/{partner_id}/products/{product_id}'.
@@ -1704,18 +1715,21 @@ func (s SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, err
 // SubscriptionMigrationDetails: Describes the details of the migrated
 // subscription.
 type SubscriptionMigrationDetails struct {
+	// LegacyCreationTime: Output only. The creation time of the migrated
+	// subscription in the legacy system.
+	LegacyCreationTime string `json:"legacyCreationTime,omitempty"`
 	// MigratedSubscriptionId: Output only. The migrated subscription id in the
 	// legacy system.
 	MigratedSubscriptionId string `json:"migratedSubscriptionId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MigratedSubscriptionId") to
+	// ForceSendFields is a list of field names (e.g. "LegacyCreationTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MigratedSubscriptionId") to
-	// include in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "LegacyCreationTime") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3467,6 +3481,13 @@ func (r *PartnersSubscriptionsLineItemsService) Patch(name string, subscriptionl
 	c := &PartnersSubscriptionsLineItemsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.subscriptionlineitem = subscriptionlineitem
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An idempotency ID for the
+// request. A random UUID is recommended. Restricted to 36 ASCII characters.
+func (c *PartnersSubscriptionsLineItemsPatchCall) RequestId(requestId string) *PartnersSubscriptionsLineItemsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 

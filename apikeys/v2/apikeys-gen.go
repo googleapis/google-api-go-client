@@ -103,6 +103,14 @@ const mtlsBasePath = "https://apikeys.mtls.googleapis.com/"
 
 // OAuth2 scopes used by this API.
 const (
+	// See, edit, configure, and delete your Google Cloud API Keys data and see the
+	// email address for your Google Account
+	ApikeysScope = "https://www.googleapis.com/auth/apikeys"
+
+	// See your Google Cloud API Keys data and the email address of your Google
+	// Account
+	ApikeysReadonlyScope = "https://www.googleapis.com/auth/apikeys.readonly"
+
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
@@ -115,6 +123,8 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/apikeys",
+		"https://www.googleapis.com/auth/apikeys.readonly",
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
 	)
@@ -994,6 +1004,25 @@ func (r *ProjectsLocationsKeysService) Delete(name string) *ProjectsLocationsKey
 	return c
 }
 
+// CheckExistingUsage sets the optional parameter "checkExistingUsage": Defines
+// the behavior for checking existing usage when deleting a key.
+//
+// Possible values:
+//
+//	"CHECK_EXISTING_USAGE_UNSPECIFIED" - When unset, the default behavior is
+//
+// used, which is SKIP.
+//
+//	"SKIP" - If set, skip checking existing usage when deleting a key.
+//	"CHECK" - If set, existing usage is checked when deleting the key. If the
+//
+// key has usage in the last 7 days, the request returns a FAILED_PRECONDITION
+// error.
+func (c *ProjectsLocationsKeysDeleteCall) CheckExistingUsage(checkExistingUsage string) *ProjectsLocationsKeysDeleteCall {
+	c.urlParams_.Set("checkExistingUsage", checkExistingUsage)
+	return c
+}
+
 // Etag sets the optional parameter "etag": The etag known to the client for
 // the expected state of the key. This is to be used for optimistic
 // concurrency.
@@ -1481,6 +1510,25 @@ func (r *ProjectsLocationsKeysService) Patch(name string, v2key *V2Key) *Project
 	c := &ProjectsLocationsKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.v2key = v2key
+	return c
+}
+
+// CheckExistingUsage sets the optional parameter "checkExistingUsage": Defines
+// the behavior for checking existing usage when updating a key.
+//
+// Possible values:
+//
+//	"CHECK_EXISTING_USAGE_UNSPECIFIED" - When unset, the default behavior is
+//
+// used, which is SKIP.
+//
+//	"SKIP" - If set, skip checking existing usage when updating a key.
+//	"CHECK" - If set, existing usage is checked when updating the key. If the
+//
+// key has usage in the last 7 days, the request returns a FAILED_PRECONDITION
+// error.
+func (c *ProjectsLocationsKeysPatchCall) CheckExistingUsage(checkExistingUsage string) *ProjectsLocationsKeysPatchCall {
+	c.urlParams_.Set("checkExistingUsage", checkExistingUsage)
 	return c
 }
 

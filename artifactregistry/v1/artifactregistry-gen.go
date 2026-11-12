@@ -1298,7 +1298,7 @@ func (s GoogleDevtoolsArtifactregistryV1File) MarshalJSON() ([]byte, error) {
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepo
 // sitory: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.apt.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1355,7 +1355,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPubli
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomR
 // epository: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the custom remote repository, for ex:
+	// Uri: An https uri reference to the custom remote repository, for ex:
 	// "https://registry-1.docker.io".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1379,7 +1379,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCu
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRe
 // pository: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.maven.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1403,7 +1403,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCus
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepo
 // sitory: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.npm.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1427,7 +1427,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCusto
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomR
 // epository: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.python.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -1451,7 +1451,7 @@ func (s GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCu
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepo
 // sitory: Customer-specified publicly available remote repository.
 type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository struct {
-	// Uri: An http/https uri reference to the upstream remote repository, for ex:
+	// Uri: An https uri reference to the upstream remote repository, for ex:
 	// "https://my.yum.registry/".
 	Uri string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Uri") to unconditionally
@@ -2863,26 +2863,40 @@ func (s PrewarmPlatform) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PrewarmedArtifact: PrewarmedArtifact represents a streamed artifact. This is
-// not a request message, so field_behavior annotations are not required.
+// PrewarmedArtifact: PrewarmedArtifact represents a streamed artifact.
 type PrewarmedArtifact struct {
+	// CreateTime: Output only. The time the artifact was first prewarmed.
+	CreateTime string `json:"createTime,omitempty"`
+	// ErrorMessage: Output only. The error message if the state is `FAILED`.
+	ErrorMessage string `json:"errorMessage,omitempty"`
 	// ExpirationTime: The expiration time of the prewarmed artifact.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 	// Location: The location of the prewarmed artifact.
 	Location string `json:"location,omitempty"`
+	// SizeBytes: Output only. The compressed size of the prewarmed artifact in
+	// bytes. This is the size counted against the prewarm storage quota.
+	SizeBytes int64 `json:"sizeBytes,omitempty,string"`
+	// State: Output only. The caching state of the prewarmed artifact.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State not specified.
+	//   "CACHING" - The artifact is currently being cached.
+	//   "ACTIVE" - The artifact is cached and ready for streaming.
+	//   "FAILED" - Caching the artifact failed. See `error_message` for details.
+	State string `json:"state,omitempty"`
 	// Uri: URL to access the image. Example:
 	// us-west4-docker.pkg.dev/test-project/test-repo/nginx@sha256:e9954c1fc875017be
 	// 1c3e36eca16be2d9e9bccc4bf072163515467d6a823c7cf
 	Uri string `json:"uri,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ExpirationTime") to
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ExpirationTime") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3176,6 +3190,7 @@ type Repository struct {
 	//   "GO" - Go package format.
 	//   "GENERIC" - Generic package format.
 	//   "RUBY" - Ruby package format.
+	//   "CONDA" - Conda package format.
 	Format string `json:"format,omitempty"`
 	// KmsKeyName: The Cloud KMS resource name of the customer managed encryption
 	// key that's used to encrypt the contents of the Repository. Has the form:
@@ -3483,6 +3498,13 @@ type UploadFileRequest struct {
 	// FileId: Optional. The ID of the file. If left empty will default to sha256
 	// digest of the content uploaded.
 	FileId string `json:"fileId,omitempty"`
+	// FileType: Optional. The type of the file to upload. Defaulting to ATTACHMENT
+	// if not specified.
+	//
+	// Possible values:
+	//   "ATTACHMENT" - Attachment file. Default value.
+	//   "ARTIFACT" - Facade specific artifact file.
+	FileType string `json:"fileType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "FileId") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -3546,6 +3568,11 @@ type UploadGenericArtifactRequest struct {
 	// and end with a letter or number, only contain letters, numbers, hyphens,
 	// underscores, and periods, and not exceed 256 characters.
 	PackageId string `json:"packageId,omitempty"`
+	// VersionAnnotations: Optional. Client specified annotations to attach to the
+	// version upon creation. This field is only applied if the Version is created
+	// during this upload. If the Version already exists and this field is set, the
+	// request will fail.
+	VersionAnnotations map[string]string `json:"versionAnnotations,omitempty"`
 	// VersionId: The ID of the version of the generic artifact. If the version
 	// does not exist, a new version will be created. The version_id must start and
 	// end with a letter or number, can only contain lowercase letters, numbers,
@@ -3968,14 +3995,15 @@ func (s VirtualRepositoryConfig) MarshalJSON() ([]byte, error) {
 // describing current state.
 type VulnerabilityScanningConfig struct {
 	// EnablementConfig: Optional. Config for whether this repository has
-	// vulnerability scanning disabled.
+	// vulnerability scanning disabled. When unset (ENABLEMENT_CONFIG_UNSPECIFIED),
+	// this is treated as INHERITED for Docker repositories and DISABLED for
+	// non-Docker repositories.
 	//
 	// Possible values:
-	//   "ENABLEMENT_CONFIG_UNSPECIFIED" - Not set. This will be treated as
-	// INHERITED for Docker repositories and DISABLED for non-Docker repositories.
-	//   "INHERITED" - Scanning is Enabled, but dependent on API enablement.
-	//   "DISABLED" - No automatic vulnerability scanning will be performed for
-	// this repository.
+	//   "ENABLEMENT_CONFIG_UNSPECIFIED" - Unspecified enablement configuration.
+	//   "INHERITED" - Enables the feature, but is dependent on parent API
+	// enablement.
+	//   "DISABLED" - Disables the feature for this repository.
 	EnablementConfig string `json:"enablementConfig,omitempty"`
 	// EnablementState: Output only. State of feature enablement, combining
 	// repository enablement config and API enablement state.

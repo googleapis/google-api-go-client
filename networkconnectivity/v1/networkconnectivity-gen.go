@@ -1394,6 +1394,37 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExportPscConfig: Configuration for more granular control of Private Service
+// Connect connection propagation. This allows enabling or disabling connection
+// propagation for specific types of Private Service Connect endpoints.
+type ExportPscConfig struct {
+	// GlobalGoogleApis: Optional. Controls whether Private Service Connect
+	// endpoints for global Google APIs should be propagated. The default value is
+	// false.
+	GlobalGoogleApis bool `json:"globalGoogleApis,omitempty"`
+	// PublishedServicesAndRegionalGoogleApis: Optional. Controls whether Private
+	// Service Connect endpoints for regional ILBs and regional Google APIs should
+	// be propagated. Default value is true if export_psc is true. Otherwise, the
+	// default value is false.
+	PublishedServicesAndRegionalGoogleApis bool `json:"publishedServicesAndRegionalGoogleApis,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GlobalGoogleApis") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GlobalGoogleApis") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExportPscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportPscConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression Language
 // (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
 // of CEL are documented at https://github.com/google/cel-spec. Example
@@ -1852,6 +1883,9 @@ type Hub struct {
 	// spokes attached to the hub are made accessible to other VPC spokes attached
 	// to the hub. The default value is false.
 	ExportPsc bool `json:"exportPsc,omitempty"`
+	// ExportPscConfig: Optional. Config for more granular control of Private
+	// Service Connect transitivity.
+	ExportPscConfig *ExportPscConfig `json:"exportPscConfig,omitempty"`
 	// Labels: Optional labels in key-value pair format. For more information about
 	// labels, see Requirements for labels
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
@@ -2078,6 +2112,32 @@ type InternalRange struct {
 	// is set as well, and both fields must match. In other words, with IPv6 this
 	// field only works as a redundant parameter.
 	PrefixLength int64 `json:"prefixLength,omitempty"`
+	// Purpose: Optional. The purpose of this internal range. Defines the intended
+	// use of the range and any restrictions associated with it. If not specified,
+	// it defaults to VPC_SUBNET.
+	//
+	// Possible values:
+	//   "PURPOSE_UNSPECIFIED" - If purpose is left unspecified in
+	// CreateInternalRange or UpdateInternalRange, it will be defaulted to
+	// VPC_SUBNET.
+	//   "VPC_SUBNET" - The internal range is used for VPC subnetworks.
+	//   "INTERNAL_ADDRESS" - The internal range is used exclusively for allocating
+	// individual IP addresses (e.g., for global PSC endpoints). Child ranges or
+	// subnetworks cannot be created from a range with this purpose.
+	Purpose string `json:"purpose,omitempty"`
+	// RangeStatus: Output only. Status of the Internal Range.
+	//
+	// Possible values:
+	//   "RANGE_STATUS_UNSPECIFIED" - Unspecified status is the default value for
+	// an Internal Range.
+	//   "ACTIVE" - Ranges with ACTIVE status will reserve the CIDR block from the
+	// given VPC.
+	//   "OBSOLETE" - A range becomes OBSOLETE if its VPC network is deleted. An
+	// OBSOLETE range is inactive, doesn't reserve any CIDR blocks, and can only be
+	// deleted or have its labels and description updated.
+	//   "CREATING" - The resource is being created.
+	//   "DELETING" - The resource is being deleted.
+	RangeStatus string `json:"rangeStatus,omitempty"`
 	// TargetCidrRange: Optional. Can be set to narrow down or pick a different
 	// address space while searching for a free range. If not set, defaults to the
 	// ["10.0.0.0/8", "172.16.0.0/12", "192.168.0.0/16"] address space (for
@@ -2177,6 +2237,18 @@ type LinkedInterconnectAttachments struct {
 	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
 	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
+	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
+	// ProposedExcludeImportRanges: Output only. The proposed exclude import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeImportRanges []string `json:"proposedExcludeImportRanges,omitempty"`
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
+	// ProposedIncludeImportRanges: Output only. The proposed include import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeImportRanges []string `json:"proposedIncludeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -2266,6 +2338,18 @@ type LinkedRouterApplianceInstances struct {
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
 	// Instances: The list of router appliance instances.
 	Instances []*RouterApplianceInstance `json:"instances,omitempty"`
+	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
+	// ProposedExcludeImportRanges: Output only. The proposed exclude import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeImportRanges []string `json:"proposedExcludeImportRanges,omitempty"`
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
+	// ProposedIncludeImportRanges: Output only. The proposed include import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeImportRanges []string `json:"proposedIncludeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -2351,6 +2435,18 @@ type LinkedVpnTunnels struct {
 	// IncludeImportRanges: Optional. Hub routes fully encompassed by include
 	// import ranges are included during import from hub.
 	IncludeImportRanges []string `json:"includeImportRanges,omitempty"`
+	// ProposedExcludeExportRanges: Output only. The proposed exclude export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeExportRanges []string `json:"proposedExcludeExportRanges,omitempty"`
+	// ProposedExcludeImportRanges: Output only. The proposed exclude import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedExcludeImportRanges []string `json:"proposedExcludeImportRanges,omitempty"`
+	// ProposedIncludeExportRanges: Output only. The proposed include export IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeExportRanges []string `json:"proposedIncludeExportRanges,omitempty"`
+	// ProposedIncludeImportRanges: Output only. The proposed include import IP
+	// ranges waiting for hub administrator's approval.
+	ProposedIncludeImportRanges []string `json:"proposedIncludeImportRanges,omitempty"`
 	// SiteToSiteDataTransfer: A value that controls whether site-to-site data
 	// transfer is enabled for these resources. Data transfer is available only in
 	// supported locations
@@ -4245,6 +4341,8 @@ type Route struct {
 	//   "DYNAMIC_ROUTE" - The route leads to a destination in a dynamic route.
 	// Dynamic routes are derived from Border Gateway Protocol (BGP) advertisements
 	// received from an NCC hybrid spoke.
+	//   "PSC_GLOBAL_GAPI" - The route leads to a destination within the Private
+	// Service Connect Global Google API range of the VPC network.
 	Type string `json:"type,omitempty"`
 	// Uid: Output only. The Google-generated UUID for the route. This value is
 	// unique across all Network Connectivity Center route resources. If a route is
@@ -4691,7 +4789,7 @@ type Spoke struct {
 	// of other fields, and may be sent on update and delete requests to ensure the
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-	// FieldPathsPendingUpdate: Optional. The list of fields waiting for hub
+	// FieldPathsPendingUpdate: Output only. The list of fields waiting for hub
 	// administrator's approval.
 	FieldPathsPendingUpdate []string `json:"fieldPathsPendingUpdate,omitempty"`
 	// Gateway: Optional. This is a gateway that can apply specialized processing
@@ -5085,6 +5183,11 @@ type Transport struct {
 	// AdvertisedRoutes: Optional. List of IP Prefixes that will be advertised to
 	// the remote provider. Both IPv4 and IPv6 addresses are supported.
 	AdvertisedRoutes []string `json:"advertisedRoutes,omitempty"`
+	// AutoAccept: Optional. Immutable. Controls whether resources proposed by the
+	// Transport are automatically accepted on behalf of the user. List of actions
+	// that can be automatically accepted are: 1. VPC Peering creation 2. Routing
+	// VPC Spoke creation 3. Hybrid Spoke creation
+	AutoAccept bool `json:"autoAccept,omitempty"`
 	// Bandwidth: Optional. Bandwidth of the Transport. This must be one of the
 	// supported bandwidths for the remote profile, and must be set when no
 	// activation key is being provided.
@@ -5115,6 +5218,10 @@ type Transport struct {
 	// PENDING_KEY state. Once the provider has accepted the key, the resource will
 	// move to the CONFIGURING state.
 	GeneratedActivationKey string `json:"generatedActivationKey,omitempty"`
+	// Hub: Optional. Immutable. The NCC Hub that the Transport should attach to.
+	// The hub must be in the same project as the Transport. Format: `{hub}` or
+	// `projects/{project}/locations/global/hubs/{hub}`
+	Hub string `json:"hub,omitempty"`
 	// Labels: Optional. Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MtuLimit: Output only. The maximum transmission unit (MTU) of a packet that
@@ -5135,6 +5242,11 @@ type Transport struct {
 	// profile supports an INPUT key flow and the resource is in the PENDING_KEY
 	// state.
 	ProvidedActivationKey string `json:"providedActivationKey,omitempty"`
+	// PscRoutingEnabled: Optional. Immutable. Controls whether a Routing VPC Spoke
+	// should be created and attached to the NCC Hub. This will provide Private
+	// Service Connect (PSC) connectivity through NCC. This can only be set when
+	// the Transport is first created.
+	PscRoutingEnabled bool `json:"pscRoutingEnabled,omitempty"`
 	// RemoteAccountId: Optional. Immutable. The user supplied account id for the
 	// CSP associated with the remote profile.
 	RemoteAccountId string `json:"remoteAccountId,omitempty"`
@@ -5169,6 +5281,8 @@ type Transport struct {
 	//   "DEPROVISIONED" - The Transport was deleted on the remote provider's end
 	// and is no longer operational. GCP has insufficient information to move the
 	// resource back to PENDING_KEY state.
+	//   "SUSPENDED" - The Transport is suspended due to an Abuse suspension or
+	// Wipeout Hide event. Underlying connectivity is administratively disabled.
 	State string `json:"state,omitempty"`
 	// UpdateTime: Output only. Update time stamp.
 	UpdateTime string `json:"updateTime,omitempty"`

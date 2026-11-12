@@ -556,6 +556,21 @@ func (s DeviceRecall) MarshalJSON() ([]byte, error) {
 type EnvironmentDetails struct {
 	// AppAccessRiskVerdict: The evaluation of the App Access Risk verdicts.
 	AppAccessRiskVerdict *AppAccessRiskVerdict `json:"appAccessRiskVerdict,omitempty"`
+	// LocationSpoofingRiskVerdict: The evaluation of the Location Spoofing Risk
+	// verdict.
+	//
+	// Possible values:
+	//   "LOCATION_SPOOFING_RISK_VERDICT_UNSPECIFIED" - Catch-all for unrecognized
+	// enum values.
+	//   "LOW_RISK_DEVICE" - Device-related spoofing was evaluated, and no issues
+	// were detected.
+	//   "LOW_RISK_NETWORK" - Network-related spoofing was evaluated, and no issues
+	// were detected.
+	//   "MEDIUM_RISK_DEVICE" - Potential device-related spoofing was detected.
+	//   "MEDIUM_RISK_NETWORK" - Potential network-related spoofing was detected.
+	//   "HIGH_RISK_DEVICE" - Likely device-related spoofing was detected.
+	//   "HIGH_RISK_NETWORK" - Likely network-related spoofing was detected.
+	LocationSpoofingRiskVerdict []string `json:"locationSpoofingRiskVerdict,omitempty"`
 	// PlayProtectVerdict: The evaluation of Play Protect verdict.
 	//
 	// Possible values:

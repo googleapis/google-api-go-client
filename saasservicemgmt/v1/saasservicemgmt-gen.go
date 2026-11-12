@@ -6,7 +6,7 @@
 
 // Package saasservicemgmt provides access to the App Lifecycle Manager API.
 //
-// For product documentation, see: https://cloud.google.com/saas-runtime/docs
+// For product documentation, see: https://docs.cloud.google.com/app-lifecycle-manager
 //
 // # Library status
 //
@@ -312,14 +312,44 @@ func (s Aggregate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AppParams: AppParams contains the parameters for creating an AppHub
+// Application.
+type AppParams struct {
+	// Group: Optional. Grouping used to construct the name of the AppHub
+	// Application. Multiple UnitKinds can specify the same group to use the same
+	// Application across their respective units. Corresponds to the
+	// app_boundary_id in the ADC composite ApplicationTemplate. Defaults to
+	// UnitKind.name
+	Group string `json:"group,omitempty"`
+	// Scope: Optional. Corresponds to the scope in the ADC composite
+	// ApplicationTemplate. Defaults to TYPE_REGIONAL.
+	Scope *Scope `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Group") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AppParams) MarshalJSON() ([]byte, error) {
+	type NoMethod AppParams
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Blueprint: Blueprints are OCI Images that contain all of the artifacts
 // needed to provision a unit. Metadata such as, type of the engine used to
-// actuate the blueprint (e.g. terraform, helm etc) and version will come from
+// actuate the blueprint (Terraform, for example) and version will come from
 // the image manifest. If the hostname is omitted, it will be assumed to be the
 // regional path to Artifact Registry (eg. us-east1-docker.pkg.dev).
 type Blueprint struct {
-	// Engine: Output only. Type of the engine used to actuate the blueprint. e.g.
-	// terraform, helm etc.
+	// Engine: Output only. Type of the engine used to actuate the blueprint.
+	// (Terraform, for example)
 	Engine string `json:"engine,omitempty"`
 	// Package: Optional. Immutable. URI to a blueprint used by the Unit (required
 	// unless unitKind or release is set).
@@ -341,6 +371,65 @@ type Blueprint struct {
 
 func (s Blueprint) MarshalJSON() ([]byte, error) {
 	type NoMethod Blueprint
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ComponentRef: ComponentRef represents a reference to a component resource.
+type ComponentRef struct {
+	// Component: Optional. Name of the component in composite.Components
+	Component string `json:"component,omitempty"`
+	// CompositeRef: Optional. Reference to the Composite ApplicationTemplate.
+	CompositeRef *CompositeRef `json:"compositeRef,omitempty"`
+	// Revision: Optional. Revision of the component. If the component does not
+	// have a revision, this field will be explicitly set to the revision of the
+	// composite ApplicationTemplate.
+	Revision string `json:"revision,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Component") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Component") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ComponentRef) MarshalJSON() ([]byte, error) {
+	type NoMethod ComponentRef
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CompositeRef: CompositeRef represents a reference to a composite resource.
+type CompositeRef struct {
+	// ApplicationTemplate: Required. Reference to the ApplicationTemplate
+	// resource.
+	ApplicationTemplate string `json:"applicationTemplate,omitempty"`
+	// Revision: Optional. Revision of the ApplicationTemplate to use. Changes to
+	// revision will trigger manual resynchronization. If empty,
+	// ApplicationTemplate will be ignored.
+	Revision string `json:"revision,omitempty"`
+	// SyncOperation: Output only. Reference to on-going AppTemplate import and
+	// replication operation (i.e. the operation_id for the long-running
+	// operation). This field is opaque for external usage.
+	SyncOperation string `json:"syncOperation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ApplicationTemplate") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ApplicationTemplate") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CompositeRef) MarshalJSON() ([]byte, error) {
+	type NoMethod CompositeRef
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -438,6 +527,36 @@ func (s Dependency) MarshalJSON() ([]byte, error) {
 type Deprovision struct {
 }
 
+// DurationLimits: DurationLimits defines the time-related constraints for a
+// UnitOperation's execution. This allows users to control how long an
+// operation can run before being cancelled by the system.
+type DurationLimits struct {
+	// UnitOperationTimeout: Optional. The maximum duration a UnitOperation is
+	// allowed to execute in the RUNNING state. - Minimum value: 60 seconds (1
+	// minute) - Maximum value: 604800 seconds (7 days) If this field is not set,
+	// or if the provided value falls outside the allowed range, the system will
+	// use a default timeout of 10800 seconds (3 hours). Upon exceeding this time
+	// limit, the UnitOperation will be best-effort cancelled, and its state will
+	// be set to FAILED.
+	UnitOperationTimeout string `json:"unitOperationTimeout,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "UnitOperationTimeout") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "UnitOperationTimeout") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DurationLimits) MarshalJSON() ([]byte, error) {
+	type NoMethod DurationLimits
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -472,29 +591,6 @@ type ErrorBudget struct {
 
 func (s ErrorBudget) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorBudget
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// FlagUpdate: FlagUpdate is a UnitOperation that pushes new flag values to
-// Units.
-type FlagUpdate struct {
-	// FlagRelease: Required. Flag release being applied by UnitOperation.
-	FlagRelease string `json:"flagRelease,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FlagRelease") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FlagRelease") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s FlagUpdate) MarshalJSON() ([]byte, error) {
-	type NoMethod FlagUpdate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -918,8 +1014,7 @@ func (s Provision) MarshalJSON() ([]byte, error) {
 }
 
 // Release: A new version to be propagated and deployed to units. This includes
-// pointers to packaged blueprints for actuation (e.g Helm or Terraform
-// configuration packages) via artifact registry.
+// pointers to packaged blueprints for actuation via Artifact Registry.
 type Release struct {
 	// Annotations: Optional. Annotations is an unstructured key-value map stored
 	// with a resource that may be set by external tools to store and retrieve
@@ -927,6 +1022,9 @@ type Release struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// ApplicationTemplateComponent: Output only. Reference to component and
+	// revision in a composite ApplicationTemplate.
+	ApplicationTemplateComponent *ComponentRef `json:"applicationTemplateComponent,omitempty"`
 	// Blueprint: Optional. Blueprints are OCI Images that contain all of the
 	// artifacts needed to provision a unit.
 	Blueprint *Blueprint `json:"blueprint,omitempty"`
@@ -1051,12 +1149,6 @@ type Rollout struct {
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
 	Etag string `json:"etag,omitempty"`
-	// FlagRelease: Optional. Immutable. Name of the FlagRelease to be rolled out
-	// to the target Units. Release and FlagRelease are mutually exclusive. Note:
-	// `release` comment needs to be adjusted to mention that "Release and
-	// FlagRelease are mutually exclusive" when visibility restriction will be
-	// lifted.
-	FlagRelease string `json:"flagRelease,omitempty"`
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1232,12 +1324,12 @@ type RolloutKind struct {
 	// must not be changed. UID is used to uniquely identify resources with
 	// resource name reuses. This should be a UUID4.
 	Uid string `json:"uid,omitempty"`
-	// UnitFilter: Optional. CEL(https://github.com/google/cel-spec) formatted
+	// UnitFilter: Optional. CEL (https://github.com/google/cel-spec) formatted
 	// filter string against Unit. The filter will be applied to determine the
 	// eligible unit population. This filter can only reduce, but not expand the
 	// scope of the rollout.
 	UnitFilter string `json:"unitFilter,omitempty"`
-	// UnitKind: Required. Immutable. UnitKind that this rollout kind corresponds
+	// UnitKind: Optional. Immutable. UnitKind that this rollout kind corresponds
 	// to. Rollouts stemming from this rollout kind will target the units of this
 	// unit kind. In other words, this defines the population of target units to be
 	// upgraded by rollouts.
@@ -1343,6 +1435,16 @@ type Saas struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// ApplicationTemplate: Optional. Reference to composite ApplicationTemplate.
+	// When specified, the template components will be imported into their
+	// equivalent UnitKind, Release and Blueprint resources. Deleted references
+	// will not delete imported resources. Should only be specified on source
+	// regions, and be unspecified on replica regions.
+	ApplicationTemplate *CompositeRef `json:"applicationTemplate,omitempty"`
+	// BlueprintRepo: Output only. Name of repository in Artifact Registry for
+	// system-generated Blueprints, eg. Blueprints of imported
+	// ApplicationTemplates.
+	BlueprintRepo string `json:"blueprintRepo,omitempty"`
 	// Conditions: Output only. A set of conditions which indicate the various
 	// conditions this resource can have.
 	Conditions []*SaasCondition `json:"conditions,omitempty"`
@@ -1369,7 +1471,9 @@ type Saas struct {
 	// the application_template is empty.
 	//
 	// Possible values:
-	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified.
+	//   "STATE_UNSPECIFIED" - State is unspecified.
+	//   "STATE_TYPE_UNSPECIFIED" - State type is unspecified. Deprecated: Use
+	// STATE_UNSPECIFIED instead.
 	//   "STATE_ACTIVE" - The Saas is ready
 	//   "STATE_RUNNING" - In the process of importing, synchronizing or
 	// replicating ApplicationTemplates
@@ -1470,6 +1574,33 @@ type Schedule struct {
 
 func (s Schedule) MarshalJSON() ([]byte, error) {
 	type NoMethod Schedule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Scope: Scope of an application.
+type Scope struct {
+	// Type: Required. Scope Type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "TYPE_REGIONAL" - Regional type.
+	//   "TYPE_GLOBAL" - Global type.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Type") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Scope) MarshalJSON() ([]byte, error) {
+	type NoMethod Scope
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1603,7 +1734,7 @@ func (s ToMapping) MarshalJSON() ([]byte, error) {
 }
 
 // Unit: A unit of deployment that has its lifecycle via a CRUD API using an
-// actuation engine under the hood (e.g. based on Terraform, Helm or a custom
+// actuation engine under the hood (e.g. based on Terraform, or a custom
 // implementation provided by a service producer). A building block of a SaaS
 // Tenant.
 type Unit struct {
@@ -1613,6 +1744,10 @@ type Unit struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// Application: Optional. Reference to the AppHub Application this unit belongs
+	// to. All resources deployed in this Unit will be associated with the
+	// specified Application.
+	Application string `json:"application,omitempty"`
 	// Conditions: Optional. Output only. A set of conditions which indicate the
 	// various conditions this resource can have.
 	Conditions []*UnitCondition `json:"conditions,omitempty"`
@@ -1628,8 +1763,6 @@ type Unit struct {
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
 	Etag string `json:"etag,omitempty"`
-	// FlagRevisions: Optional. Output only. Flag revisions used by this Unit.
-	FlagRevisions []string `json:"flagRevisions,omitempty"`
 	// InputVariables: Optional. Output only. Indicates the current input variables
 	// deployed by the unit
 	InputVariables []*UnitVariable `json:"inputVariables,omitempty"`
@@ -1659,9 +1792,8 @@ type Unit struct {
 	OngoingOperations []string `json:"ongoingOperations,omitempty"`
 	// OutputVariables: Optional. Output only. Set of key/value pairs corresponding
 	// to output variables from execution of actuation templates. The variables are
-	// declared in actuation configs (e.g in helm chart or terraform) and the
-	// values are fetched and returned by the actuation engine upon completion of
-	// execution.
+	// declared in actuation configs (in Terraform for example) and the values are
+	// fetched and returned by the actuation engine upon completion of execution.
 	OutputVariables []*UnitVariable `json:"outputVariables,omitempty"`
 	// PendingOperations: Optional. Output only. List of pending (wait to be
 	// executed) UnitOperations for this unit.
@@ -1832,6 +1964,12 @@ type UnitKind struct {
 	// modifying objects. More info:
 	// https://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
+	// AppParams: Optional. AppParams contains the parameters for creating an
+	// AppHub Application.
+	AppParams *AppParams `json:"appParams,omitempty"`
+	// ApplicationTemplateComponent: Optional. Reference to component and revision
+	// in a composite ApplicationTemplate.
+	ApplicationTemplateComponent *ComponentRef `json:"applicationTemplateComponent,omitempty"`
 	// BoundaryType: Optional. Output only. BoundaryType describes the type of
 	// boundary the Unit Kind represents.
 	//
@@ -1842,19 +1980,27 @@ type UnitKind struct {
 	BoundaryType string `json:"boundaryType,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// DefaultFlagRevisions: Optional. Default revisions of flags for this
-	// UnitKind. Newly created units will use the flag default_flag_revisions
-	// present at the time of creation.
-	DefaultFlagRevisions []string `json:"defaultFlagRevisions,omitempty"`
 	// DefaultRelease: Optional. A reference to the Release object to use as
 	// default for creating new units of this UnitKind (optional). If not
 	// specified, a new unit must explicitly reference which release to use for its
 	// creation.
 	DefaultRelease string `json:"defaultRelease,omitempty"`
+	// DeleteTime: Output only. The timestamp when the resource was marked for
+	// deletion (deletion is an asynchronous operation).
+	DeleteTime string `json:"deleteTime,omitempty"`
 	// Dependencies: Optional. Immutable. List of other unit kinds that this
 	// release will depend on. Dependencies will be automatically provisioned if
 	// not found. Maximum 10.
 	Dependencies []*Dependency `json:"dependencies,omitempty"`
+	// DurationLimits: Optional. Defines the default duration limits for
+	// UnitOperations created from this UnitKind. These settings provide a baseline
+	// for execution time constraints. The limits specified here can be overridden
+	// by more specific settings on an individual UnitOperation resource. See the
+	// DurationLimits message definition for details on the constraints like
+	// minimum, maximum, and system default values for unit_operation_timeout. If
+	// not set, UnitOperations will use the system default duration limits unless
+	// overridden on the UnitOperation.
+	DurationLimits *DurationLimits `json:"durationLimits,omitempty"`
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
@@ -1937,6 +2083,12 @@ type UnitOperation struct {
 	DeleteTime string `json:"deleteTime,omitempty"`
 	// Deprovision: Optional. Deprovision operation.
 	Deprovision *Deprovision `json:"deprovision,omitempty"`
+	// DurationLimits: Optional. Defines the duration limits for this specific
+	// UnitOperation instance. These settings override any default duration limits
+	// set on the UnitKind. See the DurationLimits message definition for details
+	// on the constraints like minimum, maximum, and system default values for
+	// unit_operation_timeout.
+	DurationLimits *DurationLimits `json:"durationLimits,omitempty"`
 	// EngineState: Optional. Output only. The engine state for on-going deployment
 	// engine operation(s). This field is opaque for external usage.
 	EngineState string `json:"engineState,omitempty"`
@@ -1958,8 +2110,6 @@ type UnitOperation struct {
 	// generation of a resource. It can be used to confirm that the client and
 	// server agree on the ordering of a resource being written.
 	Etag string `json:"etag,omitempty"`
-	// FlagUpdate: Optional. Flag update operation.
-	FlagUpdate *FlagUpdate `json:"flagUpdate,omitempty"`
 	// Labels: Optional. The labels on the resource, which can be used for
 	// categorization. similar to Kubernetes resource labels.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1985,7 +2135,7 @@ type UnitOperation struct {
 	// of the unit operation.
 	//
 	// Possible values:
-	//   "UNIT_OPERATION_STATE_UNKNOWN"
+	//   "UNIT_OPERATION_STATE_UNKNOWN" - Unit operation state is unknown.
 	//   "UNIT_OPERATION_STATE_PENDING" - Unit operation is accepted but not ready
 	// to run.
 	//   "UNIT_OPERATION_STATE_SCHEDULED" - Unit operation is accepted and

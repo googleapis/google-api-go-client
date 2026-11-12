@@ -396,11 +396,8 @@ type Company struct {
 	// access as admins but can also add, delete, and edit your organization's
 	// portal users.
 	OwnerEmails []string `json:"ownerEmails,omitempty"`
-	// SkipWelcomeEmail: Input only. If set to true, welcome email will not be sent
-	// to the customer. It is recommended to skip the welcome email if devices will
-	// be claimed with additional DEVICE_PROTECTION service, as the customer will
-	// receive separate emails at device claim time. This field is ignored if this
-	// is not a Zero-touch customer.
+	// SkipWelcomeEmail: Input only. Deprecated: This field is no longer supported
+	// and is ignored by the server.
 	SkipWelcomeEmail bool `json:"skipWelcomeEmail,omitempty"`
 	// TermsStatus: Output only. Whether any user from the company has accepted the
 	// latest Terms of Service (ToS). See TermsStatus.
@@ -826,7 +823,8 @@ type DeviceIdentifier struct {
 	//
 	// Possible values:
 	//   "DEVICE_TYPE_UNSPECIFIED" - Device type is not specified.
-	//   "DEVICE_TYPE_ANDROID" - Android device
+	//   "DEVICE_TYPE_ANDROID" - Android mobile and Desktop except Googlebooks and
+	// Chromebooks
 	//   "DEVICE_TYPE_CHROME_OS" - Chrome OS device
 	DeviceType string `json:"deviceType,omitempty"`
 	// Imei: The device’s IMEI number. Validated on input.
@@ -2625,8 +2623,8 @@ func (r *CustomersDevicesService) List(parent string) *CustomersDevicesListCall 
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number of
-// devices to show in a page of results. If unset or 0, defaults to 1000. If a
-// value greater than 1000 is specified, it will be coerced to 1000.
+// devices to show in a page of results. If unset or `0`, defaults to `5000`.
+// If a value greater than `10000` is specified, it will be coerced to `10000`.
 func (c *CustomersDevicesListCall) PageSize(pageSize int64) *CustomersDevicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

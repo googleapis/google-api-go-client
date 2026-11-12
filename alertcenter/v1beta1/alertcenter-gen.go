@@ -531,6 +531,30 @@ func (s Alert) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// AlertDetail: The alert data relevant for this alert
+type AlertDetail struct {
+	// FieldName: Audit data key
+	FieldName string `json:"fieldName,omitempty"`
+	// FieldValues: Audit data values
+	FieldValues []*SystemDefinedAlertDataAlertDetailFieldValue `json:"fieldValues,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "FieldName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "FieldName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AlertDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod AlertDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AlertFeedback: A customer feedback about an alert.
 type AlertFeedback struct {
 	// AlertId: Output only. The alert identifier.
@@ -1444,6 +1468,8 @@ type KeyServiceError struct {
 	//   "UNSUPPORTED_ALGORITHM" - SMIME only: the algorithm name in the response
 	// is not supported by the client.
 	//   "FETCH_REQUEST_ERROR" - Fetch request on the client has failed.
+	//   "SERVER_SIDE_FETCH_REQUEST_ERROR" - Fetch request from the Google server
+	// to the key service has failed.
 	ErrorInfo string `json:"errorInfo,omitempty"`
 	// HttpResponseCode: HTTP response status code from the key service.
 	HttpResponseCode int64 `json:"httpResponseCode,omitempty,string"`
@@ -1983,6 +2009,9 @@ type RuleViolationInfo struct {
 	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
 	//   "CHROME_WATERMARK" - Send watermark alert
 	//   "CHROME_FORCE_SAVE_TO_CLOUD" - Force save to cloud storage.
+	//   "CHROME_KEEP_IN_MANAGED_CHROME" - Keep in managed Chrome.
+	//   "CHROME_BLOCK_DATA_COPIED" - Block text copied from Chrome.
+	//   "CHROME_WARN_DATA_COPIED" - Warn on text copied from Chrome.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent out.
 	//   "CHAT_WARN_USER" - Warn end user about Chat content.
@@ -2008,6 +2037,8 @@ type RuleViolationInfo struct {
 	// between different file systems on ChromeOS.
 	//   "GEMINI_ACCESS" - Gemini access.
 	//   "AGENT_EXECUTION" - Agent execution.
+	//   "CHROME_DATA_COPIED" - Text copied from Chrome.
+	//   "CHROME_NETWORK_REQUEST" - Network request from Chrome.
 	Trigger string `json:"trigger,omitempty"`
 	// TriggeredActionInfo: Metadata related to the triggered actions.
 	TriggeredActionInfo []*ActionInfo `json:"triggeredActionInfo,omitempty"`
@@ -2045,6 +2076,9 @@ type RuleViolationInfo struct {
 	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
 	//   "CHROME_WATERMARK" - Send watermark alert
 	//   "CHROME_FORCE_SAVE_TO_CLOUD" - Force save to cloud storage.
+	//   "CHROME_KEEP_IN_MANAGED_CHROME" - Keep in managed Chrome.
+	//   "CHROME_BLOCK_DATA_COPIED" - Block text copied from Chrome.
+	//   "CHROME_WARN_DATA_COPIED" - Warn on text copied from Chrome.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
 	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent out.
 	//   "CHAT_WARN_USER" - Warn end user about Chat content.
@@ -2376,6 +2410,57 @@ type SuspiciousActivitySecurityDetail struct {
 
 func (s SuspiciousActivitySecurityDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod SuspiciousActivitySecurityDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SystemDefinedAlertData: System defined alerts which trigger when an relevant
+// audit event occures.
+type SystemDefinedAlertData struct {
+	// AlertDetails: Details of the conditions which led to alert being created
+	AlertDetails []*AlertDetail `json:"alertDetails,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AlertDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AlertDetails") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SystemDefinedAlertData) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemDefinedAlertData
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SystemDefinedAlertDataAlertDetailFieldValue: Audit data value
+type SystemDefinedAlertDataAlertDetailFieldValue struct {
+	// BoolValue: Value if the type is boolean
+	BoolValue bool `json:"boolValue,omitempty"`
+	// IntValue: Value if the type is integer
+	IntValue int64 `json:"intValue,omitempty,string"`
+	// StringValue: Value if the type is string
+	StringValue string `json:"stringValue,omitempty"`
+	// TimestampValue: Value is the type is a timestamp
+	TimestampValue string `json:"timestampValue,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BoolValue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SystemDefinedAlertDataAlertDetailFieldValue) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemDefinedAlertDataAlertDetailFieldValue
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

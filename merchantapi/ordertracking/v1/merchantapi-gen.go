@@ -273,7 +273,8 @@ func (s LineItemDetails) MarshalJSON() ([]byte, error) {
 }
 
 // OrderTrackingSignal: Represents a business trade from which signals are
-// extracted, such as shipping.
+// extracted, such as shipping. For more information, see Manage order tracking
+// signals (https://developers.google.com/merchant/api/guides/order/overview).
 type OrderTrackingSignal struct {
 	// CustomerShippingFee: Optional. The shipping fee of the order; this value
 	// should be set to zero in the case of free shipping.
@@ -291,8 +292,8 @@ type OrderTrackingSignal struct {
 	// MerchantId: Optional. The Google Merchant Center ID of this order tracking
 	// signal. This value is optional. If left unset, the caller's Merchant Center
 	// ID is used. You must request access in order to provide data on behalf of
-	// another business. For more information, see Submitting Order Tracking
-	// Signals (/shopping-content/guides/order-tracking-signals).
+	// another business. For more information, see Manage order tracking signals
+	// (https://developers.google.com/merchant/api/guides/order/overview).
 	MerchantId int64 `json:"merchantId,omitempty,string"`
 	// OrderCreatedTime: Required. The time when the order was created on the
 	// businesses side. Include the year and timezone string, if available.
@@ -415,6 +416,7 @@ type ProductChange struct {
 	//   "MERCHANT_REVIEWS" - [Merchant
 	// Reviews](https://developers.google.com/merchant-review-feeds).
 	//   "YOUTUBE_CHECKOUT" - YouTube Checkout .
+	//   "RENTAL_ADS" - Real Estate Rental Ads. .
 	ReportingContext string `json:"reportingContext,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewValue") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -435,7 +437,9 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`

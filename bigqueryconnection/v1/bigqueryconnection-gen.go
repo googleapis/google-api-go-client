@@ -305,6 +305,9 @@ type AwsProperties struct {
 	// AccessRole: Authentication using Google owned service account to assume into
 	// customer's AWS IAM Role.
 	AccessRole *AwsAccessRole `json:"accessRole,omitempty"`
+	// CrossCloudCacheOptions: Optional. Configuration options for cross-cloud
+	// caching of data and metadata files.
+	CrossCloudCacheOptions *CrossCloudCacheOptions `json:"crossCloudCacheOptions,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessRole") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -331,6 +334,9 @@ type AzureProperties struct {
 	// ClientId: Output only. The client id of the Azure Active Directory
 	// Application.
 	ClientId string `json:"clientId,omitempty"`
+	// CrossCloudCacheOptions: Optional. Configuration options for cross-cloud
+	// caching of data and metadata files.
+	CrossCloudCacheOptions *CrossCloudCacheOptions `json:"crossCloudCacheOptions,omitempty"`
 	// CustomerTenantId: The id of customer's directory that host the data.
 	CustomerTenantId string `json:"customerTenantId,omitempty"`
 	// FederatedApplicationClientId: The client ID of the user's Azure Active
@@ -679,13 +685,15 @@ type ConnectorConfiguration struct {
 	// Network: Networking configuration.
 	Network *ConnectorConfigurationNetwork `json:"network,omitempty"`
 	// Parameters: Optional. A map of name-value pairs for connector-specific
-	// parameters. Extra configuration parameters, that are not standardized in
-	// configuration sections. To update a single parameter value call
+	// parameters. These extra configuration parameters aren't standardized in the
+	// configuration sections. To update a single parameter value, call
 	// ConnectionService.UpdateConnection with `update_mask` set to
-	// `configuration.parameters.parameter_id`. If parameter id does not fit
-	// `[a-zA-Z0-9_]+` pattern, it should be escaped with backticks - for example
-	// ``configuration.parameters.`parameter id` ``.
+	// `configuration.parameters.parameter_id`. If ``parameter_id`` doesn't fit the
+	// `[a-zA-Z0-9_]+` pattern, ``parameter_id`` should be escaped with
+	// backticks—for example, ``configuration.parameters.`parameter id` ``.
 	Parameters map[string]ConnectorConfigurationParameterValue `json:"parameters,omitempty"`
+	// Tls: Optional. TLS configuration options.
+	Tls *ConnectorConfigurationTls `json:"tls,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Asset") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -734,13 +742,13 @@ func (s ConnectorConfigurationAsset) MarshalJSON() ([]byte, error) {
 
 // ConnectorConfigurationAuthentication: Client authentication.
 type ConnectorConfigurationAuthentication struct {
-	// Parameters: Optional. A map of name-value pairs for authentication-specific
-	// parameters. Extra configuration parameters, that are not standardized in
-	// authentication. To update a single parameter value call
+	// Parameters: Optional. A map of name-value pairs for connector-specific
+	// parameters. These extra configuration parameters aren't standardized in the
+	// configuration sections. To update a single parameter value, call
 	// ConnectionService.UpdateConnection with `update_mask` set to
-	// `configuration.authentication.parameters.parameter_id`. If parameter id does
-	// not fit `[a-zA-Z0-9_]+` pattern, it should be escaped with backticks - for
-	// example ``configuration.authentication.parameters.`parameter id` ``.
+	// `configuration.parameters.parameter_id`. If ``parameter_id`` doesn't fit the
+	// `[a-zA-Z0-9_]+` pattern, ``parameter_id`` should be escaped with
+	// backticks—for example, ``configuration.parameters.`parameter id` ``.
 	Parameters map[string]ConnectorConfigurationParameterValue `json:"parameters,omitempty"`
 	// ServiceAccount: Output only. Google-managed service account associated with
 	// this connection, e.g.,
@@ -913,6 +921,69 @@ func (s ConnectorConfigurationSecret) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ConnectorConfigurationTls: TLS configuration options.
+type ConnectorConfigurationTls struct {
+	// Mode: Optional. The mode of TLS configuration.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - TLS mode unspecified.
+	//   "DISABLE" - TLS is disabled.
+	//   "ENCRYPT_VERIFY_NONE" - Encryption is enabled, but server certificate is
+	// not verified.
+	//   "ENCRYPT_VERIFY_CA" - Encryption is enabled, and server certificate is
+	// verified.
+	//   "ENCRYPT_VERIFY_CA_AND_HOST" - Encryption is enabled, and server
+	// certificate and host are verified.
+	Mode string `json:"mode,omitempty"`
+	// PrivatePki: Optional. Private PKI.
+	PrivatePki *ConnectorConfigurationTlsPrivatePki `json:"privatePki,omitempty"`
+	// WebPki: Optional. Web PKI.
+	WebPki *ConnectorConfigurationTlsWebPki `json:"webPki,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Mode") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Mode") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectorConfigurationTls) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationTls
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationTlsPrivatePki: Private PKI.
+type ConnectorConfigurationTlsPrivatePki struct {
+	// TrustedCertificatesPem: Optional. a PEM-encoded list of certificates to
+	// trust
+	TrustedCertificatesPem string `json:"trustedCertificatesPem,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TrustedCertificatesPem") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TrustedCertificatesPem") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ConnectorConfigurationTlsPrivatePki) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationTlsPrivatePki
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationTlsWebPki: Web PKI.
+type ConnectorConfigurationTlsWebPki struct {
+}
+
 // ConnectorConfigurationUsernamePassword: Username and Password
 // authentication.
 type ConnectorConfigurationUsernamePassword struct {
@@ -935,6 +1006,33 @@ type ConnectorConfigurationUsernamePassword struct {
 
 func (s ConnectorConfigurationUsernamePassword) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationUsernamePassword
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CrossCloudCacheOptions: Options for caching cross-cloud data and metadata
+// files.
+type CrossCloudCacheOptions struct {
+	// Enabled: Optional. Whether cross-cloud caching is enabled. This only affects
+	// queries through BigQuery. If this value is `true`, read data and metadata
+	// are stored in a cache, which can increase performance and decrease network
+	// egress costs for cross-cloud queries. If this value is `false`, cross-cloud
+	// caching is disabled.
+	Enabled bool `json:"enabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CrossCloudCacheOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod CrossCloudCacheOptions
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1196,6 +1294,9 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 // SalesforceDataCloudProperties: Connection properties specific to Salesforce
 // DataCloud. This is intended for use only by Salesforce partner projects.
 type SalesforceDataCloudProperties struct {
+	// CrossCloudCacheOptions: Optional. Configuration options for cross-cloud
+	// caching of data and metadata files.
+	CrossCloudCacheOptions *CrossCloudCacheOptions `json:"crossCloudCacheOptions,omitempty"`
 	// Identity: Output only. A unique Google-owned and Google-generated service
 	// account identity for the connection.
 	Identity string `json:"identity,omitempty"`
@@ -1203,15 +1304,15 @@ type SalesforceDataCloudProperties struct {
 	InstanceUri string `json:"instanceUri,omitempty"`
 	// TenantId: The ID of the user's Salesforce tenant.
 	TenantId string `json:"tenantId,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Identity") to
+	// ForceSendFields is a list of field names (e.g. "CrossCloudCacheOptions") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Identity") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CrossCloudCacheOptions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

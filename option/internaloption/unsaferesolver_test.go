@@ -14,17 +14,18 @@ import (
 
 func TestNewUnsafeResolver(t *testing.T) {
 	for _, tc := range []struct {
-		desc                              string
-		opts                              []option.ClientOption
-		wantResolvedWithAPIKeyIsCustom    bool
-		wantResolvedGRPCConnPoolSize      int
-		wantResolvedGRPCEndpointAddress   string
-		wantResolvedGRPCEndpointError     bool
-		wantResolvedGRPCConnIsCustom      bool
-		wantResolvedHTTPClientIsCustom    bool
-		wantResolvedEnableDirectPath      bool
-		wantResolvedEnableDirectPathXds   bool
-		wantResolvedWithoutAuthentication bool
+		desc                                            string
+		opts                                            []option.ClientOption
+		wantResolvedWithAPIKeyIsCustom                  bool
+		wantResolvedGRPCConnPoolSize                    int
+		wantResolvedGRPCEndpointAddress                 string
+		wantResolvedGRPCEndpointError                   bool
+		wantResolvedGRPCConnIsCustom                    bool
+		wantResolvedHTTPClientIsCustom                  bool
+		wantResolvedEnableDirectPath                    bool
+		wantResolvedEnableDirectPathXds                 bool
+		wantResolvedEnableDirectPathXdsOverInterconnect bool
+		wantResolvedWithoutAuthentication               bool
 	}{
 		{
 			desc: "empty",
@@ -76,6 +77,17 @@ func TestNewUnsafeResolver(t *testing.T) {
 			},
 			wantResolvedEnableDirectPath:    true,
 			wantResolvedEnableDirectPathXds: true,
+		},
+		{
+			desc: "direct path xds over interconnect",
+			opts: []option.ClientOption{
+				EnableDirectPath(true),
+				EnableDirectPathXds(),
+				EnableDirectPathXdsOverInterconnect(),
+			},
+			wantResolvedEnableDirectPath:                    true,
+			wantResolvedEnableDirectPathXds:                 true,
+			wantResolvedEnableDirectPathXdsOverInterconnect: true,
 		},
 		{
 			desc: "api key",
@@ -140,6 +152,9 @@ func TestNewUnsafeResolver(t *testing.T) {
 			}
 			if gotDirectPathXds := ur.ResolvedEnableDirectPathXds(); gotDirectPathXds != tc.wantResolvedEnableDirectPathXds {
 				t.Errorf("ResolvedEnableDirectPathXds: got %t want %t", gotDirectPathXds, tc.wantResolvedEnableDirectPathXds)
+			}
+			if gotInterconnect := ur.ResolvedEnableDirectPathXdsOverInterconnect(); gotInterconnect != tc.wantResolvedEnableDirectPathXdsOverInterconnect {
+				t.Errorf("ResolvedEnableDirectPathXdsOverInterconnect: got %t want %t", gotInterconnect, tc.wantResolvedEnableDirectPathXdsOverInterconnect)
 			}
 			// check ResolvedWithoutAuth
 			if got := ur.ResolvedWithoutAuthentication(); got != tc.wantResolvedWithoutAuthentication {

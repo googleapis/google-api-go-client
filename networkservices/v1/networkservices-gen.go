@@ -168,12 +168,14 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.AgentConnectivityTemplates = NewProjectsLocationsAgentConnectivityTemplatesService(s)
 	rs.AgentGateways = NewProjectsLocationsAgentGatewaysService(s)
 	rs.AuthzExtensions = NewProjectsLocationsAuthzExtensionsService(s)
 	rs.EdgeCacheKeysets = NewProjectsLocationsEdgeCacheKeysetsService(s)
 	rs.EdgeCacheOrigins = NewProjectsLocationsEdgeCacheOriginsService(s)
 	rs.EdgeCacheServices = NewProjectsLocationsEdgeCacheServicesService(s)
 	rs.EndpointPolicies = NewProjectsLocationsEndpointPoliciesService(s)
+	rs.ExtensionBindings = NewProjectsLocationsExtensionBindingsService(s)
 	rs.Gateways = NewProjectsLocationsGatewaysService(s)
 	rs.GrpcRoutes = NewProjectsLocationsGrpcRoutesService(s)
 	rs.HttpRoutes = NewProjectsLocationsHttpRoutesService(s)
@@ -184,6 +186,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.MulticastConsumerAssociations = NewProjectsLocationsMulticastConsumerAssociationsService(s)
 	rs.MulticastGroupConsumerActivations = NewProjectsLocationsMulticastGroupConsumerActivationsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.ProducerExtensions = NewProjectsLocationsProducerExtensionsService(s)
 	rs.ServiceBindings = NewProjectsLocationsServiceBindingsService(s)
 	rs.ServiceLbPolicies = NewProjectsLocationsServiceLbPoliciesService(s)
 	rs.TcpRoutes = NewProjectsLocationsTcpRoutesService(s)
@@ -194,6 +197,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 
 type ProjectsLocationsService struct {
 	s *Service
+
+	AgentConnectivityTemplates *ProjectsLocationsAgentConnectivityTemplatesService
 
 	AgentGateways *ProjectsLocationsAgentGatewaysService
 
@@ -206,6 +211,8 @@ type ProjectsLocationsService struct {
 	EdgeCacheServices *ProjectsLocationsEdgeCacheServicesService
 
 	EndpointPolicies *ProjectsLocationsEndpointPoliciesService
+
+	ExtensionBindings *ProjectsLocationsExtensionBindingsService
 
 	Gateways *ProjectsLocationsGatewaysService
 
@@ -227,6 +234,8 @@ type ProjectsLocationsService struct {
 
 	Operations *ProjectsLocationsOperationsService
 
+	ProducerExtensions *ProjectsLocationsProducerExtensionsService
+
 	ServiceBindings *ProjectsLocationsServiceBindingsService
 
 	ServiceLbPolicies *ProjectsLocationsServiceLbPoliciesService
@@ -236,6 +245,15 @@ type ProjectsLocationsService struct {
 	TlsRoutes *ProjectsLocationsTlsRoutesService
 
 	WasmPlugins *ProjectsLocationsWasmPluginsService
+}
+
+func NewProjectsLocationsAgentConnectivityTemplatesService(s *Service) *ProjectsLocationsAgentConnectivityTemplatesService {
+	rs := &ProjectsLocationsAgentConnectivityTemplatesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsAgentConnectivityTemplatesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsAgentGatewaysService(s *Service) *ProjectsLocationsAgentGatewaysService {
@@ -289,6 +307,15 @@ func NewProjectsLocationsEndpointPoliciesService(s *Service) *ProjectsLocationsE
 }
 
 type ProjectsLocationsEndpointPoliciesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsExtensionBindingsService(s *Service) *ProjectsLocationsExtensionBindingsService {
+	rs := &ProjectsLocationsExtensionBindingsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsExtensionBindingsService struct {
 	s *Service
 }
 
@@ -406,6 +433,15 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+func NewProjectsLocationsProducerExtensionsService(s *Service) *ProjectsLocationsProducerExtensionsService {
+	rs := &ProjectsLocationsProducerExtensionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsProducerExtensionsService struct {
+	s *Service
+}
+
 func NewProjectsLocationsServiceBindingsService(s *Service) *ProjectsLocationsServiceBindingsService {
 	rs := &ProjectsLocationsServiceBindingsService{s: s}
 	return rs
@@ -463,8 +499,90 @@ type ProjectsLocationsWasmPluginsVersionsService struct {
 	s *Service
 }
 
+// AgentConnectivityTemplate: AgentConnectivityTemplate represents a reusable
+// network configuration.
+type AgentConnectivityTemplate struct {
+	// AccessPath: Optional. Immutable. The path of the access. Maps roughly to
+	// ingress/egress, though we keep CLIENT_TO_AGENT and AGENT_TO_ANYWHERE as
+	// carryovers from Agent Gateway's original resource model. The path is
+	// immutable once set. Exactly one path can be set.
+	//
+	// Possible values:
+	//   "ACCESS_PATH_UNSPECIFIED" - Unspecified access path.
+	//   "CLIENT_TO_AGENT" - Protect connection to Agent or Tool.
+	//   "AGENT_TO_ANYWHERE" - Govern agent connections to destinations.
+	AccessPath string `json:"accessPath,omitempty"`
+	// AccessTypes: Optional. The types of network access provided to the gateway.
+	// Both PUBLIC and PRIVATE can be configured.
+	//
+	// Possible values:
+	//   "ACCESS_TYPE_UNSPECIFIED" - Unspecified access type.
+	//   "PUBLIC" - Public network access.
+	//   "PRIVATE" - Private network access.
+	AccessTypes []string `json:"accessTypes,omitempty"`
+	// AgentCompute: Optional. The compute environment where the agent is hosted.
+	// Exactly one type of compute must be chosen.
+	//
+	// Possible values:
+	//   "AGENT_COMPUTE_UNSPECIFIED" - Unspecified compute type.
+	//   "GKE" - Google Kubernetes Engine.
+	//   "CLOUD_RUN" - Google Cloud Run.
+	//   "BORG" - Google Borg (for 1P producers).
+	//   "GCE_VM" - Google Compute Engine VM.
+	AgentCompute string `json:"agentCompute,omitempty"`
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// DeploymentModel: Optional. The deployment model for the gateway.
+	//
+	// Possible values:
+	//   "DEPLOYMENT_MODEL_UNSPECIFIED" - Unspecified deployment model.
+	//   "CENTRALIZED" - Centralized deployment.
+	//   "AMBIENT" - Ambient deployment.
+	DeploymentModel string `json:"deploymentModel,omitempty"`
+	// Description: Optional. A free-text description of the resource. Max length
+	// 1024 characters.
+	Description string `json:"description,omitempty"`
+	// EgressNetworkConfig: Optional. Configuration for egress network traffic.
+	EgressNetworkConfig *EgressNetworkConfig `json:"egressNetworkConfig,omitempty"`
+	// Etag: Optional. Etag of the resource. If this is provided, it must match the
+	// server's etag. If the provided etag does not match the server's etag, the
+	// request will fail with a 409 ABORTED error.
+	Etag string `json:"etag,omitempty"`
+	// Labels: Optional. Set of label tags associated with the
+	// AgentConnectivityTemplate resource.
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. Name of the AgentConnectivityTemplate resource. It matches
+	// pattern `projects/*/locations/*/agentConnectivityTemplates/`.
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AccessPath") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AccessPath") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentConnectivityTemplate) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentConnectivityTemplate
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AgentGateway: AgentGateway represents the agent gateway resource.
 type AgentGateway struct {
+	// AgentConnectivityTemplate: Optional. The resource name of the
+	// AgentConnectivityTemplate. Format:
+	// projects/{project}/locations/{location}/agentConnectivityTemplates/{template}
+	AgentConnectivityTemplate string `json:"agentConnectivityTemplate,omitempty"`
 	// AgentGatewayCard: Output only. Field for populated AgentGateway card.
 	AgentGatewayCard *AgentGatewayAgentGatewayOutputCard `json:"agentGatewayCard,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
@@ -506,15 +624,15 @@ type AgentGateway struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "AgentGatewayCard") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "AgentConnectivityTemplate")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "AgentGatewayCard") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AgentConnectivityTemplate") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -669,6 +787,10 @@ type AgentGatewaySelfManaged struct {
 	// ResourceUri: Optional. A supported Google Cloud networking proxy in the
 	// Project and Location
 	ResourceUri string `json:"resourceUri,omitempty"`
+	// ResourceUris: Optional. List of supported Google Cloud networking proxies in
+	// the Project and Location. resource_uris is mutually exclusive with
+	// resource_uri.
+	ResourceUris []string `json:"resourceUris,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ResourceUri") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -768,7 +890,7 @@ func (s AuditLogConfig) MarshalJSON() ([]byte, error) {
 type AuthzExtension struct {
 	// Authority: Optional. The `:authority` header in the gRPC request sent from
 	// Envoy to the extension service. It is required when the `service` field
-	// points to a backend service or a wasm plugin.
+	// points to a backend service.
 	Authority string `json:"authority,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -802,10 +924,10 @@ type AuthzExtension struct {
 	// (/compute/docs/labeling-resources#requirements) for Google Cloud resources.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LoadBalancingScheme: Optional. All backend services and forwarding rules
-	// referenced by this extension must share the same load balancing scheme.
-	// Supported values: `INTERNAL_MANAGED`, `EXTERNAL_MANAGED`. Can be omitted for
-	// AuthzExtensions that do not reference a backend service. For more
-	// information, refer to Backend services overview
+	// referenced by this extension must share the same load balancing scheme. The
+	// supported values are `INTERNAL_MANAGED` and `EXTERNAL_MANAGED`. You can omit
+	// this field for `AuthzExtensions` resources that don't reference a backend
+	// service. For more information, see Backend services overview
 	// (https://cloud.google.com/load-balancing/docs/backend-service).
 	//
 	// Possible values:
@@ -827,14 +949,21 @@ type AuthzExtension struct {
 	// `projects/{project}/locations/{location}/authzExtensions/{authz_extension}`.
 	Name string `json:"name,omitempty"`
 	// Service: Required. The reference to the service that runs the extension. To
-	// configure a callout extension, `service` must be a fully-qualified reference
-	// to a backend service
+	// configure a callout extension: For global AuthzExtension, `service` must be
+	// a fully-qualified reference to a backend service
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/backendServices) in
+	// the format:
+	// `https://www.googleapis.com/compute/v1/projects/{project}/global/backendServi
+	// ces/{backendService}`. For regional AuthzExtension, `service` must be a
+	// fully-qualified reference to one of the following: * a backend service
 	// (https://cloud.google.com/compute/docs/reference/rest/v1/backendServices) in
 	// the format:
 	// `https://www.googleapis.com/compute/v1/projects/{project}/regions/{region}/ba
-	// ckendServices/{backendService}` or
-	// `https://www.googleapis.com/compute/v1/projects/{project}/global/backendServi
-	// ces/{backendService}`.
+	// ckendServices/{backendService}`. * a fully qualified domain name that can be
+	// resolved by the Google Cloud DNS. * `iap.googleapis.com` and it can only be
+	// referenced by an AuthzPolicy with the policyProfile set to REQUEST_AUTHZ. *
+	// `modelarmor..rep.googleapis.com` and it can only be referenced by an
+	// AuthzPolicy with the policyProfile set to CONTENT_AUTHZ.
 	Service string `json:"service,omitempty"`
 	// Timeout: Required. Specifies the timeout for each individual message on the
 	// stream. The timeout must be between 10-10000 milliseconds.
@@ -982,6 +1111,105 @@ func (s Binding) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// DnsPeeringConfig: DNS Peering configuration.
+type DnsPeeringConfig struct {
+	// Domain: Optional. Deprecated: Use `domains` instead. The domain to peer.
+	Domain string `json:"domain,omitempty"`
+	// Domains: Optional. The domains to peer.
+	Domains []string `json:"domains,omitempty"`
+	// TargetNetwork: Optional. The target network resource name for DNS peering.
+	// Format: projects/{project}/global/networks/{network_id}
+	TargetNetwork string `json:"targetNetwork,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Domain") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Domain") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DnsPeeringConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DnsPeeringConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EgressNetworkConfig: Egress network config
+type EgressNetworkConfig struct {
+	// DnsPeeringConfig: Optional. DNS Peering configuration.
+	DnsPeeringConfig *DnsPeeringConfig `json:"dnsPeeringConfig,omitempty"`
+	// NetworkAttachment: Optional. The network attachment resource name. Format:
+	// projects/{project}/regions/{region}/networkAttachments/{network_attachment_id
+	// }
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+	// TlsConfig: Optional. The TLS configuration for the egress traffic.
+	TlsConfig *EgressNetworkConfigTlsConfig `json:"tlsConfig,omitempty"`
+	// TrustConfig: Optional. Deprecated: Use tls_config instead. The trust config
+	// resource name. Format:
+	// projects/{project}/locations/{location}/trustConfigs/{trust_config}
+	TrustConfig string `json:"trustConfig,omitempty"`
+	// VpcEgress: Optional. The VPC egress setting.
+	//
+	// Possible values:
+	//   "VPC_EGRESS_UNSPECIFIED" - Unspecified
+	//   "ALL_TRAFFIC" - All outbound traffic is routed through the VPC connector.
+	//   "PRIVATE_RANGES_ONLY" - Only private IP ranges are routed through the VPC
+	// connector.
+	VpcEgress string `json:"vpcEgress,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DnsPeeringConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DnsPeeringConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EgressNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EgressNetworkConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// EgressNetworkConfigTlsConfig: Configuration for TLS connections.
+type EgressNetworkConfigTlsConfig struct {
+	// AdditionalRoots: Optional. The additional roots to trust.
+	//
+	// Possible values:
+	//   "ADDITIONAL_ROOTS_UNSPECIFIED" - Unspecified additional roots.
+	//   "NO_ADDITIONAL_ROOTS" - Trust only the certificates provided in
+	// `trust_config`.
+	//   "PUBLICLY_TRUSTED_ROOTS" - Trust certificates provided in `trust_config`
+	// and publicly trusted roots.
+	AdditionalRoots string `json:"additionalRoots,omitempty"`
+	// TrustConfig: Optional. The trust config resource name. Format:
+	// projects/{project}/locations/{location}/trustConfigs/{trust_config}
+	TrustConfig string `json:"trustConfig,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AdditionalRoots") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AdditionalRoots") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s EgressNetworkConfigTlsConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod EgressNetworkConfigTlsConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -1099,14 +1327,15 @@ type EndpointPolicy struct {
 	// field is not specified, authorization is disabled(no authz checks) for this
 	// endpoint.
 	AuthorizationPolicy string `json:"authorizationPolicy,omitempty"`
-	// ClientTlsPolicy: Optional. A URL referring to a ClientTlsPolicy resource.
-	// ClientTlsPolicy can be set to specify the authentication for traffic from
-	// the proxy to the actual endpoints. More specifically, it is applied to the
-	// outgoing traffic from the proxy to the endpoint. This is typically used for
-	// sidecar model where the proxy identifies itself as endpoint to the control
-	// plane, with the connection between sidecar and endpoint requiring
-	// authentication. If this field is not set, authentication is disabled(open).
-	// Applicable only when EndpointPolicyType is SIDECAR_PROXY.
+	// ClientTlsPolicy: Optional. Deprecated: This field is not used and is a
+	// no-op. A URL referring to a ClientTlsPolicy resource. ClientTlsPolicy can be
+	// set to specify the authentication for traffic from the proxy to the actual
+	// endpoints. More specifically, it is applied to the outgoing traffic from the
+	// proxy to the endpoint. This is typically used for sidecar model where the
+	// proxy identifies itself as endpoint to the control plane, with the
+	// connection between sidecar and endpoint requiring authentication. If this
+	// field is not set, authentication is disabled(open). Applicable only when
+	// EndpointPolicyType is SIDECAR_PROXY.
 	ClientTlsPolicy string `json:"clientTlsPolicy,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -1209,14 +1438,336 @@ func (s Expr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ExtensionBinding: `ExtensionBinding` is a resource representing the
+// attachment of an extension to a service.
+type ExtensionBinding struct {
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A human-readable description of the resource.
+	Description string `json:"description,omitempty"`
+	// Etag: Optional. Etag of the resource. If provided, it must match the
+	// server's etag. If the provided etag does not match the server's etag, the
+	// request will fail with a 409 ABORTED error.
+	Etag string `json:"etag,omitempty"`
+	// FailOpen: Optional. Determines the behavior of the extension binding when
+	// the call to the extension fails or times out. Default value is `FALSE`. When
+	// set to `TRUE`, failures of the extension are silently ignored.
+	FailOpen bool `json:"failOpen,omitempty"`
+	// Labels: Optional. Set of labels associated with the `ExtensionBinding`
+	// resource. The format must comply with the following requirements
+	// (https://cloud.google.com/compute/docs/labeling-resources#requirements).
+	Labels map[string]string `json:"labels,omitempty"`
+	// MatchConditions: Optional. A list of match conditions to evaluate against
+	// the incoming request. The extension is invoked if the request matches at
+	// least one condition, or if no match conditions are specified. A request
+	// matches a condition only if it matches every field that is set in that
+	// condition. Limited to 5 conditions.
+	MatchConditions []*ExtensionBindingMatchCondition `json:"matchConditions,omitempty"`
+	// Name: Identifier. Name of the `ExtensionBinding` resource in the following
+	// format:
+	// `projects/{project}/locations/{location}/extensionBindings/{extension_binding
+	// }`.
+	Name string `json:"name,omitempty"`
+	// Priority: Optional. This field is not supported.
+	Priority int64 `json:"priority,omitempty"`
+	// ProducerExtension: Required. The name of the extension that this binding
+	// should attach to target resources. Format: For Google-provided extensions,
+	// specify the service endpoint, for example
+	// `modelarmor.us-central1.rep.googleapis.com`.
+	ProducerExtension string `json:"producerExtension,omitempty"`
+	// ProducerMetadata: Optional. Additional metadata that should be passed to the
+	// attached extension with each request. This field is subject to the following
+	// limitations: * The total size of the metadata must be less than 1 KiB. * The
+	// total number of keys must be less than 16. * The length of each key must be
+	// less than 64 characters. * The length of each value must be less than 1024
+	// characters.
+	ProducerMetadata map[string]string `json:"producerMetadata,omitempty"`
+	// Target: Required. Specifies a target to which this `ExtensionBinding` should
+	// be attached.
+	Target *ExtensionBindingTarget `json:"target,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBinding) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBinding
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtensionBindingMatchCondition: Conditions to match against the incoming
+// request.
+type ExtensionBindingMatchCondition struct {
+	// To: Optional. Describes properties of a destination of a request. If
+	// specified, the extension will only be invoked on requests to destinations
+	// that match the specified criteria.
+	To *ExtensionBindingMatchConditionTo `json:"to,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "To") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "To") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBindingMatchCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBindingMatchCondition
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtensionBindingMatchConditionHeaderMatch: Determines how an HTTP header
+// should be matched.
+type ExtensionBindingMatchConditionHeaderMatch struct {
+	// Name: Required. Specifies the name of the header in the request.
+	Name string `json:"name,omitempty"`
+	// Value: Optional. Specifies how the header match will be performed.
+	Value *ExtensionBindingMatchConditionStringMatch `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBindingMatchConditionHeaderMatch) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBindingMatchConditionHeaderMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtensionBindingMatchConditionStringMatch: Specifies matching logic for
+// string values.
+type ExtensionBindingMatchConditionStringMatch struct {
+	// Contains: Optional. The input string must contain the substring specified
+	// here. An empty substring is not allowed. Examples: * `abc` matches the value
+	// `xyz.abc.def`.
+	Contains string `json:"contains,omitempty"`
+	// Exact: Optional. The input string must match exactly the string specified
+	// here. Examples: * `abc` only matches the value `abc`.
+	Exact string `json:"exact,omitempty"`
+	// IgnoreCase: Optional. If true, the `exact`, `prefix`, `suffix`, or
+	// `contains` match is case insensitive. For example, the matcher `data`
+	// matches both `Data` and `data` when set to true.
+	IgnoreCase bool `json:"ignoreCase,omitempty"`
+	// Prefix: Optional. The input string must have the prefix specified here. An
+	// empty prefix is not allowed. Examples: * `abc` matches the value `abc.xyz`.
+	Prefix string `json:"prefix,omitempty"`
+	// Suffix: Optional. The input string must have the suffix specified here. An
+	// empty suffix is not allowed. Examples: * `abc` matches the value `xyz.abc`.
+	Suffix string `json:"suffix,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Contains") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Contains") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBindingMatchConditionStringMatch) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBindingMatchConditionStringMatch
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtensionBindingMatchConditionTo: Describes properties of one or more
+// destinations of a request.
+type ExtensionBindingMatchConditionTo struct {
+	// Destination: Optional. Describes properties of the destination of a request.
+	// A request matches the destination only if it matches every field that is
+	// set. Fields that are not set are always considered a match. For example, if
+	// only `hosts` and `paths` are set, a request matches when any host matches
+	// and any path matches. At least one of `destination` or `not_destination`
+	// must be specified.
+	Destination *ExtensionBindingMatchConditionToDestination `json:"destination,omitempty"`
+	// NotDestination: Optional. Describes the negated properties of the request
+	// destination. Extension will not be invoked on requests that match the
+	// criteria specified in this field. At least one of destination or
+	// not_destination must be specified.
+	NotDestination *ExtensionBindingMatchConditionToDestination `json:"notDestination,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Destination") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Destination") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBindingMatchConditionTo) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBindingMatchConditionTo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtensionBindingMatchConditionToDestination: Describes properties of a
+// single destination.
+type ExtensionBindingMatchConditionToDestination struct {
+	// HeaderSet: Optional. A set of HTTP headers to match against. If not
+	// specified, requests with any headers are matched.
+	HeaderSet *ExtensionBindingMatchConditionToDestinationHeaderSet `json:"headerSet,omitempty"`
+	// Hosts: Optional. A list of HTTP Hosts to match against. Limited to 10 hosts.
+	// If not specified, any host is allowed. If specified, a match occurs if any
+	// of the hosts matches the host value in the request.
+	Hosts []*ExtensionBindingMatchConditionStringMatch `json:"hosts,omitempty"`
+	// Paths: Optional. A list of paths to match against. Limited to 10 paths. If
+	// not specified, any path is allowed. Note that this path match includes the
+	// query parameters. For gRPC services, this should be a fully-qualified name
+	// of the form /package.service/method.
+	Paths []*ExtensionBindingMatchConditionStringMatch `json:"paths,omitempty"`
+	// Resources: Optional. A list of non-empty strings whose value is matched
+	// against the resource to which a request is sent (e.g., an Agent in
+	// AiApplication). If not specified, any resource is allowed. If specified, a
+	// match occurs if any of the resources matches the resource value in the
+	// request. Limited to 5 resources. When matching against resources in the
+	// AgentRegistry, use the URNs of the registry resources.
+	Resources []*ExtensionBindingMatchConditionStringMatch `json:"resources,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HeaderSet") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HeaderSet") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBindingMatchConditionToDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBindingMatchConditionToDestination
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtensionBindingMatchConditionToDestinationHeaderSet: Describes a set of
+// HTTP headers to match against.
+type ExtensionBindingMatchConditionToDestinationHeaderSet struct {
+	// Headers: Required. A list of HTTP headers to match against. If multiple
+	// header matches are provided, they are evaluated as an AND, meaning that all
+	// header matches must match for the request to match. Limited to 10 headers.
+	Headers []*ExtensionBindingMatchConditionHeaderMatch `json:"headers,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Headers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBindingMatchConditionToDestinationHeaderSet) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBindingMatchConditionToDestinationHeaderSet
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtensionBindingTarget: Specifies a list of targets to which this
+// `ExtensionBinding` should attach.
+type ExtensionBindingTarget struct {
+	// Resources: Optional. The references to the target resources to which this
+	// binding should attach. Exactly one of `resources` or `scope` must be set.
+	// For AI Application resources, specify the full resource name in the format:
+	// `projects/{project}/locations/{location}/applications/{application}`.
+	// Limited to 1 resource.
+	Resources []string `json:"resources,omitempty"`
+	// Scope: Optional. Specifies the scope of resources to which this binding
+	// should attach. Exactly one of `resources` or `scope` must be set.
+	Scope *ExtensionBindingTargetScope `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Resources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBindingTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBindingTarget
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ExtensionBindingTargetScope: Specifies the scope of resources to which this
+// binding should attach.
+type ExtensionBindingTargetScope struct {
+	// Parent: Required. The parent resource that defines the scope, in the format
+	// `projects/{project_number}`. When the scope is a project, the binding
+	// applies to the resources that meet all of the following conditions: * The
+	// resource belongs to the specified project. * The resource is in the same
+	// location as the `ExtensionBinding`. * The resource type is listed in
+	// `resource_types`.
+	Parent string `json:"parent,omitempty"`
+	// ResourceTypes: Required. The types of resources to which the binding should
+	// attach. Limited to 1 resource type.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - Default value. Should not be used.
+	//   "AI_APPLICATION" - AI Application resources.
+	//   "AGENT_GATEWAY" - Agent Gateway resources.
+	ResourceTypes []string `json:"resourceTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Parent") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Parent") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ExtensionBindingTargetScope) MarshalJSON() ([]byte, error) {
+	type NoMethod ExtensionBindingTargetScope
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ExtensionChain: A single extension chain wrapper that contains the match
 // conditions and extensions to execute.
 type ExtensionChain struct {
 	// Extensions: Required. A set of extensions to execute for the matching
 	// request. At least one extension is required. Up to 3 extensions can be
-	// defined for each extension chain for `LbTrafficExtension` resource.
-	// `LbRouteExtension` and `LbEdgeExtension` chains are limited to 1 extension
-	// per extension chain.
+	// defined for each extension chain for `LbTrafficExtension` and
+	// `CdnEdgeExtension` resources. `LbRouteExtension`, `LbEdgeExtension`, and
+	// `LbTcpExtension` chains are limited to 1 extension per extension chain.
 	Extensions []*ExtensionChainExtension `json:"extensions,omitempty"`
 	// MatchCondition: Required. Conditions under which this chain is invoked for a
 	// request.
@@ -1370,8 +1921,8 @@ type ExtensionChainExtension struct {
 	// `projects/{project}/locations/{location}/wasmPlugins/{plugin}` or
 	// `//networkservices.googleapis.com/projects/{project}/locations/{location}/was
 	// mPlugins/{wasmPlugin}`. Plugin extensions are currently supported for the
-	// `LbTrafficExtension`, the `LbRouteExtension`, and the `LbEdgeExtension`
-	// resources.
+	// `LbTrafficExtension`, the `LbRouteExtension`, the `LbEdgeExtension`, and the
+	// `CdnEdgeExtension` resources.
 	Service string `json:"service,omitempty"`
 	// SupportedEvents: Optional. A set of events during request or response
 	// processing for which this extension is called. For the `LbTrafficExtension`
@@ -1380,7 +1931,10 @@ type ExtensionChainExtension struct {
 	// supported. For the `LbEdgeExtension` resource, this field is required and
 	// must only contain `REQUEST_HEADERS` event. For the `AuthzExtension`
 	// resource, this field is optional. `REQUEST_HEADERS` is the only supported
-	// event. If unspecified, `REQUEST_HEADERS` event is assumed as supported.
+	// event. If unspecified, `REQUEST_HEADERS` event is assumed as supported. For
+	// the `CdnEdgeExtension` resource, this field is optional. Eligible values are
+	// `REQUEST_HEADERS` and `RESPONSE_HEADERS`. If unspecified, both are assumed
+	// as supported.
 	//
 	// Possible values:
 	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified value. Do not use.
@@ -3025,6 +3579,41 @@ func (s LbTrafficExtension) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListAgentConnectivityTemplatesResponse: Response returned by the
+// ListAgentConnectivityTemplates method.
+type ListAgentConnectivityTemplatesResponse struct {
+	// AgentConnectivityTemplates: List of AgentConnectivityTemplate resources.
+	AgentConnectivityTemplates []*AgentConnectivityTemplate `json:"agentConnectivityTemplates,omitempty"`
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request attempts to list all resources across all supported locations, while
+	// some locations are temporarily unavailable.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "AgentConnectivityTemplates")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AgentConnectivityTemplates") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListAgentConnectivityTemplatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAgentConnectivityTemplatesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListAgentGatewaysResponse: Response returned by the ListAgentGateways
 // method.
 type ListAgentGatewaysResponse struct {
@@ -3123,6 +3712,44 @@ type ListEndpointPoliciesResponse struct {
 
 func (s ListEndpointPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEndpointPoliciesResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ListExtensionBindingsResponse: Response returned by the
+// `ListExtensionBindings` method.
+type ListExtensionBindingsResponse struct {
+	// ExtensionBindings: List of `ExtensionBinding` resources.
+	ExtensionBindings []*ExtensionBinding `json:"extensionBindings,omitempty"`
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request attempts to list all resources across all supported locations, while
+	// some locations are temporarily unavailable. The resource names are in the
+	// format
+	// `projects/{project}/locations/{location}/extensionBindings/{extension_binding
+	// }`.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "ExtensionBindings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExtensionBindings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListExtensionBindingsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListExtensionBindingsResponse
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -3545,6 +4172,44 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListProducerExtensionsResponse: Response returned by the
+// `ListProducerExtensions` method.
+type ListProducerExtensionsResponse struct {
+	// NextPageToken: If there might be more results than those appearing in this
+	// response, then `next_page_token` is included. To get the next set of
+	// results, call this method again using the value of `next_page_token` as
+	// `page_token`.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// ProducerExtensions: List of `ProducerExtension` resources.
+	ProducerExtensions []*ProducerExtension `json:"producerExtensions,omitempty"`
+	// Unreachable: Unordered list. Unreachable resources. Populated when the
+	// request attempts to list all resources across all supported locations, while
+	// some locations are temporarily unavailable. The resource names are in the
+	// format:
+	// `projects/{project}/locations/{location}/producerExtensions/{producer_extensi
+	// on}`.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListProducerExtensionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListProducerExtensionsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListServiceBindingsResponse: Response returned by the ListServiceBindings
 // method.
 type ListServiceBindingsResponse struct {
@@ -3934,7 +4599,7 @@ type MulticastConsumerAssociation struct {
 	// Description: Optional. An optional text description of the multicast
 	// consumer association.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key-value pairs
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// MulticastDomainActivation: Optional. The resource name of the multicast
 	// domain activation that is in the same zone as this multicast consumer
@@ -3969,9 +4634,9 @@ type MulticastConsumerAssociation struct {
 	State *MulticastResourceState `json:"state,omitempty"`
 	// UniqueId: Output only. [Output only] The Google-generated UUID for the
 	// resource. This value is unique across all multicast consumer association
-	// resources. If a consumer association is deleted and another with the same
-	// name is created, the new consumer association is assigned a different
-	// unique_id.
+	// resources. If a multicast consumer association is deleted and another with
+	// the same name is created, the new multicast consumer association is assigned
+	// a different unique_id.
 	UniqueId string `json:"uniqueId,omitempty"`
 	// UpdateTime: Output only. [Output only] The timestamp when the Multicast
 	// Consumer Association was most recently updated.
@@ -4006,7 +4671,7 @@ type MulticastGroupConsumerActivation struct {
 	// Description: Optional. An optional text description of the multicast group
 	// consumer activation.
 	Description string `json:"description,omitempty"`
-	// Labels: Optional. Labels as key-value pairs
+	// Labels: Optional. Labels as key-value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 	// LogConfig: Optional. Specifies the logging options for the activities
 	// performed related to the multicast group consumer activation. Defaults to
@@ -4019,12 +4684,12 @@ type MulticastGroupConsumerActivation struct {
 	MulticastConsumerAssociation string `json:"multicastConsumerAssociation,omitempty"`
 	// MulticastGroup: Optional. The resource name of the multicast group created
 	// by the admin in the same zone as this multicast group consumer activation.
-	// Use the following format: // `projects/*/locations/*/multicastGroups/*`.
-	// This field is deprecated. Use multicast_group_range_activation instead.
+	// Use the following format: `projects/*/locations/*/multicastGroups/*`. This
+	// field is deprecated. Use multicast_group_range_activation instead.
 	MulticastGroup string `json:"multicastGroup,omitempty"`
 	// MulticastGroupRangeActivation: Required. The resource name of the multicast
 	// group range activation created by the admin in the same zone as this
-	// multicast group consumer activation. Use the following format: //
+	// multicast group consumer activation. Use the following format:
 	// `projects/*/locations/*/multicastGroupRangeActivations/*`.
 	MulticastGroupRangeActivation string `json:"multicastGroupRangeActivation,omitempty"`
 	// Name: Identifier. The resource name of the multicast group consumer
@@ -4045,9 +4710,9 @@ type MulticastGroupConsumerActivation struct {
 	State *MulticastResourceState `json:"state,omitempty"`
 	// UniqueId: Output only. [Output only] The Google-generated UUID for the
 	// resource. This value is unique across all multicast group consumer
-	// activation resources. If a group consumer activation is deleted and another
-	// with the same name is created, the new group consumer activation is assigned
-	// a different unique_id.
+	// activation resources. If a multicast group consumer activation is deleted
+	// and another with the same name is created, the new multicast group consumer
+	// activation is assigned a different unique_id.
 	UniqueId string `json:"uniqueId,omitempty"`
 	// UpdateTime: Output only. [Output only] The timestamp when the multicast
 	// group consumer activation was most recently updated.
@@ -4307,6 +4972,106 @@ func (s Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProducerExtension: `ProducerExtension` is a resource representing producer
+// defined configuration for their service extension.
+type ProducerExtension struct {
+	// CreateTime: Output only. The timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// Description: Optional. A human-readable description of the resource.
+	Description string `json:"description,omitempty"`
+	// Etag: Optional. Etag of the resource. If this is provided, it must match the
+	// server's etag. If the provided etag does not match the server's etag, the
+	// request will fail with a 409 ABORTED error.
+	Etag string `json:"etag,omitempty"`
+	// ExtensionSettings: Required. The configuration for the service that this
+	// `ProducerExtension` offers.
+	ExtensionSettings *ProducerExtensionExtensionSettings `json:"extensionSettings,omitempty"`
+	// Labels: Optional. Set of labels associated with the `ProducerExtension`
+	// resource. The format must comply with the following requirements
+	// (https://cloud.google.com/compute/docs/labeling-resources#requirements).
+	Labels map[string]string `json:"labels,omitempty"`
+	// Name: Identifier. Name of the `ProducerExtension` resource in the following
+	// format:
+	// `projects/{project}/locations/{location}/producerExtensions/{producer_extensi
+	// on}`.
+	Name string `json:"name,omitempty"`
+	// Phase: Required. The phase in which this `ProducerExtension` should execute.
+	//
+	// Possible values:
+	//   "PHASE_UNSPECIFIED" - Unspecified phase.
+	//   "TRAFFIC" - The `ProducerExtension` will be executed during the traffic
+	// phase.
+	//   "AUTHZ" - The `ProducerExtension` will be executed during the
+	// authorization phase.
+	Phase string `json:"phase,omitempty"`
+	// UpdateTime: Output only. The timestamp when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProducerExtension) MarshalJSON() ([]byte, error) {
+	type NoMethod ProducerExtension
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ProducerExtensionExtensionSettings: The configuration for the service that
+// this `ProducerExtension` offers.
+type ProducerExtensionExtensionSettings struct {
+	// Authority: Optional. The `:authority` header in the request sent to the
+	// extension service.
+	Authority string `json:"authority,omitempty"`
+	// ObservabilityMode: Optional. This field is not supported.
+	ObservabilityMode bool `json:"observabilityMode,omitempty"`
+	// Service: Required. URI of the PSC attachment.
+	Service string `json:"service,omitempty"`
+	// SupportedEvents: Required. The event types supported by the extension.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - Unspecified value. Do not use.
+	//   "REQUEST_HEADERS" - If included in `supported_events`, the extension is
+	// called when the HTTP request headers arrive.
+	//   "REQUEST_BODY" - If included in `supported_events`, the extension is
+	// called when the HTTP request body arrives.
+	//   "RESPONSE_HEADERS" - If included in `supported_events`, the extension is
+	// called when the HTTP response headers arrive.
+	//   "RESPONSE_BODY" - If included in `supported_events`, the extension is
+	// called when the HTTP response body arrives.
+	//   "REQUEST_TRAILERS" - If included in `supported_events`, the extension is
+	// called when the HTTP request trailers arrives.
+	//   "RESPONSE_TRAILERS" - If included in `supported_events`, the extension is
+	// called when the HTTP response trailers arrives.
+	SupportedEvents []string `json:"supportedEvents,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Authority") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Authority") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProducerExtensionExtensionSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ProducerExtensionExtensionSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type RetryFilterPerRouteConfig struct {
 	// CryptoKeyName: The name of the crypto key to use for encrypting event data.
 	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
@@ -4379,8 +5144,9 @@ func (s ServiceBinding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ServiceLbPolicy: ServiceLbPolicy holds global load balancing and traffic
-// distribution configuration that can be applied to a BackendService.
+// ServiceLbPolicy: ServiceLbPolicy holds load balancing and traffic
+// distribution configuration that can be applied to a global or regional
+// BackendService.
 type ServiceLbPolicy struct {
 	// AutoCapacityDrain: Optional. Configuration to automatically move traffic
 	// away for unhealthy IG/NEG for the associated Backend Service.
@@ -4405,16 +5171,23 @@ type ServiceLbPolicy struct {
 	//   "LOAD_BALANCING_ALGORITHM_UNSPECIFIED" - The type of the loadbalancing
 	// algorithm is unspecified.
 	//   "SPRAY_TO_WORLD" - Balance traffic across all backends across the world
-	// proportionally based on capacity.
+	// proportionally based on capacity. Only supported for global ServiceLbPolicy
+	// with Cloud Service Mesh, not supported for regional ServiceLbPolicy.
 	//   "SPRAY_TO_REGION" - Direct traffic to the nearest region with endpoints
 	// and capacity before spilling over to other regions and spread the traffic
-	// from each client to all the MIGs/NEGs in a region.
+	// from each client to all the MIGs/NEGs in a region. For regional
+	// ServiceLbPolicy, traffic stays within the configured region and does not
+	// spill over to other regions.
 	//   "WATERFALL_BY_REGION" - Direct traffic to the nearest region with
 	// endpoints and capacity before spilling over to other regions. All MIGs/NEGs
 	// within a region are evenly loaded but each client might not spread the
-	// traffic to all the MIGs/NEGs in the region.
+	// traffic to all the MIGs/NEGs in the region. For regional ServiceLbPolicy,
+	// traffic stays within the configured region and does not spill over to other
+	// regions.
 	//   "WATERFALL_BY_ZONE" - Attempt to keep traffic in a single zone closest to
-	// the client, before spilling over to other zones.
+	// the client, before spilling over to other zones. For regional
+	// ServiceLbPolicy, traffic only spills over to other zones within the same
+	// region.
 	LoadBalancingAlgorithm string `json:"loadBalancingAlgorithm,omitempty"`
 	// Name: Identifier. Name of the ServiceLbPolicy resource. It matches pattern
 	// `projects/{project}/locations/{location}/serviceLbPolicies/{service_lb_policy
@@ -4444,7 +5217,7 @@ func (s ServiceLbPolicy) MarshalJSON() ([]byte, error) {
 }
 
 // ServiceLbPolicyAutoCapacityDrain: Option to specify if an unhealthy IG/NEG
-// should be considered for global load balancing and traffic routing.
+// should be considered for load balancing and traffic routing.
 type ServiceLbPolicyAutoCapacityDrain struct {
 	// Enable: Optional. If set to 'True', an unhealthy IG/NEG will be set as
 	// drained. - An IG/NEG is considered unhealthy if less than 25% of the
@@ -5101,9 +5874,9 @@ type WasmPluginLogConfig struct {
 	// Enable: Optional. Specifies whether to enable logging for activity by this
 	// plugin. Defaults to `false`.
 	Enable bool `json:"enable,omitempty"`
-	// MinLogLevel: Non-empty default. Specifies the lowest level of the plugin
-	// logs that are exported to Cloud Logging. This setting relates to the logs
-	// generated by using logging statements in your Wasm code. This field is can
+	// MinLogLevel: Optional. Non-empty default. Specifies the lowest level of the
+	// plugin logs that are exported to Cloud Logging. This setting relates to the
+	// logs generated by using logging statements in your Wasm code. This field can
 	// be set only if logging is enabled for the plugin. If the field is not
 	// provided when logging is enabled, it is set to `INFO` by default.
 	//
@@ -5116,13 +5889,13 @@ type WasmPluginLogConfig struct {
 	//   "ERROR" - Report logs with ERROR level and above.
 	//   "CRITICAL" - Report logs with CRITICAL level only.
 	MinLogLevel string `json:"minLogLevel,omitempty"`
-	// SampleRate: Non-empty default. Configures the sampling rate of activity
-	// logs, where `1.0` means all logged activity is reported and `0.0` means no
-	// activity is reported. A floating point value between `0.0` and `1.0`
-	// indicates that a percentage of log messages is stored. The default value
-	// when logging is enabled is `1.0`. The value of the field must be between `0`
-	// and `1` (inclusive). This field can be specified only if logging is enabled
-	// for this plugin.
+	// SampleRate: Optional. Non-empty default. Configures the sampling rate of
+	// activity logs, where `1.0` means all logged activity is reported and `0.0`
+	// means no activity is reported. A floating point value between `0.0` and
+	// `1.0` indicates that a percentage of log messages is stored. The default
+	// value when logging is enabled is `1.0`. The value of the field must be
+	// between `0` and `1` (inclusive). This field can be specified only if logging
+	// is enabled for this plugin.
 	SampleRate float64 `json:"sampleRate,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Enable") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -5622,6 +6395,607 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+type ProjectsLocationsAgentConnectivityTemplatesCreateCall struct {
+	s                         *Service
+	parent                    string
+	agentconnectivitytemplate *AgentConnectivityTemplate
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Create: Creates a new AgentConnectivityTemplate in a given project and
+// location.
+//
+//   - parent: The parent resource of the AgentConnectivityTemplate. Must be in
+//     the format `projects/*/locations/*`.
+func (r *ProjectsLocationsAgentConnectivityTemplatesService) Create(parent string, agentconnectivitytemplate *AgentConnectivityTemplate) *ProjectsLocationsAgentConnectivityTemplatesCreateCall {
+	c := &ProjectsLocationsAgentConnectivityTemplatesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.agentconnectivitytemplate = agentconnectivitytemplate
+	return c
+}
+
+// AgentConnectivityTemplateId sets the optional parameter
+// "agentConnectivityTemplateId": Required. Short name of the
+// AgentConnectivityTemplate resource to be created.
+func (c *ProjectsLocationsAgentConnectivityTemplatesCreateCall) AgentConnectivityTemplateId(agentConnectivityTemplateId string) *ProjectsLocationsAgentConnectivityTemplatesCreateCall {
+	c.urlParams_.Set("agentConnectivityTemplateId", agentConnectivityTemplateId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentConnectivityTemplatesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentConnectivityTemplatesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentConnectivityTemplatesCreateCall) Context(ctx context.Context) *ProjectsLocationsAgentConnectivityTemplatesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentConnectivityTemplatesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentConnectivityTemplatesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.agentconnectivitytemplate)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/agentConnectivityTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.agentConnectivityTemplates.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentConnectivityTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAgentConnectivityTemplatesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single AgentConnectivityTemplate.
+//
+//   - name: A name of the AgentConnectivityTemplate to delete. Must be in the
+//     format `projects/*/locations/*/agentConnectivityTemplates/*`.
+func (r *ProjectsLocationsAgentConnectivityTemplatesService) Delete(name string) *ProjectsLocationsAgentConnectivityTemplatesDeleteCall {
+	c := &ProjectsLocationsAgentConnectivityTemplatesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the
+// AgentConnectivityTemplate to delete.
+func (c *ProjectsLocationsAgentConnectivityTemplatesDeleteCall) Etag(etag string) *ProjectsLocationsAgentConnectivityTemplatesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentConnectivityTemplatesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentConnectivityTemplatesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentConnectivityTemplatesDeleteCall) Context(ctx context.Context) *ProjectsLocationsAgentConnectivityTemplatesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentConnectivityTemplatesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentConnectivityTemplatesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.agentConnectivityTemplates.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentConnectivityTemplatesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAgentConnectivityTemplatesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single AgentConnectivityTemplate.
+//
+//   - name: A name of the AgentConnectivityTemplate to get. Must be in the
+//     format `projects/*/locations/*/agentConnectivityTemplates/*`.
+func (r *ProjectsLocationsAgentConnectivityTemplatesService) Get(name string) *ProjectsLocationsAgentConnectivityTemplatesGetCall {
+	c := &ProjectsLocationsAgentConnectivityTemplatesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentConnectivityTemplatesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentConnectivityTemplatesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAgentConnectivityTemplatesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentConnectivityTemplatesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentConnectivityTemplatesGetCall) Context(ctx context.Context) *ProjectsLocationsAgentConnectivityTemplatesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentConnectivityTemplatesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentConnectivityTemplatesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.agentConnectivityTemplates.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AgentConnectivityTemplate.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentConnectivityTemplatesGetCall) Do(opts ...googleapi.CallOption) (*AgentConnectivityTemplate, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AgentConnectivityTemplate{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsAgentConnectivityTemplatesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists AgentConnectivityTemplates in a given project and location.
+//
+//   - parent: The project and location from which the AgentConnectivityTemplates
+//     should be listed, specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsAgentConnectivityTemplatesService) List(parent string) *ProjectsLocationsAgentConnectivityTemplatesListCall {
+	c := &ProjectsLocationsAgentConnectivityTemplatesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// AgentConnectivityTemplates to return per call.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) PageSize(pageSize int64) *ProjectsLocationsAgentConnectivityTemplatesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListAgentConnectivityTemplatesResponse` Indicates that this is a
+// continuation of a prior `ListAgentConnectivityTemplates` call, and that the
+// system should return the next page of data.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) PageToken(pageToken string) *ProjectsLocationsAgentConnectivityTemplatesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// ReturnPartialSuccess sets the optional parameter "returnPartialSuccess": If
+// true, allow partial responses for multi-regional Aggregated List requests.
+// Otherwise if one of the locations is down or unreachable, the Aggregated
+// List request will fail.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) ReturnPartialSuccess(returnPartialSuccess bool) *ProjectsLocationsAgentConnectivityTemplatesListCall {
+	c.urlParams_.Set("returnPartialSuccess", fmt.Sprint(returnPartialSuccess))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentConnectivityTemplatesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsAgentConnectivityTemplatesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) Context(ctx context.Context) *ProjectsLocationsAgentConnectivityTemplatesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/agentConnectivityTemplates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.agentConnectivityTemplates.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAgentConnectivityTemplatesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) Do(opts ...googleapi.CallOption) (*ListAgentConnectivityTemplatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAgentConnectivityTemplatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsAgentConnectivityTemplatesListCall) Pages(ctx context.Context, f func(*ListAgentConnectivityTemplatesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsAgentConnectivityTemplatesPatchCall struct {
+	s                         *Service
+	name                      string
+	agentconnectivitytemplate *AgentConnectivityTemplate
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// Patch: Updates the parameters of a single AgentConnectivityTemplate.
+//
+//   - name: Identifier. Name of the AgentConnectivityTemplate resource. It
+//     matches pattern `projects/*/locations/*/agentConnectivityTemplates/`.
+func (r *ProjectsLocationsAgentConnectivityTemplatesService) Patch(name string, agentconnectivitytemplate *AgentConnectivityTemplate) *ProjectsLocationsAgentConnectivityTemplatesPatchCall {
+	c := &ProjectsLocationsAgentConnectivityTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.agentconnectivitytemplate = agentconnectivitytemplate
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the AgentConnectivityTemplate
+// resource by the update. The fields specified in the update_mask are relative
+// to the resource, not the full request. A field will be overwritten if it is
+// in the mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsAgentConnectivityTemplatesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAgentConnectivityTemplatesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsAgentConnectivityTemplatesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsAgentConnectivityTemplatesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsAgentConnectivityTemplatesPatchCall) Context(ctx context.Context) *ProjectsLocationsAgentConnectivityTemplatesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsAgentConnectivityTemplatesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsAgentConnectivityTemplatesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.agentconnectivitytemplate)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.agentConnectivityTemplates.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsAgentConnectivityTemplatesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.agentConnectivityTemplates.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsAgentGatewaysCreateCall struct {
 	s            *Service
 	parent       string
@@ -5964,6 +7338,14 @@ type ProjectsLocationsAgentGatewaysListCall struct {
 func (r *ProjectsLocationsAgentGatewaysService) List(parent string) *ProjectsLocationsAgentGatewaysListCall {
 	c := &ProjectsLocationsAgentGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter expression to filter
+// the results listed in the response. The expression must follow the syntax
+// described in AIP-160 (https://google.aip.dev/160).
+func (c *ProjectsLocationsAgentGatewaysListCall) Filter(filter string) *ProjectsLocationsAgentGatewaysListCall {
+	c.urlParams_.Set("filter", filter)
 	return c
 }
 
@@ -6772,11 +8154,11 @@ func (c *ProjectsLocationsAuthzExtensionsPatchCall) RequestId(requestId string) 
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. Used to
-// specify the fields to be overwritten in the `AuthzExtension` resource by the
-// update. The fields specified in the `update_mask` are relative to the
-// resource, not the full request. A field is overwritten if it is in the mask.
-// If the user does not specify a mask, then all fields are overwritten.
+// UpdateMask sets the optional parameter "updateMask": Used to specify the
+// fields to be overwritten in the `AuthzExtension` resource by the update. The
+// fields specified in the `update_mask` are relative to the resource, not the
+// full request. A field is overwritten if it is in the mask. If the user does
+// not specify a mask, then all fields are overwritten.
 func (c *ProjectsLocationsAuthzExtensionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsAuthzExtensionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8495,6 +9877,604 @@ func (c *ProjectsLocationsEndpointPoliciesPatchCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.endpointPolicies.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExtensionBindingsCreateCall struct {
+	s                *Service
+	parent           string
+	extensionbinding *ExtensionBinding
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new `ExtensionBinding` resource in a given project and
+// location.
+//
+//   - parent: The parent resource of the `ExtensionBinding` resource. Must be in
+//     the format `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsExtensionBindingsService) Create(parent string, extensionbinding *ExtensionBinding) *ProjectsLocationsExtensionBindingsCreateCall {
+	c := &ProjectsLocationsExtensionBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.extensionbinding = extensionbinding
+	return c
+}
+
+// ExtensionBindingId sets the optional parameter "extensionBindingId":
+// Required. Short name of the `ExtensionBinding` resource to be created.
+func (c *ProjectsLocationsExtensionBindingsCreateCall) ExtensionBindingId(extensionBindingId string) *ProjectsLocationsExtensionBindingsCreateCall {
+	c.urlParams_.Set("extensionBindingId", extensionBindingId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExtensionBindingsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsExtensionBindingsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExtensionBindingsCreateCall) Context(ctx context.Context) *ProjectsLocationsExtensionBindingsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExtensionBindingsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExtensionBindingsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.extensionbinding)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/extensionBindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.extensionBindings.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExtensionBindingsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExtensionBindingsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified `ExtensionBinding` resource.
+//
+//   - name: A name of the `ExtensionBinding` resource to delete. Must be in the
+//     format
+//     `projects/{project}/locations/{location}/extensionBindings/{extension_bindi
+//     ng}`.
+func (r *ProjectsLocationsExtensionBindingsService) Delete(name string) *ProjectsLocationsExtensionBindingsDeleteCall {
+	c := &ProjectsLocationsExtensionBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the ExtensionBinding to
+// delete.
+func (c *ProjectsLocationsExtensionBindingsDeleteCall) Etag(etag string) *ProjectsLocationsExtensionBindingsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExtensionBindingsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsExtensionBindingsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExtensionBindingsDeleteCall) Context(ctx context.Context) *ProjectsLocationsExtensionBindingsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExtensionBindingsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExtensionBindingsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.extensionBindings.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExtensionBindingsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExtensionBindingsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of the specified `ExtensionBinding` resource.
+//
+//   - name: A name of the `ExtensionBinding` resource to get. Must be in the
+//     format
+//     `projects/{project}/locations/{location}/extensionBindings/{extension_bindi
+//     ng}`.
+func (r *ProjectsLocationsExtensionBindingsService) Get(name string) *ProjectsLocationsExtensionBindingsGetCall {
+	c := &ProjectsLocationsExtensionBindingsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExtensionBindingsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsExtensionBindingsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsExtensionBindingsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsExtensionBindingsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExtensionBindingsGetCall) Context(ctx context.Context) *ProjectsLocationsExtensionBindingsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExtensionBindingsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExtensionBindingsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.extensionBindings.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ExtensionBinding.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsExtensionBindingsGetCall) Do(opts ...googleapi.CallOption) (*ExtensionBinding, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ExtensionBinding{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsExtensionBindingsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `ExtensionBinding` resources in a given project and location.
+//
+//   - parent: The project and location from which the `ExtensionBinding`
+//     resources should be listed, specified in the format
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsExtensionBindingsService) List(parent string) *ProjectsLocationsExtensionBindingsListCall {
+	c := &ProjectsLocationsExtensionBindingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// `ExtensionBinding` resources to return per call.
+func (c *ProjectsLocationsExtensionBindingsListCall) PageSize(pageSize int64) *ProjectsLocationsExtensionBindingsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListExtensionBindingsResponse` Indicates that this is a continuation
+// of a prior `ListExtensionBindings` call, and that the system should return
+// the next page of data.
+func (c *ProjectsLocationsExtensionBindingsListCall) PageToken(pageToken string) *ProjectsLocationsExtensionBindingsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExtensionBindingsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsExtensionBindingsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsExtensionBindingsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsExtensionBindingsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExtensionBindingsListCall) Context(ctx context.Context) *ProjectsLocationsExtensionBindingsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExtensionBindingsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExtensionBindingsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/extensionBindings")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.extensionBindings.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListExtensionBindingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsExtensionBindingsListCall) Do(opts ...googleapi.CallOption) (*ListExtensionBindingsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListExtensionBindingsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsExtensionBindingsListCall) Pages(ctx context.Context, f func(*ListExtensionBindingsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsExtensionBindingsPatchCall struct {
+	s                *Service
+	name             string
+	extensionbinding *ExtensionBinding
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Patch: Updates the parameters of the specified `ExtensionBinding` resource.
+//
+//   - name: Identifier. Name of the `ExtensionBinding` resource in the following
+//     format:
+//     `projects/{project}/locations/{location}/extensionBindings/{extension_bindi
+//     ng}`.
+func (r *ProjectsLocationsExtensionBindingsService) Patch(name string, extensionbinding *ExtensionBinding) *ProjectsLocationsExtensionBindingsPatchCall {
+	c := &ProjectsLocationsExtensionBindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.extensionbinding = extensionbinding
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the `ExtensionBinding` resource by
+// the update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields will be
+// overwritten.
+func (c *ProjectsLocationsExtensionBindingsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsExtensionBindingsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsExtensionBindingsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsExtensionBindingsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsExtensionBindingsPatchCall) Context(ctx context.Context) *ProjectsLocationsExtensionBindingsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsExtensionBindingsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExtensionBindingsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.extensionbinding)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.extensionBindings.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExtensionBindingsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.extensionBindings.patch", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 
@@ -15128,6 +17108,487 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
+type ProjectsLocationsProducerExtensionsCreateCall struct {
+	s                 *Service
+	parent            string
+	producerextension *ProducerExtension
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Create: Creates a new `ProducerExtension` resource in a given project and
+// location.
+//
+//   - parent: The parent resource of the `ProducerExtension` resource. Must be
+//     in the format `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsProducerExtensionsService) Create(parent string, producerextension *ProducerExtension) *ProjectsLocationsProducerExtensionsCreateCall {
+	c := &ProjectsLocationsProducerExtensionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.producerextension = producerextension
+	return c
+}
+
+// ProducerExtensionId sets the optional parameter "producerExtensionId":
+// Required. Short name of the `ProducerExtension` resource to be created.
+func (c *ProjectsLocationsProducerExtensionsCreateCall) ProducerExtensionId(producerExtensionId string) *ProjectsLocationsProducerExtensionsCreateCall {
+	c.urlParams_.Set("producerExtensionId", producerExtensionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsProducerExtensionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsProducerExtensionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsProducerExtensionsCreateCall) Context(ctx context.Context) *ProjectsLocationsProducerExtensionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsProducerExtensionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProducerExtensionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.producerextension)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/producerExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.producerExtensions.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.producerExtensions.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProducerExtensionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.producerExtensions.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsProducerExtensionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the specified `ProducerExtension` resource.
+//
+//   - name: A name of the `ProducerExtension` resource to delete. Must be in the
+//     format
+//     `projects/{project}/locations/{location}/producerExtensions/{producer_exten
+//     sion}`.
+func (r *ProjectsLocationsProducerExtensionsService) Delete(name string) *ProjectsLocationsProducerExtensionsDeleteCall {
+	c := &ProjectsLocationsProducerExtensionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The etag of the ProducerExtension
+// to delete.
+func (c *ProjectsLocationsProducerExtensionsDeleteCall) Etag(etag string) *ProjectsLocationsProducerExtensionsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsProducerExtensionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsProducerExtensionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsProducerExtensionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsProducerExtensionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsProducerExtensionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProducerExtensionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.producerExtensions.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.producerExtensions.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsProducerExtensionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.producerExtensions.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsProducerExtensionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of the specified `ProducerExtension` resource.
+//
+//   - name: A name of the `ProducerExtension` resource to get. Must be in the
+//     format
+//     `projects/{project}/locations/{location}/producerExtensions/{producer_exten
+//     sion}`.
+func (r *ProjectsLocationsProducerExtensionsService) Get(name string) *ProjectsLocationsProducerExtensionsGetCall {
+	c := &ProjectsLocationsProducerExtensionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsProducerExtensionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsProducerExtensionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsProducerExtensionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsProducerExtensionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsProducerExtensionsGetCall) Context(ctx context.Context) *ProjectsLocationsProducerExtensionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsProducerExtensionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProducerExtensionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.producerExtensions.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.producerExtensions.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProducerExtension.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsProducerExtensionsGetCall) Do(opts ...googleapi.CallOption) (*ProducerExtension, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProducerExtension{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.producerExtensions.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsProducerExtensionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists `ProducerExtension` resources in a given project and location.
+//
+//   - parent: The project and location from which the `ProducerExtension`
+//     resources should be listed, specified in the format
+//     `projects/{project}/locations/{location}`.
+func (r *ProjectsLocationsProducerExtensionsService) List(parent string) *ProjectsLocationsProducerExtensionsListCall {
+	c := &ProjectsLocationsProducerExtensionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// `ProducerExtension` resources to return per call.
+func (c *ProjectsLocationsProducerExtensionsListCall) PageSize(pageSize int64) *ProjectsLocationsProducerExtensionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListProducerExtensionsResponse` Indicates that this is a continuation
+// of a prior `ListProducerExtensions` call, and that the system should return
+// the next page of data.
+func (c *ProjectsLocationsProducerExtensionsListCall) PageToken(pageToken string) *ProjectsLocationsProducerExtensionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsProducerExtensionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsProducerExtensionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsProducerExtensionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsProducerExtensionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsProducerExtensionsListCall) Context(ctx context.Context) *ProjectsLocationsProducerExtensionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsProducerExtensionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsProducerExtensionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/producerExtensions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "networkservices.projects.locations.producerExtensions.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "networkservices.projects.locations.producerExtensions.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListProducerExtensionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsProducerExtensionsListCall) Do(opts ...googleapi.CallOption) (*ListProducerExtensionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListProducerExtensionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "networkservices.projects.locations.producerExtensions.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsProducerExtensionsListCall) Pages(ctx context.Context, f func(*ListProducerExtensionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 type ProjectsLocationsServiceBindingsCreateCall struct {
 	s              *Service
 	parent         string
@@ -15145,6 +17606,21 @@ func (r *ProjectsLocationsServiceBindingsService) Create(parent string, serviceb
 	c := &ProjectsLocationsServiceBindingsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.servicebinding = servicebinding
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees this for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request. This prevents clients
+// from accidentally creating duplicate commitments. The request ID must be a
+// valid UUID version 4 with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsServiceBindingsCreateCall) RequestId(requestId string) *ProjectsLocationsServiceBindingsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -15254,6 +17730,21 @@ type ProjectsLocationsServiceBindingsDeleteCall struct {
 func (r *ProjectsLocationsServiceBindingsService) Delete(name string) *ProjectsLocationsServiceBindingsDeleteCall {
 	c := &ProjectsLocationsServiceBindingsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees this for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request. This prevents clients
+// from accidentally creating duplicate commitments. The request ID must be a
+// valid UUID version 4 with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsServiceBindingsDeleteCall) RequestId(requestId string) *ProjectsLocationsServiceBindingsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
@@ -15612,6 +18103,21 @@ func (r *ProjectsLocationsServiceBindingsService) Patch(name string, servicebind
 	c := &ProjectsLocationsServiceBindingsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	c.servicebinding = servicebinding
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional request ID to
+// identify requests. Specify a unique request ID so that if you must retry
+// your request, the server can ignore the request if it has already been
+// completed. The server guarantees this for 60 minutes after the first
+// request. For example, consider a situation where you make an initial request
+// and the request times out. If you make the request again with the same
+// request ID, the server ignores the second request. This prevents clients
+// from accidentally creating duplicate commitments. The request ID must be a
+// valid UUID version 4 with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsServiceBindingsPatchCall) RequestId(requestId string) *ProjectsLocationsServiceBindingsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 

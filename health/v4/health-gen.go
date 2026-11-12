@@ -130,9 +130,18 @@ const (
 	// See exercise GPS location data in Google Health
 	GooglehealthLocationReadonlyScope = "https://www.googleapis.com/auth/googlehealth.location.readonly"
 
-	// Add exercise GPS location data to Google Health, and edit or delete the data
-	// it adds.
-	GooglehealthLocationWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.location.writeonly"
+	// See your Google Health logged symptoms data
+	GooglehealthLoggedSymptomsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly"
+
+	// Add logged symptoms data to Google Health, and edit or delete the data it
+	// adds
+	GooglehealthLoggedSymptomsWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly"
+
+	// See your Google Health mindfulness data
+	GooglehealthMindfulnessReadonlyScope = "https://www.googleapis.com/auth/googlehealth.mindfulness.readonly"
+
+	// Add mindfulness data to Google Health, and edit or delete the data it adds
+	GooglehealthMindfulnessWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly"
 
 	// Add nutrition data to Google Health, and edit or delete the data it adds.
 	GooglehealthNutritionWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.nutrition.writeonly"
@@ -142,6 +151,13 @@ const (
 
 	// Add profile data to Google Health, and edit or delete the data it adds.
 	GooglehealthProfileWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.profile.writeonly"
+
+	// See your Google Health reproductive health data
+	GooglehealthReproductiveHealthReadonlyScope = "https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly"
+
+	// Add reproductive health data to Google Health, and edit or delete the data
+	// it adds
+	GooglehealthReproductiveHealthWriteonlyScope = "https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly"
 
 	// See your Google Health settings
 	GooglehealthSettingsReadonlyScope = "https://www.googleapis.com/auth/googlehealth.settings.readonly"
@@ -167,10 +183,15 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/googlehealth.health_metrics_and_measurements.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.irn.readonly",
 		"https://www.googleapis.com/auth/googlehealth.location.readonly",
-		"https://www.googleapis.com/auth/googlehealth.location.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.logged_symptoms.readonly",
+		"https://www.googleapis.com/auth/googlehealth.logged_symptoms.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.mindfulness.readonly",
+		"https://www.googleapis.com/auth/googlehealth.mindfulness.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.nutrition.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.profile.readonly",
 		"https://www.googleapis.com/auth/googlehealth.profile.writeonly",
+		"https://www.googleapis.com/auth/googlehealth.reproductive_health.readonly",
+		"https://www.googleapis.com/auth/googlehealth.reproductive_health.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.settings.readonly",
 		"https://www.googleapis.com/auth/googlehealth.settings.writeonly",
 		"https://www.googleapis.com/auth/googlehealth.sleep.readonly",
@@ -345,6 +366,7 @@ type ActiveEnergyBurned struct {
 	// Interval: Required. Observed interval
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
 	// Kcal: Required. Energy burned during an activity, measured in kilocalories.
+	// Must be in the range `[0, 1000000]`.
 	Kcal float64 `json:"kcal,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Interval") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -731,7 +753,7 @@ func (s AlertWindow) MarshalJSON() ([]byte, error) {
 // for a user in millimeters.
 type Altitude struct {
 	// GainMillimeters: Required. Altitude gain in millimeters over the observed
-	// interval.
+	// interval. Must be in the range `[-1000000000, 1000000000]`.
 	GainMillimeters int64 `json:"gainMillimeters,omitempty,string"`
 	// Interval: Required. Observed interval.
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
@@ -883,7 +905,7 @@ func (s BatchDeleteDataPointsRequest) MarshalJSON() ([]byte, error) {
 // LEGACY_NAMES
 type BloodGlucose struct {
 	// BloodGlucoseMilligramsPerDeciliter: Required. Blood glucose level
-	// concentration in mg/dL.
+	// concentration in mg/dL. Must be in the range `[0, 900]`.
 	BloodGlucoseMilligramsPerDeciliter float64 `json:"bloodGlucoseMilligramsPerDeciliter,omitempty"`
 	// MealType: Optional. Meal type of the measurement.
 	//
@@ -1005,7 +1027,7 @@ func (s *BloodGlucoseRollupValue) UnmarshalJSON(data []byte) error {
 
 // BodyFat: Body fat measurement.
 type BodyFat struct {
-	// Percentage: Required. Body fat percentage, in range [0, 100].
+	// Percentage: Required. Body fat percentage. Must be in the range `[0, 100]`.
 	Percentage float64 `json:"percentage,omitempty"`
 	// SampleTime: Required. The time at which body fat was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -1231,7 +1253,8 @@ type CoreBodyTemperature struct {
 	MeasurementLocation string `json:"measurementLocation,omitempty"`
 	// SampleTime: Required. The time at which core body temperature was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
-	// TemperatureCelsius: Required. The core body temperature in Celsius.
+	// TemperatureCelsius: Required. The core body temperature in Celsius. Must be
+	// in the range `[0, 100]`.
 	TemperatureCelsius float64 `json:"temperatureCelsius,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1460,19 +1483,19 @@ func (s DailyHeartRateZones) MarshalJSON() ([]byte, error) {
 // sleep.
 type DailyOxygenSaturation struct {
 	// AveragePercentage: Required. The average value of the oxygen saturation
-	// samples during the sleep.
+	// samples during the sleep. Must be in the range `[0, 100]`.
 	AveragePercentage float64 `json:"averagePercentage,omitempty"`
 	// Date: Required. Date (in user's timezone) of the daily oxygen saturation
 	// record.
 	Date *Date `json:"date,omitempty"`
 	// LowerBoundPercentage: Required. The lower bound of the confidence interval
-	// of oxygen saturation samples during sleep.
+	// of oxygen saturation samples during sleep. Must be in the range `[0, 100]`.
 	LowerBoundPercentage float64 `json:"lowerBoundPercentage,omitempty"`
 	// StandardDeviationPercentage: Optional. Standard deviation of the daily
 	// oxygen saturation averages from the past 7-30 days.
 	StandardDeviationPercentage float64 `json:"standardDeviationPercentage,omitempty"`
 	// UpperBoundPercentage: Required. The upper bound of the confidence interval
-	// of oxygen saturation samples during sleep.
+	// of oxygen saturation samples during sleep. Must be in the range `[0, 100]`.
 	UpperBoundPercentage float64 `json:"upperBoundPercentage,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AveragePercentage") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1614,16 +1637,34 @@ func (s DailyRestingHeartRateMetadata) MarshalJSON() ([]byte, error) {
 type DailyRollUpDataPointsRequest struct {
 	// DataSourceFamily: Optional. The data source family name to roll up. If
 	// empty, data points from all available data sources will be rolled up.
-	// Format: `users/me/dataSourceFamilies/{data_source_family}` The supported
-	// values are: - `users/me/dataSourceFamilies/all-sources` - default value -
-	// `users/me/dataSourceFamilies/google-wearables` - tracker devices -
-	// `users/me/dataSourceFamilies/google-sources` - Google first party sources
+	// Format: `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}`
+	// can be either the alias `me` or the authenticated user's numeric Health User
+	// ID, retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or
+	// `users/1234567890/dataSourceFamilies/...`). The supported values are: -
+	// `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data
+	// from all available data sources. -
+	// `users/{user}/dataSourceFamilies/google-wearables` - Includes data from
+	// Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+	// Excludes manually logged data. -
+	// `users/{user}/dataSourceFamilies/google-sources` - Includes first-party
+	// Google data, such as data from tracker devices, manually logged data, and
+	// Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes
+	// only the data the calling client wrote through this API, that is, data
+	// points whose data source was registered through this API with the same OAuth
+	// client ID as the caller. Callers that were only granted write scopes for the
+	// requested data type may only read the data they wrote themselves: their
+	// requests are implicitly restricted to `self-sources`, and requesting any
+	// other data source family fails with `PERMISSION_DENIED`. If no data point
+	// matches the requested data source family, the response is an empty list
+	// rather than an error.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
-	// unspecified, at most 1440 data points will be returned. The maximum page
-	// size is 10000; values above that will be truncated accordingly.
+	// unspecified, at most `90` data points will be returned. The maximum page
+	// size is `90`. For `calories-in-heart-rate-zone`, `heart-rate`,
+	// `active-minutes`, and `total-calories`, the default and maximum page size is
+	// `14`.
 	PageSize int64 `json:"pageSize,omitempty"`
-	// PageToken: Optional. The `next_page_token` from a previous request, if any.
+	// PageToken: Optional. The next_page_token from a previous request, if any.
 	// All other request fields need to be the same as in the initial request when
 	// the page token is specified.
 	PageToken string `json:"pageToken,omitempty"`
@@ -1634,7 +1675,10 @@ type DailyRollUpDataPointsRequest struct {
 	// 90 days.
 	Range *CivilTimeInterval `json:"range,omitempty"`
 	// WindowSizeDays: Optional. Aggregation window size, in number of days.
-	// Defaults to 1 if not specified.
+	// Defaults to 1 if not specified. If the requested range is not an exact
+	// multiple of `window_size_days`, the final bucket chronologically will be
+	// truncated at the upper endpoint of the range and will cover a duration
+	// shorter than `window_size_days`.
 	WindowSizeDays int64 `json:"windowSizeDays,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSourceFamily") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -1657,20 +1701,23 @@ func (s DailyRollUpDataPointsRequest) MarshalJSON() ([]byte, error) {
 // DailyRollUpDataPointsResponse: Response containing the list of rolled up
 // data points.
 type DailyRollUpDataPointsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
 	// RollupDataPoints: Values for each aggregation time window.
 	RollupDataPoints []*DailyRollupDataPoint `json:"rollupDataPoints,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "RollupDataPoints") to
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "RollupDataPoints") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1873,7 +1920,7 @@ type DailyVO2Max struct {
 	// confidence has decreased sufficiently to consider the value an estimation.
 	Estimated bool `json:"estimated,omitempty"`
 	// Vo2Max: Required. Daily VO2 max value measured as in ml consumed oxygen / kg
-	// of body weight / min.
+	// of body weight / min. Must be in the range `[0, 100]`.
 	Vo2Max float64 `json:"vo2Max,omitempty"`
 	// Vo2MaxCovariance: Optional. The covariance of the VO2 max value.
 	Vo2MaxCovariance float64 `json:"vo2MaxCovariance,omitempty"`
@@ -1994,13 +2041,20 @@ type DataPoint struct {
 	// IrregularRhythmNotification: Optional. Data for points in the
 	// `irregular-rhythm-notification` session data type collection.
 	IrregularRhythmNotification *IrregularRhythmNotification `json:"irregularRhythmNotification,omitempty"`
+	// MenstrualPeriod: Optional. Data for points in the `menstrual-period`
+	// interval data type collection.
+	MenstrualPeriod *MenstrualPeriod `json:"menstrualPeriod,omitempty"`
+	// Moods: Optional. Data for points in the `moods` sample data type collection.
+	Moods *Moods `json:"moods,omitempty"`
 	// Name: Identifier. Data point name, only supported for the subset of
 	// identifiable data types. For the majority of the data types, individual data
 	// points do not need to be identified and this field would be empty. Format:
-	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example:
-	// `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcd
-	// ef` The `{user}` ID is a system-generated identifier, as described in
-	// Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case
+	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples: ##
+	// `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef`
+	// `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890ab
+	// cdef` The `{user}` can be either the alias `me` or the authenticated user's
+	// numeric Health User ID, which can be retrieved by calling GetIdentity (see
+	// Identity.health_user_id). The `{data_type}` ID corresponds to the kebab-case
 	// version of the field names in the DataPoint data union field, e.g.
 	// `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
 	// client-provided or system-generated. If client-provided, it must be a string
@@ -2009,6 +2063,9 @@ type DataPoint struct {
 	// NutritionLog: Optional. Data for points in the `nutrition-log` session data
 	// type collection.
 	NutritionLog *NutritionLog `json:"nutritionLog,omitempty"`
+	// OvulationTest: Optional. Data for points in the `ovulation-test` sample data
+	// type collection.
+	OvulationTest *OvulationTest `json:"ovulationTest,omitempty"`
 	// OxygenSaturation: Optional. Data for points in the `oxygen-saturation`
 	// sample data type collection.
 	OxygenSaturation *OxygenSaturation `json:"oxygenSaturation,omitempty"`
@@ -2030,6 +2087,9 @@ type DataPoint struct {
 	// SwimLengthsData: Optional. Data for points in the `swim-lengths-data`
 	// interval data type collection.
 	SwimLengthsData *SwimLengthsData `json:"swimLengthsData,omitempty"`
+	// Symptoms: Optional. Data for points in the `symptoms` sample data type
+	// collection.
+	Symptoms *Symptoms `json:"symptoms,omitempty"`
 	// TimeInHeartRateZone: Optional. Data for points in the
 	// `time-in-heart-rate-zone` interval data type collection.
 	TimeInHeartRateZone *TimeInHeartRateZone `json:"timeInHeartRateZone,omitempty"`
@@ -2260,6 +2320,7 @@ type Distance struct {
 	// Interval: Required. Observed interval.
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
 	// Millimeters: Required. Distance in millimeters over the observed interval.
+	// Must be in the range `[0, 1000000000]`.
 	Millimeters int64 `json:"millimeters,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "Interval") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -2418,7 +2479,8 @@ func (s EndpointAuthorization) MarshalJSON() ([]byte, error) {
 
 // EnergyQuantity: Represents the energy quantity.
 type EnergyQuantity struct {
-	// Kcal: Required. The energy value in kilocalories.
+	// Kcal: Required. The energy value in kilocalories. Must be in the range `[0,
+	// 100000]`.
 	Kcal float64 `json:"kcal,omitempty"`
 	// UserProvidedUnit: Optional. Value representing the user provided unit.
 	//
@@ -2515,7 +2577,11 @@ type Exercise struct {
 	// CreateTime: Output only. Represents the timestamp of the creation of the
 	// exercise.
 	CreateTime string `json:"createTime,omitempty"`
-	// DisplayName: Required. Exercise display name.
+	// DisplayName: Required. The localized, human-readable name of the exercise.
+	// For all exercise types other than `OTHER`, the system ignores client input
+	// and overrides this field with a generated name based on `exercise_type`
+	// (e.g., "Walking" for `WALKING`). If `exercise_type` is `OTHER`, this field
+	// can contain the user's custom, free-form display name.
 	DisplayName string `json:"displayName,omitempty"`
 	// ExerciseEvents: Optional. Exercise events that happen during an exercise,
 	// such as pause & restarts.
@@ -2837,7 +2903,8 @@ func (s ExportExerciseTcxResponse) MarshalJSON() ([]byte, error) {
 
 // Floors: Gained elevation measured in floors over the time interval
 type Floors struct {
-	// Count: Required. Number of floors in the recorded interval
+	// Count: Required. Number of floors in the recorded interval. Must be in the
+	// range `[0, 1000000]`.
 	Count int64 `json:"count,omitempty,string"`
 	// Interval: Required. Observed interval
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
@@ -3040,8 +3107,10 @@ func (s *FoodServing) UnmarshalJSON(data []byte) error {
 // not need to interact with this resource directly.
 type GoogleDevicesandservicesHealthV4DataType struct {
 	// Name: Identifier. The resource name of the data type. Format:
-	// `users/{user}/dataTypes/{data_type}` See DataPoint.name for examples and
-	// possible values.
+	// `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+	// `users/1234567890/dataTypes/steps` The `{user}` can be either the alias `me`
+	// or the authenticated user's numeric Health User ID (retrieved via
+	// GetIdentity). See DataPoint.name for examples and possible values.
 	Name string `json:"name,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -3112,6 +3181,86 @@ func (s GoogleDevicesandservicesHealthV4WebhookNotificationCloudLog) MarshalJSON
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevicesandservicesHealthV4betaDataType: Represents a type of health
+// data a user can have data points recorded for. It matches the parent
+// resource of collection containing data points of the given type. Clients
+// currently do not need to interact with this resource directly.
+type GoogleDevicesandservicesHealthV4betaDataType struct {
+	// Name: Identifier. The resource name of the data type. Format:
+	// `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+	// `users/1234567890/dataTypes/steps` The `{user}` can be either the alias `me`
+	// or the authenticated user's numeric Health User ID (retrieved via
+	// GetIdentity). See DataPoint.name for examples and possible values.
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevicesandservicesHealthV4betaDataType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevicesandservicesHealthV4betaDataType
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevicesandservicesHealthV4betaUser: Represents a user in the Google
+// Health API. It matches the parent resource of collections owned by the user.
+// Clients currently do not need to interact with this resource directly.
+type GoogleDevicesandservicesHealthV4betaUser struct {
+	// Name: Identifier. The resource name of the user. The `{user}` ID is a
+	// system-generated identifier, as described in Identity.health_user_id.
+	// Format: `users/{user}`
+	Name string `json:"name,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevicesandservicesHealthV4betaUser) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevicesandservicesHealthV4betaUser
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog: Log message
+// for a webhook notification sent by the Google Health API to a subscriber's
+// endpoint. Includes the HTTP response received from the endpoint.
+type GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog struct {
+	// HttpResponse: Required. Represents the HTTP response. This message includes
+	// the status code, reason phrase, headers, and body.
+	HttpResponse *HttpResponse `json:"httpResponse,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HttpResponse") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HttpResponse") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevicesandservicesHealthV4betaWebhookNotificationCloudLog
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // HeartBeat: A single heart beat measurement.
 type HeartBeat struct {
 	// BeatsPerMinute: Required. The beats-per-minute value extrapolated from the
@@ -3147,7 +3296,8 @@ func (s HeartBeat) MarshalJSON() ([]byte, error) {
 
 // HeartRate: A heart rate measurement.
 type HeartRate struct {
-	// BeatsPerMinute: Required. The heart rate value in beats per minute.
+	// BeatsPerMinute: Required. The heart rate value in beats per minute. Must be
+	// in the range `[1, 300]`.
 	BeatsPerMinute int64 `json:"beatsPerMinute,omitempty,string"`
 	// Metadata: Optional. Metadata about the heart rate sample.
 	Metadata *HeartRateMetadata `json:"metadata,omitempty"`
@@ -3263,24 +3413,26 @@ func (s *HeartRateRollupValue) UnmarshalJSON(data []byte) error {
 // normal heartbeats or by standard deviation of the inter-beat intervals
 // (SDNN).
 type HeartRateVariability struct {
+	// Metadata: Optional. Additional information about the heart rate variability
+	// measurement.
+	Metadata *HeartRateVariabilityMetadata `json:"metadata,omitempty"`
 	// RootMeanSquareOfSuccessiveDifferencesMilliseconds: Optional. The root mean
 	// square of successive differences between normal heartbeats. This is a
-	// measure of heart rate variability used by Google Health.
+	// measure of heart rate variability used by Google Health. Must be in the
+	// range `[1, 200]`.
 	RootMeanSquareOfSuccessiveDifferencesMilliseconds float64 `json:"rootMeanSquareOfSuccessiveDifferencesMilliseconds,omitempty"`
 	// SampleTime: Required. The time of the heart rate variability measurement.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
 	// StandardDeviationMilliseconds: Optional. The standard deviation of the heart
 	// rate variability measurement.
 	StandardDeviationMilliseconds float64 `json:"standardDeviationMilliseconds,omitempty"`
-	// ForceSendFields is a list of field names (e.g.
-	// "RootMeanSquareOfSuccessiveDifferencesMilliseconds") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g.
-	// "RootMeanSquareOfSuccessiveDifferencesMilliseconds") to include in API
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -3305,6 +3457,48 @@ func (s *HeartRateVariability) UnmarshalJSON(data []byte) error {
 	}
 	s.RootMeanSquareOfSuccessiveDifferencesMilliseconds = float64(s1.RootMeanSquareOfSuccessiveDifferencesMilliseconds)
 	s.StandardDeviationMilliseconds = float64(s1.StandardDeviationMilliseconds)
+	return nil
+}
+
+// HeartRateVariabilityMetadata: Metadata for HeartRateVariability.
+type HeartRateVariabilityMetadata struct {
+	// HighFrequencyPower: Optional. The power in interbeat interval fluctuations
+	// within the high frequency band (0.15 Hz - 0.4 Hz).
+	HighFrequencyPower float64 `json:"highFrequencyPower,omitempty"`
+	// LowFrequencyPower: Optional. The power in interbeat interval fluctuations
+	// within the low frequency band (0.04 Hz - 0.15 Hz).
+	LowFrequencyPower float64 `json:"lowFrequencyPower,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HighFrequencyPower") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HighFrequencyPower") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s HeartRateVariabilityMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod HeartRateVariabilityMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *HeartRateVariabilityMetadata) UnmarshalJSON(data []byte) error {
+	type NoMethod HeartRateVariabilityMetadata
+	var s1 struct {
+		HighFrequencyPower gensupport.JSONFloat64 `json:"highFrequencyPower"`
+		LowFrequencyPower  gensupport.JSONFloat64 `json:"lowFrequencyPower"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.HighFrequencyPower = float64(s1.HighFrequencyPower)
+	s.LowFrequencyPower = float64(s1.LowFrequencyPower)
 	return nil
 }
 
@@ -3390,7 +3584,8 @@ func (s HeartRateZone) MarshalJSON() ([]byte, error) {
 
 // Height: Body height measurement.
 type Height struct {
-	// HeightMillimeters: Required. Height of the user in millimeters.
+	// HeightMillimeters: Required. Height of the user in millimeters. Must be in
+	// the range `[0, 3000]`.
 	HeightMillimeters int64 `json:"heightMillimeters,omitempty,string"`
 	// SampleTime: Required. The time at which the height was recorded.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -3887,6 +4082,30 @@ func (s MedicalDeviceInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MenstrualPeriod: Menstrual period record.
+type MenstrualPeriod struct {
+	// Interval: Required. Observed interval.
+	Interval *ObservationTimeInterval `json:"interval,omitempty"`
+	// Notes: Optional. Standard free-form notes captured at manual logging.
+	Notes string `json:"notes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Interval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Interval") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MenstrualPeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod MenstrualPeriod
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // MetricsSummary: Summary metrics for an exercise.
 type MetricsSummary struct {
 	// ActiveZoneMinutes: Optional. Total active zone minutes for the exercise.
@@ -4016,6 +4235,109 @@ func (s *MobilityMetrics) UnmarshalJSON(data []byte) error {
 	s.AvgCadenceStepsPerMinute = float64(s1.AvgCadenceStepsPerMinute)
 	s.AvgVerticalRatio = float64(s1.AvgVerticalRatio)
 	return nil
+}
+
+// Moods: Moods record.
+type Moods struct {
+	// Moods: Required. The moods logged.
+	//
+	// Possible values:
+	//   "MOOD_UNSPECIFIED" - Unspecified mood.
+	//   "AMAZED" - Amazed.
+	//   "AMUSED" - Amused.
+	//   "ANGRY" - Angry.
+	//   "ANNOYED" - Annoyed.
+	//   "ANXIOUS" - Anxious.
+	//   "HAPPY" - Happy.
+	//   "CONTENT" - Content.
+	//   "SAD" - Sad.
+	//   "WORRIED" - Worried.
+	//   "FRUSTRATED" - Frustrated.
+	//   "EXCITED" - Excited.
+	//   "CALM" - Calm.
+	//   "STRESSED" - Stressed.
+	//   "ASHAMED" - Ashamed.
+	//   "BRAVE" - Brave.
+	//   "CONFIDENT" - Confident.
+	//   "DISAPPOINTED" - Disappointed.
+	//   "DISCOURAGED" - Discouraged.
+	//   "DISGUSTED" - Disgusted.
+	//   "DRAINED" - Drained.
+	//   "EMBARRASSED" - Embarrassed.
+	//   "GRATEFUL" - Grateful.
+	//   "GUILTY" - Guilty.
+	//   "HOPEFUL" - Hopeful.
+	//   "HOPELESS" - Hopeless.
+	//   "INDIFFERENT" - Indifferent.
+	//   "IRRITATED" - Irritated.
+	//   "JEALOUS" - Jealous.
+	//   "JOYFUL" - Joyful.
+	//   "LONELY" - Lonely.
+	//   "OVERWHELMED" - Overwhelmed.
+	//   "PASSIONATE" - Passionate.
+	//   "PEACEFUL" - Peaceful.
+	//   "PROUD" - Proud.
+	//   "RELIEVED" - Relieved.
+	//   "SATISFIED" - Satisfied.
+	//   "SCARED" - Scared.
+	//   "SURPRISED" - Surprised.
+	//   "ENERGIZED" - Energized.
+	//   "FATIGUED" - Fatigued.
+	//   "VERY_CALM" - Very calm.
+	//   "VERY_STRESSED" - Very stressed.
+	//   "NEUTRAL" - Neutral.
+	//   "AFRAID" - Afraid.
+	//   "HURTING" - Hurting.
+	//   "BORED" - Bored.
+	//   "BITTER" - Bitter.
+	//   "ENVIOUS" - Envious.
+	//   "CONFUSED" - Confused.
+	//   "CURIOUS" - Curious.
+	//   "AWESTRUCK" - Awestruck.
+	//   "INSPIRED" - Inspired.
+	//   "LONGING" - Longing.
+	//   "ACCOMPLISHED" - Accomplished.
+	//   "LOVING" - Loving.
+	//   "COMPASSIONATE" - Compassionate.
+	//   "DEPRESSED" - Depressed.
+	//   "GOOD" - Good.
+	//   "LOW_ENERGY" - Low energy.
+	//   "OBSESSIVE_THOUGHTS" - Obsessive thoughts.
+	//   "PANIC" - Panic.
+	//   "PLAYFUL" - Playful.
+	//   "PLEASED" - Pleased.
+	//   "SENSITIVE" - Sensitive.
+	//   "SLEEPY" - Sleepy.
+	//   "SWINGS" - Mood swings.
+	//   "UNHAPPY" - Unhappy.
+	//   "VERY_SELF_CRITICAL" - Very self-critical.
+	Moods []string `json:"moods,omitempty"`
+	// SampleTime: Required. The time at which moods were measured.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// Valences: Optional. The valences.
+	//
+	// Possible values:
+	//   "VALENCE_UNSPECIFIED" - Unspecified valence.
+	//   "UNPLEASANT" - Unpleasant.
+	//   "BASELINE" - Baseline.
+	//   "PLEASANT" - Pleasant.
+	Valences []string `json:"valences,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Moods") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Moods") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Moods) MarshalJSON() ([]byte, error) {
+	type NoMethod Moods
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // NutrientQuantity: Represents the quantity of a nutrient.
@@ -4392,11 +4714,43 @@ func (s OutOfBedSegment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// OvulationTest: Ovulation test record.
+type OvulationTest struct {
+	// Result: Required. The result of the ovulation test.
+	//
+	// Possible values:
+	//   "OVULATION_TEST_RESULT_UNSPECIFIED" - Unspecified result.
+	//   "NEGATIVE" - Negative result.
+	//   "LUTEINIZING_HORMONE_SURGE" - Luteinizing hormone surge.
+	//   "ESTROGEN_SURGE" - Estrogen surge.
+	//   "POSITIVE" - Positive result.
+	//   "INDETERMINATE" - Indeterminate result.
+	Result string `json:"result,omitempty"`
+	// SampleTime: Required. The time at which ovulation test was measured.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Result") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Result") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s OvulationTest) MarshalJSON() ([]byte, error) {
+	type NoMethod OvulationTest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // OxygenSaturation: Captures the user's instantaneous oxygen saturation
 // percentage (SpO2).
 type OxygenSaturation struct {
-	// Percentage: Required. The oxygen saturation percentage. Valid values are
-	// from 0 to 100.
+	// Percentage: Required. The oxygen saturation percentage. Must be in the range
+	// `[0, 100]`.
 	Percentage float64 `json:"percentage,omitempty"`
 	// SampleTime: Required. The time at which oxygen saturation was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -4538,16 +4892,14 @@ type Profile struct {
 	// this field are currently not supported.
 	Age int64 `json:"age,omitempty"`
 	// AutoRunningStrideLengthMm: Output only. The automatically calculated running
-	// stride length, in millimeters. The user must consent to one of the following
-	// access scopes to access this field: -
+	// stride length, in millimeters. The user must consent to the following access
+	// scope to access this field: -
 	// `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`
-	// - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`
 	AutoRunningStrideLengthMm int64 `json:"autoRunningStrideLengthMm,omitempty"`
 	// AutoWalkingStrideLengthMm: Output only. The automatically calculated walking
-	// stride length, in millimeters. The user must consent to one of the following
-	// access scopes to access this field: -
+	// stride length, in millimeters. The user must consent to the following access
+	// scope to access this field: -
 	// `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`
-	// - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`
 	AutoWalkingStrideLengthMm int64 `json:"autoWalkingStrideLengthMm,omitempty"`
 	// MembershipStartDate: Output only. The date the user created their account.
 	// Updates to this field are currently not supported.
@@ -4557,19 +4909,17 @@ type Profile struct {
 	// `users/me/profile` The {user} ID is a system-generated Google Health API
 	// user ID, a string of 1-63 characters consisting of lowercase and uppercase
 	// letters, numbers, and hyphens. The literal `me` can also be used to refer to
-	// the authenticated user.
+	// the authenticated user. This field is read-only.
 	Name string `json:"name,omitempty"`
 	// UserConfiguredRunningStrideLengthMm: Optional. The user's user configured
-	// running stride length, in millimeters. The user must consent to one of the
-	// following access scopes to access this field: -
+	// running stride length, in millimeters. The user must consent to the
+	// following access scope to access this field: -
 	// `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`
-	// - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`
 	UserConfiguredRunningStrideLengthMm int64 `json:"userConfiguredRunningStrideLengthMm,omitempty"`
 	// UserConfiguredWalkingStrideLengthMm: Optional. The user's user configured
-	// walking stride length, in millimeters. The user must consent to one of the
-	// following access scopes to access this field: -
+	// walking stride length, in millimeters. The user must consent to the
+	// following access scope to access this field: -
 	// `https://www.googleapis.com/auth/googlehealth.activity_and_fitness.readonly`
-	// - `https://www.googleapis.com/auth/googlehealth.activity_and_fitness`
 	UserConfiguredWalkingStrideLengthMm int64 `json:"userConfiguredWalkingStrideLengthMm,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -4671,10 +5021,12 @@ type ReconciledDataPoint struct {
 	// DataPointName: Identifier. Data point name, only supported for the subset of
 	// identifiable data types. For the majority of the data types, individual data
 	// points do not need to be identified and this field would be empty. Format:
-	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` Example:
-	// `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcd
-	// ef` The `{user}` ID is a system-generated identifier, as described in
-	// Identity.health_user_id. The `{data_type}` ID corresponds to the kebab-case
+	// `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples: ##
+	// `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef`
+	// `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890ab
+	// cdef` The `{user}` can be either the alias `me` or the authenticated user's
+	// numeric Health User ID, which can be retrieved by calling GetIdentity (see
+	// Identity.health_user_id). The `{data_type}` ID corresponds to the kebab-case
 	// version of the field names in the DataPoint data union field, e.g.
 	// `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
 	// client-provided or system-generated. If client-provided, it must be a string
@@ -4867,10 +5219,26 @@ func (s *RestingHeartRatePersonalRangeRollupValue) UnmarshalJSON(data []byte) er
 type RollUpDataPointsRequest struct {
 	// DataSourceFamily: Optional. The data source family name to roll up. If
 	// empty, data points from all available data sources will be rolled up.
-	// Format: `users/me/dataSourceFamilies/{data_source_family}` The supported
-	// values are: - `users/me/dataSourceFamilies/all-sources` - default value -
-	// `users/me/dataSourceFamilies/google-wearables` - tracker devices -
-	// `users/me/dataSourceFamilies/google-sources` - Google first party sources
+	// Format: `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}`
+	// can be either the alias `me` or the authenticated user's numeric Health User
+	// ID, retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or
+	// `users/1234567890/dataSourceFamilies/...`). The supported values are: -
+	// `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data
+	// from all available data sources. -
+	// `users/{user}/dataSourceFamilies/google-wearables` - Includes data from
+	// Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+	// Excludes manually logged data. -
+	// `users/{user}/dataSourceFamilies/google-sources` - Includes first-party
+	// Google data, such as data from tracker devices, manually logged data, and
+	// Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes
+	// only the data the calling client wrote through this API, that is, data
+	// points whose data source was registered through this API with the same OAuth
+	// client ID as the caller. Callers that were only granted write scopes for the
+	// requested data type may only read the data they wrote themselves: their
+	// requests are implicitly restricted to `self-sources`, and requesting any
+	// other data source family fails with `PERMISSION_DENIED`. If no data point
+	// matches the requested data source family, the response is an empty list
+	// rather than an error.
 	DataSourceFamily string `json:"dataSourceFamily,omitempty"`
 	// PageSize: Optional. The maximum number of data points to return. If
 	// unspecified, at most 1440 data points will be returned. The maximum page
@@ -4886,7 +5254,10 @@ type RollUpDataPointsRequest struct {
 	// other data types is 90 days.
 	Range *Interval `json:"range,omitempty"`
 	// WindowSize: Required. The size of the time window to group data points into
-	// before applying the aggregation functions. Must be at least 1 second.
+	// before applying the aggregation functions. Must be at least 1 second. If the
+	// requested range is not an exact multiple of `window_size`, the final bucket
+	// chronologically will be truncated at the upper endpoint of the range and
+	// will cover a duration shorter than `window_size`.
 	WindowSize string `json:"windowSize,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DataSourceFamily") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5046,7 +5417,8 @@ func (s RollupDataPoint) MarshalJSON() ([]byte, error) {
 // RunVO2Max: VO2 max value calculated based on the user's running activity.
 // Value stored in ml/kg/min.
 type RunVO2Max struct {
-	// RunVo2Max: Required. Run VO2 max value in ml/kg/min.
+	// RunVo2Max: Required. Run VO2 max value in ml/kg/min. Must be in the range
+	// `[0, 100]`.
 	RunVo2Max float64 `json:"runVo2Max,omitempty"`
 	// SampleTime: Required. The time at which the metric was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
@@ -5259,7 +5631,7 @@ type Settings struct {
 	// automatically. Updates to this field are currently not supported.
 	AutoStrideEnabled bool `json:"autoStrideEnabled,omitempty"`
 	// DistanceUnit: Optional. The measurement unit defined in the user's account
-	// settings. Updates to this field are currently not supported.
+	// settings.
 	//
 	// Possible values:
 	//   "DISTANCE_UNIT_UNSPECIFIED" - Distance unit is not specified.
@@ -5296,7 +5668,7 @@ type Settings struct {
 	// `users/me/settings` The {user} ID is a system-generated Google Health API
 	// user ID, a string of 1-63 characters consisting of lowercase and uppercase
 	// letters, numbers, and hyphens. The literal `me` can also be used to refer to
-	// the authenticated user.
+	// the authenticated user. This field is read-only.
 	Name string `json:"name,omitempty"`
 	// StrideLengthRunningType: Optional. The stride length type defined in the
 	// user's account settings for running. Updates to this field are currently not
@@ -5392,12 +5764,16 @@ type Sleep struct {
 	CreateTime string `json:"createTime,omitempty"`
 	// Interval: Required. Observed sleep interval.
 	Interval *SessionTimeInterval `json:"interval,omitempty"`
-	// Metadata: Optional. Sleep metadata: processing, main, manually edited,
-	// stages status.
+	// Metadata: Optional. Sleep metadata: `processed`, `main_sleep`,
+	// `manually_edited`, and `stages_status`.
 	Metadata *SleepMetadata `json:"metadata,omitempty"`
 	// OutOfBedSegments: Optional. “Out of bed” segments that can overlap with
 	// sleep stages.
 	OutOfBedSegments []*OutOfBedSegment `json:"outOfBedSegments,omitempty"`
+	// ShortAwakenings: Output only. List of short awake segments (under a set
+	// threshold) that are part of the sleep session. These can overlap with sleep
+	// stages.
+	ShortAwakenings []*SleepStage `json:"shortAwakenings,omitempty"`
 	// Stages: Optional. List of non-overlapping contiguous sleep stage segments
 	// that cover the sleep period.
 	Stages []*SleepStage `json:"stages,omitempty"`
@@ -5438,6 +5814,11 @@ type SleepMetadata struct {
 	// ExternalId: Optional. Sleep identifier relevant in the context of the data
 	// source.
 	ExternalId string `json:"externalId,omitempty"`
+	// MainSleep: Output only. `main_sleep`: the longest sleep session with stages
+	// within one day. If no sleep session has stages, then the longest sleep is
+	// the `main_sleep`. If there are multiple days of sleep in the response, there
+	// is one `main_sleep` per day.
+	MainSleep bool `json:"mainSleep,omitempty"`
 	// ManuallyEdited: Output only. Some sleeps autodetected by algorithms can be
 	// manually edited by users.
 	ManuallyEdited bool `json:"manuallyEdited,omitempty"`
@@ -5690,7 +6071,8 @@ func (s Status) MarshalJSON() ([]byte, error) {
 
 // Steps: Step count over the time interval.
 type Steps struct {
-	// Count: Required. Number of steps in the recorded interval.
+	// Count: Required. Number of steps in the recorded interval. Must be in the
+	// range `[0, 1000000]`.
 	Count int64 `json:"count,omitempty,string"`
 	// Interval: Required. Observed interval.
 	Interval *ObservationTimeInterval `json:"interval,omitempty"`
@@ -5932,6 +6314,98 @@ type SwimLengthsDataRollupValue struct {
 
 func (s SwimLengthsDataRollupValue) MarshalJSON() ([]byte, error) {
 	type NoMethod SwimLengthsDataRollupValue
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Symptoms: Symptoms logged by the user.
+type Symptoms struct {
+	// SampleTime: Required. Time when the symptoms were logged.
+	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// Symptoms: Required. List of symptoms experienced.
+	//
+	// Possible values:
+	//   "SYMPTOM_VALUE_UNSPECIFIED" - Unspecified symptom value.
+	//   "CRAMPS" - Abdominal cramps.
+	//   "HEADACHE" - Headache.
+	//   "TENDER_BREASTS" - Tender breasts.
+	//   "ACNE" - Acne.
+	//   "SICK" - Feeling sick or unwell.
+	//   "BLOATED" - Bloating or abdominal swelling.
+	//   "HOT_FLASHES" - Hot flashes.
+	//   "PMS" - Premenstrual syndrome symptoms.
+	//   "COUGH" - Coughing.
+	//   "FEVER" - Fever or elevated body temperature.
+	//   "DIFFICULTY_BREATHING" - Difficulty breathing or shortness of breath.
+	//   "BACK_PAIN" - Back pain.
+	//   "SHAKINESS" - Shakiness or tremors.
+	//   "HUNGER" - Excessive hunger.
+	//   "SWEATING" - Excessive sweating.
+	//   "ANXIETY" - Anxiety or nervousness.
+	//   "THIRST" - Excessive thirst.
+	//   "FREQUENT_URINATION" - Frequent urination.
+	//   "BLURRED_VISION" - Blurred vision.
+	//   "OTHER" - Other symptoms.
+	//   "SEX_DRIVE_HIGH" - High sex drive.
+	//   "SEX_DRIVE_MEDIUM" - Medium sex drive.
+	//   "SEX_DRIVE_LOW" - Low sex drive.
+	//   "HEART_PALPITATIONS" - Heart palpitations or racing heart.
+	//   "FAINTING" - Fainting or loss of consciousness.
+	//   "CHEST_PAIN" - Chest pain or discomfort.
+	//   "FATIGUE" - Fatigue or extreme tiredness.
+	//   "CONFUSION" - Confusion or mental fogginess.
+	//   "DIZZINESS" - Dizziness or lightheadedness.
+	//   "ABDOMINAL_PAIN" - Abdominal pain.
+	//   "BLADDER_LEAKS" - Bladder leaks.
+	//   "BLEEDING_GUMS" - Bleeding gums.
+	//   "BRAIN_FOG" - Brain fog.
+	//   "BURNING_MOUTH" - Burning mouth.
+	//   "CONSTIPATION" - Constipation.
+	//   "CRAVINGS" - Food cravings.
+	//   "DECREASED_APPETITE" - Decreased appetite.
+	//   "DIARRHEA" - Diarrhea.
+	//   "DRAWING_PAIN" - Drawing pain.
+	//   "DRY_EYES" - Dry eyes.
+	//   "DRY_HAIR" - Dry hair.
+	//   "DRY_SKIN" - Dry skin.
+	//   "EXHAUSTION" - Exhaustion.
+	//   "FEEL_GOOD" - Feeling good or well.
+	//   "FOOD_AVERSIONS" - Food aversions.
+	//   "HAIR_LOSS" - Hair loss.
+	//   "HEARTBURN" - Heartburn.
+	//   "HYPERPIGMENTATION" - Hyperpigmentation.
+	//   "INCREASED_APPETITE" - Increased appetite.
+	//   "INCREASED_APPETITE_V2" - Increased appetite V2.
+	//   "INSOMNIA" - Insomnia or difficulty sleeping.
+	//   "JOINT_PAIN" - Joint pain.
+	//   "LEG_CRAMPS" - Leg cramps.
+	//   "MILKY_NIPPLE_DISCHARGE" - Milky nipple discharge.
+	//   "NAUSEA" - Nausea.
+	//   "NIGHT_SWEATS" - Night sweats.
+	//   "NORMAL_DIGESTION" - Normal digestion.
+	//   "NORMAL_STOOL" - Normal stool.
+	//   "PERINEUM_PAIN" - Perineum pain.
+	//   "SLEEPINESS" - Sleepiness or drowsiness.
+	//   "STRETCH_MARKS" - Stretch marks.
+	//   "SWELLING" - Swelling.
+	//   "VAGINAL_DRYNESS" - Vaginal dryness.
+	//   "VAGINAL_ITCHING" - Vaginal itching.
+	//   "VOMITING" - Vomiting.
+	Symptoms []string `json:"symptoms,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SampleTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SampleTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Symptoms) MarshalJSON() ([]byte, error) {
+	type NoMethod Symptoms
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -6183,7 +6657,7 @@ type VO2Max struct {
 	// SampleTime: Required. The time at which VO2 max was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
 	// Vo2Max: Required. VO2 max value measured as in ml consumed oxygen / kg of
-	// body weight / min.
+	// body weight / min. Must be in the range `[0, 100]`.
 	Vo2Max float64 `json:"vo2Max,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "MeasurementMethod") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6219,7 +6693,8 @@ func (s *VO2Max) UnmarshalJSON(data []byte) error {
 
 // VolumeQuantity: Represents the volume quantity.
 type VolumeQuantity struct {
-	// Milliliters: Required. Value representing the volume in milliliters.
+	// Milliliters: Required. Value representing the volume in milliliters. Must be
+	// in the range `[0, 100000]`.
 	Milliliters float64 `json:"milliliters,omitempty"`
 	// UserProvidedUnit: Optional. Value representing the user provided unit, used
 	// only for user-facing input and display purposes. In the API format, all
@@ -6323,7 +6798,8 @@ type Weight struct {
 	Notes string `json:"notes,omitempty"`
 	// SampleTime: Required. The time at which the weight was measured
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
-	// WeightGrams: Required. Weight of a user in grams.
+	// WeightGrams: Required. Weight of a user in grams. Must be in the range `[0,
+	// 1000000]`.
 	WeightGrams float64 `json:"weightGrams,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Notes") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -6359,7 +6835,8 @@ func (s *Weight) UnmarshalJSON(data []byte) error {
 
 // WeightQuantity: Represents the weight quantity.
 type WeightQuantity struct {
-	// Grams: Required. The weight value in grams.
+	// Grams: Required. The weight value in grams. Must be in the range `[0,
+	// 100000]`.
 	Grams float64 `json:"grams,omitempty"`
 	// UserProvidedUnit: Optional. Value representing the user provided unit.
 	//
@@ -8199,7 +8676,7 @@ type UsersUpdateProfileCall struct {
 //     `users/me/profile` The {user} ID is a system-generated Google Health API
 //     user ID, a string of 1-63 characters consisting of lowercase and uppercase
 //     letters, numbers, and hyphens. The literal `me` can also be used to refer
-//     to the authenticated user.
+//     to the authenticated user. This field is read-only.
 func (r *UsersService) UpdateProfile(name string, profile *Profile) *UsersUpdateProfileCall {
 	c := &UsersUpdateProfileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8314,7 +8791,7 @@ type UsersUpdateSettingsCall struct {
 //     `users/me/settings` The {user} ID is a system-generated Google Health API
 //     user ID, a string of 1-63 characters consisting of lowercase and uppercase
 //     letters, numbers, and hyphens. The literal `me` can also be used to refer
-//     to the authenticated user.
+//     to the authenticated user. This field is read-only.
 func (r *UsersService) UpdateSettings(name string, settings *Settings) *UsersUpdateSettingsCall {
 	c := &UsersUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8425,9 +8902,12 @@ type UsersDataTypesDataPointsBatchDeleteCall struct {
 // BatchDelete: Delete a batch of identifyable data points.
 //
 //   - parent: Optional. Parent (data type) for the Data Point collection Format:
-//     `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/-` For a list of the supported data types see the
-//     DataPoint data union field. Deleting data points across multiple data type
+//     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/-` -
+//     `users/1234567890/dataTypes/-` The `{user}` can be either the alias `me`
+//     or the authenticated user's numeric Health User ID (retrieved via
+//     GetIdentity). For a list of the supported data types see the DataPoint
+//     data union field. Deleting data points across multiple data type
 //     collections is supported following https://aip.dev/159. If this is set,
 //     the parent of all of the data points specified in `names` must match this
 //     field.
@@ -8534,7 +9014,10 @@ type UsersDataTypesDataPointsCreateCall struct {
 // Create: Creates a single identifiable data point.
 //
 //   - parent: The parent resource name where the data point will be created.
-//     Format: `users/{user}/dataTypes/{data_type}`.
+//     Format: `users/{user}/dataTypes/{data_type}`, e.g.: -
+//     `users/me/dataTypes/steps` - `users/1234567890/dataTypes/steps` The
+//     `{user}` can be either the alias `me` or the authenticated user's numeric
+//     Health User ID (retrieved via GetIdentity).
 func (r *UsersDataTypesDataPointsService) Create(parent string, datapoint *DataPoint) *UsersDataTypesDataPointsCreateCall {
 	c := &UsersDataTypesDataPointsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8640,8 +9123,11 @@ type UsersDataTypesDataPointsDailyRollUpCall struct {
 //
 //   - parent: Parent data type of the Data Point collection. Format:
 //     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/distance` For a list of the supported data types see
-//     the DailyRollupDataPoint value union field.
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/distance` -
+//     `users/1234567890/dataTypes/distance` The `{user}` can be either the alias
+//     `me` or the authenticated user's numeric Health User ID (retrieved via
+//     GetIdentity). For a list of the supported data types see the
+//     DailyRollupDataPoint value union field.
 func (r *UsersDataTypesDataPointsService) DailyRollUp(parent string, dailyrollupdatapointsrequest *DailyRollUpDataPointsRequest) *UsersDataTypesDataPointsDailyRollUpCall {
 	c := &UsersDataTypesDataPointsDailyRollUpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8734,6 +9220,27 @@ func (c *UsersDataTypesDataPointsDailyRollUpCall) Do(opts ...googleapi.CallOptio
 	return ret, nil
 }
 
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *UsersDataTypesDataPointsDailyRollUpCall) Pages(ctx context.Context, f func(*DailyRollUpDataPointsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.dailyrollupdatapointsrequest.PageToken = pt }(c.dailyrollupdatapointsrequest.PageToken)
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.dailyrollupdatapointsrequest.PageToken = x.NextPageToken
+	}
+}
+
 type UsersDataTypesDataPointsExportExerciseTcxCall struct {
 	s            *Service
 	name         string
@@ -8745,21 +9252,25 @@ type UsersDataTypesDataPointsExportExerciseTcxCall struct {
 
 // ExportExerciseTcx: Exports exercise data in TCX format. **IMPORTANT:** HTTP
 // clients must append `?alt=media` to the request URL to download the raw TCX
-// file. Example:
+// file. ## Examples: ##
 // `https://health.googleapis.com/v4/users/me/dataTypes/exercise/dataPoints/EXER
-// CISE_ID:exportExerciseTcx?alt=media` Without `alt=media`, the server returns
-// a JSON response (`ExportExerciseTcxResponse`) which is intended primarily
-// for gRPC clients. **Note:** While the Authorization section below states
-// that any one of the listed scopes is accepted, this specific method requires
-// the user to provide both one of the `activity_and_fitness` scopes (`normal`
-// or `readonly`) AND one of the `location` scopes (`normal` or `readonly`) in
-// their access token to succeed.
+// CISE_ID:exportExerciseTcx?alt=media`
+// `https://health.googleapis.com/v4/users/1234567890/dataTypes/exercise/dataPoi
+// nts/EXERCISE_ID:exportExerciseTcx?alt=media` Without `alt=media`, the server
+// returns a JSON response (`ExportExerciseTcxResponse`) which is intended
+// primarily for gRPC clients. **Note:** While the Authorization section below
+// states that any one of the listed scopes is accepted, this specific method
+// requires the user to provide both one of the `activity_and_fitness` scopes
+// (`normal` or `readonly`) AND one of the `location` scopes (`normal` or
+// `readonly`) in their access token to succeed.
 //
 //   - name: The resource name of the exercise data point to export. Format:
-//     `users/{user}/dataTypes/exercise/dataPoints/{data_point}` Example:
-//     `users/me/dataTypes/exercise/dataPoints/2026443605080188808` The `{user}`
-//     is the alias "me" currently. Future versions may support user IDs. The
-//     `{data_point}` ID maps to the exercise ID, which is a long integer.
+//     `users/{user}/dataTypes/exercise/dataPoints/{data_point}` Examples: -
+//     `users/me/dataTypes/exercise/dataPoints/2026443605080188808` -
+//     `users/1234567890/dataTypes/exercise/dataPoints/2026443605080188808` The
+//     `{user}` can be either the alias `me` or the authenticated user's numeric
+//     Health User ID (retrieved via GetIdentity). The `{data_point}` ID maps to
+//     the exercise ID, which is a long integer.
 func (r *UsersDataTypesDataPointsService) ExportExerciseTcx(name string) *UsersDataTypesDataPointsExportExerciseTcxCall {
 	c := &UsersDataTypesDataPointsExportExerciseTcxCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8894,7 +9405,12 @@ type UsersDataTypesDataPointsGetCall struct {
 // Get: Get a single identifyable data point.
 //
 //   - name: The name of the data point to retrieve. Format:
-//     `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` See
+//     `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ## Examples:
+//     ##
+//     `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef`
+//     `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890
+//     abcdef` The `{user}` can be either the alias `me` or the authenticated
+//     user's numeric Health User ID (retrieved via GetIdentity). See
 //     DataPoint.name for examples and possible values.
 func (r *UsersDataTypesDataPointsService) Get(name string) *UsersDataTypesDataPointsGetCall {
 	c := &UsersDataTypesDataPointsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9005,12 +9521,49 @@ type UsersDataTypesDataPointsListCall struct {
 // List: Query user health and fitness data points.
 //
 //   - parent: Parent data type of the Data Point collection. Format:
-//     `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/weight` For a list of the supported data types see the
-//     DataPoint data union field.
+//     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/weight` -
+//     `users/1234567890/dataTypes/weight` The `{user}` can be either the alias
+//     `me` or the authenticated user's numeric Health User ID (retrieved via
+//     GetIdentity). For a list of the supported data types see the DataPoint
+//     data union field.
 func (r *UsersDataTypesDataPointsService) List(parent string) *UsersDataTypesDataPointsListCall {
 	c := &UsersDataTypesDataPointsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// DataSourceFamily sets the optional parameter "dataSourceFamily": The data
+// source family name to filter by. If empty, data points from all available
+// data sources will be returned. Format:
+// `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}` can be
+// either the alias `me` or the authenticated user's numeric Health User ID,
+// retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or
+// `users/1234567890/dataSourceFamilies/...`). The supported values are: -
+// `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data
+// from all available data sources. -
+// `users/{user}/dataSourceFamilies/google-wearables` - Includes data from
+// Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+// Excludes manually logged data. -
+// `users/{user}/dataSourceFamilies/google-sources` - Includes first-party
+// Google data, such as data from tracker devices, manually logged data, and
+// Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes
+// only the data the calling client wrote through this API, that is, data
+// points whose data source was registered through this API with the same OAuth
+// client ID as the caller. Callers that were only granted write scopes for the
+// requested data types may only read the data they wrote themselves: their
+// requests are implicitly restricted to `self-sources`, and requesting any
+// other data source family fails with `PERMISSION_DENIED`. If no data point
+// matches the requested data source family, the response is an empty list
+// rather than an error. Filtering by data source family is not supported for
+// the `sleep`, `food` and `food-measurement-unit` data types, because the
+// underlying listing implementation cannot restrict results by data source.
+// Such requests fail with `INVALID_ARGUMENT` when the data source family is
+// set explicitly, and with `PERMISSION_DENIED` when the restriction is only
+// implied by the caller's scopes. For `sleep`, use ReconcileDataPoints
+// instead.
+func (c *UsersDataTypesDataPointsListCall) DataSourceFamily(dataSourceFamily string) *UsersDataTypesDataPointsListCall {
+	c.urlParams_.Set("dataSourceFamily", dataSourceFamily)
 	return c
 }
 
@@ -9208,7 +9761,7 @@ func (c *UsersDataTypesDataPointsListCall) Pages(ctx context.Context, f func(*Li
 
 type UsersDataTypesDataPointsPatchCall struct {
 	s          *Service
-	nameid     string
+	name       string
 	datapoint  *DataPoint
 	urlParams_ gensupport.URLParams
 	ctx_       context.Context
@@ -9221,19 +9774,21 @@ type UsersDataTypesDataPointsPatchCall struct {
 //   - name: Identifier. Data point name, only supported for the subset of
 //     identifiable data types. For the majority of the data types, individual
 //     data points do not need to be identified and this field would be empty.
-//     Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}`
-//     Example:
-//     `users/abcd1234/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890ab
-//     cdef` The `{user}` ID is a system-generated identifier, as described in
-//     Identity.health_user_id. The `{data_type}` ID corresponds to the
-//     kebab-case version of the field names in the DataPoint data union field,
-//     e.g. `heart-rate` for the `heart_rate` field. The `{data_point}` ID can be
-//     client-provided or system-generated. If client-provided, it must be a
-//     string of 4-63 characters, containing only lowercase letters, numbers, and
-//     hyphens.
-func (r *UsersDataTypesDataPointsService) Patch(nameid string, datapoint *DataPoint) *UsersDataTypesDataPointsPatchCall {
+//     Format: `users/{user}/dataTypes/{data_type}/dataPoints/{data_point}` ##
+//     Examples: ##
+//     `users/me/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890abcdef`
+//     `users/1234567890/dataTypes/sleep/dataPoints/a1b2c3d4-e5f6-7890-1234-567890
+//     abcdef` The `{user}` can be either the alias `me` or the authenticated
+//     user's numeric Health User ID, which can be retrieved by calling
+//     GetIdentity (see Identity.health_user_id). The `{data_type}` ID
+//     corresponds to the kebab-case version of the field names in the DataPoint
+//     data union field, e.g. `heart-rate` for the `heart_rate` field. The
+//     `{data_point}` ID can be client-provided or system-generated. If
+//     client-provided, it must be a string of 4-63 characters, containing only
+//     lowercase letters, numbers, and hyphens.
+func (r *UsersDataTypesDataPointsService) Patch(name string, datapoint *DataPoint) *UsersDataTypesDataPointsPatchCall {
 	c := &UsersDataTypesDataPointsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.nameid = nameid
+	c.name = name
 	c.datapoint = datapoint
 	return c
 }
@@ -9277,7 +9832,7 @@ func (c *UsersDataTypesDataPointsPatchCall) doRequest(alt string) (*http.Respons
 	}
 	req.Header = reqHeaders
 	googleapi.Expand(req.URL, map[string]string{
-		"name": c.nameid,
+		"name": c.name,
 	})
 	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "health.users.dataTypes.dataPoints.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
 	return gensupport.SendRequest(c.ctx_, c.s.client, req)
@@ -9335,9 +9890,12 @@ type UsersDataTypesDataPointsReconcileCall struct {
 // data stream.
 //
 //   - parent: Parent data type of the Data Point collection. Format:
-//     `users/me/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/heart-rate` For a list of the supported data types see
-//     the DataPoint data union field.
+//     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/heart-rate` -
+//     `users/1234567890/dataTypes/heart-rate` The `{user}` can be either the
+//     alias `me` or the authenticated user's numeric Health User ID (retrieved
+//     via GetIdentity). For a list of the supported data types see the DataPoint
+//     data union field.
 func (r *UsersDataTypesDataPointsService) Reconcile(parent string) *UsersDataTypesDataPointsReconcileCall {
 	c := &UsersDataTypesDataPointsReconcileCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9347,10 +9905,26 @@ func (r *UsersDataTypesDataPointsService) Reconcile(parent string) *UsersDataTyp
 // DataSourceFamily sets the optional parameter "dataSourceFamily": The data
 // source family name to reconcile. If empty, data points from all data sources
 // will be reconciled. Format:
-// `users/me/dataSourceFamilies/{data_source_family}` The supported values are:
-// - `users/me/dataSourceFamilies/all-sources` - default value -
-// `users/me/dataSourceFamilies/google-wearables` - tracker devices -
-// `users/me/dataSourceFamilies/google-sources` - Google first party sources
+// `users/{user}/dataSourceFamilies/{data_source_family}` The `{user}` can be
+// either the alias `me` or the authenticated user's numeric Health User ID,
+// retrieved via GetIdentity (e.g. `users/me/dataSourceFamilies/...` or
+// `users/1234567890/dataSourceFamilies/...`). The supported values are: -
+// `users/{user}/dataSourceFamilies/all-sources` - Default value. Includes data
+// from all available data sources. -
+// `users/{user}/dataSourceFamilies/google-wearables` - Includes data from
+// Google and Fitbit tracker devices (such as Fitbit trackers and Pixel Watch).
+// Excludes manually logged data. -
+// `users/{user}/dataSourceFamilies/google-sources` - Includes first-party
+// Google data, such as data from tracker devices, manually logged data, and
+// Health Connect. - `users/{user}/dataSourceFamilies/self-sources` - Includes
+// only the data the calling client wrote through this API, that is, data
+// points whose data source was registered through this API with the same OAuth
+// client ID as the caller. Callers that were only granted write scopes for the
+// requested data type may only read the data they wrote themselves: their
+// requests are implicitly restricted to `self-sources`, and requesting any
+// other data source family fails with `PERMISSION_DENIED`. If no data point
+// matches the requested data source family, the response is an empty list
+// rather than an error.
 func (c *UsersDataTypesDataPointsReconcileCall) DataSourceFamily(dataSourceFamily string) *UsersDataTypesDataPointsReconcileCall {
 	c.urlParams_.Set("dataSourceFamily", dataSourceFamily)
 	return c
@@ -9509,8 +10083,11 @@ type UsersDataTypesDataPointsRollUpCall struct {
 //
 //   - parent: Parent data type of the Data Point collection. Format:
 //     `users/{user}/dataTypes/{data_type}`, e.g.: - `users/me/dataTypes/steps` -
-//     `users/me/dataTypes/distance` For a list of the supported data types see
-//     the RollupDataPoint value union field.
+//     `users/1234567890/dataTypes/steps` - `users/me/dataTypes/distance` -
+//     `users/1234567890/dataTypes/distance` The `{user}` can be either the alias
+//     `me` or the authenticated user's numeric Health User ID (retrieved via
+//     GetIdentity). For a list of the supported data types see the
+//     RollupDataPoint value union field.
 func (r *UsersDataTypesDataPointsService) RollUp(parent string, rollupdatapointsrequest *RollUpDataPointsRequest) *UsersDataTypesDataPointsRollUpCall {
 	c := &UsersDataTypesDataPointsRollUpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent

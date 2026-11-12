@@ -924,6 +924,16 @@ type AdAsset struct {
 	EntityStatus string `json:"entityStatus,omitempty"`
 	// Name: Identifier. The resource name of the ad asset.
 	Name string `json:"name,omitempty"`
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// asset as created or edited using AI when served in regions with local AI
+	// labeling regulations.
+	//
+	// Possible values:
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
+	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// YoutubeVideoAsset: Youtube video asset data.
 	YoutubeVideoAsset *YoutubeVideoAsset `json:"youtubeVideoAsset,omitempty"`
 
@@ -947,7 +957,7 @@ func (s AdAsset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// AdGroup: A single ad group associated with a line item.
+// AdGroup: LINT: LEGACY_NAMES A single ad group associated with a line item.
 type AdGroup struct {
 	// AdGroupFormat: Required. Immutable. The format of the ads in the ad group.
 	//
@@ -1053,26 +1063,26 @@ type AdGroupAd struct {
 	// (//support.google.com/displayvideo/answer/6274216) used for reach marketing
 	// objectives.
 	AudioAd *AudioAd `json:"audioAd,omitempty"`
-	// BumperAd: Output only. Details of a non-skippable short video ad
+	// BumperAd: Optional. Details of a non-skippable short video ad
 	// (//support.google.com/displayvideo/answer/6274216), equal to or less than 6
 	// seconds, used for reach.
 	BumperAd *BumperAd `json:"bumperAd,omitempty"`
-	// DcmTrackingInfo: Optional. The DCM tracking ad info. Only valid for Demand
-	// Gen ads. To remove the DCM tracking ad info, please leave this field empty.
+	// DcmTrackingInfo: Optional. The DCM tracking ad info. To remove the DCM
+	// tracking ad info, please leave this field empty.
 	DcmTrackingInfo *DcmTrackingInfo `json:"dcmTrackingInfo,omitempty"`
-	// DemandGenCarouselAd: Details of a Demand Gen carousel ad
+	// DemandGenCarouselAd: Optional. Details of a Demand Gen carousel ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#CarouselAd).
 	DemandGenCarouselAd *DemandGenCarouselAd `json:"demandGenCarouselAd,omitempty"`
-	// DemandGenImageAd: Details of a Demand Gen image ad
+	// DemandGenImageAd: Optional. Details of a Demand Gen image ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#ImageAd).
 	DemandGenImageAd *DemandGenImageAd `json:"demandGenImageAd,omitempty"`
-	// DemandGenProductAd: Details of a Demand Gen product ad
+	// DemandGenProductAd: Optional. Details of a Demand Gen product ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#Product-onlyAd).
 	DemandGenProductAd *DemandGenProductAd `json:"demandGenProductAd,omitempty"`
-	// DemandGenVideoAd: Details of a Demand Gen video ad
+	// DemandGenVideoAd: Optional. Details of a Demand Gen video ad
 	// (//support.google.com/displayvideo/answer/15598924?&sjid=11207068802760924844
 	// -NC#VideoAd).
 	DemandGenVideoAd *DemandGenVideoAd `json:"demandGenVideoAd,omitempty"`
@@ -1098,24 +1108,24 @@ type AdGroupAd struct {
 	//   "ENTITY_STATUS_SCHEDULED_FOR_DELETION" - The entity is scheduled for
 	// deletion.
 	EntityStatus string `json:"entityStatus,omitempty"`
-	// InStreamAd: Output only. Details of an in-stream ad skippable after 5
-	// seconds (//support.google.com/displayvideo/answer/6274216), used for brand
-	// awareness or reach marketing objectives.
+	// InStreamAd: Optional. Details of an in-stream ad skippable after 5 seconds
+	// (//support.google.com/displayvideo/answer/6274216), used for brand awareness
+	// or reach marketing objectives.
 	InStreamAd *InStreamAd `json:"inStreamAd,omitempty"`
 	// MastheadAd: Output only. Details of an ad served on the YouTube Home feed
 	// (//support.google.com/google-ads/answer/9709826).
 	MastheadAd *MastheadAd `json:"mastheadAd,omitempty"`
 	// Name: Output only. The resource name of the ad.
 	Name string `json:"name,omitempty"`
-	// NonSkippableAd: Output only. Details of a non-skippable short in-stream
-	// video ad (//support.google.com/displayvideo/answer/6274216), between 6 and
-	// 15 seconds, used for reach marketing objectives.
+	// NonSkippableAd: Optional. Details of a non-skippable short in-stream video
+	// ad (//support.google.com/displayvideo/answer/6274216), between 6 and 15
+	// seconds, used for reach marketing objectives.
 	NonSkippableAd *NonSkippableAd `json:"nonSkippableAd,omitempty"`
 	// VideoDiscoverAd: Output only. Details of an ad promoting a video
 	// (//support.google.com/displayvideo/answer/6274216) that shows in places of
 	// discovery.
 	VideoDiscoverAd *VideoDiscoveryAd `json:"videoDiscoverAd,omitempty"`
-	// VideoPerformanceAd: Output only. Details of an ad used in a video action
+	// VideoPerformanceAd: Optional. Details of an ad used in a video action
 	// campaign (//support.google.com/google-ads/answer/10147229) to drive actions
 	// to the business, service or product.
 	VideoPerformanceAd *VideoPerformanceAd `json:"videoPerformanceAd,omitempty"`
@@ -3690,7 +3700,7 @@ type AssignedTargetingOption struct {
 	// from advertiser targeting settings.
 	Inheritance string `json:"inheritance,omitempty"`
 	// InventorySourceDetails: Inventory source details. This field will be
-	// populated when the targeting_type is `TARGETING_TYPE_INVENTORY_SOURCE`.
+	// populated when the targeting_type is `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`.
 	InventorySourceDetails *InventorySourceAssignedTargetingOptionDetails `json:"inventorySourceDetails,omitempty"`
 	// InventorySourceGroupDetails: Inventory source group details. This field will
 	// be populated when the targeting_type is
@@ -4054,6 +4064,8 @@ type AudioAd struct {
 	// the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
 	// TrackingUrl: The URL address loaded in the background for tracking purposes.
+	// In v4 and earlier, this field represents the tracking URL specified by the
+	// user manually. This can be found at userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
 	// Video: The YouTube video of the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
@@ -4534,22 +4546,28 @@ type BulkEditAdGroupAssignedTargetingOptionsRequest struct {
 	// CreateRequests: Optional. The assigned targeting options to create in batch,
 	// specified as a list of `CreateAssignedTargetingOptionRequest`. Supported
 	// targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
-	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
-	// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` *
-	// `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
-	// `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
-	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_URL` *
-	// `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`
+	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_CATEGORY` *
+	// `TARGETING_TYPE_COMBINED_AUDIENCE` * `TARGETING_TYPE_CUSTOM_LIST` *
+	// `TARGETING_TYPE_FIRST_PARTY_AND_PARTNER_AUDIENCE` * `TARGETING_TYPE_GENDER`
+	// * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_GOOGLE_AUDIENCE` *
+	// `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
+	// `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_LOOKALIKE_AUDIENCE` *
+	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SESSION_POSITION` *
+	// `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+	// `TARGETING_TYPE_YOUTUBE_VIDEO`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 	// DeleteRequests: Optional. The assigned targeting options to delete in batch,
 	// specified as a list of `DeleteAssignedTargetingOptionsRequest`. Supported
 	// targeting types: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
-	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
-	// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_GENDER` *
-	// `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
-	// `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
-	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_URL` *
-	// `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`
+	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_CATEGORY` *
+	// `TARGETING_TYPE_COMBINED_AUDIENCE` * `TARGETING_TYPE_CUSTOM_LIST` *
+	// `TARGETING_TYPE_FIRST_PARTY_AND_PARTNER_AUDIENCE` * `TARGETING_TYPE_GENDER`
+	// * `TARGETING_TYPE_GEO_REGION` * `TARGETING_TYPE_GOOGLE_AUDIENCE` *
+	// `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
+	// `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_LOOKALIKE_AUDIENCE` *
+	// `TARGETING_TYPE_PARENTAL_STATUS` * `TARGETING_TYPE_SESSION_POSITION` *
+	// `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
+	// `TARGETING_TYPE_YOUTUBE_VIDEO`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdGroupIds") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4609,13 +4627,15 @@ type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	// as a list of `CreateAssignedTargetingOptionsRequest`. Supported targeting
 	// types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+	// `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 	// DeleteRequests: The assigned targeting options to delete in batch, specified
 	// as a list of `DeleteAssignedTargetingOptionsRequest`. Supported targeting
 	// types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`
+	// `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+	// `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -4780,8 +4800,8 @@ type BulkEditAssignedTargetingOptionsRequest struct {
 	// CreateRequests: The assigned targeting options to create in batch, specified
 	// as a list of CreateAssignedTargetingOptionsRequest. Supported targeting
 	// types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
-	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
-	// `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUCTION_PACKAGE` *
+	// `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
 	// `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` *
 	// `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` *
 	// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` *
@@ -4793,7 +4813,7 @@ type BulkEditAssignedTargetingOptionsRequest struct {
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 	// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
 	// `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-	// `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` *
+	// `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE_DEAL` *
 	// `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
 	// `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
 	// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
@@ -4809,8 +4829,8 @@ type BulkEditAssignedTargetingOptionsRequest struct {
 	// DeleteRequests: The assigned targeting options to delete in batch, specified
 	// as a list of DeleteAssignedTargetingOptionsRequest. Supported targeting
 	// types include: * `TARGETING_TYPE_AGE_RANGE` * `TARGETING_TYPE_APP` *
-	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUDIENCE_GROUP` *
-	// `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+	// `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AUCTION_PACKAGE` *
+	// `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
 	// `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` *
 	// `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` *
 	// `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` *
@@ -4822,7 +4842,7 @@ type BulkEditAssignedTargetingOptionsRequest struct {
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 	// `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
 	// `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-	// `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` *
+	// `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE_DEAL` *
 	// `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
 	// `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
 	// `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
@@ -5268,7 +5288,7 @@ func (s BulkUpdateLineItemsResponse) MarshalJSON() ([]byte, error) {
 
 // BumperAd: Details for a bumper ad.
 type BumperAd struct {
-	// CommonInStreamAttribute: Common ad attributes.
+	// CommonInStreamAttribute: Required. Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonInStreamAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6079,20 +6099,24 @@ func (s CombinedAudienceTargetingSetting) MarshalJSON() ([]byte, error) {
 // CommonInStreamAttribute: Common attributes for in-stream, non-skippable and
 // bumper ads.
 type CommonInStreamAttribute struct {
-	// ActionButtonLabel: The text on the call-to-action button.
+	// ActionButtonLabel: Optional. The text on the call-to-action button. Must be
+	// set if actionHeadline is set.
 	ActionButtonLabel string `json:"actionButtonLabel,omitempty"`
-	// ActionHeadline: The headline of the call-to-action banner.
+	// ActionHeadline: Optional. The headline of the call-to-action banner.
 	ActionHeadline string `json:"actionHeadline,omitempty"`
-	// CompanionBanner: The image which shows next to the video ad.
+	// CompanionBanner: Optional. The image which shows next to the video ad.
 	CompanionBanner *ImageAsset `json:"companionBanner,omitempty"`
-	// DisplayUrl: The webpage address that appears with the ad.
+	// DisplayUrl: Required. The webpage address that appears with the ad.
 	DisplayUrl string `json:"displayUrl,omitempty"`
-	// FinalUrl: The URL address of the webpage that people reach after they click
-	// the ad.
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
-	// TrackingUrl: The URL address loaded in the background for tracking purposes.
+	// TrackingUrl: Output only. The URL address loaded in the background for
+	// tracking purposes. In v4 and earlier, this field represents the tracking URL
+	// specified by the user manually. This can be found at
+	// userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
-	// Video: The YouTube video of the ad.
+	// Video: Required. Immutable. The YouTube video of the ad.
 	Video *YoutubeVideoDetails `json:"video,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionButtonLabel") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -6151,8 +6175,7 @@ func (s Consent) MarshalJSON() ([]byte, error) {
 // ContactInfo: Contact information defining a Customer Match audience member.
 type ContactInfo struct {
 	// CountryCode: Optional. Country code of the member. Must also be set with the
-	// following fields: * country_code * hashed_first_name * hashed_last_name *
-	// zip_codes
+	// following fields: * hashed_first_name * hashed_last_name * zip_codes
 	CountryCode string `json:"countryCode,omitempty"`
 	// HashedEmails: Optional. A list of SHA256 hashed email of the member. Before
 	// hashing, remove all whitespace and make sure the string is all lowercase.
@@ -7020,33 +7043,49 @@ type CreateSdfDownloadTaskRequest struct {
 	// Possible values:
 	//   "SDF_VERSION_UNSPECIFIED" - SDF version value is not specified or is
 	// unknown in this version.
-	//   "SDF_VERSION_3_1" - SDF version 3.1
-	//   "SDF_VERSION_4" - SDF version 4
-	//   "SDF_VERSION_4_1" - SDF version 4.1
-	//   "SDF_VERSION_4_2" - SDF version 4.2
-	//   "SDF_VERSION_5" - SDF version 5.
-	//   "SDF_VERSION_5_1" - SDF version 5.1
-	//   "SDF_VERSION_5_2" - SDF version 5.2
-	//   "SDF_VERSION_5_3" - SDF version 5.3
-	//   "SDF_VERSION_5_4" - SDF version 5.4
-	//   "SDF_VERSION_5_5" - SDF version 5.5
-	//   "SDF_VERSION_6" - SDF version 6
-	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
+	//   "SDF_VERSION_3_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 3.1
+	//   "SDF_VERSION_4" - Deprecated: This SDF version is no longer supported. SDF
+	// version 4
+	//   "SDF_VERSION_4_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 4.1
+	//   "SDF_VERSION_4_2" - Deprecated: This SDF version is no longer supported.
+	// SDF version 4.2
+	//   "SDF_VERSION_5" - Deprecated: This SDF version is no longer supported. SDF
+	// version 5.
+	//   "SDF_VERSION_5_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.1
+	//   "SDF_VERSION_5_2" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.2
+	//   "SDF_VERSION_5_3" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.3
+	//   "SDF_VERSION_5_4" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.4
+	//   "SDF_VERSION_5_5" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.5
+	//   "SDF_VERSION_6" - Deprecated: This SDF version is no longer supported. SDF
+	// version 6
+	//   "SDF_VERSION_7" - Deprecated: This SDF version is no longer supported. SDF
+	// version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
+	//   "SDF_VERSION_7_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8" - SDF version 8. Read the [v8 migration
+	//   "SDF_VERSION_8" - Deprecated: This SDF version is no longer supported. SDF
+	// version 8. Read the [v8 migration
 	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8_1" - SDF version 8.1.
+	//   "SDF_VERSION_8_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 8.1.
 	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	//   "SDF_VERSION_10" - SDF version 10.
+	//   "SDF_VERSION_10_1" - SDF version 10.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -7350,6 +7389,16 @@ type Creative struct {
 	// This field is only supported for the following creative_type: *
 	// `CREATIVE_TYPE_VIDEO`
 	Skippable bool `json:"skippable,omitempty"`
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// creative as created or edited using AI when served in regions with local AI
+	// labeling regulations.
+	//
+	// Possible values:
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
+	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ThirdPartyTag: Optional. The original third-party tag used for the creative.
 	// Required and only valid for third-party tag creatives. Third-party tag
 	// creatives are creatives with following hosting_source: *
@@ -8811,22 +8860,27 @@ func (s DeviceTypeTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION`.
 type DigitalContentLabelAssignedTargetingOptionDetails struct {
 	// ExcludedContentRatingTier: Required. The display name of the digital content
-	// label rating tier to be EXCLUDED.
+	// label rating tier to be EXCLUDED. This field only accepts the value
+	// `CONTENT_RATING_TIER_UNRATED`.
 	//
 	// Possible values:
 	//   "CONTENT_RATING_TIER_UNSPECIFIED" - Content label is not specified in this
 	// version. This enum is a place holder for a default value and does not
 	// represent a real content rating.
 	//   "CONTENT_RATING_TIER_UNRATED" - Content that has not been labeled.
-	//   "CONTENT_RATING_TIER_GENERAL" - Content suitable for general audiences.
-	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Content suitable for most
-	// audiences with parental guidance.
-	//   "CONTENT_RATING_TIER_TEENS" - Content suitable for teen and older
-	// audiences.
-	//   "CONTENT_RATING_TIER_MATURE" - Content suitable only for mature audiences.
-	//   "CONTENT_RATING_TIER_FAMILIES" - Content suitable for family audiences. It
-	// is a subset of CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and
-	// Partners line items.
+	//   "CONTENT_RATING_TIER_GENERAL" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable for general audiences.
+	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Deprecated: This content rating
+	// tier is no longer supported. Content suitable for most audiences with
+	// parental guidance.
+	//   "CONTENT_RATING_TIER_TEENS" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable for teen and older audiences.
+	//   "CONTENT_RATING_TIER_MATURE" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable only for mature audiences.
+	//   "CONTENT_RATING_TIER_FAMILIES" - Deprecated: This content rating tier is
+	// no longer supported. Content suitable for family audiences. It is a subset
+	// of CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and Partners line
+	// items.
 	ExcludedContentRatingTier string `json:"excludedContentRatingTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExcludedContentRatingTier")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -8859,15 +8913,19 @@ type DigitalContentLabelTargetingOptionDetails struct {
 	// version. This enum is a place holder for a default value and does not
 	// represent a real content rating.
 	//   "CONTENT_RATING_TIER_UNRATED" - Content that has not been labeled.
-	//   "CONTENT_RATING_TIER_GENERAL" - Content suitable for general audiences.
-	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Content suitable for most
-	// audiences with parental guidance.
-	//   "CONTENT_RATING_TIER_TEENS" - Content suitable for teen and older
-	// audiences.
-	//   "CONTENT_RATING_TIER_MATURE" - Content suitable only for mature audiences.
-	//   "CONTENT_RATING_TIER_FAMILIES" - Content suitable for family audiences. It
-	// is a subset of CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and
-	// Partners line items.
+	//   "CONTENT_RATING_TIER_GENERAL" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable for general audiences.
+	//   "CONTENT_RATING_TIER_PARENTAL_GUIDANCE" - Deprecated: This content rating
+	// tier is no longer supported. Content suitable for most audiences with
+	// parental guidance.
+	//   "CONTENT_RATING_TIER_TEENS" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable for teen and older audiences.
+	//   "CONTENT_RATING_TIER_MATURE" - Deprecated: This content rating tier is no
+	// longer supported. Content suitable only for mature audiences.
+	//   "CONTENT_RATING_TIER_FAMILIES" - Deprecated: This content rating tier is
+	// no longer supported. Content suitable for family audiences. It is a subset
+	// of CONTENT_RATING_TIER_GENERAL. Only applicable to YouTube and Partners line
+	// items.
 	ContentRatingTier string `json:"contentRatingTier,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ContentRatingTier") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -10895,9 +10953,10 @@ type GoogleAudience struct {
 	// specified or is unknown.
 	//   "GOOGLE_AUDIENCE_TYPE_AFFINITY" - Affinity type Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_IN_MARKET" - In-Market type Google audience.
-	//   "GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS" - Installed-Apps type Google
-	// audience.
-	//   "GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES" - New-Mobile-Devices type Google
+	//   "GOOGLE_AUDIENCE_TYPE_INSTALLED_APPS" - Deprecated: This Google audience
+	// type is no longer supported. Installed-Apps type Google audience.
+	//   "GOOGLE_AUDIENCE_TYPE_NEW_MOBILE_DEVICES" - Deprecated: This Google
+	// audience type is no longer supported. New-Mobile-Devices type Google
 	// audience.
 	//   "GOOGLE_AUDIENCE_TYPE_LIFE_EVENT" - Life-Event type Google audience.
 	//   "GOOGLE_AUDIENCE_TYPE_EXTENDED_DEMOGRAPHIC" - Extended-Demographic type
@@ -11387,10 +11446,10 @@ func (s ImageAsset) MarshalJSON() ([]byte, error) {
 
 // InStreamAd: Details for an in-stream ad.
 type InStreamAd struct {
-	// CommonInStreamAttribute: Common ad attributes.
+	// CommonInStreamAttribute: Required. Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
-	// CustomParameters: The custom parameters and accompanying values to add to
-	// the tracking URL.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonInStreamAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -11478,8 +11537,8 @@ type InsertionOrder struct {
 	Kpi *Kpi `json:"kpi,omitempty"`
 	// Name: Output only. The resource name of the insertion order.
 	Name string `json:"name,omitempty"`
-	// OptimizationObjective: Optional. Required. The optimization objective of the
-	// insertion order.
+	// OptimizationObjective: Required. The optimization objective of the insertion
+	// order.
 	//
 	// Possible values:
 	//   "OPTIMIZATION_OBJECTIVE_UNSPECIFIED" - Type value is not specified or is
@@ -12107,7 +12166,7 @@ func (s InventorySourceAccessorsPartnerAccessor) MarshalJSON() ([]byte, error) {
 // InventorySourceAssignedTargetingOptionDetails: Targeting details for
 // inventory source. This will be populated in the details field of an
 // AssignedTargetingOption when targeting_type is
-// `TARGETING_TYPE_INVENTORY_SOURCE`.
+// `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`.
 type InventorySourceAssignedTargetingOptionDetails struct {
 	// InventorySourceId: Required. ID of the inventory source. Should refer to the
 	// inventory_source_id field of an InventorySource resource.
@@ -12831,7 +12890,7 @@ type LineItem struct {
 	//   "PARENT_INSERTION_ORDER_EXPIRED" - The insertion order of this line item
 	// has its end date set in the past. The line item will not run.
 	WarningMessages []string `json:"warningMessages,omitempty"`
-	// YoutubeAndPartnersSettings: Output only. Settings specific to YouTube and
+	// YoutubeAndPartnersSettings: Optional. Settings specific to YouTube and
 	// Partners line items.
 	YoutubeAndPartnersSettings *YoutubeAndPartnersSettings `json:"youtubeAndPartnersSettings,omitempty"`
 
@@ -14527,10 +14586,10 @@ func (s NegativeKeywordListAssignedTargetingOptionDetails) MarshalJSON() ([]byte
 
 // NonSkippableAd: Details for a non-skippable ad.
 type NonSkippableAd struct {
-	// CommonInStreamAttribute: Common ad attributes.
+	// CommonInStreamAttribute: Required. Common ad attributes.
 	CommonInStreamAttribute *CommonInStreamAttribute `json:"commonInStreamAttribute,omitempty"`
-	// CustomParameters: The custom parameters and accompanying values to add to
-	// the tracking URL.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CommonInStreamAttribute") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -15272,7 +15331,7 @@ type PartnerCost struct {
 	// `PARTNER_COST_TYPE_MOAT_VIDEO`.
 	FeeType string `json:"feeType,omitempty"`
 	// InvoiceType: The invoice type for this partner cost. * Required when
-	// cost_type is one of: - `PARTNER_COST_TYPE_ADLOOX` -
+	// cost_type is one of: - `PARTNER_COST_TYPE_PEER39` -
 	// `PARTNER_COST_TYPE_DOUBLE_VERIFY` - `PARTNER_COST_TYPE_INTEGRAL_AD_SCIENCE`.
 	// * Output only for other types.
 	//
@@ -15883,11 +15942,22 @@ func (s PlannedProduct) MarshalJSON() ([]byte, error) {
 
 // PlannedProductForecast: Performance metrics for a forecast point.
 type PlannedProductForecast struct {
+	// OnTargetCoviewImpressions: Number of on-target impressions including
+	// co-viewers.
+	OnTargetCoviewImpressions int64 `json:"onTargetCoviewImpressions,omitempty,string"`
+	// OnTargetCoviewReach: Number of unique people reached that match the
+	// on-target definition including co-viewers.
+	OnTargetCoviewReach int64 `json:"onTargetCoviewReach,omitempty,string"`
 	// OnTargetImpressions: Number of on-target impressions.
 	OnTargetImpressions int64 `json:"onTargetImpressions,omitempty,string"`
 	// OnTargetReach: Number of unique people reached that match the on-target
 	// definition.
 	OnTargetReach int64 `json:"onTargetReach,omitempty,string"`
+	// TotalCoviewImpressions: Total number of impressions including co-viewers.
+	TotalCoviewImpressions int64 `json:"totalCoviewImpressions,omitempty,string"`
+	// TotalCoviewReach: Total number of unique people reached including
+	// co-viewers.
+	TotalCoviewReach int64 `json:"totalCoviewReach,omitempty,string"`
 	// TotalImpressions: Total number of impressions.
 	TotalImpressions int64 `json:"totalImpressions,omitempty,string"`
 	// TotalReach: Total number of unique people reached.
@@ -15896,15 +15966,15 @@ type PlannedProductForecast struct {
 	TrueviewViews int64 `json:"trueviewViews,omitempty,string"`
 	// ViewableImpressions: Number of viewable impressions.
 	ViewableImpressions int64 `json:"viewableImpressions,omitempty,string"`
-	// ForceSendFields is a list of field names (e.g. "OnTargetImpressions") to
-	// unconditionally include in API requests. By default, fields with empty or
+	// ForceSendFields is a list of field names (e.g. "OnTargetCoviewImpressions")
+	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "OnTargetImpressions") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "OnTargetCoviewImpressions") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -16754,33 +16824,49 @@ type SdfConfig struct {
 	// Possible values:
 	//   "SDF_VERSION_UNSPECIFIED" - SDF version value is not specified or is
 	// unknown in this version.
-	//   "SDF_VERSION_3_1" - SDF version 3.1
-	//   "SDF_VERSION_4" - SDF version 4
-	//   "SDF_VERSION_4_1" - SDF version 4.1
-	//   "SDF_VERSION_4_2" - SDF version 4.2
-	//   "SDF_VERSION_5" - SDF version 5.
-	//   "SDF_VERSION_5_1" - SDF version 5.1
-	//   "SDF_VERSION_5_2" - SDF version 5.2
-	//   "SDF_VERSION_5_3" - SDF version 5.3
-	//   "SDF_VERSION_5_4" - SDF version 5.4
-	//   "SDF_VERSION_5_5" - SDF version 5.5
-	//   "SDF_VERSION_6" - SDF version 6
-	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
+	//   "SDF_VERSION_3_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 3.1
+	//   "SDF_VERSION_4" - Deprecated: This SDF version is no longer supported. SDF
+	// version 4
+	//   "SDF_VERSION_4_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 4.1
+	//   "SDF_VERSION_4_2" - Deprecated: This SDF version is no longer supported.
+	// SDF version 4.2
+	//   "SDF_VERSION_5" - Deprecated: This SDF version is no longer supported. SDF
+	// version 5.
+	//   "SDF_VERSION_5_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.1
+	//   "SDF_VERSION_5_2" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.2
+	//   "SDF_VERSION_5_3" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.3
+	//   "SDF_VERSION_5_4" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.4
+	//   "SDF_VERSION_5_5" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.5
+	//   "SDF_VERSION_6" - Deprecated: This SDF version is no longer supported. SDF
+	// version 6
+	//   "SDF_VERSION_7" - Deprecated: This SDF version is no longer supported. SDF
+	// version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
+	//   "SDF_VERSION_7_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8" - SDF version 8. Read the [v8 migration
+	//   "SDF_VERSION_8" - Deprecated: This SDF version is no longer supported. SDF
+	// version 8. Read the [v8 migration
 	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8_1" - SDF version 8.1.
+	//   "SDF_VERSION_8_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 8.1.
 	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	//   "SDF_VERSION_10" - SDF version 10.
+	//   "SDF_VERSION_10_1" - SDF version 10.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16839,33 +16925,49 @@ type SdfDownloadTaskMetadata struct {
 	// Possible values:
 	//   "SDF_VERSION_UNSPECIFIED" - SDF version value is not specified or is
 	// unknown in this version.
-	//   "SDF_VERSION_3_1" - SDF version 3.1
-	//   "SDF_VERSION_4" - SDF version 4
-	//   "SDF_VERSION_4_1" - SDF version 4.1
-	//   "SDF_VERSION_4_2" - SDF version 4.2
-	//   "SDF_VERSION_5" - SDF version 5.
-	//   "SDF_VERSION_5_1" - SDF version 5.1
-	//   "SDF_VERSION_5_2" - SDF version 5.2
-	//   "SDF_VERSION_5_3" - SDF version 5.3
-	//   "SDF_VERSION_5_4" - SDF version 5.4
-	//   "SDF_VERSION_5_5" - SDF version 5.5
-	//   "SDF_VERSION_6" - SDF version 6
-	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
+	//   "SDF_VERSION_3_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 3.1
+	//   "SDF_VERSION_4" - Deprecated: This SDF version is no longer supported. SDF
+	// version 4
+	//   "SDF_VERSION_4_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 4.1
+	//   "SDF_VERSION_4_2" - Deprecated: This SDF version is no longer supported.
+	// SDF version 4.2
+	//   "SDF_VERSION_5" - Deprecated: This SDF version is no longer supported. SDF
+	// version 5.
+	//   "SDF_VERSION_5_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.1
+	//   "SDF_VERSION_5_2" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.2
+	//   "SDF_VERSION_5_3" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.3
+	//   "SDF_VERSION_5_4" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.4
+	//   "SDF_VERSION_5_5" - Deprecated: This SDF version is no longer supported.
+	// SDF version 5.5
+	//   "SDF_VERSION_6" - Deprecated: This SDF version is no longer supported. SDF
+	// version 6
+	//   "SDF_VERSION_7" - Deprecated: This SDF version is no longer supported. SDF
+	// version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_7_1" - SDF version 7.1. Read the [v7 migration
+	//   "SDF_VERSION_7_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 7.1. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8" - SDF version 8. Read the [v8 migration
+	//   "SDF_VERSION_8" - Deprecated: This SDF version is no longer supported. SDF
+	// version 8. Read the [v8 migration
 	// guide](/display-video/api/structured-data-file/v8-migration-guide) before
 	// migrating to this version.
-	//   "SDF_VERSION_8_1" - SDF version 8.1.
+	//   "SDF_VERSION_8_1" - Deprecated: This SDF version is no longer supported.
+	// SDF version 8.1.
 	//   "SDF_VERSION_9" - SDF version 9. Read the [v9 migration
 	// guide](/display-video/api/structured-data-file/v9-migration-guide) before
 	// migrating to this version.
 	//   "SDF_VERSION_9_1" - SDF version 9.1.
 	//   "SDF_VERSION_9_2" - SDF version 9.2.
 	//   "SDF_VERSION_10" - SDF version 10.
+	//   "SDF_VERSION_10_1" - SDF version 10.1.
 	Version string `json:"version,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -16997,58 +17099,72 @@ func (s SelectedInventories) MarshalJSON() ([]byte, error) {
 // AssignedTargetingOption when targeting_type is
 // `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 type SensitiveCategoryAssignedTargetingOptionDetails struct {
-	// ExcludedSensitiveCategory: Required. An enum for the DV360 Sensitive
-	// category content classified to be EXCLUDED.
+	// ExcludedSensitiveCategory: Required. An enum for the Display & Video 360
+	// Sensitive category content classified to be EXCLUDED. This field only
+	// accepts the following values: * `SENSITIVE_CATEGORY_EMBEDDED_VIDEO` *
+	// `SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO`
 	//
 	// Possible values:
-	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder and
-	// doesn't specify a DV360 sensitive category.
-	//   "SENSITIVE_CATEGORY_ADULT" - Adult or pornographic text, image, or video
-	// content.
-	//   "SENSITIVE_CATEGORY_DEROGATORY" - Content that may be construed as biased
-	// against individuals, groups, or organizations based on criteria such as
-	// race, religion, disability, sex, age, veteran status, sexual orientation,
-	// gender identity, or political affiliation. May also indicate discussion of
-	// such content, for instance, in an academic or journalistic context.
-	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Content related to audio, video,
-	// or software downloads.
-	//   "SENSITIVE_CATEGORY_WEAPONS" - Contains content related to personal
-	// weapons, including knives, guns, small firearms, and ammunition. Selecting
-	// either "weapons" or "sensitive social issues" will result in selecting both.
-	//   "SENSITIVE_CATEGORY_GAMBLING" - Contains content related to betting or
-	// wagering in a real-world or online setting.
-	//   "SENSITIVE_CATEGORY_VIOLENCE" - Content which may be considered
-	// graphically violent, gory, gruesome, or shocking, such as street fighting
-	// videos, accident photos, descriptions of torture, etc.
-	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Adult content, as well as suggestive
-	// content that's not explicitly pornographic. This category includes all pages
-	// categorized as adult.
-	//   "SENSITIVE_CATEGORY_PROFANITY" - Prominent use of words considered
-	// indecent, such as curse words and sexual slang. Pages with only very
-	// occasional usage, such as news sites that might include such words in a
-	// quotation, are not included.
-	//   "SENSITIVE_CATEGORY_ALCOHOL" - Contains content related to alcoholic
-	// beverages, alcohol brands, recipes, etc.
-	//   "SENSITIVE_CATEGORY_DRUGS" - Contains content related to the recreational
-	// use of legal or illegal drugs, as well as to drug paraphernalia or
-	// cultivation.
-	//   "SENSITIVE_CATEGORY_TOBACCO" - Contains content related to tobacco and
-	// tobacco accessories, including lighters, humidors, ashtrays, etc.
-	//   "SENSITIVE_CATEGORY_POLITICS" - Political news and media, including
-	// discussions of social, governmental, and public policy.
-	//   "SENSITIVE_CATEGORY_RELIGION" - Content related to religious thought or
-	// beliefs.
-	//   "SENSITIVE_CATEGORY_TRAGEDY" - Content related to death, disasters,
-	// accidents, war, etc.
-	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Content related to motor
-	// vehicle, aviation or other transportation accidents.
-	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Issues that evoke strong,
-	// opposing views and spark debate. These include issues that are controversial
-	// in most countries and markets (such as abortion), as well as those that are
+	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - Serves as a placeholder and doesn't
+	// specify a Display & Video 360 sensitive category.
+	//   "SENSITIVE_CATEGORY_ADULT" - Deprecated: This sensitive category is no
+	// longer supported. Adult or pornographic text, image, or video content.
+	//   "SENSITIVE_CATEGORY_DEROGATORY" - Deprecated: This sensitive category is
+	// no longer supported. Content that may be construed as biased against
+	// individuals, groups, or organizations based on criteria such as race,
+	// religion, disability, sex, age, veteran status, sexual orientation, gender
+	// identity, or political affiliation. May also indicate discussion of such
+	// content, for instance, in an academic or journalistic context.
+	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Deprecated: This sensitive
+	// category is no longer supported. Content related to audio, video, or
+	// software downloads.
+	//   "SENSITIVE_CATEGORY_WEAPONS" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to personal weapons, including
+	// knives, guns, small firearms, and ammunition. Selecting either "weapons" or
+	// "sensitive social issues" will result in selecting both.
+	//   "SENSITIVE_CATEGORY_GAMBLING" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to betting or wagering in a
+	// real-world or online setting.
+	//   "SENSITIVE_CATEGORY_VIOLENCE" - Deprecated: This sensitive category is no
+	// longer supported. Content which may be considered graphically violent, gory,
+	// gruesome, or shocking, such as street fighting videos, accident photos,
+	// descriptions of torture, etc.
+	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Deprecated: This sensitive category is
+	// no longer supported. Adult content, as well as suggestive content that's not
+	// explicitly pornographic. This category includes all pages categorized as
+	// adult.
+	//   "SENSITIVE_CATEGORY_PROFANITY" - Deprecated: This sensitive category is no
+	// longer supported. Prominent use of words considered indecent, such as curse
+	// words and sexual slang. Pages with only very occasional usage, such as news
+	// sites that might include such words in a quotation, are not included.
+	//   "SENSITIVE_CATEGORY_ALCOHOL" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to alcoholic beverages, alcohol
+	// brands, recipes, etc.
+	//   "SENSITIVE_CATEGORY_DRUGS" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to the recreational use of legal
+	// or illegal drugs, as well as to drug paraphernalia or cultivation.
+	//   "SENSITIVE_CATEGORY_TOBACCO" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to tobacco and tobacco
+	// accessories, including lighters, humidors, ashtrays, etc.
+	//   "SENSITIVE_CATEGORY_POLITICS" - Deprecated: This sensitive category is no
+	// longer supported. Political news and media, including discussions of social,
+	// governmental, and public policy.
+	//   "SENSITIVE_CATEGORY_RELIGION" - Deprecated: This sensitive category is no
+	// longer supported. Content related to religious thought or beliefs.
+	//   "SENSITIVE_CATEGORY_TRAGEDY" - Deprecated: This sensitive category is no
+	// longer supported. Content related to death, disasters, accidents, war, etc.
+	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Deprecated: This sensitive
+	// category is no longer supported. Content related to motor vehicle, aviation
+	// or other transportation accidents.
+	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Deprecated: This sensitive
+	// category is no longer supported. Issues that evoke strong, opposing views
+	// and spark debate. These include issues that are controversial in most
+	// countries and markets (such as abortion), as well as those that are
 	// controversial in specific countries and markets (such as immigration reform
 	// in the United States).
-	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
-	// or disturbing, such as violent news stories, stunts, or toilet humor.
+	//   "SENSITIVE_CATEGORY_SHOCKING" - Deprecated: This sensitive category is no
+	// longer supported. Content which may be considered shocking or disturbing,
+	// such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
 	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
@@ -17077,58 +17193,70 @@ func (s SensitiveCategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, 
 // the TargetingOption when targeting_type is
 // `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
 type SensitiveCategoryTargetingOptionDetails struct {
-	// SensitiveCategory: Output only. An enum for the DV360 Sensitive category
-	// content classifier.
+	// SensitiveCategory: Output only. An enum for the Display & Video 360
+	// Sensitive category content classifier.
 	//
 	// Possible values:
-	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - This enum is only a placeholder and
-	// doesn't specify a DV360 sensitive category.
-	//   "SENSITIVE_CATEGORY_ADULT" - Adult or pornographic text, image, or video
-	// content.
-	//   "SENSITIVE_CATEGORY_DEROGATORY" - Content that may be construed as biased
-	// against individuals, groups, or organizations based on criteria such as
-	// race, religion, disability, sex, age, veteran status, sexual orientation,
-	// gender identity, or political affiliation. May also indicate discussion of
-	// such content, for instance, in an academic or journalistic context.
-	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Content related to audio, video,
-	// or software downloads.
-	//   "SENSITIVE_CATEGORY_WEAPONS" - Contains content related to personal
-	// weapons, including knives, guns, small firearms, and ammunition. Selecting
-	// either "weapons" or "sensitive social issues" will result in selecting both.
-	//   "SENSITIVE_CATEGORY_GAMBLING" - Contains content related to betting or
-	// wagering in a real-world or online setting.
-	//   "SENSITIVE_CATEGORY_VIOLENCE" - Content which may be considered
-	// graphically violent, gory, gruesome, or shocking, such as street fighting
-	// videos, accident photos, descriptions of torture, etc.
-	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Adult content, as well as suggestive
-	// content that's not explicitly pornographic. This category includes all pages
-	// categorized as adult.
-	//   "SENSITIVE_CATEGORY_PROFANITY" - Prominent use of words considered
-	// indecent, such as curse words and sexual slang. Pages with only very
-	// occasional usage, such as news sites that might include such words in a
-	// quotation, are not included.
-	//   "SENSITIVE_CATEGORY_ALCOHOL" - Contains content related to alcoholic
-	// beverages, alcohol brands, recipes, etc.
-	//   "SENSITIVE_CATEGORY_DRUGS" - Contains content related to the recreational
-	// use of legal or illegal drugs, as well as to drug paraphernalia or
-	// cultivation.
-	//   "SENSITIVE_CATEGORY_TOBACCO" - Contains content related to tobacco and
-	// tobacco accessories, including lighters, humidors, ashtrays, etc.
-	//   "SENSITIVE_CATEGORY_POLITICS" - Political news and media, including
-	// discussions of social, governmental, and public policy.
-	//   "SENSITIVE_CATEGORY_RELIGION" - Content related to religious thought or
-	// beliefs.
-	//   "SENSITIVE_CATEGORY_TRAGEDY" - Content related to death, disasters,
-	// accidents, war, etc.
-	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Content related to motor
-	// vehicle, aviation or other transportation accidents.
-	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Issues that evoke strong,
-	// opposing views and spark debate. These include issues that are controversial
-	// in most countries and markets (such as abortion), as well as those that are
+	//   "SENSITIVE_CATEGORY_UNSPECIFIED" - Serves as a placeholder and doesn't
+	// specify a Display & Video 360 sensitive category.
+	//   "SENSITIVE_CATEGORY_ADULT" - Deprecated: This sensitive category is no
+	// longer supported. Adult or pornographic text, image, or video content.
+	//   "SENSITIVE_CATEGORY_DEROGATORY" - Deprecated: This sensitive category is
+	// no longer supported. Content that may be construed as biased against
+	// individuals, groups, or organizations based on criteria such as race,
+	// religion, disability, sex, age, veteran status, sexual orientation, gender
+	// identity, or political affiliation. May also indicate discussion of such
+	// content, for instance, in an academic or journalistic context.
+	//   "SENSITIVE_CATEGORY_DOWNLOADS_SHARING" - Deprecated: This sensitive
+	// category is no longer supported. Content related to audio, video, or
+	// software downloads.
+	//   "SENSITIVE_CATEGORY_WEAPONS" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to personal weapons, including
+	// knives, guns, small firearms, and ammunition. Selecting either "weapons" or
+	// "sensitive social issues" will result in selecting both.
+	//   "SENSITIVE_CATEGORY_GAMBLING" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to betting or wagering in a
+	// real-world or online setting.
+	//   "SENSITIVE_CATEGORY_VIOLENCE" - Deprecated: This sensitive category is no
+	// longer supported. Content which may be considered graphically violent, gory,
+	// gruesome, or shocking, such as street fighting videos, accident photos,
+	// descriptions of torture, etc.
+	//   "SENSITIVE_CATEGORY_SUGGESTIVE" - Deprecated: This sensitive category is
+	// no longer supported. Adult content, as well as suggestive content that's not
+	// explicitly pornographic. This category includes all pages categorized as
+	// adult.
+	//   "SENSITIVE_CATEGORY_PROFANITY" - Deprecated: This sensitive category is no
+	// longer supported. Prominent use of words considered indecent, such as curse
+	// words and sexual slang. Pages with only very occasional usage, such as news
+	// sites that might include such words in a quotation, are not included.
+	//   "SENSITIVE_CATEGORY_ALCOHOL" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to alcoholic beverages, alcohol
+	// brands, recipes, etc.
+	//   "SENSITIVE_CATEGORY_DRUGS" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to the recreational use of legal
+	// or illegal drugs, as well as to drug paraphernalia or cultivation.
+	//   "SENSITIVE_CATEGORY_TOBACCO" - Deprecated: This sensitive category is no
+	// longer supported. Contains content related to tobacco and tobacco
+	// accessories, including lighters, humidors, ashtrays, etc.
+	//   "SENSITIVE_CATEGORY_POLITICS" - Deprecated: This sensitive category is no
+	// longer supported. Political news and media, including discussions of social,
+	// governmental, and public policy.
+	//   "SENSITIVE_CATEGORY_RELIGION" - Deprecated: This sensitive category is no
+	// longer supported. Content related to religious thought or beliefs.
+	//   "SENSITIVE_CATEGORY_TRAGEDY" - Deprecated: This sensitive category is no
+	// longer supported. Content related to death, disasters, accidents, war, etc.
+	//   "SENSITIVE_CATEGORY_TRANSPORTATION_ACCIDENTS" - Deprecated: This sensitive
+	// category is no longer supported. Content related to motor vehicle, aviation
+	// or other transportation accidents.
+	//   "SENSITIVE_CATEGORY_SENSITIVE_SOCIAL_ISSUES" - Deprecated: This sensitive
+	// category is no longer supported. Issues that evoke strong, opposing views
+	// and spark debate. These include issues that are controversial in most
+	// countries and markets (such as abortion), as well as those that are
 	// controversial in specific countries and markets (such as immigration reform
 	// in the United States).
-	//   "SENSITIVE_CATEGORY_SHOCKING" - Content which may be considered shocking
-	// or disturbing, such as violent news stories, stunts, or toilet humor.
+	//   "SENSITIVE_CATEGORY_SHOCKING" - Deprecated: This sensitive category is no
+	// longer supported. Content which may be considered shocking or disturbing,
+	// such as violent news stories, stunts, or toilet humor.
 	//   "SENSITIVE_CATEGORY_EMBEDDED_VIDEO" - YouTube videos embedded on websites
 	// outside of YouTube.com.
 	//   "SENSITIVE_CATEGORY_LIVE_STREAMING_VIDEO" - Video of live events streamed
@@ -17426,7 +17554,8 @@ type TargetFrequency struct {
 	// time_unit_count.
 	TargetCount int64 `json:"targetCount,omitempty,string"`
 	// TimeUnit: The unit of time in which the target frequency will be applied.
-	// The following time unit is applicable: * `TIME_UNIT_WEEKS`
+	// The following time unit is applicable: * `TIME_UNIT_WEEKS` *
+	// `TIME_UNIT_MONTHS`
 	//
 	// Possible values:
 	//   "TIME_UNIT_UNSPECIFIED" - Time unit value is not specified or is unknown
@@ -17445,7 +17574,7 @@ type TargetFrequency struct {
 	TimeUnit string `json:"timeUnit,omitempty"`
 	// TimeUnitCount: The number of time_unit the target frequency will last. The
 	// following restrictions apply based on the value of time_unit: *
-	// `TIME_UNIT_WEEKS` - must be 1
+	// `TIME_UNIT_WEEKS` - must be 1 * `TIME_UNIT_MONTHS` - must be 1
 	TimeUnitCount int64 `json:"timeUnitCount,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "TargetCount") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -17981,6 +18110,7 @@ type ThirdPartyVendorConfig struct {
 	//   "THIRD_PARTY_VENDOR_INTAGE" - Intage.
 	//   "THIRD_PARTY_VENDOR_MACROMILL" - Macromill.
 	//   "THIRD_PARTY_VENDOR_VIDEO_RESEARCH" - Video Research.
+	//   "THIRD_PARTY_VENDOR_AQUILA" - Aquila.
 	Vendor string `json:"vendor,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PlacementId") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -18218,6 +18348,16 @@ type UploadAdAssetRequest struct {
 	// extension. The filename must be UTF-8 encoded with a maximum size of 240
 	// bytes.
 	Filename string `json:"filename,omitempty"`
+	// SyntheticContentAttestationStatus: Optional. Whether to add a label to the
+	// asset as created or edited using AI when served in regions with local AI
+	// labeling regulations.
+	//
+	// Possible values:
+	//   "SYNTHETIC_CONTENT_ATTESTATION_STATUS_UNSPECIFIED" - No attestation has
+	// been provided.
+	//   "NOT_SYNTHETIC" - Attested as not created or edited using AI.
+	//   "IS_SYNTHETIC" - Attested as created or edited using AI.
+	SyntheticContentAttestationStatus string `json:"syntheticContentAttestationStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AdAssetType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -18566,33 +18706,52 @@ func (s VideoDiscoveryAd) MarshalJSON() ([]byte, error) {
 
 // VideoPerformanceAd: Details for a video performance ad.
 type VideoPerformanceAd struct {
-	// ActionButtonLabels: The list of text assets shown on the call-to-action
-	// button.
+	// ActionButtonLabels: Optional. The list of text assets shown on the
+	// call-to-action button. Must be set if headlines is set.
 	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
-	// CompanionBanners: The list of companion banners used by this ad.
+	// BusinessName: Optional. The business name shown on the ad. This setting is
+	// required unless a default value is set at the advertiser level. If left
+	// unset, the default value will be applied.
+	BusinessName string `json:"businessName,omitempty"`
+	// CompanionBanners: Optional. The list of companion banners used by this ad.
 	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
-	// CustomParameters: The custom parameters and accompanying values to add to
-	// the tracking URL.
+	// CustomParameters: Optional. The custom parameters and accompanying values to
+	// add to the tracking URL.
 	CustomParameters map[string]string `json:"customParameters,omitempty"`
-	// Descriptions: The list of descriptions shown on the call-to-action banner.
+	// Descriptions: Optional. The list of descriptions shown on the call-to-action
+	// banner. Must be set unless the parent line item's lineItemType is
+	// `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE`, in which case this
+	// field cannot be set.
 	Descriptions []string `json:"descriptions,omitempty"`
-	// DisplayUrlBreadcrumb1: The first piece after the domain in the display URL.
+	// DisplayUrlBreadcrumb1: Optional. The first piece after the domain in the
+	// display URL.
 	DisplayUrlBreadcrumb1 string `json:"displayUrlBreadcrumb1,omitempty"`
-	// DisplayUrlBreadcrumb2: The second piece after the domain in the display URL.
+	// DisplayUrlBreadcrumb2: Optional. The second piece after the domain in the
+	// display URL. Can only be set if displayUrlBreadcrumb1 is also set.
 	DisplayUrlBreadcrumb2 string `json:"displayUrlBreadcrumb2,omitempty"`
-	// Domain: The domain of the display URL.
+	// Domain: Output only. The domain of the display URL.
 	Domain string `json:"domain,omitempty"`
-	// FinalUrl: The URL address of the webpage that people reach after they click
-	// the ad.
+	// FinalUrl: Required. The URL address of the webpage that people reach after
+	// they click the ad.
 	FinalUrl string `json:"finalUrl,omitempty"`
-	// Headlines: The list of headlines shown on the call-to-action banner.
-	Headlines []string `json:"headlines,omitempty"`
-	// LongHeadlines: The list of long headlines shown on the call-to-action
+	// Headlines: Optional. The list of headlines shown on the call-to-action
 	// banner.
+	Headlines []string `json:"headlines,omitempty"`
+	// Logo: Optional. The logo image used by this ad. This setting is required
+	// unless a default value is set at the advertiser level. If left unset, the
+	// default value will be applied.
+	Logo *ImageAsset `json:"logo,omitempty"`
+	// LongHeadlines: Optional. The list of long headlines shown on the
+	// call-to-action banner. Must be set unless the parent line item's
+	// lineItemType is `LINE_ITEM_TYPE_YOUTUBE_AND_PARTNERS_NON_SKIPPABLE`, in
+	// which case this field cannot be set.
 	LongHeadlines []string `json:"longHeadlines,omitempty"`
-	// TrackingUrl: The URL address loaded in the background for tracking purposes.
+	// TrackingUrl: Output only. The URL address loaded in the background for
+	// tracking purposes. In v4 and earlier, this field represents the tracking URL
+	// specified by the user manually. This can be found at
+	// userSpecifiedTrackingUrl in v5.
 	TrackingUrl string `json:"trackingUrl,omitempty"`
-	// Videos: The list of YouTube video assets used by this ad.
+	// Videos: Required. The list of YouTube video assets used by this ad.
 	Videos []*YoutubeVideoDetails `json:"videos,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ActionButtonLabels") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -19401,7 +19560,8 @@ type YoutubeVideoDetails struct {
 	// Id: Output only. The YouTube video ID which can be searched on YouTube
 	// webpage.
 	Id string `json:"id,omitempty"`
-	// UnavailableReason: The reason why the video data is not available.
+	// UnavailableReason: Output only. The reason why the video data is not
+	// available.
 	//
 	// Possible values:
 	//   "VIDEO_UNAVAILABLE_REASON_UNSPECIFIED" - Unknown or unspecified.
@@ -20933,6 +21093,125 @@ func (c *AdvertisersAdAssetsListCall) Pages(ctx context.Context, f func(*ListAdA
 	}
 }
 
+type AdvertisersAdAssetsPatchCall struct {
+	s            *Service
+	advertiserId int64
+	adAssetId    int64
+	adasset      *AdAsset
+	urlParams_   gensupport.URLParams
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Patch: Updates an ad asset. Returns the updated ad asset if successful.
+// Supports updating assets of AdAssetType `AD_ASSET_TYPE_YOUTUBE_VIDEO` and
+// `AD_ASSET_TYPE_IMAGE`. Only the AdAsset.synthetic_content_attestation_status
+// field is mutable.
+//
+//   - adAssetId: Output only. The ID of the ad asset. Referred to as the asset
+//     ID when assigned to an ad.
+//   - advertiserId: The ID of the advertiser this ad asset belongs to.
+func (r *AdvertisersAdAssetsService) Patch(advertiserId int64, adAssetId int64, adasset *AdAsset) *AdvertisersAdAssetsPatchCall {
+	c := &AdvertisersAdAssetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.advertiserId = advertiserId
+	c.adAssetId = adAssetId
+	c.adasset = adasset
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The list of
+// fields to update. Only AdAsset.synthetic_content_attestation_status is
+// mutable.
+func (c *AdvertisersAdAssetsPatchCall) UpdateMask(updateMask string) *AdvertisersAdAssetsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *AdvertisersAdAssetsPatchCall) Fields(s ...googleapi.Field) *AdvertisersAdAssetsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *AdvertisersAdAssetsPatchCall) Context(ctx context.Context) *AdvertisersAdAssetsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *AdvertisersAdAssetsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AdvertisersAdAssetsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.adasset)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v4/advertisers/{+advertiserId}/adAssets/{+adAssetId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"advertiserId": strconv.FormatInt(c.advertiserId, 10),
+		"adAssetId":    strconv.FormatInt(c.adAssetId, 10),
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.advertisers.adAssets.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdAsset.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *AdvertisersAdAssetsPatchCall) Do(opts ...googleapi.CallOption) (*AdAsset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AdAsset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "displayvideo.advertisers.adAssets.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type AdvertisersAdAssetsUploadCall struct {
 	s                    *Service
 	advertiserId         int64
@@ -21111,8 +21390,7 @@ type AdvertisersAdGroupAdsCreateCall struct {
 	header_      http.Header
 }
 
-// Create: Creates an ad group ad. This method is only supported for Demand Gen
-// ads.
+// Create: Creates an ad group ad.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
 //     to.
@@ -21216,12 +21494,10 @@ type AdvertisersAdGroupAdsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Deletes an ad group ad. This method is only supported for Demand Gen
-// ads.
+// Delete: Deletes an ad group ad.
 //
-//   - adGroupAdId: The ID of the ad to delete. Only Demand Gen ads are
-//     supported.
-//   - advertiserId: The ID of the advertiser the ad belongs to.
+// - adGroupAdId: The ID of the ad to delete.
+// - advertiserId: The ID of the advertiser the ad belongs to.
 func (r *AdvertisersAdGroupAdsService) Delete(advertiserId int64, adGroupAdId int64) *AdvertisersAdGroupAdsDeleteCall {
 	c := &AdvertisersAdGroupAdsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -21447,13 +21723,14 @@ func (r *AdvertisersAdGroupAdsService) List(advertiserId int64) *AdvertisersAdGr
 // of restrictions implicitly uses `AND`. * A restriction has the form of
 // `{field} {operator} {value}`. * All fields must use the `EQUALS (=)`
 // operator. Supported fields: * `adGroupId` * `displayName` * `entityStatus` *
-// `adGroupAdId` Examples: * All ad group ads under an ad group:
-// `adGroupId="1234" * All ad group ads under an ad group with an entityStatus
-// of `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`:
+// `adGroupAdId` * `parentCreativeId` Examples: * All ad group ads under an ad
+// group: `adGroupId="1234" * All ad group ads under an ad group with an
+// entityStatus of `ENTITY_STATUS_ACTIVE` or `ENTITY_STATUS_PAUSED`:
 // `(entityStatus="ENTITY_STATUS_ACTIVE" OR
-// entityStatus="ENTITY_STATUS_PAUSED") AND adGroupId="12345" The length of
-// this field should be no more than 500 characters. Reference our filter
-// `LIST` requests (/display-video/api/guides/how-tos/filters) guide for more
+// entityStatus="ENTITY_STATUS_PAUSED") AND adGroupId="12345" * All ad group
+// ads under a parent creative: `parentCreativeId="12345" The length of this
+// field should be no more than 500 characters. Reference our filter `LIST`
+// requests (/display-video/api/guides/how-tos/filters) guide for more
 // information.
 func (c *AdvertisersAdGroupAdsListCall) Filter(filter string) *AdvertisersAdGroupAdsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -21610,8 +21887,7 @@ type AdvertisersAdGroupAdsPatchCall struct {
 	header_      http.Header
 }
 
-// Patch: Updates an ad group ad. This method is only supported for Demand Gen
-// ads.
+// Patch: Updates an ad group ad.
 //
 //   - adGroupAdId: Output only. The unique ID of the ad. Assigned by the system.
 //   - advertiserId: Output only. The unique ID of the advertiser the ad belongs
@@ -22651,12 +22927,15 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall struct 
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
-//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_COMBINED_AUDIENCE` *
+//     `TARGETING_TYPE_CUSTOM_LIST` *
+//     `TARGETING_TYPE_FIRST_PARTY_AND_PARTNER_AUDIENCE` *
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
-//     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
-//     `TARGETING_TYPE_URL` * `TARGETING_TYPE_YOUTUBE_CHANNEL` *
-//     `TARGETING_TYPE_YOUTUBE_VIDEO`.
+//     `TARGETING_TYPE_GOOGLE_AUDIENCE` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_LOOKALIKE_AUDIENCE` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
+//     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, adGroupId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -22776,10 +23055,13 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall struct 
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
-//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_COMBINED_AUDIENCE` *
+//     `TARGETING_TYPE_CUSTOM_LIST` *
+//     `TARGETING_TYPE_FIRST_PARTY_AND_PARTNER_AUDIENCE` *
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
-//     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_GOOGLE_AUDIENCE` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_LOOKALIKE_AUDIENCE` * `TARGETING_TYPE_PARENTAL_STATUS` *
 //     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
 //     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, adGroupId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsDeleteCall {
@@ -22898,10 +23180,13 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsGetCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
-//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_COMBINED_AUDIENCE` *
+//     `TARGETING_TYPE_CUSTOM_LIST` *
+//     `TARGETING_TYPE_FIRST_PARTY_AND_PARTNER_AUDIENCE` *
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
-//     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_GOOGLE_AUDIENCE` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_LOOKALIKE_AUDIENCE` * `TARGETING_TYPE_PARENTAL_STATUS` *
 //     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
 //     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) Get(advertiserId int64, adGroupId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsGetCall {
@@ -23027,10 +23312,13 @@ type AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsListCall struct {
 //   - targetingType: Identifies the type of assigned targeting options to list.
 //     Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
-//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_CATEGORY` *
+//     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_COMBINED_AUDIENCE` *
+//     `TARGETING_TYPE_CUSTOM_LIST` *
+//     `TARGETING_TYPE_FIRST_PARTY_AND_PARTNER_AUDIENCE` *
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_KEYWORD` *
-//     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_PARENTAL_STATUS` *
+//     `TARGETING_TYPE_GOOGLE_AUDIENCE` * `TARGETING_TYPE_HOUSEHOLD_INCOME` *
+//     `TARGETING_TYPE_KEYWORD` * `TARGETING_TYPE_LANGUAGE` *
+//     `TARGETING_TYPE_LOOKALIKE_AUDIENCE` * `TARGETING_TYPE_PARENTAL_STATUS` *
 //     `TARGETING_TYPE_SESSION_POSITION` * `TARGETING_TYPE_URL` *
 //     `TARGETING_TYPE_YOUTUBE_CHANNEL` * `TARGETING_TYPE_YOUTUBE_VIDEO`.
 func (r *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsService) List(advertiserId int64, adGroupId int64, targetingType string) *AdvertisersAdGroupsTargetingTypesAssignedTargetingOptionsListCall {
@@ -28324,7 +28612,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
-//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUCTION_PACKAGE` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
 //     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` *
 //     `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` *
 //     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` *
@@ -28336,8 +28625,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` *
-//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`
+//   - `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
 //     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
 //     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` *
@@ -28470,7 +28759,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
-//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUCTION_PACKAGE` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
 //     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` *
 //     `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` *
 //     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` *
@@ -28482,8 +28772,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` *
-//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`
+//   - `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
 //     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
 //     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` *
@@ -28609,7 +28899,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
-//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUCTION_PACKAGE` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
 //     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` *
 //     `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` *
 //     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` *
@@ -28621,8 +28912,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsGetCall struct {
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` *
-//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`
+//   - `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
 //     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
 //     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` *
@@ -28760,7 +29051,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
 //   - targetingType: Identifies the type of assigned targeting options to list.
 //     Supported targeting types include: * `TARGETING_TYPE_AGE_RANGE` *
 //     `TARGETING_TYPE_APP` * `TARGETING_TYPE_APP_CATEGORY` *
-//     `TARGETING_TYPE_AUDIENCE_GROUP` * `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
+//     `TARGETING_TYPE_AUCTION_PACKAGE` * `TARGETING_TYPE_AUDIENCE_GROUP` *
+//     `TARGETING_TYPE_AUDIO_CONTENT_TYPE` *
 //     `TARGETING_TYPE_AUTHORIZED_SELLER_STATUS` * `TARGETING_TYPE_BROWSER` *
 //     `TARGETING_TYPE_BUSINESS_CHAIN` * `TARGETING_TYPE_CARRIER_AND_ISP` *
 //     `TARGETING_TYPE_CATEGORY` * `TARGETING_TYPE_CHANNEL` *
@@ -28772,8 +29064,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsListCall struct {
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_ENVIRONMENT` * `TARGETING_TYPE_EXCHANGE` *
 //     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_GEO_REGION` *
-//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE` *
-//     `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_HOUSEHOLD_INCOME` * `TARGETING_TYPE_INVENTORY_SOURCE_DEAL`
+//   - `TARGETING_TYPE_INVENTORY_SOURCE_GROUP` * `TARGETING_TYPE_KEYWORD` *
 //     `TARGETING_TYPE_LANGUAGE` * `TARGETING_TYPE_NATIVE_CONTENT_POSITION` *
 //     `TARGETING_TYPE_NEGATIVE_KEYWORD_LIST` * `TARGETING_TYPE_OMID` *
 //     `TARGETING_TYPE_ON_SCREEN_POSITION` * `TARGETING_TYPE_OPERATING_SYSTEM` *
@@ -31623,7 +31915,9 @@ type AdvertisersReachForecastGenerateReachForecastCall struct {
 }
 
 // GenerateReachForecast: Generates a reach forecast for a given advertiser and
-// targeting configuration.
+// targeting configuration. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 // - advertiserId: The ID of the advertiser that will run the planned campaign.
 func (r *AdvertisersReachForecastService) GenerateReachForecast(advertiserId int64, generatereachforecastrequest *GenerateReachForecastRequest) *AdvertisersReachForecastGenerateReachForecastCall {
@@ -31728,7 +32022,9 @@ type AdvertisersReachForecastRetrievePlannableLocationsCall struct {
 }
 
 // RetrievePlannableLocations: Retrieves the list of countries where reach
-// forecasting is supported.
+// forecasting is supported. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 // - advertiserId: The ID of the advertiser to list plannable locations for.
 func (r *AdvertisersReachForecastService) RetrievePlannableLocations(advertiserId int64) *AdvertisersReachForecastRetrievePlannableLocationsCall {
@@ -31839,7 +32135,9 @@ type AdvertisersReachForecastRetrievePlannableProductsCall struct {
 }
 
 // RetrievePlannableProducts: Retrieves the list of products that can be
-// planned for a location.
+// planned for a location. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 // - advertiserId: The ID of the advertiser to list plannable products for.
 func (r *AdvertisersReachForecastService) RetrievePlannableProducts(advertiserId int64) *AdvertisersReachForecastRetrievePlannableProductsCall {
@@ -31957,7 +32255,9 @@ type AdvertisersReachForecastRetrievePlannableUserInterestsCall struct {
 }
 
 // RetrievePlannableUserInterests: Retrieves Google Audiences (User Interests)
-// available for forecasting.
+// available for forecasting. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 //   - advertiserId: The ID of the advertiser to list plannable user interests
 //     for.
@@ -32082,7 +32382,9 @@ type AdvertisersReachForecastRetrievePlannableUserListsCall struct {
 }
 
 // RetrievePlannableUserLists: Retrieves first and third party user lists
-// available for forecasting.
+// available for forecasting. API support for generating reach forecasts and
+// retrieving related metadata is in beta. This method is only available to
+// allowlisted users.
 //
 //   - advertiserId: The ID of the advertiser to retrieve plannable user lists
 //     for.
@@ -32257,7 +32559,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -32370,7 +32673,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 //   - targetingType: Identifies the type of this assigned targeting option.
 //     Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD` *
+//     `TARGETING_TYPE_YOUTUBE_VIDEO` * `TARGETING_TYPE_YOUTUBE_CHANNEL`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -41676,7 +41980,8 @@ type TargetingTypesTargetingOptionsGetCall struct {
 //   - targetingOptionId: The ID of the of targeting option to retrieve.
 //   - targetingType: The type of targeting option to retrieve. Accepted values
 //     are: * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AGE_RANGE` *
-//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
+//     `TARGETING_TYPE_AUCTION_PACKAGE` * `TARGETING_TYPE_GENDER` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
 //     `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_PARENTAL_STATUS`
 //   - `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
 //     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_DEVICE_TYPE`
@@ -41810,7 +42115,8 @@ type TargetingTypesTargetingOptionsListCall struct {
 //
 //   - targetingType: The type of targeting option to be listed. Accepted values
 //     are: * `TARGETING_TYPE_APP_CATEGORY` * `TARGETING_TYPE_AGE_RANGE` *
-//     `TARGETING_TYPE_GENDER` * `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
+//     `TARGETING_TYPE_AUCTION_PACKAGE` * `TARGETING_TYPE_GENDER` *
+//     `TARGETING_TYPE_VIDEO_PLAYER_SIZE` *
 //     `TARGETING_TYPE_USER_REWARDED_CONTENT` * `TARGETING_TYPE_PARENTAL_STATUS`
 //   - `TARGETING_TYPE_CONTENT_INSTREAM_POSITION` *
 //     `TARGETING_TYPE_CONTENT_OUTSTREAM_POSITION` * `TARGETING_TYPE_DEVICE_TYPE`

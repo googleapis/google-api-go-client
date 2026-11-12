@@ -556,10 +556,19 @@ func (s AuthorizedView) MarshalJSON() ([]byte, error) {
 
 // AutomatedBackupPolicy: Defines an automated backup policy for a table
 type AutomatedBackupPolicy struct {
+	// Disabled: Optional. If `true`, automated backups are explicitly disabled on
+	// this table. This allows users to opt out of default enablement.
+	Disabled bool `json:"disabled,omitempty"`
 	// Frequency: How frequently automated backups should occur. The only supported
 	// value at this time is 24 hours. An undefined frequency is treated as 24
 	// hours.
 	Frequency string `json:"frequency,omitempty"`
+	// KeepHotDuration: Optional. The amount of time that the automated backups
+	// remain hot. If specified, the backups created by this policy are `HOT`
+	// backups. If not specified, the backups are `STANDARD` backups. The value
+	// must be at least 24 hours and at most 10 days, and can't exceed the policy's
+	// `retention_period`. Only SSD instances support `HOT` automated backups.
+	KeepHotDuration string `json:"keepHotDuration,omitempty"`
 	// Locations: Optional. A list of Cloud Bigtable zones where automated backups
 	// are allowed to be created. If empty, automated backups will be created in
 	// all zones of the instance. Locations are in the format
@@ -569,13 +578,13 @@ type AutomatedBackupPolicy struct {
 	// RetentionPeriod: Required. How long the automated backups should be
 	// retained. Values must be at least 3 days and at most 90 days.
 	RetentionPeriod string `json:"retentionPeriod,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Frequency") to
+	// ForceSendFields is a list of field names (e.g. "Disabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Frequency") to include in API
+	// NullFields is a list of field names (e.g. "Disabled") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -642,6 +651,31 @@ type AutoscalingTargets struct {
 
 func (s AutoscalingTargets) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingTargets
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// AvroSchema: Represents a collection of Avro schemas.
+type AvroSchema struct {
+	// JsonSchemas: Required. The Avro schemas in JSON format. Each element must be
+	// the content of a valid, self-contained Avro schema file (.avsc), as
+	// described in https://avro.apache.org/docs/1.8.1/spec.html. Use repeated
+	// elements to include multiple Avro schema files in a single bundle.
+	JsonSchemas []string `json:"jsonSchemas,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "JsonSchemas") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "JsonSchemas") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AvroSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod AvroSchema
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1178,6 +1212,12 @@ type ColumnFamilyStats struct {
 	// This is roughly how many bytes would be needed to read the contents of the
 	// entire column family (e.g. by streaming all contents out).
 	LogicalDataBytes int64 `json:"logicalDataBytes,omitempty,string"`
+	// LogicalDataHddBytes: Output only. The logical data bytes of the column
+	// family stored on HDD.
+	LogicalDataHddBytes int64 `json:"logicalDataHddBytes,omitempty,string"`
+	// LogicalDataSsdBytes: Output only. The logical data bytes of the column
+	// family stored on SSD.
+	LogicalDataSsdBytes int64 `json:"logicalDataSsdBytes,omitempty,string"`
 	// ForceSendFields is a list of field names (e.g. "AverageCellsPerColumn") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -1608,6 +1648,9 @@ func (s CreateMaterializedViewMetadata) MarshalJSON() ([]byte, error) {
 // CreateMaterializedViewRequest: Request message for
 // BigtableInstanceAdmin.CreateMaterializedView.
 type CreateMaterializedViewRequest struct {
+	// IgnoreWarnings: Optional. If true, ignore optional safety checks when
+	// creating the materialized view.
+	IgnoreWarnings bool `json:"ignoreWarnings,omitempty"`
 	// MaterializedView: Required. The materialized view to create.
 	MaterializedView *MaterializedView `json:"materializedView,omitempty"`
 	// MaterializedViewId: Required. The ID to use for the materialized view, which
@@ -1616,13 +1659,13 @@ type CreateMaterializedViewRequest struct {
 	// Parent: Required. The parent instance where this materialized view will be
 	// created. Format: `projects/{project}/instances/{instance}`.
 	Parent string `json:"parent,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "MaterializedView") to
+	// ForceSendFields is a list of field names (e.g. "IgnoreWarnings") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "MaterializedView") to include in
+	// NullFields is a list of field names (e.g. "IgnoreWarnings") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2934,7 +2977,10 @@ type Instance struct {
 	// be between 0 and 63 characters long and must conform to the regular
 	// expression: `[\p{Ll}\p{Lo}\p{N}_-]{0,63}`. * No more than 64 labels can be
 	// associated with a given resource. * Keys and values must both be under 128
-	// bytes.
+	// bytes. Labels and Tags (below) are both used to bind metadata to resources,
+	// with different use-cases. See
+	// https://cloud.google.com/resource-manager/docs/tags/tags-overview for an
+	// in-depth overview on the difference between tags and labels.
 	Labels map[string]string `json:"labels,omitempty"`
 	// Name: The unique name of the instance. Values are of the form
 	// `projects/{project}/instances/a-z+[a-z0-9]`.
@@ -4109,6 +4155,8 @@ type RowAffinity struct {
 
 // SchemaBundle: A named collection of related schemas.
 type SchemaBundle struct {
+	// AvroSchema: Optional. Schema for Avros.
+	AvroSchema *AvroSchema `json:"avroSchema,omitempty"`
 	// Etag: Optional. The etag for this schema bundle. This may be sent on update
 	// and delete requests to ensure the client has an up-to-date value before
 	// proceeding. The server returns an ABORTED error on a mismatched etag.
@@ -4123,15 +4171,15 @@ type SchemaBundle struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "AvroSchema") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Etag") to include in API requests
-	// with the JSON null value. By default, fields with empty values are omitted
-	// from API requests. See
+	// NullFields is a list of field names (e.g. "AvroSchema") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -4317,6 +4365,11 @@ type Table struct {
 	// containing the table. Note one can still delete the data stored in the table
 	// through Data APIs.
 	DeletionProtection bool `json:"deletionProtection,omitempty"`
+	// EffectiveAutomatedBackupPolicy: Output only. The effective automated backup
+	// policy applied to the table. This represents the policy actually in effect,
+	// which may be a system-default policy if the user has not explicitly
+	// configured one. Views: `SCHEMA_VIEW`, `FULL`.
+	EffectiveAutomatedBackupPolicy *AutomatedBackupPolicy `json:"effectiveAutomatedBackupPolicy,omitempty"`
 	// Granularity: Immutable. The granularity at which timestamps are stored in
 	// this table. Timestamps not matching the granularity will be rejected. If
 	// unspecified at creation time, the value will be set to `MILLIS`. Views:
@@ -4327,6 +4380,7 @@ type Table struct {
 	// granularity. Should not be returned. When specified during table creation,
 	// MILLIS will be used.
 	//   "MILLIS" - The table keeps data versioned at a granularity of 1ms.
+	//   "MICROS" - The table keeps data versioned at a granularity of 1us.
 	Granularity string `json:"granularity,omitempty"`
 	// Name: The unique name of the table. Values are of the form
 	// `projects/{project}/instances/{instance}/tables/_a-zA-Z0-9*`. Views:
@@ -7719,6 +7773,119 @@ func (c *ProjectsInstancesClustersUpdateCall) Do(opts ...googleapi.CallOption) (
 	return ret, nil
 }
 
+type ProjectsInstancesClustersUpdateMemoryLayerCall struct {
+	s           *Service
+	name        string
+	memorylayer *MemoryLayer
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// UpdateMemoryLayer: Updates the memory layer of a cluster. To enable the
+// memory layer, set the memory_config. To disable the memory layer, unset the
+// memory_config.
+//
+//   - name: Identifier. Name of the memory layer. This is always:
+//     "projects/{project}/instances/{instance}/clusters/{cluster}/memoryLayer".
+func (r *ProjectsInstancesClustersService) UpdateMemoryLayer(name string, memorylayer *MemoryLayer) *ProjectsInstancesClustersUpdateMemoryLayerCall {
+	c := &ProjectsInstancesClustersUpdateMemoryLayerCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.memorylayer = memorylayer
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of fields to
+// update.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) UpdateMask(updateMask string) *ProjectsInstancesClustersUpdateMemoryLayerCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) Fields(s ...googleapi.Field) *ProjectsInstancesClustersUpdateMemoryLayerCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) Context(ctx context.Context) *ProjectsInstancesClustersUpdateMemoryLayerCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.memorylayer)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.updateMemoryLayer", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.clusters.updateMemoryLayer" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsInstancesClustersUpdateMemoryLayerCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "bigtableadmin.projects.instances.clusters.updateMemoryLayer", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsInstancesClustersBackupsCopyCall struct {
 	s                 *Service
 	parent            string
@@ -10040,6 +10207,13 @@ func (r *ProjectsInstancesMaterializedViewsService) Create(parent string, materi
 	c := &ProjectsInstancesMaterializedViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	c.materializedview = materializedview
+	return c
+}
+
+// IgnoreWarnings sets the optional parameter "ignoreWarnings": If true, ignore
+// optional safety checks when creating the materialized view.
+func (c *ProjectsInstancesMaterializedViewsCreateCall) IgnoreWarnings(ignoreWarnings bool) *ProjectsInstancesMaterializedViewsCreateCall {
+	c.urlParams_.Set("ignoreWarnings", fmt.Sprint(ignoreWarnings))
 	return c
 }
 

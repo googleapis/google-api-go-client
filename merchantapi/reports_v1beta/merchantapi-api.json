@@ -142,7 +142,7 @@
       }
     }
   },
-  "revision": "20260715",
+  "revision": "20261026",
   "rootUrl": "https://merchantapi.googleapis.com/",
   "schemas": {
     "BestSellersBrandView": {
@@ -476,7 +476,7 @@
           "description": "Date of this row. A condition on `date` is required in the `WHERE` clause."
         },
         "domain": {
-          "description": "Domain of your competitor or your domain, if 'is_your_domain' is true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE' clause.",
+          "description": "Domain of your competitor or your domain, if `is_your_domain` is true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE' clause.",
           "type": "string"
         },
         "higherPositionRate": {
@@ -545,7 +545,7 @@
           "description": "Date of this row. Cannot be selected in the `SELECT` clause. A condition on `date` is required in the `WHERE` clause."
         },
         "domain": {
-          "description": "Domain of your competitor or your domain, if 'is_your_domain' is true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE' clause.",
+          "description": "Domain of your competitor or your domain, if `is_your_domain` is true. Required in the `SELECT` clause. Cannot be filtered on in the 'WHERE' clause.",
           "type": "string"
         },
         "higherPositionRate": {
@@ -657,12 +657,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -701,7 +703,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         }
@@ -1043,12 +1046,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -1087,7 +1092,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         }
@@ -1184,12 +1190,46 @@
           "enum": [
             "MARKETING_METHOD_ENUM_UNSPECIFIED",
             "ORGANIC",
-            "ADS"
+            "ADS",
+            "AFFILIATE"
           ],
           "enumDescriptions": [
             "Not specified.",
             "Organic marketing.",
-            "Ads-based marketing."
+            "Ads-based marketing.",
+            "[YouTube Shopping Affiliate marketing](https://support.google.com/merchants/answer/14815513)."
+          ],
+          "type": "string"
+        },
+        "network": {
+          "description": "Network to which metrics apply. Segment.",
+          "enum": [
+            "NETWORK_ENUM_UNSPECIFIED",
+            "UNKNOWN",
+            "SEARCH",
+            "SEARCH_PARTNERS",
+            "CONTENT",
+            "MIXED",
+            "YOUTUBE",
+            "GOOGLE_TV",
+            "GOOGLE_OWNED_CHANNELS",
+            "GMAIL",
+            "DISCOVER",
+            "MAPS"
+          ],
+          "enumDescriptions": [
+            "Not specified.",
+            "The value is unknown in this version.",
+            "Google search.",
+            "Search partners.",
+            "Display Network.",
+            "Cross-network.",
+            "YouTube",
+            "Google TV",
+            "This network is used for Google Owned channels such as Discover feed, Gmail, YouTube. Demand Gen stats are attributed to more granular network types such as GMAIL, DISCOVER, MAPS, YOUTUBE; this value is only used for historical data.",
+            "Gmail",
+            "Discover Feed",
+            "Maps"
           ],
           "type": "string"
         },
@@ -1486,12 +1526,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -1530,7 +1572,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         },
@@ -1688,12 +1731,14 @@
             "LOCAL_CLOUD_RETAIL",
             "PRODUCT_REVIEWS",
             "MERCHANT_REVIEWS",
-            "YOUTUBE_CHECKOUT"
+            "YOUTUBE_CHECKOUT",
+            "RENTAL_ADS"
           ],
           "enumDeprecated": [
             false,
             false,
             true,
+            false,
             false,
             false,
             false,
@@ -1732,7 +1777,8 @@
             "[Local cloud retail](https://cloud.google.com/solutions/retail).",
             "[Product Reviews](https://support.google.com/merchants/answer/14620732).",
             "[Merchant Reviews](https://developers.google.com/merchant-review-feeds).",
-            "YouTube Checkout ."
+            "YouTube Checkout .",
+            "Real Estate Rental Ads. ."
           ],
           "type": "string"
         }

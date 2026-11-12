@@ -2,6 +2,12 @@
   "auth": {
     "oauth2": {
       "scopes": {
+        "https://www.googleapis.com/auth/assuredworkloads": {
+          "description": "See, edit, configure, and delete your Google Cloud Assured Workloads data and see the email address for your Google Account"
+        },
+        "https://www.googleapis.com/auth/assuredworkloads.readonly": {
+          "description": "See your Google Cloud Assured Workloads data and the email address of your Google Account"
+        },
         "https://www.googleapis.com/auth/cloud-platform": {
           "description": "See, edit, configure, and delete your Google Cloud data and see the email address for your Google Account."
         }
@@ -15,6 +21,23 @@
   "description": "",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/learnmoreurl",
+  "endpoints": [
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://assuredworkloads.us.rep.googleapis.com/",
+      "location": "us"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://assuredworkloads.ca.rep.googleapis.com/",
+      "location": "ca"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://assuredworkloads.eu.rep.googleapis.com/",
+      "location": "eu"
+    }
+  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -105,46 +128,6 @@
   },
   "protocol": "rest",
   "resources": {
-    "assuredworkloads": {
-      "methods": {
-        "archiveResourceEvents": {
-          "description": "Finds orphan ResourceEvents matching the criteria and moves them to the ArchivedResourceEvents table.",
-          "flatPath": "v1beta1/assuredworkloads:archiveResourceEvents",
-          "httpMethod": "POST",
-          "id": "assuredworkloads.assuredworkloads.archiveResourceEvents",
-          "parameterOrder": [],
-          "parameters": {},
-          "path": "v1beta1/assuredworkloads:archiveResourceEvents",
-          "request": {
-            "$ref": "GoogleCloudAssuredworkloadsV1beta1ArchiveResourceEventsRequest"
-          },
-          "response": {
-            "$ref": "GoogleCloudAssuredworkloadsV1beta1ArchiveResourceEventsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
-        },
-        "revertArchivedResourceEvents": {
-          "description": "Finds matching ArchivedResourceEvents and moves them back to the ResourceEvents table.",
-          "flatPath": "v1beta1/assuredworkloads:revertArchivedResourceEvents",
-          "httpMethod": "POST",
-          "id": "assuredworkloads.assuredworkloads.revertArchivedResourceEvents",
-          "parameterOrder": [],
-          "parameters": {},
-          "path": "v1beta1/assuredworkloads:revertArchivedResourceEvents",
-          "request": {
-            "$ref": "GoogleCloudAssuredworkloadsV1beta1RevertArchivedResourceEventsRequest"
-          },
-          "response": {
-            "$ref": "GoogleCloudAssuredworkloadsV1beta1RevertArchivedResourceEventsResponse"
-          },
-          "scopes": [
-            "https://www.googleapis.com/auth/cloud-platform"
-          ]
-        }
-      }
-    },
     "organizations": {
       "resources": {
         "locations": {
@@ -173,6 +156,8 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
+                    "https://www.googleapis.com/auth/assuredworkloads.readonly",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -219,38 +204,8 @@
                     "$ref": "GoogleLongrunningListOperationsResponse"
                   },
                   "scopes": [
-                    "https://www.googleapis.com/auth/cloud-platform"
-                  ]
-                }
-              }
-            },
-            "violations": {
-              "methods": {
-                "batchAcknowledgeViolations": {
-                  "description": "Acknowledges multiple existing violations. By acknowledging violations, users acknowledge the existence of compliance violations in their workload and decide to ignore them due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted. This is a batch version of AcknowledgeViolation.",
-                  "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/violations:batchAcknowledgeViolations",
-                  "httpMethod": "POST",
-                  "id": "assuredworkloads.organizations.locations.violations.batchAcknowledgeViolations",
-                  "parameterOrder": [
-                    "parent"
-                  ],
-                  "parameters": {
-                    "parent": {
-                      "description": "Optional. The parent resource shared by all violations being acknowledged. Format: organizations/{organization}/locations/{location}/workloads/{workload}",
-                      "location": "path",
-                      "pattern": "^organizations/[^/]+/locations/[^/]+$",
-                      "required": true,
-                      "type": "string"
-                    }
-                  },
-                  "path": "v1beta1/{+parent}/violations:batchAcknowledgeViolations",
-                  "request": {
-                    "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest"
-                  },
-                  "response": {
-                    "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse"
-                  },
-                  "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
+                    "https://www.googleapis.com/auth/assuredworkloads.readonly",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 }
@@ -290,7 +245,7 @@
                       "type": "string"
                     },
                     "target": {
-                      "description": "Required. The resource ID of the folder-based destination workload. This workload is where the source resource will hypothetically be moved to. Specify the workload's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-2\"",
+                      "description": "Required. The resource name of the folder-based destination workload. This workload is where the source resource will hypothetically be moved to. Specify the workload's relative resource name, formatted as: \"organizations/{ORGANIZATION_ID}/locations/{LOCATION_ID}/workloads/{WORKLOAD_ID}\" For example: \"organizations/123/locations/us-east1/workloads/assured-workload-2\"",
                       "location": "path",
                       "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
                       "required": true,
@@ -302,6 +257,8 @@
                     "$ref": "GoogleCloudAssuredworkloadsV1beta1AnalyzeWorkloadMoveResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
+                    "https://www.googleapis.com/auth/assuredworkloads.readonly",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -335,6 +292,7 @@
                     "$ref": "GoogleLongrunningOperation"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -365,6 +323,7 @@
                     "$ref": "GoogleProtobufEmpty"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -390,6 +349,7 @@
                     "$ref": "GoogleCloudAssuredworkloadsV1beta1EnableComplianceUpdatesResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -415,6 +375,7 @@
                     "$ref": "GoogleCloudAssuredworkloadsV1beta1EnableResourceMonitoringResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -440,6 +401,8 @@
                     "$ref": "GoogleCloudAssuredworkloadsV1beta1Workload"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
+                    "https://www.googleapis.com/auth/assuredworkloads.readonly",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -453,18 +416,18 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "A custom filter for filtering by properties of a workload. At this time, only filtering by labels is supported.",
+                      "description": "Optional. A custom filter for filtering by properties of a workload. At this time, only filtering by labels is supported.",
                       "location": "query",
                       "type": "string"
                     },
                     "pageSize": {
-                      "description": "Page size.",
+                      "description": "Optional. Page size.",
                       "format": "int32",
                       "location": "query",
                       "type": "integer"
                     },
                     "pageToken": {
-                      "description": "Page token returned from previous request. Page token contains context from previous request. Page token needs to be passed in the second and following requests.",
+                      "description": "Optional. Page token returned from previous request. Page token contains context from previous request. Page token needs to be passed in the second and following requests.",
                       "location": "query",
                       "type": "string"
                     },
@@ -481,6 +444,8 @@
                     "$ref": "GoogleCloudAssuredworkloadsV1beta1ListWorkloadsResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
+                    "https://www.googleapis.com/auth/assuredworkloads.readonly",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -515,6 +480,7 @@
                     "$ref": "GoogleCloudAssuredworkloadsV1beta1Workload"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
@@ -543,6 +509,7 @@
                     "$ref": "GoogleCloudAssuredworkloadsV1beta1RestrictAllowedResourcesResponse"
                   },
                   "scopes": [
+                    "https://www.googleapis.com/auth/assuredworkloads",
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 }
@@ -575,6 +542,7 @@
                         "$ref": "GoogleLongrunningOperation"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/assuredworkloads",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
@@ -611,6 +579,8 @@
                         "$ref": "GoogleCloudAssuredworkloadsV1beta1ListWorkloadUpdatesResponse"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/assuredworkloads",
+                        "https://www.googleapis.com/auth/assuredworkloads.readonly",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     }
@@ -628,7 +598,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The resource name of the Violation to acknowledge. Format: organizations/{organization}/locations/{location}/workloads/{workload}/violations/{violation}",
+                          "description": "Required. The resource name of the violation to acknowledge. Format: `organizations/{organization}/locations/{location}/workloads/{workload}/violations/{violation}`",
                           "location": "path",
                           "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+/violations/[^/]+$",
                           "required": true,
@@ -643,39 +613,12 @@
                         "$ref": "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationResponse"
                       },
                       "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform"
-                      ]
-                    },
-                    "batchAcknowledgeViolations": {
-                      "description": "Acknowledges multiple existing violations. By acknowledging violations, users acknowledge the existence of compliance violations in their workload and decide to ignore them due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted. This is a batch version of AcknowledgeViolation.",
-                      "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}/violations:batchAcknowledgeViolations",
-                      "httpMethod": "POST",
-                      "id": "assuredworkloads.organizations.locations.workloads.violations.batchAcknowledgeViolations",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "Optional. The parent resource shared by all violations being acknowledged. Format: organizations/{organization}/locations/{location}/workloads/{workload}",
-                          "location": "path",
-                          "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1beta1/{+parent}/violations:batchAcknowledgeViolations",
-                      "request": {
-                        "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest"
-                      },
-                      "response": {
-                        "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse"
-                      },
-                      "scopes": [
+                        "https://www.googleapis.com/auth/assuredworkloads",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
                     "get": {
-                      "description": "Retrieves Assured Workload Violation based on ID.",
+                      "description": "Retrieves an Assured Workloads violation by its resource name.",
                       "flatPath": "v1beta1/organizations/{organizationsId}/locations/{locationsId}/workloads/{workloadsId}/violations/{violationsId}",
                       "httpMethod": "GET",
                       "id": "assuredworkloads.organizations.locations.workloads.violations.get",
@@ -684,10 +627,25 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Required. The resource name of the Violation to fetch (ie. Violation.name). Format: organizations/{organization}/locations/{location}/workloads/{workload}/violations/{violation}",
+                          "description": "Required. The resource name of the violation to retrieve (that is, the value of `Violation.name`). Format: `organizations/{organization}/locations/{location}/workloads/{workload}/violations/{violation}`",
                           "location": "path",
                           "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+/violations/[^/]+$",
                           "required": true,
+                          "type": "string"
+                        },
+                        "view": {
+                          "description": "Optional. The violation view (`VIOLATION_VIEW_ASSURED_WORKLOADS` or `VIOLATION_VIEW_DATA_BOUNDARY`) that the violation belongs to. If not specified, `VIOLATION_VIEW_ASSURED_WORKLOADS` is used.",
+                          "enum": [
+                            "VIOLATION_VIEW_UNSPECIFIED",
+                            "VIOLATION_VIEW_ASSURED_WORKLOADS",
+                            "VIOLATION_VIEW_DATA_BOUNDARY"
+                          ],
+                          "enumDescriptions": [
+                            "Defaults to the ASSURED_WORKLOADS view.",
+                            "Includes the basic metadata about the violation.",
+                            "Includes all information about the violation, including details about the data boundary."
+                          ],
+                          "location": "query",
                           "type": "string"
                         }
                       },
@@ -696,6 +654,8 @@
                         "$ref": "GoogleCloudAssuredworkloadsV1beta1Violation"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/assuredworkloads",
+                        "https://www.googleapis.com/auth/assuredworkloads.readonly",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
@@ -709,7 +669,7 @@
                       ],
                       "parameters": {
                         "filter": {
-                          "description": "Optional. A custom filter for filtering by the Violations properties.",
+                          "description": "Optional. A filter expression that restricts the violations that are returned. The syntax follows [AIP-160](https://google.aip.dev/160). Only the equality operator (`=`) is supported, and expressions can be combined with `AND`, `OR`, and `NOT`. When `view` is `VIOLATION_VIEW_DATA_BOUNDARY`, the following fields are supported: `violationId`, `category`, `state` (`UNRESOLVED`, `RESOLVED`, or `EXCEPTION`), `violationType` (`ORG_POLICY` or `RESOURCE`), `resourceType`, `resourceName`, `project`, `associatedOrgPolicyViolationId`, `cloudControlName`, `workloadDisplayName`, and `complianceType` (a framework ID). Example: `state = \"UNRESOLVED\" AND complianceType = \"builtin-fedramp-high\"`",
                           "location": "query",
                           "type": "string"
                         },
@@ -726,26 +686,41 @@
                           "type": "string"
                         },
                         "orderBy": {
-                          "description": "Optional. Actionable sorting delegation.",
+                          "description": "Optional. A comma-separated list of fields to sort the results by. The default sort order is ascending; to sort in descending order, append ` desc` to the field name. For example, `update_time desc,category`. When `view` is `VIOLATION_VIEW_DATA_BOUNDARY`, the following fields are supported: `begin_time`, `update_time`, `resource_type`, `state`, and `category`. If not specified, results are sorted by `begin_time` in descending order.",
                           "location": "query",
                           "type": "string"
                         },
                         "pageSize": {
-                          "description": "Optional. Page size.",
+                          "description": "Optional. The maximum number of violations to return. The service might return fewer violations than this value. If unspecified, at most 100 violations are returned. The maximum value is 1000; values above 1000 are coerced to 1000.",
                           "format": "int32",
                           "location": "query",
                           "type": "integer"
                         },
                         "pageToken": {
-                          "description": "Optional. Page token returned from previous request.",
+                          "description": "Optional. A page token, received from a previous `ListViolations` call. Provide this token to retrieve the subsequent page. When paginating, all other parameters that are provided to `ListViolations` must match the call that provided the page token.",
                           "location": "query",
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Required. The Workload name. Format `organizations/{org_id}/locations/{location}/workloads/{workload}`.",
+                          "description": "Required. The workload to list violations for. To list violations across all workloads in an organization, use `-` as the workload ID. When `view` is `VIOLATION_VIEW_DATA_BOUNDARY`, violations are listed for the entire organization and location, and the workload ID is ignored. Format: `organizations/{organization}/locations/{location}/workloads/{workload}`",
                           "location": "path",
                           "pattern": "^organizations/[^/]+/locations/[^/]+/workloads/[^/]+$",
                           "required": true,
+                          "type": "string"
+                        },
+                        "view": {
+                          "description": "Optional. The violation view (`VIOLATION_VIEW_ASSURED_WORKLOADS` or `VIOLATION_VIEW_DATA_BOUNDARY`) to list violations for. If not specified, `VIOLATION_VIEW_ASSURED_WORKLOADS` is used.",
+                          "enum": [
+                            "VIOLATION_VIEW_UNSPECIFIED",
+                            "VIOLATION_VIEW_ASSURED_WORKLOADS",
+                            "VIOLATION_VIEW_DATA_BOUNDARY"
+                          ],
+                          "enumDescriptions": [
+                            "Defaults to the ASSURED_WORKLOADS view.",
+                            "Includes the basic metadata about the violation.",
+                            "Includes all information about the violation, including details about the data boundary."
+                          ],
+                          "location": "query",
                           "type": "string"
                         }
                       },
@@ -754,6 +729,8 @@
                         "$ref": "GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse"
                       },
                       "scopes": [
+                        "https://www.googleapis.com/auth/assuredworkloads",
+                        "https://www.googleapis.com/auth/assuredworkloads.readonly",
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     }
@@ -762,77 +739,59 @@
               }
             }
           }
-        },
-        "violations": {
-          "methods": {
-            "batchAcknowledgeViolations": {
-              "description": "Acknowledges multiple existing violations. By acknowledging violations, users acknowledge the existence of compliance violations in their workload and decide to ignore them due to a valid business justification. Acknowledgement is a permanent operation and it cannot be reverted. This is a batch version of AcknowledgeViolation.",
-              "flatPath": "v1beta1/organizations/{organizationsId}/violations:batchAcknowledgeViolations",
-              "httpMethod": "POST",
-              "id": "assuredworkloads.organizations.violations.batchAcknowledgeViolations",
-              "parameterOrder": [
-                "parent"
-              ],
-              "parameters": {
-                "parent": {
-                  "description": "Optional. The parent resource shared by all violations being acknowledged. Format: organizations/{organization}/locations/{location}/workloads/{workload}",
-                  "location": "path",
-                  "pattern": "^organizations/[^/]+$",
-                  "required": true,
-                  "type": "string"
-                }
-              },
-              "path": "v1beta1/{+parent}/violations:batchAcknowledgeViolations",
-              "request": {
-                "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest"
-              },
-              "response": {
-                "$ref": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse"
-              },
-              "scopes": [
-                "https://www.googleapis.com/auth/cloud-platform"
-              ]
-            }
-          }
         }
       }
     }
   },
-  "revision": "20260623",
+  "revision": "20261106",
   "rootUrl": "https://assuredworkloads.googleapis.com/",
   "schemas": {
     "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest": {
-      "description": "Request for acknowledging the violation",
+      "description": "Request message for acknowledging a violation.",
       "id": "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationRequest",
       "properties": {
         "acknowledgeType": {
-          "description": "Optional. Acknowledge type of specified violation.",
+          "description": "Optional. The scope of the acknowledgement for the specified violation. If not specified, `SINGLE_VIOLATION` is used.",
           "enum": [
             "ACKNOWLEDGE_TYPE_UNSPECIFIED",
             "SINGLE_VIOLATION",
             "EXISTING_CHILD_RESOURCE_VIOLATIONS"
           ],
           "enumDescriptions": [
-            "Acknowledge type unspecified.",
-            "Acknowledge only the specific violation.",
-            "Acknowledge specified orgPolicy violation and also associated resource violations."
+            "Default value. The acknowledge type isn't specified.",
+            "Acknowledges only the specified violation.",
+            "Acknowledges the specified organization policy violation and all of its existing associated resource violations."
           ],
           "type": "string"
         },
         "comment": {
-          "description": "Required. Business justification explaining the need for violation acknowledgement",
+          "description": "Required. The business justification for acknowledging the violation. The comment can't be empty or contain only whitespace characters.",
           "type": "string"
         },
         "nonCompliantOrgPolicy": {
           "deprecated": true,
-          "description": "Optional. This field is deprecated and will be removed in future version of the API. Name of the OrgPolicy which was modified with non-compliant change and resulted in this violation. Format: projects/{project_number}/policies/{constraint_name} folders/{folder_id}/policies/{constraint_name} organizations/{organization_id}/policies/{constraint_name}",
+          "description": "Optional. Deprecated: This field is deprecated and will be removed in a future version of the API. The service identifies the violation to acknowledge by `name`, and ignores this field. Don't set this field. The name of the organization policy that was modified with a non-compliant change and resulted in this violation. Formats: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}`",
+          "type": "string"
+        },
+        "view": {
+          "description": "Optional. The violation view (`VIOLATION_VIEW_ASSURED_WORKLOADS` or `VIOLATION_VIEW_DATA_BOUNDARY`) that the violation belongs to. If not specified, `VIOLATION_VIEW_ASSURED_WORKLOADS` is used.",
+          "enum": [
+            "VIOLATION_VIEW_UNSPECIFIED",
+            "VIOLATION_VIEW_ASSURED_WORKLOADS",
+            "VIOLATION_VIEW_DATA_BOUNDARY"
+          ],
+          "enumDescriptions": [
+            "Defaults to the ASSURED_WORKLOADS view.",
+            "Includes the basic metadata about the violation.",
+            "Includes all information about the violation, including details about the data boundary."
+          ],
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationResponse": {
-      "description": "Response for violation acknowledgement",
+      "description": "Response message for acknowledging a violation. This message is empty.",
       "id": "GoogleCloudAssuredworkloadsV1beta1AcknowledgeViolationResponse",
       "properties": {},
       "type": "object"
@@ -914,54 +873,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudAssuredworkloadsV1beta1ArchiveResourceEventsRequest": {
-      "description": "Request for archiving resource events.",
-      "id": "GoogleCloudAssuredworkloadsV1beta1ArchiveResourceEventsRequest",
-      "properties": {
-        "archiveTime": {
-          "description": "Optional. Time to set as ArchiveTime in the archive table. If not provided, the current time is used.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "batchSize": {
-          "description": "Required. The number of events to process in a single transaction batch.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "eventCutoffTime": {
-          "description": "Required. Only events with EventTime earlier than this cutoff will be archived.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "maxEventsMove": {
-          "description": "Required. The maximum total number of events to move in this request.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "organizationId": {
-          "description": "Required. The organization ID for which to archive events.",
-          "format": "int64",
-          "type": "string"
-        },
-        "region": {
-          "description": "Required. The region of the workload(s) whose events should be archived. This is used to filter workloads based on AssurantWorkloadData.region.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAssuredworkloadsV1beta1ArchiveResourceEventsResponse": {
-      "description": "Response for archiving resource events.",
-      "id": "GoogleCloudAssuredworkloadsV1beta1ArchiveResourceEventsResponse",
-      "properties": {
-        "movedEventsCount": {
-          "description": "The total number of events successfully moved to the archive table.",
-          "format": "int32",
-          "type": "integer"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis": {
       "description": "Represents move analysis results for an asset.",
       "id": "GoogleCloudAssuredworkloadsV1beta1AssetMoveAnalysis",
@@ -980,50 +891,6 @@
         "assetType": {
           "description": "Type of the asset being analyzed. Possible values will be among the ones listed [here](https://cloud.google.com/asset-inventory/docs/supported-asset-types).",
           "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest": {
-      "description": "Request for acknowledging the violations in a batch",
-      "id": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsRequest",
-      "properties": {
-        "acknowledgeType": {
-          "description": "Optional. Acknowledge type of specified violations.",
-          "enum": [
-            "ACKNOWLEDGE_TYPE_UNSPECIFIED",
-            "SINGLE_VIOLATION",
-            "EXISTING_CHILD_RESOURCE_VIOLATIONS"
-          ],
-          "enumDescriptions": [
-            "Acknowledge type unspecified.",
-            "Acknowledge only the specific violation.",
-            "Acknowledge specified orgPolicy violation and also associated resource violations."
-          ],
-          "type": "string"
-        },
-        "comment": {
-          "description": "Required. Business justification explaining the need for violations acknowledgement",
-          "type": "string"
-        },
-        "names": {
-          "description": "Required. The resource names of the Violations to acknowledge. Format for each name: organizations/{organization}/locations/{location}/workloads/{workload}/violations/{violation}",
-          "items": {
-            "type": "string"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse": {
-      "description": "Response for batch violation acknowledgement",
-      "id": "GoogleCloudAssuredworkloadsV1beta1BatchAcknowledgeViolationsResponse",
-      "properties": {
-        "acknowledgedViolationsCount": {
-          "description": "Count of acknowledged violations.",
-          "format": "int32",
-          "type": "integer"
         }
       },
       "type": "object"
@@ -1216,20 +1083,20 @@
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse": {
-      "description": "Response of ListViolations endpoint.",
+      "description": "Response message for the `ListViolations` method.",
       "id": "GoogleCloudAssuredworkloadsV1beta1ListViolationsResponse",
       "properties": {
         "nextPageToken": {
-          "description": "The next page token. Returns empty if reached the last page.",
+          "description": "A token that can be sent as `page_token` to retrieve the next page. If this field is empty, there are no subsequent pages.",
           "type": "string"
         },
         "totalSize": {
-          "description": "The total number of violations.",
+          "description": "The total number of violations that match the request, across all pages. This field might not be populated for all requests; when it's not populated, its value is `0`.",
           "format": "int32",
           "type": "integer"
         },
         "violations": {
-          "description": "List of Violations under a Workload.",
+          "description": "The list of violations.",
           "items": {
             "$ref": "GoogleCloudAssuredworkloadsV1beta1Violation"
           },
@@ -1440,54 +1307,6 @@
       "properties": {},
       "type": "object"
     },
-    "GoogleCloudAssuredworkloadsV1beta1RevertArchivedResourceEventsRequest": {
-      "description": "Request for reverting archived resource events.",
-      "id": "GoogleCloudAssuredworkloadsV1beta1RevertArchivedResourceEventsRequest",
-      "properties": {
-        "archiveEndTime": {
-          "description": "Required. Only events within this time range will be reverted. This helps prevent reverting everything when something goes wrong.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "archiveStartTime": {
-          "description": "Required. Only events within this time range will be reverted. This helps prevent reverting everything when something goes wrong.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "batchSize": {
-          "description": "Required. The number of events to process in a single transaction batch.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "maxEventsMove": {
-          "description": "Required. The maximum total number of events to move in this request.",
-          "format": "int32",
-          "type": "integer"
-        },
-        "organizationId": {
-          "description": "Required. The organization ID for which to revert events.",
-          "format": "int64",
-          "type": "string"
-        },
-        "region": {
-          "description": "Required. The region of the workload(s) whose events should be reverted. This is used to filter workloads based on AssurantWorkloadData.region.",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudAssuredworkloadsV1beta1RevertArchivedResourceEventsResponse": {
-      "description": "Response for reverting archived resource events.",
-      "id": "GoogleCloudAssuredworkloadsV1beta1RevertArchivedResourceEventsResponse",
-      "properties": {
-        "movedEventsCount": {
-          "description": "The total number of events successfully moved to the original table.",
-          "format": "int32",
-          "type": "integer"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudAssuredworkloadsV1beta1UpdateDetails": {
       "description": "The details of the update.",
       "id": "GoogleCloudAssuredworkloadsV1beta1UpdateDetails",
@@ -1500,51 +1319,65 @@
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1Violation": {
-      "description": "Workload monitoring Violation.",
+      "description": "A compliance violation that's detected by Assured Workloads monitoring. A violation is created when an organization policy or a resource in a workload (or a Data Boundary scope) changes in a way that doesn't comply with the controls of the applicable compliance regime or framework.",
       "id": "GoogleCloudAssuredworkloadsV1beta1Violation",
       "properties": {
         "acknowledged": {
-          "description": "A boolean that indicates if the violation is acknowledged",
+          "description": "Whether the violation has been acknowledged.",
           "type": "boolean"
         },
         "acknowledgementTime": {
-          "description": "Optional. Timestamp when this violation was acknowledged first. Check exception_contexts to find the last time the violation was acknowledged when there are more than one violations. This field will be absent when acknowledged field is marked as false.",
+          "description": "Optional. The time when the violation was first acknowledged. To find the most recent time that the violation was acknowledged, check `exception_contexts`. This field is absent when `acknowledged` is `false`.",
           "format": "google-datetime",
           "type": "string"
         },
+        "affectedFrameworks": {
+          "description": "Output only. The IDs of the compliance frameworks that are affected by this violation. For example, `builtin-fedramp-high`. This field is only populated when using `VIOLATION_VIEW_DATA_BOUNDARY`.",
+          "items": {
+            "type": "string"
+          },
+          "readOnly": true,
+          "type": "array"
+        },
         "associatedOrgPolicyViolationId": {
-          "description": "Optional. Output only. Violation Id of the org-policy violation due to which the resource violation is caused. Empty for org-policy violations.",
+          "description": "Optional. Output only. For resource violations, the ID of the organization policy violation that caused this resource violation. This field is empty for organization policy violations.",
           "readOnly": true,
           "type": "string"
         },
         "auditLogLink": {
-          "description": "Output only. Immutable. Audit Log Link for violated resource Format: https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{timeRange}{folder}",
+          "description": "Output only. Immutable. A link to the Cloud Audit Logs entries for the violated resource. Format: `https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{timeRange}{folder}`",
           "readOnly": true,
           "type": "string"
         },
         "beginTime": {
-          "description": "Output only. Time of the event which triggered the Violation.",
+          "description": "Output only. The time of the event that triggered the violation.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
         },
         "category": {
-          "description": "Output only. Category under which this violation is mapped. e.g. Location, Service Usage, Access, Encryption, etc.",
+          "description": "Output only. The category that the violation is mapped to. For example, `Location`, `Service Usage`, `Access`, or `Encryption`.",
           "readOnly": true,
           "type": "string"
         },
+        "childResourceViolationCount": {
+          "description": "Optional. Output only. For organization policy violations, the number of resource violations that are associated with this violation. This field is `0` for resource violations.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
         "description": {
-          "description": "Output only. Description for the Violation. e.g. OrgPolicy gcp.resourceLocations has non compliant value.",
+          "description": "Output only. A description of the violation. For example, `OrgPolicy gcp.resourceLocations has non compliant value.`",
           "readOnly": true,
           "type": "string"
         },
         "exceptionAuditLogLink": {
-          "description": "Output only. Immutable. Audit Log link to find business justification provided for violation exception. Format: https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{protoPayload.methodName}{timeRange}{organization}",
+          "description": "Output only. Immutable. A link to the Cloud Audit Logs entries that contain the business justification that was provided when the violation was acknowledged. Format: `https://console.cloud.google.com/logs/query;query={logName}{protoPayload.resourceName}{protoPayload.methodName}{timeRange}{organization}`",
           "readOnly": true,
           "type": "string"
         },
         "exceptionContexts": {
-          "description": "Output only. List of all the exception detail added for the violation.",
+          "description": "Output only. The details of all of the acknowledgements (exceptions) for the violation.",
           "items": {
             "$ref": "GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext"
           },
@@ -1552,49 +1385,54 @@
           "type": "array"
         },
         "name": {
-          "description": "Output only. Immutable. Name of the Violation. Format: organizations/{organization}/locations/{location}/workloads/{workload_id}/violations/{violations_id}",
+          "description": "Output only. Immutable. The resource name of the violation. Format: `organizations/{organization}/locations/{location}/workloads/{workload_id}/violations/{violations_id}`",
           "readOnly": true,
           "type": "string"
         },
         "nonCompliantOrgPolicy": {
-          "description": "Output only. Immutable. Name of the OrgPolicy which was modified with non-compliant change and resulted this violation. Format: projects/{project_number}/policies/{constraint_name} folders/{folder_id}/policies/{constraint_name} organizations/{organization_id}/policies/{constraint_name}",
+          "description": "Output only. Immutable. The name of the organization policy that was modified with a non-compliant change and resulted in this violation. Formats: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}`",
           "readOnly": true,
           "type": "string"
         },
         "orgPolicyConstraint": {
           "deprecated": true,
-          "description": "Output only. Immutable. The org-policy-constraint that was incorrectly changed, which resulted in this violation.",
+          "description": "Output only. Immutable. Deprecated: This field is deprecated and might be removed in a future version of the API. Use `non_compliant_org_policy` instead, which contains the full resource name of the organization policy, including the constraint name. The organization policy constraint that was changed in a non-compliant way, which resulted in this violation.",
           "readOnly": true,
           "type": "string"
         },
         "parentProjectNumber": {
-          "description": "Optional. Output only. Parent project number where resource is present. Empty for org-policy violations.",
+          "description": "Optional. Output only. For resource violations, the number of the project that contains the non-compliant resource. This field is empty for organization policy violations.",
           "readOnly": true,
           "type": "string"
         },
         "remediation": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1ViolationRemediation",
-          "description": "Output only. Compliance violation remediation",
+          "description": "Output only. The remediation guidance for the violation.",
           "readOnly": true
         },
+        "remediationMarkdown": {
+          "description": "Output only. The remediation instructions for the violation, in Markdown format. This field is only populated by `GetViolation` when using `VIOLATION_VIEW_DATA_BOUNDARY`. When this field isn't populated, see `remediation` instead.",
+          "readOnly": true,
+          "type": "string"
+        },
         "resolveTime": {
-          "description": "Output only. Time of the event which fixed the Violation. If the violation is ACTIVE this will be empty.",
+          "description": "Output only. The time of the event that resolved the violation. This field is empty if the violation is unresolved.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
         },
         "resourceName": {
-          "description": "Optional. Output only. Name of the resource like //storage.googleapis.com/myprojectxyz-testbucket. Empty for org-policy violations.",
+          "description": "Optional. Output only. For resource violations, the full resource name of the non-compliant resource. For example, `//storage.googleapis.com/myprojectxyz-testbucket`. This field is empty for organization policy violations.",
           "readOnly": true,
           "type": "string"
         },
         "resourceType": {
-          "description": "Optional. Output only. Type of the resource like compute.googleapis.com/Disk, etc. Empty for org-policy violations.",
+          "description": "Optional. Output only. For resource violations, the type of the non-compliant resource. For example, `compute.googleapis.com/Disk`. This field is empty for organization policy violations.",
           "readOnly": true,
           "type": "string"
         },
         "state": {
-          "description": "Output only. State of the violation",
+          "description": "Output only. The state of the violation.",
           "enum": [
             "STATE_UNSPECIFIED",
             "RESOLVED",
@@ -1602,31 +1440,31 @@
             "EXCEPTION"
           ],
           "enumDescriptions": [
-            "Unspecified state.",
-            "Violation is resolved.",
-            "Violation is Unresolved",
-            "Violation is Exception"
+            "Default value. The state isn't specified.",
+            "The violation is resolved.",
+            "The violation is unresolved and hasn't been acknowledged.",
+            "The violation is unresolved and has been acknowledged as an exception."
           ],
           "readOnly": true,
           "type": "string"
         },
         "updateTime": {
-          "description": "Output only. The last time when the Violation record was updated.",
+          "description": "Output only. The time when the violation record was last updated.",
           "format": "google-datetime",
           "readOnly": true,
           "type": "string"
         },
         "violationType": {
-          "description": "Output only. Type of the violation",
+          "description": "Output only. The type of the violation.",
           "enum": [
             "VIOLATION_TYPE_UNSPECIFIED",
             "ORG_POLICY",
             "RESOURCE"
           ],
           "enumDescriptions": [
-            "Unspecified type.",
-            "Org Policy Violation.",
-            "Resource Violation."
+            "Default value. The violation type isn't specified.",
+            "A violation that's caused by a non-compliant change to an organization policy.",
+            "A violation that's caused by a non-compliant resource."
           ],
           "readOnly": true,
           "type": "string"
@@ -1635,31 +1473,31 @@
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext": {
-      "description": "Violation exception detail.",
+      "description": "Details about an acknowledgement (exception) of a violation.",
       "id": "GoogleCloudAssuredworkloadsV1beta1ViolationExceptionContext",
       "properties": {
         "acknowledgementTime": {
-          "description": "Timestamp when the violation was acknowledged.",
+          "description": "The time when the violation was acknowledged.",
           "format": "google-datetime",
           "type": "string"
         },
         "comment": {
-          "description": "Business justification provided towards the acknowledgement of the violation.",
+          "description": "The business justification that was provided when the violation was acknowledged.",
           "type": "string"
         },
         "userName": {
-          "description": "Name of the user (or service account) who acknowledged the violation.",
+          "description": "The name of the user (or service account) who acknowledged the violation.",
           "type": "string"
         }
       },
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1ViolationRemediation": {
-      "description": "Represents remediation guidance to resolve compliance violation for AssuredWorkload",
+      "description": "Remediation guidance to resolve a compliance violation.",
       "id": "GoogleCloudAssuredworkloadsV1beta1ViolationRemediation",
       "properties": {
         "compliantValues": {
-          "description": "Values that can resolve the violation For example: for list org policy violations, this will either be the list of allowed or denied values",
+          "description": "The values that can resolve the violation. For example, for list organization policy violations, this field contains the list of allowed or denied values.",
           "items": {
             "type": "string"
           },
@@ -1667,10 +1505,10 @@
         },
         "instructions": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructions",
-          "description": "Required. Remediation instructions to resolve violations"
+          "description": "Required. The instructions to resolve the violation."
         },
         "remediationType": {
-          "description": "Output only. Reemediation type based on the type of org policy values violated",
+          "description": "Output only. The remediation type, which is based on the type of organization policy values that were violated.",
           "enum": [
             "REMEDIATION_TYPE_UNSPECIFIED",
             "REMEDIATION_BOOLEAN_ORG_POLICY_VIOLATION",
@@ -1681,13 +1519,13 @@
             "REMEDIATION_RESOURCE_VIOLATION_NON_CMEK_SERVICES"
           ],
           "enumDescriptions": [
-            "Unspecified remediation type",
-            "Remediation type for boolean org policy",
-            "Remediation type for list org policy which have allowed values in the monitoring rule",
-            "Remediation type for list org policy which have denied values in the monitoring rule",
-            "Remediation type for gcp.restrictCmekCryptoKeyProjects",
-            "Remediation type for resource violation.",
-            "Remediation type for resource violation due to gcp.restrictNonCmekServices"
+            "Default value. The remediation type isn't specified.",
+            "Remediation for a boolean organization policy violation.",
+            "Remediation for a list organization policy violation where the monitoring rule specifies allowed values.",
+            "Remediation for a list organization policy violation where the monitoring rule specifies denied values.",
+            "Remediation for a `gcp.restrictCmekCryptoKeyProjects` organization policy violation.",
+            "Remediation for a resource violation.",
+            "Remediation for a resource violation that's caused by the `gcp.restrictNonCmekServices` organization policy."
           ],
           "readOnly": true,
           "type": "string"
@@ -1696,40 +1534,40 @@
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructions": {
-      "description": "Instructions to remediate violation",
+      "description": "Instructions to remediate a violation.",
       "id": "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructions",
       "properties": {
         "consoleInstructions": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsConsole",
-          "description": "Remediation instructions to resolve violation via cloud console"
+          "description": "Instructions to resolve the violation by using the Google Cloud console."
         },
         "gcloudInstructions": {
           "$ref": "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGcloud",
-          "description": "Remediation instructions to resolve violation via gcloud cli"
+          "description": "Instructions to resolve the violation by using the gcloud CLI."
         }
       },
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsConsole": {
-      "description": "Remediation instructions to resolve violation via cloud console",
+      "description": "Instructions to remediate a violation by using the Google Cloud console.",
       "id": "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsConsole",
       "properties": {
         "additionalLinks": {
-          "description": "Additional urls for more information about steps",
+          "description": "Additional URLs with more information about the steps.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "consoleUris": {
-          "description": "Link to console page where violations can be resolved",
+          "description": "Links to the Google Cloud console pages where the violation can be resolved.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "steps": {
-          "description": "Steps to resolve violation via cloud console",
+          "description": "The steps to resolve the violation by using the Google Cloud console.",
           "items": {
             "type": "string"
           },
@@ -1739,25 +1577,25 @@
       "type": "object"
     },
     "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGcloud": {
-      "description": "Remediation instructions to resolve violation via gcloud cli",
+      "description": "Instructions to remediate a violation by using the Google Cloud CLI.",
       "id": "GoogleCloudAssuredworkloadsV1beta1ViolationRemediationInstructionsGcloud",
       "properties": {
         "additionalLinks": {
-          "description": "Additional urls for more information about steps",
+          "description": "Additional URLs with more information about the steps.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "gcloudCommands": {
-          "description": "Gcloud command to resolve violation",
+          "description": "The gcloud CLI commands that resolve the violation.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "steps": {
-          "description": "Steps to resolve violation via gcloud cli",
+          "description": "The steps to resolve the violation by using the gcloud CLI.",
           "items": {
             "type": "string"
           },

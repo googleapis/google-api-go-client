@@ -1459,7 +1459,7 @@ type SocketAddress struct {
 	// namespace this socket will be created in (see ``man 7 network_namespaces``).
 	// If this field is set, Envoy will create the socket in the specified network
 	// namespace. .. note:: Setting this parameter requires Envoy to run with the
-	// ``CAP_NET_ADMIN`` capability. .. attention:: Network namespaces are only
+	// ``CAP_SYS_ADMIN`` capability. .. attention:: Network namespaces are only
 	// configurable on Linux. Otherwise, this field has no effect.
 	NetworkNamespaceFilepath string `json:"networkNamespaceFilepath,omitempty"`
 	PortValue                int64  `json:"portValue,omitempty"`

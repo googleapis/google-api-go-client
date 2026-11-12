@@ -1743,6 +1743,37 @@ func (s GoogleCloudDocumentaiUiv1beta3FieldTierMetadata) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiUiv1beta3GroundingSettings: Settings for grounding
+// extractions.
+type GoogleCloudDocumentaiUiv1beta3GroundingSettings struct {
+	// GroundingType: The type of grounding to apply.
+	//
+	// Possible values:
+	//   "GROUNDING_TYPE_UNSPECIFIED" - The default value. Behaves like HARD.
+	//   "HARD" - Requires exact match with OCR text for extractions.
+	//   "OCR_RELAXED" - Allows for minor discrepancies between LLM output and OCR
+	// text.
+	//   "NO_GROUNDING" - LLM extractions are used without strict OCR matching.
+	// Bounding boxes may be approximated or absent.
+	GroundingType string `json:"groundingType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroundingType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroundingType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiUiv1beta3GroundingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiUiv1beta3GroundingSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiUiv1beta3HumanReviewLabelingMetadata: Metadata for
 // human review labeling config.
 type GoogleCloudDocumentaiUiv1beta3HumanReviewLabelingMetadata struct {
@@ -2044,6 +2075,10 @@ type GoogleCloudDocumentaiUiv1beta3ProcessorVersion struct {
 	// GoogleManaged: Output only. Denotes that this `ProcessorVersion` is managed
 	// by Google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
+	// GroundingSettings: Output only. The grounding settings of the processor
+	// version. This can only be set using TrainProcessorVersionRequest to override
+	// the default grounding settings.
+	GroundingSettings *GoogleCloudDocumentaiUiv1beta3GroundingSettings `json:"groundingSettings,omitempty"`
 	// KmsKeyName: Output only. The KMS key name used for encryption.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyVersionName: Output only. The KMS key version with which data is
@@ -7340,6 +7375,37 @@ func (s GoogleCloudDocumentaiV1beta3GetDocumentResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDocumentaiV1beta3GroundingSettings: Settings for grounding
+// extractions.
+type GoogleCloudDocumentaiV1beta3GroundingSettings struct {
+	// GroundingType: The type of grounding to apply.
+	//
+	// Possible values:
+	//   "GROUNDING_TYPE_UNSPECIFIED" - The default value. Behaves like HARD.
+	//   "HARD" - Requires exact match with OCR text for extractions.
+	//   "OCR_RELAXED" - Allows for minor discrepancies between LLM output and OCR
+	// text.
+	//   "NO_GROUNDING" - LLM extractions are used without strict OCR matching.
+	// Bounding boxes may be approximated or absent.
+	GroundingType string `json:"groundingType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroundingType") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroundingType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3GroundingSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3GroundingSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDocumentaiV1beta3HumanReviewStatus: The status of human review on
 // a processed document.
 type GoogleCloudDocumentaiV1beta3HumanReviewStatus struct {
@@ -8533,6 +8599,10 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	// GoogleManaged: Output only. Denotes that this `ProcessorVersion` is managed
 	// by Google.
 	GoogleManaged bool `json:"googleManaged,omitempty"`
+	// GroundingSettings: Output only. The grounding settings of the processor
+	// version. This can only be set using TrainProcessorVersionRequest to override
+	// the default grounding settings.
+	GroundingSettings *GoogleCloudDocumentaiV1beta3GroundingSettings `json:"groundingSettings,omitempty"`
 	// KmsKeyName: Output only. The KMS key name used for encryption.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 	// KmsKeyVersionName: Output only. The KMS key version with which data is
@@ -8728,6 +8798,30 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiMo
 
 func (s GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionGenAiModelInfoFoundationGenAiModelInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1beta3ProcessorVersionOverrides: Overrides to apply
+// when creating a new processor version.
+type GoogleCloudDocumentaiV1beta3ProcessorVersionOverrides struct {
+	// GroundingSettings: Optional. Grounding settings to override the default
+	// values.
+	GroundingSettings *GoogleCloudDocumentaiV1beta3GroundingSettings `json:"groundingSettings,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "GroundingSettings") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "GroundingSettings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudDocumentaiV1beta3ProcessorVersionOverrides) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1beta3ProcessorVersionOverrides
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -9216,6 +9310,9 @@ type GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequest struct {
 	InputData *GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData `json:"inputData,omitempty"`
 	// ProcessorVersion: Required. The processor version to be created.
 	ProcessorVersion *GoogleCloudDocumentaiV1beta3ProcessorVersion `json:"processorVersion,omitempty"`
+	// ProcessorVersionOverrides: Optional. Options to override structures in the
+	// base processor version.
+	ProcessorVersionOverrides *GoogleCloudDocumentaiV1beta3ProcessorVersionOverrides `json:"processorVersionOverrides,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BaseProcessorVersion") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

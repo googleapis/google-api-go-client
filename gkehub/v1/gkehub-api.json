@@ -2596,7 +2596,7 @@
       }
     }
   },
-  "revision": "20260713",
+  "revision": "20261031",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceFeatureSpec": {
@@ -3109,6 +3109,10 @@
           "$ref": "RBACRoleBindingActuationFeatureState",
           "description": "RBAC Role Binding Actuation feature state"
         },
+        "servicemesh": {
+          "$ref": "ServiceMeshFeatureState",
+          "description": "Service Mesh-specific state."
+        },
         "state": {
           "$ref": "FeatureState",
           "description": "Output only. The \"running state\" of the Feature in this Fleet.",
@@ -3216,7 +3220,7 @@
           "type": "boolean"
         },
         "sourceFormat": {
-          "description": "Optional. Specifies whether the Config Sync repo is in `hierarchical` or `unstructured` mode. Defaults to `hierarchical`. See https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/concepts/configs#organize-configs for an explanation.",
+          "description": "Optional. Specifies whether the Config Sync repo is in `hierarchy` or `unstructured` mode. Defaults to `hierarchy`. See https://docs.cloud.google.com/kubernetes-engine/config-sync/docs/concepts/configs#organize-configs for an explanation.",
           "type": "string"
         },
         "stopSyncing": {
@@ -3697,11 +3701,11 @@
       "id": "ConfigManagementGitConfig",
       "properties": {
         "gcpServiceAccountEmail": {
-          "description": "Optional. The Google Cloud Service Account Email used for auth when secret_type is `gcpserviceaccount`.",
+          "description": "Optional. The Google Cloud Service Account Email used for auth when secret_type is `gcpserviceaccount`. Annotates the `RootSync` or `RepoSync` controller's Kubernetes Service Account.",
           "type": "string"
         },
         "httpsProxy": {
-          "description": "Optional. URL for the HTTPS proxy to be used when communicating with the Git repo. Only specify when secret_type is `cookiefile`, `token`, or `none`.",
+          "description": "Optional. URL for the HTTPS proxy to be used when communicating with the Git repo. Defines an HTTPS_PROXY environment variable and only accepts `https` or unadorned URLs. For example, `https://proxy.internal.business.co:443` or `proxy.internal.business.co:443`. If using an unadorned URL, make sure the communication between your proxy server and Git host is secure. Rejects `http://` URLs. Only specify when secret_type is `cookiefile`, `token`, or `none`.",
           "type": "string"
         },
         "policyDir": {
@@ -3721,7 +3725,7 @@
           "type": "string"
         },
         "syncRev": {
-          "description": "Optional. Git revision (tag or hash) to check out. Default HEAD.",
+          "description": "Optional. Git revision (tag or hash) or branch to sync from. Default `HEAD`. If not `HEAD`, takes precedence over `sync_branch` field. When using a hash, must be a full hash, and not an abbreviated form.",
           "type": "string"
         },
         "syncWaitSecs": {
@@ -3873,7 +3877,7 @@
         },
         "management": {
           "deprecated": true,
-          "description": "Optional. Deprecated: In Preview, automatic Feature management is unavailable from version 1.21.0 onwards, and Config Sync only supports manual upgrades. If set to manual upgrades, clear this field instead, which is behaviorally equivalent.",
+          "description": "Optional. Deprecated: Automatic Feature management is in Preview and is unavailable in version 1.21.0 and later, after which Config Sync only supports manual upgrades. If set to manual upgrades, clear this field instead, which is behaviorally equivalent but helps prevent compatibility issues with newer fields.",
           "enum": [
             "MANAGEMENT_UNSPECIFIED",
             "MANAGEMENT_AUTOMATIC",
@@ -3945,7 +3949,7 @@
       "id": "ConfigManagementOciConfig",
       "properties": {
         "gcpServiceAccountEmail": {
-          "description": "Optional. The Google Cloud Service Account Email used for auth when secret_type is `gcpserviceaccount`.",
+          "description": "Optional. The Google Cloud Service Account Email used for auth when secret_type is `gcpserviceaccount`. Annotates the `RootSync` or `RepoSync` controller's Kubernetes Service Account.",
           "type": "string"
         },
         "policyDir": {
@@ -6205,6 +6209,21 @@
       "properties": {},
       "type": "object"
     },
+    "PerStageSoakDurationOverrides": {
+      "description": "Configuration for per-stage soak duration overrides.",
+      "id": "PerStageSoakDurationOverrides",
+      "properties": {
+        "stageOverrides": {
+          "additionalProperties": {
+            "format": "google-duration",
+            "type": "string"
+          },
+          "description": "Required. A mapping of stage numbers to their respective desired soak durations. Key is the stage number, value is the desired soak duration. Stages omitted from the map will receive the standard soak duration configured on the sequence for that stage.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
     "Policy": {
       "description": "An Identity and Access Management (IAM) policy, which specifies access controls for Google Cloud resources. A `Policy` is a collection of `bindings`. A `binding` binds one or more `members`, or principals, to a single `role`. Principals can be user accounts, service accounts, Google groups, and domains (such as G Suite). A `role` is a named list of permissions; each `role` can be an IAM predefined role or a user-created custom role. For some types of Google Cloud resources, a `binding` can also specify a `condition`, which is a logical expression that allows access to a resource only if the expression evaluates to `true`. A condition can add constraints based on attributes of the request, the resource, or both. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies). **JSON example:** ``` { \"bindings\": [ { \"role\": \"roles/resourcemanager.organizationAdmin\", \"members\": [ \"user:mike@example.com\", \"group:admins@example.com\", \"domain:google.com\", \"serviceAccount:my-project-id@appspot.gserviceaccount.com\" ] }, { \"role\": \"roles/resourcemanager.organizationViewer\", \"members\": [ \"user:eve@example.com\" ], \"condition\": { \"title\": \"expirable access\", \"description\": \"Does not grant access after Sep 2020\", \"expression\": \"request.time \u003c timestamp('2020-10-01T00:00:00.000Z')\", } } ], \"etag\": \"BwWWja0YfJA=\", \"version\": 3 } ``` **YAML example:** ``` bindings: - members: - user:mike@example.com - group:admins@example.com - domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com role: roles/resourcemanager.organizationAdmin - members: - user:eve@example.com role: roles/resourcemanager.organizationViewer condition: title: expirable access description: Does not grant access after Sep 2020 expression: request.time \u003c timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features, see the [IAM documentation](https://cloud.google.com/iam/docs/).",
       "id": "Policy",
@@ -6800,7 +6819,7 @@
       "type": "object"
     },
     "Rollout": {
-      "description": "Rollout contains the Rollout metadata and configuration. Next ID: 28",
+      "description": "Rollout contains the Rollout metadata and configuration. Next ID: 32",
       "id": "Rollout",
       "properties": {
         "completeTime": {
@@ -6830,19 +6849,29 @@
           "readOnly": true,
           "type": "string"
         },
+        "ignoreClusterDisruptionBudgets": {
+          "description": "Optional. If set to true, the rollout will ignore the disruption budgets of the clusters.",
+          "type": "boolean"
+        },
+        "ignoreMaintenancePolicies": {
+          "description": "Optional. If set to true, the rollout will ignore any maintenance policies (Maintenance Windows and Maintenance Exclusions) set on the clusters.",
+          "type": "boolean"
+        },
         "intent": {
           "description": "Output only. The intent of the rollout.",
           "enum": [
             "ROLLOUT_INTENT_UNSPECIFIED",
             "REGULAR_UPGRADE",
             "CONTROL_PLANE_PATCH_ENFORCEMENT",
-            "END_OF_SUPPORT_ENFORCEMENT"
+            "END_OF_SUPPORT_ENFORCEMENT",
+            "PARTIAL_PATCH"
           ],
           "enumDescriptions": [
             "The default value.",
             "A standard rollout for the whole sequence.",
             "A mandatory upgrade for clusters that haven't been patched within the allowed window.",
-            "A mandatory upgrade for clusters that have reached its end of support."
+            "A mandatory upgrade for clusters that have reached its end of support.",
+            "A patch upgrade for a subset of clusters on a given minor version."
           ],
           "readOnly": true,
           "type": "string"
@@ -6866,9 +6895,21 @@
           "description": "Identifier. The full, unique resource name of this Rollout in the format of `projects/{project}/locations/global/rollouts/{rollout}`.",
           "type": "string"
         },
+        "prioritized": {
+          "description": "Optional. If set to true, conflicting rollouts will be paused, to allow this rollout to progress through the sequence. Conflicting rollouts running on the first stage will be canceled, to allow this rollout to be created.",
+          "type": "boolean"
+        },
         "rolloutSequence": {
           "description": "Optional. Immutable. The full, unique resource name of the rollout sequence that initiatied this Rollout. In the format of `projects/{project}/locations/global/rolloutSequences/{rollout_sequence}`.",
           "type": "string"
+        },
+        "stageSoakDurationOverrides": {
+          "additionalProperties": {
+            "format": "google-duration",
+            "type": "string"
+          },
+          "description": "Optional. Overrides the soak durations for specific stages of the rollout. Key is the stage number, value is the desired soak duration. Stages omitted from the map will receive the standard soak duration configured on the sequence for that stage.",
+          "type": "object"
         },
         "stages": {
           "description": "Output only. The stages of the Rollout.",
@@ -7018,7 +7059,7 @@
       "type": "object"
     },
     "RolloutSequence": {
-      "description": "RolloutSequence defines the desired order of upgrades. Next ID: 20",
+      "description": "RolloutSequence defines the desired order of upgrades. Next ID: 22",
       "id": "RolloutSequence",
       "properties": {
         "autoUpgradeConfig": {
@@ -7450,6 +7491,8 @@
             "MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION",
             "MODERNIZATION_INCOMPATIBLE_CONFIG",
             "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE",
+            "MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART",
+            "MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET",
             "MODERNIZATION_SCHEDULED",
             "MODERNIZATION_IN_PROGRESS",
             "MODERNIZATION_COMPLETED",
@@ -7459,6 +7502,7 @@
             "MODERNIZATION_PREPARED",
             "MODERNIZATION_MIGRATING_WORKLOADS",
             "MODERNIZATION_ROLLING_BACK_CLUSTER",
+            "MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART",
             "MODERNIZATION_WILL_BE_SCHEDULED",
             "MODERNIZATION_MANUAL",
             "MODERNIZATION_ELIGIBLE",
@@ -7466,6 +7510,8 @@
             "MODERNIZATION_MODERNIZED_SOAKING",
             "MODERNIZATION_FINALIZED",
             "MODERNIZATION_ROLLING_BACK_FLEET",
+            "MODERNIZATION_MODERNIZED",
+            "MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER",
             "MODERNIZATION_COMPATIBLE",
             "MODERNIZATION_INCOMPATIBLE",
             "MODERNIZATION_INCOMPATIBLE_FLEET_SCALE",
@@ -7516,6 +7562,8 @@
             "One or more Pods have unsupported annotations.",
             "Incompatible config found in the cluster.",
             "Gateway pods per cluster limit exceeded.",
+            "Cluster contains workloads that will require manual restart during modernization.",
+            "Cluster contains PodDisruptionBudgets that prevent automated pod eviction during modernization.",
             "Modernization is scheduled for a cluster.",
             "Modernization is in progress for a cluster.",
             "Modernization is completed for a cluster.",
@@ -7525,6 +7573,7 @@
             "Cluster has been prepared for its workloads to be migrated.",
             "Migrating the cluster's workloads to the new implementation.",
             "Rollback is in progress for modernization of a cluster.",
+            "Modernization of a cluster is awaiting manual restart of workloads. The customer must restart these workloads to complete modernization.",
             "Modernization will be scheduled for a fleet.",
             "Fleet is opted out from automated modernization.",
             "Fleet is eligible for modernization.",
@@ -7532,6 +7581,8 @@
             "Modernization of all the fleet's clusters is complete. Soaking before finalizing the modernization.",
             "Modernization is finalized for all clusters in a fleet. Rollback is no longer allowed.",
             "Rollback is in progress for modernization of all clusters in a fleet.",
+            "Modernization of all the fleet's clusters is complete. Soaking before finalizing the modernization.",
+            "Fleet modernization must be Customer-Triggered, and cannot be Google-driven. Specific details may be reported via another fleet/cluster condition.",
             "Fleet is compatible for modernization.",
             "Fleet is not yet compatible for modernization.",
             "Fleet exceeds service mesh fleet-level scalability limits.",
@@ -7663,6 +7714,183 @@
       },
       "type": "object"
     },
+    "ServiceMeshFeatureCondition": {
+      "description": "Condition being reported.",
+      "id": "ServiceMeshFeatureCondition",
+      "properties": {
+        "code": {
+          "description": "Unique identifier of the condition which describes the condition recognizable to the user.",
+          "enum": [
+            "CODE_UNSPECIFIED",
+            "MESH_IAM_PERMISSION_DENIED",
+            "MESH_IAM_CROSS_PROJECT_PERMISSION_DENIED",
+            "CNI_CONFIG_UNSUPPORTED",
+            "GKE_SANDBOX_UNSUPPORTED",
+            "NODEPOOL_WORKLOAD_IDENTITY_FEDERATION_REQUIRED",
+            "CNI_INSTALLATION_FAILED",
+            "CNI_POD_UNSCHEDULABLE",
+            "CLUSTER_HAS_ZERO_NODES",
+            "CANONICAL_SERVICE_ERROR",
+            "UNSUPPORTED_MULTIPLE_CONTROL_PLANES",
+            "VPCSC_GA_SUPPORTED",
+            "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT",
+            "DEPRECATED_SPEC_CONTROL_PLANE_MANAGEMENT_SAFE",
+            "CONFIG_APPLY_INTERNAL_ERROR",
+            "CONFIG_VALIDATION_ERROR",
+            "CONFIG_VALIDATION_WARNING",
+            "QUOTA_EXCEEDED_BACKEND_SERVICES",
+            "QUOTA_EXCEEDED_HEALTH_CHECKS",
+            "QUOTA_EXCEEDED_HTTP_ROUTES",
+            "QUOTA_EXCEEDED_TCP_ROUTES",
+            "QUOTA_EXCEEDED_TLS_ROUTES",
+            "QUOTA_EXCEEDED_TRAFFIC_POLICIES",
+            "QUOTA_EXCEEDED_ENDPOINT_POLICIES",
+            "QUOTA_EXCEEDED_GATEWAYS",
+            "QUOTA_EXCEEDED_MESHES",
+            "QUOTA_EXCEEDED_SERVER_TLS_POLICIES",
+            "QUOTA_EXCEEDED_CLIENT_TLS_POLICIES",
+            "QUOTA_EXCEEDED_SERVICE_LB_POLICIES",
+            "QUOTA_EXCEEDED_HTTP_FILTERS",
+            "QUOTA_EXCEEDED_TCP_FILTERS",
+            "QUOTA_EXCEEDED_NETWORK_ENDPOINT_GROUPS",
+            "CONFIG_APPLY_BLOCKED",
+            "LEGACY_MC_SECRETS",
+            "WORKLOAD_IDENTITY_REQUIRED",
+            "NON_STANDARD_BINARY_USAGE",
+            "UNSUPPORTED_GATEWAY_CLASS",
+            "MANAGED_CNI_NOT_ENABLED",
+            "MISSING_CONTROL_PLANE_CONFIG",
+            "SHARED_VPC_MISSING_PERMISSIONS",
+            "REQUIRED_ORG_POLICY_DISABLED",
+            "MODERNIZATION_INCOMPATIBLE_POD_ANNOTATION",
+            "MODERNIZATION_INCOMPATIBLE_CONFIG",
+            "MODERNIZATION_INCOMPATIBLE_GATEWAY_POD_SCALE",
+            "MODERNIZATION_REQUIRES_MANUAL_WORKLOAD_RESTART",
+            "MODERNIZATION_UNEVICTABLE_POD_DISRUPTION_BUDGET",
+            "MODERNIZATION_SCHEDULED",
+            "MODERNIZATION_IN_PROGRESS",
+            "MODERNIZATION_COMPLETED",
+            "MODERNIZATION_ABORTED",
+            "MODERNIZATION_PREPARING",
+            "MODERNIZATION_STALLED",
+            "MODERNIZATION_PREPARED",
+            "MODERNIZATION_MIGRATING_WORKLOADS",
+            "MODERNIZATION_ROLLING_BACK_CLUSTER",
+            "MODERNIZATION_AWAITING_MANUAL_WORKLOAD_RESTART",
+            "MODERNIZATION_WILL_BE_SCHEDULED",
+            "MODERNIZATION_MANUAL",
+            "MODERNIZATION_ELIGIBLE",
+            "MODERNIZATION_MODERNIZING",
+            "MODERNIZATION_MODERNIZED_SOAKING",
+            "MODERNIZATION_FINALIZED",
+            "MODERNIZATION_ROLLING_BACK_FLEET",
+            "MODERNIZATION_MODERNIZED",
+            "MODERNIZATION_REQUIRES_CUSTOMER_TRIGGER",
+            "MODERNIZATION_COMPATIBLE",
+            "MODERNIZATION_INCOMPATIBLE",
+            "MODERNIZATION_INCOMPATIBLE_FLEET_SCALE",
+            "MODERNIZATION_INCOMPATIBLE_FLEET_QUOTA"
+          ],
+          "enumDescriptions": [
+            "Default Unspecified code",
+            "Mesh IAM permission denied error code",
+            "Permission denied error code for cross-project",
+            "CNI config unsupported error code",
+            "GKE sandbox unsupported error code",
+            "Nodepool workload identity federation required error code",
+            "CNI installation failed error code",
+            "CNI pod unschedulable error code",
+            "Cluster has zero node code",
+            "Failure to reconcile CanonicalServices",
+            "Multiple control planes unsupported error code",
+            "VPC-SC GA is supported for this control plane.",
+            "User is using deprecated ControlPlaneManagement and they have not yet set Management.",
+            "User is using deprecated ControlPlaneManagement and they have already set Management.",
+            "Configuration (Istio/k8s resources) failed to apply due to internal error.",
+            "Configuration failed to be applied due to being invalid.",
+            "Encountered configuration(s) with possible unintended behavior or invalid configuration. These configs may not have been applied.",
+            "BackendService quota exceeded error code.",
+            "HealthCheck quota exceeded error code.",
+            "HTTPRoute quota exceeded error code.",
+            "TCPRoute quota exceeded error code.",
+            "TLS routes quota exceeded error code.",
+            "TrafficPolicy quota exceeded error code.",
+            "EndpointPolicy quota exceeded error code.",
+            "Gateway quota exceeded error code.",
+            "Mesh quota exceeded error code.",
+            "ServerTLSPolicy quota exceeded error code.",
+            "ClientTLSPolicy quota exceeded error code.",
+            "ServiceLBPolicy quota exceeded error code.",
+            "HTTPFilter quota exceeded error code.",
+            "TCPFilter quota exceeded error code.",
+            "NetworkEndpointGroup quota exceeded error code.",
+            "Configuration failed to apply due to fleet being blocked.",
+            "Legacy istio secrets found for multicluster error code.",
+            "Workload identity required error code.",
+            "Non-standard binary usage error code.",
+            "Unsupported gateway class error code.",
+            "Managed CNI not enabled error code.",
+            "Missing control plane configuration error code.",
+            "Shared VPC missing permissions error code.",
+            "Required org policy disabled error code.",
+            "One or more Pods have unsupported annotations.",
+            "Incompatible config found in the cluster.",
+            "Gateway pods per cluster limit exceeded.",
+            "Cluster contains workloads that will require manual restart during modernization.",
+            "Cluster contains PodDisruptionBudgets that prevent automated pod eviction during modernization.",
+            "Modernization is scheduled for a cluster.",
+            "Modernization is in progress for a cluster.",
+            "Modernization is completed for a cluster.",
+            "Modernization is aborted for a cluster.",
+            "Preparing cluster so that its workloads can be migrated.",
+            "Modernization is stalled for a cluster.",
+            "Cluster has been prepared for its workloads to be migrated.",
+            "Migrating the cluster's workloads to the new implementation.",
+            "Rollback is in progress for modernization of a cluster.",
+            "Modernization of a cluster is awaiting manual restart of workloads. The customer must restart these workloads to complete modernization.",
+            "Modernization will be scheduled for a fleet.",
+            "Fleet is opted out from automated modernization.",
+            "Fleet is eligible for modernization.",
+            "Modernization of one or more clusters in a fleet is in progress.",
+            "Modernization of all the fleet's clusters is complete. Soaking before finalizing the modernization.",
+            "Modernization is finalized for all clusters in a fleet. Rollback is no longer allowed.",
+            "Rollback is in progress for modernization of all clusters in a fleet.",
+            "Modernization of all clusters in the fleet is complete. Soaking before finalizing the modernization.",
+            "Fleet modernization must be Customer-Triggered, and cannot be Google-driven. Specific details may be reported via another fleet/cluster condition.",
+            "Fleet is compatible for modernization.",
+            "Fleet is not yet compatible for modernization.",
+            "Fleet exceeds service mesh fleet-level scalability limits.",
+            "Fleet exceeds service mesh fleet-level quota limits."
+          ],
+          "type": "string"
+        },
+        "details": {
+          "description": "A short summary about the issue.",
+          "type": "string"
+        },
+        "documentationLink": {
+          "description": "Links contains actionable information.",
+          "type": "string"
+        },
+        "severity": {
+          "description": "Severity level of the condition.",
+          "enum": [
+            "SEVERITY_UNSPECIFIED",
+            "ERROR",
+            "WARNING",
+            "INFO"
+          ],
+          "enumDescriptions": [
+            "Unspecified severity",
+            "Indicates an issue that prevents the mesh from operating correctly",
+            "Indicates a setting is likely wrong, but the mesh is still able to operate",
+            "An informational message, not requiring any action"
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ServiceMeshFeatureSpec": {
       "description": "**Service Mesh**: Spec for the fleet for the servicemesh feature",
       "id": "ServiceMeshFeatureSpec",
@@ -7680,6 +7908,35 @@
             "Google should not report modernization eligibility gaps."
           ],
           "type": "string"
+        },
+        "modernizationStrategy": {
+          "description": "Optional. Declares your intended modernization strategy for the fleet.",
+          "enum": [
+            "MODERNIZATION_STRATEGY_UNSPECIFIED",
+            "AUTOMATIC",
+            "DEFERRED"
+          ],
+          "enumDescriptions": [
+            "Default unspecified.",
+            "The infrastructure is automatically modernized. Setting this strategy initiates the modernization process. The system schedules the modernization subject to configured maintenance windows and maintenance exclusions.",
+            "The infrastructure is pinned to the legacy implementation. This fleet will not be selected for Google-driven modernization. If the resource is actively modernizing, or if the modernization has completed but is not yet finalized (e.g., during the soak time), setting this strategy triggers a rollback to the legacy state. If the modernization process has already been marked as finalized, setting this strategy has no effect."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ServiceMeshFeatureState": {
+      "description": "**Service Mesh**: State for the whole Hub, as analyzed by the Service Mesh Hub Controller.",
+      "id": "ServiceMeshFeatureState",
+      "properties": {
+        "conditions": {
+          "description": "Output only. List of conditions reported for this feature.",
+          "items": {
+            "$ref": "ServiceMeshFeatureCondition"
+          },
+          "readOnly": true,
+          "type": "array"
         }
       },
       "type": "object"
@@ -7892,6 +8149,31 @@
         "force": {
           "description": "Optional. If set to true, any rollout already running on the first stage of the sequence will be cancelled to allow for the creation of the new rollout.",
           "type": "boolean"
+        },
+        "ignoreClusterDisruptionBudgets": {
+          "description": "Optional. If set to true, the rollout will ignore the disruption budgets of the clusters.",
+          "type": "boolean"
+        },
+        "ignoreMaintenancePolicies": {
+          "description": "Optional. If set to true, the rollout will ignore any maintenance policies (Maintenance Windows and Maintenance Exclusions) set on the clusters.",
+          "type": "boolean"
+        },
+        "patchOnly": {
+          "description": "Optional. If set to true, the rollout will only upgrade clusters that match the minor version of the `version` field, but are on an earlier patch version.",
+          "type": "boolean"
+        },
+        "prioritized": {
+          "description": "Optional. If set to true, conflicting rollouts will be paused, to allow this rollout to progress through the sequence. Conflicting rollouts running on the first stage will be canceled, to allow this rollout to be created.",
+          "type": "boolean"
+        },
+        "soakDurationOverrideAllStages": {
+          "description": "Optional. Overrides the soak duration for all stages of the rollout.",
+          "format": "google-duration",
+          "type": "string"
+        },
+        "soakDurationOverridePerStage": {
+          "$ref": "PerStageSoakDurationOverrides",
+          "description": "Optional. Overrides the soak durations for specific stages of the rollout."
         },
         "upgradeType": {
           "description": "Required. The type of upgrade.",

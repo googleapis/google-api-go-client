@@ -1198,8 +1198,8 @@ type AutoProtectionPolicyBinding struct {
 	// Description: Optional. A description of the binding. The description must be
 	// at most 2048 characters.
 	Description string `json:"description,omitempty"`
-	// Etag: Optional. Output only. The etag for the binding. If this is provided
-	// on update, it must match the server's etag.
+	// Etag: Output only. The etag for the binding. If this is provided on update,
+	// it must match the server's etag.
 	Etag string `json:"etag,omitempty"`
 	// Name: Output only. Identifier. The resource name of the
 	// AutoProtectionPolicyBinding. Format:
@@ -2385,15 +2385,15 @@ type BindingMatchingResource struct {
 	// LastEvaluationTime: Output only. The timestamp when the resource was last
 	// evaluated for protection.
 	LastEvaluationTime string `json:"lastEvaluationTime,omitempty"`
-	// Name: Identifier. The resource name of the `BindingMatchingResource`.
-	// Format:
+	// Name: Output only. Identifier. The resource name of the
+	// `BindingMatchingResource`. Format:
 	// `projects/{project}/locations/{location}/autoProtectionPolicies/{auto_protect
 	// ion_policy}/bindings/{binding}/matchingResources/{matching_resource}`
 	Name string `json:"name,omitempty"`
-	// Resource: Required. Immutable. Resource name of the workload that matches
-	// the criteria of the binding. The format can be either a relative resource
-	// name (e.g., `projects/my-project/zones/us-central1-a/instances/my-instance`)
-	// or a schemeless full resource name (e.g.,
+	// Resource: Output only. Resource name of the workload that matches the
+	// criteria of the binding. The format can be either a relative resource name
+	// (e.g., `projects/my-project/zones/us-central1-a/instances/my-instance`) or a
+	// schemeless full resource name (e.g.,
 	// `//compute.googleapis.com/projects/my-project/zones/us-central1-a/instances/m
 	// y-instance`).
 	Resource string `json:"resource,omitempty"`
@@ -4600,7 +4600,7 @@ type ListAutoProtectionPoliciesResponse struct {
 	// NextPageToken: A token that can be sent as `page_token` to retrieve the next
 	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6540,8 +6540,8 @@ func (s RestoreVerificationCleanupRule) MarshalJSON() ([]byte, error) {
 
 // RestoreVerificationPlan: A `RestoreVerificationPlan` specifies the
 // scheduling and clean-up template for automated restore verification. It
-// contains a `RestoreVerificationSchedule` to dictate when the verifications
-// should run, and a `CleanupConfig` for post-verification resource deletion.
+// contains a `schedule` to dictate when the verifications should run, and a
+// `RestoreVerificationCleanupRule` for post-verification resource deletion.
 type RestoreVerificationPlan struct {
 	// CreateTime: Output only. When the `RestoreVerificationPlan` was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -6619,10 +6619,10 @@ type RestoreVerificationPlanAssociation struct {
 	Description string `json:"description,omitempty"`
 	// Labels: Optional. User-defined labels.
 	Labels map[string]string `json:"labels,omitempty"`
-	// Name: Output only. Identifier. The resource name of
-	// RestoreVerificationPlanAssociation in below format Format :
-	// projects/{project}/locations/{location}/restoreVerificationPlans/{restore_ver
-	// ification_plan}/associations/{association}
+	// Name: Output only. Identifier. The resource name of the
+	// `RestoreVerificationPlanAssociation`. Format:
+	// `projects/{project}/locations/{location}/restoreVerificationPlans/{restore_ve
+	// rification_plan}/associations/{association}`
 	Name string `json:"name,omitempty"`
 	// ResourceType: Required. Immutable. The type of the Google Cloud resource
 	// (e.g., `compute.googleapis.com/Instance`,

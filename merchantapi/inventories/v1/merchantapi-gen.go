@@ -378,7 +378,11 @@ func (s ListRegionalInventoriesResponse) MarshalJSON() ([]byte, error) {
 // in-store information for a specific product at the store specified by
 // `storeCode`. For a list of all accepted attribute values, see the local
 // product inventory data specification
-// (https://support.google.com/merchants/answer/3061342).
+// (https://support.google.com/merchants/answer/3061342). For more information,
+// see Add local inventory
+// (https://developers.google.com/merchant/api/guides/inventories/add-local-inventory)
+// and Update local inventory
+// (https://developers.google.com/merchant/api/guides/inventories/update-local-inventory).
 type LocalInventory struct {
 	// Account: Output only. The account that owns the product. This field will be
 	// ignored if set by the client.
@@ -658,7 +662,9 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -717,7 +723,13 @@ func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 // Represents specific information like price and availability for a given
 // product in a specific `region`. For a list of all accepted attribute values,
 // see the regional product inventory data specification
-// (https://support.google.com/merchants/answer/9698880).
+// (https://support.google.com/merchants/answer/9698880). For more information,
+// see Add regional inventory
+// (https://developers.google.com/merchant/api/guides/inventories/add-regional-inventory),
+// Update regional inventory
+// (https://developers.google.com/merchant/api/guides/inventories/update-regional-inventory),
+// and Create and update regions
+// (https://developers.google.com/merchant/api/guides/accounts/regions).
 type RegionalInventory struct {
 	// Account: Output only. The account that owns the product. This field will be
 	// ignored if set by the client.
@@ -982,7 +994,10 @@ type AccountsProductsLocalInventoriesInsertCall struct {
 // account. Replaces the full `LocalInventory` resource if an entry with the
 // same `storeCode` already exists for the product. It might take up to 30
 // minutes for the new or updated `LocalInventory` resource to appear in
-// products.
+// products. For step-by-step instructions, see Add local inventory
+// (https://developers.google.com/merchant/api/guides/inventories/add-local-inventory)
+// and Update local inventory
+// (https://developers.google.com/merchant/api/guides/inventories/update-local-inventory).
 //
 //   - parent: The account and product where this inventory will be inserted.
 //     Format: `accounts/{account}/products/{product}` The `{product}` segment is
@@ -1420,6 +1435,10 @@ type AccountsProductsRegionalInventoriesInsertCall struct {
 // account. Replaces the full `RegionalInventory` resource if an entry with the
 // same `region` already exists for the product. It might take up to 30 minutes
 // for the new or updated `RegionalInventory` resource to appear in products.
+// For step-by-step instructions, see Add regional inventory
+// (https://developers.google.com/merchant/api/guides/inventories/add-regional-inventory)
+// and Update regional inventory
+// (https://developers.google.com/merchant/api/guides/inventories/update-regional-inventory).
 //
 //   - parent: The account and product where this inventory will be inserted.
 //     Format: `accounts/{account}/products/{product}` The `{product}` segment is

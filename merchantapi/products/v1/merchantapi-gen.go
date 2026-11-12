@@ -1229,6 +1229,12 @@ func (s Price) MarshalJSON() ([]byte, error) {
 // retrieved. All fields in the processed product and its sub-messages match
 // the name of their corresponding attribute in the Product data specification
 // (https://support.google.com/merchants/answer/7052112) with some exceptions.
+// For product ingestion workflows and status checks, see Manage products
+// (https://developers.google.com/merchant/api/guides/products/overview), Add
+// and manage products
+// (https://developers.google.com/merchant/api/guides/products/add-manage), and
+// List your products data and product issues
+// (https://developers.google.com/merchant/api/guides/products/list-products-data-issues).
 type Product struct {
 	// Archived: Output only. Determines whether the product is archived
 	// (https://support.google.com/merchants/answer/11909930). To archive or
@@ -2013,8 +2019,10 @@ type ProductAttributes struct {
 	//   "US" - US.
 	SizeSystem string `json:"sizeSystem,omitempty"`
 	// SizeTypes: The cut of the item. It can be used to represent combined size
-	// types for apparel items. Maximum two of size types can be provided, see Size
-	// type (https://support.google.com/merchants/answer/6324497).
+	// types for apparel items. You can provide up to two `SizeType` values, for
+	// example, `["PETITE", "MATERNITY"]` or `["BIG", "TALL"]`. For more
+	// information, see Size type
+	// (https://support.google.com/merchants/answer/6324497).
 	//
 	// Possible values:
 	//   "SIZE_TYPE_UNSPECIFIED" - The size type is not specified.
@@ -2416,7 +2424,14 @@ func (s ProductFee) MarshalJSON() ([]byte, error) {
 // not the processed product that you see in Merchant Center, in Shopping ads,
 // or across Google surfaces. Product inputs, rules and supplemental data
 // source data are combined to create the processed Product. For more
-// information, see Manage products (/merchant/api/guides/products/overview).
+// information, see Manage products
+// (https://developers.google.com/merchant/api/guides/products/overview), Add
+// and manage products
+// (https://developers.google.com/merchant/api/guides/products/add-manage),
+// Make frequent updates to your products
+// (https://developers.google.com/merchant/api/guides/products/frequent-updates),
+// and Manage API data sources
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source).
 // Required product input attributes to pass data validation checks are
 // primarily defined in the Products Data Specification
 // (https://support.google.com/merchants/answer/188494). The following
@@ -2684,7 +2699,9 @@ func (s ProductStatus) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -3609,9 +3626,9 @@ type AccountsProductInputsInsertCall struct {
 }
 
 // Insert: Uploads a product input to your Merchant Center account
-// (/merchant/api/guides/products/add-manage#add_a_product). You must have a
-// products data source
-// (/merchant/api/guides/data-sources/api-sources#create-primary-data-source)
+// (https://developers.google.com/merchant/api/guides/products/add-manage#add_a_product).
+// You must have a products data source
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source)
 // to be able to insert a product. The unique identifier of the data source is
 // passed as a query parameter in the request URL. If a product input with the
 // same contentLanguage, offerId, and dataSource already exists, then the
@@ -3632,7 +3649,7 @@ func (r *AccountsProductInputsService) Insert(parent string, productinput *Produ
 // or supplemental product data source name. If the product already exists and
 // data source provided is different, then the product will be moved to a new
 // data source. For more information, see Create a primary data source
-// (/merchant/api/guides/data-sources/api-sources#create-primary-data-source).
+// (https://developers.google.com/merchant/api/guides/data-sources/api-sources#create-primary-data-source).
 // Only API data sources are supported. Format:
 // `accounts/{account}/dataSources/{datasource}`. For example,
 // `accounts/123456/dataSources/104628`.
@@ -3738,7 +3755,10 @@ type AccountsProductInputsPatchCall struct {
 // The name of the product input to update is taken from the `name` field
 // within the `ProductInput` resource. After inserting, updating, or deleting a
 // product input, it may take several minutes before the processed product can
-// be retrieved.
+// be retrieved. For more information, see Add and manage products
+// (https://developers.google.com/merchant/api/guides/products/add-manage) and
+// Make frequent updates to your products
+// (https://developers.google.com/merchant/api/guides/products/frequent-updates).
 //
 //   - name: Identifier. The name of the product. Format:
 //     `accounts/{account}/productInputs/{productinput}` The {productinput}
@@ -4031,7 +4051,9 @@ type AccountsProductsListCall struct {
 // response might contain fewer items than specified by `pageSize`. Rely on
 // `pageToken` to determine if there are more items to be requested. After
 // inserting, updating, or deleting a product input, it may take several
-// minutes before the updated processed product can be retrieved.
+// minutes before the updated processed product can be retrieved. For more
+// information, see List your products data and product issues
+// (https://developers.google.com/merchant/api/guides/products/list-products-data-issues).
 //
 //   - parent: The account to list processed products for. Format:
 //     `accounts/{account}`.

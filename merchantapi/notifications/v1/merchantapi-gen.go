@@ -214,10 +214,12 @@ func (s ListNotificationSubscriptionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 // NotificationSubscription: Represents a notification subscription owned by a
-// Merchant account. See Decode notifications
-// (/merchant/api/guides/accounts/notifications#decode_notifications) for
-// information on how to decode the notification payload and how to interpret
-// its contents.
+// Merchant account. For more information, see Notifications overview
+// (https://developers.google.com/merchant/api/guides/notifications/overview).
+// See Decode notifications
+// (https://developers.google.com/merchant/api/guides/notifications/overview#decode_notifications)
+// for information on how to decode the notification payload and how to
+// interpret its contents.
 type NotificationSubscription struct {
 	// AllManagedAccounts: If this value is true, the requesting account is
 	// notified of the specified event for all managed accounts (can be subaccounts
@@ -344,7 +346,9 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -412,9 +416,9 @@ type AccountsNotificationsubscriptionsCreateCall struct {
 // or sub-accounts, the business can create a subscription for self. For
 // advanced accounts, the business can create a subscription for all managed
 // accounts or for a specific subaccount. See Decode notifications
-// (/merchant/api/guides/accounts/notifications#decode_notifications) for
-// information on how to decode the notification payload and how to interpret
-// its contents. We will allow the following types of notification
+// (https://developers.google.com/merchant/api/guides/notifications/overview#decode_notifications)
+// for information on how to decode the notification payload and how to
+// interpret its contents. We will allow the following types of notification
 // subscriptions to exist together (per business as a subscriber per event
 // type): 1. Subscription for all managed accounts + subscription for self. 2.
 // Multiple "partial" subscriptions for managed accounts + subscription for

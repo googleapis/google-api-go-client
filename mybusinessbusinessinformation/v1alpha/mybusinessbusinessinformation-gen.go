@@ -1309,8 +1309,9 @@ type Metadata struct {
 	// CanDelete: Output only. Indicates whether the location can be deleted using
 	// the API.
 	CanDelete bool `json:"canDelete,omitempty"`
-	// CanHaveBusinessCalls: Output only. Indicates if the listing is eligible for
-	// business calls.
+	// CanHaveBusinessCalls: Output only. Deprecated: Relates to the Call Tracking
+	// feature which is no longer supported. Indicates whether the location is
+	// eligible for business calls.
 	CanHaveBusinessCalls bool `json:"canHaveBusinessCalls,omitempty"`
 	// CanHaveFoodMenus: Output only. Indicates if the listing is eligible for food
 	// menu.
@@ -1354,7 +1355,7 @@ type Metadata struct {
 	// NewReviewUri: Output only. A link to the page on Google Search where a
 	// customer can leave a review for the location.
 	NewReviewUri string `json:"newReviewUri,omitempty"`
-	// PlaceId: Output only. If this locationappears on Google Maps, this field is
+	// PlaceId: Output only. If this location appears on Google Maps, this field is
 	// populated with the place ID for the location. This ID can be used in various
 	// Places APIs. This field can be set during Create calls, but not for Update.
 	PlaceId string `json:"placeId,omitempty"`

@@ -1784,7 +1784,7 @@ func (s ListSupportedServicesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// LookupConfiguredServicePerimeterResponse: A configured service perimeter
+// LookupConfiguredServicePerimeterResponse: A configured ServicePerimeter
 // returned by Access Context Manager.
 type LookupConfiguredServicePerimeterResponse struct {
 	// RestrictedResource: The resource (for example, `projects/123` or
@@ -1795,13 +1795,13 @@ type LookupConfiguredServicePerimeterResponse struct {
 	// `folders/456`) that directly owns or is restricted by the dry-run perimeter.
 	RestrictedResourceDryRun string `json:"restrictedResourceDryRun,omitempty"`
 	// ServicePerimeter: Fully qualified name of the configured enforced perimeter.
-	// Format: `accessPolicies/{policy_id}/servicePerimeters/{perimeter_name}` This
-	// field is empty if no enforced perimeter applies.
+	// This field is empty if no enforced perimeter applies. Format:
+	// `accessPolicies/{policy_id}/servicePerimeters/{perimeter_name}`
 	ServicePerimeter string `json:"servicePerimeter,omitempty"`
 	// ServicePerimeterDryRun: Fully qualified name of the configured dry-run
-	// perimeter. Format:
-	// `accessPolicies/{policy_id}/servicePerimeters/{perimeter_name}` This field
-	// is empty if no dry-run perimeter configuration applies.
+	// perimeter. This field is empty if no dry-run perimeter configuration
+	// applies. Format:
+	// `accessPolicies/{policy_id}/servicePerimeters/{perimeter_name}`
 	ServicePerimeterDryRun string `json:"servicePerimeterDryRun,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -6142,12 +6142,11 @@ type FoldersLookupConfiguredServicePerimeterCall struct {
 	header_      http.Header
 }
 
-// LookupConfiguredServicePerimeter: Looks up the configured service perimeter
-// for a given resource. Format: `['projects/{projectNumber}',
-// 'folders/{folderNumber}']`.
+// LookupConfiguredServicePerimeter: Looks up the configured ServicePerimeter
+// for a given resource.
 //
-//   - resource: The resource to resolve (for example, `projects/123` or
-//     `folders/456`).
+//   - resource: The resource name. Format: `projects/{project_number}` or
+//     `folders/{folder_number}` (for example, `projects/123` or `folders/456`).
 func (r *FoldersService) LookupConfiguredServicePerimeter(resource string) *FoldersLookupConfiguredServicePerimeterCall {
 	c := &FoldersLookupConfiguredServicePerimeterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7494,12 +7493,11 @@ type ProjectsLookupConfiguredServicePerimeterCall struct {
 	header_      http.Header
 }
 
-// LookupConfiguredServicePerimeter: Looks up the configured service perimeter
-// for a given resource. Format: `['projects/{projectNumber}',
-// 'folders/{folderNumber}']`.
+// LookupConfiguredServicePerimeter: Looks up the configured ServicePerimeter
+// for a given resource.
 //
-//   - resource: The resource to resolve (for example, `projects/123` or
-//     `folders/456`).
+//   - resource: The resource name. Format: `projects/{project_number}` or
+//     `folders/{folder_number}` (for example, `projects/123` or `folders/456`).
 func (r *ProjectsService) LookupConfiguredServicePerimeter(resource string) *ProjectsLookupConfiguredServicePerimeterCall {
 	c := &ProjectsLookupConfiguredServicePerimeterCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource

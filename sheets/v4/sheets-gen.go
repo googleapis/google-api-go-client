@@ -1162,7 +1162,7 @@ type BasicChartSeries struct {
 	DataLabel *DataLabel `json:"dataLabel,omitempty"`
 	// LineStyle: The line style of this series. Valid only if the chartType is
 	// AREA, LINE, or SCATTER. COMBO charts are also supported if the series chart
-	// type is AREA or LINE.
+	// type is AREA, STEPPED_AREA, or LINE.
 	LineStyle *LineStyle `json:"lineStyle,omitempty"`
 	// PointStyle: The style for points associated with this series. Valid only if
 	// the chartType is AREA, LINE, or SCATTER. COMBO charts are also supported if
@@ -1191,7 +1191,7 @@ type BasicChartSeries struct {
 	TargetAxis string `json:"targetAxis,omitempty"`
 	// Type: The type of this series. Valid only if the chartType is COMBO.
 	// Different types will change the way the series is visualized. Only LINE,
-	// AREA, and COLUMN are supported.
+	// AREA, STEPPED_AREA, and COLUMN are supported.
 	//
 	// Possible values:
 	//   "BASIC_CHART_TYPE_UNSPECIFIED" - Default value, do not use.
@@ -1272,7 +1272,7 @@ type BasicChartSpec struct {
 	//   "NO_LEGEND" - No legend is rendered.
 	LegendPosition string `json:"legendPosition,omitempty"`
 	// LineSmoothing: Gets whether all lines should be rendered smooth or straight
-	// by default. Applies to Line charts.
+	// by default. Applies to Line and Combo charts.
 	LineSmoothing bool `json:"lineSmoothing,omitempty"`
 	// Series: The data this chart is visualizing.
 	Series []*BasicChartSeries `json:"series,omitempty"`

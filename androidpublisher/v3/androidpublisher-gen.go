@@ -5509,7 +5509,8 @@ type InAppProduct struct {
 	// PackageName: Package name of the parent app.
 	PackageName string `json:"packageName,omitempty"`
 	// Prices: Prices per buyer region. None of these can be zero, as in-app
-	// products are never free. Map key is region code, as defined by ISO 3166-2.
+	// products are never free. Map key is region code, as defined by ISO 3166-1
+	// alpha-2.
 	Prices map[string]Price `json:"prices,omitempty"`
 	// PurchaseType: The type of the product, e.g. a recurring subscription.
 	//
@@ -7237,7 +7238,7 @@ type OneTimeProductOfferRegionalPricingAndAvailabilityConfig struct {
 	// used.
 	NoOverride *OneTimeProductOfferNoPriceOverrideOptions `json:"noOverride,omitempty"`
 	// RegionCode: Required. Region code this configuration applies to, as defined
-	// by ISO 3166-2, e.g., "US".
+	// by ISO 3166-1 alpha-2, e.g., "US".
 	RegionCode string `json:"regionCode,omitempty"`
 	// RelativeDiscount: The percentage discount subtracted from the purchase
 	// option price, specified as a fraction strictly larger than `0` and strictly
@@ -7439,7 +7440,7 @@ type OneTimeProductPurchaseOptionRegionalPricingAndAvailabilityConfig struct {
 	// in the currency that is linked to the specified region.
 	Price *Money `json:"price,omitempty"`
 	// RegionCode: Required. Region code this configuration applies to, as defined
-	// by ISO 3166-2, e.g., "US".
+	// by ISO 3166-1 alpha-2, e.g., "US".
 	RegionCode string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Availability") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9066,7 +9067,7 @@ type RegionalBasePlanConfig struct {
 	// that is linked to the specified region.
 	Price *Money `json:"price,omitempty"`
 	// RegionCode: Required. Region code this configuration applies to, as defined
-	// by ISO 3166-2, e.g. "US".
+	// by ISO 3166-1 alpha-2, e.g. "US".
 	RegionCode string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewSubscriberAvailability")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -9110,7 +9111,7 @@ type RegionalPriceMigrationConfig struct {
 	// Play Console.
 	PriceIncreaseType string `json:"priceIncreaseType,omitempty"`
 	// RegionCode: Required. Region code this configuration applies to, as defined
-	// by ISO 3166-2, e.g. "US".
+	// by ISO 3166-1 alpha-2, e.g. "US".
 	RegionCode string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g.
 	// "OldestAllowedPriceVersionTime") to unconditionally include in API requests.
@@ -9147,7 +9148,7 @@ type RegionalProductAgeRatingInfo struct {
 	// products that are appropriate for 18 years and above.
 	ProductAgeRatingTier string `json:"productAgeRatingTier,omitempty"`
 	// RegionCode: Region code this configuration applies to, as defined by ISO
-	// 3166-2, e.g. "US".
+	// 3166-1 alpha-2, e.g. "US".
 	RegionCode string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ProductAgeRatingTier") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -9176,7 +9177,7 @@ type RegionalSubscriptionOfferConfig struct {
 	// specified, this will default to false.
 	NewSubscriberAvailability bool `json:"newSubscriberAvailability,omitempty"`
 	// RegionCode: Required. Immutable. Region code this configuration applies to,
-	// as defined by ISO 3166-2, e.g. "US".
+	// as defined by ISO 3166-1 alpha-2, e.g. "US".
 	RegionCode string `json:"regionCode,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "NewSubscriberAvailability")
 	// to unconditionally include in API requests. By default, fields with empty or
@@ -9266,7 +9267,7 @@ type RegionalTaxConfig struct {
 	// only supported in the United States.
 	EligibleForStreamingServiceTaxRate bool `json:"eligibleForStreamingServiceTaxRate,omitempty"`
 	// RegionCode: Required. Region code this configuration applies to, as defined
-	// by ISO 3166-2, e.g. "US".
+	// by ISO 3166-1 alpha-2, e.g. "US".
 	RegionCode string `json:"regionCode,omitempty"`
 	// StreamingTaxType: To collect communications or amusement taxes in the United
 	// States, choose the appropriate tax category. Learn more
@@ -9599,7 +9600,7 @@ type ReplacementCancellation struct {
 // payment location restrictions are imposed.
 type RestrictedPaymentCountries struct {
 	// RegionCodes: Required. Region codes to impose payment restrictions on, as
-	// defined by ISO 3166-2, e.g. "US".
+	// defined by ISO 3166-1 alpha-2, e.g. "US".
 	RegionCodes []string `json:"regionCodes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "RegionCodes") to
 	// unconditionally include in API requests. By default, fields with empty or

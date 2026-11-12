@@ -441,6 +441,8 @@ type GoogleCloudRunV2BuildConfiguration struct {
 	BuildpacksBuild *GoogleCloudRunV2BuildConfigurationBuildpacksBuild `json:"buildpacksBuild,omitempty"`
 	// DockerBuild: Optional. Builds the source using Docker.
 	DockerBuild *GoogleCloudRunV2BuildConfigurationDockerBuild `json:"dockerBuild,omitempty"`
+	// EnvironmentVariables: Optional. Environment variables for the build.
+	EnvironmentVariables []*GoogleCloudRunV2EnvVar `json:"environmentVariables,omitempty"`
 	// ImageRepositoryUri: Required. Artifact Registry URI to store the built
 	// image.
 	ImageRepositoryUri string `json:"imageRepositoryUri,omitempty"`
@@ -476,7 +478,8 @@ type GoogleCloudRunV2BuildConfigurationBuildpacksBuild struct {
 	BuildBaseImageUri string `json:"buildBaseImageUri,omitempty"`
 	// CacheImageUri: Optional. Cache image URI.
 	CacheImageUri string `json:"cacheImageUri,omitempty"`
-	// EnvironmentVariables: Optional. Environment variables for the build.
+	// EnvironmentVariables: Optional. Deprecated: Use environment_variables in
+	// BuildConfiguration instead.
 	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BuildBaseImageUri") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -735,10 +738,11 @@ type GoogleCloudRunV2Condition struct {
 	//   "INSTANCE_STOPPING" - Instance stopping.
 	//   "INSTANCE_NON_ZERO_EXIT_CODE" - Instance exited with a non-zero exit code.
 	InstanceReason string `json:"instanceReason,omitempty"`
-	// LastTransitionTime: Last time the condition transitioned from one status to
-	// another.
+	// LastTransitionTime: Output only. Last time the condition transitioned from
+	// one status to another.
 	LastTransitionTime string `json:"lastTransitionTime,omitempty"`
-	// Message: Human readable message indicating details about the current status.
+	// Message: Output only. Human readable message indicating details about the
+	// current status.
 	Message string `json:"message,omitempty"`
 	// Reason: Output only. A common (service-level) reason for this condition.
 	//
@@ -791,8 +795,8 @@ type GoogleCloudRunV2Condition struct {
 	//   "MIN_INSTANCES_WARMING" - A revision with min_instance_count > 0 was
 	// created and is waiting for enough instances to begin a traffic migration.
 	RevisionReason string `json:"revisionReason,omitempty"`
-	// Severity: How to interpret failures of this condition, one of Error,
-	// Warning, Info
+	// Severity: Output only. How to interpret failures of this condition, one of
+	// Error, Warning, Info
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - Unspecified severity
@@ -800,7 +804,7 @@ type GoogleCloudRunV2Condition struct {
 	//   "WARNING" - Warning severity.
 	//   "INFO" - Info severity.
 	Severity string `json:"severity,omitempty"`
-	// State: State of the condition.
+	// State: Output only. State of the condition.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The default value. This value is used if the state
@@ -812,8 +816,8 @@ type GoogleCloudRunV2Condition struct {
 	//   "CONDITION_SUCCEEDED" - Terminal state: Reconciliation completed
 	// successfully.
 	State string `json:"state,omitempty"`
-	// Type: type is used to communicate the status of the reconciliation process.
-	// See also:
+	// Type: Output only. type is used to communicate the status of the
+	// reconciliation process. See also:
 	// https://github.com/knative/serving/blob/main/docs/spec/errors.md#error-conditions-and-reporting
 	// Types common to all resources include: * "Ready": True when the Resource is
 	// ready.
@@ -1000,18 +1004,57 @@ func (s GoogleCloudRunV2ContainerStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2CpuScaling: Represents CPU-related scaling settings.
+type GoogleCloudRunV2CpuScaling struct {
+	// CpuUtilization: Optional. Determines a threshold for CPU utilization before
+	// scaling begins. Accepted values are between `0.1` and `0.90` (inclusive) or
+	// `0.0` to disable CPU utilization as threshold for scaling.
+	CpuUtilization float64 `json:"cpuUtilization,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CpuUtilization") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CpuUtilization") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudRunV2CpuScaling) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2CpuScaling
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudRunV2CpuScaling) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudRunV2CpuScaling
+	var s1 struct {
+		CpuUtilization gensupport.JSONFloat64 `json:"cpuUtilization"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.CpuUtilization = float64(s1.CpuUtilization)
+	return nil
+}
+
 // GoogleCloudRunV2DockerBuild: Build the source using Docker. This means the
 // source has a Dockerfile.
 type GoogleCloudRunV2DockerBuild struct {
 }
 
-// GoogleCloudRunV2EmptyDirVolumeSource: In memory (tmpfs) ephemeral storage.
-// It is ephemeral in the sense that when the sandbox is taken down, the data
-// is destroyed with it (it does not persist across sandbox runs).
+// GoogleCloudRunV2EmptyDirVolumeSource: Represents in-memory (tmpfs) or
+// disk-backed ephemeral storage. It is ephemeral in the sense that when the
+// sandbox is taken down, the data is destroyed with it (it does not persist
+// across sandbox runs).
 type GoogleCloudRunV2EmptyDirVolumeSource struct {
-	// Medium: The medium on which the data is stored. Acceptable values today is
-	// only MEMORY or none. When none, the default will currently be backed by
-	// memory but could change over time. +optional
+	// Medium: The medium on which the data is stored. Acceptable values are
+	// `MEMORY`, `DISK`, or unset (`MEDIUM_UNSPECIFIED`). When unset, the default
+	// is currently memory-backed but could change over time.
 	//
 	// Possible values:
 	//   "MEDIUM_UNSPECIFIED" - When not specified, falls back to the default
@@ -1023,10 +1066,11 @@ type GoogleCloudRunV2EmptyDirVolumeSource struct {
 	// limit is also applicable for memory medium. The maximum usage on memory
 	// medium EmptyDir would be the minimum value between the SizeLimit specified
 	// here and the sum of memory limits of all containers. The default is nil
-	// which means that the limit is undefined. More info:
-	// https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume.
-	// Info in Kubernetes:
-	// https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+	// which means that the limit is undefined. For more information, see Configure
+	// in-memory volume mounts
+	// (https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume)
+	// and the Kubernetes `emptyDir` volume documentation
+	// (https://kubernetes.io/docs/concepts/storage/volumes/#emptydir).
 	SizeLimit string `json:"sizeLimit,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Medium") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1445,31 +1489,6 @@ type GoogleCloudRunV2ExportStatusResponse struct {
 
 func (s GoogleCloudRunV2ExportStatusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2ExportStatusResponse
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudRunV2FilestoreVolumeSource: Represents a volume backed by a
-// Filestore instance.
-type GoogleCloudRunV2FilestoreVolumeSource struct {
-	// Volume: Required. The resource name of the Filestore volume. Format:
-	// `projects/{project}/locations/{location}/volumePools/{volume_pool}/volumes/{v
-	// olume}`
-	Volume string `json:"volume,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Volume") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Volume") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s GoogleCloudRunV2FilestoreVolumeSource) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudRunV2FilestoreVolumeSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4108,8 +4127,6 @@ type GoogleCloudRunV2Volume struct {
 	CloudSqlInstance *GoogleCloudRunV2CloudSqlInstance `json:"cloudSqlInstance,omitempty"`
 	// EmptyDir: Ephemeral storage used as a shared volume.
 	EmptyDir *GoogleCloudRunV2EmptyDirVolumeSource `json:"emptyDir,omitempty"`
-	// Filestore: Optional. Represents a volume backed by a Filestore instance.
-	Filestore *GoogleCloudRunV2FilestoreVolumeSource `json:"filestore,omitempty"`
 	// Gcs: Persistent storage backed by a Google Cloud Storage bucket.
 	Gcs *GoogleCloudRunV2GCSVolumeSource `json:"gcs,omitempty"`
 	// Name: Required. Volume's name.
@@ -4518,18 +4535,33 @@ func (s GoogleCloudRunV2WorkerPoolRevisionTemplate) MarshalJSON() ([]byte, error
 
 // GoogleCloudRunV2WorkerPoolScaling: Worker pool scaling settings.
 type GoogleCloudRunV2WorkerPoolScaling struct {
+	// CpuScaling: Optional. The CPU scaling settings for the worker pool.
+	CpuScaling *GoogleCloudRunV2CpuScaling `json:"cpuScaling,omitempty"`
 	// ManualInstanceCount: Optional. The total number of instances in manual
 	// scaling mode.
 	ManualInstanceCount int64 `json:"manualInstanceCount,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ManualInstanceCount") to
+	// MaxInstanceCount: Optional. The maximum count of instances distributed among
+	// revisions based on the specified instance split percentages.
+	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
+	// MinInstanceCount: Optional. The minimum count of instances distributed among
+	// revisions based on the specified instance split percentages.
+	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
+	// ScalingMode: Optional. The scaling mode for the worker pool.
+	//
+	// Possible values:
+	//   "SCALING_MODE_UNSPECIFIED" - Unspecified.
+	//   "AUTOMATIC" - Automatically scale between min and max instances.
+	//   "MANUAL" - Scale to manual instance count.
+	ScalingMode string `json:"scalingMode,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CpuScaling") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ManualInstanceCount") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "CpuScaling") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -5017,11 +5049,9 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
 	// status updates.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
-	// RankedMachineSeries: Optional. Ranked list (earlier items have higher
-	// priority) of Machine Series to consider when provisioning Worker VMs. A
-	// concrete machine type will be selected based on machine availability in the
-	// given region. This field must be empty for the Build to be eligible to be
-	// paired with a pre-provisioned worker VM.
+	// RankedMachineSeries: Optional. Deprecated: Use
+	// PrivatePoolV1Config.WorkerConfig.ranked_machine_series instead. This field
+	// has no effect.
 	//
 	// Possible values:
 	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.
@@ -8831,7 +8861,7 @@ type ProjectsLocationsInstancesTestIamPermissionsCall struct {
 }
 
 // TestIamPermissions: Returns permissions that a caller has on the specified
-// Project. There are no permissions required for making this API call.
+// Instance. There are no permissions required for making this API call.
 //
 //   - resource: REQUIRED: The resource for which the policy detail is being
 //     requested. See Resource names

@@ -1924,7 +1924,10 @@ type EventTicketClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#eventTicketClass".
@@ -1934,7 +1937,7 @@ type EventTicketClass struct {
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
@@ -2671,7 +2674,10 @@ type FlightClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#flightClass".
@@ -2745,7 +2751,7 @@ type FlightClass struct {
 	LocalScheduledDepartureDateTime string `json:"localScheduledDepartureDateTime,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.
@@ -3673,7 +3679,10 @@ type GiftCardClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#giftCardClass".
@@ -3687,7 +3696,7 @@ type GiftCardClass struct {
 	LocalizedEventNumberLabel *LocalizedString `json:"localizedEventNumberLabel,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// LocalizedMerchantName: Translated strings for the merchant_name. The app may
 	// display an ellipsis after the first 20 characters to ensure full string is
@@ -4718,7 +4727,10 @@ type LoyaltyClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#loyaltyClass".
@@ -4736,7 +4748,7 @@ type LoyaltyClass struct {
 	LocalizedAccountNameLabel *LocalizedString `json:"localizedAccountNameLabel,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// LocalizedProgramName: Translated strings for the program_name. The app may
 	// display an ellipsis after the first 20 characters to ensure full string is
@@ -5805,7 +5817,10 @@ type OfferClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// Kind: Identifies what kind of resource this is. Value: the fixed string
 	// "walletobjects#offerClass".
@@ -5819,7 +5834,7 @@ type OfferClass struct {
 	LocalizedFinePrint *LocalizedString `json:"localizedFinePrint,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// LocalizedProvider: Translated strings for the provider. Recommended maximum
 	// length is 12 characters to ensure full string is displayed on smaller
@@ -7312,7 +7327,10 @@ type TransitClass struct {
 	// InfoModuleData: Deprecated. Use textModulesData instead.
 	InfoModuleData *InfoModuleData `json:"infoModuleData,omitempty"`
 	// IssuerName: Required. The issuer name. Recommended maximum length is 20
-	// characters to ensure full string is displayed on smaller screens.
+	// characters to ensure full string is displayed on smaller screens. Ignored if
+	// `localizedIssuerName` is set, including when a patch request sets only this
+	// field. To change the issuer name of a class that has `localizedIssuerName`,
+	// update `localizedIssuerName` instead.
 	IssuerName string `json:"issuerName,omitempty"`
 	// LanguageOverride: If this field is present, transit tickets served to a
 	// user's device will always be in this language. Represents the BCP 47
@@ -7323,7 +7341,7 @@ type TransitClass struct {
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
 	// LocalizedIssuerName: Translated strings for the issuer_name. Recommended
 	// maximum length is 20 characters to ensure full string is displayed on
-	// smaller screens.
+	// smaller screens. If set, this field takes precedence over `issuerName`.
 	LocalizedIssuerName *LocalizedString `json:"localizedIssuerName,omitempty"`
 	// Locations: Note: This field is currently not supported to trigger geo
 	// notifications.

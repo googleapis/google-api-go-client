@@ -487,7 +487,7 @@ func (s AcceptTermsOfServiceResponse) MarshalJSON() ([]byte, error) {
 }
 
 // Accepted: Describes the accepted terms of service
-// (https://developers.google.com/merchant/api/guides/accounts/create-and-configure#accept_the_merchant_center_terms_of_service).
+// (https://developers.google.com/merchant/api/guides/accounts/manage-tos-agreements#accept-tos).
 type Accepted struct {
 	// AcceptedBy: Required. The account where the acceptance was recorded. This
 	// can be the account itself or, in the case of subaccounts, the advanced
@@ -526,7 +526,17 @@ func (s Accepted) MarshalJSON() ([]byte, error) {
 // sub-accounts. Establishing an account involves configuring attributes like
 // the account name, time zone, and language preferences. The `Account` message
 // is the parent entity for many other resources, for example,
-// `AccountRelationship`, `Homepage`, `BusinessInfo` and so on.
+// `AccountRelationship`, `Homepage`, `BusinessInfo` and so on. For more
+// information, see Sign up for Merchant Center
+// (https://support.google.com/merchants/answer/188924), Manage accounts and
+// settings
+// (https://developers.google.com/merchant/api/guides/accounts/overview),
+// Create accounts
+// (https://developers.google.com/merchant/api/guides/accounts/create-accounts),
+// Create test accounts
+// (https://developers.google.com/merchant/api/guides/accounts/test-accounts),
+// and Filter accounts you can access
+// (https://developers.google.com/merchant/api/guides/accounts/filter).
 type Account struct {
 	// AccountId: Output only. The ID of the account.
 	AccountId int64 `json:"accountId,omitempty,string"`
@@ -581,8 +591,9 @@ type AccountAggregation struct {
 
 // AccountIssue: Issues with your Merchant Center account that can impact all
 // your products. For more information, see Account-level issues in Merchant
-// Center
-// (https://support.google.com/merchants/answer/12153802?sjid=17798438912526418908-EU#account).
+// Center (https://support.google.com/merchants/answer/12153802#account) and
+// View account issues
+// (https://developers.google.com/merchant/api/guides/accounts/view-issues).
 type AccountIssue struct {
 	// Detail: Further localized details about the issue.
 	Detail string `json:"detail,omitempty"`
@@ -637,7 +648,9 @@ type AccountManagement struct {
 // services. Establishing an account relationship involves linking the
 // merchant's account with a provider's account. The provider could be another
 // Google account (like Google Ads or Google My Business) or a third-party
-// platform (such as Shopify or WooCommerce).
+// platform (such as Shopify or WooCommerce). For more information, see Account
+// relationships
+// (https://developers.google.com/merchant/api/guides/accounts/relationships).
 type AccountRelationship struct {
 	// AccountIdAlias: Optional. An optional alias you can assign to this account
 	// relationship. This alias acts as a convenient identifier for your own
@@ -691,7 +704,11 @@ func (s AccountRelationship) MarshalJSON() ([]byte, error) {
 // a user is an admin of both accounts, the approval can happen automatically.
 // The mutability of a service is also managed through `AccountService`. Some
 // services might be immutable, for example, if they were established through
-// other systems or APIs, and you cannot alter them through this API.
+// other systems or APIs, and you cannot alter them through this API. For more
+// information, see Account relationships
+// (https://developers.google.com/merchant/api/guides/accounts/relationships)
+// and Account service changes
+// (https://developers.google.com/merchant/api/guides/notifications/account-service-changes).
 type AccountService struct {
 	// AccountAggregation: Service type for account aggregation. This enables the
 	// provider, which is a multi-client advanced account, to manage multiple
@@ -898,7 +915,9 @@ type ApproveAccountServiceRequest struct {
 }
 
 // AutofeedSettings: Collection of information related to the autofeed
-// (https://support.google.com/merchants/answer/7538732) settings.
+// (https://support.google.com/merchants/answer/7538732) settings. For more
+// information, see Configure Autofeed settings
+// (https://developers.google.com/merchant/api/guides/data-sources/manage-various-data-sources#autofeed-settings).
 type AutofeedSettings struct {
 	// Eligible: Output only. Determines whether the business is eligible for being
 	// enrolled into an autofeed.
@@ -976,9 +995,9 @@ func (s AutomaticImageImprovements) MarshalJSON() ([]byte, error) {
 }
 
 // AutomaticImprovements: Collection of information related to the automatic
-// improvements
-// (https://developers.google.com/shopping-content/guides/automatic-improvements)
-// of an account.
+// improvements (https://support.google.com/merchants/answer/12157888) of an
+// account. For more information, see Enable automatic improvements
+// (https://developers.google.com/merchant/api/guides/automatic-improvements/overview).
 type AutomaticImprovements struct {
 	// ImageImprovements: This improvement will attempt to automatically correct
 	// submitted images if they don't meet the image requirements
@@ -1275,7 +1294,9 @@ func (s BusinessDayConfig) MarshalJSON() ([]byte, error) {
 }
 
 // BusinessIdentity: Collection of information related to the identity of a
-// business (https://support.google.com/merchants/answer/12564247).
+// business (https://support.google.com/merchants/answer/12564247). For more
+// information, see Manage business identity
+// (https://developers.google.com/merchant/api/guides/accounts/business-identity).
 type BusinessIdentity struct {
 	// BlackOwned: Optional. Specifies whether the business identifies itself as
 	// being black-owned. This optional field will only be available for businesses
@@ -1340,7 +1361,10 @@ func (s BusinessIdentity) MarshalJSON() ([]byte, error) {
 // BusinessInfo: The `BusinessInfo` message contains essential information
 // about a business. This message captures key business details such as
 // physical address, customer service contacts, and region-specific
-// identifiers.
+// identifiers. For more information, see Add your business information
+// (https://support.google.com/merchants/answer/14286818#add_bus_info) and
+// Update your business information
+// (https://developers.google.com/merchant/api/guides/accounts/create-accounts#update_your_business_information).
 type BusinessInfo struct {
 	// Address: Optional. The address of the business. Only `region_code`,
 	// `address_lines`, `postal_code`, `administrative_area` and `locality` fields
@@ -1432,7 +1456,10 @@ func (s CarrierRate) MarshalJSON() ([]byte, error) {
 
 // CheckoutSettings: CheckoutSettings
 // (https://support.google.com/merchants/answer/13945960) for a specific
-// merchant.
+// merchant. For more information, see Add a checkout link for your products
+// (https://support.google.com/merchants/answer/13945960) and Manage checkout
+// settings
+// (https://developers.google.com/merchant/api/guides/products/checkout-settings).
 type CheckoutSettings struct {
 	// EffectiveEnrollmentState: Output only. The effective value of
 	// enrollment_state for a given merchant ID. If account level settings are
@@ -1860,7 +1887,10 @@ func (s DeliveryTime) MarshalJSON() ([]byte, error) {
 }
 
 // DeveloperRegistration: Represents a developer registration owned by a
-// Merchant account.
+// Merchant account. For more information, see Register as a developer
+// (https://developers.google.com/merchant/api/guides/quickstart/registration)
+// and Manage and transition Google Cloud projects
+// (https://developers.google.com/merchant/api/guides/accounts/manage-transition-gcp-projects).
 type DeveloperRegistration struct {
 	// GcpIds: Output only. The GCP ids attached to this developer registration
 	GcpIds []string `json:"gcpIds,omitempty"`
@@ -1926,7 +1956,11 @@ func (s Distance) MarshalJSON() ([]byte, error) {
 
 // EmailPreferences: The categories of notifications the user opted into /
 // opted out of. The email preferences do not include mandatory announcements
-// as users can't opt out of them.
+// as users can't opt out of them. For more information, see Change your
+// Merchant Center email preferences
+// (https://support.google.com/merchants/answer/9370919) and Manage Merchant
+// Center email preferences
+// (https://developers.google.com/merchant/api/guides/accounts/email-notifications).
 type EmailPreferences struct {
 	// Name: Identifier. The name of the EmailPreferences. The endpoint is only
 	// supported for the authenticated user.
@@ -2005,7 +2039,8 @@ func (s FindLfpProvidersResponse) MarshalJSON() ([]byte, error) {
 }
 
 // GbpAccount: Collection of information related to a Google Business Profile
-// (GBP) account.
+// (GBP) account. For more information, see Link a Google business profile
+// (https://developers.google.com/merchant/api/guides/accounts/link-business-profile).
 type GbpAccount struct {
 	// GbpAccountId: The id of the GBP account.
 	GbpAccountId string `json:"gbpAccountId,omitempty"`
@@ -2191,7 +2226,9 @@ func (s Headers) MarshalJSON() ([]byte, error) {
 // verified as a proof of ownership and allows the business to unlock features
 // that require a verified website. For more information, see Understanding
 // online store URL verification
-// (//support.google.com/merchants/answer/176793).
+// (//support.google.com/merchants/answer/176793). For step-by-step
+// instructions, see Manage homepage settings
+// (https://developers.google.com/merchant/api/guides/accounts/manage-homepage-settings).
 type Homepage struct {
 	// Claimed: Output only. Whether the homepage is claimed. See About online
 	// store URL verification (https://support.google.com/merchants/answer/176793).
@@ -2588,7 +2625,11 @@ func (s LfpLink) MarshalJSON() ([]byte, error) {
 }
 
 // LfpProvider: Collection of information related to a Local Feed Partnership
-// (LFP) provider.
+// (LFP) provider. For more information, see Manage Local Feeds Partnership
+// (LFP) providers
+// (https://developers.google.com/merchant/api/guides/accounts/manage-lfp-providers)
+// and Manage local feeds partnership
+// (https://developers.google.com/merchant/api/guides/local-feeds-partnership/overview).
 type LfpProvider struct {
 	// DisplayName: The display name of the LFP provider.
 	DisplayName string `json:"displayName,omitempty"`
@@ -3161,7 +3202,9 @@ func (s MinimumOrderValueTable) MarshalJSON() ([]byte, error) {
 }
 
 // OmnichannelSetting: Collection of information related to the omnichannel
-// settings of a merchant.
+// settings of a merchant. For more information, see Manage omnichannel
+// settings
+// (https://developers.google.com/merchant/api/guides/accounts/manage-omnichannel-settings).
 type OmnichannelSetting struct {
 	// About: Optional. The about page URI and state for this country.
 	About *About `json:"about,omitempty"`
@@ -3257,7 +3300,8 @@ func (s OnDisplayToOrder) MarshalJSON() ([]byte, error) {
 // OnlineReturnPolicy: Online return policy
 // (https://support.google.com/merchants/answer/10220642) object. This is
 // currently used to represent return policies for ads and free listings
-// programs.
+// programs. For more information, see Manage your online return policies
+// (https://developers.google.com/merchant/api/guides/online-return-policies/overview).
 type OnlineReturnPolicy struct {
 	// AcceptDefectiveOnly: Optional. This field specifies if business only accepts
 	// defective products for returns.
@@ -3738,7 +3782,9 @@ func (s ProductChange) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -3802,7 +3848,9 @@ type ProductsManagement struct {
 // accounts. A typical example of this is the Free product listings
 // (https://support.google.com/merchants/answer/13889434) program, which
 // enables products from a business's store to be shown across Google for free.
-// The following list is the available set of program resource IDs accessible
+// For more information, see Manage programs
+// (https://developers.google.com/merchant/api/guides/programs/overview). The
+// following list is the available set of program resource IDs accessible
 // through the API: * `checkout`
 // (https://developers.google.com/merchant/api/guides/products/checkout-settings)
 // * `free-listings` * `loyalty`
@@ -3983,8 +4031,11 @@ func (s RateGroup) MarshalJSON() ([]byte, error) {
 // countries, using predefined geotargets. A region must be defined by
 // specifying exactly one of `postal_code_area`, `geotarget_area`, or
 // `radius_area`. For more information, see Set up regions
-// (https://support.google.com/merchants/answer/7410946#zippy=%2Ccreate-a-new-region)
-// for more information.
+// (https://support.google.com/merchants/answer/7410946#zippy=%2Ccreate-a-new-region),
+// Create and update regions
+// (https://developers.google.com/merchant/api/guides/accounts/regions), and
+// Manage region batching
+// (https://developers.google.com/merchant/api/guides/accounts/manage-region-batching).
 type Region struct {
 	// DisplayName: Optional. The display name of the region.
 	DisplayName string `json:"displayName,omitempty"`
@@ -4361,7 +4412,9 @@ func (s SetAliasForRelationship) MarshalJSON() ([]byte, error) {
 // ShippingSettings: The Merchant Center account's shipping settings
 // (https://support.google.com/merchants/answer/6069284). The
 // `ShippingSettings` resource lets you retrieve and update the shipping
-// settings of your advanced account and all its associated sub-accounts.
+// settings of your advanced account and all its associated sub-accounts. For
+// more information, see Manage shipping settings
+// (https://developers.google.com/merchant/api/guides/accounts/manage-shipping-settings).
 type ShippingSettings struct {
 	// Etag: Required. This field helps avoid async issues. It ensures that the
 	// shipping setting data doesn't change between the `get` call and the `insert`
@@ -4546,7 +4599,9 @@ func (s Table) MarshalJSON() ([]byte, error) {
 // necessary legal agreements for using the service. Merchants can retrieve the
 // latest terms of service for a given `kind` and `region` through
 // `RetrieveLatestTermsOfService`, and accept them as required through
-// `AcceptTermsOfService`.
+// `AcceptTermsOfService`. For step-by-step instructions, see Manage Terms of
+// Service
+// (https://developers.google.com/merchant/api/guides/accounts/manage-tos-agreements).
 type TermsOfService struct {
 	// External: Whether this terms of service version is external. External terms
 	// of service versions can only be agreed through external processes and not
@@ -4605,7 +4660,9 @@ func (s TermsOfService) MarshalJSON() ([]byte, error) {
 // associated with the given terms of service agreement (the url to the file
 // containing the text is added in the Required message below as
 // `tos_file_uri`). The actual acceptance of the terms of service is done by
-// calling accept on the `TermsOfService` resource. `valid_until` field.
+// calling accept on the `TermsOfService` resource. `valid_until` field. For
+// more information, see Manage Terms of Service
+// (https://developers.google.com/merchant/api/guides/accounts/manage-tos-agreements).
 type TermsOfServiceAgreementState struct {
 	// Accepted: Optional. The accepted terms of service of this kind and for the
 	// associated region_code
@@ -4829,11 +4886,13 @@ func (s UriSettings) MarshalJSON() ([]byte, error) {
 // Center account. It is used to manage user permissions and access rights
 // within the account. For more information, see Frequently asked questions
 // about people and access levels
-// (//support.google.com/merchants/answer/12160472).
+// (//support.google.com/merchants/answer/12160472) and Control access to your
+// account
+// (https://developers.google.com/merchant/api/guides/accounts/control-access).
 type User struct {
 	// AccessRights: Required. The access rights
-	// (https://support.google.com/merchants/answer/12160472?sjid=6789834943175119429-EU#accesstypes)
-	// the user has.
+	// (https://support.google.com/merchants/answer/12160472#accesstypes) the user
+	// has.
 	//
 	// Possible values:
 	//   "ACCESS_RIGHT_UNSPECIFIED" - Default value. This value is unused.
@@ -5092,7 +5151,8 @@ type AccountsCreateAndConfigureCall struct {
 
 // CreateAndConfigure: Creates a Merchant Center account with additional
 // configuration. Adds the user that makes the request as an admin for the new
-// account.
+// account. For step-by-step instructions, see Create accounts
+// (https://developers.google.com/merchant/api/guides/accounts/create-accounts).
 func (r *AccountsService) CreateAndConfigure(createandconfigureaccountrequest *CreateAndConfigureAccountRequest) *AccountsCreateAndConfigureCall {
 	c := &AccountsCreateAndConfigureCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.createandconfigureaccountrequest = createandconfigureaccountrequest
@@ -5198,7 +5258,9 @@ type AccountsCreateTestAccountCall struct {
 // offers, or data created within a test account will not be published or made
 // visible to end-users on any Google surfaces. They are strictly for testing
 // environments. - Separate Environment: Test accounts operate in a
-// sandbox-like manner, isolated from live serving and real user traffic.
+// sandbox-like manner, isolated from live serving and real user traffic. For
+// more information, see Create test accounts
+// (https://developers.google.com/merchant/api/guides/accounts/test-accounts).
 //
 //   - parent: The account resource name to create the test account under.
 //     Format: accounts/{account}.
@@ -5529,7 +5591,8 @@ type AccountsListCall struct {
 // charged for each user, and not for the Merchant Center ID or the advanced
 // account ID. To list several sub-accounts, you should use the
 // `accounts.listSubaccounts` method, which is more suitable for advanced
-// accounts use case.
+// accounts use case. For more information, see Filter accounts you can access
+// (https://developers.google.com/merchant/api/guides/accounts/filter).
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -6853,7 +6916,9 @@ type AccountsDeveloperRegistrationGetAccountForGcpRegistrationCall struct {
 }
 
 // GetAccountForGcpRegistration: Retrieves the merchant account that the
-// calling GCP is registered with.
+// calling GCP is registered with. For more information, see Verify your
+// account's connection to Merchant API
+// (https://developers.google.com/merchant/api/guides/accounts/verify-api-access).
 func (r *AccountsDeveloperRegistrationService) GetAccountForGcpRegistration() *AccountsDeveloperRegistrationGetAccountForGcpRegistrationCall {
 	c := &AccountsDeveloperRegistrationGetAccountForGcpRegistrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -7077,7 +7142,9 @@ type AccountsDeveloperRegistrationRegisterGcpCall struct {
 // verified website (https://support.google.com/merchants/answer/11586344) in
 // Merchant Center. * Test accounts
 // (https://developers.google.com/merchant/api/guides/accounts/test-accounts)
-// are not eligible for registration.
+// are not eligible for registration. For step-by-step instructions, see
+// Register as a developer
+// (https://developers.google.com/merchant/api/guides/quickstart/registration).
 //
 //   - name: The name of the developer registration to be created for the
 //     merchant account that the GCP will be registered with. Format:
@@ -7085,8 +7152,8 @@ type AccountsDeveloperRegistrationRegisterGcpCall struct {
 //     same account where user calling this API method is directly added to.
 //     Note: The account used must be a production account (can't be a test
 //     account
-//     (https://developers.google.com/merchant/api/guides/accounts/test-accounts)
-//     ) and must have a verified website
+//     (https://developers.google.com/merchant/api/guides/accounts/test-accounts))
+//     and must have a verified website
 //     (https://support.google.com/merchants/answer/11586344) in Merchant Center.
 func (r *AccountsDeveloperRegistrationService) RegisterGcp(name string, registergcprequest *RegisterGcpRequest) *AccountsDeveloperRegistrationRegisterGcpCall {
 	c := &AccountsDeveloperRegistrationRegisterGcpCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7191,7 +7258,9 @@ type AccountsDeveloperRegistrationUnregisterGcpCall struct {
 
 // UnregisterGcp: Unregister the calling GCP from the calling shopping account.
 // Note that the GCP will still be able to access the API for at most 1 day
-// from the unregister succussful call.
+// from the unregister successful call. For more information, see Manage and
+// transition Google Cloud projects
+// (https://developers.google.com/merchant/api/guides/accounts/manage-transition-gcp-projects).
 //
 //   - name: The name of the developer registration to be created for the
 //     merchant account that the GCP will be registered with. Format:
@@ -10625,7 +10694,9 @@ type AccountsRegionsBatchCreateCall struct {
 }
 
 // BatchCreate: Creates one or more regions in your Merchant Center account.
-// Executing this method requires admin access.
+// Executing this method requires admin access. For more information, see
+// Manage region batching
+// (https://developers.google.com/merchant/api/guides/accounts/manage-region-batching).
 //
 //   - parent: The account to create one or more regions for. Format:
 //     `accounts/{account}`.
@@ -10731,7 +10802,9 @@ type AccountsRegionsBatchDeleteCall struct {
 }
 
 // BatchDelete: Deletes multiple regions by name from your Merchant Center
-// account. Executing this method requires admin access.
+// account. Executing this method requires admin access. For more information,
+// see Manage region batching
+// (https://developers.google.com/merchant/api/guides/accounts/manage-region-batching).
 //
 //   - parent: The account to delete one or more regions from. Format:
 //     `accounts/{account}`.
@@ -10836,7 +10909,9 @@ type AccountsRegionsBatchUpdateCall struct {
 }
 
 // BatchUpdate: Updates one or more regions in your Merchant Center account.
-// Executing this method requires admin access.
+// Executing this method requires admin access. For more information, see
+// Manage region batching
+// (https://developers.google.com/merchant/api/guides/accounts/manage-region-batching).
 //
 //   - parent: The account to update one or more regions for. Format:
 //     `accounts/{account}`.

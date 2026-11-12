@@ -186,7 +186,11 @@ type AccountsQuotasService struct {
 	s *Service
 }
 
-// AccountLimit: A limit of a certain type that is applied to an account.
+// AccountLimit: A limit of a certain type that is applied to an account. For
+// more information, see Quotas and limits overview
+// (https://developers.google.com/merchant/api/guides/quotas-limits/overview)
+// and Merchant Center limits
+// (https://developers.google.com/merchant/api/guides/quotas-limits/limits).
 type AccountLimit struct {
 	// Name: Identifier. The limit part of the name will be a combination of the
 	// type and the scope. For example: `accounts/123/limits/products~ADS_NON_EEA`
@@ -413,7 +417,9 @@ func (s ProductLimit) MarshalJSON() ([]byte, error) {
 }
 
 // ProductStatusChangeMessage: The message that the merchant will receive to
-// notify about product status change event
+// notify about product status change event. For more information, see Product
+// status changes
+// (https://developers.google.com/merchant/api/guides/notifications/product-status-changes).
 type ProductStatusChangeMessage struct {
 	// Account: The target account that owns the entity that changed. Format :
 	// `accounts/{merchant_id}`
@@ -470,7 +476,11 @@ func (s ProductStatusChangeMessage) MarshalJSON() ([]byte, error) {
 
 // QuotaGroup: The group information for methods in the Merchant API. The quota
 // is shared between all methods in the group. Even if none of the methods
-// within the group have usage the information for the group is returned.
+// within the group have usage the information for the group is returned. For
+// more information, see Quotas and limits overview
+// (https://developers.google.com/merchant/api/guides/quotas-limits/overview)
+// and Quotas
+// (https://developers.google.com/merchant/api/guides/quotas-limits/quotas).
 type QuotaGroup struct {
 	// MethodDetails: Output only. List of all methods group quota applies to.
 	MethodDetails []*MethodDetails `json:"methodDetails,omitempty"`

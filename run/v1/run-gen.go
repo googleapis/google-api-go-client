@@ -1265,17 +1265,19 @@ type Empty struct {
 type EmptyDirVolumeSource struct {
 	// Medium: The medium on which the data is stored. The default is "" which
 	// means to use the node's default medium. Must be an empty string (default),
-	// `Memory`, or `Disk`. More info:
-	// https://kubernetes.io/docs/concepts/storage/volumes#emptydir
+	// `Memory`, or `Disk`. For more information, see the Kubernetes `emptyDir`
+	// volume documentation
+	// (https://kubernetes.io/docs/concepts/storage/volumes#emptydir).
 	Medium string `json:"medium,omitempty"`
 	// SizeLimit: Limit on the storage usable by this EmptyDir volume. The size
 	// limit is also applicable for memory medium. The maximum usage on memory
 	// medium EmptyDir would be the minimum value between the SizeLimit specified
 	// here and the sum of memory limits of all containers. The default is nil
-	// which means that the limit is undefined. More info:
-	// https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume.
-	// Info in Kubernetes:
-	// https://kubernetes.io/docs/concepts/storage/volumes/#emptydir
+	// which means that the limit is undefined. For more information, see Configure
+	// in-memory volume mounts
+	// (https://cloud.google.com/run/docs/configuring/in-memory-volumes#configure-volume)
+	// and the Kubernetes `emptyDir` volume documentation
+	// (https://kubernetes.io/docs/concepts/storage/volumes/#emptydir).
 	SizeLimit string `json:"sizeLimit,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Medium") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -1654,30 +1656,6 @@ type Expr struct {
 
 func (s Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
-}
-
-// FilestoreVolumeSource: Represents a volume backed by a Filestore instance.
-type FilestoreVolumeSource struct {
-	// Volume: Required. The resource name of the Filestore volume. Format:
-	// `projects/{project}/locations/{location}/volumePools/{volume_pool}/volumes/{v
-	// olume}`
-	Volume string `json:"volume,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Volume") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Volume") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s FilestoreVolumeSource) MarshalJSON() ([]byte, error) {
-	type NoMethod FilestoreVolumeSource
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -2198,11 +2176,9 @@ type GoogleDevtoolsCloudbuildV1BuildOptions struct {
 	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
 	// status updates.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
-	// RankedMachineSeries: Optional. Ranked list (earlier items have higher
-	// priority) of Machine Series to consider when provisioning Worker VMs. A
-	// concrete machine type will be selected based on machine availability in the
-	// given region. This field must be empty for the Build to be eligible to be
-	// paired with a pre-provisioned worker VM.
+	// RankedMachineSeries: Optional. Deprecated: Use
+	// PrivatePoolV1Config.WorkerConfig.ranked_machine_series instead. This field
+	// has no effect.
 	//
 	// Possible values:
 	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.
@@ -6335,8 +6311,6 @@ type Volume struct {
 	Csi *CSIVolumeSource `json:"csi,omitempty"`
 	// EmptyDir: Ephemeral storage used as a shared volume.
 	EmptyDir *EmptyDirVolumeSource `json:"emptyDir,omitempty"`
-	// Filestore: Represents a volume backed by a Filestore instance.
-	Filestore *FilestoreVolumeSource `json:"filestore,omitempty"`
 	// Name: Volume's name. In Cloud Run Fully Managed, the name 'cloudsql' is
 	// reserved.
 	Name string           `json:"name,omitempty"`

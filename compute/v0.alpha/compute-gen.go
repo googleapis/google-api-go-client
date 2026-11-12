@@ -9782,9 +9782,6 @@ type BackendServiceHAPolicy struct {
 	//    Advertisement(RA) packet (IPv6).  Google Cloud immediately but
 	//    temporarily associates the forwarding rule IP address with that VM, and
 	//    both new and in-flight packets are quickly delivered to that VM.
-	//    - HA_CONTROLLER: The Backend Service is managed by a High Availability
-	//    Controller. Failover and leader election are exclusively managed by the
-	//    HA Controller service.
 	//
 	//
 	//
@@ -12813,9 +12810,11 @@ func (s CapacityAdviceRequestInstanceProperties) MarshalJSON() ([]byte, error) {
 // CapacityAdviceRequestInstancePropertiesScheduling: Defines the instance
 // scheduling options.
 type CapacityAdviceRequestInstancePropertiesScheduling struct {
-	// MaxRunDuration: The maximum time that instances can run before Compute
-	// Engine
-	// terminates them.
+	// MaxRunDuration: Optional. The maximum time that instances can run before
+	// Compute Engine
+	// terminates them. If you set the `provisioning_model` to `FLEX_START`,
+	// then Compute Engine requires this duration, and the value must be
+	// between 10 minutes and 7 days.
 	MaxRunDuration string `json:"maxRunDuration,omitempty"`
 	// ProvisioningModel: Specifies the provisioning model.
 	//
@@ -12907,9 +12906,10 @@ type CapacityAdviceResponseRecommendationScores struct {
 	// on
 	// historical data and current conditions.
 	EstimatedUptime string `json:"estimatedUptime,omitempty"`
-	// EstimatedWaitDuration: Output only. The likely maximum time that you will
-	// have to wait until
-	// Compute Engine provisions your instances.
+	// EstimatedWaitDuration: Output only. The estimated time you have to wait
+	// before Compute Engine provisions
+	// your instances. The value 999999999s indicates that the wait time is
+	// unknown or very long.
 	EstimatedWaitDuration string `json:"estimatedWaitDuration,omitempty"`
 	// Obtainability: The obtainability score indicates the likelihood of
 	// successfully

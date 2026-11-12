@@ -286,9 +286,8 @@ func createES256JWT(t *testing.T) (string, ecdsa.PublicKey) {
 	return token.String(), privateKey.PublicKey
 }
 
-// TestValidateES256_ShortSignature confirms that a JWT whose ES256 signature
-// segment decodes to fewer than es256KeySize*2 bytes is rejected with an
-// error rather than causing an unrecovered panic.
+// TestValidateES256Length confirms that validation correctly rejects ES256 signatures
+// that do not have the expected length (2 * es256KeySize).
 func TestValidateES256Length(t *testing.T) {
 	for _, tc := range []struct {
 		description    string

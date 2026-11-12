@@ -17,6 +17,7 @@ import (
 	"io"
 	"math/big"
 	"net/http"
+	"strings"
 	"testing"
 	"time"
 
@@ -283,6 +284,85 @@ func createES256JWT(t *testing.T) (string, ecdsa.PublicKey) {
 	sig = append(sig, s.Bytes()...)
 	token.signature = base64.RawURLEncoding.EncodeToString(sig)
 	return token.String(), privateKey.PublicKey
+}
+
+// TestValidateES256Length confirms that validation correctly rejects ES256 signatures
+// that do not have the expected length (2 * es256KeySize).
+func TestValidateES256Length(t *testing.T) {
+	for _, tc := range []struct {
+		description    string
+		signature      string
+		wantLengthFail bool
+	}{
+		{
+			description:    "too short",
+			signature:      base64.RawURLEncoding.EncodeToString([]byte{0x01, 0x02, 0x03}),
+			wantLengthFail: true,
+		},
+		{
+			description:    "too long",
+			signature:      base64.RawURLEncoding.EncodeToString(make([]byte, es256KeySize*2+1)),
+			wantLengthFail: true,
+		},
+		{
+			description:    "expectedlen",
+			signature:      base64.RawURLEncoding.EncodeToString(make([]byte, es256KeySize*2)),
+			wantLengthFail: false,
+		},
+	} {
+		t.Run(tc.description, func(t *testing.T) {
+			token := commonToken(t, "ES256")
+			token.signature = tc.signature
+			idToken := token.String()
+			client := &http.Client{
+				Transport: RoundTripFn(func(req *http.Request) *http.Response {
+					cr := certResponse{
+						Keys: []jwk{
+							{
+								Kid: keyID,
+								X:   base64.RawURLEncoding.EncodeToString([]byte{0x01}),
+								Y:   base64.RawURLEncoding.EncodeToString([]byte{0x01}),
+							},
+						},
+					}
+					b, err := json.Marshal(&cr)
+					if err != nil {
+						t.Fatalf("unable to marshal response: %v", err)
+					}
+					return &http.Response{
+						StatusCode: 200,
+						Body:       io.NopCloser(bytes.NewReader(b)),
+						Header:     make(http.Header),
+					}
+				}),
+			}
+			oldNow := now
+			defer func() { now = oldNow }()
+			now = beforeExp
+
+			v, err := NewValidator(context.Background(), option.WithHTTPClient(client))
+			if err != nil {
+				t.Fatalf("NewValidator(...) = %q, want nil", err)
+			}
+
+			_, err = v.Validate(context.Background(), idToken, testAudience)
+			if tc.wantLengthFail {
+				if err == nil {
+					t.Fatal("expected signature length error, but validate succeeded")
+				} else {
+					if !strings.HasPrefix(err.Error(), "idtoken: invalid ES256 signature length") {
+						t.Fatalf("got alternate error when signature length error expected: %v", err)
+					}
+				}
+			} else {
+				if err != nil {
+					if strings.HasPrefix(err.Error(), "idtoken: invalid ES256 signature length") {
+						t.Fatalf("got signature length error when not expected: %v", err)
+					}
+				}
+			}
+		})
+	}
 }
 
 func createRS256JWT(t *testing.T) (string, rsa.PublicKey) {

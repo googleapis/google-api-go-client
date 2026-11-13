@@ -1744,7 +1744,7 @@ func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 // DestinationTasklist sets the optional parameter "destinationTasklist":
 // Destination task list identifier. If set, the task is moved from tasklist to
 // the destinationTasklist list. Otherwise the task is moved within its current
-// list. Recurrent tasks cannot currently be moved between lists.
+// list.
 func (c *TasksMoveCall) DestinationTasklist(destinationTasklist string) *TasksMoveCall {
 	c.urlParams_.Set("destinationTasklist", destinationTasklist)
 	return c

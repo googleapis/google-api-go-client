@@ -496,7 +496,7 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// evaluation of the constraint. For example:
 	// `resource.instanceName.matches("(production|test)_(.+_)?[\d]+")` or,
 	// `resource.management.auto_upgrade == true` The max length of the condition
-	// is 1000 characters.
+	// is 1,500 characters.
 	Condition string `json:"condition,omitempty"`
 	// Description: Detailed information about this custom policy constraint. The
 	// max length of the description is 2000 characters.

@@ -250,6 +250,12 @@ func (s ListPlaceActionTypeMetadataResponse) MarshalJSON() ([]byte, error) {
 type PlaceActionLink struct {
 	// CreateTime: Output only. The time when the place action link was created.
 	CreateTime string `json:"createTime,omitempty"`
+	// IsDisabled: Optional. Whether the merchant disabled this link. Defaults to
+	// `false`, which means the link is enabled. If `provider_type` is
+	// `AGGREGATOR_3P`, the merchant can disable or enable this link through
+	// `UpdatePlaceActionLink`. If `provider_type` is `MERCHANT`, this field is
+	// always `false` and `UpdatePlaceActionLink` rejects updates to it.
+	IsDisabled bool `json:"isDisabled,omitempty"`
 	// IsEditable: Output only. Indicates whether this link can be edited by the
 	// client.
 	IsEditable bool `json:"isEditable,omitempty"`
@@ -857,10 +863,10 @@ func (r *LocationsPlaceActionLinksService) Patch(name string, placeactionlink *P
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. The specific
-// fields to update. The only editable fields are `uri`, `place_action_type`
-// and `is_preferred`. If the updated link already exists at the same location
-// with the same `place_action_type` and `uri`, fails with an `ALREADY_EXISTS`
-// error.
+// fields to update. The only editable fields are `uri`, `place_action_type`,
+// `is_preferred` and `is_disabled`. If the updated link already exists at the
+// same location with the same `place_action_type` and `uri`, fails with an
+// `ALREADY_EXISTS` error.
 func (c *LocationsPlaceActionLinksPatchCall) UpdateMask(updateMask string) *LocationsPlaceActionLinksPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c

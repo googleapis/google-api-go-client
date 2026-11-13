@@ -1,5 +1,17 @@
 # Changes
 
+## [0.315.0](https://github.com/googleapis/google-api-go-client/compare/v0.314.0...v0.315.0) (2026-11-13)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3822](https://github.com/googleapis/google-api-go-client/issues/3822)) ([9d5a11c](https://github.com/googleapis/google-api-go-client/commit/9d5a11cfd0b4a30a8ff59090e62cb207c3241109))
+
+
+### Bug Fixes
+
+* **idtoken:** Validate ES256 signature length before slicing ([#3668](https://github.com/googleapis/google-api-go-client/issues/3668)) ([60547d9](https://github.com/googleapis/google-api-go-client/commit/60547d97f8d87a7fe3aa4d1fca5bef01a3e9be5e))
+
 ## [0.314.0](https://github.com/googleapis/google-api-go-client/compare/v0.313.0...v0.314.0) (2026-11-12)
 
 

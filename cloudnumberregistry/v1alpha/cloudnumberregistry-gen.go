@@ -328,7 +328,9 @@ func (s AggregatedData) MarshalJSON() ([]byte, error) {
 }
 
 // Attribute: A key-value pair representing a custom attribute associated with
-// a resource.
+// a resource. Attributes are resource metadata used to organize and search for
+// resources. Do not include sensitive information, such as personally
+// identifiable information or credentials, in attribute `key` or `value`.
 type Attribute struct {
 	// Key: Required. The key of the attribute.
 	Key string `json:"key,omitempty"`
@@ -419,7 +421,9 @@ func (s CleanupIpamAdminScopeRequest) MarshalJSON() ([]byte, error) {
 type CustomRange struct {
 	// Attributes: Optional. The attributes of the CustomRange.
 	Attributes []*Attribute `json:"attributes,omitempty"`
-	// Description: Optional. The description of the CustomRange.
+	// Description: Optional. The description of the CustomRange. Do not include
+	// sensitive information, such as personally identifiable information or
+	// credentials, in the `description` field.
 	Description string `json:"description,omitempty"`
 	// Ipv4CidrRange: Optional. The IPv4 CIDR range of the CustomRange.
 	Ipv4CidrRange string `json:"ipv4CidrRange,omitempty"`
@@ -784,7 +788,7 @@ type ListCustomRangesResponse struct {
 	// NextPageToken: A token to retrieve the next page of results, or empty if
 	// there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -815,7 +819,7 @@ type ListDiscoveredRangesResponse struct {
 	// NextPageToken: A token to retrieve the next page of results, or empty if
 	// there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -846,7 +850,7 @@ type ListIpamAdminScopesResponse struct {
 	// NextPageToken: A token to retrieve the next page of results, or empty if
 	// there are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -938,7 +942,7 @@ type ListOrgNumberRegistriesResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// OrgNumberRegistries: The list of OrgNumberRegistries.
 	OrgNumberRegistries []*OrgNumberRegistry `json:"orgNumberRegistries,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -969,7 +973,7 @@ type ListRealmsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// Realms: The list of Realms.
 	Realms []*Realm `json:"realms,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1000,7 +1004,7 @@ type ListRegistryBooksResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 	// RegistryBooks: The list of RegistryBook
 	RegistryBooks []*RegistryBook `json:"registryBooks,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
@@ -1499,7 +1503,7 @@ type SearchIpResourcesResponse struct {
 	Ranges []*Range `json:"ranges,omitempty"`
 	// Results: The list of results matching the search query.
 	Results []*SearchIpResourcesResult `json:"results,omitempty"`
-	// Unreachable: Locations that could not be reached.
+	// Unreachable: Unordered list. Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.

@@ -733,6 +733,14 @@ type GceHyperdiskBalancedHighAvailability struct {
 	// enforced by this configuration. Resizing is still subject to the quotas and
 	// limits of the underlying disk type.
 	MaxSizeGb int64 `json:"maxSizeGb,omitempty"`
+	// ProvisionedIops: Optional. Indicates how many IOPS to provision for the
+	// disk. This sets the number of I/O operations per second that the disk can
+	// handle. Values must be between 3,000 and 100,000.
+	ProvisionedIops int64 `json:"provisionedIops,omitempty,string"`
+	// ProvisionedThroughput: Optional. Indicates how much throughput to provision
+	// for the disk. This sets the number of throughput MB per second that the disk
+	// can handle. Values must be between 1 and 2,400.
+	ProvisionedThroughput int64 `json:"provisionedThroughput,omitempty,string"`
 	// ReclaimPolicy: Optional. Whether the persistent disk should be deleted when
 	// the workstation is deleted. Valid values are `DELETE` and `RETAIN`. Defaults
 	// to `DELETE`.
@@ -2015,6 +2023,13 @@ type WorkstationCluster struct {
 	// Conditions: Output only. Status conditions describing the workstation
 	// cluster's current state.
 	Conditions []*Status `json:"conditions,omitempty"`
+	// ConsoleBaseUrl: Optional. Specifies a custom base URL for the Google Cloud
+	// Console. This field is intended to be user-configurable to support data
+	// residency for Cloud Workstations users. This will be used generally for user
+	// journeys where users need to go to the Cloud Console from Code OSS. When the
+	// Auth and Launch URLs are unset, this will be used as the base URL for those
+	// endpoints if set.
+	ConsoleBaseUrl string `json:"consoleBaseUrl,omitempty"`
 	// ControlPlaneIp: Output only. The private IP address of the control plane for
 	// this workstation cluster. Workstation VMs need access to this IP address to
 	// work with the service, so make sure that your firewall rules allow egress

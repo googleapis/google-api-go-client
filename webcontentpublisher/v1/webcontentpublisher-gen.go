@@ -892,7 +892,9 @@ func (s ContentPolicyStatus) MarshalJSON() ([]byte, error) {
 
 // Cta: Represents a Call-To-Action (CTA) configuration for a publication.
 type Cta struct {
-	// DisplayName: Required. The user-visible display name of the CTA.
+	// DisplayName: Optional. The user-visible display name of the CTA (up to 40
+	// characters). Defaults to a server-specified name based on the CTA type when
+	// omitted on creation.
 	DisplayName string `json:"displayName,omitempty"`
 	// Name: Identifier. The resource name of the Cta. Format:
 	// organizations/{organization}/publications/{publication}/ctas/{cta}
@@ -969,7 +971,7 @@ type CustomQuestion struct {
 	// CategoryLabel: Optional. Reporting category label sent to Google Analytics
 	// (up to 100 characters).
 	CategoryLabel string `json:"categoryLabel,omitempty"`
-	// DisplayText: Optional. The question prompt displayed to readers (up to 140
+	// DisplayText: Required. The question prompt displayed to readers (up to 140
 	// characters).
 	DisplayText string `json:"displayText,omitempty"`
 	// Id: Output only. Server-assigned unique identifier for the custom question.

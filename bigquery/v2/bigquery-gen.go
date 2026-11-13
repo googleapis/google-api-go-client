@@ -768,7 +768,8 @@ func (s ArimaSingleModelForecastingMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// ArrowRecordBatch: Arrow RecordBatch. This feature is not yet available.
+// ArrowRecordBatch: Arrow RecordBatch. Preview
+// (https://cloud.google.com/products/#product-launch-stages)
 type ArrowRecordBatch struct {
 	// SerializedRecordBatch: IPC-serialized Arrow RecordBatch.
 	SerializedRecordBatch string `json:"serializedRecordBatch,omitempty"`
@@ -794,8 +795,8 @@ func (s ArrowRecordBatch) MarshalJSON() ([]byte, error) {
 // https://arrow.apache.org/docs/python/api/datatypes.html and serialized to
 // bytes using IPC:
 // https://arrow.apache.org/docs/format/Columnar.html#serialization-and-interprocess-communication-ipc
-// See code samples on how this message can be deserialized. This feature is
-// not yet available.
+// See code samples on how this message can be deserialized. Preview
+// (https://cloud.google.com/products/#product-launch-stages)
 type ArrowSchema struct {
 	// SerializedSchema: IPC serialized Arrow schema.
 	SerializedSchema string `json:"serializedSchema,omitempty"`
@@ -818,15 +819,15 @@ func (s ArrowSchema) MarshalJSON() ([]byte, error) {
 }
 
 // ArrowSerializationOptions: Contains options specific to Arrow Serialization.
-// This feature is not yet available.
+// Preview (https://cloud.google.com/products/#product-launch-stages)
 type ArrowSerializationOptions struct {
 	// BufferCompression: The compression codec to use for Arrow buffers in
 	// serialized record batches.
 	//
 	// Possible values:
 	//   "COMPRESSION_UNSPECIFIED" - If unspecified no compression will be used.
-	//   "LZ4_FRAME" - LZ4 Frame
-	// (https://github.com/lz4/lz4/blob/dev/doc/lz4_Frame_format.md)
+	//   "LZ4_FRAME" - [LZ4
+	// Frame](https://github.com/lz4/lz4/blob/dev/doc/lz4_Frame_format.md)
 	//   "ZSTD" - Zstandard compression.
 	BufferCompression string `json:"bufferCompression,omitempty"`
 	// PicosTimestampPrecision: Optional. Set timestamp precision option. If not
@@ -1094,6 +1095,15 @@ type BigLakeConfiguration struct {
 	//   "FILE_FORMAT_UNSPECIFIED" - Default Value.
 	//   "PARQUET" - Apache Parquet format.
 	FileFormat string `json:"fileFormat,omitempty"`
+	// MetadataExportMode: Optional. The type of Metadata Export for BigLake
+	// Managed Tables.
+	//
+	// Possible values:
+	//   "METADATA_EXPORT_MODE_UNSPECIFIED" - No export type specified. This will
+	// default to ASYNC.
+	//   "ASYNC" - Async export mode.
+	//   "MANUAL" - Manual metadata export.
+	MetadataExportMode string `json:"metadataExportMode,omitempty"`
 	// StorageUri: Optional. The fully qualified location prefix of the external
 	// folder where table data is stored. The '*' wildcard character is not
 	// allowed. The URI should be in the format `gs://bucket/path_to_table/`
@@ -2271,6 +2281,11 @@ type Dataset struct {
 	// dataset defined in data catalogs outside of BigQuery. Filled out when the
 	// dataset type is EXTERNAL.
 	ExternalDatasetReference *ExternalDatasetReference `json:"externalDatasetReference,omitempty"`
+	// FailoverReservationId: Optional. The failover reservation associated with
+	// the dataset in the regionless format. Example: .. To learn about about
+	// failover reservations see:
+	// https://docs.cloud.google.com/bigquery/docs/managed-disaster-recovery#overview
+	FailoverReservationId string `json:"failoverReservationId,omitempty"`
 	// FriendlyName: Optional. A descriptive name for the dataset.
 	FriendlyName string `json:"friendlyName,omitempty"`
 	// Id: Output only. The fully-qualified unique name of the dataset in the
@@ -2309,6 +2324,9 @@ type Dataset struct {
 	// value can be from 48 to 168 hours (2 to 7 days). The default value is 168
 	// hours if this is not set.
 	MaxTimeTravelHours int64 `json:"maxTimeTravelHours,omitempty,string"`
+	// Replicas: Optional. The list of replicas in a cross region replicated or
+	// disaster recovery dataset.
+	Replicas []*Replica `json:"replicas,omitempty"`
 	// ResourceTags: Optional. The tags
 	// (https://cloud.google.com/bigquery/docs/tags) attached to this dataset. Tag
 	// keys are globally unique. Tag key is expected to be in the namespaced
@@ -4729,6 +4747,36 @@ func (s *InputDataChange) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// InstalledPackage:  Information about a package installed in the routine
+// execution environment.
+type InstalledPackage struct {
+	// Name: Output only. The name of the installed package.
+	Name string `json:"name,omitempty"`
+	// SourceRepository: Output only. The source repository from which this package
+	// was installed. Populated only when the package was installed from an
+	// additional package repository. E.g.
+	// 'https://my-region-python.pkg.dev/my-project/my-repo/simple'
+	SourceRepository string `json:"sourceRepository,omitempty"`
+	// Version: Output only. The version of the installed package.
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s InstalledPackage) MarshalJSON() ([]byte, error) {
+	type NoMethod InstalledPackage
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // IntArray: An array of int.
 type IntArray struct {
 	// Elements: Elements in the int array.
@@ -6098,6 +6146,8 @@ type JobStatistics2 struct {
 	// Schema: Output only. The schema of the results. Present only for successful
 	// dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
+	// SearchIndexingStats: Output only. Search indexing specific statistics.
+	SearchIndexingStats *SearchIndexingStats `json:"searchIndexingStats,omitempty"`
 	// SearchStatistics: Output only. Search query specific statistics.
 	SearchStatistics *SearchStatistics `json:"searchStatistics,omitempty"`
 	// SparkStatistics: Output only. Statistics of a Spark procedure job.
@@ -6302,6 +6352,9 @@ type JobStatistics2 struct {
 	// UndeclaredQueryParameters: Output only. GoogleSQL only: list of undeclared
 	// query parameters detected during a dry run validation.
 	UndeclaredQueryParameters []*QueryParameter `json:"undeclaredQueryParameters,omitempty"`
+	// VectorSearchIndexingStats: Output only. Vector Search indexing specific
+	// statistics.
+	VectorSearchIndexingStats *VectorSearchIndexingStats `json:"vectorSearchIndexingStats,omitempty"`
 	// VectorSearchStatistics: Output only. Vector Search query specific
 	// statistics.
 	VectorSearchStatistics *VectorSearchStatistics `json:"vectorSearchStatistics,omitempty"`
@@ -7803,23 +7856,35 @@ func (s PruningStats) MarshalJSON() ([]byte, error) {
 
 // PythonOptions: Options for a user-defined Python function.
 type PythonOptions struct {
+	// BuildConnection: Optional. Fully qualified name of the connection whose
+	// service account will be used to authenticate to private package repositories
+	// during build-time. Format:
+	// "projects/{project_id}/locations/{location_id}/connections/{connection_id}"
+	BuildConnection string `json:"buildConnection,omitempty"`
 	// EntryPoint: Required. The name of the function defined in Python code as the
 	// entry point when the Python UDF is invoked.
 	EntryPoint string `json:"entryPoint,omitempty"`
+	// ExtraPackageRepositories: Optional. The list of additional package
+	// repositories to search when resolving Python packages. These repositories
+	// are searched in addition to the default public PyPI. Only repositories
+	// hosted in Artifact Registry (.pkg.dev) are supported. Only pre-compiled
+	// Wheel (.whl) packages are supported from these repositories. E.g.
+	// ['https://my-region-python.pkg.dev/my-project/my-repo/simple']
+	ExtraPackageRepositories []string `json:"extraPackageRepositories,omitempty"`
 	// Packages: Optional. A list of Python package names along with versions to be
 	// installed. Example: ["pandas>=2.1", "google-cloud-translate==3.11"]. For
 	// more information, see Use third-party packages
 	// (https://cloud.google.com/bigquery/docs/user-defined-functions-python#third-party-packages).
 	Packages []string `json:"packages,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "EntryPoint") to
+	// ForceSendFields is a list of field names (e.g. "BuildConnection") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "EntryPoint") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BuildConnection") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -8065,12 +8130,12 @@ type QueryRequest struct {
 	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
 	// QueryResultsFormat: Optional. The query results format. If the value is
 	// anything other than `STRUCT_ENCODING` or unspecified: * The schema of the
-	// results will be provided in `QueryResponse.results_schema` field. * The
-	// results of the first page will be provided in `QueryResponse.results` field.
-	// * The `QueryResponse.rows` will not be populated. * The
-	// `QueryResponse.schema` for `QueryResponse.rows` will also not be populated
-	// since it is the schema of the `QueryResponse.rows`. This feature is not yet
-	// available.
+	// results is provided in the `QueryResponse.results_schema` field. * The
+	// results of the first page are provided in the `QueryResponse.results` field.
+	// * The `QueryResponse.rows` is not populated. * The `QueryResponse.schema`
+	// for `QueryResponse.rows` is not populated since it is the schema of the
+	// `QueryResponse.rows`. Preview
+	// (https://cloud.google.com/products/#product-launch-stages)
 	//
 	// Possible values:
 	//   "QUERY_RESULTS_FORMAT_UNSPECIFIED" - If unspecified it will default to
@@ -8078,7 +8143,7 @@ type QueryRequest struct {
 	//   "STRUCT_ENCODING" - Default encoding of results as struct in
 	// `QueryResponse.rows`
 	//   "ARROW" - Arrow is a standard open source column-based message format. See
-	// https://arrow.apache.org/ for more details.
+	// the Apache Arrow documentation for more details.
 	QueryResultsFormat string `json:"queryResultsFormat,omitempty"`
 	// RequestId: Optional. A unique user provided identifier to ensure idempotent
 	// behavior for queries. Note that this is different from the job_id. It has
@@ -8212,7 +8277,8 @@ type QueryResponse struct {
 	// statement. Present only for DML statements INSERT, UPDATE or DELETE.
 	NumDmlAffectedRows int64 `json:"numDmlAffectedRows,omitempty,string"`
 	// PageRowCount: Output only. The number of rows out of `total_rows` returned
-	// in this response. This feature is not yet available.
+	// in this response. Preview
+	// (https://cloud.google.com/products/#product-launch-stages)
 	PageRowCount int64 `json:"pageRowCount,omitempty,string"`
 	// PageToken: A token used for paging results. A non-empty token indicates that
 	// additional results are available. To see additional results, query the
@@ -8776,6 +8842,140 @@ func (s RemoteModelInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Replica: The replica metadata of the dataset. If the dataset has two or more
+// replicas, it's considered a cross region replicated (CRR) dataset.
+type Replica struct {
+	// BackfillCompletionTime: Output only. The time when the backfill was
+	// completed and replica is ready to use.
+	BackfillCompletionTime string `json:"backfillCompletionTime,omitempty"`
+	// CreationTime: Output only. The timestamp when the replica was created. For
+	// any dataset's first replica, this should be set to the dataset's
+	// creation_time.
+	CreationTime string `json:"creationTime,omitempty"`
+	// FailoverReservationUri: Output only. Failover reservation ID for the
+	// replica's region if this replica is used for DR. Fully-qualified format,
+	// e.g. "projects/some-project/locations/US/reservations/some-reservation" The
+	// location portion of the format is upper case if "US" or "EU", otherwise a
+	// lower case cloud region like "asia-northeast1".
+	FailoverReservationUri string `json:"failoverReservationUri,omitempty"`
+	// Id: Required. The user-visible string identifier for this dataset replica.
+	// This is generally named after the region.
+	Id string `json:"id,omitempty"`
+	// Location: Required. The logical bigquery region where this replica is
+	// located. This is upper case if "US" or "EU", otherwise a lower case cloud
+	// region like "asia-northeast1".
+	Location string `json:"location,omitempty"`
+	// PrimaryAssignmentCompletionTime: Output only. After a new primary assignment
+	// is made, this is the time that the dataset's data has been fully replicated
+	// to the replica, and after which the system will use current reads in the new
+	// primary replica.
+	PrimaryAssignmentCompletionTime string `json:"primaryAssignmentCompletionTime,omitempty"`
+	// PrimaryAssignmentTime: Output only. The time at which the replica was
+	// assigned primary. Only one replica will have this field populated at any
+	// point.
+	PrimaryAssignmentTime string `json:"primaryAssignmentTime,omitempty"`
+	// ReplicaOptions: Optional. Contains modify options on the replica such as set
+	// a kms key on the replica.
+	ReplicaOptions *ReplicaOptions `json:"replicaOptions,omitempty"`
+	// ReplicaState: Output only. Gives an explicit indicator of the replica
+	// primary state.
+	//
+	// Possible values:
+	//   "REPLICA_STATE_UNSPECIFIED" - Should never be set.
+	//   "PRIMARY" - Denotes that the replica is the primary. All routing by
+	// default goes to the primary and only the primary is writable.
+	//   "SECONDARY" - Denotes that the replica is the secondary and is only
+	// readable.
+	//   "ASSIGNED_PRIMARY" - This value for the replica where the new primary is
+	// going to be. At most one replica can have this value, and its only present
+	// when the dataset has a primary switch in progress.
+	//   "PREVIOUSLY_ASSIGNED_PRIMARY" - This value for the replica where the last
+	// primary was, but is no longer assigned the primary. All routing still goes
+	// to this replica, but it is no longer writable. Only set on the old primary
+	// during a primary switch. At most one replica at any moment can have this
+	// value.
+	//   "BACKFILLING" - The replica is not queriable yet since it's still
+	// backfilling.
+	ReplicaState string `json:"replicaState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BackfillCompletionTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BackfillCompletionTime") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Replica) MarshalJSON() ([]byte, error) {
+	type NoMethod Replica
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ReplicaOptions: Options set by the user when creating the replica. These
+// include region-specific dataset values, for example default KMS key name.
+// When a resource is replicated, the destination region's replica contains
+// values that should be overwritten in the destination region.
+type ReplicaOptions struct {
+	// DefaultKmsKeyName: Optional. Default KMS encryption key name.
+	DefaultKmsKeyName string `json:"defaultKmsKeyName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefaultKmsKeyName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefaultKmsKeyName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ReplicaOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicaOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ResourcePolicyMember: Output-only policy member strings of a Google Cloud
+// resource's built-in identity.
+type ResourcePolicyMember struct {
+	// IamPolicyNamePrincipal: Output only. IAM policy binding member referring to
+	// a Google Cloud resource by user-assigned name (https://google.aip.dev/122).
+	// If a resource is deleted and recreated with the same name, the binding will
+	// be applicable to the new resource. Example:
+	// `principal://parametermanager.googleapis.com/projects/12345/name/locations/us
+	// -central1-a/parameters/my-parameter`
+	IamPolicyNamePrincipal string `json:"iamPolicyNamePrincipal,omitempty"`
+	// IamPolicyUidPrincipal: Output only. IAM policy binding member referring to a
+	// Google Cloud resource by system-assigned unique identifier
+	// (https://google.aip.dev/148#uid). If a resource is deleted and recreated
+	// with the same name, the binding will not be applicable to the new resource
+	// Example:
+	// `principal://parametermanager.googleapis.com/projects/12345/uid/locations/us-
+	// central1-a/parameters/a918fed5`
+	IamPolicyUidPrincipal string `json:"iamPolicyUidPrincipal,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "IamPolicyNamePrincipal") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "IamPolicyNamePrincipal") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ResourcePolicyMember) MarshalJSON() ([]byte, error) {
+	type NoMethod ResourcePolicyMember
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type RestrictionConfig struct {
 	// Type: Output only. Specifies the type of dataset/table restriction.
 	//
@@ -8978,6 +9178,9 @@ type RoutineBuildStatus struct {
 	// ImageSizeBytes: Output only. The size of the image in bytes. Populated only
 	// after the build succeeds.
 	ImageSizeBytes int64 `json:"imageSizeBytes,omitempty,string"`
+	// InstalledPackages: Output only. The list of installed packages in the
+	// routine's execution environment. Populated only after the build succeeds.
+	InstalledPackages []*InstalledPackage `json:"installedPackages,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "BuildDuration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -9272,6 +9475,32 @@ type ScriptStatistics struct {
 
 func (s ScriptStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod ScriptStatistics
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SearchIndexingStats: Statistics for a search indexing job. Populated as part
+// of JobStatistics2.
+type SearchIndexingStats struct {
+	// BaseTable: Output only. The base table for which the search index is being
+	// created or refreshed.
+	BaseTable *TableReference `json:"baseTable,omitempty"`
+	// IndexName: Output only. The name of the search index.
+	IndexName string `json:"indexName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseTable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseTable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SearchIndexingStats) MarshalJSON() ([]byte, error) {
+	type NoMethod SearchIndexingStats
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -10144,6 +10373,10 @@ type Table struct {
 	// populated for metastore partitioned tables. For other table formats, this is
 	// an output only field.
 	PartitionDefinition *PartitioningDefinition `json:"partitionDefinition,omitempty"`
+	// PolicyMember: Output only. Contains the resource identity token of the view
+	// that users can use to include in their policy bindings for authorization.
+	// This should be set only for views.
+	PolicyMember *ResourcePolicyMember `json:"policyMember,omitempty"`
 	// RangePartitioning: If specified, configures range partitioning for this
 	// table.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
@@ -11986,6 +12219,32 @@ func (s UserDefinedFunctionResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// VectorSearchIndexingStats: Statistics for a vector search indexing job.
+// Populated as part of JobStatistics2.
+type VectorSearchIndexingStats struct {
+	// BaseTable: Output only. The base table for which the vector index is being
+	// created or refreshed.
+	BaseTable *TableReference `json:"baseTable,omitempty"`
+	// IndexName: Output only. The name of the vector index.
+	IndexName string `json:"indexName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BaseTable") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BaseTable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VectorSearchIndexingStats) MarshalJSON() ([]byte, error) {
+	type NoMethod VectorSearchIndexingStats
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // VectorSearchStatistics: Statistics for a vector search query. Populated as
 // part of JobStatistics2.
 type VectorSearchStatistics struct {
@@ -12214,6 +12473,11 @@ func (c *DatasetsGetCall) AccessPolicyVersion(accessPolicyVersion int64) *Datase
 // for one or more entities.
 //
 //	"FULL" - View both dataset metadata and ACL information.
+//	"BASIC" - View both dataset metadata and ACL information.
+//	"BASIC_REPLICA_METADATA_VIEW" - Includes everything from the BASIC view
+//
+// plus replication information. However, it will not include sync_status or
+// other fields requiring cross-region requests.
 func (c *DatasetsGetCall) DatasetView(datasetView string) *DatasetsGetCall {
 	c.urlParams_.Set("datasetView", datasetView)
 	return c

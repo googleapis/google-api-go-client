@@ -1019,9 +1019,12 @@ type CreativeServingDecision struct {
 	//   "GOOGLE_AD_CATEGORY_TAXONOMY" - Google ad categories taxonomy, including
 	// product categories and sensitive categories. Find the category lists at
 	// https://developers.google.com/authorized-buyers/rtb/data#reference-data
-	//   "IAB_CONTENT_1_0" - IAB Content Taxonomy 1.0. See
-	// https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main/Content%20Taxonomies/Content%20Taxonomy%201.0.tsv
-	// for more details.
+	//   "IAB_CONTENT_1_0" - IAB Content Taxonomy 1.0. See [Content Taxonomy
+	// 1.0.tsv](https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main
+	// /Content%20Taxonomies/Content%20Taxonomy%201.0.tsv) for more details.
+	//   "IAB_CONTENT_2_2" - IAB Content Taxonomy 2.2. See [Content Taxonomy
+	// 2.2.tsv](https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main
+	// /Content%20Taxonomies/Content%20Taxonomy%202.2.tsv) for more details.
 	DetectedCategoriesTaxonomy string `json:"detectedCategoriesTaxonomy,omitempty"`
 	// DetectedClickThroughUrls: The set of detected destination URLs for the
 	// creative. Can be used to filter the response of the creatives.list method.
@@ -2888,6 +2891,35 @@ type BiddersCreativesListCall struct {
 func (r *BiddersCreativesService) List(parent string) *BiddersCreativesListCall {
 	c := &BiddersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// AdCategoryTaxonomyOverride sets the optional parameter
+// "adCategoryTaxonomyOverride": The category taxonomy to use for the response.
+// Overrides the default category taxonomy for the bidder.
+//
+// Possible values:
+//
+//	"AD_CATEGORY_TAXONOMY_UNSPECIFIED" - Default value that should never be
+//
+// used.
+//
+//	"GOOGLE_AD_CATEGORY_TAXONOMY" - Google ad categories taxonomy, including
+//
+// product categories and sensitive categories. Find the category lists at
+// https://developers.google.com/authorized-buyers/rtb/data#reference-data
+//
+//	"IAB_CONTENT_1_0" - IAB Content Taxonomy 1.0. See [Content Taxonomy
+//
+// 1.0.tsv](https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main
+// /Content%20Taxonomies/Content%20Taxonomy%201.0.tsv) for more details.
+//
+//	"IAB_CONTENT_2_2" - IAB Content Taxonomy 2.2. See [Content Taxonomy
+//
+// 2.2.tsv](https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main
+// /Content%20Taxonomies/Content%20Taxonomy%202.2.tsv) for more details.
+func (c *BiddersCreativesListCall) AdCategoryTaxonomyOverride(adCategoryTaxonomyOverride string) *BiddersCreativesListCall {
+	c.urlParams_.Set("adCategoryTaxonomyOverride", adCategoryTaxonomyOverride)
 	return c
 }
 
@@ -6060,6 +6092,35 @@ func (r *BuyersCreativesService) Get(name string) *BuyersCreativesGetCall {
 	return c
 }
 
+// AdCategoryTaxonomyOverride sets the optional parameter
+// "adCategoryTaxonomyOverride": The category taxonomy to use for the response.
+// Overrides the default category taxonomy for the bidder.
+//
+// Possible values:
+//
+//	"AD_CATEGORY_TAXONOMY_UNSPECIFIED" - Default value that should never be
+//
+// used.
+//
+//	"GOOGLE_AD_CATEGORY_TAXONOMY" - Google ad categories taxonomy, including
+//
+// product categories and sensitive categories. Find the category lists at
+// https://developers.google.com/authorized-buyers/rtb/data#reference-data
+//
+//	"IAB_CONTENT_1_0" - IAB Content Taxonomy 1.0. See [Content Taxonomy
+//
+// 1.0.tsv](https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main
+// /Content%20Taxonomies/Content%20Taxonomy%201.0.tsv) for more details.
+//
+//	"IAB_CONTENT_2_2" - IAB Content Taxonomy 2.2. See [Content Taxonomy
+//
+// 2.2.tsv](https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main
+// /Content%20Taxonomies/Content%20Taxonomy%202.2.tsv) for more details.
+func (c *BuyersCreativesGetCall) AdCategoryTaxonomyOverride(adCategoryTaxonomyOverride string) *BuyersCreativesGetCall {
+	c.urlParams_.Set("adCategoryTaxonomyOverride", adCategoryTaxonomyOverride)
+	return c
+}
+
 // View sets the optional parameter "view": Controls the amount of information
 // included in the response. By default only creativeServingDecision is
 // included. To retrieve the entire creative resource (including the declared
@@ -6205,6 +6266,35 @@ type BuyersCreativesListCall struct {
 func (r *BuyersCreativesService) List(parent string) *BuyersCreativesListCall {
 	c := &BuyersCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
+	return c
+}
+
+// AdCategoryTaxonomyOverride sets the optional parameter
+// "adCategoryTaxonomyOverride": The category taxonomy to use for the response.
+// Overrides the default category taxonomy for the bidder.
+//
+// Possible values:
+//
+//	"AD_CATEGORY_TAXONOMY_UNSPECIFIED" - Default value that should never be
+//
+// used.
+//
+//	"GOOGLE_AD_CATEGORY_TAXONOMY" - Google ad categories taxonomy, including
+//
+// product categories and sensitive categories. Find the category lists at
+// https://developers.google.com/authorized-buyers/rtb/data#reference-data
+//
+//	"IAB_CONTENT_1_0" - IAB Content Taxonomy 1.0. See [Content Taxonomy
+//
+// 1.0.tsv](https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main
+// /Content%20Taxonomies/Content%20Taxonomy%201.0.tsv) for more details.
+//
+//	"IAB_CONTENT_2_2" - IAB Content Taxonomy 2.2. See [Content Taxonomy
+//
+// 2.2.tsv](https://github.com/InteractiveAdvertisingBureau/Taxonomies/blob/main
+// /Content%20Taxonomies/Content%20Taxonomy%202.2.tsv) for more details.
+func (c *BuyersCreativesListCall) AdCategoryTaxonomyOverride(adCategoryTaxonomyOverride string) *BuyersCreativesListCall {
+	c.urlParams_.Set("adCategoryTaxonomyOverride", adCategoryTaxonomyOverride)
 	return c
 }
 

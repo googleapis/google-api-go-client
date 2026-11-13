@@ -282,6 +282,11 @@ type AwsAccessRole struct {
 	// Identity: A unique Google-owned and Google-generated identity for the
 	// Connection. This identity will be used to access the user's AWS IAM Role.
 	Identity string `json:"identity,omitempty"`
+	// ServiceAccountId: Output only. The email address of the Google-owned service
+	// account that represents the connection's identity. Grant IAM roles to this
+	// service account, for example, to let the connection resolve the Service
+	// Directory service in `AwsProperties.service_directory_service`.
+	ServiceAccountId string `json:"serviceAccountId,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "IamRoleId") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -308,6 +313,13 @@ type AwsProperties struct {
 	// CrossCloudCacheOptions: Optional. Configuration options for cross-cloud
 	// caching of data and metadata files.
 	CrossCloudCacheOptions *CrossCloudCacheOptions `json:"crossCloudCacheOptions,omitempty"`
+	// ServiceDirectoryService: Optional. The Service Directory resource name for
+	// routing traffic to AWS over a private network connection through Cross-Cloud
+	// Interconnect, in the format
+	// `projects/{project_id}/locations/{location}/namespaces/{namespace_id}/service
+	// s/{service_id}`. If both this field and `s3_service_directory_service` are
+	// set, this field takes precedence.
+	ServiceDirectoryService string `json:"serviceDirectoryService,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AccessRole") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -352,6 +364,17 @@ type AzureProperties struct {
 	// RedirectUri: The URL user will be redirected to after granting consent
 	// during connection setup.
 	RedirectUri string `json:"redirectUri,omitempty"`
+	// ServiceAccountId: Output only. The email address of the Google-owned service
+	// account that represents the connection's identity. Grant IAM roles to this
+	// service account, for example, to let the connection resolve the Service
+	// Directory service in `AzureProperties.service_directory_service`.
+	ServiceAccountId string `json:"serviceAccountId,omitempty"`
+	// ServiceDirectoryService: Optional. The service directory resource name for
+	// routing traffic over a private network connection through Cross-Cloud
+	// Interconnect, in the format
+	// `projects/{project_id}/locations/{location}/namespaces/{namespace_id}/service
+	// s/{service_id}`.
+	ServiceDirectoryService string `json:"serviceDirectoryService,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Application") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See

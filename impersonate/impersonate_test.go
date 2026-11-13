@@ -24,6 +24,9 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 		config  CredentialsConfig
 		opts    option.ClientOption
 		wantErr error
+		// wantHost is the host of the IAM Credentials endpoint the request
+		// should be sent to. Empty means no request is expected.
+		wantHost string
 	}{
 		{
 			name:    "missing targetPrincipal",
@@ -51,7 +54,18 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 				TargetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 				Scopes:          []string{"scope"},
 			},
-			wantErr: nil,
+			wantErr:  nil,
+			wantHost: "iamcredentials.googleapis.com",
+		},
+		{
+			name: "custom universe domain",
+			config: CredentialsConfig{
+				TargetPrincipal: "foo@project-id.iam.gserviceaccount.com",
+				Scopes:          []string{"scope"},
+			},
+			opts:     option.WithUniverseDomain("example.com"),
+			wantErr:  nil,
+			wantHost: "iamcredentials.example.com",
 		},
 		{
 			name: "universe domain",
@@ -69,9 +83,11 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 		name := tt.name
 		t.Run(name, func(t *testing.T) {
 			saTok := "sa-token"
+			var gotHost string
 			client := &http.Client{
 				Transport: RoundTripFn(func(req *http.Request) *http.Response {
 					if strings.Contains(req.URL.Path, "generateAccessToken") {
+						gotHost = req.URL.Host
 						resp := generateAccessTokenResp{
 							AccessToken: saTok,
 							ExpireTime:  time.Now().Format(time.RFC3339),
@@ -108,6 +124,9 @@ func TestTokenSource_serviceAccount(t *testing.T) {
 				}
 				if tok.AccessToken != saTok {
 					t.Fatalf("got %q, want %q", tok.AccessToken, saTok)
+				}
+				if want := tt.wantHost; want != "" && gotHost != want {
+					t.Fatalf("request host: got %q, want %q", gotHost, want)
 				}
 			}
 		})

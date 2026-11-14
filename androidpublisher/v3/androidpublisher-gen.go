@@ -1738,6 +1738,11 @@ type AutoRenewingPlan struct {
 	// InstallmentDetails: The installment plan commitment and state related info
 	// for the auto renewing plan.
 	InstallmentDetails *InstallmentPlan `json:"installmentDetails,omitempty"`
+	// PlanTransitionDetails: The information of the associated plan transition.
+	// Will be present only if this plan has a transition plan associated with it
+	// and will only include the latest transition details associated with the
+	// item.
+	PlanTransitionDetails *PlanTransitionDetails `json:"planTransitionDetails,omitempty"`
 	// PriceChangeDetails: The information of the last price change for the item
 	// since subscription signup.
 	PriceChangeDetails *SubscriptionItemPriceChangeDetails `json:"priceChangeDetails,omitempty"`
@@ -1810,6 +1815,9 @@ type BasePlan struct {
 	//   "INACTIVE" - The base plan is inactive and only available for existing
 	// subscribers.
 	State string `json:"state,omitempty"`
+	// TransitionTargetConfig: Transition target base plan information when this
+	// base plan has a transition plan.
+	TransitionTargetConfig *TransitionTargetConfig `json:"transitionTargetConfig,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AutoRenewingBasePlanType")
 	// to unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -2681,6 +2689,42 @@ type CancelOneTimeProductOfferRequest struct {
 func (s CancelOneTimeProductOfferRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelOneTimeProductOfferRequest
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CancelPlanTransitionRequest: Request for the
+// purchases.subscriptionsv2.cancelplantransition API.
+type CancelPlanTransitionRequest struct {
+	// Etag: If set, the API will fail if the etag does not match the latest etag
+	// for this subscription. The etag is retrieved from
+	// purchases.subscriptionsv2.get:
+	// https://developers.google.com/android-publisher/api-ref/rest/v3/purchases.subscriptionsv2/get
+	Etag string `json:"etag,omitempty"`
+	// ProductId: Required. The subscription product (for example, 'premium_plan')
+	// for which an in process plan transition should be canceled.
+	ProductId string `json:"productId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s CancelPlanTransitionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelPlanTransitionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// CancelPlanTransitionResponse: Response for the
+// purchases.subscriptionsv2.cancelplantransition API.
+type CancelPlanTransitionResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // CancelSubscriptionPurchaseRequest: Request for the
@@ -3759,6 +3803,10 @@ type DeferredItemReplacement struct {
 func (s DeferredItemReplacement) MarshalJSON() ([]byte, error) {
 	type NoMethod DeferredItemReplacement
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DefiniteTransition: Used to indicate that the plan transition is definite.
+type DefiniteTransition struct {
 }
 
 // DeleteOneTimeProductOfferRequest: Request message for deleting an one-time
@@ -8057,6 +8105,35 @@ func (s PausedStateContext) MarshalJSON() ([]byte, error) {
 type PendingCancellation struct {
 }
 
+// PlanTransitionDetails: Information related to a plan transition.
+type PlanTransitionDetails struct {
+	// BasePlanId: [Required] The base plan ID to which this plan would be
+	// transitioned.
+	BasePlanId string `json:"basePlanId,omitempty"`
+	// ProductId: [Required] The product ID to which this plan would be
+	// transitioned, (for example, 'monthly001').
+	ProductId string `json:"productId,omitempty"`
+	// TransitionInfo: Additional info about the scheduled plan transition. Will be
+	// present only if a plan transition has been scheduled.
+	TransitionInfo *TransitionInfo `json:"transitionInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s PlanTransitionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod PlanTransitionDetails
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // PointsDetails: Details relating to any Play Points applied to an order.
 type PointsDetails struct {
 	// PointsCouponValue: The monetary value of a Play Points coupon. This is the
@@ -9966,6 +10043,71 @@ type SafetyLabelsUpdateResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// SchedulePlanTransitionRequest: Request for the
+// purchases.subscriptionsv2.schedulePlanTransition API.
+type SchedulePlanTransitionRequest struct {
+	// DefiniteTransition: When using this mode, the user's transition to the new
+	// plan is definite, and cannot be canceled.
+	DefiniteTransition *DefiniteTransition `json:"definiteTransition,omitempty"`
+	// EarliestTransitionEffectiveTime: Required. The earliest time at which the
+	// plan transition may take effect. The actual transition will take place at
+	// the time of renewal on or after this time.
+	EarliestTransitionEffectiveTime string `json:"earliestTransitionEffectiveTime,omitempty"`
+	// Etag: If set, the API will fail if the etag does not match the latest etag
+	// for this subscription. The etag is retrieved from
+	// purchases.subscriptionsv2.get:
+	// https://developers.google.com/android-publisher/api-ref/rest/v3/purchases.subscriptionsv2/get
+	Etag string `json:"etag,omitempty"`
+	// ProductId: Required. The subscription product (for example, 'premium_plan')
+	// for which the transition must be scheduled.
+	ProductId string `json:"productId,omitempty"`
+	// TentativeTransition: When using this mode, the user's transition to the new
+	// plan is tentative, and can be canceled.
+	TentativeTransition *TentativeTransition `json:"tentativeTransition,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DefiniteTransition") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DefiniteTransition") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchedulePlanTransitionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SchedulePlanTransitionRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SchedulePlanTransitionResponse: Response for the
+// purchases.subscriptionsv2.schedulePlanTransition API.
+type SchedulePlanTransitionResponse struct {
+	// PlanTransitionDetails: The plan transition details of the subscription item.
+	PlanTransitionDetails *PlanTransitionDetails `json:"planTransitionDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "PlanTransitionDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "PlanTransitionDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SchedulePlanTransitionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SchedulePlanTransitionResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ScreenDensity: Represents a screen density.
 type ScreenDensity struct {
 	// DensityAlias: Alias for a screen density.
@@ -11108,6 +11250,10 @@ func (s TargetingUpdate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// TentativeTransition: Used to indicate that the plan transition is tentative.
+type TentativeTransition struct {
+}
+
 // TestPurchase: Whether this subscription purchase is a test purchase.
 type TestPurchase struct {
 }
@@ -11515,6 +11661,68 @@ type TracksListResponse struct {
 
 func (s TracksListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TracksListResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TransitionInfo: Information related to a scheduled plan transition.
+type TransitionInfo struct {
+	// ExpectedTransitionTime: The current expected time at which the plan may be
+	// transitioned. This is subject to change (to a future time) due to cases
+	// where the renewal time shifts like pause and account hold.
+	ExpectedTransitionTime string `json:"expectedTransitionTime,omitempty"`
+	// Price: The default base plan price to which the plan will be transitioned.
+	Price *Money `json:"price,omitempty"`
+	// TransitionState: Output only. [Required] The current state of the
+	// transition.
+	//
+	// Possible values:
+	//   "TRANSITION_STATE_UNSPECIFIED" - Unspecified transition state.
+	//   "SCHEDULED" - The transition is scheduled to start in the future.
+	//   "IN_PROGRESS" - The transition process has been initiated and the initial
+	// transition notification has been sent to the user.
+	//   "COMPLETED" - The transition has been completed.
+	//   "CANCELED" - The transition was canceled.
+	TransitionState string `json:"transitionState,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ExpectedTransitionTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ExpectedTransitionTime") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransitionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TransitionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TransitionTargetConfig: Configuration for a transition target base plan.
+type TransitionTargetConfig struct {
+	// BasePlanId: Required. The ID of the transition target base plan.
+	BasePlanId string `json:"basePlanId,omitempty"`
+	// ProductId: Required. The ID of the parent subscription this transition
+	// target base plan belongs to.
+	ProductId string `json:"productId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TransitionTargetConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TransitionTargetConfig
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -27960,6 +28168,116 @@ func (c *PurchasesSubscriptionsv2CancelCall) Do(opts ...googleapi.CallOption) (*
 	return ret, nil
 }
 
+type PurchasesSubscriptionsv2CancelplantransitionCall struct {
+	s                           *Service
+	packageName                 string
+	token                       string
+	cancelplantransitionrequest *CancelPlanTransitionRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Cancelplantransition: Cancel a plan transition for a subscription.
+//
+//   - packageName: The package of the application for which this subscription
+//     was purchased (for example, 'com.some.thing').
+//   - token: The token provided to the user's device when the subscription was
+//     purchased.
+func (r *PurchasesSubscriptionsv2Service) Cancelplantransition(packageName string, token string, cancelplantransitionrequest *CancelPlanTransitionRequest) *PurchasesSubscriptionsv2CancelplantransitionCall {
+	c := &PurchasesSubscriptionsv2CancelplantransitionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.token = token
+	c.cancelplantransitionrequest = cancelplantransitionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PurchasesSubscriptionsv2CancelplantransitionCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsv2CancelplantransitionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PurchasesSubscriptionsv2CancelplantransitionCall) Context(ctx context.Context) *PurchasesSubscriptionsv2CancelplantransitionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PurchasesSubscriptionsv2CancelplantransitionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesSubscriptionsv2CancelplantransitionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.cancelplantransitionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:cancelPlanTransition")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"token":       c.token,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.cancelplantransition", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.subscriptionsv2.cancelplantransition" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *CancelPlanTransitionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PurchasesSubscriptionsv2CancelplantransitionCall) Do(opts ...googleapi.CallOption) (*CancelPlanTransitionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CancelPlanTransitionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.cancelplantransition", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type PurchasesSubscriptionsv2DeferCall struct {
 	s                                *Service
 	packageName                      string
@@ -28293,6 +28611,116 @@ func (c *PurchasesSubscriptionsv2RevokeCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.revoke", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PurchasesSubscriptionsv2ScheduleplantransitionCall struct {
+	s                             *Service
+	packageName                   string
+	token                         string
+	scheduleplantransitionrequest *SchedulePlanTransitionRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Scheduleplantransition: Schedule a plan transition for a subscription.
+//
+//   - packageName: The package of the application for which this subscription
+//     was purchased (for example, 'com.some.thing').
+//   - token: The token provided to the user's device when the subscription was
+//     purchased.
+func (r *PurchasesSubscriptionsv2Service) Scheduleplantransition(packageName string, token string, scheduleplantransitionrequest *SchedulePlanTransitionRequest) *PurchasesSubscriptionsv2ScheduleplantransitionCall {
+	c := &PurchasesSubscriptionsv2ScheduleplantransitionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.token = token
+	c.scheduleplantransitionrequest = scheduleplantransitionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PurchasesSubscriptionsv2ScheduleplantransitionCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsv2ScheduleplantransitionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PurchasesSubscriptionsv2ScheduleplantransitionCall) Context(ctx context.Context) *PurchasesSubscriptionsv2ScheduleplantransitionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PurchasesSubscriptionsv2ScheduleplantransitionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesSubscriptionsv2ScheduleplantransitionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.scheduleplantransitionrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:schedulePlanTransition")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"token":       c.token,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.scheduleplantransition", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.subscriptionsv2.scheduleplantransition" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SchedulePlanTransitionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PurchasesSubscriptionsv2ScheduleplantransitionCall) Do(opts ...googleapi.CallOption) (*SchedulePlanTransitionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SchedulePlanTransitionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.scheduleplantransition", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

@@ -228,6 +228,9 @@ type Attributes struct {
 	// DisclosureDate: The disclosure date of the product. For more information,
 	// see https://support.google.com/manufacturers/answer/6124116#disclosure.
 	DisclosureDate string `json:"disclosureDate,omitempty"`
+	// DocumentLink: Optional. URLs of PDF documents for the product, such as user
+	// manuals or specifications.
+	DocumentLink []string `json:"documentLink,omitempty"`
 	// ExcludedDestination: A list of excluded destinations such as "ClientExport",
 	// "ClientShoppingCatalog" or "PartnerShoppingCatalog". For more information,
 	// see https://support.google.com/manufacturers/answer/7443550
@@ -268,6 +271,9 @@ type Attributes struct {
 	// ItemGroupId: The item group id of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#itemgroupid.
 	ItemGroupId string `json:"itemGroupId,omitempty"`
+	// ItemGroupTitle: Optional. The shared title of the product group that this
+	// variant belongs to.
+	ItemGroupTitle string `json:"itemGroupTitle,omitempty"`
 	// Material: The material of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#material.
 	Material string `json:"material,omitempty"`
@@ -281,6 +287,9 @@ type Attributes struct {
 	// Pattern: The pattern of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#pattern.
 	Pattern string `json:"pattern,omitempty"`
+	// PopularityRank: Optional. The popularity rank of the product from 0.0
+	// (lowest) to 100.0 (highest).
+	PopularityRank float64 `json:"popularityRank,omitempty"`
 	// ProductDetail: The details of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#productdetail.
 	ProductDetail []*ProductDetail `json:"productDetail,omitempty"`
@@ -301,6 +310,12 @@ type Attributes struct {
 	// ProductType: The type or category of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#producttype.
 	ProductType []string `json:"productType,omitempty"`
+	// QuestionAndAnswer: Optional. Frequently asked questions and answers about
+	// the product.
+	QuestionAndAnswer []*QuestionAndAnswer `json:"questionAndAnswer,omitempty"`
+	// RelatedProduct: Optional. Products related to this product, such as
+	// accessories or substitutes.
+	RelatedProduct []*RelatedProduct `json:"relatedProduct,omitempty"`
 	// ReleaseDate: The release date of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#release.
 	ReleaseDate string `json:"releaseDate,omitempty"`
@@ -333,6 +348,9 @@ type Attributes struct {
 	// Title: The title of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#title.
 	Title string `json:"title,omitempty"`
+	// VariantOption: Optional. The list of all variant-identifying options for the
+	// product.
+	VariantOption []*VariantOption `json:"variantOption,omitempty"`
 	// VideoLink: The videos of the product. For more information, see
 	// https://support.google.com/manufacturers/answer/6124116#video.
 	VideoLink []string `json:"videoLink,omitempty"`
@@ -354,6 +372,20 @@ type Attributes struct {
 func (s Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod Attributes
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+func (s *Attributes) UnmarshalJSON(data []byte) error {
+	type NoMethod Attributes
+	var s1 struct {
+		PopularityRank gensupport.JSONFloat64 `json:"popularityRank"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PopularityRank = float64(s1.PopularityRank)
+	return nil
 }
 
 // Capacity: The capacity of a product. For more information, see
@@ -387,6 +419,13 @@ type Certification struct {
 	Authority string `json:"authority,omitempty"`
 	// Code: Optional. A unique code to identify the certification.
 	Code string `json:"code,omitempty"`
+	// DocumentLink: Optional. A URL to the certification fiche. For example:
+	// https://eprel.ec.europa.eu/fiches/smartphonestablets20231669/Fiche_2556297_EN.pdf
+	// In case of multiple languages, the English version is preferred.
+	DocumentLink string `json:"documentLink,omitempty"`
+	// LabelLink: Optional. A URL to the certification label. For example:
+	// https://eprel.ec.europa.eu/labels/smartphonestablets20231669/Label_2556297.pdf
+	LabelLink string `json:"labelLink,omitempty"`
 	// Link: Optional. A URL link to the certification.
 	Link string `json:"link,omitempty"`
 	// Logo: Optional. A URL link to the certification logo.
@@ -561,6 +600,13 @@ type GoogleShoppingManufacturersV1ProductCertification struct {
 	Authority string `json:"authority,omitempty"`
 	// Code: Optional. A unique code to identify the certification.
 	Code string `json:"code,omitempty"`
+	// DocumentLink: Optional. A URL to the (English if >1 language) certification
+	// fiche. For example:
+	// https://eprel.ec.europa.eu/fiches/smartphonestablets20231669/Fiche_2556297_EN.pdf
+	DocumentLink string `json:"documentLink,omitempty"`
+	// LabelLink: Optional. A URL to the certification label. For example:
+	// https://eprel.ec.europa.eu/labels/smartphonestablets20231669/Label_2556297.pdf
+	LabelLink string `json:"labelLink,omitempty"`
 	// Link: Optional. A URL link to the certification.
 	Link string `json:"link,omitempty"`
 	// Logo: Optional. A URL link to the certification logo.
@@ -1113,6 +1159,85 @@ type ProductDetail struct {
 
 func (s ProductDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductDetail
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// QuestionAndAnswer: A question and answer about the product.
+type QuestionAndAnswer struct {
+	// Answer: Required. The answer text.
+	Answer string `json:"answer,omitempty"`
+	// Question: Required. The question text.
+	Question string `json:"question,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Answer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Answer") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s QuestionAndAnswer) MarshalJSON() ([]byte, error) {
+	type NoMethod QuestionAndAnswer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// RelatedProduct: A product related to this product.
+type RelatedProduct struct {
+	// Identifier: Required. The identifier of the related product.
+	Identifier string `json:"identifier,omitempty"`
+	// IdentifierType: Required. The identifier type of the related product, such
+	// as "GTIN" or "ID".
+	IdentifierType string `json:"identifierType,omitempty"`
+	// RelationshipType: Required. The relationship to the related product, such as
+	// "ACCESSORY", "PART_OF_SET", "REQUIRED_PART", "OFTEN_BOUGHT_WITH",
+	// "SUBSTITUTE", or "DIFFERENT_BRAND".
+	RelationshipType string `json:"relationshipType,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Identifier") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Identifier") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RelatedProduct) MarshalJSON() ([]byte, error) {
+	type NoMethod RelatedProduct
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// VariantOption: A variant-identifying option for the product.
+type VariantOption struct {
+	// Name: Required. The name of the variant option, such as "Color" or "Watch
+	// band style".
+	Name string `json:"name,omitempty"`
+	// Value: Required. The value of the variant option, such as "Red" or "Milanese
+	// loop".
+	Value string `json:"value,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s VariantOption) MarshalJSON() ([]byte, error) {
+	type NoMethod VariantOption
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

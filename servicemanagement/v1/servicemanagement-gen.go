@@ -1149,8 +1149,10 @@ func (s ClientLibrarySettings) MarshalJSON() ([]byte, error) {
 
 // CommonLanguageSettings: Required information for every language.
 type CommonLanguageSettings struct {
-	// Destinations: The destination where API teams want this client library to be
-	// published.
+	// Destinations: Deprecated: Client libraries are published for all supported
+	// languages by default when a `library_settings` entry is present with a
+	// `version` and `launch_stage`. The destination where API teams want this
+	// client library to be published.
 	//
 	// Possible values:
 	//   "CLIENT_LIBRARY_DESTINATION_UNSPECIFIED" - Client libraries will neither
@@ -2223,6 +2225,56 @@ type GoSettings struct {
 
 func (s GoSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoSettings
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleApiFieldInfo: Rich semantic information of an API field beyond basic
+// typing.
+type GoogleApiFieldInfo struct {
+	// Format: The standard format of a field value. This does not explicitly
+	// configure any API consumer, just documents the API's format for the field it
+	// is applied to.
+	//
+	// Possible values:
+	//   "FORMAT_UNSPECIFIED" - Default, unspecified value.
+	//   "UUID4" - Universally Unique Identifier, version 4, value as defined by
+	// https://datatracker.ietf.org/doc/html/rfc4122. The value may be normalized
+	// to entirely lowercase letters. For example, the value
+	// `F47AC10B-58CC-0372-8567-0E02B2C3D479` would be normalized to
+	// `f47ac10b-58cc-0372-8567-0e02b2c3d479`.
+	//   "IPV4" - Internet Protocol v4 value as defined by [RFC
+	// 791](https://datatracker.ietf.org/doc/html/rfc791). The value may be
+	// condensed, with leading zeros in each octet stripped. For example,
+	// `001.022.233.040` would be condensed to `1.22.233.40`.
+	//   "IPV6" - Internet Protocol v6 value as defined by [RFC
+	// 2460](https://datatracker.ietf.org/doc/html/rfc2460). The value may be
+	// normalized to entirely lowercase letters with zeros compressed, following
+	// [RFC 5952](https://datatracker.ietf.org/doc/html/rfc5952). For example, the
+	// value `2001:0DB8:0::0` would be normalized to `2001:db8::`.
+	//   "IPV4_OR_IPV6" - An IP address in either v4 or v6 format as described by
+	// the individual values defined herein. See the comments on the IPV4 and IPV6
+	// types for allowed normalizations of each.
+	Format string `json:"format,omitempty"`
+	// ReferencedTypes: The type(s) that the annotated, generic field may
+	// represent. Currently, this must only be used on fields of type
+	// `google.protobuf.Any`. Supporting other generic types may be considered in
+	// the future.
+	ReferencedTypes []*TypeReference `json:"referencedTypes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Format") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Format") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleApiFieldInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleApiFieldInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -4761,6 +4813,34 @@ type Type struct {
 
 func (s Type) MarshalJSON() ([]byte, error) {
 	type NoMethod Type
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// TypeReference: A reference to a message type, for use in FieldInfo.
+type TypeReference struct {
+	// TypeName: The name of the type that the annotated, generic field may
+	// represent. If the type is in the same protobuf package, the value can be the
+	// simple message name e.g., "MyMessage". Otherwise, the value must be the
+	// fully-qualified message name e.g., "google.library.v1.Book". If the
+	// type(s) are unknown to the service (e.g. the field accepts generic user
+	// input), use the wildcard "*" to denote this behavior. See AIP-202
+	// (https://google.aip.dev/202#type-references) for more details.
+	TypeName string `json:"typeName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "TypeName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "TypeName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s TypeReference) MarshalJSON() ([]byte, error) {
+	type NoMethod TypeReference
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 

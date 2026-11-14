@@ -266,15 +266,6 @@ type CancelOperationRequest struct {
 // ComponentMetrics: ComponentMetrics contains sizing, timing, retries, and
 // metrics for an exported component.
 type ComponentMetrics struct {
-	// ComponentType: Type of the exported component.
-	//
-	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Unspecified component type.
-	//   "BQ_ESA" - BigQuery Elite System Activity component.
-	//   "DB" - Database component.
-	//   "FS" - File system component.
-	//   "ALL" - Overall Export Job.
-	ComponentType string `json:"componentType,omitempty"`
 	// Duration: Duration of the component export.
 	Duration string `json:"duration,omitempty"`
 	// EndTime: End timestamp of the component export.
@@ -285,13 +276,22 @@ type ComponentMetrics struct {
 	SizeGb float64 `json:"sizeGb,omitempty"`
 	// StartTime: Start timestamp of the component export.
 	StartTime string `json:"startTime,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ComponentType") to
+	// Type: Type of the exported component.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified component type.
+	//   "BQ_ESA" - BigQuery Elite System Activity component.
+	//   "DB" - Database component.
+	//   "FS" - File system component.
+	//   "ALL" - Overall Export Job.
+	Type string `json:"type,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Duration") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ComponentType") to include in API
+	// NullFields is a list of field names (e.g. "Duration") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -540,9 +540,11 @@ func (s ExportInstanceRequest) MarshalJSON() ([]byte, error) {
 // message
 type ExportMetadata struct {
 	// EsaMigrationToken: Opaque capability token for O2C Elite System Activity
-	// (ESA) direct dataset migration. It is minted by the exporter together with
-	// the cloned source dataset and presented back to Looker Original when the
-	// import requests access to that dataset.
+	// (ESA) direct dataset migration, encrypted by the exporter with the export
+	// encryption key (base64-encoded Cloud KMS ciphertext). It is minted by the
+	// exporter together with the cloned source dataset; Looker Core CLH decrypts
+	// it with the import's service account and presents the plaintext to Looker
+	// Original when the import requests access to that dataset.
 	EsaMigrationToken string `json:"esaMigrationToken,omitempty"`
 	// EsaSourceDatasetId: Source BigQuery dataset (formatted as
 	// `project_id:dataset_id`) for O2C Elite System Activity (ESA) direct dataset

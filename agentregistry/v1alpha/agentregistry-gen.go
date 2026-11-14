@@ -1146,7 +1146,7 @@ func (s Finding) MarshalJSON() ([]byte, error) {
 // Frontmatter: Structured metadata attributes extracted from the package's
 // local SKILL.md frontmatter.
 type Frontmatter struct {
-	// Compatibility: Optional. Environmental dependencies or local sidecars.
+	// Compatibility: Optional. Environmental dependencies or companion services.
 	Compatibility string `json:"compatibility,omitempty"`
 	// Description: Required. Functional description.
 	Description string `json:"description,omitempty"`

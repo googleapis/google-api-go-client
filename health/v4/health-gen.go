@@ -4725,9 +4725,19 @@ type OvulationTest struct {
 	//   "ESTROGEN_SURGE" - Estrogen surge.
 	//   "POSITIVE" - Positive result.
 	//   "INDETERMINATE" - Indeterminate result.
+	//   "OWN_METHOD" - Ovulation day the user identified by their own method, not
+	// a test kit.
 	Result string `json:"result,omitempty"`
 	// SampleTime: Required. The time at which ovulation test was measured.
 	SampleTime *ObservationSampleTime `json:"sampleTime,omitempty"`
+	// TestType: Optional. The type of ovulation test.
+	//
+	// Possible values:
+	//   "TEST_TYPE_UNSPECIFIED" - Unspecified test type.
+	//   "STRIP" - Test strip.
+	//   "DIGITAL" - Digital test.
+	//   "OWN_METHOD" - The user's own method, not a test kit.
+	TestType string `json:"testType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Result") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
@@ -6390,6 +6400,9 @@ type Symptoms struct {
 	//   "VAGINAL_DRYNESS" - Vaginal dryness.
 	//   "VAGINAL_ITCHING" - Vaginal itching.
 	//   "VOMITING" - Vomiting.
+	//   "LIMBS_SWELLING" - Swelling of the arms or legs.
+	//   "FACE_SWELLING" - Swelling of the face.
+	//   "NASAL_CONGESTION" - Nasal congestion.
 	Symptoms []string `json:"symptoms,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "SampleTime") to
 	// unconditionally include in API requests. By default, fields with empty or

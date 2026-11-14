@@ -488,7 +488,8 @@ type V2Key struct {
 	// https://google.aip.dev/154.
 	Etag string `json:"etag,omitempty"`
 	// KeyString: Output only. An encrypted and signed value held by this key. This
-	// field can be accessed only through the `GetKeyString` method.
+	// field is returned upon initial key creation (`CreateKey`) and can afterward
+	// be accessed only through the `GetKeyString` method.
 	KeyString string `json:"keyString,omitempty"`
 	// Name: Identifier. The resource name of the key. The `name` has the form:
 	// `projects//locations/global/keys/`. For example:
@@ -878,8 +879,10 @@ type ProjectsLocationsKeysCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a new API key. NOTE: Key is a global resource; hence the
-// only supported value for location is `global`.
+// Create: Creates a new API key. The key string of the API key is included in
+// the response and can afterward only be retrieved through the `GetKeyString`
+// method. NOTE: Key is a global resource; hence the only supported value for
+// location is `global`.
 //
 //   - parent: The project in which the API key is created. The parent field must
 //     be in format of "projects//locations/global".
@@ -994,8 +997,10 @@ type ProjectsLocationsKeysDeleteCall struct {
 }
 
 // Delete: Deletes an API key. Deleted key can be retrieved within 30 days of
-// deletion. Afterward, key will be purged from the project. NOTE: Key is a
-// global resource; hence the only supported value for location is `global`.
+// deletion. Afterward, key will be purged from the project. The key string of
+// the API key isn't included in the response and can only be retrieved through
+// the `GetKeyString` method. NOTE: Key is a global resource; hence the only
+// supported value for location is `global`.
 //
 // - name: The resource name of the API key to be deleted.
 func (r *ProjectsLocationsKeysService) Delete(name string) *ProjectsLocationsKeysDeleteCall {
@@ -1498,8 +1503,9 @@ type ProjectsLocationsKeysPatchCall struct {
 }
 
 // Patch: Patches the modifiable fields of an API key. The key string of the
-// API key isn't included in the response. NOTE: Key is a global resource;
-// hence the only supported value for location is `global`.
+// API key isn't included in the response and can only be retrieved through the
+// `GetKeyString` method. NOTE: Key is a global resource; hence the only
+// supported value for location is `global`.
 //
 //   - name: Identifier. The resource name of the key. The `name` has the form:
 //     `projects//locations/global/keys/`. For example:
@@ -1637,9 +1643,10 @@ type ProjectsLocationsKeysUndeleteCall struct {
 	header_              http.Header
 }
 
-// Undelete: Undeletes an API key which was deleted within 30 days. NOTE: Key
-// is a global resource; hence the only supported value for location is
-// `global`.
+// Undelete: Undeletes an API key which was deleted within 30 days. The key
+// string of the API key isn't included in the response and can only be
+// retrieved through the `GetKeyString` method. NOTE: Key is a global resource;
+// hence the only supported value for location is `global`.
 //
 // - name: The resource name of the API key to be undeleted.
 func (r *ProjectsLocationsKeysService) Undelete(name string, v2undeletekeyrequest *V2UndeleteKeyRequest) *ProjectsLocationsKeysUndeleteCall {

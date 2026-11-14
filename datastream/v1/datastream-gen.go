@@ -598,7 +598,8 @@ type ConnectionProfile struct {
 	Name string `json:"name,omitempty"`
 	// OracleProfile: Profile for connecting to an Oracle source.
 	OracleProfile *OracleProfile `json:"oracleProfile,omitempty"`
-	// PostgresqlProfile: Profile for connecting to a PostgreSQL source.
+	// PostgresqlProfile: Profile for connecting to a PostgreSQL source or
+	// destination.
 	PostgresqlProfile *PostgresqlProfile `json:"postgresqlProfile,omitempty"`
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
@@ -2869,7 +2870,8 @@ func (s PostgresqlObjectIdentifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PostgresqlProfile: Profile for connecting to a PostgreSQL source.
+// PostgresqlProfile: Profile for connecting to a PostgreSQL source or
+// destination.
 type PostgresqlProfile struct {
 	// Database: Required. Database for the PostgreSQL connection.
 	Database string `json:"database,omitempty"`

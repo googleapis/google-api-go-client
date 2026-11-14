@@ -7075,6 +7075,40 @@ func (s GoogleCloudSecuritycenterV2Role) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+type GoogleCloudSecuritycenterV2RuntimeInfo struct {
+	// Possible values:
+	//   "RUNTIME_EVIDENCE_UNSPECIFIED"
+	//   "VULNERABLE_PACKAGE_NOT_LOADED"
+	//   "VULNERABLE_PACKAGE_LOADED"
+	//   "VULNERABLE_CLASS_OR_SCRIPT_LOADED"
+	//   "VULNERABLE_FUNCTION_EXECUTED"
+	Evidence          string `json:"evidence,omitempty"`
+	FirstObservedTime string `json:"firstObservedTime,omitempty"`
+	// Possible values:
+	//   "RUNTIME_IMPACT_UNSPECIFIED"
+	//   "NO_IMPACT"
+	//   "POTENTIAL_IMPACT"
+	//   "ACTIVE_IMPACT"
+	Impact           string `json:"impact,omitempty"`
+	LastObservedTime string `json:"lastObservedTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Evidence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Evidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleCloudSecuritycenterV2RuntimeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudSecuritycenterV2RuntimeInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type GoogleCloudSecuritycenterV2Secret struct {
 	EnvironmentVariable *GoogleCloudSecuritycenterV2SecretEnvironmentVariable `json:"environmentVariable,omitempty"`
 	FilePath            *GoogleCloudSecuritycenterV2SecretFilePath            `json:"filePath,omitempty"`
@@ -7479,6 +7513,7 @@ type GoogleCloudSecuritycenterV2Vulnerability struct {
 	OffendingPackage  *GoogleCloudSecuritycenterV2Package          `json:"offendingPackage,omitempty"`
 	ProviderRiskScore int64                                        `json:"providerRiskScore,omitempty,string"`
 	Reachable         bool                                         `json:"reachable,omitempty"`
+	RuntimeInfo       *GoogleCloudSecuritycenterV2RuntimeInfo      `json:"runtimeInfo,omitempty"`
 	SecurityBulletin  *GoogleCloudSecuritycenterV2SecurityBulletin `json:"securityBulletin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cve") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9010,6 +9045,40 @@ func (s Role) MarshalJSON() ([]byte, error) {
 type RunAssetDiscoveryRequest struct {
 }
 
+type RuntimeInfo struct {
+	// Possible values:
+	//   "RUNTIME_EVIDENCE_UNSPECIFIED"
+	//   "VULNERABLE_PACKAGE_NOT_LOADED"
+	//   "VULNERABLE_PACKAGE_LOADED"
+	//   "VULNERABLE_CLASS_OR_SCRIPT_LOADED"
+	//   "VULNERABLE_FUNCTION_EXECUTED"
+	Evidence          string `json:"evidence,omitempty"`
+	FirstObservedTime string `json:"firstObservedTime,omitempty"`
+	// Possible values:
+	//   "RUNTIME_IMPACT_UNSPECIFIED"
+	//   "NO_IMPACT"
+	//   "POTENTIAL_IMPACT"
+	//   "ACTIVE_IMPACT"
+	Impact           string `json:"impact,omitempty"`
+	LastObservedTime string `json:"lastObservedTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Evidence") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Evidence") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RuntimeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod RuntimeInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 type Secret struct {
 	EnvironmentVariable *SecretEnvironmentVariable `json:"environmentVariable,omitempty"`
 	FilePath            *SecretFilePath            `json:"filePath,omitempty"`
@@ -9541,6 +9610,7 @@ type Vulnerability struct {
 	OffendingPackage  *Package          `json:"offendingPackage,omitempty"`
 	ProviderRiskScore int64             `json:"providerRiskScore,omitempty,string"`
 	Reachable         bool              `json:"reachable,omitempty"`
+	RuntimeInfo       *RuntimeInfo      `json:"runtimeInfo,omitempty"`
 	SecurityBulletin  *SecurityBulletin `json:"securityBulletin,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cve") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

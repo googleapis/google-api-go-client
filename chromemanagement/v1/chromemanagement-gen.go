@@ -4782,6 +4782,32 @@ func (s GoogleChromeManagementV1UserRequestingExtensionDetails) MarshalJSON() ([
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1AnnualSubscriptionInfo: Information for
+// annually recurring subscriptions/licenses.
+type GoogleChromeManagementVersionsV1AnnualSubscriptionInfo struct {
+	// Counts: Output only. License counts for this subscription.
+	Counts *GoogleChromeManagementVersionsV1LicenseCounts `json:"counts,omitempty"`
+	// SubscriptionEndTime: Output only. The date when the current subscription
+	// period ends.
+	SubscriptionEndTime string `json:"subscriptionEndTime,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Counts") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Counts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1AnnualSubscriptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1AnnualSubscriptionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1AttestationCredential: Information of public
 // key associated with a Chrome browser profile.
 type GoogleChromeManagementVersionsV1AttestationCredential struct {
@@ -6267,6 +6293,35 @@ func (s GoogleChromeManagementVersionsV1GoogleSecOpsConfig) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1LicenseCounts: Resource counts for a
+// specific license type.
+type GoogleChromeManagementVersionsV1LicenseCounts struct {
+	// AssignedCount: Output only. Total number of licenses currently assigned to
+	// users or devices.
+	AssignedCount int64 `json:"assignedCount,omitempty,string"`
+	// TotalPurchasedCount: Output only. Total number of licenses purchased.
+	TotalPurchasedCount int64 `json:"totalPurchasedCount,omitempty,string"`
+	// UnassignedCount: Output only. Total number of licenses available for
+	// assignment.
+	UnassignedCount int64 `json:"unassignedCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "AssignedCount") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AssignedCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1LicenseCounts) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1LicenseCounts
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse:
 // Response to ListChromeBrowserProfileCommands method.
 type GoogleChromeManagementVersionsV1ListChromeBrowserProfileCommandsResponse struct {
@@ -6550,6 +6605,41 @@ type GoogleChromeManagementVersionsV1PaloAltoNetworksConfig struct {
 
 func (s GoogleChromeManagementVersionsV1PaloAltoNetworksConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementVersionsV1PaloAltoNetworksConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementVersionsV1PerpetualLicenseInfo: Information for
+// perpetual licenses.
+type GoogleChromeManagementVersionsV1PerpetualLicenseInfo struct {
+	// ConditionallyAvailableCount: Output only. Number of standalone perpetual
+	// upgrades that were previously enrolled and later unenrolled for RMA,
+	// warranty, or repair reasons, and are only available to be reused on a same
+	// model device. Conditionally available licenses are a subset of the Assigned
+	// total.
+	ConditionallyAvailableCount int64 `json:"conditionallyAvailableCount,omitempty,string"`
+	// Counts: Output only. License counts for the perpetual SKU.
+	Counts *GoogleChromeManagementVersionsV1LicenseCounts `json:"counts,omitempty"`
+	// RetiredCount: Output only. Number of perpetual upgrades that were purchased
+	// but are no longer available for enrollment. These are perpetual upgrades
+	// that were enrolled to a device that has since been retired, and the upgrade
+	// cannot be transferred or re-used on a different device. Retired licenses are
+	// a subset of the Assigned total.
+	RetiredCount int64 `json:"retiredCount,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ConditionallyAvailableCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConditionallyAvailableCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1PerpetualLicenseInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1PerpetualLicenseInfo
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -7401,6 +7491,42 @@ func (s GoogleChromeManagementVersionsV1SubjectAltName) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementVersionsV1SubscriptionInfo: Singleton resource
+// representing the subscription and license information for a given customer.
+type GoogleChromeManagementVersionsV1SubscriptionInfo struct {
+	// ChromeEnterpriseUpgradeAnnual: Output only. Details for Chrome Enterprise
+	// Upgrade Annual SKU.
+	ChromeEnterpriseUpgradeAnnual *GoogleChromeManagementVersionsV1AnnualSubscriptionInfo `json:"chromeEnterpriseUpgradeAnnual,omitempty"`
+	// ChromePerpetualUpgrade: Output only. Details for Chrome Ent/Edu Upgrade
+	// Perpetual SKU.
+	ChromePerpetualUpgrade *GoogleChromeManagementVersionsV1PerpetualLicenseInfo `json:"chromePerpetualUpgrade,omitempty"`
+	// KioskSignageUpgradeAnnual: Output only. Details for Kiosk & Signage Upgrade
+	// Annual SKU.
+	KioskSignageUpgradeAnnual *GoogleChromeManagementVersionsV1AnnualSubscriptionInfo `json:"kioskSignageUpgradeAnnual,omitempty"`
+	// Name: Identifier. The resource name of the customer subscription info.
+	// Format: customers/{customer}/subscriptionInfo
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g.
+	// "ChromeEnterpriseUpgradeAnnual") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ChromeEnterpriseUpgradeAnnual")
+	// to include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GoogleChromeManagementVersionsV1SubscriptionInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementVersionsV1SubscriptionInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementVersionsV1ThirdPartyProfileUser: A representation of
 // non-Google (third party) user that is associated with a managed Chrome
 // profile.
@@ -7713,6 +7839,120 @@ type GoogleTypeDate struct {
 func (s GoogleTypeDate) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeDate
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type CustomersGetSubscriptionInfoCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSubscriptionInfo: Gets the aggregated subscription and license
+// information for a given customer as a singleton resource. Note: Because the
+// data is snapshotted for ChromeOS devices, the exact numbers can be delayed
+// by up to 10 seconds.
+//
+//   - name: The resource name of the customer subscription info to retrieve.
+//     Format: customers/{customer}/subscriptionInfo.
+func (r *CustomersService) GetSubscriptionInfo(name string) *CustomersGetSubscriptionInfoCall {
+	c := &CustomersGetSubscriptionInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *CustomersGetSubscriptionInfoCall) Fields(s ...googleapi.Field) *CustomersGetSubscriptionInfoCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *CustomersGetSubscriptionInfoCall) IfNoneMatch(entityTag string) *CustomersGetSubscriptionInfoCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *CustomersGetSubscriptionInfoCall) Context(ctx context.Context) *CustomersGetSubscriptionInfoCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *CustomersGetSubscriptionInfoCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersGetSubscriptionInfoCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "chromemanagement.customers.getSubscriptionInfo", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.getSubscriptionInfo" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleChromeManagementVersionsV1SubscriptionInfo.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *CustomersGetSubscriptionInfoCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementVersionsV1SubscriptionInfo, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementVersionsV1SubscriptionInfo{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "chromemanagement.customers.getSubscriptionInfo", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type CustomersAppsCountChromeAppRequestsCall struct {

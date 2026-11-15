@@ -1159,11 +1159,9 @@ type BuildOptions struct {
 	// PubsubTopic: Optional. Option to specify the Pub/Sub topic to receive build
 	// status updates.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
-	// RankedMachineSeries: Optional. Ranked list (earlier items have higher
-	// priority) of Machine Series to consider when provisioning Worker VMs. A
-	// concrete machine type will be selected based on machine availability in the
-	// given region. This field must be empty for the Build to be eligible to be
-	// paired with a pre-provisioned worker VM.
+	// RankedMachineSeries: Optional. Deprecated: Use
+	// PrivatePoolV1Config.WorkerConfig.ranked_machine_series instead. This field
+	// has no effect.
 	//
 	// Possible values:
 	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.
@@ -3121,8 +3119,9 @@ func (s PoolOption) MarshalJSON() ([]byte, error) {
 type PrivatePoolV1Config struct {
 	// NetworkConfig: Network configuration for the pool.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
-	// PrivateServiceConnect: Immutable. Private Service Connect(PSC) Network
-	// configuration for the pool.
+	// PrivateServiceConnect: Immutable. Deprecated: Private Service Connect is no
+	// longer supported. Private Service Connect(PSC) Network configuration for the
+	// pool.
 	PrivateServiceConnect *PrivateServiceConnect `json:"privateServiceConnect,omitempty"`
 	// WorkerConfig: Machine configuration for the workers in the pool.
 	WorkerConfig *WorkerConfig `json:"workerConfig,omitempty"`
@@ -3144,8 +3143,9 @@ func (s PrivatePoolV1Config) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// PrivateServiceConnect: Defines the Private Service Connect network
-// configuration for the pool.
+// PrivateServiceConnect: Deprecated: Private Service Connect is no longer
+// supported. Defines the Private Service Connect network configuration for the
+// pool.
 type PrivateServiceConnect struct {
 	// NetworkAttachment: Required. Immutable. The network attachment that the
 	// worker network interface is peered to. Must be in the format
@@ -4275,9 +4275,10 @@ type WorkerConfig struct {
 	// If left blank, Cloud Build will use a sensible default.
 	MachineType string `json:"machineType,omitempty"`
 	// RankedMachineSeries: Optional. Ranked list (earlier items have higher
-	// priority) of Machine Series to consider when provisioning Worker VMs. A
-	// concrete machine type will be selected based on machine availability in the
-	// given region.
+	// priority) of Machine Series to consider when provisioning worker VMs. The
+	// pool's requirements will be matched to a pre-sized machine type
+	// (/compute/docs/general-purpose-machines) which is available in the pool's
+	// region. If left blank, Cloud Build will use a sensible default.
 	//
 	// Possible values:
 	//   "MACHINE_SERIES_UNSPECIFIED" - Should not be used.

@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	aiplatformService, err := aiplatform.NewService(ctx, option.WithScopes(aiplatform.CloudPlatformReadOnlyScope))
+//	aiplatformService, err := aiplatform.NewService(ctx, option.WithScopes(aiplatform.DiscoveryengineServingReadwriteScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -114,6 +114,18 @@ const (
 	// View your data across Google Cloud services and see the email address of
 	// your Google Account
 	CloudPlatformReadOnlyScope = "https://www.googleapis.com/auth/cloud-platform.read-only"
+
+	// View your Agentspace chat history, including uploaded files and generated
+	// reports and visualizations, and interact with the Agentspace assistant on
+	// your behalf. Also view the artifacts you access through NotebookLM
+	// Enterprise.
+	DiscoveryengineAssistReadwriteScope = "https://www.googleapis.com/auth/discoveryengine.assist.readwrite"
+
+	// Interact with Discovery Engine API products, such as Agentspace, Vertex AI
+	// Search, or NotebookLM Enterprise, on your behalf. It will also allow the app
+	// to view all data that you have access to when you use or interact with a
+	// Discovery Engine API product.
+	DiscoveryengineServingReadwriteScope = "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
 )
 
 // NewService creates a new Service.
@@ -122,6 +134,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/aiplatform",
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/cloud-platform.read-only",
+		"https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+		"https://www.googleapis.com/auth/discoveryengine.serving.readwrite",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -3978,7 +3992,9 @@ type CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfig struct
 	SourceVideo *CloudAiLargeModelsVisionGenerateVideoRequestVideo `json:"sourceVideo,omitempty"`
 	// TargetCharacterReferences: Optional. The character reference images/videos.
 	TargetCharacterReferences []*CloudAiLargeModelsVisionGenerateVideoExperimentsPerfEstimationConfigCharacterReference `json:"targetCharacterReferences,omitempty"`
-	// TemporalSmoothness: Optional.
+	// TemporalSmoothness: Optional. How much to temporally smooth the 3D fitting
+	// optimization (the fitting server's `temporal_weight`). Must be finite and >=
+	// 0. Defaults to the fitting server's default (10) if unset.
 	TemporalSmoothness float64 `json:"temporalSmoothness,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ExportUsd") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -5220,17 +5236,19 @@ func (s GenaiVertexV1CodeExecutionResultDelta) MarshalJSON() ([]byte, error) {
 
 // GenaiVertexV1CodeExecutionResultStep: Code execution result step.
 type GenaiVertexV1CodeExecutionResultStep struct {
+	// Content: Multimodal output of the code execution.
+	Content *GenaiVertexV1ContentList `json:"content,omitempty"`
 	// IsError: Whether the code execution resulted in an error.
 	IsError bool `json:"isError,omitempty"`
 	// Result: Required. The output of the code execution.
 	Result string `json:"result,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "IsError") to unconditionally
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "IsError") to include in API
+	// NullFields is a list of field names (e.g. "Content") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -5626,6 +5644,16 @@ type GenaiVertexV1DocumentDelta struct {
 	//   "TYPE_UNSPECIFIED"
 	//   "TYPE_PDF" - PDF document format
 	//   "TYPE_CSV" - CSV document format
+	//   "TYPE_PPTX" - PPTX presentation format
+	//   "TYPE_PPT" - PPT presentation format
+	//   "TYPE_ODP" - ODP presentation format
+	//   "TYPE_DOCX" - DOCX document format
+	//   "TYPE_DOC" - DOC document format
+	//   "TYPE_DOTX" - DOTX document template format
+	//   "TYPE_ODT" - ODT document format
+	//   "TYPE_XLSX" - XLSX spreadsheet format
+	//   "TYPE_XLS" - XLS spreadsheet format
+	//   "TYPE_ODS" - ODS spreadsheet format
 	MimeType string `json:"mimeType,omitempty"`
 	Uri      string `json:"uri,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Data") to unconditionally
@@ -7775,6 +7803,31 @@ func (s GenaiVertexV1ServerToolResultDelta) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// GenaiVertexV1SmartTranscriptionMode: Configuration for smart transcription
+// mode.
+type GenaiVertexV1SmartTranscriptionMode struct {
+	// SourceText: The source text to be edited or rewritten via voice
+	// instructions. When provided, the model performs voice-driven editing and
+	// outputs the finalized replacement text.
+	SourceText string `json:"sourceText,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "SourceText") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "SourceText") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1SmartTranscriptionMode) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1SmartTranscriptionMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // GenaiVertexV1SpeakerConfig: Configuration for multi-speaker and speech
 // generation.
 type GenaiVertexV1SpeakerConfig struct {
@@ -8364,7 +8417,13 @@ type GenaiVertexV1TranscriptionConfig struct {
 	// LanguageCodes: Optional. BCP-47 language codes providing hints about the
 	// languages present in the audio. If omitted or empty, defaults to automatic
 	// language detection.
-	LanguageCodes []string `json:"languageCodes,omitempty"`
+	LanguageCodes []string                        `json:"languageCodes,omitempty"`
+	ModeConfig    *GenaiVertexV1TranscriptionMode `json:"modeConfig,omitempty"`
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Unspecified transcription mode.
+	//   "VERBATIM" - Verbatim transcription mode.
+	//   "SMART" - Smart transcription mode.
+	ModeEnum string `json:"modeEnum,omitempty"`
 	// TimestampGranularities: Optional. The granularity of timestamps to include
 	// in the transcription output. Supported values: "word". If empty, no
 	// timestamps are generated.
@@ -8384,6 +8443,28 @@ type GenaiVertexV1TranscriptionConfig struct {
 
 func (s GenaiVertexV1TranscriptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GenaiVertexV1TranscriptionConfig
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// GenaiVertexV1TranscriptionMode: Configuration for transcription mode.
+type GenaiVertexV1TranscriptionMode struct {
+	Smart    *GenaiVertexV1SmartTranscriptionMode    `json:"smart,omitempty"`
+	Verbatim *GenaiVertexV1VerbatimTranscriptionMode `json:"verbatim,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Smart") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Smart") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1TranscriptionMode) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1TranscriptionMode
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -8689,6 +8770,34 @@ func (s *GenaiVertexV1Value) UnmarshalJSON(data []byte) error {
 	}
 	s.NumberValue = float64(s1.NumberValue)
 	return nil
+}
+
+// GenaiVertexV1VerbatimTranscriptionMode: Configuration for verbatim
+// transcription mode.
+type GenaiVertexV1VerbatimTranscriptionMode struct {
+	// DiarizationMode: Optional. Configures speaker diarization. Supported values:
+	// "speaker".
+	DiarizationMode string `json:"diarizationMode,omitempty"`
+	// TimestampGranularities: Optional. The granularity of timestamps to include
+	// in the transcription output. Supported values: "word". If empty, no
+	// timestamps are generated.
+	TimestampGranularities []string `json:"timestampGranularities,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "DiarizationMode") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "DiarizationMode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GenaiVertexV1VerbatimTranscriptionMode) MarshalJSON() ([]byte, error) {
+	type NoMethod GenaiVertexV1VerbatimTranscriptionMode
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // GenaiVertexV1VertexAISearchConfig: Used to specify configuration for
@@ -9295,7 +9404,7 @@ type GoogleCloudAiplatformV1Agent struct {
 	// Persona: Optional. The persona (presentation) of the agent. Mutable:
 	// presentation only, not an archetype-derivation signal.
 	Persona *GoogleCloudAiplatformV1Persona `json:"persona,omitempty"`
-	// Status: Output only. The current operational state of the agent.
+	// Status: Optional. The current operational state of the agent.
 	Status *GoogleCloudAiplatformV1AgentStatus `json:"status,omitempty"`
 	// SystemInstruction: Optional. The instructions for the agent to follow. These
 	// instructions are passed to the LLM as a system instruction.
@@ -9582,7 +9691,7 @@ func (s GoogleCloudAiplatformV1AgentResponseCustomization) MarshalJSON() ([]byte
 type GoogleCloudAiplatformV1AgentStatus struct {
 	// DeleteTime: Output only. The time at which the agent was soft-deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
-	// State: Output only. The current state of the agent.
+	// State: Optional. The current state of the agent.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified agent state.
@@ -9590,6 +9699,8 @@ type GoogleCloudAiplatformV1AgentStatus struct {
 	//   "SUSPENDED" - The agent is suspended.
 	//   "ARCHIVED" - The agent is archived (read-only).
 	//   "DELETED" - The agent is soft-deleted.
+	//   "PROVISIONING" - The agent has been created and is awaiting post-creation
+	// provisioning before becoming active.
 	State string `json:"state,omitempty"`
 	// SuspensionReason: Output only. Context about the current active suspension.
 	SuspensionReason *GoogleCloudAiplatformV1AgentStatusSuspensionReason `json:"suspensionReason,omitempty"`
@@ -9649,8 +9760,8 @@ func (s GoogleCloudAiplatformV1AgentStatusSuspensionReason) MarshalJSON() ([]byt
 // "url": "https://api.example.com/mcp", "headers": { "Authorization": "Bearer
 // token123" } }
 type GoogleCloudAiplatformV1AgentTool struct {
-	// Headers: Optional. The headers for the MCP server, such as for
-	// authentication. Only applicable when `type` is `mcp_server`.
+	// Headers: Optional. Not used; the tool is resolved from `name` via Agent
+	// Registry.
 	Headers map[string]string `json:"headers,omitempty"`
 	// Name: Optional. The tool's Google Cloud resource name, used to resolve the
 	// tool. Applicable when `type` is `mcp_server` or `endpoint` (a tool
@@ -9659,15 +9770,11 @@ type GoogleCloudAiplatformV1AgentTool struct {
 	// `projects/{project}/locations/{location}/.../endpoints/{id}`.
 	Name string `json:"name,omitempty"`
 	// Type: Required. The type of the tool. Supported types: * `audio_generation`
-	// * `code_execution` * `endpoint` * `filesystem` * `google_search` *
-	// `image_generation` * `mcp_server` * `speech_generation` * `url_context` *
-	// `video_generation`
+	// * `endpoint` * `google_search` * `image_generation` * `mcp_server` *
+	// `speech_generation` * `url_context` * `video_generation`
 	Type string `json:"type,omitempty"`
-	// Url: Optional. Fallback for the tool's runtime reference, consumed by
-	// `CreateAgent` to create the downstream AI App. Applicable when `type` is
-	// `mcp_server` or `endpoint`, and optional: the Agent service derives the
-	// runtime reference from `name` via Agent Registry (`GetMcpServer` /
-	// `GetEndpoint`), and reads this only when that lookup yields none.
+	// Url: Optional. The runtime reference is resolved from `name` via Agent
+	// Registry (`GetMcpServer` / `GetEndpoint`), so this is not required.
 	Url string `json:"url,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Headers") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -26084,7 +26191,9 @@ type GoogleCloudAiplatformV1GoogleMaps struct {
 	// include the widget context token in the response.
 	EnableWidget bool `json:"enableWidget,omitempty"`
 	// GroundingTypes: Optional. Specifies the types of Google Maps grounding to
-	// enable. Defaults to `places` when unset.
+	// enable. Defaults to `places` when unset, and to `places` and `routing` for
+	// Gemini 4 and later models. When set, only the listed types are enabled; for
+	// example, setting only `places` disables routing.
 	GroundingTypes *GoogleCloudAiplatformV1GoogleMapsGroundingTypes `json:"groundingTypes,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "EnableWidget") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -26111,7 +26220,8 @@ type GoogleCloudAiplatformV1GoogleMapsGroundingTypes struct {
 	// default grounding type when no `GroundingTypes` are specified.
 	Places *GoogleCloudAiplatformV1GoogleMapsPlaces `json:"places,omitempty"`
 	// Routing: Optional. Enables grounding with Google Maps Routing APIs
-	// (ComputeRoutes and SearchAlongRoute).
+	// (ComputeRoutes and SearchAlongRoute). Also enabled by default for Gemini 4
+	// and later models when no `GroundingTypes` are specified.
 	Routing *GoogleCloudAiplatformV1GoogleMapsRouting `json:"routing,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Places") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -26138,7 +26248,8 @@ type GoogleCloudAiplatformV1GoogleMapsPlaces struct {
 }
 
 // GoogleCloudAiplatformV1GoogleMapsRouting: Grounding with Google Maps Routing
-// APIs (ComputeRoutes and SearchAlongRoute).
+// APIs (ComputeRoutes and SearchAlongRoute). Also enabled by default for
+// Gemini 4 and later models when no grounding type is specified.
 type GoogleCloudAiplatformV1GoogleMapsRouting struct {
 }
 
@@ -35899,6 +36010,9 @@ func (s GoogleCloudAiplatformV1NotebookSoftwareConfig) MarshalJSON() ([]byte, er
 // GoogleCloudAiplatformV1ObservabilityConfig: Observability settings for one
 // agent's sessions.
 type GoogleCloudAiplatformV1ObservabilityConfig struct {
+	// ArtifactGcsBucket: Optional. Customer bucket (`gs://bucket`) the media of
+	// observed turns is written to; unset means media is not persisted.
+	ArtifactGcsBucket string `json:"artifactGcsBucket,omitempty"`
 	// ObservabilityEnabled: Optional. Enables observability for this agent's
 	// sessions: OpenTelemetry span emission covering tool names, model names,
 	// token counts, latencies and status. If `false`, the other fields here are
@@ -35914,15 +36028,15 @@ type GoogleCloudAiplatformV1ObservabilityConfig struct {
 	// captured. Treat it as a recorded intention that takes effect when
 	// enforcement lands.
 	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
+	// ForceSendFields is a list of field names (e.g. "ArtifactGcsBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ObservabilityEnabled") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArtifactGcsBucket") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -41846,9 +41960,9 @@ func (s GoogleCloudAiplatformV1ReasoningEngineSpec) MarshalJSON() ([]byte, error
 type GoogleCloudAiplatformV1ReasoningEngineSpecBuildSpec struct {
 	// ServiceAccount: Optional. The service account that Cloud Build uses to run
 	// the build. This field is only applicable when `worker_pool` is specified
-	// (i.e., for custom worker pools). If `worker_pool` is not specified, this
-	// field is ignored and the build runs using the Google-managed service agent.
-	// Format: `projects/{project}/serviceAccounts/{service_account}` or
+	// (i.e., for private pools). If `worker_pool` is not specified, this field is
+	// ignored and the build runs using the Google-managed service agent. Format:
+	// `projects/{project}/serviceAccounts/{service_account}` or
 	// `{service_account}@{project}.iam.gserviceaccount.com`
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 	// WorkerPool: Optional. Identifier. The resource name of the Cloud Build
@@ -52467,6 +52581,7 @@ type GoogleCloudAiplatformV1ServingProfile struct {
 	//   "GEMINI_LIVE" - The scope for Gemini Live.
 	//   "INTERACTIONS_API" - The scope for Interactions API.
 	//   "RESPONSE_API" - The scope for Response API.
+	//   "VOICES_API" - The scope for Voices API.
 	Scope string `json:"scope,omitempty"`
 	// UpdateTime: Output only. Timestamp when the ServingProfile was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`

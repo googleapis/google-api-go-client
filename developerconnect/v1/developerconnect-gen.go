@@ -343,10 +343,12 @@ func (s AddGitRepositoryLinkPullRequestCommentRequest) MarshalJSON() ([]byte, er
 // AddGitRepositoryLinkPullRequestReviewCommentRequest: Request message for
 // AddGitRepositoryLinkPullRequestReviewComment.
 type AddGitRepositoryLinkPullRequestReviewCommentRequest struct {
-	// Comment: Required. The review comment to add.
+	// Comment: Required. The review comment to add. Input fields used: `body`,
+	// `path`, `first_line`, `last_line`, `side`.
 	Comment *PullRequestReviewComment `json:"comment,omitempty"`
-	// CommitId: Optional. The commit SHA to comment on. If not specified, defaults
-	// to the HEAD commit of the Pull Request.
+	// CommitId: Optional. The SHA of a commit in the pull request to comment on.
+	// If not specified, defaults to the HEAD commit of the pull request. Set this
+	// only to comment on a specific, known commit in the pull request.
 	CommitId string `json:"commitId,omitempty"`
 	// PullRequestId: Required. The ID of the Pull Request.
 	PullRequestId string `json:"pullRequestId,omitempty"`
@@ -2695,7 +2697,8 @@ func (s ProxyConfig) MarshalJSON() ([]byte, error) {
 type PullRequest struct {
 	// Author: Output only. The username of the author.
 	Author string `json:"author,omitempty"`
-	// BaseRef: Required. The target commit SHA of the base branch.
+	// BaseRef: Required. The name of the target (base) branch that the changes are
+	// merged into.
 	BaseRef string `json:"baseRef,omitempty"`
 	// Body: Optional. The body description of the PR.
 	Body string `json:"body,omitempty"`
@@ -2708,11 +2711,13 @@ type PullRequest struct {
 	// Enterprise, GitLab, or GitLab Enterprise, where a pull request closed
 	// without being merged is `CLOSED`.
 	DeclineTime string `json:"declineTime,omitempty"`
-	// HeadRef: Required. The source commit SHA of the head branch.
+	// HeadRef: Required. The name of the source (head) branch that contains the
+	// changes.
 	HeadRef string `json:"headRef,omitempty"`
 	// HtmlUrl: Output only. The HTML URL of the pull request on the SCM provider.
 	HtmlUrl string `json:"htmlUrl,omitempty"`
-	// Id: Required. The ID of the PR.
+	// Id: Optional. The ID of the PR, assigned by the SCM provider (for example,
+	// "45"). Ignored by `OpenGitRepositoryLinkPullRequest`.
 	Id string `json:"id,omitempty"`
 	// MergeTime: Output only. When the PR was merged.
 	MergeTime string `json:"mergeTime,omitempty"`
@@ -2805,6 +2810,8 @@ type PullRequestReviewComment struct {
 	// Body: Required. The body of the comment.
 	Body string `json:"body,omitempty"`
 	// CommitId: Output only. The commit SHA the comment was actually applied to.
+	// Ignored in requests; to choose the commit to comment on, set
+	// `AddGitRepositoryLinkPullRequestReviewCommentRequest.commit_id`.
 	CommitId string `json:"commitId,omitempty"`
 	// CreateTime: Output only. When the comment was created.
 	CreateTime string `json:"createTime,omitempty"`
@@ -6676,7 +6683,8 @@ type ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall struct {
 
 // DiffCommit: Diff commits for a GitRepositoryLink.
 //
-// - name: The resource name of the GitRepositoryLink.
+//   - name: The resource name of the GitRepositoryLink in the format
+//     `projects/*/locations/*/connections/*/gitRepositoryLinks/*`.
 func (r *ProjectsLocationsConnectionsGitRepositoryLinksService) DiffCommit(name string) *ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall {
 	c := &ProjectsLocationsConnectionsGitRepositoryLinksDiffCommitCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name

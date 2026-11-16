@@ -18,13 +18,6 @@
   "description": "Allows users to manage BigQuery data policies.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery/docs/column-data-masking",
-  "endpoints": [
-    {
-      "description": "Regional Endpoint",
-      "endpointUrl": "https://bigquerydatapolicy.us-central1.rep.googleapis.com/",
-      "location": "us-central1"
-    }
-  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -412,7 +405,7 @@
       }
     }
   },
-  "revision": "20261106",
+  "revision": "20261107",
   "rootUrl": "https://bigquerydatapolicy.googleapis.com/",
   "schemas": {
     "AuditConfig": {

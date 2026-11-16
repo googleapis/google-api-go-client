@@ -512,6 +512,12 @@ type BulkInsertOperationStatus struct {
 	CreatedVmCount int64 `json:"createdVmCount,omitempty"`
 	// DeletedVmCount: [Output Only] Count of VMs that got deleted during rollback.
 	DeletedVmCount int64 `json:"deletedVmCount,omitempty"`
+	// EstimatedAvailabilityTime: Output only. [Output Only] The time when the
+	// scheduler expects capacity for this location. The field is set only while
+	// the status is PENDING. The value 9999-12-31T23:59:59.999999999Z means that
+	// the scheduler expects no capacity. The field is absent when the scheduler
+	// gives no estimate, and it is cleared when the status changes.
+	EstimatedAvailabilityTime string `json:"estimatedAvailabilityTime,omitempty"`
 	// FailedToCreateVmCount: [Output Only] Count of VMs that started creating but
 	// encountered an error.
 	FailedToCreateVmCount int64 `json:"failedToCreateVmCount,omitempty"`
@@ -1257,14 +1263,15 @@ func (s GetHealthOperationMetadataHealthInfo) MarshalJSON() ([]byte, error) {
 }
 
 type GetVersionOperationMetadata struct {
+	InlineHbomInfo *GetVersionOperationMetadataHbomInfo `json:"inlineHbomInfo,omitempty"`
 	InlineSbomInfo *GetVersionOperationMetadataSbomInfo `json:"inlineSbomInfo,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "InlineSbomInfo") to
+	// ForceSendFields is a list of field names (e.g. "InlineHbomInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "InlineSbomInfo") to include in
+	// NullFields is a list of field names (e.g. "InlineHbomInfo") to include in
 	// API requests with the JSON null value. By default, fields with empty values
 	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -1273,6 +1280,49 @@ type GetVersionOperationMetadata struct {
 
 func (s GetVersionOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GetVersionOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GetVersionOperationMetadataHbomInfo struct {
+	// HardwareComponentInfo: A mapping of hardware sub-component categories to
+	// their component values.
+	HardwareComponentInfo map[string]GetVersionOperationMetadataHbomInfoComponentValues `json:"hardwareComponentInfo,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "HardwareComponentInfo") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "HardwareComponentInfo") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetVersionOperationMetadataHbomInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GetVersionOperationMetadataHbomInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+type GetVersionOperationMetadataHbomInfoComponentValues struct {
+	// Values: List of obfuscated hardware component identifiers.
+	Values []string `json:"values,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s GetVersionOperationMetadataHbomInfoComponentValues) MarshalJSON() ([]byte, error) {
+	type NoMethod GetVersionOperationMetadataHbomInfoComponentValues
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1629,6 +1679,88 @@ func (s MethodMap) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// MicroVmsExportOperationMetadata: [Output Only] Operation metadata for
+// microVms.export.
+type MicroVmsExportOperationMetadata struct {
+	// ArchiveSha256: Output only. [Output Only] SHA-256 hex digest of the exported
+	// archive.
+	ArchiveSha256 string `json:"archiveSha256,omitempty"`
+	// BucketName: Output only. [Output Only] Target Cloud Storage bucket name.
+	BucketName string `json:"bucketName,omitempty"`
+	// BytesTransferred: Output only. [Output Only] Total bytes transferred to
+	// Cloud Storage.
+	BytesTransferred int64 `json:"bytesTransferred,omitempty,string"`
+	// FilesTransferred: Output only. [Output Only] Total files archived.
+	FilesTransferred int64 `json:"filesTransferred,omitempty,string"`
+	// ObjectName: Output only. [Output Only] Target Cloud Storage object name or
+	// prefix.
+	ObjectName string `json:"objectName,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArchiveSha256") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchiveSha256") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MicroVmsExportOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod MicroVmsExportOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// MicroVmsImportOperationMetadata: [Output Only] Operation metadata for
+// microVms.import.
+type MicroVmsImportOperationMetadata struct {
+	// ArchiveSha256: Output only. [Output Only] SHA-256 hex digest of the imported
+	// archive.
+	ArchiveSha256 string `json:"archiveSha256,omitempty"`
+	// BucketName: Output only. [Output Only] Source Cloud Storage bucket name.
+	BucketName string `json:"bucketName,omitempty"`
+	// BytesTransferred: Output only. [Output Only] Total bytes transferred from
+	// Cloud Storage.
+	BytesTransferred int64 `json:"bytesTransferred,omitempty,string"`
+	// FilesTransferred: Output only. [Output Only] Total files imported.
+	FilesTransferred int64 `json:"filesTransferred,omitempty,string"`
+	// ObjectName: Output only. [Output Only] Source Cloud Storage object name or
+	// prefix.
+	ObjectName string `json:"objectName,omitempty"`
+	// Phase: Output only. [Output Only] The current phase of the import operation.
+	//
+	// Possible values:
+	//   "PHASE_UNSPECIFIED" - Default value; not used.
+	//   "SCHEDULING" - Selecting a host and reserving capacity for the MicroVM.
+	//   "PROVISIONING_STORAGE" - Creating and attaching the MicroVM's persistent
+	// session storage.
+	//   "IMPORTING" - Streaming user data from Cloud Storage into the session
+	// storage.
+	//   "BOOTING" - Booting the guest VM.
+	Phase string `json:"phase,omitempty"`
+	// TotalBytes: Output only. [Output Only] Size of the source object in bytes.
+	// Unset for DIRECTORY_SYNC.
+	TotalBytes int64 `json:"totalBytes,omitempty,string"`
+	// ForceSendFields is a list of field names (e.g. "ArchiveSha256") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ArchiveSha256") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s MicroVmsImportOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod MicroVmsImportOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Operation: Represents an Operation resource. Google Compute Engine has three
 // Operation resources: * Global
 // (/compute/docs/reference/rest/{$api_version}/globalOperations) * Regional
@@ -1686,6 +1818,12 @@ type Operation struct {
 	// Kind: Output only. [Output Only] Type of the resource. Always
 	// `compute#operation` for Operation resources.
 	Kind string `json:"kind,omitempty"`
+	// MicroVmsExportOperationMetadata: Output only. [Output Only] Operation
+	// metadata for microVms.export.
+	MicroVmsExportOperationMetadata *MicroVmsExportOperationMetadata `json:"microVmsExportOperationMetadata,omitempty"`
+	// MicroVmsImportOperationMetadata: Output only. [Output Only] Operation
+	// metadata for microVms.import.
+	MicroVmsImportOperationMetadata *MicroVmsImportOperationMetadata `json:"microVmsImportOperationMetadata,omitempty"`
 	// Name: [Output Only] Name of the operation.
 	Name string `json:"name,omitempty"`
 	// OperationGroupId: Output only. [Output Only] An ID that represents a group
@@ -1940,11 +2078,13 @@ type OperationWarnings struct {
 	// the creation of a VM that uses global DNS.
 	//   "RATE_LIMIT_EXCEEDED" - Resource can't be retrieved due to api quota
 	// exceeded.
+	//   "ASYNC_REPLICATION_SECONDARY_UPDATE_PENDING" - Primary disk resized.
+	// Secondary disk resize is in-progress and awaiting resource allocation in the
+	// secondary region.
 	//   "UPCOMING_MAINTENANCES_UNAVAILABLE" - Upcoming maintenance schedule is
 	// unavailable for the resource.
-	//   "RESERVED_ENTRY_136" - Reserved entries for quickly adding new warnings
+	//   "RESERVED_ENTRY_139" - Reserved entries for quickly adding new warnings
 	// without breaking dependent clients.
-	//   "RESERVED_ENTRY_139"
 	//   "RESERVED_ENTRY_141"
 	//   "RESERVED_ENTRY_142"
 	//   "RESERVED_ENTRY_143"
@@ -2410,11 +2550,13 @@ type ResourceWarnings struct {
 	// the creation of a VM that uses global DNS.
 	//   "RATE_LIMIT_EXCEEDED" - Resource can't be retrieved due to api quota
 	// exceeded.
+	//   "ASYNC_REPLICATION_SECONDARY_UPDATE_PENDING" - Primary disk resized.
+	// Secondary disk resize is in-progress and awaiting resource allocation in the
+	// secondary region.
 	//   "UPCOMING_MAINTENANCES_UNAVAILABLE" - Upcoming maintenance schedule is
 	// unavailable for the resource.
-	//   "RESERVED_ENTRY_136" - Reserved entries for quickly adding new warnings
+	//   "RESERVED_ENTRY_139" - Reserved entries for quickly adding new warnings
 	// without breaking dependent clients.
-	//   "RESERVED_ENTRY_139"
 	//   "RESERVED_ENTRY_141"
 	//   "RESERVED_ENTRY_142"
 	//   "RESERVED_ENTRY_143"
@@ -2737,11 +2879,13 @@ type ResourceUpdateWarnings struct {
 	// the creation of a VM that uses global DNS.
 	//   "RATE_LIMIT_EXCEEDED" - Resource can't be retrieved due to api quota
 	// exceeded.
+	//   "ASYNC_REPLICATION_SECONDARY_UPDATE_PENDING" - Primary disk resized.
+	// Secondary disk resize is in-progress and awaiting resource allocation in the
+	// secondary region.
 	//   "UPCOMING_MAINTENANCES_UNAVAILABLE" - Upcoming maintenance schedule is
 	// unavailable for the resource.
-	//   "RESERVED_ENTRY_136" - Reserved entries for quickly adding new warnings
+	//   "RESERVED_ENTRY_139" - Reserved entries for quickly adding new warnings
 	// without breaking dependent clients.
-	//   "RESERVED_ENTRY_139"
 	//   "RESERVED_ENTRY_141"
 	//   "RESERVED_ENTRY_142"
 	//   "RESERVED_ENTRY_143"

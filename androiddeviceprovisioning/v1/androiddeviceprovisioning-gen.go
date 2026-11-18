@@ -372,17 +372,8 @@ type Company struct {
 	// GoogleWorkspaceAccount: Output only. The Google Workspace account associated
 	// with this customer. Only used for customer Companies.
 	GoogleWorkspaceAccount *GoogleWorkspaceAccount `json:"googleWorkspaceAccount,omitempty"`
-	// LanguageCode: Input only. The preferred locale of the customer represented
-	// as a BCP47 language code. This field is validated on input and requests
-	// containing unsupported language codes will be rejected. Supported language
-	// codes: Arabic (ar) Chinese (Hong Kong) (zh-HK) Chinese (Simplified) (zh-CN)
-	// Chinese (Traditional) (zh-TW) Czech (cs) Danish (da) Dutch (nl) English (UK)
-	// (en-GB) English (US) (en-US) Filipino (fil) Finnish (fi) French (fr) German
-	// (de) Hebrew (iw) Hindi (hi) Hungarian (hu) Indonesian (id) Italian (it)
-	// Japanese (ja) Korean (ko) Norwegian (Bokmal) (no) Polish (pl) Portuguese
-	// (Brazil) (pt-BR) Portuguese (Portugal) (pt-PT) Russian (ru) Spanish (es)
-	// Spanish (Latin America) (es-419) Swedish (sv) Thai (th) Turkish (tr)
-	// Ukrainian (uk) Vietnamese (vi)
+	// LanguageCode: Input only. Deprecated: This field is no longer supported and
+	// is ignored by the server.
 	LanguageCode string `json:"languageCode,omitempty"`
 	// Name: Output only. The API resource name of the company. The resource name
 	// is one of the following formats: *

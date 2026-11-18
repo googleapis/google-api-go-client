@@ -419,6 +419,8 @@ type ApiDimensionFilter struct {
 	//   "COUNTRY"
 	//   "DEVICE"
 	//   "SEARCH_APPEARANCE"
+	//   "BRANDED_CLASSIFICATION" - Filters by branded query classification
+	// (`BRANDED` or `NON_BRANDED`).
 	Dimension  string `json:"dimension,omitempty"`
 	Expression string `json:"expression,omitempty"`
 	// Possible values:
@@ -452,20 +454,29 @@ func (s ApiDimensionFilter) MarshalJSON() ([]byte, error) {
 // results within a filter group are either AND'ed or OR'ed together, depending
 // on the group type selected. All filter groups are AND'ed together.
 type ApiDimensionFilterGroup struct {
-	// Filters: Optional. A list of single-value filters in this group.
+	// FilterLists: Optional. Unlike the `filters` field which only supports a
+	// single value per entry, `filter_lists` allows matching against a list of
+	// values for a single dimension in one filter. `filter_lists` supports
+	// `COUNTRY` and `DEVICE` dimensions only. The maximum number of `expressions`
+	// allowed in a single filter list is 1000.
+	FilterLists []*ApiDimensionFilterList `json:"filterLists,omitempty"`
+	// Filters: Optional. A list of single-value filters in this group. A list of
+	// multi-value dimension filters. A row matches if its value for the specified
+	// dimension matches any of the values in the filter list (implicit OR logic,
+	// e.g., `COUNTRY` is `'usa'` OR `'can'`).
 	Filters []*ApiDimensionFilter `json:"filters,omitempty"`
 	// GroupType: Optional. The logic operator between filters of the same group.
 	//
 	// Possible values:
 	//   "AND"
 	GroupType string `json:"groupType,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Filters") to unconditionally
-	// include in API requests. By default, fields with empty or default values are
-	// omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "FilterLists") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Filters") to include in API
+	// NullFields is a list of field names (e.g. "FilterLists") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -474,6 +485,46 @@ type ApiDimensionFilterGroup struct {
 
 func (s ApiDimensionFilterGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod ApiDimensionFilterGroup
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ApiDimensionFilterList: A filter that allows specifying multiple values for
+// a single dimension. The matching logic is an implicit OR of equality matches
+// (e.g., `COUNTRY` is `'usa'` OR `'can'`). Only supported for `COUNTRY` and
+// `DEVICE`.
+type ApiDimensionFilterList struct {
+	// Dimension: Required. The dimension to filter by. Only supported for
+	// `COUNTRY` and `DEVICE`.
+	//
+	// Possible values:
+	//   "QUERY"
+	//   "PAGE"
+	//   "COUNTRY"
+	//   "DEVICE"
+	//   "SEARCH_APPEARANCE"
+	//   "BRANDED_CLASSIFICATION" - Filters by branded query classification
+	// (`BRANDED` or `NON_BRANDED`).
+	Dimension string `json:"dimension,omitempty"`
+	// Expressions: Required. The values to filter against. A row matches if its
+	// value for the specified `dimension` equals any of these `expressions`
+	// (implicit OR logic between the `expressions`). The maximum number of
+	// `expressions` allowed is 1000.
+	Expressions []string `json:"expressions,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Dimension") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Dimension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ApiDimensionFilterList) MarshalJSON() ([]byte, error) {
+	type NoMethod ApiDimensionFilterList
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
@@ -1110,6 +1161,8 @@ type SearchAnalyticsQueryRequest struct {
 	// format (ISO-8601 extended offset date-time format) in PT time (UTC -
 	// 7:00/8:00). Data is available up to 10 days. Requires setting the dataState
 	// to HOURLY_ALL.
+	//   "BRANDED_CLASSIFICATION" - Group by branded query classification
+	// (`BRANDED` and `NON_BRANDED`).
 	Dimensions []string `json:"dimensions,omitempty"`
 	// EndDate: [Required] End date of the requested date range, in YYYY-MM-DD
 	// format, in PST (UTC - 8:00). Must be greater than or equal to the start
@@ -1127,6 +1180,7 @@ type SearchAnalyticsQueryRequest struct {
 	//   "NEWS" - News tab in search.
 	//   "DISCOVER" - Discover.
 	//   "GOOGLE_NEWS" - Google News (news.google.com or mobile app).
+	//   "WEB_MULTIMODAL" - Web multimodal search.
 	SearchType string `json:"searchType,omitempty"`
 	// StartDate:  [Required] Start date of the requested date range, in YYYY-MM-DD
 	// format, in PST time (UTC - 8:00). Must be less than or equal to the end
@@ -1145,6 +1199,7 @@ type SearchAnalyticsQueryRequest struct {
 	//   "NEWS" - News tab in search.
 	//   "DISCOVER" - Discover.
 	//   "GOOGLE_NEWS" - Google News (news.google.com or mobile app).
+	//   "WEB_MULTIMODAL" - Web multimodal search.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AggregationType") to
 	// unconditionally include in API requests. By default, fields with empty or

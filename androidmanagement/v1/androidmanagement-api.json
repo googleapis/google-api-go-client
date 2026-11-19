@@ -1265,7 +1265,7 @@
       }
     }
   },
-  "revision": "20261104",
+  "revision": "20261116",
   "rootUrl": "https://androidmanagement.googleapis.com/",
   "schemas": {
     "AdbShellCommandEvent": {
@@ -3602,8 +3602,8 @@
           "enumDescriptions": [
             "Unspecified. Defaults to ALLOW_ALL_TETHERING unless tetheringConfigDisabled is set to true. If tetheringConfigDisabled is set to true, this is equivalent to DISALLOW_ALL_TETHERING.",
             "Allows configuration and use of all forms of tethering. tetheringConfigDisabled is ignored.",
-            "Disallows the user from using Wi-Fi tethering. Supported on company owned devices running Android 13 and above. If the setting is not supported, ALLOW_ALL_TETHERING will be set. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 13. tetheringConfigDisabled is ignored.",
-            "Disallows all forms of tethering. Supported on fully managed devices and work profile on company-owned devices, on all supported android versions. The setting tetheringConfigDisabled is ignored."
+            "Disallows the user from using Wi-Fi tethering. Supported on company owned devices running Android 13 (API level 33) and higher. If the setting is not supported, ALLOW_ALL_TETHERING will be set. A NonComplianceDetail with API_LEVEL is reported if the Android version is less than 13. tetheringConfigDisabled is ignored.",
+            "Disallows all forms of tethering. Supported on fully managed devices and work profile on company-owned devices, on all supported Android versions. The setting tetheringConfigDisabled is ignored."
           ],
           "type": "string"
         },
@@ -5487,7 +5487,7 @@
       "id": "NetworkInfo",
       "properties": {
         "imei": {
-          "description": "IMEI number of the GSM device. For example, A1000031212.",
+          "description": "IMEI number of the GSM device. For example, A1000031212. This value corresponds to the result of TelephonyManager.getImei()(https://developer.android.com/reference/android/telephony/TelephonyManager#getImei()). On dual-SIM devices, reports the IMEI associated with the default active subscription, such as the IMEI of the eSIM slot when only an eSIM is active.",
           "type": "string"
         },
         "meid": {

@@ -242,6 +242,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Buckets = NewProjectsLocationsBucketsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.Reports = NewProjectsLocationsReportsService(s)
 	rs.Scopes = NewProjectsLocationsScopesService(s)
 	rs.TraceScopes = NewProjectsLocationsTraceScopesService(s)
 	return rs
@@ -253,6 +254,8 @@ type ProjectsLocationsService struct {
 	Buckets *ProjectsLocationsBucketsService
 
 	Operations *ProjectsLocationsOperationsService
+
+	Reports *ProjectsLocationsReportsService
 
 	Scopes *ProjectsLocationsScopesService
 
@@ -310,6 +313,15 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsReportsService(s *Service) *ProjectsLocationsReportsService {
+	rs := &ProjectsLocationsReportsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsReportsService struct {
 	s *Service
 }
 
@@ -643,6 +655,34 @@ func (s ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ListReportsResponse: Response for listing Reports.
+type ListReportsResponse struct {
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+	// Reports: The list of reports.
+	Reports []*Report `json:"reports,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ListReportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListReportsResponse
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ListTraceScopesResponse: Response for listing TraceScopes.
 type ListTraceScopesResponse struct {
 	// NextPageToken: Optional. If there might be more results than appear in this
@@ -825,6 +865,117 @@ func (s OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RenderingOptions: Rendering options for the report.
+type RenderingOptions struct {
+	// CollapsibleGroupsExpanded: Optional. Whether widgets within a collapsible
+	// group are expanded by default.
+	CollapsibleGroupsExpanded bool `json:"collapsibleGroupsExpanded,omitempty"`
+	// LegendsIncluded: Optional. Whether legends are included on widgets.
+	LegendsIncluded bool `json:"legendsIncluded,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "CollapsibleGroupsExpanded")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CollapsibleGroupsExpanded") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RenderingOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod RenderingOptions
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// Report: A Cloud Observability report configuration.
+type Report struct {
+	// CreateTime: Output only. When the report was created.
+	CreateTime string `json:"createTime,omitempty"`
+	// CreatorUsername: Output only. The username of the user who created the
+	// report. This may be an email or a formatted subject and identity pool
+	// identifier. The following are examples: alice.smith@example.com
+	// alice.smith@example.com (global/workforcePools/example-com-us-employees)
+	// my-workload
+	// (projects/1234/locations/global/workloadIdentityPools/example-workload-pool)
+	// This value may be empty if the creating user was deleted, or if the username
+	// is otherwise unavailable.
+	CreatorUsername string `json:"creatorUsername,omitempty"`
+	// Dashboard: Required. The dashboard to render in the report. Note that
+	// dashboards are snapshotted on report creation, so changes to the dashboard
+	// after report creation will not be reflected in the report. For example:
+	// //monitoring.googleapis.com/projects/my-project/dashboards/my-dashboard
+	Dashboard string `json:"dashboard,omitempty"`
+	// Description: Optional. A description of the report. Useful for documenting
+	// how the report is intended to be used.
+	Description string `json:"description,omitempty"`
+	// DisplayName: Optional. The human readable name of the report. The maximum
+	// length is 63 characters.
+	DisplayName string `json:"displayName,omitempty"`
+	// Etag: Optional. This checksum is computed by the server based on the value
+	// of other fields, and may be sent on update and delete requests to ensure the
+	// client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+	// LatestRunTime: Output only. When the report was last successfully run.
+	LatestRunTime string `json:"latestRunTime,omitempty"`
+	// Name: Identifier. The resource name of the report. Format:
+	// projects/{project}/locations/{location}/reports/{report}
+	Name string `json:"name,omitempty"`
+	// RecipientEmails: Optional. The list of email addresses to receive the
+	// report.
+	RecipientEmails []string `json:"recipientEmails,omitempty"`
+	// RenderingOptions: Optional. Rendering options for the report.
+	RenderingOptions *RenderingOptions `json:"renderingOptions,omitempty"`
+	// ReportType: Optional. The type of the report.
+	//
+	// Possible values:
+	//   "REPORT_TYPE_UNSPECIFIED" - Unspecified report type.
+	//   "PNG" - Render the report to a PNG image.
+	//   "PDF" - Render the report to a PDF document.
+	//   "HTML" - Render the report as an HTML document.
+	ReportType string `json:"reportType,omitempty"`
+	// SchedulingJob: Optional. The associated cloud scheduling job, if this is a
+	// scheduled report. For example:
+	// cloudscheduler.googleapis.com/projects/my-project/locations/global/jobs/my-jo
+	// b
+	SchedulingJob string `json:"schedulingJob,omitempty"`
+	// TimeWindow: Optional. The time window of the report data, ending at the time
+	// the report is generated. If not specified, defaults to the last 7 days.
+	TimeWindow string `json:"timeWindow,omitempty"`
+	// UpdateTime: Output only. When the report was last updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+	// UpdaterUsername: Output only. The username of the user who updated the
+	// report. This may be an email or a formatted subject and identity pool
+	// identifier. The following are examples: alice.smith@example.com
+	// alice.smith@example.com (global/workforcePools/example-com-us-employees)
+	// my-workload
+	// (projects/1234/locations/global/workloadIdentityPools/example-workload-pool)
+	// This value may be empty if the updating user was deleted, or if the username
+	// is otherwise unavailable.
+	UpdaterUsername string `json:"updaterUsername,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Report) MarshalJSON() ([]byte, error) {
+	type NoMethod Report
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ReprovisionBucketRequest: Request for reprovisioning a bucket, replaces
 // configuration with that of the configured Observability settings.
 type ReprovisionBucketRequest struct {
@@ -868,6 +1019,10 @@ type Scope struct {
 func (s Scope) MarshalJSON() ([]byte, error) {
 	type NoMethod Scope
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// SendReportRequest: Request for sending a Report via email.
+type SendReportRequest struct {
 }
 
 // Settings: Describes the settings associated with a project, organization, or
@@ -5695,6 +5850,694 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsReportsCreateCall struct {
+	s          *Service
+	parent     string
+	report     *Report
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Create a Report.
+//
+//   - parent: The full resource name of the location where the report should be
+//     created projects/[PROJECT_ID]/locations/[LOCATION_ID] For example:
+//     projects/my-project/locations/global.
+func (r *ProjectsLocationsReportsService) Create(parent string, report *Report) *ProjectsLocationsReportsCreateCall {
+	c := &ProjectsLocationsReportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.report = report
+	return c
+}
+
+// ReportId sets the optional parameter "reportId": Required. A client-assigned
+// identifier for the report. The maximum length is 63 characters. Valid
+// characters are `a-zA-Z0-9-._~%!$&'()*+,;=@`
+func (c *ProjectsLocationsReportsCreateCall) ReportId(reportId string) *ProjectsLocationsReportsCreateCall {
+	c.urlParams_.Set("reportId", reportId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsReportsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsReportsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsReportsCreateCall) Context(ctx context.Context) *ProjectsLocationsReportsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsReportsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.report)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/reports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.create", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "observability.projects.locations.reports.create" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsReportsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.create", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsReportsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Report resource.
+//
+//   - name: The resource name of the report to delete. Format:
+//     projects/{project}/locations/{location}/reports/{REPORT_ID}.
+func (r *ProjectsLocationsReportsService) Delete(name string) *ProjectsLocationsReportsDeleteCall {
+	c := &ProjectsLocationsReportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsReportsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsReportsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsReportsDeleteCall) Context(ctx context.Context) *ProjectsLocationsReportsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsReportsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReportsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.delete", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "observability.projects.locations.reports.delete" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsReportsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.delete", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsReportsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Report Endpoints Gets a Report resource.
+//
+//   - name: The resource name of the report to retrieve. Format:
+//     projects/{project}/locations/{location}/reports/{REPORT_ID}.
+func (r *ProjectsLocationsReportsService) Get(name string) *ProjectsLocationsReportsGetCall {
+	c := &ProjectsLocationsReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsReportsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsReportsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsReportsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsReportsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsReportsGetCall) Context(ctx context.Context) *ProjectsLocationsReportsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsReportsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReportsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.get", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "observability.projects.locations.reports.get" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Report.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsReportsGetCall) Do(opts ...googleapi.CallOption) (*Report, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Report{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.get", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsReportsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Report resources
+//
+//   - parent: The scope of reports to list Format:
+//     projects/{project}/locations/{location}.
+func (r *ProjectsLocationsReportsService) List(parent string) *ProjectsLocationsReportsListCall {
+	c := &ProjectsLocationsReportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return from this request. Note that the server may return fewer
+// reports than requested. If unspecified, the server will pick an appropriate
+// default. The maximum value is 100; values above 100 will be coerced to 100.
+// If not provided, the default page size is 10.
+func (c *ProjectsLocationsReportsListCall) PageSize(pageSize int64) *ProjectsLocationsReportsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListReports` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListReports` must
+// match the call that provided the page token (except `page_size`, which may
+// differ).
+func (c *ProjectsLocationsReportsListCall) PageToken(pageToken string) *ProjectsLocationsReportsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsReportsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsReportsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsReportsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsReportsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsReportsListCall) Context(ctx context.Context) *ProjectsLocationsReportsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsReportsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReportsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/reports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.list", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "observability.projects.locations.reports.list" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListReportsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsReportsListCall) Do(opts ...googleapi.CallOption) (*ListReportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListReportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.list", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsReportsListCall) Pages(ctx context.Context, f func(*ListReportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+type ProjectsLocationsReportsPatchCall struct {
+	s          *Service
+	name       string
+	report     *Report
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a Report resource.
+//
+//   - name: Identifier. The resource name of the report. Format:
+//     projects/{project}/locations/{location}/reports/{report}.
+func (r *ProjectsLocationsReportsService) Patch(name string, report *Report) *ProjectsLocationsReportsPatchCall {
+	c := &ProjectsLocationsReportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.report = report
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The field mask
+// specifying which fields of the report are to be updated.
+func (c *ProjectsLocationsReportsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsReportsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsReportsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsReportsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsReportsPatchCall) Context(ctx context.Context) *ProjectsLocationsReportsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsReportsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReportsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.report)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.patch", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "observability.projects.locations.reports.patch" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsReportsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.patch", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type ProjectsLocationsReportsSendCall struct {
+	s                 *Service
+	name              string
+	sendreportrequest *SendReportRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Send: Sends a Report resource via email.
+//
+//   - name: The resource name of the report to send. Format:
+//     projects/{project}/locations/{location}/reports/{REPORT_ID}.
+func (r *ProjectsLocationsReportsService) Send(name string, sendreportrequest *SendReportRequest) *ProjectsLocationsReportsSendCall {
+	c := &ProjectsLocationsReportsSendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.sendreportrequest = sendreportrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsReportsSendCall) Fields(s ...googleapi.Field) *ProjectsLocationsReportsSendCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsReportsSendCall) Context(ctx context.Context) *ProjectsLocationsReportsSendCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsReportsSendCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReportsSendCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.sendreportrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:send")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.send", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "observability.projects.locations.reports.send" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsReportsSendCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "observability.projects.locations.reports.send", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsScopesGetCall struct {

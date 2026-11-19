@@ -799,6 +799,36 @@ func (s ActivateBasePlanRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ActivateOfferTargetingRequest: Request to activate targeting for a specific
+// offer.
+type ActivateOfferTargetingRequest struct {
+	// OfferId: Required. The specific discounted offer ID to target for base item.
+	// Required.
+	OfferId string `json:"offerId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OfferId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OfferId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ActivateOfferTargetingRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivateOfferTargetingRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// ActivateOfferTargetingResponse: Response for ActivateOfferTargeting.
+type ActivateOfferTargetingResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // ActivateOneTimeProductOfferRequest: Request message for
 // ActivateOneTimeProductOffer.
 type ActivateOneTimeProductOfferRequest struct {
@@ -2845,6 +2875,9 @@ type CancellationContext struct {
 	// details on renewals and payments, see
 	// https://developer.android.com/google/play/billing/subscriptions#installments
 	CancellationType string `json:"cancellationType,omitempty"`
+	// Etag: Optional. The ETag representing the subscription state. If provided,
+	// the cancellation will only proceed if it matches the current server state.
+	Etag string `json:"etag,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "CancellationType") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -3566,6 +3599,36 @@ func (s DeactivateBasePlanRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DeactivateOfferTargetingRequest: Request to deactivate targeting for a
+// specific offer.
+type DeactivateOfferTargetingRequest struct {
+	// OfferId: Required. The specific discounted offer ID to target for base item.
+	// Required.
+	OfferId string `json:"offerId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "OfferId") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "OfferId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeactivateOfferTargetingRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeactivateOfferTargetingRequest
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
+// DeactivateOfferTargetingResponse: Response for DeactivateOfferTargeting.
+type DeactivateOfferTargetingResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // DeactivateOneTimeProductOfferRequest: Request message for
 // DeactivateOneTimeProductOffer.
 type DeactivateOneTimeProductOfferRequest struct {
@@ -4060,6 +4123,32 @@ func (s DeveloperDetails) MarshalJSON() ([]byte, error) {
 // DeveloperInitiatedCancellation: Information specific to cancellations
 // initiated by developers.
 type DeveloperInitiatedCancellation struct {
+}
+
+// DeveloperTargetedOffer: Information about a developer-targeted offer for a
+// subscription line item.
+type DeveloperTargetedOffer struct {
+	// ActivateTime: Optional. Time at which the offer targeting was activated.
+	ActivateTime string `json:"activateTime,omitempty"`
+	// OfferId: Optional. The developer-created offer ID targeted for the
+	// subscription.
+	OfferId string `json:"offerId,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ActivateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ActivateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DeveloperTargetedOffer) MarshalJSON() ([]byte, error) {
+	type NoMethod DeveloperTargetedOffer
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // DeviceCompatibilityRequirements: Defines a set of device compatibility
@@ -8109,6 +8198,9 @@ type PlanTransitionDetails struct {
 	// BasePlanId: [Required] The base plan ID to which this plan would be
 	// transitioned.
 	BasePlanId string `json:"basePlanId,omitempty"`
+	// OfferId: The offer ID. Only present for discounted offers. This is only set
+	// if the target plan is not a base plan.
+	OfferId string `json:"offerId,omitempty"`
 	// ProductId: [Required] The product ID to which this plan would be
 	// transitioned, (for example, 'monthly001').
 	ProductId string `json:"productId,omitempty"`
@@ -9696,6 +9788,51 @@ func (s RestrictedPaymentCountries) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// RetentionPerUserTargetingRule: Represents a targeting rule for retaining
+// existing users via Developer API.
+type RetentionPerUserTargetingRule struct {
+}
+
+// RetentionTargetingRule: Represents a targeting rule for retaining existing
+// users.
+type RetentionTargetingRule struct {
+	// AllowMultipleClaims: Optional. Whether this offer can be claimed multiple
+	// times by a user. If set to false, a user who has ever subscribed to this
+	// offer will never be eligible for it again. If set to true, a user may become
+	// eligible again after the duration specified in `min_offer_cooldown_duration`
+	// has passed since the end of the previous retention offer's discount period.
+	// Defaults to false if not specified.
+	AllowMultipleClaims bool `json:"allowMultipleClaims,omitempty"`
+	// MinDuration: Optional. The minimum duration a user must have been a paid
+	// subscriber to be eligible, specified in ISO 8601 format. If not specified,
+	// no minimum subscription time is considered for this rule.
+	MinDuration string `json:"minDuration,omitempty"`
+	// MinOfferCooldownDuration: Optional. The minimum duration that must pass
+	// after the previous retention offer's discount period ends before the user is
+	// eligible again. Specified in ISO 8601 format. Applicable only if
+	// allow_multiple_claims is true.
+	MinOfferCooldownDuration string `json:"minOfferCooldownDuration,omitempty"`
+	// Scope: Optional. The scope of subscriptions this rule considers. Only allows
+	// "this subscription".
+	Scope *TargetingRuleScope `json:"scope,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "AllowMultipleClaims") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "AllowMultipleClaims") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s RetentionTargetingRule) MarshalJSON() ([]byte, error) {
+	type NoMethod RetentionTargetingRule
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Review: An Android app review.
 type Review struct {
 	// AuthorName: The name of the user who wrote the review.
@@ -9830,6 +9967,9 @@ func (s ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 // RevocationContext: Revocation context of the
 // purchases.subscriptionsv2.revoke API.
 type RevocationContext struct {
+	// Etag: Optional. The ETag representing the subscription state. If provided,
+	// the revocation will only proceed if it matches the current server state.
+	Etag string `json:"etag,omitempty"`
 	// FullRefund: Optional. Used when users should be refunded the full amount of
 	// latest charge on each item in the subscription.
 	FullRefund *RevocationContextFullRefund `json:"fullRefund,omitempty"`
@@ -9840,15 +9980,15 @@ type RevocationContext struct {
 	// amount they paid for their subscription based on the amount of time
 	// remaining in a subscription.
 	ProratedRefund *RevocationContextProratedRefund `json:"proratedRefund,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "FullRefund") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "FullRefund") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -10605,6 +10745,10 @@ type SubscriptionOffer struct {
 	// BasePlanId: Required. Immutable. The ID of the base plan to which this offer
 	// is an extension.
 	BasePlanId string `json:"basePlanId,omitempty"`
+	// EndTime: Optional. The timestamp when this subscription offer ceases to be
+	// available regardless of the state of the offer. If unset, the offer has no
+	// end date.
+	EndTime string `json:"endTime,omitempty"`
 	// OfferId: Required. Immutable. Unique ID of this subscription offer. Must be
 	// unique within the base plan.
 	OfferId string `json:"offerId,omitempty"`
@@ -10627,6 +10771,10 @@ type SubscriptionOffer struct {
 	// RegionalConfigs: Required. The region-specific configuration of this offer.
 	// Must contain at least one entry.
 	RegionalConfigs []*RegionalSubscriptionOfferConfig `json:"regionalConfigs,omitempty"`
+	// StartTime: Optional. The timestamp when this subscription offer becomes
+	// available to eligible users. Optional. If unset, it becomes active depending
+	// on the state of the offer.
+	StartTime string `json:"startTime,omitempty"`
 	// State: Output only. The current state of this offer. Can be changed using
 	// Activate and Deactivate actions. NB: the base plan state supersedes this
 	// state, so an active offer may not be available if the base plan is not
@@ -10705,6 +10853,11 @@ func (s SubscriptionOfferPhase) MarshalJSON() ([]byte, error) {
 type SubscriptionOfferTargeting struct {
 	// AcquisitionRule: Offer targeting rule for new user acquisition.
 	AcquisitionRule *AcquisitionTargetingRule `json:"acquisitionRule,omitempty"`
+	// RetentionPerUserRule: Offer targeting rule for retaining existing users via
+	// Developer API.
+	RetentionPerUserRule *RetentionPerUserTargetingRule `json:"retentionPerUserRule,omitempty"`
+	// RetentionRule: Offer targeting rule for retaining existing users.
+	RetentionRule *RetentionTargetingRule `json:"retentionRule,omitempty"`
 	// UpgradeRule: Offer targeting rule for upgrading users' existing plans.
 	UpgradeRule *UpgradeTargetingRule `json:"upgradeRule,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "AcquisitionRule") to
@@ -10733,6 +10886,9 @@ type SubscriptionPurchaseLineItem struct {
 	DeferredItemRemoval *DeferredItemRemoval `json:"deferredItemRemoval,omitempty"`
 	// DeferredItemReplacement: Information for deferred item replacement.
 	DeferredItemReplacement *DeferredItemReplacement `json:"deferredItemReplacement,omitempty"`
+	// DeveloperTargetedOffers: Optional. Details of developer-targeted offers
+	// registered for this line item.
+	DeveloperTargetedOffers []*DeveloperTargetedOffer `json:"developerTargetedOffers,omitempty"`
 	// ExpiryTime: Time at which the subscription expired or will expire unless the
 	// access is extended (ex. renews).
 	ExpiryTime string `json:"expiryTime,omitempty"`
@@ -28054,6 +28210,116 @@ func (c *PurchasesSubscriptionsDeferCall) Do(opts ...googleapi.CallOption) (*Sub
 	return ret, nil
 }
 
+type PurchasesSubscriptionsv2ActivateoffertargetingCall struct {
+	s                             *Service
+	packageName                   string
+	purchaseToken                 string
+	activateoffertargetingrequest *ActivateOfferTargetingRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Activateoffertargeting: Activates targeting for a specific offer.
+//
+//   - packageName: The package of the application for which this subscription
+//     was purchased. Required.
+//   - purchaseToken: The purchase token provided to the user's device when the
+//     subscription was purchased. Required.
+func (r *PurchasesSubscriptionsv2Service) Activateoffertargeting(packageName string, purchaseToken string, activateoffertargetingrequest *ActivateOfferTargetingRequest) *PurchasesSubscriptionsv2ActivateoffertargetingCall {
+	c := &PurchasesSubscriptionsv2ActivateoffertargetingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.purchaseToken = purchaseToken
+	c.activateoffertargetingrequest = activateoffertargetingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PurchasesSubscriptionsv2ActivateoffertargetingCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsv2ActivateoffertargetingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PurchasesSubscriptionsv2ActivateoffertargetingCall) Context(ctx context.Context) *PurchasesSubscriptionsv2ActivateoffertargetingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PurchasesSubscriptionsv2ActivateoffertargetingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesSubscriptionsv2ActivateoffertargetingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.activateoffertargetingrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{purchaseToken}:activateOfferTargeting")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":   c.packageName,
+		"purchaseToken": c.purchaseToken,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.activateoffertargeting", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.subscriptionsv2.activateoffertargeting" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *ActivateOfferTargetingResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PurchasesSubscriptionsv2ActivateoffertargetingCall) Do(opts ...googleapi.CallOption) (*ActivateOfferTargetingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ActivateOfferTargetingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.activateoffertargeting", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type PurchasesSubscriptionsv2CancelCall struct {
 	s                                 *Service
 	packageName                       string
@@ -28271,6 +28537,116 @@ func (c *PurchasesSubscriptionsv2CancelplantransitionCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.cancelplantransition", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
+type PurchasesSubscriptionsv2DeactivateoffertargetingCall struct {
+	s                               *Service
+	packageName                     string
+	purchaseToken                   string
+	deactivateoffertargetingrequest *DeactivateOfferTargetingRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// Deactivateoffertargeting: Deactivates targeting for a specific offer.
+//
+//   - packageName: The package of the application for which this subscription
+//     was purchased. Required.
+//   - purchaseToken: The purchase token provided to the user's device when the
+//     subscription was purchased. Required.
+func (r *PurchasesSubscriptionsv2Service) Deactivateoffertargeting(packageName string, purchaseToken string, deactivateoffertargetingrequest *DeactivateOfferTargetingRequest) *PurchasesSubscriptionsv2DeactivateoffertargetingCall {
+	c := &PurchasesSubscriptionsv2DeactivateoffertargetingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.purchaseToken = purchaseToken
+	c.deactivateoffertargetingrequest = deactivateoffertargetingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *PurchasesSubscriptionsv2DeactivateoffertargetingCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsv2DeactivateoffertargetingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *PurchasesSubscriptionsv2DeactivateoffertargetingCall) Context(ctx context.Context) *PurchasesSubscriptionsv2DeactivateoffertargetingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *PurchasesSubscriptionsv2DeactivateoffertargetingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesSubscriptionsv2DeactivateoffertargetingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.deactivateoffertargetingrequest)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{purchaseToken}:deactivateOfferTargeting")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":   c.packageName,
+		"purchaseToken": c.purchaseToken,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.deactivateoffertargeting", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.subscriptionsv2.deactivateoffertargeting" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeactivateOfferTargetingResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *PurchasesSubscriptionsv2DeactivateoffertargetingCall) Do(opts ...googleapi.CallOption) (*DeactivateOfferTargetingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeactivateOfferTargetingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "androidpublisher.purchases.subscriptionsv2.deactivateoffertargeting", "response", internallog.HTTPResponse(res, b))
 	return ret, nil
 }
 

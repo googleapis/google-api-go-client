@@ -542,6 +542,9 @@ type Event struct {
 	BundleOrPackage string `json:"bundleOrPackage,omitempty"`
 	// CrashlyticsSdkVersion: Crashlytics SDK version.
 	CrashlyticsSdkVersion string `json:"crashlyticsSdkVersion,omitempty"`
+	// CrashlyticsSessionId: Output only. Mobile only. Unique identifier for the
+	// Crashlytics device session.
+	CrashlyticsSessionId string `json:"crashlyticsSessionId,omitempty"`
 	// CustomKeys: Custom keys set by the developer during the session.
 	CustomKeys map[string]string `json:"customKeys,omitempty"`
 	// Device: Mobile device metadata.

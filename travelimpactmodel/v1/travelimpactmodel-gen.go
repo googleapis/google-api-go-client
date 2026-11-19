@@ -814,6 +814,9 @@ type FlightWithDetailedEmissions struct {
 	// EmissionsMetadata: Output only. Additional metadata about the flight
 	// emissions calculation.
 	EmissionsMetadata *EmissionsMetadata `json:"emissionsMetadata,omitempty"`
+	// Errors: Output only. Errors detailing why detailed emission estimates could
+	// not be returned for the flight. Empty when emission estimates are present.
+	Errors []*Status `json:"errors,omitempty"`
 	// Flight: Output only. Matches the flight identifiers in the request. Note:
 	// all IATA codes are capitalized.
 	Flight *Flight `json:"flight,omitempty"`
@@ -858,6 +861,9 @@ type FlightWithEmissions struct {
 	// Will not be present if emissions could not be computed. For the list of
 	// reasons why emissions could not be computed, see ComputeFlightEmissions.
 	EmissionsGramsPerPax *EmissionsGramsPerPax `json:"emissionsGramsPerPax,omitempty"`
+	// Errors: Output only. Errors detailing why emission estimates could not be
+	// returned for the flight. Empty when emission estimates are present.
+	Errors []*Status `json:"errors,omitempty"`
 	// Flight: Identifier. Matches the flight identifiers in the request. Note: all
 	// IATA codes are capitalized.
 	Flight *Flight `json:"flight,omitempty"`
@@ -1067,6 +1073,44 @@ func (s Scope3FlightSegment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// Status: Represents an error encountered while processing an individual
+// flight or market in a request. When emission estimates cannot be computed
+// for a requested item, the `errors` field contains one or more `Status`
+// objects describing why: * `INVALID_ARGUMENT` (`code` `3`): Reports input
+// errors on the requested item, such as missing or invalid airport codes,
+// operating carrier codes, flight numbers, or departure dates. Multiple
+// `Status` entries may be returned if multiple input fields are invalid. *
+// `NOT_FOUND` (`code` `5`): Indicates that no emission estimates matched the
+// requested flight or market inputs.
+type Status struct {
+	// Code: The numeric status code corresponding to a `google.rpc.Code` enum
+	// value: * `3` (`INVALID_ARGUMENT`): Input error (for example, a missing or
+	// invalid airport or carrier code). * `5` (`NOT_FOUND`): No emission estimates
+	// matched the requested inputs.
+	Code int64 `json:"code,omitempty"`
+	// Details: Additional structured error details, when available.
+	Details []googleapi.RawMessage `json:"details,omitempty"`
+	// Message: A human-readable error message in English describing why emission
+	// estimates could not be returned for the requested item.
+	Message string `json:"message,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s Status) MarshalJSON() ([]byte, error) {
+	type NoMethod Status
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // TypicalFlightEmissions: Typical flight emission estimates for a certain
 // market
 type TypicalFlightEmissions struct {
@@ -1076,6 +1120,10 @@ type TypicalFlightEmissions struct {
 	// computed, see GitHub
 	// (https://github.com/google/travel-impact-model/blob/main/projects/typical_flight_emissions.md#step-7-validate-dataset).
 	EmissionsGramsPerPax *EmissionsGramsPerPax `json:"emissionsGramsPerPax,omitempty"`
+	// Errors: Output only. Errors detailing why typical flight emission estimates
+	// could not be returned for the market. Empty when emission estimates are
+	// present.
+	Errors []*Status `json:"errors,omitempty"`
 	// Market: Identifier. Matches the flight identifiers in the request. Note: all
 	// IATA codes are capitalized.
 	Market *Market `json:"market,omitempty"`

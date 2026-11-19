@@ -569,34 +569,6 @@ func (s AuthorizationInfo) MarshalJSON() ([]byte, error) {
 
 // CallerAgent: Information set when the caller is an agent.
 type CallerAgent struct {
-	// Authority: The type of authority for the caller agent.
-	//
-	// Possible values:
-	//   "AUTHORITY_TYPE_UNSPECIFIED" - Default value. Should not be used.
-	//   "SELF" - Acts under its own authority.
-	//   "ON_BEHALF_OF" - Acts on behalf of another authority.
-	Authority string `json:"authority,omitempty"`
-	// Id: The agent identifier of the caller agent. This is a globally unique,
-	// immutable name in Uniform Resource Name (URN) format. Example:
-	// 'urn:agent:projects-123456789:projects:123456789:locations:us-central1:aiplat
-	// form:reasoningEngines:987654321'
-	Id string `json:"id,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "Authority") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
-	// details.
-	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "Authority") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
-	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
-	NullFields []string `json:"-"`
-}
-
-func (s CallerAgent) MarshalJSON() ([]byte, error) {
-	type NoMethod CallerAgent
-	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
 // CheckRequest: Request message for the Check method.

@@ -949,7 +949,7 @@
       }
     }
   },
-  "revision": "20261104",
+  "revision": "20261117",
   "rootUrl": "https://firebasecrashlytics.googleapis.com/",
   "schemas": {
     "BatchGetEventsResponse": {
@@ -1195,6 +1195,11 @@
         },
         "crashlyticsSdkVersion": {
           "description": "Crashlytics SDK version.",
+          "type": "string"
+        },
+        "crashlyticsSessionId": {
+          "description": "Output only. Mobile only. Unique identifier for the Crashlytics device session.",
+          "readOnly": true,
           "type": "string"
         },
         "customKeys": {

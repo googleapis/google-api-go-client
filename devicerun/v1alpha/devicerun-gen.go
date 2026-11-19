@@ -1212,6 +1212,32 @@ func (s CatalogXcodeDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ClientInfo: Information about the client which invoked the session.
+type ClientInfo struct {
+	// Client: Required. Client name, such as gcloud. Maximum string size is 64
+	// bytes (UTF-8 encoded).
+	Client string `json:"client,omitempty"`
+	// Version: Optional. Client version. Maximum string size is 64 bytes (UTF-8
+	// encoded).
+	Version string `json:"version,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Client") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Client") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ClientInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod ClientInfo
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Date: Represents a whole or partial calendar date, such as a birthday. The
 // time of day and time zone are either specified elsewhere or are
 // insignificant. The date is relative to the Gregorian Calendar. This can
@@ -2184,6 +2210,11 @@ type Result struct {
 	// infra, or the tools that the infra is depending on.
 	//   "TIMED_OUT" - Test timeout.
 	//   "CANCELLED" - Test is aborted by user.
+	//   "SKIPPED" - Indicates that the session, job, or execution finished, but no
+	// test case was executed. For example, all test cases were filtered out,
+	// ignored, or skipped by assumptions, or uniform sharding assigned no test
+	// case to an execution. A job is `SKIPPED` only if all its executions are
+	// `SKIPPED`. A session is `SKIPPED` only if all its jobs are `SKIPPED`.
 	ResultType string `json:"resultType,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Cause") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2335,6 +2366,9 @@ func (s Session) MarshalJSON() ([]byte, error) {
 
 // SessionConfig: SessionConfig is used to create a session.
 type SessionConfig struct {
+	// ClientInfo: Optional. Information about the client which invoked the
+	// session.
+	ClientInfo *ClientInfo `json:"clientInfo,omitempty"`
 	// DisplayName: Optional. User-settable, human-readable name for the session.
 	// Maximum size is 63 bytes when encoded as UTF-8. If set, must match regex:
 	// `^A-Za-z0-9*$`.
@@ -2346,13 +2380,13 @@ type SessionConfig struct {
 	// OutputDirectoryConfig: Required. Output file directory config for the
 	// session.
 	OutputDirectoryConfig *SessionConfigSessionOutputFileDirectoryConfig `json:"outputDirectoryConfig,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// ForceSendFields is a list of field names (e.g. "ClientInfo") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// NullFields is a list of field names (e.g. "ClientInfo") to include in API
 	// requests with the JSON null value. By default, fields with empty values are
 	// omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
@@ -2370,6 +2404,15 @@ type SessionConfigSessionNotificationConfig struct {
 	// PubsubTopic: Optional. The Pub/Sub topics to which session events are
 	// published. Format: `projects/{project}/topics/{topic}`. See
 	// https://cloud.google.com/pubsub/docs/admin#topic_and_subscription_name_restrictions
+	// Each published Pub/Sub message includes the following attributes: -
+	// `eventType`: The type of event (`JOB_ENDED` or `SESSION_ENDED`). -
+	// `payloadFormat`: The format of the `data` field (`JSON`). - `sessionName`:
+	// The resource name of the session, in the format
+	// `projects/{project}/locations/{location}/sessions/{session}`, where
+	// `{project}` is the project number. The `data` field contains a UTF-8 JSON
+	// payload corresponding to `eventType`: - `JOB_ENDED`: UTF-8 JSON
+	// representation of JobReport. - `SESSION_ENDED`: UTF-8 JSON representation of
+	// SessionReport.
 	PubsubTopic []string `json:"pubsubTopic,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "PubsubTopic") to
 	// unconditionally include in API requests. By default, fields with empty or

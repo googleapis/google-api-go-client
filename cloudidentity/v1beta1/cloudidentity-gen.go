@@ -12623,8 +12623,8 @@ func (r *InboundSsoAssignmentsService) List() *InboundSsoAssignmentsListCall {
 
 // Filter sets the optional parameter "filter": A CEL expression to filter the
 // results. The only supported filter is filtering by customer. For example:
-// `customer==customers/C0123abc`. Omitting the filter or specifying a filter
-// of `customer==customers/my_customer` will return the assignments for the
+// `customer=="customers/C0123abc". Omitting the filter or specifying a filter
+// of `customer=="customers/my_customer" will return the assignments for the
 // customer that the caller (authenticated user) belongs to.
 func (c *InboundSsoAssignmentsListCall) Filter(filter string) *InboundSsoAssignmentsListCall {
 	c.urlParams_.Set("filter", filter)

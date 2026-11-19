@@ -3104,13 +3104,13 @@ type DeviceConnectivityManagement struct {
 	//   "ALLOW_ALL_TETHERING" - Allows configuration and use of all forms of
 	// tethering. tetheringConfigDisabled is ignored.
 	//   "DISALLOW_WIFI_TETHERING" - Disallows the user from using Wi-Fi tethering.
-	// Supported on company owned devices running Android 13 and above. If the
-	// setting is not supported, ALLOW_ALL_TETHERING will be set. A
+	// Supported on company owned devices running Android 13 (API level 33) and
+	// higher. If the setting is not supported, ALLOW_ALL_TETHERING will be set. A
 	// NonComplianceDetail with API_LEVEL is reported if the Android version is
 	// less than 13. tetheringConfigDisabled is ignored.
 	//   "DISALLOW_ALL_TETHERING" - Disallows all forms of tethering. Supported on
 	// fully managed devices and work profile on company-owned devices, on all
-	// supported android versions. The setting tetheringConfigDisabled is ignored.
+	// supported Android versions. The setting tetheringConfigDisabled is ignored.
 	TetheringSettings string `json:"tetheringSettings,omitempty"`
 	// UsbDataAccess: Optional. Controls what files and/or data can be transferred
 	// via USB. Supported only on company-owned devices.
@@ -5616,7 +5616,12 @@ func (s ModifyPolicyApplicationsResponse) MarshalJSON() ([]byte, error) {
 
 // NetworkInfo: Device network info.
 type NetworkInfo struct {
-	// Imei: IMEI number of the GSM device. For example, A1000031212.
+	// Imei: IMEI number of the GSM device. For example, A1000031212. This value
+	// corresponds to the result of
+	// TelephonyManager.getImei()(https://developer.android.com/reference/android/te
+	// lephony/TelephonyManager#getImei()). On dual-SIM devices, reports the IMEI
+	// associated with the default active subscription, such as the IMEI of the
+	// eSIM slot when only an eSIM is active.
 	Imei string `json:"imei,omitempty"`
 	// Meid: MEID number of the CDMA device. For example, A00000292788E1.
 	Meid string `json:"meid,omitempty"`

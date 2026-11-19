@@ -443,8 +443,10 @@ type GoogleCloudRunV2BuildConfiguration struct {
 	DockerBuild *GoogleCloudRunV2BuildConfigurationDockerBuild `json:"dockerBuild,omitempty"`
 	// EnvironmentVariables: Optional. Environment variables for the build.
 	EnvironmentVariables []*GoogleCloudRunV2EnvVar `json:"environmentVariables,omitempty"`
-	// ImageRepositoryUri: Required. Artifact Registry URI to store the built
-	// image.
+	// ImageRepositoryUri: Optional. Stores the built image in the given Artifact
+	// Registry repository. When not specified, Cloud Run will generate an Artifact
+	// Registry repository. The user is responsible for managing the repository,
+	// cleaning up images, and setting deletion policy.
 	ImageRepositoryUri string `json:"imageRepositoryUri,omitempty"`
 	// ServiceAccount: Optional. The service account to use for the build. Its
 	// resource name in the format `projects/{project}/serviceAccounts/{email}`.

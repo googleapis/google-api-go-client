@@ -7132,10 +7132,13 @@ type AccountsDeveloperRegistrationRegisterGcpCall struct {
 	header_            http.Header
 }
 
-// RegisterGcp: Registers the GCP used for the API call to the shopping account
-// passed in the request. Will create a user with an "API developer" and add
-// the "developer_email" as a contact with "API notifications" email preference
-// on. Restrictions: * The caller account must be authenticated and must not
+// RegisterGcp: Registers the GCP used for the API call to the Merchant Center
+// account passed in the request. Will create a user with an "API developer"
+// and add the "developer_email" as a contact with "API notifications" email
+// preference on. Executing this method requires admin (`ADMIN`) access to the
+// Merchant Center account. For more information, see Register as a developer
+// (https://developers.google.com/merchant/api/guides/quickstart/registration#prerequisites).
+// Restrictions: * The caller account must be authenticated and must not
 // impersonate another account at registration time. Registering for
 // subaccounts is not supported if the caller account is authenticated with the
 // parent or the managing advanced account. * The caller account must have a
@@ -7256,11 +7259,16 @@ type AccountsDeveloperRegistrationUnregisterGcpCall struct {
 	header_              http.Header
 }
 
-// UnregisterGcp: Unregister the calling GCP from the calling shopping account.
-// Note that the GCP will still be able to access the API for at most 1 day
-// from the unregister successful call. For more information, see Manage and
-// transition Google Cloud projects
-// (https://developers.google.com/merchant/api/guides/accounts/manage-transition-gcp-projects).
+// UnregisterGcp: Unregister the calling GCP from the calling Merchant Center
+// account. Note that the GCP will still be able to access the API for at most
+// 1 day from the successful unregistration call. Executing this method
+// requires admin (`ADMIN`) access to the Merchant Center account. For more
+// information, see Manage and transition Google Cloud projects
+// (https://developers.google.com/merchant/api/guides/accounts/manage-transition-gcp-projects),
+// Set up authentication for Merchant API
+// (https://developers.google.com/merchant/api/guides/quickstart/authentication),
+// and Register as a developer
+// (https://developers.google.com/merchant/api/guides/quickstart/registration#prerequisites).
 //
 //   - name: The name of the developer registration to be created for the
 //     merchant account that the GCP will be registered with. Format:
@@ -12656,7 +12664,7 @@ type AccountsShippingSettingsInsertCall struct {
 }
 
 // Insert: Replace the shipping setting of a business with the request shipping
-// setting. Executing this method requires admin access.
+// setting.
 //
 //   - parent: The account for which this shipping setting will be inserted. If
 //     you are using an advanced account, you must specify the unique identifier

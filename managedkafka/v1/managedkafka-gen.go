@@ -1977,7 +1977,9 @@ func (s PublicClusterDetails) MarshalJSON() ([]byte, error) {
 // RebalanceConfig: Defines rebalancing behavior of a Kafka cluster.
 type RebalanceConfig struct {
 	// Mode: Optional. The rebalance behavior for the cluster. When not specified,
-	// defaults to `NO_REBALANCE`.
+	// defaults to `AUTO_REBALANCE_ON_SCALE_UP`. Clusters created before July 2026
+	// defaulted to `NO_REBALANCE` if created without a gcloud, Terraform, or Cloud
+	// Console client.
 	//
 	// Possible values:
 	//   "MODE_UNSPECIFIED" - A mode was not specified. Do not use.

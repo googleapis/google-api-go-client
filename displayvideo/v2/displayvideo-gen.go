@@ -3621,6 +3621,16 @@ func (s CarrierAndIspTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 type CategoryAssignedTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the category.
 	DisplayName string `json:"displayName,omitempty"`
+	// ExclusionStatus: Output only. The exclusion status of the category.
+	//
+	// Possible values:
+	//   "CATEGORY_EXCLUSION_STATUS_UNSPECIFIED" - The exclusion status is
+	// unspecified.
+	//   "CATEGORY_EXCLUSION_STATUS_ALLOWED" - The category can be excluded.
+	//   "CATEGORY_EXCLUSION_STATUS_DEPRECATED" - The category is deprecated for
+	// exclusion and will be disallowed in the future.
+	//   "CATEGORY_EXCLUSION_STATUS_NOT_ALLOWED" - The category cannot be excluded.
+	ExclusionStatus string `json:"exclusionStatus,omitempty"`
 	// Negative: Indicates if this option is being negatively targeted.
 	Negative bool `json:"negative,omitempty"`
 	// TargetingOptionId: Required. The targeting_option_id field when
@@ -3650,6 +3660,16 @@ func (s CategoryAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 type CategoryTargetingOptionDetails struct {
 	// DisplayName: Output only. The display name of the category.
 	DisplayName string `json:"displayName,omitempty"`
+	// ExclusionStatus: Output only. The exclusion status of the category.
+	//
+	// Possible values:
+	//   "CATEGORY_EXCLUSION_STATUS_UNSPECIFIED" - The exclusion status is
+	// unspecified.
+	//   "CATEGORY_EXCLUSION_STATUS_ALLOWED" - The category can be excluded.
+	//   "CATEGORY_EXCLUSION_STATUS_DEPRECATED" - The category is deprecated for
+	// exclusion and will be disallowed in the future.
+	//   "CATEGORY_EXCLUSION_STATUS_NOT_ALLOWED" - The category cannot be excluded.
+	ExclusionStatus string `json:"exclusionStatus,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
@@ -13367,8 +13387,8 @@ type VideoPerformanceAd struct {
 	// call-to-action button. Must be set if headlines is set.
 	ActionButtonLabels []string `json:"actionButtonLabels,omitempty"`
 	// BusinessName: Optional. The business name shown on the ad. This setting is
-	// required unless a default value is set at the advertiser level. If left
-	// unset, the default value will be applied.
+	// required unless defaultBusinessName is set for the parent advertiser. If
+	// this field is unset, the advertiser's default business name is used.
 	BusinessName string `json:"businessName,omitempty"`
 	// CompanionBanners: Optional. The list of companion banners used by this ad.
 	CompanionBanners []*ImageAsset `json:"companionBanners,omitempty"`
@@ -13395,8 +13415,8 @@ type VideoPerformanceAd struct {
 	// banner.
 	Headlines []string `json:"headlines,omitempty"`
 	// Logo: Optional. The logo image used by this ad. This setting is required
-	// unless a default value is set at the advertiser level. If left unset, the
-	// default value will be applied.
+	// unless defaultLogoAssetId is set for the parent advertiser. If this field is
+	// unset, the advertiser's default logo asset is used.
 	Logo *ImageAsset `json:"logo,omitempty"`
 	// LongHeadlines: Optional. The list of long headlines shown on the
 	// call-to-action banner. Must be set unless the parent line item's

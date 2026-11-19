@@ -1660,6 +1660,7 @@ type Scope struct {
 	//   "TYPE_UNSPECIFIED" - Unspecified type.
 	//   "REGIONAL" - Regional type.
 	//   "GLOBAL" - Global type.
+	//   "MULTI_REGIONAL" - Multi-regional type.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Type") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

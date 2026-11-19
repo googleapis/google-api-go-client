@@ -34,11 +34,6 @@
 //
 // # Other authentication options
 //
-// By default, all available scopes (see "Constants") are used to authenticate.
-// To restrict scopes, use [google.golang.org/api/option.WithScopes]:
-//
-//	deepreviewService, err := deepreview.NewService(ctx, option.WithScopes(deepreview.DriveFileScope))
-//
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
 //
@@ -106,17 +101,12 @@ const (
 	// See, edit, configure, and delete your Google Cloud data and see the email
 	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
-
-	// See, edit, create, and delete only the specific Google Drive files you use
-	// with this app
-	DriveFileScope = "https://www.googleapis.com/auth/drive.file"
 )
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
-		"https://www.googleapis.com/auth/drive.file",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)

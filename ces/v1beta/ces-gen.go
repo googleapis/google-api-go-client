@@ -852,11 +852,11 @@ type AgentRemoteDialogflowAgent struct {
 	// RespectResponseInterruptionSettings: Optional. Indicates whether to respect
 	// the message-level interruption settings configured in the Dialogflow agent.
 	// * If false: all response messages from the Dialogflow agent follow the
-	// app-level barge-in settings. * If true: only response messages with
+	// app-level barge-in settings. * If true: response messages with
 	// `allow_playback_interruption`
 	// (https://docs.cloud.google.com/dialogflow/cx/docs/reference/rpc/google.cloud.dialogflow.cx.v3#text)
-	// set to true will be interruptable, all other messages follow the app-level
-	// barge-in settings.
+	// set to false will not be interruptable regardless of the app-level barge-in
+	// settings, all other messages follow the app-level barge-in settings.
 	RespectResponseInterruptionSettings bool `json:"respectResponseInterruptionSettings,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Agent") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -7969,9 +7969,10 @@ type GuardrailContentFilter struct {
 	// contain word delimiters.
 	//   "REGEXP_MATCH" - Content is matched using regular expression syntax.
 	//   "SENSITIVE_WORDS" - Content is matched against a system-managed list of
-	// sensitive words and phrases. Attaching a guardrail with this match type to
-	// an app or agent replaces the default sensitive words filter for the affected
-	// agents; disable the guardrail to opt out of the default filter.
+	// sensitive words and phrases. Attaching an enabled guardrail with this match
+	// type to an app or agent replaces the default sensitive words filter for the
+	// affected agents. A disabled guardrail with this match type is ignored; the
+	// default filter can't be turned off.
 	MatchType string `json:"matchType,omitempty"`
 	// SensitiveWordsExemptions: Optional. Entries of the sensitive words list that
 	// this guardrail allows. Only valid when match_type is SENSITIVE_WORDS. Each
@@ -8200,6 +8201,11 @@ type GuardrailSupervisor struct {
 	//   "CUSTOM" - Custom issue type.
 	//   "CHOPPY_AUDIO" - Choppy audio issue type.
 	//   "PROFANITY" - Agent profanity issue type.
+	//   "THOUGHT_LEAKAGE" - Thought leakage issue type: the agent spoke internal
+	// reasoning, instructions, variables, or function names aloud.
+	//   "AUTOMATED_BOT" - Automated bot issue type: the incoming caller (the end
+	// user) is an automated bot, e.g. a text-to-speech voice, rather than a live
+	// human.
 	Type string `json:"type,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "DetectionMode") to
 	// unconditionally include in API requests. By default, fields with empty or

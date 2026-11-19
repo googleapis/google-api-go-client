@@ -21,7 +21,9 @@ func TestIDTokenSource(t *testing.T) {
 		name            string
 		aud             string
 		targetPrincipal string
+		universeDomain  string
 		wantErr         bool
+		wantHost        string
 	}{
 		{
 			name:            "missing aud",
@@ -38,6 +40,15 @@ func TestIDTokenSource(t *testing.T) {
 			aud:             "http://example.com/",
 			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
 			wantErr:         false,
+			wantHost:        "iamcredentials.googleapis.com",
+		},
+		{
+			name:            "custom universe domain",
+			aud:             "http://example.com/",
+			targetPrincipal: "foo@project-id.iam.gserviceaccount.com",
+			universeDomain:  "example.com",
+			wantErr:         false,
+			wantHost:        "iamcredentials.example.com",
 		},
 	}
 
@@ -45,8 +56,10 @@ func TestIDTokenSource(t *testing.T) {
 		name := tt.name
 		t.Run(name, func(t *testing.T) {
 			idTok := "id-token"
+			var gotHost string
 			client := &http.Client{
 				Transport: RoundTripFn(func(req *http.Request) *http.Response {
+					gotHost = req.URL.Host
 					resp := generateIDTokenResponse{
 						Token: idTok,
 					}
@@ -61,10 +74,14 @@ func TestIDTokenSource(t *testing.T) {
 					}
 				}),
 			}
+			opts := []option.ClientOption{option.WithHTTPClient(client)}
+			if tt.universeDomain != "" {
+				opts = append(opts, option.WithUniverseDomain(tt.universeDomain))
+			}
 			ts, err := IDTokenSource(ctx, IDTokenConfig{
 				Audience:        tt.aud,
 				TargetPrincipal: tt.targetPrincipal,
-			}, option.WithHTTPClient(client))
+			}, opts...)
 			if tt.wantErr && err != nil {
 				return
 			}
@@ -77,6 +94,9 @@ func TestIDTokenSource(t *testing.T) {
 			}
 			if tok.AccessToken != idTok {
 				t.Fatalf("got %q, want %q", tok.AccessToken, idTok)
+			}
+			if tt.wantHost != "" && gotHost != tt.wantHost {
+				t.Fatalf("request host: got %q, want %q", gotHost, tt.wantHost)
 			}
 		})
 	}

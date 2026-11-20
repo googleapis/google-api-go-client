@@ -10,6 +10,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"strings"
 	"time"
@@ -132,6 +133,19 @@ func SendRequestWithRetry(ctx context.Context, client *http.Client, req *http.Re
 	return sendAndRetry(ctx, client, req, retry)
 }
 
+type cancelCloser struct {
+	io.ReadCloser
+	cancel context.CancelFunc
+}
+
+func (c *cancelCloser) Close() error {
+	err := c.ReadCloser.Close()
+	if c.cancel != nil {
+		c.cancel()
+	}
+	return err
+}
+
 func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, retry *RetryConfig) (*http.Response, error) {
 	if client == nil {
 		client = http.DefaultClient
@@ -193,17 +207,42 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, r
 		req.Header.Set("X-Goog-Api-Client", xGoogHeader)
 		req.Header.Set("X-Goog-Gcs-Idempotency-Token", invocationID)
 
-		resp, err = client.Do(req.WithContext(ctx))
+		var reqCtx context.Context
+		var cancel context.CancelFunc
+		stallRetryAvailable := false
+		if retry != nil &&
+			retry.RequestTimeout > 0 &&
+			req.GetBody != nil {
+			stallRetryAvailable = true
+			reqCtx, cancel = context.WithTimeout(ctx, retry.RequestTimeout)
+		} else {
+			reqCtx = ctx
+		}
+
+		resp, err = client.Do(req.WithContext(reqCtx))
 
 		var status int
 		if resp != nil {
 			status = resp.StatusCode
 		}
 
+		isStallTimeout := false
+		if stallRetryAvailable &&
+			ctx.Err() == nil &&
+			(errors.Is(err, context.DeadlineExceeded) || errors.Is(err, context.Canceled)) {
+			log.Printf("Cancelled the request due to stall")
+			isStallTimeout = true
+		}
+
+		if resp != nil && resp.Body != nil && cancel != nil {
+			resp.Body = &cancelCloser{ReadCloser: resp.Body, cancel: cancel}
+		} else if cancel != nil {
+			cancel()
+		}
 		// Check if we can retry the request. A retry can only be done if the error
 		// is retryable and the request body can be re-created using GetBody (this
 		// will not be possible if the body was unbuffered).
-		if req.GetBody == nil || !errorFunc(status, err) {
+		if req.GetBody == nil || (!isStallTimeout && !errorFunc(status, err)) {
 			break
 		}
 		attempts++

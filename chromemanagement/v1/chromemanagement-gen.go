@@ -9698,7 +9698,7 @@ func (r *CustomersChromeBrowsersService) List(parent string) *CustomersChromeBro
 // functions is supported with AND operator. String type, Integer type fields
 // and enum type fields support `=` and `:` operators. The timestamp type
 // fields support `=`, `<=` and `>=` operators. Timestamps expect an RFC-3339
-// formatted string (e.g., `2012-04-21T11:30:00-04:00` or
+// formatted string enclosed in double quotes (e.g.,
 // "2012-04-21T11:30:00-04:00"). Wildcard `*` is only supported for
 // `machine_name`, `annotated_asset_id`, and `browser_version`. In addition,
 // global string literal filtering without a field name is supported: a single
@@ -9729,7 +9729,7 @@ func (c *CustomersChromeBrowsersListCall) OrderBy(orderBy string) *CustomersChro
 }
 
 // PageSize sets the optional parameter "pageSize": Maximum number of results
-// to return. Maximum and default are 100.
+// to return. Maximum and default are 50.
 func (c *CustomersChromeBrowsersListCall) PageSize(pageSize int64) *CustomersChromeBrowsersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c

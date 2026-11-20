@@ -437,6 +437,10 @@ type BoostConfig struct {
 	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in gigabytes
 	// (GB). The minimum boot disk size is `30` GB. Defaults to `50` GB.
 	BootDiskSizeGb int64 `json:"bootDiskSizeGb,omitempty"`
+	// EnableAutomaticFailover: Optional. Indicates if this boost config is
+	// eligible for automatic failover when the service cannot provision the
+	// default VM type. Defaults to `false`.
+	EnableAutomaticFailover bool `json:"enableAutomaticFailover,omitempty"`
 	// EnableNestedVirtualization: Optional. Whether to enable nested
 	// virtualization on boosted Cloud Workstations VMs running using this boost
 	// configuration. Defaults to false. Nested virtualization lets you run virtual

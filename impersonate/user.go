@@ -142,8 +142,7 @@ func (u userTokenSource) signJWT() (string, error) {
 func (u userTokenSource) exchangeToken(signedJWT string) (*oauth2.Token, error) {
 	now := time.Now()
 	v := url.Values{}
-	v.Set("grant_type", "assertion")
-	v.Set("assertion_type", "http://oauth.net/grant_type/jwt/1.0/bearer")
+	v.Set("grant_type", "urn:ietf:params:oauth:grant-type:jwt-bearer")
 	v.Set("assertion", signedJWT)
 	rawResp, err := u.client.PostForm(fmt.Sprintf("%s/token", oauth2Endpoint), v)
 	if err != nil {

@@ -1450,8 +1450,8 @@ type Saas struct {
 	Conditions []*SaasCondition `json:"conditions,omitempty"`
 	// CreateTime: Output only. The timestamp when the resource was created.
 	CreateTime string `json:"createTime,omitempty"`
-	// Error: Output only. If the state is FAILED, the corresponding error code and
-	// message. Defaults to code=OK for all other states.
+	// Error: Output only. If the state is `FAILED`, the corresponding error code
+	// and message. Defaults to code=OK for all other states.
 	Error *Status `json:"error,omitempty"`
 	// Etag: Output only. An opaque value that uniquely identifies a version or
 	// generation of a resource. It can be used to confirm that the client and
@@ -2062,7 +2062,7 @@ func (s UnitKind) MarshalJSON() ([]byte, error) {
 // the future for non-mutating operations). UnitOperations allow different
 // actors interacting with the same unit to focus only on the change they have
 // requested. This is a base object that contains the common fields in all unit
-// operations. Next: 22
+// operations.
 type UnitOperation struct {
 	// Annotations: Optional. Annotations is an unstructured key-value map stored
 	// with a resource that may be set by external tools to store and retrieve

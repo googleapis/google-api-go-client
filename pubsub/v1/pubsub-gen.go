@@ -1047,6 +1047,7 @@ type Compression struct {
 	// Possible values:
 	//   "COMPRESSION_ALGORITHM_UNSPECIFIED" - Unspecified algorithm.
 	//   "ZLIB" - ZLIB compression.
+	//   "ZSTD" - Zstd compression.
 	CompressionAlgorithm string `json:"compressionAlgorithm,omitempty"`
 	// CompressionMode: Required. Specifies whether to compress or decompress the
 	// message.

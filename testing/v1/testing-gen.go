@@ -339,6 +339,14 @@ type AndroidInstrumentationTest struct {
 	// AppPackageId: The java package for the application under test. The default
 	// value is determined by examining the application's manifest.
 	AppPackageId string `json:"appPackageId,omitempty"`
+	// InstrumentInPrivateComputeCore: Optional. Whether to use Private Compute
+	// Core (PCC) sandbox testing. For self-instrumenting test APKs, the test
+	// process runs directly inside the PCC sandbox. For separate test and
+	// application APKs, the PCC sandbox is configured to allow the application's
+	// PCC components to run and accept connections from the test process.
+	// Effective only on Android 17 (API level 37) and higher, ignored otherwise.
+	// Cannot be combined with `OrchestratorOption.USE_ORCHESTRATOR`.
+	InstrumentInPrivateComputeCore bool `json:"instrumentInPrivateComputeCore,omitempty"`
 	// OrchestratorOption: The option of whether running each test within its own
 	// invocation of instrumentation with Android Test Orchestrator or not. **
 	// Orchestrator is only compatible with AndroidJUnitRunner version 1.1 or

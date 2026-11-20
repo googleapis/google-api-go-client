@@ -8898,10 +8898,13 @@ type UnifiedUpdatePolicy struct {
 	// which refer to that target are evaluated in sequence. The first rule for
 	// which the predicate evaluates to true is considered, and its outcome is
 	// used. If no rule matches, the default update behavior applies. In other
-	// words, this behaves like a chained if-else statement.However, if an update
-	// has been available for more than a certain amount of time, any outcome of
-	// BLOCK is automatically changed to the default update behavior. At most 100
-	// rules are allowed.
+	// words, this behaves like a chained if-else statement.However, each update
+	// can only be deferred for a limited time. After an update has been available
+	// for longer than its maximum deferral period, rules with an outcome of BLOCK
+	// or USER_PROMPT no longer delay it. The update then follows a matching rule
+	// with an outcome of FORCE or the default update behavior. The maximum
+	// deferral period depends on the target type and, for OS updates, the
+	// management mode.At most 100 rules are allowed.
 	Rules []*Rule `json:"rules,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Rules") to unconditionally
 	// include in API requests. By default, fields with empty or default values are

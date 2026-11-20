@@ -572,6 +572,13 @@ type AuditReport struct {
 	Name string `json:"name,omitempty"`
 	// OperationId: Output only. Client operation ID for the audit report.
 	OperationId string `json:"operationId,omitempty"`
+	// ReportExportFormats: Output only. Additional formats in which the audit
+	// report was requested to be exported.
+	//
+	// Possible values:
+	//   "REPORT_EXPORT_FORMAT_UNSPECIFIED" - Default value. This value is unused.
+	//   "REPORT_EXPORT_FORMAT_PDF" - Portable Document Format (PDF).
+	ReportExportFormats []string `json:"reportExportFormats,omitempty"`
 	// ReportGenerationState: Output only. State of audit report generation.
 	//
 	// Possible values:
@@ -585,6 +592,9 @@ type AuditReport struct {
 	// `OPERATION_STATE_FAILED`.
 	//   "SUMMARY_UNKNOWN" - The process completed, but the report summary's status
 	// is unknown. This state isn't used for new reports.
+	//   "DONE_WITH_ERRORS" - The process completed and the mandatory report was
+	// generated, but an optional additional report export (for example, PDF)
+	// failed. The operation state is `OPERATION_STATE_DONE`.
 	ReportGenerationState string `json:"reportGenerationState,omitempty"`
 	// ReportSummary: Output only. Report summary that includes information about
 	// compliance and violation counts.
@@ -652,6 +662,14 @@ type AuditSchedule struct {
 	// `{"organizations/123/locations/global/cloudControls/control-1": {parameters:
 	// [...]}}`
 	ParameterOverrides map[string]ParameterOverrides `json:"parameterOverrides,omitempty"`
+	// ReportExportFormats: Optional. Formats in which to export each scheduled
+	// audit report, in addition to the ODF report. Each format can be listed only
+	// once.
+	//
+	// Possible values:
+	//   "REPORT_EXPORT_FORMAT_UNSPECIFIED" - Default value. This value is unused.
+	//   "REPORT_EXPORT_FORMAT_PDF" - Portable Document Format (PDF).
+	ReportExportFormats []string `json:"reportExportFormats,omitempty"`
 	// ReportFormat: Required. Format for the audit report.
 	//
 	// Possible values:
@@ -1035,6 +1053,13 @@ type GenerateAuditReportRequest struct {
 	// `{"organizations/123/locations/global/cloudControls/control-1": {parameters:
 	// [...]}}`
 	ParameterOverrides map[string]ParameterOverrides `json:"parameterOverrides,omitempty"`
+	// ReportExportFormats: Optional. Formats in which to export the audit report,
+	// in addition to the ODF report. Each format can be listed only once.
+	//
+	// Possible values:
+	//   "REPORT_EXPORT_FORMAT_UNSPECIFIED" - Default value. This value is unused.
+	//   "REPORT_EXPORT_FORMAT_PDF" - Portable Document Format (PDF).
+	ReportExportFormats []string `json:"reportExportFormats,omitempty"`
 	// ReportFormat: Required. Format for the audit report.
 	//
 	// Possible values:

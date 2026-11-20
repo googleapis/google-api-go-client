@@ -4392,6 +4392,14 @@ func (r *ProjectsLocationsReservationsService) List(parent string) *ProjectsLoca
 	return c
 }
 
+// Filter sets the optional parameter "filter": The filter to apply to the list
+// results. Only filtering by reservation group is supported. Examples:
+// "reservation_group=my-group"
+func (c *ProjectsLocationsReservationsListCall) Filter(filter string) *ProjectsLocationsReservationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": The maximum number of items
 // to return per page.
 func (c *ProjectsLocationsReservationsListCall) PageSize(pageSize int64) *ProjectsLocationsReservationsListCall {

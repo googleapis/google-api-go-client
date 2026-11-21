@@ -254,6 +254,12 @@ func GetGRPCTransportConfigAndEndpoint(settings *DialSettings) (credentials.Tran
 // GetHTTPTransportConfigAndEndpoint returns a client certificate source, a function for dialing MTLS with S2A,
 // and the endpoint to use for HTTP client.
 func GetHTTPTransportConfigAndEndpoint(settings *DialSettings) (cert.Source, func(context.Context, string, string) (net.Conn, error), string, error) {
+	// The supplied HTTP client owns its TLS configuration. Resolve its endpoint
+	// without initializing an unused default certificate source or S2A transport.
+	if settings.HTTPClient != nil {
+		endpoint, err := getEndpoint(settings, nil)
+		return nil, nil, endpoint, err
+	}
 	config, err := getTransportConfig(settings)
 	if err != nil {
 		return nil, nil, "", err

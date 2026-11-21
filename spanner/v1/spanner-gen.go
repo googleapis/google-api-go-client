@@ -566,6 +566,37 @@ type AddSplitPointsResponse struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// AllowedProcessingUnits: Defines a range of processing units supported by an
+// instance configuration.
+type AllowedProcessingUnits struct {
+	// MaxProcessingUnits: The maximum value of processing units applicable to this
+	// interval, inclusive. If unset, there is no predefined limit to the supported
+	// number of processing units, although project quota limits still apply.
+	MaxProcessingUnits int64 `json:"maxProcessingUnits,omitempty"`
+	// MinProcessingUnits: The minimum value of processing units applicable to this
+	// interval, inclusive.
+	MinProcessingUnits int64 `json:"minProcessingUnits,omitempty"`
+	// ProcessingUnitIncrement: Allowed increments of processing units between
+	// “min” and “max”.
+	ProcessingUnitIncrement int64 `json:"processingUnitIncrement,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxProcessingUnits") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxProcessingUnits") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AllowedProcessingUnits) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowedProcessingUnits
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AsymmetricAutoscalingOption: AsymmetricAutoscalingOption specifies the
 // scaling of replicas identified by the given selection.
 type AsymmetricAutoscalingOption struct {
@@ -1103,10 +1134,17 @@ func (s BatchCreateSessionsResponse) MarshalJSON() ([]byte, error) {
 
 // BatchWriteRequest: The request for BatchWrite.
 type BatchWriteRequest struct {
-	// ExcludeTxnFromChangeStreams: Optional. If you don't set the
-	// `exclude_txn_from_change_streams` option or if it's set to `false`, then any
-	// change streams monitoring columns modified by transactions will capture the
-	// updates made within that transaction.
+	// ExcludeTxnFromChangeStreams: Optional. For change streams monitoring columns
+	// modified by transactions, when `exclude_txn_from_change_streams` is set to
+	// `true`, two scenarios are possible: * If the DDL option
+	// `allow_txn_exclusion` is set to `true`, then the updates made within all
+	// transactions in this batch write aren't recorded in the change stream. * If
+	// you don't set the DDL option `allow_txn_exclusion` or if it's set to
+	// `false`, then the updates made within this transaction are recorded in the
+	// change stream. If you don't set the `exclude_txn_from_change_streams` option
+	// or if it's set to `false`, then any change streams monitoring columns
+	// modified by transactions will capture the updates made within that
+	// transaction.
 	ExcludeTxnFromChangeStreams bool `json:"excludeTxnFromChangeStreams,omitempty"`
 	// MutationGroups: Required. The groups of mutations to be applied.
 	MutationGroups []*MutationGroup `json:"mutationGroups,omitempty"`
@@ -2422,6 +2460,49 @@ type Database struct {
 	// database option set using DatabaseAdmin.CreateDatabase or
 	// DatabaseAdmin.UpdateDatabaseDdl. If not explicitly set, this is empty.
 	DefaultLeader string `json:"defaultLeader,omitempty"`
+	// DefaultReadLockMode: Output only. The default read lock mode for
+	// transactions. If not configured via DDL, `READ_LOCK_MODE_UNSPECIFIED` will
+	// be returned. For transactions, if lock mode is unspecified, it defaults to
+	// `PESSIMISTIC` for `SERIALIZABLE` isolation and `OPTIMISTIC` for
+	// `REPEATABLE_READ` isolation.
+	//
+	// Possible values:
+	//   "READ_LOCK_MODE_UNSPECIFIED" - If `READ_LOCK_MODE_UNSPECIFIED` is used,
+	// the default behavior described in `ReadLockMode` applies.
+	//   "PESSIMISTIC" - Pessimistic lock mode. Read locks are acquired immediately
+	// on read.
+	//   "OPTIMISTIC" - Optimistic lock mode. Locks for reads within the
+	// transaction are not acquired on read. Instead the locks are acquired on a
+	// commit to validate that read/queried data has not changed since the
+	// transaction started.
+	DefaultReadLockMode string `json:"defaultReadLockMode,omitempty"`
+	// DefaultTransactionIsolation: Output only. The default isolation level for
+	// transactions in this database. If not configured via DDL,
+	// `ISOLATION_LEVEL_UNSPECIFIED` will be returned. For transactions, if
+	// isolation level is unspecified, it defaults to `SERIALIZABLE`.
+	//
+	// Possible values:
+	//   "ISOLATION_LEVEL_UNSPECIFIED" - Default value. If the value is not
+	// specified, the `SERIALIZABLE` isolation level is used.
+	//   "SERIALIZABLE" - All transactions appear as if they executed in a serial
+	// order, even if some of the reads, writes, and other operations of distinct
+	// transactions actually occurred in parallel. Spanner assigns commit
+	// timestamps that reflect the order of committed transactions to implement
+	// this property. Spanner offers a stronger guarantee than serializability
+	// called external consistency. For more information, see [TrueTime and
+	// external
+	// consistency](https://cloud.google.com/spanner/docs/true-time-external-consist
+	// ency#serializability).
+	//   "REPEATABLE_READ" - All reads performed during the transaction observe a
+	// consistent snapshot of the database, and the transaction is only
+	// successfully committed in the absence of conflicts between its updates and
+	// any concurrent updates that have occurred since that snapshot. Consequently,
+	// in contrast to `SERIALIZABLE` transactions, only write-write conflicts are
+	// detected in snapshot transactions. This isolation level does not support
+	// read-only and partitioned DML transactions. When `REPEATABLE_READ` is
+	// specified on a read-write transaction, the locking semantics default to
+	// `OPTIMISTIC`.
+	DefaultTransactionIsolation string `json:"defaultTransactionIsolation,omitempty"`
 	// EarliestVersionTime: Output only. Earliest timestamp at which older versions
 	// of the data can be read. This value is continuously updated by Cloud Spanner
 	// and becomes stale the moment it is queried. If you are using this value to
@@ -3566,6 +3647,19 @@ func (s Instance) MarshalJSON() ([]byte, error) {
 // Configurations define the geographic placement of nodes and their
 // replication.
 type InstanceConfig struct {
+	// AllowedProcessingUnits: Output only. Defines the ranges of allowed
+	// processing units supported by this instance configuration. If multiple
+	// ranges are specified, an instance using this configuration may use a valid
+	// increment in any of the given ranges. For example, an
+	// allowed_processing_units specification of `[{min_processing_units:100,
+	// max_processing_units:900, processing_unit_increment:100},
+	// {min_processing_units:1000, processing_unit_increment:1000}]` specifies that
+	// the instance configuration supports instances with quantities of processing
+	// units in multiples of 100 processing units (100, 200, 300 and so on) up to
+	// and including 900 processing units and quantities that are at least 1000
+	// processing units and multiples of 1000 processing units (1000, 2000, 3000
+	// and so on).
+	AllowedProcessingUnits []*AllowedProcessingUnits `json:"allowedProcessingUnits,omitempty"`
 	// BaseConfig: Base configuration name, e.g. projects//instanceConfigs/nam3,
 	// based on which this configuration is created. Only set for user-managed
 	// configurations. `base_config` must refer to a configuration of type
@@ -3674,15 +3768,15 @@ type InstanceConfig struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "BaseConfig") to
+	// ForceSendFields is a list of field names (e.g. "AllowedProcessingUnits") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "BaseConfig") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AllowedProcessingUnits") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }

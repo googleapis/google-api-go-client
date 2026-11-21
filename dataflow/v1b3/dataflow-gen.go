@@ -2881,6 +2881,12 @@ func (s IntegerMean) MarshalJSON() ([]byte, error) {
 // Job: Defines a job to be run by the Cloud Dataflow service. Do not enter
 // confidential information when you supply string values using the API.
 type Job struct {
+	// AutoVmSelectionEnabled: Output only. Indicates whether Auto VM Selection
+	// (https://cloud.google.com/dataflow/docs/guides/auto-vm-selection) is enabled
+	// for the job. Set to `true` on a best-effort basis once any worker pool of
+	// the job was created with Auto VM Selection. Populated for `ListJobs` and all
+	// `GetJob` views `SUMMARY` and higher.
+	AutoVmSelectionEnabled bool `json:"autoVmSelectionEnabled,omitempty"`
 	// ClientRequestId: The client's unique identifier of the job, re-used across
 	// retried attempts. If this field is set, the service will ensure its
 	// uniqueness. The request to create a job will fail if the service has
@@ -2969,8 +2975,8 @@ type Job struct {
 	// when the job is created, and is immutable for the life of the job.
 	Id string `json:"id,omitempty"`
 	// JobMetadata: This field is populated by the Dataflow service to support
-	// filtering jobs by the metadata values provided here. Populated for ListJobs
-	// and all GetJob views SUMMARY and higher.
+	// filtering jobs by the metadata values provided here. Populated for
+	// `ListJobs` and all `GetJob` views `SUMMARY` and higher.
 	JobMetadata *JobMetadata `json:"jobMetadata,omitempty"`
 	// Labels: User-defined labels for this job. The labels map can contain no more
 	// than 64 entries. Entries of the labels map are UTF8 strings that comply with
@@ -2995,7 +3001,7 @@ type Job struct {
 	// PipelineDescription: Preliminary field: The format of this data may change
 	// at any time. A description of the user pipeline and stages through which it
 	// is executed. Created by Cloud Dataflow service. Only retrieved with
-	// JOB_VIEW_DESCRIPTION or JOB_VIEW_ALL.
+	// `JOB_VIEW_DESCRIPTION` or `JOB_VIEW_ALL`.
 	PipelineDescription *PipelineDescription `json:"pipelineDescription,omitempty"`
 	// ProjectId: The ID of the Google Cloud project that the job belongs to.
 	ProjectId string `json:"projectId,omitempty"`
@@ -3098,7 +3104,7 @@ type Job struct {
 	StartTime string `json:"startTime,omitempty"`
 	// Steps: Exactly one of step or steps_location should be specified. The
 	// top-level steps that constitute the entire job. Only retrieved with
-	// JOB_VIEW_ALL.
+	// `JOB_VIEW_ALL`.
 	Steps []*Step `json:"steps,omitempty"`
 	// StepsLocation: The Cloud Storage location where the steps are stored.
 	StepsLocation string `json:"stepsLocation,omitempty"`
@@ -3123,15 +3129,15 @@ type Job struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ClientRequestId") to
+	// ForceSendFields is a list of field names (e.g. "AutoVmSelectionEnabled") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ClientRequestId") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "AutoVmSelectionEnabled") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3272,7 +3278,7 @@ func (s JobMessage) MarshalJSON() ([]byte, error) {
 }
 
 // JobMetadata: Metadata available primarily for filtering jobs. Will be
-// included in the ListJob response and Job SUMMARY view.
+// included in the `ListJobs` response and Job `SUMMARY` view.
 type JobMetadata struct {
 	// BigTableDetails: Identification of a Cloud Bigtable source used in the
 	// Dataflow job.
@@ -6332,7 +6338,7 @@ type Step struct {
 	Name string `json:"name,omitempty"`
 	// Properties: Named properties associated with the step. Each kind of
 	// predefined step has its own required set of properties. Must be provided on
-	// Create. Only retrieved with JOB_VIEW_ALL.
+	// Create. Only retrieved with `JOB_VIEW_ALL`.
 	Properties googleapi.RawMessage `json:"properties,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -9331,6 +9337,30 @@ func (c *ProjectsJobsAggregatedCall) Filter(filter string) *ProjectsJobsAggregat
 	return c
 }
 
+// FilterExpression sets the optional parameter "filterExpression": Restricts
+// the results to jobs that match this AIP-160 (https://google.aip.dev/160)
+// filter expression. The expression is ANDed with `filter` and the time
+// ranges, and is limited to 4 KiB and 32 levels of nesting. Not yet
+// implemented: the service currently ignores this field and returns unfiltered
+// results. Support will be added in a future release. Supported fields are
+// `name`, `id`, `location`, `job_metadata.sdk_version.version`, `type`,
+// `current_state`, `create_time` and `current_state_time`: * String fields
+// support `=` and `!=`, where `*` in the value matches any sequence of
+// characters, and `:`, which matches the same way but ignores ASCII case.
+// `field:*` matches any non-empty value. * `type` and `current_state` support
+// `=`, `!=` and `:` with enum value names, e.g. `current_state =
+// JOB_STATE_RUNNING`. * Timestamp fields support `=`, `!=`, `<`, `<=`, `>` and
+// `>=` with RFC 3339 values, e.g. `create_time >= "2026-10-01T00:00:00Z". A
+// job without the timestamp doesn't match any comparison on it. Restrictions
+// can be combined with `AND`, `OR`, `NOT` (or its equivalent, `-`) and
+// parentheses; `AND` and `OR` can't be mixed without parentheses. For example:
+// `name:"wordcount-*" AND -type = JOB_TYPE_STREAMING AND (current_state =
+// JOB_STATE_FAILED OR current_state = JOB_STATE_CANCELLED)`.
+func (c *ProjectsJobsAggregatedCall) FilterExpression(filterExpression string) *ProjectsJobsAggregatedCall {
+	c.urlParams_.Set("filterExpression", filterExpression)
+	return c
+}
+
 // Location sets the optional parameter "location": The [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
 // contains this job.
@@ -9385,8 +9415,8 @@ func (c *ProjectsJobsAggregatedCall) TerminationTimeRangeStartTime(terminationTi
 	return c
 }
 
-// View sets the optional parameter "view": Deprecated. ListJobs always returns
-// summaries now. Use GetJob for other JobViews.
+// View sets the optional parameter "view": Deprecated. `ListJobs` always
+// returns summaries now. Use `GetJob` for other `JobView`s.
 //
 // Possible values:
 //
@@ -10050,6 +10080,30 @@ func (c *ProjectsJobsListCall) Filter(filter string) *ProjectsJobsListCall {
 	return c
 }
 
+// FilterExpression sets the optional parameter "filterExpression": Restricts
+// the results to jobs that match this AIP-160 (https://google.aip.dev/160)
+// filter expression. The expression is ANDed with `filter` and the time
+// ranges, and is limited to 4 KiB and 32 levels of nesting. Not yet
+// implemented: the service currently ignores this field and returns unfiltered
+// results. Support will be added in a future release. Supported fields are
+// `name`, `id`, `location`, `job_metadata.sdk_version.version`, `type`,
+// `current_state`, `create_time` and `current_state_time`: * String fields
+// support `=` and `!=`, where `*` in the value matches any sequence of
+// characters, and `:`, which matches the same way but ignores ASCII case.
+// `field:*` matches any non-empty value. * `type` and `current_state` support
+// `=`, `!=` and `:` with enum value names, e.g. `current_state =
+// JOB_STATE_RUNNING`. * Timestamp fields support `=`, `!=`, `<`, `<=`, `>` and
+// `>=` with RFC 3339 values, e.g. `create_time >= "2026-10-01T00:00:00Z". A
+// job without the timestamp doesn't match any comparison on it. Restrictions
+// can be combined with `AND`, `OR`, `NOT` (or its equivalent, `-`) and
+// parentheses; `AND` and `OR` can't be mixed without parentheses. For example:
+// `name:"wordcount-*" AND -type = JOB_TYPE_STREAMING AND (current_state =
+// JOB_STATE_FAILED OR current_state = JOB_STATE_CANCELLED)`.
+func (c *ProjectsJobsListCall) FilterExpression(filterExpression string) *ProjectsJobsListCall {
+	c.urlParams_.Set("filterExpression", filterExpression)
+	return c
+}
+
 // Location sets the optional parameter "location": The [regional endpoint]
 // (https://cloud.google.com/dataflow/docs/concepts/regional-endpoints) that
 // contains this job.
@@ -10104,8 +10158,8 @@ func (c *ProjectsJobsListCall) TerminationTimeRangeStartTime(terminationTimeRang
 	return c
 }
 
-// View sets the optional parameter "view": Deprecated. ListJobs always returns
-// summaries now. Use GetJob for other JobViews.
+// View sets the optional parameter "view": Deprecated. `ListJobs` always
+// returns summaries now. Use `GetJob` for other `JobView`s.
 //
 // Possible values:
 //
@@ -12619,6 +12673,30 @@ func (c *ProjectsLocationsJobsListCall) Filter(filter string) *ProjectsLocations
 	return c
 }
 
+// FilterExpression sets the optional parameter "filterExpression": Restricts
+// the results to jobs that match this AIP-160 (https://google.aip.dev/160)
+// filter expression. The expression is ANDed with `filter` and the time
+// ranges, and is limited to 4 KiB and 32 levels of nesting. Not yet
+// implemented: the service currently ignores this field and returns unfiltered
+// results. Support will be added in a future release. Supported fields are
+// `name`, `id`, `location`, `job_metadata.sdk_version.version`, `type`,
+// `current_state`, `create_time` and `current_state_time`: * String fields
+// support `=` and `!=`, where `*` in the value matches any sequence of
+// characters, and `:`, which matches the same way but ignores ASCII case.
+// `field:*` matches any non-empty value. * `type` and `current_state` support
+// `=`, `!=` and `:` with enum value names, e.g. `current_state =
+// JOB_STATE_RUNNING`. * Timestamp fields support `=`, `!=`, `<`, `<=`, `>` and
+// `>=` with RFC 3339 values, e.g. `create_time >= "2026-10-01T00:00:00Z". A
+// job without the timestamp doesn't match any comparison on it. Restrictions
+// can be combined with `AND`, `OR`, `NOT` (or its equivalent, `-`) and
+// parentheses; `AND` and `OR` can't be mixed without parentheses. For example:
+// `name:"wordcount-*" AND -type = JOB_TYPE_STREAMING AND (current_state =
+// JOB_STATE_FAILED OR current_state = JOB_STATE_CANCELLED)`.
+func (c *ProjectsLocationsJobsListCall) FilterExpression(filterExpression string) *ProjectsLocationsJobsListCall {
+	c.urlParams_.Set("filterExpression", filterExpression)
+	return c
+}
+
 // Name sets the optional parameter "name": The job name.
 func (c *ProjectsLocationsJobsListCall) Name(name string) *ProjectsLocationsJobsListCall {
 	c.urlParams_.Set("name", name)
@@ -12665,8 +12743,8 @@ func (c *ProjectsLocationsJobsListCall) TerminationTimeRangeStartTime(terminatio
 	return c
 }
 
-// View sets the optional parameter "view": Deprecated. ListJobs always returns
-// summaries now. Use GetJob for other JobViews.
+// View sets the optional parameter "view": Deprecated. `ListJobs` always
+// returns summaries now. Use `GetJob` for other `JobView`s.
 //
 // Possible values:
 //

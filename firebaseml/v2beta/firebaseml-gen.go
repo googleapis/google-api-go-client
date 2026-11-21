@@ -1651,15 +1651,17 @@ type GoogleCloudAiplatformV1beta1FunctionResponsePart struct {
 	FileData *GoogleCloudAiplatformV1beta1FunctionResponseFileData `json:"fileData,omitempty"`
 	// InlineData: Inline media bytes.
 	InlineData *GoogleCloudAiplatformV1beta1FunctionResponseBlob `json:"inlineData,omitempty"`
-	// MediaProcessing: Optional. Processes this part's media for understanding.
-	// Only meaningful for video parts (`inline_data` or `file_data` with video
-	// mime). Non-video parts ignore this field.
+	// MediaProcessing: Optional. The strategy used by the model to process this
+	// part's media. This field is only meaningful for video parts (`inline_data`
+	// or `file_data` with a video MIME type). Non-video parts ignore this field.
 	//
 	// Possible values:
-	//   "MEDIA_PROCESSING_UNSPECIFIED" - Defaults to model-specific processing.
-	//   "STATIC" - Fixed-rate frame extraction. All frames placed in context.
-	//   "AGENTIC" - Model-driven dynamic navigation. Recommended for most use
-	// cases.
+	//   "MEDIA_PROCESSING_UNSPECIFIED" - Default value. The model uses its
+	// specific default processing strategy.
+	//   "STATIC" - Fixed-rate frame extraction. The model extracts frames at a
+	// fixed rate and places all of them into the context.
+	//   "AGENTIC" - Model-driven dynamic navigation. The model dynamically
+	// navigates the media. This is recommended for most use cases.
 	MediaProcessing string `json:"mediaProcessing,omitempty"`
 	// MediaResolution: Optional. Media resolution for the input media.
 	MediaResolution *GoogleCloudAiplatformV1beta1FunctionResponseMediaResolution `json:"mediaResolution,omitempty"`
@@ -3205,15 +3207,17 @@ type GoogleCloudAiplatformV1beta1Part struct {
 	// InlineData: Optional. The inline data content of the part. This can be used
 	// to include images, audio, or video in a request.
 	InlineData *GoogleCloudAiplatformV1beta1Blob `json:"inlineData,omitempty"`
-	// MediaProcessing: Optional. How the model processes this part's media for
-	// understanding. Only meaningful for video parts (`inline_data` or `file_data`
-	// with video mime). Non-video parts ignore this field.
+	// MediaProcessing: Optional. The strategy used by the model to process this
+	// part's media. This field is only meaningful for video parts (`inline_data`
+	// or `file_data` with a video MIME type). Non-video parts ignore this field.
 	//
 	// Possible values:
-	//   "MEDIA_PROCESSING_UNSPECIFIED" - Defaults to model-specific processing.
-	//   "STATIC" - Fixed-rate frame extraction. All frames placed in context.
-	//   "AGENTIC" - Model-driven dynamic navigation. Recommended for most use
-	// cases.
+	//   "MEDIA_PROCESSING_UNSPECIFIED" - Default value. The model uses its
+	// specific default processing strategy.
+	//   "STATIC" - Fixed-rate frame extraction. The model extracts frames at a
+	// fixed rate and places all of them into the context.
+	//   "AGENTIC" - Model-driven dynamic navigation. The model dynamically
+	// navigates the media. This is recommended for most use cases.
 	MediaProcessing string `json:"mediaProcessing,omitempty"`
 	// MediaResolution: per part media resolution. Media resolution for the input
 	// media.

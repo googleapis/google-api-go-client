@@ -603,13 +603,13 @@ type Deployment struct {
 	//   "EXTERNAL_VALUE_SOURCE_IMPORT_FAILED" - Failed to import values from an
 	// external source.
 	ErrorCode string `json:"errorCode,omitempty"`
-	// ErrorLogs: Output only. Location of Terraform error logs in Google Cloud
-	// Storage. Format: `gs://{bucket}/{object}`.
+	// ErrorLogs: Output only. Location of actuation engine error logs in Google
+	// Cloud Storage. Format: `gs://{bucket}/{object}`.
 	ErrorLogs string `json:"errorLogs,omitempty"`
 	// ImportExistingResources: By default, Infra Manager will return a failure
-	// when Terraform encounters a 409 code (resource conflict error) during
-	// actuation. If this flag is set to true, Infra Manager will instead attempt
-	// to automatically import the resource into the Terraform state (for supported
+	// when the actuation engine encounters a 409 code (resource conflict error)
+	// during actuation. If this flag is set to true, Infra Manager will instead
+	// attempt to automatically import the resource into the state (for supported
 	// resource types) and continue actuation. Not all resource types are
 	// supported, refer to documentation.
 	ImportExistingResources bool `json:"importExistingResources,omitempty"`
@@ -637,17 +637,16 @@ type Deployment struct {
 	// ProviderConfig: Optional. This field specifies the provider configurations.
 	ProviderConfig *ProviderConfig `json:"providerConfig,omitempty"`
 	// QuotaValidation: Optional. Input to control quota checks for resources in
-	// terraform configuration files. There are limited resources on which quota
-	// validation applies.
+	// configuration files. There are limited resources on which quota validation
+	// applies.
 	//
 	// Possible values:
 	//   "QUOTA_VALIDATION_UNSPECIFIED" - The default value. QuotaValidation on
-	// terraform configuration files will be disabled in this case.
-	//   "ENABLED" - Enable computing quotas for resources in terraform
-	// configuration files to get visibility on resources with insufficient quotas.
+	// configuration files will be disabled in this case.
+	//   "ENABLED" - Enable computing quotas for resources in configuration files
+	// to get visibility on resources with insufficient quotas.
 	//   "ENFORCED" - Enforce quota checks so deployment fails if there isn't
-	// sufficient quotas available to deploy resources in terraform configuration
-	// files.
+	// sufficient quotas available to deploy resources in configuration files.
 	QuotaValidation string `json:"quotaValidation,omitempty"`
 	// ServiceAccount: Required. User-specified Service Account (SA) credentials to
 	// be used when actuating resources. Format:
@@ -864,6 +863,14 @@ type DeploymentOperationMetadata struct {
 	//   "FAILED" - Operation failed
 	//   "VALIDATING_REPOSITORY" - Validating the provided repository.
 	//   "RUNNING_QUOTA_VALIDATION" - Running quota validation
+	//   "RUNNING_ENGINE_INIT" - Initializing the actuation engine.
+	//   "RUNNING_ENGINE_PLAN" - Generating an execution plan using the actuation
+	// engine.
+	//   "RUNNING_ENGINE_APPLY" - Actuating resources using the actuation engine.
+	//   "RUNNING_ENGINE_DESTROY" - Destroying resources using the actuation
+	// engine.
+	//   "RUNNING_ENGINE_VALIDATE" - Validating the uploaded state file when
+	// unlocking a deployment.
 	Step string `json:"step,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "ApplyResults") to
 	// unconditionally include in API requests. By default, fields with empty or
@@ -917,6 +924,14 @@ type DeploymentOperationSummary struct {
 	//   "FAILED" - Operation failed
 	//   "VALIDATING_REPOSITORY" - Validating the provided repository.
 	//   "RUNNING_QUOTA_VALIDATION" - Running quota validation
+	//   "RUNNING_ENGINE_INIT" - Initializing the actuation engine.
+	//   "RUNNING_ENGINE_PLAN" - Generating an execution plan using the actuation
+	// engine.
+	//   "RUNNING_ENGINE_APPLY" - Actuating resources using the actuation engine.
+	//   "RUNNING_ENGINE_DESTROY" - Destroying resources using the actuation
+	// engine.
+	//   "RUNNING_ENGINE_VALIDATE" - Validating the uploaded state file when
+	// unlocking a deployment.
 	DeploymentStep string `json:"deploymentStep,omitempty"`
 	// Logs: Output only. Location of Deployment operations logs in
 	// `gs://{bucket}/{object}` format.
@@ -1711,9 +1726,9 @@ type LockInfo struct {
 	// LockId: Unique ID for the lock to be overridden with generation ID in the
 	// backend.
 	LockId int64 `json:"lockId,omitempty,string"`
-	// Operation: Terraform operation, provided by the caller.
+	// Operation: Actuation engine operation, provided by the caller.
 	Operation string `json:"operation,omitempty"`
-	// Version: Terraform version
+	// Version: Actuation engine version
 	Version string `json:"version,omitempty"`
 	// Who: user@hostname when available
 	Who string `json:"who,omitempty"`
@@ -1968,8 +1983,8 @@ type Preview struct {
 	//   "EXTERNAL_VALUE_SOURCE_IMPORT_FAILED" - Failed to import values from an
 	// external source.
 	ErrorCode string `json:"errorCode,omitempty"`
-	// ErrorLogs: Output only. Link to tf-error.ndjson file, which contains the
-	// full list of the errors encountered during a Terraform preview. Format:
+	// ErrorLogs: Output only. Link to the error log file, which contains the full
+	// list of the errors encountered during a preview. Format:
 	// `gs://{bucket}/{object}`.
 	ErrorLogs string `json:"errorLogs,omitempty"`
 	// ErrorStatus: Output only. Additional information regarding the current
@@ -2108,6 +2123,8 @@ type PreviewOperationMetadata struct {
 	//   "SUCCEEDED" - Operation was successful.
 	//   "FAILED" - Operation failed.
 	//   "VALIDATING_REPOSITORY" - Validating the provided repository.
+	//   "RUNNING_ENGINE_INIT" - Initializing the engine.
+	//   "RUNNING_ENGINE_PLAN" - Generating an execution plan using the engine.
 	Step string `json:"step,omitempty"`
 	// ForceSendFields is a list of field names (e.g. "Build") to unconditionally
 	// include in API requests. By default, fields with empty or default values are
@@ -2582,18 +2599,18 @@ type Revision struct {
 	// updating a deployment could not be started.
 	//   "APPLY_BUILD_RUN_FAILED" - Cloud Build job associated with creating or
 	// updating a deployment was started but failed.
-	//   "QUOTA_VALIDATION_FAILED" - quota validation failed for one or more
-	// resources in terraform configuration files.
+	//   "QUOTA_VALIDATION_FAILED" - Quota validation failed for one or more
+	// resources in configuration files.
 	//   "EXTERNAL_VALUE_SOURCE_IMPORT_FAILED" - Failed to import values from an
 	// external source.
 	ErrorCode string `json:"errorCode,omitempty"`
-	// ErrorLogs: Output only. Location of Terraform error logs in Google Cloud
-	// Storage. Format: `gs://{bucket}/{object}`.
+	// ErrorLogs: Output only. Location of actuation engine error logs in Google
+	// Cloud Storage. Format: `gs://{bucket}/{object}`.
 	ErrorLogs string `json:"errorLogs,omitempty"`
 	// ImportExistingResources: Output only. By default, Infra Manager will return
-	// a failure when Terraform encounters a 409 code (resource conflict error)
-	// during actuation. If this flag is set to true, Infra Manager will instead
-	// attempt to automatically import the resource into the Terraform state (for
+	// a failure when the actuation engine encounters a 409 code (resource conflict
+	// error) during actuation. If this flag is set to true, Infra Manager will
+	// instead attempt to automatically import the resource into the state (for
 	// supported resource types) and continue actuation. Not all resource types are
 	// supported, refer to documentation.
 	ImportExistingResources bool `json:"importExistingResources,omitempty"`
@@ -2608,17 +2625,16 @@ type Revision struct {
 	// configurations.
 	ProviderConfig *ProviderConfig `json:"providerConfig,omitempty"`
 	// QuotaValidation: Optional. Input to control quota checks for resources in
-	// terraform configuration files. There are limited resources on which quota
-	// validation applies.
+	// configuration files. There are limited resources on which quota validation
+	// applies.
 	//
 	// Possible values:
 	//   "QUOTA_VALIDATION_UNSPECIFIED" - The default value. QuotaValidation on
-	// terraform configuration files will be disabled in this case.
-	//   "ENABLED" - Enable computing quotas for resources in terraform
-	// configuration files to get visibility on resources with insufficient quotas.
+	// configuration files will be disabled in this case.
+	//   "ENABLED" - Enable computing quotas for resources in configuration files
+	// to get visibility on resources with insufficient quotas.
 	//   "ENFORCED" - Enforce quota checks so deployment fails if there isn't
-	// sufficient quotas available to deploy resources in terraform configuration
-	// files.
+	// sufficient quotas available to deploy resources in configuration files.
 	QuotaValidation string `json:"quotaValidation,omitempty"`
 	// QuotaValidationResults: Output only. Cloud Storage path containing quota
 	// validation results. This field is set when a user sets
@@ -2644,7 +2660,7 @@ type Revision struct {
 	// HashiCorp Configuration Language as a root module.
 	TerraformBlueprint *TerraformBlueprint `json:"terraformBlueprint,omitempty"`
 	// TfErrors: Output only. Errors encountered when creating or updating this
-	// deployment. Errors are truncated to 10 entries, see `delete_results` and
+	// deployment. Errors are truncated to 10 entries, see `apply_results` and
 	// `error_logs` for full details.
 	TfErrors []*TerraformError `json:"tfErrors,omitempty"`
 	// TfVersion: Output only. The version of Terraform used to create the
@@ -2710,7 +2726,7 @@ func (s SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// Statefile: Contains info about a Terraform state file
+// Statefile: Contains info about a state file.
 type Statefile struct {
 	// SignedUri: Output only. Cloud Storage signed URI used for downloading or
 	// uploading the state file.
@@ -2802,7 +2818,7 @@ func (s TerraformBlueprint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
-// TerraformError: Errors encountered during actuation using Terraform
+// TerraformError: Errors encountered during actuation using Terraform.
 type TerraformError struct {
 	// Error: Output only. Original error response from underlying Google API, if
 	// available.
@@ -4968,7 +4984,7 @@ type ProjectsLocationsDeploymentsDeleteStateCall struct {
 	header_                http.Header
 }
 
-// DeleteState: Deletes Terraform state file in a given deployment.
+// DeleteState: Deletes state file in a given deployment.
 //
 //   - name: The name of the deployment in the format:
 //     'projects/{project_id}/locations/{location}/deployments/{deployment}'.
@@ -5182,7 +5198,7 @@ type ProjectsLocationsDeploymentsExportStateCall struct {
 	header_                          http.Header
 }
 
-// ExportState: Exports Terraform state file from a given deployment.
+// ExportState: Exports state file from a given deployment.
 //
 //   - parent: The parent in whose context the statefile is listed. The parent
 //     value is in the format:
@@ -5526,8 +5542,8 @@ type ProjectsLocationsDeploymentsImportStateCall struct {
 	header_                http.Header
 }
 
-// ImportState: Imports Terraform state file in a given deployment. The state
-// file does not take effect until the Deployment has been unlocked.
+// ImportState: Imports state file in a given deployment. The state file does
+// not take effect until the Deployment has been unlocked.
 //
 //   - parent: The parent in whose context the statefile is listed. The parent
 //     value is in the format:
@@ -6360,7 +6376,7 @@ type ProjectsLocationsDeploymentsRevisionsExportStateCall struct {
 	header_                        http.Header
 }
 
-// ExportState: Exports Terraform state file from a given revision.
+// ExportState: Exports state file from a given revision.
 //
 //   - parent: The parent in whose context the statefile is listed. The parent
 //     value is in the format:

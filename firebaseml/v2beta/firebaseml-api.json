@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20261115",
+  "revision": "20261119",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Date": {
@@ -1352,16 +1352,16 @@
           "description": "Inline media bytes."
         },
         "mediaProcessing": {
-          "description": "Optional. Processes this part's media for understanding. Only meaningful for video parts (`inline_data` or `file_data` with video mime). Non-video parts ignore this field.",
+          "description": "Optional. The strategy used by the model to process this part's media. This field is only meaningful for video parts (`inline_data` or `file_data` with a video MIME type). Non-video parts ignore this field.",
           "enum": [
             "MEDIA_PROCESSING_UNSPECIFIED",
             "STATIC",
             "AGENTIC"
           ],
           "enumDescriptions": [
-            "Defaults to model-specific processing.",
-            "Fixed-rate frame extraction. All frames placed in context.",
-            "Model-driven dynamic navigation. Recommended for most use cases."
+            "Default value. The model uses its specific default processing strategy.",
+            "Fixed-rate frame extraction. The model extracts frames at a fixed rate and places all of them into the context.",
+            "Model-driven dynamic navigation. The model dynamically navigates the media. This is recommended for most use cases."
           ],
           "type": "string"
         },
@@ -2602,16 +2602,16 @@
           "description": "Optional. The inline data content of the part. This can be used to include images, audio, or video in a request."
         },
         "mediaProcessing": {
-          "description": "Optional. How the model processes this part's media for understanding. Only meaningful for video parts (`inline_data` or `file_data` with video mime). Non-video parts ignore this field.",
+          "description": "Optional. The strategy used by the model to process this part's media. This field is only meaningful for video parts (`inline_data` or `file_data` with a video MIME type). Non-video parts ignore this field.",
           "enum": [
             "MEDIA_PROCESSING_UNSPECIFIED",
             "STATIC",
             "AGENTIC"
           ],
           "enumDescriptions": [
-            "Defaults to model-specific processing.",
-            "Fixed-rate frame extraction. All frames placed in context.",
-            "Model-driven dynamic navigation. Recommended for most use cases."
+            "Default value. The model uses its specific default processing strategy.",
+            "Fixed-rate frame extraction. The model extracts frames at a fixed rate and places all of them into the context.",
+            "Model-driven dynamic navigation. The model dynamically navigates the media. This is recommended for most use cases."
           ],
           "type": "string"
         },

@@ -2752,6 +2752,47 @@ func (s Skill) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// SkillEncryptionSpec: Once the SkillEncryptionSpec is configured, new Skill
+// payloads are protected using the provided customer-managed encryption key
+// instead of a Google-managed encryption key. SkillEncryptionSpec cannot be
+// set if any Skills have already been created in the project and location.
+type SkillEncryptionSpec struct {
+	// CreateTime: Output only. Creation timestamp.
+	CreateTime string `json:"createTime,omitempty"`
+	// CryptoKeyName: Required. The Cloud KMS CryptoKey resource name used to
+	// protect Skill payloads in this project and location. This field can be set
+	// or updated only when no Skills exist in the target project and location.
+	// Once any Skill exists in the location, updating this field is rejected with
+	// `FAILED_PRECONDITION`. Format:
+	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys/{crypt
+	// oKey}`
+	CryptoKeyName string `json:"cryptoKeyName,omitempty"`
+	// Name: Identifier. Resource name of the SkillEncryptionSpec. Format:
+	// `projects/{project}/locations/{location}/skillEncryptionSpec`
+	Name string `json:"name,omitempty"`
+	// UpdateTime: Output only. Most recent update timestamp.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the server.
+	googleapi.ServerResponse `json:"-"`
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s SkillEncryptionSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod SkillEncryptionSpec
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SkillRevision: Represents an immutable, versioned snapshot of a Skill
 // package.
 type SkillRevision struct {
@@ -3028,6 +3069,120 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 	return ret, nil
 }
 
+type ProjectsLocationsGetSkillEncryptionSpecCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSkillEncryptionSpec:
+// ========================================================================= #
+// Skill Encryption Spec Service Methods Gets the customer-managed encryption
+// key (CMEK) configuration for Skills in a specific project and location.
+//
+//   - name: The name of the SkillEncryptionSpec to retrieve. Format:
+//     `projects/{project}/locations/{location}/skillEncryptionSpec`.
+func (r *ProjectsLocationsService) GetSkillEncryptionSpec(name string) *ProjectsLocationsGetSkillEncryptionSpecCall {
+	c := &ProjectsLocationsGetSkillEncryptionSpecCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsGetSkillEncryptionSpecCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetSkillEncryptionSpecCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
+func (c *ProjectsLocationsGetSkillEncryptionSpecCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetSkillEncryptionSpecCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsGetSkillEncryptionSpecCall) Context(ctx context.Context) *ProjectsLocationsGetSkillEncryptionSpecCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsGetSkillEncryptionSpecCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetSkillEncryptionSpecCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, nil)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.getSkillEncryptionSpec", "request", internallog.HTTPRequest(req, nil))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentregistry.projects.locations.getSkillEncryptionSpec" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *SkillEncryptionSpec.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGetSkillEncryptionSpecCall) Do(opts ...googleapi.CallOption) (*SkillEncryptionSpec, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SkillEncryptionSpec{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.getSkillEncryptionSpec", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
+}
+
 type ProjectsLocationsListCall struct {
 	s            *APIService
 	name         string
@@ -3199,6 +3354,125 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+type ProjectsLocationsUpdateSkillEncryptionSpecCall struct {
+	s                   *APIService
+	name                string
+	skillencryptionspec *SkillEncryptionSpec
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// UpdateSkillEncryptionSpec: Updates the customer-managed encryption key
+// (CMEK) configuration for Skills in a specific project and location. This
+// method is only allowed when no Skills exist in the target project and
+// location. If any Skill already exists in the location, the request fails
+// with `FAILED_PRECONDITION`.
+//
+//   - name: Identifier. Resource name of the SkillEncryptionSpec. Format:
+//     `projects/{project}/locations/{location}/skillEncryptionSpec`.
+func (r *ProjectsLocationsService) UpdateSkillEncryptionSpec(name string, skillencryptionspec *SkillEncryptionSpec) *ProjectsLocationsUpdateSkillEncryptionSpecCall {
+	c := &ProjectsLocationsUpdateSkillEncryptionSpecCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.skillencryptionspec = skillencryptionspec
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask is used to
+// specify the fields to be overwritten in the SkillEncryptionSpec resource by
+// the update. The fields specified in the update_mask are relative to the
+// resource, not the full request. A field will be overwritten if it is in the
+// mask. If the user does not provide a mask then all fields present in the
+// request will be overwritten.
+func (c *ProjectsLocationsUpdateSkillEncryptionSpecCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateSkillEncryptionSpecCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
+func (c *ProjectsLocationsUpdateSkillEncryptionSpecCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateSkillEncryptionSpecCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method.
+func (c *ProjectsLocationsUpdateSkillEncryptionSpecCall) Context(ctx context.Context) *ProjectsLocationsUpdateSkillEncryptionSpecCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
+func (c *ProjectsLocationsUpdateSkillEncryptionSpecCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateSkillEncryptionSpecCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
+	body, err := googleapi.WithoutDataWrapper.JSONBuffer(c.skillencryptionspec)
+	if err != nil {
+		return nil, err
+	}
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	c.s.logger.DebugContext(c.ctx_, "api request", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.updateSkillEncryptionSpec", "request", internallog.HTTPRequest(req, body.Bytes()))
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "agentregistry.projects.locations.updateSkillEncryptionSpec" call.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
+func (c *ProjectsLocationsUpdateSkillEncryptionSpecCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	b, err := gensupport.DecodeResponseBytes(target, res)
+	if err != nil {
+		return nil, err
+	}
+	c.s.logger.DebugContext(c.ctx_, "api response", "serviceName", apiName, "rpcName", "agentregistry.projects.locations.updateSkillEncryptionSpec", "response", internallog.HTTPResponse(res, b))
+	return ret, nil
 }
 
 type ProjectsLocationsAgentsGetCall struct {

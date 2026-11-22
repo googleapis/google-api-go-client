@@ -5021,12 +5021,73 @@ func (s ProducerExtension) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ProducerExtensionExtensionBehavior: Specifies how the `ProducerExtension`
+// acts on events. This information is required to parallelize the execution of
+// `ProducerExtension` resources.
+type ProducerExtensionExtensionBehavior struct {
+	// RequestBodyAction: Optional. Specifies how the `ProducerExtension` acts on
+	// the request body event. This can be used to determine whether the
+	// `ProducerExtension` can run in parallel with other extensions in the request
+	// direction.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Default value. When set, the strictest action
+	// (`BODY_ACTION_MUTATOR`) is assumed. Extensions that modify the body execute
+	// in sequence.
+	//   "OBSERVER" - The extension observes the body without modifying it and does
+	// not respond with an allow or deny verdict via `immediate_response`. These
+	// extensions can run in parallel with other extensions where appropriate.
+	//   "READONLY" - The extension reads the body without modifying it, and can
+	// respond with an allow or deny verdict via `immediate_response`. These
+	// extensions can run in parallel with other extensions where appropriate.
+	//   "MUTATOR" - The extension can modify the body (for example, for PII
+	// redaction or prompt sanitization). These extensions execute in sequence.
+	RequestBodyAction string `json:"requestBodyAction,omitempty"`
+	// ResponseBodyAction: Optional. Specifies how the `ProducerExtension` acts on
+	// the response body event. This can be used to determine whether the
+	// `ProducerExtension` can run in parallel with other extensions in the
+	// response direction.
+	//
+	// Possible values:
+	//   "ACTION_UNSPECIFIED" - Default value. When set, the strictest action
+	// (`BODY_ACTION_MUTATOR`) is assumed. Extensions that modify the body execute
+	// in sequence.
+	//   "OBSERVER" - The extension observes the body without modifying it and does
+	// not respond with an allow or deny verdict via `immediate_response`. These
+	// extensions can run in parallel with other extensions where appropriate.
+	//   "READONLY" - The extension reads the body without modifying it, and can
+	// respond with an allow or deny verdict via `immediate_response`. These
+	// extensions can run in parallel with other extensions where appropriate.
+	//   "MUTATOR" - The extension can modify the body (for example, for PII
+	// redaction or prompt sanitization). These extensions execute in sequence.
+	ResponseBodyAction string `json:"responseBodyAction,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "RequestBodyAction") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "RequestBodyAction") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ProducerExtensionExtensionBehavior) MarshalJSON() ([]byte, error) {
+	type NoMethod ProducerExtensionExtensionBehavior
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // ProducerExtensionExtensionSettings: The configuration for the service that
 // this `ProducerExtension` offers.
 type ProducerExtensionExtensionSettings struct {
 	// Authority: Optional. The `:authority` header in the request sent to the
 	// extension service.
 	Authority string `json:"authority,omitempty"`
+	// ExtensionBehavior: Optional. Specifies how the extension is expected to act
+	// on events.
+	ExtensionBehavior *ProducerExtensionExtensionBehavior `json:"extensionBehavior,omitempty"`
 	// ObservabilityMode: Optional. This field is not supported.
 	ObservabilityMode bool `json:"observabilityMode,omitempty"`
 	// Service: Required. The URI of the Private Service Connect (PSC) attachment.

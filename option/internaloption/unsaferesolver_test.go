@@ -163,3 +163,64 @@ func TestNewUnsafeResolver(t *testing.T) {
 		})
 	}
 }
+
+func TestUnsafeResolver_ResolvedUniverseDomain(t *testing.T) {
+	for _, tc := range []struct {
+		desc        string
+		universeEnv string
+		opts        []option.ClientOption
+		want        string
+	}{
+		{
+			desc: "default",
+			want: "googleapis.com",
+		},
+		{
+			desc:        "env var",
+			universeEnv: "env.example.com",
+			want:        "env.example.com",
+		},
+		{
+			desc: "option",
+			opts: []option.ClientOption{
+				option.WithUniverseDomain("opt.example.com"),
+			},
+			want: "opt.example.com",
+		},
+		{
+			desc:        "option overrides env var",
+			universeEnv: "env.example.com",
+			opts: []option.ClientOption{
+				option.WithUniverseDomain("opt.example.com"),
+			},
+			want: "opt.example.com",
+		},
+		{
+			desc: "option with custom endpoint",
+			opts: []option.ClientOption{
+				option.WithUniverseDomain("opt.example.com"),
+				option.WithEndpoint("https://custom.example.com"),
+			},
+			want: "opt.example.com",
+		},
+		{
+			desc: "last option wins",
+			opts: []option.ClientOption{
+				option.WithUniverseDomain("first.example.com"),
+				option.WithUniverseDomain("second.example.com"),
+			},
+			want: "second.example.com",
+		},
+	} {
+		t.Run(tc.desc, func(t *testing.T) {
+			t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", tc.universeEnv)
+			ur, err := NewUnsafeResolver(tc.opts...)
+			if err != nil {
+				t.Fatalf("NewUnsafeResolver errored: %v", err)
+			}
+			if got := ur.ResolvedUniverseDomain(); got != tc.want {
+				t.Errorf("ResolvedUniverseDomain: got %q, want %q", got, tc.want)
+			}
+		})
+	}
+}

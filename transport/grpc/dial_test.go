@@ -383,13 +383,13 @@ func TestHasUniverseDomainHost(t *testing.T) {
 		},
 		{
 			name:           "tpc_endpoint",
-			endpoint:       "storage.apis-tpclp.goog:443",
+			endpoint:       "storage.example.com:443",
 			universeDomain: "googleapis.com",
 			want:           false,
 		},
 		{
 			name:           "tpc_dns_endpoint",
-			endpoint:       "dns:///storage.apis-tpclp.goog:443",
+			endpoint:       "dns:///storage.example.com:443",
 			universeDomain: "googleapis.com",
 			want:           false,
 		},
@@ -553,7 +553,7 @@ func TestIsDirectPathEnabled(t *testing.T) {
 			endpoint: "storage.googleapis.com:443",
 			settings: &internal.DialSettings{
 				EnableDirectPath: true,
-				UniverseDomain:   "apis-tpclp.goog",
+				UniverseDomain:   "example.com",
 			},
 			want: false,
 		},
@@ -566,13 +566,13 @@ func TestIsDirectPathEnabled(t *testing.T) {
 		},
 		{
 			name:     "non_gdu_endpoint_without_universe_domain",
-			endpoint: "storage.apis-tpclp.goog:443",
+			endpoint: "storage.example.com:443",
 			settings: &internal.DialSettings{EnableDirectPath: true},
 			want:     false,
 		},
 		{
 			name:     "non_gdu_dns_endpoint_without_universe_domain",
-			endpoint: "dns:///storage.apis-tpclp.goog:443",
+			endpoint: "dns:///storage.example.com:443",
 			settings: &internal.DialSettings{EnableDirectPath: true},
 			want:     false,
 		},
@@ -634,7 +634,7 @@ func TestCanUseDirectPath(t *testing.T) {
 			creds: &google.Credentials{
 				TokenSource: defaultComputeTokenSource(),
 				UniverseDomainProvider: func() (string, error) {
-					return "apis-tpclp.goog", nil
+					return "example.com", nil
 				},
 			},
 			gce:  true,
@@ -661,7 +661,7 @@ func TestCanUseDirectPath(t *testing.T) {
 				TokenSource: defaultComputeTokenSource(),
 			},
 			gce:   true,
-			mdsUD: "apis-tpclp.goog",
+			mdsUD: "example.com",
 			want:  false,
 		},
 		{
@@ -688,7 +688,7 @@ func TestCanUseDirectPath(t *testing.T) {
 		},
 		{
 			name:     "tpc_endpoint_without_client_universe_domain",
-			endpoint: "storage.apis-tpclp.goog:443",
+			endpoint: "storage.example.com:443",
 			settings: &internal.DialSettings{EnableDirectPath: true},
 			creds: &google.Credentials{
 				TokenSource: defaultComputeTokenSource(),
@@ -704,7 +704,7 @@ func TestCanUseDirectPath(t *testing.T) {
 			endpoint: "storage.googleapis.com:443",
 			settings: &internal.DialSettings{
 				EnableDirectPath: true,
-				UniverseDomain:   "apis-tpclp.goog",
+				UniverseDomain:   "example.com",
 			},
 			creds: &google.Credentials{
 				TokenSource: defaultComputeTokenSource(),
@@ -776,7 +776,7 @@ func TestCanUseDirectPath(t *testing.T) {
 				TokenSource: nonComputeTokenSource(),
 			},
 			gce:   true,
-			mdsUD: "apis-tpclp.goog",
+			mdsUD: "example.com",
 			want:  false,
 		},
 		{
@@ -855,18 +855,18 @@ func TestDial_DirectPathUniverseDomainGating(t *testing.T) {
 			name: "tpc_universe_domain_option_blocks_directpath",
 			settings: &internal.DialSettings{
 				DefaultEndpointTemplate: "storage.UNIVERSE_DOMAIN:443",
-				UniverseDomain:          "apis-tpclp.goog",
+				UniverseDomain:          "example.com",
 				EnableDirectPath:        true,
 				EnableDirectPathXds:     true,
 				TelemetryDisabled:       true,
 				Credentials: &google.Credentials{
 					TokenSource: defaultComputeTokenSource(),
 					UniverseDomainProvider: func() (string, error) {
-						return "apis-tpclp.goog", nil
+						return "example.com", nil
 					},
 				},
 			},
-			wantTarget:  "storage.apis-tpclp.goog:443",
+			wantTarget:  "storage.example.com:443",
 			wantNumOpts: 2,
 		},
 		{
@@ -891,7 +891,7 @@ func TestDial_DirectPathUniverseDomainGating(t *testing.T) {
 			name: "tpc_endpoint_without_universe_domain_blocks_directpath",
 			settings: &internal.DialSettings{
 				DefaultEndpointTemplate: "storage.UNIVERSE_DOMAIN:443",
-				Endpoint:                "storage.apis-tpclp.goog:443",
+				Endpoint:                "storage.example.com:443",
 				EnableDirectPath:        true,
 				EnableDirectPathXds:     true,
 				TelemetryDisabled:       true,
@@ -902,7 +902,7 @@ func TestDial_DirectPathUniverseDomainGating(t *testing.T) {
 					},
 				},
 			},
-			wantTarget:  "storage.apis-tpclp.goog:443",
+			wantTarget:  "storage.example.com:443",
 			wantNumOpts: 2,
 		},
 		{
@@ -915,7 +915,7 @@ func TestDial_DirectPathUniverseDomainGating(t *testing.T) {
 				Credentials: &google.Credentials{
 					TokenSource: defaultComputeTokenSource(),
 					UniverseDomainProvider: func() (string, error) {
-						return "apis-tpclp.goog", nil
+						return "example.com", nil
 					},
 				},
 			},
@@ -931,7 +931,7 @@ func TestDial_DirectPathUniverseDomainGating(t *testing.T) {
 				Credentials: &google.Credentials{
 					TokenSource: defaultComputeTokenSource(),
 					UniverseDomainProvider: func() (string, error) {
-						return "apis-tpclp.goog", nil
+						return "example.com", nil
 					},
 				},
 			},
@@ -964,7 +964,7 @@ func TestDial_DirectPathUniverseDomainGating(t *testing.T) {
 				TelemetryDisabled:       true,
 				TokenSource:             defaultComputeTokenSource(),
 			},
-			mdsUD:       "apis-tpclp.goog",
+			mdsUD:       "example.com",
 			wantTarget:  "storage.googleapis.com:443",
 			wantNumOpts: 2,
 		},
@@ -1050,8 +1050,8 @@ func TestFetchMetadataUniverseDomain(t *testing.T) {
 		{
 			name:       "tpc_response_trimmed",
 			statusCode: http.StatusOK,
-			body:       "apis-tpclp.goog\n",
-			want:       "apis-tpclp.goog",
+			body:       "example.com\n",
+			want:       "example.com",
 		},
 		{
 			name:       "empty_response_defaults_to_gdu",
@@ -1118,13 +1118,13 @@ func TestLogDirectPathMisconfig_NonDefaultUniverseDomain(t *testing.T) {
 			settings: &internal.DialSettings{
 				EnableDirectPath:    true,
 				EnableDirectPathXds: true,
-				UniverseDomain:      "apis-tpclp.goog",
+				UniverseDomain:      "example.com",
 			},
 			creds: &google.Credentials{TokenSource: defaultComputeTokenSource()},
 		},
 		{
 			name:     "non_gdu_endpoint_host",
-			endpoint: "storage.apis-tpclp.goog:443",
+			endpoint: "storage.example.com:443",
 			settings: &internal.DialSettings{
 				EnableDirectPath:    true,
 				EnableDirectPathXds: true,
@@ -1141,7 +1141,7 @@ func TestLogDirectPathMisconfig_NonDefaultUniverseDomain(t *testing.T) {
 			creds: &google.Credentials{
 				TokenSource: defaultComputeTokenSource(),
 				UniverseDomainProvider: func() (string, error) {
-					return "apis-tpclp.goog", nil
+					return "example.com", nil
 				},
 			},
 		},
@@ -1167,7 +1167,7 @@ func TestLogDirectPathMisconfig_NonDefaultUniverseDomain(t *testing.T) {
 				EnableDirectPathXds: true,
 			},
 			creds: &google.Credentials{TokenSource: defaultComputeTokenSource()},
-			mdsUD: "apis-tpclp.goog",
+			mdsUD: "example.com",
 		},
 	}
 

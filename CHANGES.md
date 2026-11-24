@@ -1,5 +1,24 @@
 # Changes
 
+## [0.317.0](https://github.com/googleapis/google-api-go-client/compare/v0.316.0...v0.317.0) (2026-11-24)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#3828](https://github.com/googleapis/google-api-go-client/issues/3828)) ([fb09582](https://github.com/googleapis/google-api-go-client/commit/fb095823b5150e5301d201e7f19a5119edbbbdfd))
+* **all:** Auto-regenerate discovery clients ([#3830](https://github.com/googleapis/google-api-go-client/issues/3830)) ([6f4e42b](https://github.com/googleapis/google-api-go-client/commit/6f4e42b67a59955698a6de791aa74ac7505e554a))
+* **all:** Auto-regenerate discovery clients ([#3831](https://github.com/googleapis/google-api-go-client/issues/3831)) ([3de564d](https://github.com/googleapis/google-api-go-client/commit/3de564d3c70fc3a32675af0cd19b64141a6609d8))
+* **all:** Auto-regenerate discovery clients ([#3832](https://github.com/googleapis/google-api-go-client/issues/3832)) ([f024bf5](https://github.com/googleapis/google-api-go-client/commit/f024bf5c40d398ad47aad078724481c7749403a6))
+* **all:** Auto-regenerate discovery clients ([#3833](https://github.com/googleapis/google-api-go-client/issues/3833)) ([fd50f8b](https://github.com/googleapis/google-api-go-client/commit/fd50f8b260c217b0ac0df54822b950d21cbe1b18))
+* **all:** Auto-regenerate discovery clients ([#3836](https://github.com/googleapis/google-api-go-client/issues/3836)) ([0f3a39a](https://github.com/googleapis/google-api-go-client/commit/0f3a39a5df733a2b26df85c24329744e414f7892))
+* **all:** Auto-regenerate discovery clients ([#3837](https://github.com/googleapis/google-api-go-client/issues/3837)) ([3f740bc](https://github.com/googleapis/google-api-go-client/commit/3f740bc15212818d4d0eb041b02c951457ff63fa))
+* **option/internaloption:** Add UnsafeResolver.ResolvedUniverseDomain ([#3835](https://github.com/googleapis/google-api-go-client/issues/3835)) ([0cf6ef3](https://github.com/googleapis/google-api-go-client/commit/0cf6ef3e6f7e459deeb9a16cb6d20af75784b66f))
+
+
+### Bug Fixes
+
+* **transport:** Improve directpath interrogation ([#3838](https://github.com/googleapis/google-api-go-client/issues/3838)) ([96dfd8d](https://github.com/googleapis/google-api-go-client/commit/96dfd8d941f6bb334db75e12e12b5a07699713ce))
+
 ## [0.316.0](https://github.com/googleapis/google-api-go-client/compare/v0.315.0...v0.316.0) (2026-11-16)
 
 

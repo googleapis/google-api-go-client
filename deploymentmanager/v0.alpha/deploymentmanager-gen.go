@@ -255,6 +255,35 @@ type TypesService struct {
 	s *Service
 }
 
+// AgentConversationsSendMessageOperationMetadata: [Output Only] Operation
+// metadata for agentConversations.sendMessage. It holds no message content,
+// because anyone with compute.regionOperations.get on the project can read the
+// operation; the reply stays in the owner-only conversation.
+type AgentConversationsSendMessageOperationMetadata struct {
+	// ConsoleUri: Output only. [Output Only] Link that opens the conversation in
+	// the Google Cloud console.
+	ConsoleUri string `json:"consoleUri,omitempty"`
+	// Conversation: Output only. [Output Only] URL of the conversation. Pass it as
+	// agentConversation to later sendMessage calls to continue the conversation.
+	Conversation string `json:"conversation,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ConsoleUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "ConsoleUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s AgentConversationsSendMessageOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod AgentConversationsSendMessageOperationMetadata
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // AsyncOptions: Async options that determine when a resource should finish.
 type AsyncOptions struct {
 	// MethodMatch: Method regex where this policy will apply.
@@ -1774,6 +1803,9 @@ func (s MicroVmsImportOperationMetadata) MarshalJSON() ([]byte, error) {
 // Global, Regional, and Zonal Resources. Note that completed Operation
 // resources have a limited retention period.
 type Operation struct {
+	// AgentConversationsSendMessageOperationMetadata: Output only. [Output Only]
+	// Operation metadata for agentConversations.sendMessage.
+	AgentConversationsSendMessageOperationMetadata *AgentConversationsSendMessageOperationMetadata `json:"agentConversationsSendMessageOperationMetadata,omitempty"`
 	// ClientOperationId: [Output Only] The value of `requestId` if you provided it
 	// in the request. Not present otherwise.
 	ClientOperationId string `json:"clientOperationId,omitempty"`
@@ -1889,15 +1921,17 @@ type Operation struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "ClientOperationId") to
-	// unconditionally include in API requests. By default, fields with empty or
-	// default values are omitted from API requests. See
+	// ForceSendFields is a list of field names (e.g.
+	// "AgentConversationsSendMessageOperationMetadata") to unconditionally include
+	// in API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ClientOperationId") to include in
-	// API requests with the JSON null value. By default, fields with empty values
-	// are omitted from API requests. See
+	// NullFields is a list of field names (e.g.
+	// "AgentConversationsSendMessageOperationMetadata") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -3958,7 +3992,8 @@ func (r *CompositeTypesService) List(project string) *CompositeTypesListCall {
 // syntax. The literal value must match the entire field. For example, to
 // filter for instances that do not end with name "instance", you would use
 // `name ne .*instance`. You cannot combine constraints on multiple fields
-// using regular expressions.
+// using regular expressions. Note: For non-aggregated `list` requests,
+// `filter` and `orderBy` cannot be combined in the same request.
 func (c *CompositeTypesListCall) Filter(filter string) *CompositeTypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3981,7 +4016,12 @@ func (c *CompositeTypesListCall) MaxResults(maxResults int64) *CompositeTypesLis
 // This sorts results based on the `creationTimestamp` field in reverse
 // chronological order (newest result first). Use this to sort resources like
 // operations so that the newest operation is returned first. Currently, only
-// sorting by `name` or `creationTimestamp desc` is supported.
+// sorting by `name` (or `name asc`) and `creationTimestamp desc` is supported.
+// Sorting by `name desc` or `creationTimestamp` (which defaults to ascending
+// order) is not supported. For `aggregatedList` requests, `orderBy` sorts
+// resources within each individual location (`zones/*`, `regions/*`, or
+// `global`) rather than across all locations. For non-aggregated `list`
+// requests, `orderBy` cannot be combined with `filter` in the same request.
 func (c *CompositeTypesListCall) OrderBy(orderBy string) *CompositeTypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -4998,7 +5038,8 @@ func (r *DeploymentsService) List(project string) *DeploymentsListCall {
 // syntax. The literal value must match the entire field. For example, to
 // filter for instances that do not end with name "instance", you would use
 // `name ne .*instance`. You cannot combine constraints on multiple fields
-// using regular expressions.
+// using regular expressions. Note: For non-aggregated `list` requests,
+// `filter` and `orderBy` cannot be combined in the same request.
 func (c *DeploymentsListCall) Filter(filter string) *DeploymentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5021,7 +5062,12 @@ func (c *DeploymentsListCall) MaxResults(maxResults int64) *DeploymentsListCall 
 // This sorts results based on the `creationTimestamp` field in reverse
 // chronological order (newest result first). Use this to sort resources like
 // operations so that the newest operation is returned first. Currently, only
-// sorting by `name` or `creationTimestamp desc` is supported.
+// sorting by `name` (or `name asc`) and `creationTimestamp desc` is supported.
+// Sorting by `name desc` or `creationTimestamp` (which defaults to ascending
+// order) is not supported. For `aggregatedList` requests, `orderBy` sorts
+// resources within each individual location (`zones/*`, `regions/*`, or
+// `global`) rather than across all locations. For non-aggregated `list`
+// requests, `orderBy` cannot be combined with `filter` in the same request.
 func (c *DeploymentsListCall) OrderBy(orderBy string) *DeploymentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5966,7 +6012,8 @@ func (r *ManifestsService) List(project string, deployment string) *ManifestsLis
 // syntax. The literal value must match the entire field. For example, to
 // filter for instances that do not end with name "instance", you would use
 // `name ne .*instance`. You cannot combine constraints on multiple fields
-// using regular expressions.
+// using regular expressions. Note: For non-aggregated `list` requests,
+// `filter` and `orderBy` cannot be combined in the same request.
 func (c *ManifestsListCall) Filter(filter string) *ManifestsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5989,7 +6036,12 @@ func (c *ManifestsListCall) MaxResults(maxResults int64) *ManifestsListCall {
 // This sorts results based on the `creationTimestamp` field in reverse
 // chronological order (newest result first). Use this to sort resources like
 // operations so that the newest operation is returned first. Currently, only
-// sorting by `name` or `creationTimestamp desc` is supported.
+// sorting by `name` (or `name asc`) and `creationTimestamp desc` is supported.
+// Sorting by `name desc` or `creationTimestamp` (which defaults to ascending
+// order) is not supported. For `aggregatedList` requests, `orderBy` sorts
+// resources within each individual location (`zones/*`, `regions/*`, or
+// `global`) rather than across all locations. For non-aggregated `list`
+// requests, `orderBy` cannot be combined with `filter` in the same request.
 func (c *ManifestsListCall) OrderBy(orderBy string) *ManifestsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6286,7 +6338,8 @@ func (r *OperationsService) List(project string) *OperationsListCall {
 // syntax. The literal value must match the entire field. For example, to
 // filter for instances that do not end with name "instance", you would use
 // `name ne .*instance`. You cannot combine constraints on multiple fields
-// using regular expressions.
+// using regular expressions. Note: For non-aggregated `list` requests,
+// `filter` and `orderBy` cannot be combined in the same request.
 func (c *OperationsListCall) Filter(filter string) *OperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6309,7 +6362,12 @@ func (c *OperationsListCall) MaxResults(maxResults int64) *OperationsListCall {
 // This sorts results based on the `creationTimestamp` field in reverse
 // chronological order (newest result first). Use this to sort resources like
 // operations so that the newest operation is returned first. Currently, only
-// sorting by `name` or `creationTimestamp desc` is supported.
+// sorting by `name` (or `name asc`) and `creationTimestamp desc` is supported.
+// Sorting by `name desc` or `creationTimestamp` (which defaults to ascending
+// order) is not supported. For `aggregatedList` requests, `orderBy` sorts
+// resources within each individual location (`zones/*`, `regions/*`, or
+// `global`) rather than across all locations. For non-aggregated `list`
+// requests, `orderBy` cannot be combined with `filter` in the same request.
 func (c *OperationsListCall) OrderBy(orderBy string) *OperationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6612,7 +6670,8 @@ func (r *ResourcesService) List(project string, deployment string) *ResourcesLis
 // syntax. The literal value must match the entire field. For example, to
 // filter for instances that do not end with name "instance", you would use
 // `name ne .*instance`. You cannot combine constraints on multiple fields
-// using regular expressions.
+// using regular expressions. Note: For non-aggregated `list` requests,
+// `filter` and `orderBy` cannot be combined in the same request.
 func (c *ResourcesListCall) Filter(filter string) *ResourcesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6635,7 +6694,12 @@ func (c *ResourcesListCall) MaxResults(maxResults int64) *ResourcesListCall {
 // This sorts results based on the `creationTimestamp` field in reverse
 // chronological order (newest result first). Use this to sort resources like
 // operations so that the newest operation is returned first. Currently, only
-// sorting by `name` or `creationTimestamp desc` is supported.
+// sorting by `name` (or `name asc`) and `creationTimestamp desc` is supported.
+// Sorting by `name desc` or `creationTimestamp` (which defaults to ascending
+// order) is not supported. For `aggregatedList` requests, `orderBy` sorts
+// resources within each individual location (`zones/*`, `regions/*`, or
+// `global`) rather than across all locations. For non-aggregated `list`
+// requests, `orderBy` cannot be combined with `filter` in the same request.
 func (c *ResourcesListCall) OrderBy(orderBy string) *ResourcesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7274,7 +7338,8 @@ func (r *TypeProvidersService) List(project string) *TypeProvidersListCall {
 // syntax. The literal value must match the entire field. For example, to
 // filter for instances that do not end with name "instance", you would use
 // `name ne .*instance`. You cannot combine constraints on multiple fields
-// using regular expressions.
+// using regular expressions. Note: For non-aggregated `list` requests,
+// `filter` and `orderBy` cannot be combined in the same request.
 func (c *TypeProvidersListCall) Filter(filter string) *TypeProvidersListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7297,7 +7362,12 @@ func (c *TypeProvidersListCall) MaxResults(maxResults int64) *TypeProvidersListC
 // This sorts results based on the `creationTimestamp` field in reverse
 // chronological order (newest result first). Use this to sort resources like
 // operations so that the newest operation is returned first. Currently, only
-// sorting by `name` or `creationTimestamp desc` is supported.
+// sorting by `name` (or `name asc`) and `creationTimestamp desc` is supported.
+// Sorting by `name desc` or `creationTimestamp` (which defaults to ascending
+// order) is not supported. For `aggregatedList` requests, `orderBy` sorts
+// resources within each individual location (`zones/*`, `regions/*`, or
+// `global`) rather than across all locations. For non-aggregated `list`
+// requests, `orderBy` cannot be combined with `filter` in the same request.
 func (c *TypeProvidersListCall) OrderBy(orderBy string) *TypeProvidersListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -7476,7 +7546,8 @@ func (r *TypeProvidersService) ListTypes(project string, typeProvider string) *T
 // syntax. The literal value must match the entire field. For example, to
 // filter for instances that do not end with name "instance", you would use
 // `name ne .*instance`. You cannot combine constraints on multiple fields
-// using regular expressions.
+// using regular expressions. Note: For non-aggregated `list` requests,
+// `filter` and `orderBy` cannot be combined in the same request.
 func (c *TypeProvidersListTypesCall) Filter(filter string) *TypeProvidersListTypesCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -7499,7 +7570,12 @@ func (c *TypeProvidersListTypesCall) MaxResults(maxResults int64) *TypeProviders
 // This sorts results based on the `creationTimestamp` field in reverse
 // chronological order (newest result first). Use this to sort resources like
 // operations so that the newest operation is returned first. Currently, only
-// sorting by `name` or `creationTimestamp desc` is supported.
+// sorting by `name` (or `name asc`) and `creationTimestamp desc` is supported.
+// Sorting by `name desc` or `creationTimestamp` (which defaults to ascending
+// order) is not supported. For `aggregatedList` requests, `orderBy` sorts
+// resources within each individual location (`zones/*`, `regions/*`, or
+// `global`) rather than across all locations. For non-aggregated `list`
+// requests, `orderBy` cannot be combined with `filter` in the same request.
 func (c *TypeProvidersListTypesCall) OrderBy(orderBy string) *TypeProvidersListTypesCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -8024,7 +8100,8 @@ func (r *TypesService) List(project string) *TypesListCall {
 // syntax. The literal value must match the entire field. For example, to
 // filter for instances that do not end with name "instance", you would use
 // `name ne .*instance`. You cannot combine constraints on multiple fields
-// using regular expressions.
+// using regular expressions. Note: For non-aggregated `list` requests,
+// `filter` and `orderBy` cannot be combined in the same request.
 func (c *TypesListCall) Filter(filter string) *TypesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8047,7 +8124,12 @@ func (c *TypesListCall) MaxResults(maxResults int64) *TypesListCall {
 // This sorts results based on the `creationTimestamp` field in reverse
 // chronological order (newest result first). Use this to sort resources like
 // operations so that the newest operation is returned first. Currently, only
-// sorting by `name` or `creationTimestamp desc` is supported.
+// sorting by `name` (or `name asc`) and `creationTimestamp desc` is supported.
+// Sorting by `name desc` or `creationTimestamp` (which defaults to ascending
+// order) is not supported. For `aggregatedList` requests, `orderBy` sorts
+// resources within each individual location (`zones/*`, `regions/*`, or
+// `global`) rather than across all locations. For non-aggregated `list`
+// requests, `orderBy` cannot be combined with `filter` in the same request.
 func (c *TypesListCall) OrderBy(orderBy string) *TypesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c

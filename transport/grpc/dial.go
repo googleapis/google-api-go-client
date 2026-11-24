@@ -62,6 +62,9 @@ var onGCE = metadata.OnGCE
 // Assign to var for unit test replacement
 var metadataUniverseDomain = fetchMetadataUniverseDomain
 
+// Assign to var for unit test replacement
+var metadataUniverseDomainTimeout = time.Second
+
 // Dial returns a GRPC connection for use communicating with a Google cloud
 // service, configured with the given ClientOptions.
 func Dial(ctx context.Context, opts ...option.ClientOption) (*grpc.ClientConn, error) {
@@ -338,9 +341,6 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 				requestReason: o.RequestReason,
 			}))
 			// Attempt Direct Path:
-			logRateLimiter.Do(func() {
-				logDirectPathMisconfig(ctx, endpoint, creds, o)
-			})
 			if canUseDirectPath(ctx, endpoint, creds, o) {
 				// Overwrite all of the previously specific DialOptions, DirectPath uses its own set of credentials and certificates.
 				grpcOpts = []grpc.DialOption{
@@ -354,11 +354,9 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 				}
 				// Check if google-c2p resolver is enabled for DirectPath
 				if isDirectPathXdsUsed(o) {
-					// google-c2p resolver target must not have a port number
-					if addr, _, err := net.SplitHostPort(endpoint); err == nil {
-						endpoint = "google-c2p:///" + addr
-					} else {
-						endpoint = "google-c2p:///" + endpoint
+					// google-c2p resolver target must not have a scheme or port number.
+					if host, ok := parseDirectPathHost(endpoint); ok {
+						endpoint = "google-c2p:///" + host
 					}
 				} else {
 					if !strings.HasPrefix(endpoint, "dns:///") {
@@ -372,6 +370,10 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 						grpc.WithDefaultServiceConfig(`{"loadBalancingConfig":[{"grpclb":{"childPolicy":[{"pick_first":{}}]}}]}`))
 				}
 				// TODO(cbro): add support for system parameters (quota project, request reason) via chained interceptor.
+			} else {
+				logRateLimiter.Do(func() {
+					logDirectPathMisconfig(ctx, endpoint, creds, o)
+				})
 			}
 		}
 	}
@@ -448,6 +450,8 @@ func (ts grpcAPIKey) RequireTransportSecurity() bool {
 }
 
 func fetchMetadataUniverseDomain(ctx context.Context) (string, error) {
+	ctx, cancel := context.WithTimeout(ctx, metadataUniverseDomainTimeout)
+	defer cancel()
 	ud, err := metadata.GetWithContext(ctx, "universe/universe-domain")
 	if err != nil {
 		var notDefined metadata.NotDefinedError
@@ -524,7 +528,7 @@ func canUseDirectPath(ctx context.Context, endpoint string, creds *google.Creden
 	}
 	defaultUD := o.GetDefaultUniverseDomain()
 	ud, err := creds.GetUniverseDomain()
-	if err != nil || ud != defaultUD {
+	if err != nil || strings.TrimSpace(ud) != defaultUD {
 		return false
 	}
 	if !isTokenSourceDirectPathCompatible(creds.TokenSource, o) {
@@ -616,7 +620,8 @@ func logDirectPathMisconfig(ctx context.Context, endpoint string, creds *google.
 	if !isDirectPathXdsUsed(o) {
 		return
 	}
-	if o == nil || !o.EnableDirectPath || !checkDirectPathEndPoint(endpoint) {
+	// Case 1: does not enable DirectPath
+	if o == nil || !o.EnableDirectPath || !checkDirectPathEndPoint(endpoint) || strings.EqualFold(os.Getenv(disableDirectPath), "true") {
 		log.Println("WARNING: DirectPath is misconfigured. Please set the EnableDirectPath option along with the EnableDirectPathXds option.")
 		return
 	}
@@ -624,15 +629,10 @@ func logDirectPathMisconfig(ctx context.Context, endpoint string, creds *google.
 		log.Println("WARNING: DirectPath is disabled. Non-default universe domain is not supported.")
 		return
 	}
-	// Case 1: does not enable DirectPath
-	if !isDirectPathEnabled(endpoint, o) {
-		log.Println("WARNING: DirectPath is misconfigured. Please set the EnableDirectPath option along with the EnableDirectPathXds option.")
-		return
-	}
 	defaultUD := o.GetDefaultUniverseDomain()
 	var ts oauth2.TokenSource
 	if creds != nil {
-		if ud, err := creds.GetUniverseDomain(); err != nil || ud != defaultUD {
+		if ud, err := creds.GetUniverseDomain(); err != nil || strings.TrimSpace(ud) != defaultUD {
 			log.Println("WARNING: DirectPath is disabled. Non-default universe domain is not supported.")
 			return
 		}

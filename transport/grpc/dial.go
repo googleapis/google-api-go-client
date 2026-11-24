@@ -548,7 +548,7 @@ func canUseDirectPath(ctx context.Context, endpoint string, creds *google.Creden
 }
 
 func isDirectPathEnabled(endpoint string, o *internal.DialSettings) bool {
-	if o == nil || !o.EnableDirectPath {
+	if !o.EnableDirectPath {
 		return false
 	}
 	if !checkDirectPathEndPoint(endpoint) {

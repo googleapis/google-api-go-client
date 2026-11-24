@@ -42,7 +42,13 @@ const disableDirectPath = "GOOGLE_CLOUD_DISABLE_DIRECT_PATH"
 // Check env to decide if using google-c2p resolver for DirectPath traffic.
 const enableDirectPathXds = "GOOGLE_CLOUD_ENABLE_DIRECT_PATH_XDS"
 
-const defaultUniverseDomain = "googleapis.com"
+const (
+	defaultUniverseDomain               = "googleapis.com"
+	directPathNotEnabledReason          = "DirectPath is misconfigured. Please set the EnableDirectPath option along with the EnableDirectPathXds option."
+	directPathUnsupportedUniverseReason = "DirectPath is disabled. Non-default universe domain is not supported."
+	directPathIncompatibleCredReason    = "DirectPath is misconfigured. Please make sure the token source is fetched from GCE metadata server and the default service account is used."
+	directPathNotOnGCEReason            = "DirectPath is misconfigured. DirectPath is only available in a GCE environment."
+)
 
 // Set at init time by dial_socketopt.go. If nil, socketopt is not supported.
 var timeoutDialerOption grpc.DialOption
@@ -341,7 +347,7 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 				requestReason: o.RequestReason,
 			}))
 			// Attempt Direct Path:
-			if canUseDirectPath(ctx, endpoint, creds, o) {
+			if reason, ok := canUseDirectPath(ctx, endpoint, creds, o); ok {
 				// Overwrite all of the previously specific DialOptions, DirectPath uses its own set of credentials and certificates.
 				grpcOpts = []grpc.DialOption{
 					grpc.WithCredentialsBundle(grpcgoogle.NewDefaultCredentialsWithOptions(
@@ -370,9 +376,9 @@ func dial(ctx context.Context, insecure bool, o *internal.DialSettings) (*grpc.C
 						grpc.WithDefaultServiceConfig(`{"loadBalancingConfig":[{"grpclb":{"childPolicy":[{"pick_first":{}}]}}]}`))
 				}
 				// TODO(cbro): add support for system parameters (quota project, request reason) via chained interceptor.
-			} else {
+			} else if isDirectPathXdsUsed(o) && reason != "" {
 				logRateLimiter.Do(func() {
-					logDirectPathMisconfig(ctx, endpoint, creds, o)
+					logDirectPathMisconfig(o, reason)
 				})
 			}
 		}
@@ -516,23 +522,26 @@ func canUseDirectPathWithUniverseDomain(endpoint string, o *internal.DialSetting
 	return hasUniverseDomainHost(endpoint, o.GetDefaultUniverseDomain())
 }
 
-func canUseDirectPath(ctx context.Context, endpoint string, creds *google.Credentials, o *internal.DialSettings) bool {
-	if !isDirectPathEnabled(endpoint, o) {
-		return false
+// canUseDirectPath reports whether DirectPath can be used for the dial.
+// When DirectPath cannot be used, it optionally returns a human-readable
+// warning reason explaining the rejection.
+func canUseDirectPath(ctx context.Context, endpoint string, creds *google.Credentials, o *internal.DialSettings) (string, bool) {
+	if reason, ok := checkDirectPathEnabled(endpoint, o); !ok {
+		return reason, false
 	}
 	if creds == nil || creds.TokenSource == nil {
-		return false
+		return directPathIncompatibleCredReason, false
 	}
 	if !onGCE() {
-		return false
+		return directPathNotOnGCEReason, false
 	}
 	defaultUD := o.GetDefaultUniverseDomain()
 	ud, err := creds.GetUniverseDomain()
 	if err != nil || strings.TrimSpace(ud) != defaultUD {
-		return false
+		return directPathUnsupportedUniverseReason, false
 	}
 	if !isTokenSourceDirectPathCompatible(creds.TokenSource, o) {
-		return false
+		return directPathIncompatibleCredReason, false
 	}
 	// When credentials do not carry a UniverseDomainProvider (for example,
 	// option.WithTokenSource(google.ComputeTokenSource(""))), GetUniverseDomain
@@ -541,26 +550,31 @@ func canUseDirectPath(ctx context.Context, endpoint string, creds *google.Creden
 	if creds.UniverseDomainProvider == nil {
 		mdUD, err := metadataUniverseDomain(ctx)
 		if err != nil || mdUD != defaultUD {
-			return false
+			return directPathUnsupportedUniverseReason, false
 		}
 	}
-	return true
+	return "", true
+}
+
+func checkDirectPathEnabled(endpoint string, o *internal.DialSettings) (string, bool) {
+	if o == nil || !o.EnableDirectPath {
+		return directPathNotEnabledReason, false
+	}
+	if !checkDirectPathEndPoint(endpoint) {
+		return "", false
+	}
+	if strings.EqualFold(os.Getenv(disableDirectPath), "true") {
+		return "", false
+	}
+	if !canUseDirectPathWithUniverseDomain(endpoint, o) {
+		return directPathUnsupportedUniverseReason, false
+	}
+	return "", true
 }
 
 func isDirectPathEnabled(endpoint string, o *internal.DialSettings) bool {
-	if !o.EnableDirectPath {
-		return false
-	}
-	if !checkDirectPathEndPoint(endpoint) {
-		return false
-	}
-	if !canUseDirectPathWithUniverseDomain(endpoint, o) {
-		return false
-	}
-	if strings.EqualFold(os.Getenv(disableDirectPath), "true") {
-		return false
-	}
-	return true
+	_, ok := checkDirectPathEnabled(endpoint, o)
+	return ok
 }
 
 func isDirectPathXdsUsed(o *internal.DialSettings) bool {
@@ -616,43 +630,11 @@ func checkDirectPathEndPoint(endpoint string) bool {
 	return true
 }
 
-func logDirectPathMisconfig(ctx context.Context, endpoint string, creds *google.Credentials, o *internal.DialSettings) {
-	if !isDirectPathXdsUsed(o) {
+func logDirectPathMisconfig(o *internal.DialSettings, reason string) {
+	if !isDirectPathXdsUsed(o) || reason == "" {
 		return
 	}
-	// Case 1: does not enable DirectPath
-	if o == nil || !o.EnableDirectPath || !checkDirectPathEndPoint(endpoint) || strings.EqualFold(os.Getenv(disableDirectPath), "true") {
-		log.Println("WARNING: DirectPath is misconfigured. Please set the EnableDirectPath option along with the EnableDirectPathXds option.")
-		return
-	}
-	if !canUseDirectPathWithUniverseDomain(endpoint, o) {
-		log.Println("WARNING: DirectPath is disabled. Non-default universe domain is not supported.")
-		return
-	}
-	defaultUD := o.GetDefaultUniverseDomain()
-	var ts oauth2.TokenSource
-	if creds != nil {
-		if ud, err := creds.GetUniverseDomain(); err != nil || strings.TrimSpace(ud) != defaultUD {
-			log.Println("WARNING: DirectPath is disabled. Non-default universe domain is not supported.")
-			return
-		}
-		ts = creds.TokenSource
-	}
-	// Case 2: credential is not correctly set
-	tokenCompatible := isTokenSourceDirectPathCompatible(ts, o)
-	if !tokenCompatible {
-		log.Println("WARNING: DirectPath is misconfigured. Please make sure the token source is fetched from GCE metadata server and the default service account is used.")
-	}
-	// Case 3: not running on GCE
-	if !onGCE() {
-		log.Println("WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment.")
-		return
-	}
-	if tokenCompatible && creds != nil && creds.UniverseDomainProvider == nil {
-		if mdUD, err := metadataUniverseDomain(ctx); err != nil || mdUD != defaultUD {
-			log.Println("WARNING: DirectPath is disabled. Non-default universe domain is not supported.")
-		}
-	}
+	log.Printf("WARNING: %s", reason)
 }
 
 func processAndValidateOpts(opts []option.ClientOption) (*internal.DialSettings, error) {

@@ -194,7 +194,8 @@ func TestLogDirectPathMisconfigAttrempDirectPathNotSet(t *testing.T) {
 	log.SetOutput(&buf)
 	t.Cleanup(func() { log.SetOutput(origOut) })
 
-	logDirectPathMisconfig(t.Context(), endpoint, creds, o)
+	reason, _ := canUseDirectPath(t.Context(), endpoint, creds, o)
+	logDirectPathMisconfig(o, reason)
 
 	wantedLog := "WARNING: DirectPath is misconfigured. Please set the EnableDirectPath option along with the EnableDirectPathXds option."
 	if !strings.Contains(buf.String(), wantedLog) {
@@ -219,7 +220,8 @@ func TestLogDirectPathMisconfigWrongCredential(t *testing.T) {
 	log.SetOutput(&buf)
 	t.Cleanup(func() { log.SetOutput(origOut) })
 
-	logDirectPathMisconfig(t.Context(), endpoint, creds, o)
+	reason, _ := canUseDirectPath(t.Context(), endpoint, creds, o)
+	logDirectPathMisconfig(o, reason)
 
 	wantedLog := "WARNING: DirectPath is misconfigured. Please make sure the token source is fetched from GCE metadata server and the default service account is used."
 	if !strings.Contains(buf.String(), wantedLog) {
@@ -250,7 +252,8 @@ func TestLogDirectPathMisconfigNotOnGCE(t *testing.T) {
 	log.SetOutput(&buf)
 	t.Cleanup(func() { log.SetOutput(origOut) })
 
-	logDirectPathMisconfig(t.Context(), endpoint, creds, o)
+	reason, _ := canUseDirectPath(t.Context(), endpoint, creds, o)
+	logDirectPathMisconfig(o, reason)
 
 	if !metadata.OnGCE() {
 		wantedLog := "WARNING: DirectPath is misconfigured. DirectPath is only available in a GCE environment."
@@ -606,15 +609,17 @@ func TestIsDirectPathEnabled(t *testing.T) {
 
 func TestCanUseDirectPath(t *testing.T) {
 	tests := []struct {
-		name     string
-		endpoint string
-		settings *internal.DialSettings
-		creds    *google.Credentials
-		udEnv    string
-		gce      bool
-		mdsUD    string
-		mdsErr   error
-		want     bool
+		name       string
+		endpoint   string
+		settings   *internal.DialSettings
+		creds      *google.Credentials
+		disableEnv string
+		udEnv      string
+		gce        bool
+		mdsUD      string
+		mdsErr     error
+		want       bool
+		wantReason string
 	}{
 		{
 			name:     "gdu_gce_adc",
@@ -643,6 +648,32 @@ func TestCanUseDirectPath(t *testing.T) {
 			want: true,
 		},
 		{
+			name:       "direct_path_disabled",
+			endpoint:   "storage.googleapis.com:443",
+			settings:   &internal.DialSettings{},
+			creds:      &google.Credentials{TokenSource: defaultComputeTokenSource()},
+			gce:        true,
+			want:       false,
+			wantReason: directPathNotEnabledReason,
+		},
+		{
+			name:       "disabled_by_env",
+			endpoint:   "storage.googleapis.com:443",
+			settings:   &internal.DialSettings{EnableDirectPath: true},
+			creds:      &google.Credentials{TokenSource: defaultComputeTokenSource()},
+			disableEnv: "true",
+			gce:        true,
+			want:       false,
+		},
+		{
+			name:     "non_dns_scheme_no_warning",
+			endpoint: "https://storage.googleapis.com:443",
+			settings: &internal.DialSettings{EnableDirectPath: true},
+			creds:    &google.Credentials{TokenSource: defaultComputeTokenSource()},
+			gce:      true,
+			want:     false,
+		},
+		{
 			name:     "tpc_gce_adc_with_trailing_newline",
 			endpoint: "storage.googleapis.com:443",
 			settings: &internal.DialSettings{EnableDirectPath: true},
@@ -652,8 +683,9 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "example.com\n", nil
 				},
 			},
-			gce:  true,
-			want: false,
+			gce:        true,
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "tpc_gce_adc_without_client_universe_domain",
@@ -665,8 +697,9 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "example.com", nil
 				},
 			},
-			gce:  true,
-			want: false,
+			gce:        true,
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "creds_universe_domain_error_fails_closed",
@@ -678,8 +711,9 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "", errors.New("mds unavailable")
 				},
 			},
-			gce:  true,
-			want: false,
+			gce:        true,
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "token_source_without_provider_blocked_by_tpc_mds",
@@ -688,9 +722,10 @@ func TestCanUseDirectPath(t *testing.T) {
 			creds: &google.Credentials{
 				TokenSource: defaultComputeTokenSource(),
 			},
-			gce:   true,
-			mdsUD: "example.com",
-			want:  false,
+			gce:        true,
+			mdsUD:      "example.com",
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "token_source_without_provider_mds_error_fails_closed",
@@ -699,9 +734,10 @@ func TestCanUseDirectPath(t *testing.T) {
 			creds: &google.Credentials{
 				TokenSource: defaultComputeTokenSource(),
 			},
-			gce:    true,
-			mdsErr: errors.New("mds error"),
-			want:   false,
+			gce:        true,
+			mdsErr:     errors.New("mds error"),
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "token_source_without_provider_allowed_by_gdu_mds",
@@ -724,8 +760,9 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "googleapis.com", nil
 				},
 			},
-			gce:  true,
-			want: false,
+			gce:        true,
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "tpc_client_universe_domain_with_gdu_endpoint",
@@ -740,8 +777,9 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "googleapis.com", nil
 				},
 			},
-			gce:  true,
-			want: false,
+			gce:        true,
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "tpc_env_var_with_gdu_endpoint",
@@ -753,9 +791,10 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "googleapis.com", nil
 				},
 			},
-			udEnv: "example.com",
-			gce:   true,
-			want:  false,
+			udEnv:      "example.com",
+			gce:        true,
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "not_on_gce",
@@ -767,23 +806,26 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "googleapis.com", nil
 				},
 			},
-			gce:  false,
-			want: false,
+			gce:        false,
+			want:       false,
+			wantReason: directPathNotOnGCEReason,
 		},
 		{
-			name:     "nil_creds",
-			endpoint: "storage.googleapis.com:443",
-			settings: &internal.DialSettings{EnableDirectPath: true},
-			gce:      true,
-			want:     false,
+			name:       "nil_creds",
+			endpoint:   "storage.googleapis.com:443",
+			settings:   &internal.DialSettings{EnableDirectPath: true},
+			gce:        true,
+			want:       false,
+			wantReason: directPathIncompatibleCredReason,
 		},
 		{
-			name:     "creds_with_nil_token_source",
-			endpoint: "storage.googleapis.com:443",
-			settings: &internal.DialSettings{EnableDirectPath: true},
-			creds:    &google.Credentials{},
-			gce:      true,
-			want:     false,
+			name:       "creds_with_nil_token_source",
+			endpoint:   "storage.googleapis.com:443",
+			settings:   &internal.DialSettings{EnableDirectPath: true},
+			creds:      &google.Credentials{},
+			gce:        true,
+			want:       false,
+			wantReason: directPathIncompatibleCredReason,
 		},
 		{
 			name:     "non_compute_token_source_disallowed",
@@ -795,8 +837,9 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "googleapis.com", nil
 				},
 			},
-			gce:  true,
-			want: false,
+			gce:        true,
+			want:       false,
+			wantReason: directPathIncompatibleCredReason,
 		},
 		{
 			name:     "allow_non_default_sa_tpc_creds_rejected",
@@ -811,8 +854,9 @@ func TestCanUseDirectPath(t *testing.T) {
 					return "example.com", nil
 				},
 			},
-			gce:  true,
-			want: false,
+			gce:        true,
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "allow_non_default_sa_gdu_creds_on_tpc_vm_rejected",
@@ -824,9 +868,10 @@ func TestCanUseDirectPath(t *testing.T) {
 			creds: &google.Credentials{
 				TokenSource: nonComputeTokenSource(),
 			},
-			gce:   true,
-			mdsUD: "example.com",
-			want:  false,
+			gce:        true,
+			mdsUD:      "example.com",
+			want:       false,
+			wantReason: directPathUnsupportedUniverseReason,
 		},
 		{
 			name:     "allow_non_default_sa_gdu_creds_on_gdu_vm_allowed",
@@ -846,12 +891,13 @@ func TestCanUseDirectPath(t *testing.T) {
 
 	for _, tc := range tests {
 		t.Run(tc.name, func(t *testing.T) {
-			t.Setenv(disableDirectPath, "")
+			t.Setenv(disableDirectPath, tc.disableEnv)
 			t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", tc.udEnv)
 			stubGCEState(t, tc.gce, tc.mdsUD, tc.mdsErr)
 
-			if got := canUseDirectPath(t.Context(), tc.endpoint, tc.creds, tc.settings); got != tc.want {
-				t.Errorf("canUseDirectPath(%q) = %v, want %v", tc.endpoint, got, tc.want)
+			gotReason, got := canUseDirectPath(t.Context(), tc.endpoint, tc.creds, tc.settings)
+			if got != tc.want || gotReason != tc.wantReason {
+				t.Errorf("canUseDirectPath(%q) = (%q, %v), want (%q, %v)", tc.endpoint, gotReason, got, tc.wantReason, tc.want)
 			}
 		})
 	}
@@ -1275,10 +1321,67 @@ func TestLogDirectPathMisconfig_NonDefaultUniverseDomain(t *testing.T) {
 			log.SetOutput(&buf)
 			t.Cleanup(func() { log.SetOutput(origOut) })
 
-			logDirectPathMisconfig(t.Context(), tc.endpoint, tc.creds, tc.settings)
+			reason, _ := canUseDirectPath(t.Context(), tc.endpoint, tc.creds, tc.settings)
+			logDirectPathMisconfig(tc.settings, reason)
 
 			if !strings.Contains(buf.String(), wantWarning) {
 				t.Errorf("logDirectPathMisconfig(%q) logged %q, want substring %q", tc.endpoint, buf.String(), wantWarning)
+			}
+		})
+	}
+}
+
+func TestLogDirectPathMisconfig(t *testing.T) {
+	tests := []struct {
+		name     string
+		settings *internal.DialSettings
+		xdsEnv   string
+		reason   string
+		want     string
+	}{
+		{
+			name:     "xds_option_logs_warning",
+			settings: &internal.DialSettings{EnableDirectPath: true, EnableDirectPathXds: true},
+			reason:   directPathUnsupportedUniverseReason,
+			want:     "WARNING: " + directPathUnsupportedUniverseReason,
+		},
+		{
+			name:     "xds_env_logs_warning",
+			settings: &internal.DialSettings{EnableDirectPath: true},
+			xdsEnv:   "true",
+			reason:   directPathNotOnGCEReason,
+			want:     "WARNING: " + directPathNotOnGCEReason,
+		},
+		{
+			name:     "xds_disabled_logs_nothing",
+			settings: &internal.DialSettings{EnableDirectPath: true},
+			reason:   directPathUnsupportedUniverseReason,
+		},
+		{
+			name:     "empty_reason_logs_nothing",
+			settings: &internal.DialSettings{EnableDirectPath: true, EnableDirectPathXds: true},
+		},
+	}
+
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Setenv(enableDirectPathXds, tc.xdsEnv)
+
+			var buf bytes.Buffer
+			origOut := log.Writer()
+			log.SetOutput(&buf)
+			t.Cleanup(func() { log.SetOutput(origOut) })
+
+			logDirectPathMisconfig(tc.settings, tc.reason)
+
+			if tc.want == "" {
+				if buf.Len() != 0 {
+					t.Errorf("logDirectPathMisconfig(%q) logged %q, want empty output", tc.reason, buf.String())
+				}
+				return
+			}
+			if !strings.Contains(buf.String(), tc.want) {
+				t.Errorf("logDirectPathMisconfig(%q) logged %q, want substring %q", tc.reason, buf.String(), tc.want)
 			}
 		})
 	}
@@ -1321,7 +1424,8 @@ func TestLogDirectPathMisconfig_ValidGDU(t *testing.T) {
 				EnableDirectPath:    true,
 				EnableDirectPathXds: true,
 			}
-			logDirectPathMisconfig(t.Context(), "storage.googleapis.com:443", tc.creds, settings)
+			reason, _ := canUseDirectPath(t.Context(), "storage.googleapis.com:443", tc.creds, settings)
+			logDirectPathMisconfig(settings, reason)
 
 			if buf.Len() != 0 {
 				t.Errorf("logDirectPathMisconfig() logged %q, want empty output", buf.String())
@@ -1340,50 +1444,81 @@ func (c *countingTokenSource) Token() (*oauth2.Token, error) {
 	return c.base.Token()
 }
 
-func TestDial_DirectPathHealthyDoesNotDuplicateLookups(t *testing.T) {
-	t.Setenv(disableDirectPath, "")
-	t.Setenv(enableDirectPathXds, "")
-	t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "")
-	t.Setenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", "false")
-	t.Setenv("EXPERIMENTAL_GOOGLE_API_USE_S2A", "false")
-
-	origOnGCE := onGCE
-	origMDS := metadataUniverseDomain
-	origDialContext := dialContext
-	onGCE = func() bool { return true }
-	mdsCalls := 0
-	metadataUniverseDomain = func(context.Context) (string, error) {
-		mdsCalls++
-		return "googleapis.com", nil
-	}
-	dialContext = func(context.Context, string, ...grpc.DialOption) (*grpc.ClientConn, error) {
-		return nil, nil
-	}
-	logRateLimiter = rate.Sometimes{Interval: time.Second}
-	t.Cleanup(func() {
-		onGCE = origOnGCE
-		metadataUniverseDomain = origMDS
-		dialContext = origDialContext
-		logRateLimiter = rate.Sometimes{Interval: time.Second}
-	})
-
-	ts := &countingTokenSource{base: defaultComputeTokenSource()}
-	settings := &internal.DialSettings{
-		DefaultEndpointTemplate: "storage.UNIVERSE_DOMAIN:443",
-		EnableDirectPath:        true,
-		EnableDirectPathXds:     true,
-		TelemetryDisabled:       true,
-		TokenSource:             ts,
+func TestDial_DirectPathDoesNotDuplicateLookups(t *testing.T) {
+	tests := []struct {
+		name        string
+		mdsUD       string
+		wantWarning string
+	}{
+		{
+			name:  "healthy_gdu",
+			mdsUD: "googleapis.com",
+		},
+		{
+			name:        "rejected_non_gdu_mds",
+			mdsUD:       "example.com",
+			wantWarning: "WARNING: " + directPathUnsupportedUniverseReason,
+		},
 	}
 
-	if _, err := dial(t.Context(), false, settings); err != nil {
-		t.Fatalf("dial() unexpected error: %v", err)
-	}
-	if ts.calls != 1 {
-		t.Errorf("dial() token lookups = %d, want 1", ts.calls)
-	}
-	if mdsCalls != 1 {
-		t.Errorf("dial() metadata universe domain lookups = %d, want 1", mdsCalls)
+	for _, tc := range tests {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Setenv(disableDirectPath, "")
+			t.Setenv(enableDirectPathXds, "")
+			t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", "")
+			t.Setenv("GOOGLE_API_USE_CLIENT_CERTIFICATE", "false")
+			t.Setenv("EXPERIMENTAL_GOOGLE_API_USE_S2A", "false")
+
+			origOnGCE := onGCE
+			origMDS := metadataUniverseDomain
+			origDialContext := dialContext
+			origOut := log.Writer()
+			onGCE = func() bool { return true }
+			mdsCalls := 0
+			metadataUniverseDomain = func(context.Context) (string, error) {
+				mdsCalls++
+				return tc.mdsUD, nil
+			}
+			dialContext = func(context.Context, string, ...grpc.DialOption) (*grpc.ClientConn, error) {
+				return nil, nil
+			}
+			var buf bytes.Buffer
+			log.SetOutput(&buf)
+			logRateLimiter = rate.Sometimes{Interval: time.Second}
+			t.Cleanup(func() {
+				onGCE = origOnGCE
+				metadataUniverseDomain = origMDS
+				dialContext = origDialContext
+				log.SetOutput(origOut)
+				logRateLimiter = rate.Sometimes{Interval: time.Second}
+			})
+
+			ts := &countingTokenSource{base: defaultComputeTokenSource()}
+			settings := &internal.DialSettings{
+				DefaultEndpointTemplate: "storage.UNIVERSE_DOMAIN:443",
+				EnableDirectPath:        true,
+				EnableDirectPathXds:     true,
+				TelemetryDisabled:       true,
+				TokenSource:             ts,
+			}
+
+			if _, err := dial(t.Context(), false, settings); err != nil {
+				t.Fatalf("dial() unexpected error: %v", err)
+			}
+			if ts.calls != 1 {
+				t.Errorf("dial() token lookups = %d, want 1", ts.calls)
+			}
+			if mdsCalls != 1 {
+				t.Errorf("dial() metadata universe domain lookups = %d, want 1", mdsCalls)
+			}
+			if tc.wantWarning == "" {
+				if buf.Len() != 0 {
+					t.Errorf("dial() logged %q, want empty output", buf.String())
+				}
+			} else if !strings.Contains(buf.String(), tc.wantWarning) {
+				t.Errorf("dial() logged %q, want substring %q", buf.String(), tc.wantWarning)
+			}
+		})
 	}
 }
 

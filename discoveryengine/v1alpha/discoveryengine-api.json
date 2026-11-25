@@ -1559,28 +1559,21 @@
                       "httpMethod": "DELETE",
                       "id": "discoveryengine.projects.locations.collections.dataConnector.mcp",
                       "parameterOrder": [
-                        "projectsId",
-                        "locationsId",
-                        "collectionsId"
+                        "name"
                       ],
                       "parameters": {
-                        "collectionsId": {
-                          "location": "path",
-                          "required": true,
-                          "type": "string"
-                        },
-                        "contentType": {
+                        "httpBody.contentType": {
                           "description": "The HTTP Content-Type header value specifying the content type of the body.",
                           "location": "query",
                           "type": "string"
                         },
-                        "data": {
+                        "httpBody.data": {
                           "description": "The HTTP request/response body as raw binary.",
                           "format": "byte",
                           "location": "query",
                           "type": "string"
                         },
-                        "extensions": {
+                        "httpBody.extensions": {
                           "additionalProperties": {
                             "description": "Properties of the object. Contains field @type with type URL.",
                             "type": "any"
@@ -1590,18 +1583,15 @@
                           "repeated": true,
                           "type": "object"
                         },
-                        "locationsId": {
+                        "name": {
+                          "description": "Required. The DataConnector the MCP request is for. Format: `projects/{project}/locations/{location}/collections/{collection}/dataConnector`",
                           "location": "path",
-                          "required": true,
-                          "type": "string"
-                        },
-                        "projectsId": {
-                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataConnector$",
                           "required": true,
                           "type": "string"
                         }
                       },
-                      "path": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataConnector/mcp",
+                      "path": "v1alpha/{+name}/mcp",
                       "response": {
                         "$ref": "GoogleApiHttpBody"
                       },
@@ -6364,6 +6354,37 @@
                                 "https://www.googleapis.com/auth/discoveryengine.readwrite",
                                 "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
                               ]
+                            },
+                            "transferAgentOwner": {
+                              "description": "Transfers ownership of an Agent to a new owner. The new owner becomes the agent's only owner. The previous owner loses access unless `previous_owner_disposition` keeps them as a user. The previous owner's schedules and event triggers on the agent are disabled (their configuration stays on the agent), and the new owner is notified. Requires the `discoveryengine.agents.manage` permission on the agent. Private agents cannot be transferred. A failed call can be retried with the same request; the retry completes the transfer.",
+                              "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/assistants/{assistantsId}/agents/{agentsId}:transferAgentOwner",
+                              "httpMethod": "POST",
+                              "id": "discoveryengine.projects.locations.collections.engines.assistants.agents.transferAgentOwner",
+                              "parameterOrder": [
+                                "name"
+                              ],
+                              "parameters": {
+                                "name": {
+                                  "description": "Required. The name of the Agent whose ownership is being transferred. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/assistants/{assistant}/agents/{agent}`",
+                                  "location": "path",
+                                  "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/assistants/[^/]+/agents/[^/]+$",
+                                  "required": true,
+                                  "type": "string"
+                                }
+                              },
+                              "path": "v1alpha/{+name}:transferAgentOwner",
+                              "request": {
+                                "$ref": "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequest"
+                              },
+                              "response": {
+                                "$ref": "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerResponse"
+                              },
+                              "scopes": [
+                                "https://www.googleapis.com/auth/cloud-platform",
+                                "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                                "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                                "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
+                              ]
                             }
                           },
                           "resources": {
@@ -7636,6 +7657,36 @@
                           "scopes": [
                             "https://www.googleapis.com/auth/cloud-platform",
                             "https://www.googleapis.com/auth/discoveryengine.assist.readwrite",
+                            "https://www.googleapis.com/auth/discoveryengine.readwrite",
+                            "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
+                          ]
+                        },
+                        "validateUserAuthorization": {
+                          "description": "Validates an A2A 3-legged-OAuth (3LO) downstream-auth consent flow after the user returns from the third-party consent screen, and finalizes the downstream credential with Auth Manager.",
+                          "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/engines/{enginesId}/sessions/{sessionsId}:validateUserAuthorization",
+                          "httpMethod": "POST",
+                          "id": "discoveryengine.projects.locations.collections.engines.sessions.validateUserAuthorization",
+                          "parameterOrder": [
+                            "session"
+                          ],
+                          "parameters": {
+                            "session": {
+                              "description": "Required. The resource name of the assist Session that initiated the consent flow. Used together with `downstream_connector` to recover the server-stored `consent_nonce`. Format: `projects/{project}/locations/{location}/collections/{collection}/engines/{engine}/sessions/{session}`",
+                              "location": "path",
+                              "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/engines/[^/]+/sessions/[^/]+$",
+                              "required": true,
+                              "type": "string"
+                            }
+                          },
+                          "path": "v1alpha/{+session}:validateUserAuthorization",
+                          "request": {
+                            "$ref": "GoogleCloudDiscoveryengineV1alphaValidateUserAuthorizationRequest"
+                          },
+                          "response": {
+                            "$ref": "GoogleCloudDiscoveryengineV1alphaValidateUserAuthorizationResponse"
+                          },
+                          "scopes": [
+                            "https://www.googleapis.com/auth/cloud-platform",
                             "https://www.googleapis.com/auth/discoveryengine.readwrite",
                             "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
                           ]
@@ -13515,117 +13566,6 @@
                     }
                   }
                 },
-                "userAvailabilities": {
-                  "methods": {
-                    "batchUpdate": {
-                      "description": "Updates multiple UserAvailabilitys.",
-                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/userStores/{userStoresId}/userAvailabilities:batchUpdate",
-                      "httpMethod": "POST",
-                      "id": "discoveryengine.projects.locations.userStores.userAvailabilities.batchUpdate",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "Required. The parent UserStore resource name, format: `projects/{project}/locations/{location}/userStores/{user_store_id}`.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/userStores/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1alpha/{+parent}/userAvailabilities:batchUpdate",
-                      "request": {
-                        "$ref": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesRequest"
-                      },
-                      "response": {
-                        "$ref": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/discoveryengine.readwrite",
-                        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
-                      ]
-                    },
-                    "list": {
-                      "description": "Lists the UserAvailabilitys.",
-                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/userStores/{userStoresId}/userAvailabilities",
-                      "httpMethod": "GET",
-                      "id": "discoveryengine.projects.locations.userStores.userAvailabilities.list",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "filter": {
-                          "description": "Optional. Filter for the list request. Supported fields (only `user_principal` is supported for now): * `user_principal` (will be normalized for matching) Examples: * `user_principal = \"user1@example.com\"` to list user availability for `user1@example.com`.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "pageSize": {
-                          "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, defaults to 100. The maximum value is 1000; values above 1000 will be coerced to 1000. If this field is negative, an INVALID_ARGUMENT error is returned.",
-                          "format": "int32",
-                          "location": "query",
-                          "type": "integer"
-                        },
-                        "pageToken": {
-                          "description": "Optional. A page token, received from a previous `ListUserAvailabilities` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListUserAvailabilities` must match the call that provided the page token.",
-                          "location": "query",
-                          "type": "string"
-                        },
-                        "parent": {
-                          "description": "Required. The parent UserStore resource name, format: `projects/{project}/locations/{location}/userStores/{user_store_id}`.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/userStores/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1alpha/{+parent}/userAvailabilities",
-                      "response": {
-                        "$ref": "GoogleCloudDiscoveryengineV1alphaListUserAvailabilitiesResponse"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/discoveryengine.readwrite",
-                        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
-                      ]
-                    }
-                  }
-                },
-                "userAvailability": {
-                  "methods": {
-                    "update": {
-                      "description": "Updates a UserAvailability.",
-                      "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/userStores/{userStoresId}/userAvailability:update",
-                      "httpMethod": "POST",
-                      "id": "discoveryengine.projects.locations.userStores.userAvailability.update",
-                      "parameterOrder": [
-                        "parent"
-                      ],
-                      "parameters": {
-                        "parent": {
-                          "description": "Optional. The parent UserStore resource name, format: `projects/{project}/locations/{location}/userStores/{user_store_id}`.",
-                          "location": "path",
-                          "pattern": "^projects/[^/]+/locations/[^/]+/userStores/[^/]+$",
-                          "required": true,
-                          "type": "string"
-                        }
-                      },
-                      "path": "v1alpha/{+parent}/userAvailability:update",
-                      "request": {
-                        "$ref": "GoogleCloudDiscoveryengineV1alphaUpdateUserAvailabilityRequest"
-                      },
-                      "response": {
-                        "$ref": "GoogleCloudDiscoveryengineV1alphaUserAvailability"
-                      },
-                      "scopes": [
-                        "https://www.googleapis.com/auth/cloud-platform",
-                        "https://www.googleapis.com/auth/discoveryengine.readwrite",
-                        "https://www.googleapis.com/auth/discoveryengine.serving.readwrite"
-                      ]
-                    }
-                  }
-                },
                 "userLicenses": {
                   "methods": {
                     "export": {
@@ -13794,7 +13734,7 @@
       }
     }
   },
-  "revision": "20261106",
+  "revision": "20261117",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "ApiservingMcpMcpToolVisibility": {
@@ -22646,34 +22586,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesRequest": {
-      "description": "Request message for UserStoreService.BatchUpdateUserAvailabilities method.",
-      "id": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesRequest",
-      "properties": {
-        "requests": {
-          "description": "Required. The UserAvailabilitys to update. Maximum of 1000 at a time: if more are passed in, returns INVALID_ARGUMENT. Batch is all or nothing; either all updates succeed or none. The `parent` field in each child request must either be empty, or match the `parent` field in the batch request. If there is a mismatch, that will also result in an INVALID_ARGUMENT being returned.",
-          "items": {
-            "$ref": "GoogleCloudDiscoveryengineV1alphaUpdateUserAvailabilityRequest"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesResponse": {
-      "description": "Response message for UserStoreService.BatchUpdateUserAvailabilities method.",
-      "id": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserAvailabilitiesResponse",
-      "properties": {
-        "userAvailabilities": {
-          "description": "The updated UserAvailabilitys.",
-          "items": {
-            "$ref": "GoogleCloudDiscoveryengineV1alphaUserAvailability"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesMetadata": {
       "description": "Metadata related to the progress of the UserLicenseService.BatchUpdateUserLicenses operation. This will be returned by the google.longrunning.Operation.metadata field.",
       "id": "GoogleCloudDiscoveryengineV1alphaBatchUpdateUserLicensesMetadata",
@@ -30023,24 +29935,6 @@
       },
       "type": "object"
     },
-    "GoogleCloudDiscoveryengineV1alphaListUserAvailabilitiesResponse": {
-      "description": "Response message for UserStoreService.ListUserAvailabilities method.",
-      "id": "GoogleCloudDiscoveryengineV1alphaListUserAvailabilitiesResponse",
-      "properties": {
-        "nextPageToken": {
-          "description": "A token, which can be sent as `page_token` to retrieve the next page. If this field is omitted, there are no subsequent pages.",
-          "type": "string"
-        },
-        "userAvailabilities": {
-          "description": "The UserAvailabilitys matching the request.",
-          "items": {
-            "$ref": "GoogleCloudDiscoveryengineV1alphaUserAvailability"
-          },
-          "type": "array"
-        }
-      },
-      "type": "object"
-    },
     "GoogleCloudDiscoveryengineV1alphaListUserLicensesResponse": {
       "description": "Response message for UserLicenseService.ListUserLicenses.",
       "id": "GoogleCloudDiscoveryengineV1alphaListUserLicensesResponse",
@@ -30127,12 +30021,20 @@
       "description": "Observability config for a resource.",
       "id": "GoogleCloudDiscoveryengineV1alphaObservabilityConfig",
       "properties": {
+        "artifactGcsBucket": {
+          "description": "Optional. The Cloud Storage bucket that agent artifacts are written to. Artifacts are the multi-modal content (e.g. generated images and files) that an agent produces while handling an invocation. Persisting them makes them available for inspection alongside the observability traces and logs emitted for the same invocation. This must be a bucket URI without an object path. Example value: `gs://my-observability-bucket`. The bucket must be owned by the same project as the resource, and the Gemini Enterprise service agent must be able to write to it. Otherwise an `INVALID_ARGUMENT` or `PERMISSION_DENIED` error is returned. If unset, artifacts are only held for the duration of the invocation and are not persisted. This field has no effect when set on a Project; setting it there returns an `INVALID_ARGUMENT` error. Configure it on an Engine or an Agent instead. When set on both, the agent-level value takes precedence.",
+          "type": "string"
+        },
         "observabilityEnabled": {
           "description": "Optional. Enables observability. If `false`, all other flags are ignored.",
           "type": "boolean"
         },
         "sensitiveLoggingEnabled": {
           "description": "Optional. Enables sensitive logging. Sensitive logging includes customer core content (e.g. prompts, responses). If `false`, will sanitize all sensitive fields.",
+          "type": "boolean"
+        },
+        "userPrincipalLoggingEnabled": {
+          "description": "Optional. Logs the end user's identity on activity log entries even when `sensitive_logging_enabled` is `false`. Prompt and response content stays redacted. Has no effect when `sensitive_logging_enabled` is `true`. Setting this field on a Project returns an `INVALID_ARGUMENT` error. Configure it on an Engine or an Agent instead.",
           "type": "boolean"
         }
       },
@@ -30659,6 +30561,10 @@
         "idpConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaIdpConfig",
           "description": "Optional. The identity provider for this location. When provided, the location's AclConfig is set from it as part of provisioning."
+        },
+        "preProvisionMode": {
+          "description": "Optional. Runs only the common project-level pre-provisioning steps (service agents, agent identity pools, project-scoped extension bindings, App Hub registry, Sobi agent default identity, and Sobi default Model Armor template) without reading or writing the Customer, Collection, or UserStore tables, CapabilityConfig, tenant project, default engine, or trial licenses when `true`. Assumes no customer exists yet. Customer-level or non-SOBI fields (`accept_data_use_terms`, `data_use_terms_version`, `saas_params`, `idp_config`, and `PROVISION_INTENT_LEGACY`) are rejected with `INVALID_ARGUMENT`, and the returned completed `Operation` has an empty response.",
+          "type": "boolean"
         },
         "provisionIntent": {
           "description": "Optional. The caller states whether the provisioning is for the new or the classic Gemini Enterprise experience.",
@@ -35305,6 +35211,58 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequest": {
+      "description": "Request message for the AgentService.TransferAgentOwner method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequest",
+      "properties": {
+        "currentUser": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequestTransferToCurrentUser",
+          "description": "Optional. Transfers ownership to the caller."
+        },
+        "previousOwnerDisposition": {
+          "description": "Optional. What happens to the previous owner after the transfer. If unspecified, the previous owner is removed and loses access.",
+          "enum": [
+            "PREVIOUS_OWNER_DISPOSITION_UNSPECIFIED",
+            "REMOVE",
+            "KEEP_AS_AGENT_USER"
+          ],
+          "enumDescriptions": [
+            "Not specified. Defaults to `REMOVE`.",
+            "Remove the previous owner from the agent; they lose access.",
+            "Keep the previous owner on the agent as a user, without owner permissions."
+          ],
+          "type": "string"
+        },
+        "targetPrincipal": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequestTransferToTargetPrincipal",
+          "description": "Optional. Transfers ownership to a specific principal."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequestTransferToCurrentUser": {
+      "description": "Transfers ownership to the caller. The caller must be an individual user, not a service account.",
+      "id": "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequestTransferToCurrentUser",
+      "properties": {},
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequestTransferToTargetPrincipal": {
+      "description": "Transfers ownership to a specific user.",
+      "id": "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerRequestTransferToTargetPrincipal",
+      "properties": {
+        "principal": {
+          "description": "Required. The new owner, as an IAM member string. Use `user:` for Google identities (e.g. `user:alice@example.com`); use `principal://` for workforce identity federation principals. The new owner must be an individual user who has signed in to the app and has a license that allows creating agents. Groups and service accounts are not supported.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerResponse": {
+      "description": "Response message for the AgentService.TransferAgentOwner method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaTransferAgentOwnerResponse",
+      "properties": {},
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaTuneEngineMetadata": {
       "description": "Metadata associated with a tune operation.",
       "id": "GoogleCloudDiscoveryengineV1alphaTuneEngineMetadata",
@@ -35407,63 +35365,6 @@
         "updateTime": {
           "description": "Operation last update time. If the operation is done, this is also the finish time.",
           "format": "google-datetime",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDiscoveryengineV1alphaUpdateUserAvailabilityRequest": {
-      "description": "Request message for UserStoreService.UpdateUserAvailability method. Also nested within BatchUpdateUserAvailabilityRequest for the UserStoreService.BatchUpdateUserAvailability method. `parent` is a required field when this message is used for a single Update, but is optional when used for a BatchUpdate.",
-      "id": "GoogleCloudDiscoveryengineV1alphaUpdateUserAvailabilityRequest",
-      "properties": {
-        "parent": {
-          "description": "Optional. The parent UserStore resource name, format: `projects/{project}/locations/{location}/userStores/{user_store_id}`.",
-          "type": "string"
-        },
-        "updateMask": {
-          "description": "Optional. The list of fields to update. Only 'state' is supported; if unset, defaults to 'state'.",
-          "format": "google-fieldmask",
-          "type": "string"
-        },
-        "userAvailability": {
-          "$ref": "GoogleCloudDiscoveryengineV1alphaUserAvailability",
-          "description": "Required. The UserAvailability to update."
-        }
-      },
-      "type": "object"
-    },
-    "GoogleCloudDiscoveryengineV1alphaUserAvailability": {
-      "description": "Tracks whether a resource is available for a given user (distinct from whether the user is allowed to use that resource by licensing, etc).",
-      "id": "GoogleCloudDiscoveryengineV1alphaUserAvailability",
-      "properties": {
-        "observeTime": {
-          "deprecated": true,
-          "description": "Optional. Deprecated: use `update_time` only.",
-          "format": "google-datetime",
-          "type": "string"
-        },
-        "state": {
-          "description": "Optional. Whether the user can currently use the resource. Set by the caller on update. If unspecified, defaults to `ACTIVE`.",
-          "enum": [
-            "STATE_UNSPECIFIED",
-            "ACTIVE",
-            "INACTIVE"
-          ],
-          "enumDescriptions": [
-            "Unspecified state (defaults to active).",
-            "Active state.",
-            "Inactive state."
-          ],
-          "type": "string"
-        },
-        "updateTime": {
-          "description": "Output only. Timestamp when the most recent update to `state` was saved.",
-          "format": "google-datetime",
-          "readOnly": true,
-          "type": "string"
-        },
-        "userPrincipal": {
-          "description": "Required. Immutable. User principal (IdP subject for Workforce Identity, email for Google sign-in).",
           "type": "string"
         }
       },
@@ -35709,6 +35610,28 @@
           "type": "string"
         }
       },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaValidateUserAuthorizationRequest": {
+      "description": "Request message for the AuthorizationService.ValidateUserAuthorization method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaValidateUserAuthorizationRequest",
+      "properties": {
+        "downstreamConnector": {
+          "description": "Required. The downstream connector (auth provider) resource name from the consent redirect (`auth_provider_name`). Named `downstream_connector` to disambiguate from the \"connector\" in the remote agent.",
+          "type": "string"
+        },
+        "userIdValidationState": {
+          "description": "Required. The opaque, encrypted validation state returned by Auth Manager in the consent redirect. Forwarded verbatim to FinalizeCredentials.",
+          "format": "byte",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaValidateUserAuthorizationResponse": {
+      "description": "Response message for the AuthorizationService.ValidateUserAuthorization method.",
+      "id": "GoogleCloudDiscoveryengineV1alphaValidateUserAuthorizationResponse",
+      "properties": {},
       "type": "object"
     },
     "GoogleCloudDiscoveryengineV1alphaVideoCharacteristics": {

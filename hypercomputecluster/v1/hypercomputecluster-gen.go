@@ -1723,6 +1723,30 @@ func (s Orchestrator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// ServiceAccount: Service account email and scopes
+type ServiceAccount struct {
+	// Email: Optional. Service account email
+	Email string `json:"email,omitempty"`
+	// Scopes: Optional. Service account scopes
+	Scopes []string `json:"scopes,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "Email") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s ServiceAccount) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceAccount
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // SlurmLoginNodes: Configuration for Slurm login nodes
 // (https://slurm.schedmd.com/quickstart_admin.html#login) in the cluster.
 // Login nodes are Compute Engine VM instances that allow users to access the
@@ -1751,6 +1775,9 @@ type SlurmLoginNodes struct {
 	// (https://cloud.google.com/compute/docs/machine-resource) to use for login
 	// nodes, e.g. `n2-standard-2`.
 	MachineType string `json:"machineType,omitempty"`
+	// ServiceAccount: Optional. Service account to be used by login node
+	// instances.
+	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 	// StartupScript: Optional. Startup script
 	// (https://cloud.google.com/compute/docs/instances/startup-scripts/linux) to
 	// be run on each login node instance. Max 256KB. The script must complete
@@ -1804,6 +1831,9 @@ type SlurmNodeSet struct {
 	// online. Leave empty if you do not want the cluster to create nodes
 	// dynamically, and instead rely only on static nodes.
 	MaxDynamicNodeCount int64 `json:"maxDynamicNodeCount,omitempty,string"`
+	// ServiceAccount: Optional. Immutable. Service account to be used by instances
+	// in the nodeset.
+	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 	// StaticNodeCount: Optional. Number of nodes to be statically created for this
 	// nodeset. The cluster will attempt to ensure that at least this many nodes
 	// exist at all times.

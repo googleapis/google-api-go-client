@@ -5,7 +5,7 @@ go 1.26.0
 retract v0.258.0 // due to https://github.com/googleapis/google-cloud-go/issues/13503
 
 require (
-	cloud.google.com/go/auth v0.24.1-0.20261001053825-dbc26066f70a
+	cloud.google.com/go/auth v0.24.5
 	cloud.google.com/go/auth/oauth2adapt v0.3.1
 	cloud.google.com/go/compute/metadata v0.10.0
 	github.com/google/go-cmp v0.7.0
@@ -13,8 +13,8 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/googleapis/enterprise-certificate-proxy v0.3.25
 	github.com/googleapis/gax-go/v2 v2.27.0
-	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.67.0
-	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.69.0
+	go.opentelemetry.io/contrib/instrumentation/google.golang.org/grpc/otelgrpc v0.72.0
+	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.72.0
 	golang.org/x/mod v0.43.0
 	golang.org/x/net v0.63.0
 	golang.org/x/oauth2 v0.38.0

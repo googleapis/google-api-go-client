@@ -2736,6 +2736,16 @@ func (r *PublicationsService) CheckProgramAccess(name string) *PublicationsCheck
 	return c
 }
 
+// CanonicalUrl sets the optional parameter "canonicalUrl": Required. The
+// canonical `https://` URL of the article being accessed, matching the “
+// element on the rendered page. When calling the REST `GET` endpoint directly
+// without a client library, callers must percent-encode the `canonicalUrl`
+// query parameter; the service URL-decodes it automatically.
+func (c *PublicationsCheckProgramAccessCall) CanonicalUrl(canonicalUrl string) *PublicationsCheckProgramAccessCall {
+	c.urlParams_.Set("canonicalUrl", canonicalUrl)
+	return c
+}
+
 // ProductId sets the optional parameter "productId": Required. The specific
 // product ID being accessed.
 func (c *PublicationsCheckProgramAccessCall) ProductId(productId string) *PublicationsCheckProgramAccessCall {

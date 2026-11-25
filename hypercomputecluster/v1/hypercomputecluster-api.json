@@ -545,7 +545,7 @@
       }
     }
   },
-  "revision": "20261021",
+  "revision": "20261118",
   "rootUrl": "https://hypercomputecluster.googleapis.com/",
   "schemas": {
     "BootDisk": {
@@ -1649,6 +1649,24 @@
       },
       "type": "object"
     },
+    "ServiceAccount": {
+      "description": "Service account email and scopes",
+      "id": "ServiceAccount",
+      "properties": {
+        "email": {
+          "description": "Optional. Service account email",
+          "type": "string"
+        },
+        "scopes": {
+          "description": "Optional. Service account scopes",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "SlurmLoginNodes": {
       "description": "Configuration for Slurm [login nodes](https://slurm.schedmd.com/quickstart_admin.html#login) in the cluster. Login nodes are Compute Engine VM instances that allow users to access the cluster over SSH.",
       "id": "SlurmLoginNodes",
@@ -1689,6 +1707,10 @@
           "description": "Required. Name of the Compute Engine [machine type](https://cloud.google.com/compute/docs/machine-resource) to use for login nodes, e.g. `n2-standard-2`.",
           "type": "string"
         },
+        "serviceAccount": {
+          "$ref": "ServiceAccount",
+          "description": "Optional. Service account to be used by login node instances."
+        },
         "startupScript": {
           "description": "Optional. [Startup script](https://cloud.google.com/compute/docs/instances/startup-scripts/linux) to be run on each login node instance. Max 256KB. The script must complete within the system-defined default timeout of 5 minutes. For tasks that require more time, consider running them in the background using methods such as `\u0026` or `nohup`.",
           "type": "string"
@@ -1727,6 +1749,10 @@
           "description": "Optional. Controls how many additional nodes a cluster can bring online to handle workloads. Set this value to enable dynamic node creation and limit the number of additional nodes the cluster can bring online. Leave empty if you do not want the cluster to create nodes dynamically, and instead rely only on static nodes.",
           "format": "int64",
           "type": "string"
+        },
+        "serviceAccount": {
+          "$ref": "ServiceAccount",
+          "description": "Optional. Immutable. Service account to be used by instances in the nodeset."
         },
         "staticNodeCount": {
           "description": "Optional. Number of nodes to be statically created for this nodeset. The cluster will attempt to ensure that at least this many nodes exist at all times.",

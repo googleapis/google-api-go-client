@@ -456,6 +456,11 @@
             "name"
           ],
           "parameters": {
+            "canonicalUrl": {
+              "description": "Required. The canonical `https://` URL of the article being accessed, matching the `` element on the rendered page. When calling the REST `GET` endpoint directly without a client library, callers must percent-encode the `canonicalUrl` query parameter; the service URL-decodes it automatically.",
+              "location": "query",
+              "type": "string"
+            },
             "name": {
               "description": "Required. The resource name of the publication. Format: publications/{publication}",
               "location": "path",
@@ -514,7 +519,7 @@
       }
     }
   },
-  "revision": "20261111",
+  "revision": "20261122",
   "rootUrl": "https://webcontentpublisher.googleapis.com/",
   "schemas": {
     "AnswerChoiceTemplate": {

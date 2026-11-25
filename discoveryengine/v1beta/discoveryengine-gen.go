@@ -15266,6 +15266,20 @@ func (s GoogleCloudDiscoveryengineV1alphaNaturalLanguageQueryUnderstandingConfig
 // GoogleCloudDiscoveryengineV1alphaObservabilityConfig: Observability config
 // for a resource.
 type GoogleCloudDiscoveryengineV1alphaObservabilityConfig struct {
+	// ArtifactGcsBucket: Optional. The Cloud Storage bucket that agent artifacts
+	// are written to. Artifacts are the multi-modal content (e.g. generated images
+	// and files) that an agent produces while handling an invocation. Persisting
+	// them makes them available for inspection alongside the observability traces
+	// and logs emitted for the same invocation. This must be a bucket URI without
+	// an object path. Example value: `gs://my-observability-bucket`. The bucket
+	// must be owned by the same project as the resource, and the Gemini Enterprise
+	// service agent must be able to write to it. Otherwise an `INVALID_ARGUMENT`
+	// or `PERMISSION_DENIED` error is returned. If unset, artifacts are only held
+	// for the duration of the invocation and are not persisted. This field has no
+	// effect when set on a Project; setting it there returns an `INVALID_ARGUMENT`
+	// error. Configure it on an Engine or an Agent instead. When set on both, the
+	// agent-level value takes precedence.
+	ArtifactGcsBucket string `json:"artifactGcsBucket,omitempty"`
 	// ObservabilityEnabled: Optional. Enables observability. If `false`, all other
 	// flags are ignored.
 	ObservabilityEnabled bool `json:"observabilityEnabled,omitempty"`
@@ -15273,15 +15287,22 @@ type GoogleCloudDiscoveryengineV1alphaObservabilityConfig struct {
 	// logging includes customer core content (e.g. prompts, responses). If
 	// `false`, will sanitize all sensitive fields.
 	SensitiveLoggingEnabled bool `json:"sensitiveLoggingEnabled,omitempty"`
-	// ForceSendFields is a list of field names (e.g. "ObservabilityEnabled") to
+	// UserPrincipalLoggingEnabled: Optional. Logs the end user's identity on
+	// activity log entries even when `sensitive_logging_enabled` is `false`.
+	// Prompt and response content stays redacted. Has no effect when
+	// `sensitive_logging_enabled` is `true`. Setting this field on a Project
+	// returns an `INVALID_ARGUMENT` error. Configure it on an Engine or an Agent
+	// instead.
+	UserPrincipalLoggingEnabled bool `json:"userPrincipalLoggingEnabled,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "ArtifactGcsBucket") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "ObservabilityEnabled") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "ArtifactGcsBucket") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -29890,6 +29911,17 @@ type GoogleCloudDiscoveryengineV1betaProvisionProjectRequest struct {
 	// IdpConfig: Optional. The identity provider for this location. When provided,
 	// the location's AclConfig is set from it as part of provisioning.
 	IdpConfig *GoogleCloudDiscoveryengineV1betaIdpConfig `json:"idpConfig,omitempty"`
+	// PreProvisionMode: Optional. Runs only the common project-level
+	// pre-provisioning steps (service agents, agent identity pools, project-scoped
+	// extension bindings, App Hub registry, Sobi agent default identity, and Sobi
+	// default Model Armor template) without reading or writing the Customer,
+	// Collection, or UserStore tables, CapabilityConfig, tenant project, default
+	// engine, or trial licenses when `true`. Assumes no customer exists yet.
+	// Customer-level or non-SOBI fields (`accept_data_use_terms`,
+	// `data_use_terms_version`, `saas_params`, `idp_config`, and
+	// `PROVISION_INTENT_LEGACY`) are rejected with `INVALID_ARGUMENT`, and the
+	// returned completed `Operation` has an empty response.
+	PreProvisionMode bool `json:"preProvisionMode,omitempty"`
 	// ProvisionIntent: Optional. The caller states whether the provisioning is for
 	// the new or the classic Gemini Enterprise experience.
 	//

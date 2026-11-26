@@ -8851,10 +8851,8 @@ type VideoStatus struct {
 	MadeForKids bool   `json:"madeForKids,omitempty"`
 	// PrivacyStatus: The video's privacy status. In a `videos.insert` request, if
 	// you don't specify a value for this property, the uploaded video's privacy
-	// status defaults to `public`. Certain uploads might default to `private`
-	// based on creator account settings, as explained in the YouTube Help Center
-	// (https://support.google.com/youtube/answer/157177). Videos uploaded from
-	// unverified API projects are not restricted to private viewing mode.
+	// status defaults to `public`. Videos uploaded from unverified API projects
+	// are not restricted to private viewing mode.
 	//
 	// Possible values:
 	//   "public"

@@ -664,6 +664,30 @@ func (s DriveSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
 }
 
+// DurationRange: Estimated wall-clock duration range for a review run.
+type DurationRange struct {
+	// MaxDuration: Output only. Upper bound of the estimated review duration.
+	MaxDuration string `json:"maxDuration,omitempty"`
+	// MinDuration: Output only. Lower bound of the estimated review duration.
+	MinDuration string `json:"minDuration,omitempty"`
+	// ForceSendFields is a list of field names (e.g. "MaxDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
+	ForceSendFields []string `json:"-"`
+	// NullFields is a list of field names (e.g. "MaxDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
+	NullFields []string `json:"-"`
+}
+
+func (s DurationRange) MarshalJSON() ([]byte, error) {
+	type NoMethod DurationRange
+	return gensupport.MarshalJSON(NoMethod(s), s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use it as
 // the request or the response type of an API method. For instance: service Foo
@@ -699,10 +723,30 @@ func (s EstimateReviewCostRequest) MarshalJSON() ([]byte, error) {
 }
 
 // EstimateReviewCostResponse: Response message for estimating what a review
-// would cost. When the cost can't be estimated, for example because too few
-// past reviews used the same model, depth, and thinking level, the costs are
-// unset and `past_review_count` is 0.
+// would cost and how long it will take on the caller's Gemini API key.
+// Structural guidance fields (`document_token_count`, `estimated_model_calls`,
+// `paid_tier1_estimated_duration`, `paid_tier2_plus_estimated_duration`, and
+// `explicit_caching_supported`) are populated whenever the document can be
+// measured and PAT is configured, even when too few past reviews exist (or the
+// model has no listed price) to compute USD cost percentiles. When USD cost
+// can't be estimated, `low_cost`, `median_cost`, and `high_cost` are unset and
+// `past_review_count` is 0.
 type EstimateReviewCostResponse struct {
+	// DocumentTokenCount: Output only. Estimated size of the document in tokens
+	// (matching the stored `Document.estimated_tokens` used by submission gates
+	// when available).
+	DocumentTokenCount int64 `json:"documentTokenCount,omitempty,string"`
+	// EstimatedModelCalls: Output only. Planned PAT workflow topology model call
+	// budget for the configured depth and enabled modules (including dynamic
+	// prompt-writer calls when enabled and 3 progress slots for citation checking;
+	// actual citation verification runs additional per-reference lookups).
+	EstimatedModelCalls int64 `json:"estimatedModelCalls,omitempty"`
+	// ExplicitCachingSupported: Output only. Whether explicit context caching
+	// applies on Paid Tier Gemini API keys for the configured model and document
+	// size, and is reflected in the cost estimate (false when post-launch BYOK
+	// analytics show explicit caching is falling back inline; Free-Tier keys do
+	// not create explicit caches).
+	ExplicitCachingSupported bool `json:"explicitCachingSupported,omitempty"`
 	// HighCost: The 95th percentile of what comparable past reviews would cost for
 	// this document.
 	HighCost *Money `json:"highCost,omitempty"`
@@ -712,20 +756,29 @@ type EstimateReviewCostResponse struct {
 	// MedianCost: The median of what comparable past reviews would cost for this
 	// document.
 	MedianCost *Money `json:"medianCost,omitempty"`
+	// PaidTier1EstimatedDuration: Output only. Estimated wall-clock turnaround
+	// range on a Paid Tier 1 Gemini API key (bounded by Paid Tier 1's 1M-2M
+	// tokens/min ceilings and retry/spend throttle backoff; single-attempt worker
+	// runs cap at 55 minutes until multi-slice continuations are enabled).
+	PaidTier1EstimatedDuration *DurationRange `json:"paidTier1EstimatedDuration,omitempty"`
+	// PaidTier2PlusEstimatedDuration: Output only. Estimated wall-clock turnaround
+	// range on a Paid Tier 2 or Paid Tier 3 Gemini API key (unconstrained up to
+	// worker concurrency).
+	PaidTier2PlusEstimatedDuration *DurationRange `json:"paidTier2PlusEstimatedDuration,omitempty"`
 	// PastReviewCount: Number of past reviews the estimate is based on.
 	PastReviewCount int64 `json:"pastReviewCount,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "HighCost") to
+	// ForceSendFields is a list of field names (e.g. "DocumentTokenCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "HighCost") to include in API
-	// requests with the JSON null value. By default, fields with empty values are
-	// omitted from API requests. See
+	// NullFields is a list of field names (e.g. "DocumentTokenCount") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1214,8 +1267,12 @@ func (s TextQuoteSelector) MarshalJSON() ([]byte, error) {
 }
 
 // UserQuota: Singleton resource representing the authenticated caller's review
-// quota limits and sliding-window usage.
+// quota limits, sliding-window usage, and non-expiring bonus credits.
 type UserQuota struct {
+	// BonusReviewCount: Output only. Remaining non-expiring bonus free-tier review
+	// credits. Bonus credits are consumed only after the rolling 7-day weekly
+	// allowance is exhausted and are included in `remaining_review_count`.
+	BonusReviewCount int64 `json:"bonusReviewCount,omitempty"`
 	// CustomLimitEnabled: Output only. Whether a custom per-user quota override is
 	// active for this user.
 	CustomLimitEnabled bool `json:"customLimitEnabled,omitempty"`
@@ -1228,9 +1285,10 @@ type UserQuota struct {
 	// becomes available if `remaining_review_count` is 0; unset when quota is
 	// currently available.
 	NextAvailableTime string `json:"nextAvailableTime,omitempty"`
-	// RemainingReviewCount: Output only. Remaining free-tier reviews available in
-	// the current rolling 7-day window (`max(0, max_review_count_per_week -
-	// used_review_count)`).
+	// RemainingReviewCount: Output only. Total remaining free-tier reviews
+	// currently available, combining the remaining rolling 7-day weekly allowance
+	// and any non-expiring bonus credits (`max(0, max_review_count_per_week -
+	// used_review_count) + bonus_review_count`).
 	RemainingReviewCount int64 `json:"remainingReviewCount,omitempty"`
 	// UsedReviewCount: Output only. Number of free-tier reviews used in the past 7
 	// days.
@@ -1238,15 +1296,15 @@ type UserQuota struct {
 
 	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-	// ForceSendFields is a list of field names (e.g. "CustomLimitEnabled") to
+	// ForceSendFields is a list of field names (e.g. "BonusReviewCount") to
 	// unconditionally include in API requests. By default, fields with empty or
 	// default values are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
 	// details.
 	ForceSendFields []string `json:"-"`
-	// NullFields is a list of field names (e.g. "CustomLimitEnabled") to include
-	// in API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. See
+	// NullFields is a list of field names (e.g. "BonusReviewCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
 	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
@@ -1378,11 +1436,17 @@ type DocumentsEstimateReviewCostCall struct {
 	header_                   http.Header
 }
 
-// EstimateReviewCost: Estimates what a review of a document would cost on the
-// caller's Gemini API key. The estimate comes from what past reviews with the
-// same model, depth, and thinking level cost, adjusted to this document's size
-// and repriced at the Gemini API's current list prices. It covers one review
-// attempt that runs to completion, and doesn't include retries after errors.
+// EstimateReviewCost: Estimates what a review of a document would cost and how
+// long it will take on the caller's Gemini API key. The USD cost range comes
+// from what comparable past reviews with the same model, depth, and thinking
+// level cost, adjusted to this document's size, repriced at the Gemini API's
+// current list prices, and including explicit context cache creation and
+// storage fees when supported. It covers one review run to completion and
+// doesn't include retries after errors. Structural guidance (document token
+// count, estimated model calls, explicit context caching support, and
+// tier-split turnaround durations) is populated whenever the document can be
+// measured, even when too few comparable past reviews exist to compute USD
+// cost percentiles.
 //
 // - document: The document to review.
 func (r *DocumentsService) EstimateReviewCost(document string, estimatereviewcostrequest *EstimateReviewCostRequest) *DocumentsEstimateReviewCostCall {

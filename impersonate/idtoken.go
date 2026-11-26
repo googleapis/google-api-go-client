@@ -48,7 +48,8 @@ func IDTokenSource(ctx context.Context, config IDTokenConfig, opts ...option.Cli
 		return nil, fmt.Errorf("impersonate: a target service account must be provided")
 	}
 
-	clientOpts := append(defaultClientOptions(), opts...)
+	ud := universeDomain(opts)
+	clientOpts := append(defaultClientOptions(ud), opts...)
 	client, _, err := htransport.NewClient(ctx, clientOpts...)
 	if err != nil {
 		return nil, err
@@ -59,6 +60,7 @@ func IDTokenSource(ctx context.Context, config IDTokenConfig, opts ...option.Cli
 		targetPrincipal: config.TargetPrincipal,
 		audience:        config.Audience,
 		includeEmail:    config.IncludeEmail,
+		universeDomain:  ud,
 	}
 	for _, v := range config.Delegates {
 		its.delegates = append(its.delegates, formatIAMServiceAccountName(v))
@@ -83,6 +85,7 @@ type impersonatedIDTokenSource struct {
 	audience        string
 	includeEmail    bool
 	delegates       []string
+	universeDomain  string
 }
 
 func (i impersonatedIDTokenSource) Token() (*oauth2.Token, error) {
@@ -97,7 +100,7 @@ func (i impersonatedIDTokenSource) Token() (*oauth2.Token, error) {
 		return nil, fmt.Errorf("impersonate: unable to marshal request: %v", err)
 	}
 
-	url := fmt.Sprintf("%s/v1/%s:generateIdToken", iamCredentailsEndpoint, formatIAMServiceAccountName(i.targetPrincipal))
+	url := fmt.Sprintf("%s/v1/%s:generateIdToken", iamCredentialsEndpoint(i.universeDomain), formatIAMServiceAccountName(i.targetPrincipal))
 	req, err := http.NewRequest("POST", url, bytes.NewReader(bodyBytes))
 	if err != nil {
 		return nil, fmt.Errorf("impersonate: unable to create request: %v", err)

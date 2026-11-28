@@ -3864,7 +3864,7 @@ type WorkforcePoolProvider struct {
 	// 12 hours (43200s). This configuration is used only when the Google Cloud
 	// session length policy is configured. When Google Cloud session length policy
 	// is configured and `attribute_sync_interval` is not configured, attributes
-	// are synced after a default interval of 12 hours (43200 seconds).
+	// are synced after a default interval of 30 minutes (1800s).
 	AttributeSyncInterval string `json:"attributeSyncInterval,omitempty"`
 	// Description: Optional. A description of the provider. Cannot exceed 256
 	// characters.
